@@ -69,17 +69,20 @@ def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bo
     query_display = query.replace('\n', ', ')
     query_count = len([q for q in query.split('\n') if q.strip()])
     
-    header = f"При пахтании... {sklonenie_v_n_poiskovyh_zaprosah(query_count)} для слова „{query_display}“ {sklonenie_naideno_x_zapisey(total)}{sklonenie_naideno_v_y_istochnikah(sources_hit)}"
-    if limit_reached:
-        header += " (Превышен лимит записей!)"
-    
     template = env.get_template("result_fragment.html")
     return template.render(
         query=query,
-        header=header,
-        groups=sorted_groups,
+        query_display=query_display,
+        query_count=query_count,
         total=total,
-        limit_reached=limit_reached
+        sources_hit=sources_hit,
+        groups=sorted_groups,
+        limit_reached=limit_reached,
+        # Helper functions for the template
+        get_count_suffix=get_count_suffix,
+        sklonenie_v_n_poiskovyh_zaprosah=sklonenie_v_n_poiskovyh_zaprosah,
+        sklonenie_naideno_x_zapisey=sklonenie_naideno_x_zapisey,
+        sklonenie_naideno_v_y_istochnikah=sklonenie_naideno_v_y_istochnikah
     )
 
 def render_full_page(query: str, fragment: str) -> str:
