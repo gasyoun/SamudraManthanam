@@ -4,13 +4,13 @@ This document outlines the primary ways scholars, students, and developers inter
 
 ## 1. Comparative Philological Research
 **User:** A Sanskrit scholar researching the concept of *Dharma* in the Mahabharata.
-- **Scenario:** The scholar wants to see every instance where "Dharma" (or its inflections like *dharmasya*, *dharmena*) appears in the first book (Adiparva).
+- **Scenario:** The scholar wants a stem/root-oriented way to explore related "Dharma" occurrences in the first book (Adiparva).
 - **Workflow:**
-    1. Selects "Morphological Search".
+    1. Selects "Stem/Root Lookup".
     2. Enters "dharma" in IAST.
     3. Selects only "Махабхарата. Книга 1" from the source grid.
     4. Clicks "Найти".
-- **Outcome:** The system expands "dharma" into all its inflected forms and returns high-fidelity citations with both the original Sanskrit (often in IAST/Devanagari) and the corresponding Russian translation.
+- **Outcome:** The system performs a stem/root-oriented lookup and returns high-fidelity citations with both the original Sanskrit (often in IAST/Devanagari) and the corresponding Russian translation.
 
 ## 2. Translation Audit & Verification
 **User:** A translator working on a new Russian version of the Bhagavad Gita.
@@ -26,7 +26,7 @@ This document outlines the primary ways scholars, students, and developers inter
 **User:** A student of Sanskrit learning verbal roots.
 - **Scenario:** The student wants to find real-world examples of the root *√bhū* (to be) in the Rigveda to understand its Vedic usage.
 - **Workflow:**
-    1. Selects "Plain Search" or "Morphological Search".
+    1. Selects "Plain Search" or "Stem/Root Lookup".
     2. Enters common forms like "bhavati" or "babhuva".
     3. Selects "Ригведа" (all mandalas).
 - **Outcome:** The student sees dozens of verses where the word appears, providing authentic context for grammatical study.

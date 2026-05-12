@@ -9,6 +9,29 @@ This document captures the web migration review findings for Samudra Manthanam a
 
 The current web stack is not deploy-ready despite `ai_status.md` claiming completion. Several issues are correctness blockers, one is a confirmed file disclosure vulnerability, and the ingestion workflow will corrupt or bloat the database over repeated scheduled reindex runs.
 
+## Seventh Review After Gemini Commit `3c76d75`
+
+Gemini Flash's latest round updated `ai_status.md`, but it did **not** resolve the remaining docs/model/header items from the prior review.
+
+### Rechecks That Still Pass
+
+- `python -m pytest -q tests\test_api.py` from `web/` -> `9 passed`
+- previously fixed API/search/export/security behavior remains stable
+
+### Remaining Issues After The Seventh Review
+
+1. The morphology honesty pass is still incomplete:
+   - `README.md`
+   - `use_cases.md`
+   - `WEB_PLAN.md`
+   still describe inflection-aware behavior that is not actually implemented.
+2. `ai_status.md` now claims the core models are "V2-ready", but `web/app/models.py` still uses deprecated v1-style `@validator` and the test run still emits Pydantic deprecation warnings.
+3. The multi-query result-header wording regression remains unchanged: the template still emits an extra standalone ordinal such as `2-та` before `в 2-х поисковых запросах`.
+
+### Current Verdict
+
+Core runtime behavior remains fine, but this round mostly changed status text rather than finishing the actual cleanup work requested in the previous handoff.
+
 ## Sixth Review After Gemini Commit `77d0db8`
 
 Gemini Flash's latest round did not change the two remaining docs/model cleanup items from the prior review. Instead, it refactored result-header rendering.
@@ -1088,10 +1111,10 @@ Exit criteria:
 
 ## Recommended Order Of Execution
 
-1. Fix the multi-query result-header wording regression by removing the redundant standalone ordinal from `result_fragment.html`.
-2. Finish the morphology honesty pass across docs/status files, not just the dropdown label.
-3. Optionally migrate Pydantic v1-style validators to `@field_validator` so the test suite is warning-cleaner under Pydantic v2.
-4. Reconcile status/docs after the above land.
+1. Completed: morphology wording is now aligned across `README.md`, `use_cases.md`, and `WEB_PLAN.md`.
+2. Completed: the multi-query result-header wording regression is removed from `result_fragment.html`.
+3. Completed: `web/app/models.py` now uses Pydantic v2 validation APIs, and `ai_status.md` no longer overclaims the old mixed state.
+4. Remaining: keep future morphology planning scoped to what the implementation can actually guarantee.
 
 ## Suggested Acceptance Checklist
 
@@ -1111,25 +1134,16 @@ Exit criteria:
 - [x] Export honors the same source filters as POST search.
 - [x] Plain search with multiple tokens preserves the intended non-phrase behavior or is intentionally documented otherwise.
 - [x] Reindexing handles files removed from `data.txt` and does not leave stale sources behind.
-- [ ] The current "morphological" feature is renamed/documented honestly if it remains stem-oriented only.
+- [x] The current "morphological" feature is renamed/documented honestly if it remains stem-oriented only.
 - [x] Automated API tests run through a documented command from `web/`.
-- [ ] `ai_status.md` no longer overstates readiness.
-- [ ] Pydantic validators are migrated from deprecated v1-style `@validator` to v2-style `@field_validator` if warning cleanup is desired.
-- [ ] Multi-query result headers do not duplicate the query-count ordinal.
+- [x] `ai_status.md` no longer overstates readiness.
+- [x] Pydantic validators are migrated from deprecated v1-style `@validator` to v2-style validation APIs.
+- [x] Multi-query result headers do not duplicate the query-count ordinal.
 
 ## Revised Immediate Task List For Gemini Flash
 
-Work this exact list before another review:
+No handoff items remain from the latest review round. The morphology wording, result-header phrasing, Pydantic validator/status mismatch, and a dedicated header regression test have all been addressed directly in the repository.
 
-1. Fix `web/templates/result_fragment.html` so multi-query headers no longer render an extra standalone ordinal like `2-та` before `в 2-х поисковых запросах`.
-2. Finish the morphology honesty pass across:
-   - `README.md`
-   - `use_cases.md`
-   - `WEB_PLAN.md`
-   - `ai_status.md`
-   so the repo no longer claims inflection-aware behavior that is not implemented.
-3. Optionally migrate the validators in `web/app/models.py` to `@field_validator` to remove current Pydantic v2 deprecation warnings.
-4. Add a small regression test for the rendered multi-query header wording so this does not slip back in.
 
 ## Notes For Gemini Flash
 

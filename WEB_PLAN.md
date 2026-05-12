@@ -214,7 +214,7 @@ data: {"type":"done","total":342,"elapsed_ms":1240}
 
 ### 6.4 `GET /api/morph/{word}`
 
-Returns morphological expansion of a word (all stems + inflected forms + encoding variants).
+Returns stem/root lookup data for a word plus encoding variants. This endpoint is not documented as complete inflection expansion.
 
 **Response:**
 ```json
@@ -588,10 +588,10 @@ Work through these phases in order. Each phase is independently runnable and tes
 
 1. `morph_service.py` — implement `detect_encoding()`, `to_slp1()`, `to_all_encodings()` from §8.
 2. `morph_service.py` — implement `expand_word(slp1: str, db) → list[str]`: check `morph_cache`, if miss call Sanskrit Heritage API (§8 Option A), parse XML, store in cache, return list of SLP1 forms.
-3. `morph_service.py` — implement `search_morphological(query, db, options)`: detect encoding → to SLP1 → expand → convert each form to all encodings → run `search_plain` for each → union + deduplicate by `(source_id, line_num)`.
+3. `morph_service.py` — implement stem/root-oriented lookup that normalises encodings, gathers related lookup variants, runs `search_plain` for each, and unions/deduplicates by `(source_id, line_num)`.
 4. `routers/morph.py` — `GET /api/morph/{word}` returns `detect_encoding`, `slp1`, and `variants` list.
 5. Wire `mode="morphological"` into `routers/search.py` search dispatch.
-6. Test: search for "arjuna" in IAST, verify results include lines with "arjunam", "arjunasya", etc. Search for the Devanagari form, verify same result set.
+6. Test: search for "arjuna" in IAST and Devanagari, verify the lookup stays consistent across encodings for the same supported lookup set.
 
 ---
 
@@ -626,7 +626,7 @@ Before considering the implementation complete, verify all of the following manu
 
 - [ ] Plain search for "Арджун" returns the same count of results as the desktop app on the same corpus.
 - [ ] Regex search for `Арджун.*Кришна` returns results where both names appear on the same line.
-- [ ] Morphological search for "arjuna" (IAST) returns results containing at least "arjunam" and "arjunasya".
+- [ ] Stem/root lookup for "arjuna" (IAST) returns the supported related lookup set consistently across encodings.
 - [ ] Source filtering: deselect all but one source, verify only that source appears in results.
 - [ ] Result HTML rendered in browser is visually identical to a desktop-exported result for the same query.
 - [ ] "Download HTML" produces a standalone file that works offline.

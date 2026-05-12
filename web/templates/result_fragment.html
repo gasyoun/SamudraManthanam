@@ -5,9 +5,6 @@
 </div>
 <div class="header header_1">
     При пахтании океана
-    {% if query_count > 1 %}
-        {{ query_count }}-та
-    {% endif %}
     {{ sklonenie_v_n_poiskovyh_zaprosah(query_count) }}
     для слова „{{ query_display }}“
     {{ sklonenie_naideno_x_zapisey(total) }}

@@ -132,9 +132,9 @@ The highest priority for the next major version is migrating from a Windows desk
 - Enable full corpus search from any device and operating system
 - Keep result HTML format compatible with the current desktop output
 
-### 2. Morphological search
+### 2. Stem/root lookup
 
-Add stem/root-aware search so that queries match inflected forms automatically. Because the corpus uses mixed encodings (IAST, SLP1, Devanagari), the morphological layer will need to normalise input before matching. Planned integration with an established Sanskrit morphological analyser.
+Add stem/root-aware lookup that helps users explore related Sanskrit forms across mixed encodings (IAST, SLP1, Devanagari). The current web implementation exposes this honestly as stem/root lookup rather than promising complete inflection expansion.
 
 ### 3. Online corpus sync
 

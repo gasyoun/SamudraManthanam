@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import List, Optional, Dict, Any
 from enum import Enum
 
@@ -15,23 +15,24 @@ class SearchRequest(BaseModel):
     source_ids: Optional[List[int]] = None
     limit: int = Field(5000, ge=1, le=5000)
 
-    @validator('query')
+    @field_validator('query')
+    @classmethod
     def query_not_empty(cls, v):
         if not v.strip():
             raise ValueError('query cannot be empty or just whitespace')
         return v
 
-    @validator('query')
-    def validate_regex(cls, v, values):
-        if values.get('mode') == SearchMode.regex:
-            patterns = [p.strip() for p in v.split('\n') if p.strip()]
+    @model_validator(mode='after')
+    def validate_regex(self):
+        if self.mode == SearchMode.regex:
+            patterns = [p.strip() for p in self.query.split('\n') if p.strip()]
             for p in patterns:
                 try:
                     import re
                     re.compile(p)
                 except re.error as e:
                     raise ValueError(f'Invalid regex pattern: {p} ({e})')
-        return v
+        return self
 
 class SearchResultItem(BaseModel):
     source_id: int

@@ -104,3 +104,16 @@ async def test_invalid_regex():
         # Invalid regex in GET
         response = await ac.get("/api/search/export?query=%5B&mode=regex")
         assert response.status_code == 400
+
+@pytest.mark.asyncio
+async def test_multi_query_header_does_not_duplicate_ordinal():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.post("/api/search", json={
+            "query": "arjuna\nkrishna",
+            "mode": "plain"
+        })
+    assert response.status_code == 200
+    fragment = response.json()["html_fragment"]
+    assert "2-та" not in fragment
+    assert "в 2-х поисковых запросах" in fragment
