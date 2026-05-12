@@ -1,0 +1,8 @@
+# Generated SQLite search database and SQLite sidecars
+web/corpus.db
+web/corpus.db-wal
+web/corpus.db-shm
+
+# Python bytecode and cache directories
+__pycache__/
+*.py[cod]

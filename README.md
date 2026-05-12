@@ -94,6 +94,34 @@ Each corpus file is an HTML document. The first line holds the source title as a
 
 ---
 
+## Web database
+
+The FastAPI web app uses a generated SQLite FTS database at:
+
+```text
+web/corpus.db
+```
+
+This file is about 500 MB for the current corpus and is intentionally **not tracked in Git**. GitHub blocks normal repository files above 100 MB, and this database is reproducible from the checked-in corpus data and ingest pipeline.
+
+Build it locally from the repository root with:
+
+```powershell
+.\build-web-db.ps1
+```
+
+Equivalent direct command:
+
+```powershell
+python web\ingest\ingest.py --corpus-path Index\lib\x86_64-win64 --db-path web\corpus.db
+```
+
+For Docker Compose, create `web/corpus.db` before starting the container because `docker-compose.yml` mounts that host file into `/app/corpus.db`.
+
+If a prebuilt database must be distributed, use a GitHub Release asset or another artifact store rather than committing the SQLite file to normal Git history.
+
+---
+
 ## Roadmap
 
 ### 1. Web application

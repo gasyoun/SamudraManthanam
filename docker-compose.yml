@@ -11,7 +11,9 @@ services:
     volumes:
       # Mount the corpus data directory (containing Data/ and Programdata/)
       - ./corpus:/corpus
-      # Persist the SQLite database
+      # Mount a generated SQLite database built locally with:
+      #   .\build-web-db.ps1
+      # The host file must exist before `docker compose up`.
       - ./web/corpus.db:/app/corpus.db
     environment:
       - CORPUS_PATH=/corpus
