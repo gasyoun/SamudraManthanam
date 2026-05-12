@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: samudra_manthanam_web
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the corpus data directory (containing Data/ and Programdata/)
+      - ./corpus:/corpus
+      # Persist the SQLite database
+      - ./web/corpus.db:/app/corpus.db
+    environment:
+      - CORPUS_PATH=/corpus
+      - DB_PATH=/app/corpus.db
+    restart: unless-stopped
+
+  # Optional Nginx reverse proxy could be added here for SSL/Caching

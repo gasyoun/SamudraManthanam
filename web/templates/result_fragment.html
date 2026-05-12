@@ -1,0 +1,48 @@
+<div class="button-container">
+    <button id="prevButton">&lt;</button>
+    <button id="nearestButton">=</button>
+    <button id="nextButton">&gt;</button>
+</div>
+<div class="header header_1">
+    {{ header }}
+</div>
+<div class="contents">
+    {% for group in groups %}
+        <div class="content_item">
+            <a href="#chapter_{{ loop.index }}">{{ group.title }}</a>
+        </div>
+    {% endfor %}
+</div>
+<div class="chapters">
+    {% for group in groups %}
+    <div class="chapter">
+        <div class="chapter_title" id="chapter_{{ loop.index }}">{{ loop.index }}. {{ group.title }}</div>
+        {% for item in group.items %}
+            <div class="citation_block">
+                {{ item.line_html | safe }}
+            </div>
+        {% endfor %}
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    // Simple highlight script similar to desktop
+    (function() {
+        const query = "{{ query }}";
+        if (!query) return;
+        
+        const citationBlocks = document.querySelectorAll('.citation_block');
+        
+        // Escape query for regex
+        const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        // Regex that avoids matching inside HTML tags
+        // It matches the query only if it's followed by zero or more non-< characters and then a < or end of string
+        const regex = new RegExp(`(${escapedQuery})(?![^<]*>)`, 'gi');
+        
+        citationBlocks.forEach(block => {
+            block.innerHTML = block.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+        });
+    })();
+</script>
