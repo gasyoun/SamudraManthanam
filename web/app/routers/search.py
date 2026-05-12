@@ -5,7 +5,7 @@ import json
 import asyncio
 from sse_starlette.sse import EventSourceResponse
 from app.db import get_db
-from app.models import SearchRequest, SearchResult, SearchResultItem
+from app.models import SearchRequest, SearchResult, SearchResultItem, SearchMode
 from app.services.html_service import render_fragment, render_full_page, render_standalone
 from app.services.search_service import search_plain, search_regex
 from app.services.morph_service import search_morphological
@@ -54,7 +54,7 @@ async def post_search(request: SearchRequest):
         await db.close()
 
 @router.get("/stream")
-async def get_search_stream(request: Request, query: str, mode: str = "plain", case_sensitive: bool = False, whole_word: bool = False):
+async def get_search_stream(request: Request, query: str, mode: SearchMode = SearchMode.plain, case_sensitive: bool = False, whole_word: bool = False):
     # Handle source_ids from query params
     source_ids_str = request.query_params.get("source_ids")
     if source_ids_str is not None:
@@ -86,11 +86,11 @@ async def get_search_stream(request: Request, query: str, mode: str = "plain", c
             for i, source in enumerate(sources):
                 sid = source[0]
                 # Search only in this source
-                if mode == "plain":
+                if mode == SearchMode.plain:
                     res = await search_plain(db, query, case_sensitive, whole_word, [sid], 5000)
-                elif mode == "regex":
+                elif mode == SearchMode.regex:
                     res = await search_regex(db, query, case_sensitive, [sid], 5000)
-                elif mode == "morphological":
+                elif mode == SearchMode.morphological:
                     res = await search_morphological(db, query, [sid], 5000)
                 else:
                     res = []
@@ -123,7 +123,7 @@ async def get_search_stream(request: Request, query: str, mode: str = "plain", c
     return EventSourceResponse(event_generator())
 
 @router.get("/export", response_class=HTMLResponse)
-async def get_export(request: Request, query: str, mode: str = "plain", case_sensitive: bool = False, whole_word: bool = False):
+async def get_export(request: Request, query: str, mode: SearchMode = SearchMode.plain, case_sensitive: bool = False, whole_word: bool = False):
     # Handle source_ids from query params
     source_ids_str = request.query_params.get("source_ids")
     if source_ids_str is not None:
@@ -134,11 +134,11 @@ async def get_export(request: Request, query: str, mode: str = "plain", case_sen
     db = await get_db(DB_PATH)
     try:
         limit = 5000
-        if mode == "plain":
+        if mode == SearchMode.plain:
             results = await search_plain(db, query, case_sensitive, whole_word, source_ids, limit)
-        elif mode == "regex":
+        elif mode == SearchMode.regex:
             results = await search_regex(db, query, case_sensitive, source_ids, limit)
-        elif mode == "morphological":
+        elif mode == SearchMode.morphological:
             results = await search_morphological(db, query, source_ids, limit)
         else:
             results = []

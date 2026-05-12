@@ -2,11 +2,19 @@ import re
 import aiosqlite
 from typing import List, Dict, Any, Optional
 
-def escape_fts(term: str) -> str:
+def escape_fts(term: str, whole_word: bool = False) -> str:
     # Remove characters that have special meaning in FTS5
-    # and wrap in quotes.
+    # and wrap in quotes if whole_word is requested.
     safe = term.replace('"', '""')
-    return f'"{safe}"'
+    if whole_word:
+        return f'"{safe}"'
+    else:
+        # For non-whole-word, we split into words and combine with AND
+        # to avoid forcing a strict phrase match unless the user typed one.
+        tokens = [f'"{t.replace('"', '""')}"' for t in safe.split() if t.strip()]
+        if not tokens:
+            return f'"{safe}"'
+        return " AND ".join(tokens)
 
 async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: bool, whole_word: bool, source_ids: Optional[List[int]], limit: int) -> List[Dict[str, Any]]:
     # Handle multi-line queries
@@ -15,8 +23,8 @@ async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: boo
         return []
     
     # Build FTS5 query string using OR for multiple lines
-    # Each term is escaped and quoted to prevent FTS5 syntax errors
-    fts_parts = [escape_fts(q) for q in queries]
+    # Each line's tokens are joined by AND, lines themselves by OR
+    fts_parts = [escape_fts(q, whole_word) for q in queries]
     fts_query = " OR ".join(fts_parts)
     
     source_filter = ""

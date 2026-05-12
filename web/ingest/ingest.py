@@ -34,6 +34,22 @@ async def ingest(corpus_path: str, db_path: str):
 
     print(f"Found {len(filenames)} sources in data.txt")
 
+    # Reconciliation: Remove sources that are no longer in data.txt
+    async with db.execute("SELECT filename FROM sources") as cursor:
+        db_filenames = [row[0] for row in await cursor.fetchall()]
+    
+    to_remove = set(db_filenames) - set(filenames)
+    if to_remove:
+        print(f"Removing {len(to_remove)} sources no longer in manifest...")
+        for fname in to_remove:
+            async with db.execute("SELECT id FROM sources WHERE filename = ?", (fname,)) as c:
+                row = await c.fetchone()
+                if row:
+                    sid = row[0]
+                    await db.execute("DELETE FROM corpus_lines WHERE source_id = ?", (sid,))
+                    await db.execute("DELETE FROM sources WHERE id = ?", (sid,))
+        await db.commit()
+
     for idx, filename in enumerate(filenames):
         file_path = os.path.join(corpus_path, "Data", filename)
         if not os.path.exists(file_path):

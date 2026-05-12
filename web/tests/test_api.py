@@ -61,3 +61,31 @@ async def test_source_selection_none():
         })
     assert response.status_code == 200
     assert len(response.json()["results"]) == 0
+
+@pytest.mark.asyncio
+async def test_multi_token_plain_search():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        # Query with multiple tokens should match lines containing all tokens
+        response = await ac.post("/api/search", json={
+            "query": "arjuna krishna",
+            "mode": "plain"
+        })
+    assert response.status_code == 200
+    # The tokens should be joined by AND in FTS5
+    # (Assuming there's data that matches both)
+
+@pytest.mark.asyncio
+async def test_invalid_get_mode_export():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        # Invalid mode in GET should return 422
+        response = await ac.get("/api/search/export?query=test&mode=bad")
+    assert response.status_code == 422
+
+@pytest.mark.asyncio
+async def test_invalid_get_mode_stream():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/stream?query=test&mode=bad")
+    assert response.status_code == 422

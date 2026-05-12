@@ -9,6 +9,46 @@ This document captures the web migration review findings for Samudra Manthanam a
 
 The current web stack is not deploy-ready despite `ai_status.md` claiming completion. Several issues are correctness blockers, one is a confirmed file disclosure vulnerability, and the ingestion workflow will corrupt or bloat the database over repeated scheduled reindex runs.
 
+## Third Review After Gemini Commit `69f6257`
+
+Gemini Flash's second repair round materially improved the web app. The previously broken primary flow is now mostly healthy:
+
+- result rendering works for non-empty search results
+- export works again
+- POST search validation rejects invalid mode, blank/whitespace query, and negative limits
+- `source_ids=[]` now means "none selected" instead of "all sources"
+- the Windows path traversal proof-of-concept is blocked
+- query-driven header injection is escaped
+- targeted API tests were added and pass when run from `web/`
+
+### Rechecks That Now Pass
+
+The following checks were rerun against commit `69f6257`:
+
+- `POST /api/search` with `{"query":"arjuna","mode":"plain"}` -> `200`
+- `POST /api/search` with `{"query":"arjuna","mode":"regex"}` -> `200`
+- invalid POST mode -> `422`
+- blank query -> `422`
+- whitespace-only query -> `422`
+- negative limit -> `422`
+- `source_ids=[]` -> `200` with zero results
+- `GET /api/search/export?query=arjuna&mode=plain` -> `200`
+- zero-result export -> `200`
+- traversal request `/api/corpus-sync/file/..%5CProgramdata%5Cdata.txt` -> `400`
+- injected query `</script><script>globalThis.XSS=1</script>` is escaped in rendered HTML
+- `python -m pytest -q tests\test_api.py` from `web/` -> `5 passed`
+
+### Remaining Issues After The Third Review
+
+1. Plain search semantics changed unintentionally for multi-token queries.
+2. Ingest is improved for repeated updates to existing files, but it still does not reconcile removed corpus files and is not a full atomic rebuild.
+3. "Morphological search" still does not meet an inflection-aware promise; for this round, honest renaming and documentation is acceptable.
+4. GET export and SSE still accept invalid `mode` values and return `200`, while POST correctly returns `422`.
+
+### Current Verdict
+
+The web app is now **substantially healthier** than after the prior review. The original priority-0 failures are mostly resolved. The remaining work is no longer about getting the site out of a broken state; it is about restoring intended semantics, tightening operational correctness, and aligning naming/docs with actual behavior.
+
 ## Second Review After Gemini Commit `6d5ce4a`
 
 Gemini Flash made a follow-up repair commit after the first review. That commit improved a few secondary areas:
@@ -640,11 +680,15 @@ Impact:
 
 Required decision:
 
-Gemini Flash should first clarify product scope in code/docs, then implement accordingly.
+Gemini Flash should first clarify product scope in code/docs. For the current round, **honest renaming/documentation is enough**; full inflection-aware morphology is not required before the next review.
 
 Option A:
 
-- Rename behavior honestly to "stem lookup search" and adjust docs.
+- Rename behavior honestly to something like:
+  - "stem lookup search"
+  - "morphological lookup"
+  - "root/stem-assisted search"
+- Update frontend labels, API docs/comments, and handoff/docs so the feature no longer promises inflection expansion it does not provide.
 
 Option B:
 
@@ -654,15 +698,17 @@ Option B:
   - cache resolved variant lists
   - search across normalized encodings
 
-Recommendation:
+Recommendation for this round:
 
-- Preserve the public "morphological search" name only if real inflection expansion is implemented.
+- **Choose Option A.**
+- Do not keep the public "morphological search" label if the implementation remains stem-oriented only.
+- Full inflection-aware search can stay as a future enhancement.
 
 Required tests:
 
-- IAST, SLP1, and Devanagari equivalents resolve consistently.
-- Query for `arjuna` returns known inflected forms if that is the required product behavior.
-- Cache hit and cache miss paths are both tested.
+- IAST, SLP1, and Devanagari equivalents resolve consistently if that behavior is still claimed.
+- The public label and docs match the implemented feature.
+- Cache hit and cache miss paths are both tested if the feature remains exposed.
 - API outage degrades gracefully with structured metadata or warning behavior.
 
 Second-review status:
@@ -949,51 +995,48 @@ Exit criteria:
 
 ## Recommended Order Of Execution
 
-1. Rendering crash
-2. Export missing-import regression
-3. Script injection hardening
-4. Corpus sync traversal fix
-5. Input validation + FTS hardening
-6. Source filter/export consistency
-7. Idempotent ingest redesign
-8. Morphology decision and implementation
-9. Test suite expansion
-10. Documentation cleanup
+1. Restore intended plain-search semantics for multi-token queries.
+2. Reconcile ingest behavior for removed corpus files and define whether a full atomic rebuild is required.
+3. Rename/document the current "morphological" feature honestly as stem/root lookup behavior.
+4. Align export/SSE GET validation with POST validation.
+5. Expand regression tests to cover these remaining cases.
+6. Reconcile docs/status notes after the above land.
 
 ## Suggested Acceptance Checklist
 
-- [ ] `POST /api/search` returns `200` with HTML fragment for plain search.
-- [ ] `POST /api/search` returns `200` with HTML fragment for regex search.
-- [ ] `GET /api/search/export` returns `200` for plain search.
-- [ ] Zero-result export does not fail with `NameError`.
-- [ ] Result fragment rendering is safe for query text containing HTML and script delimiters.
-- [ ] Corpus file traversal attempts are blocked.
-- [ ] Blank search input returns `422`.
-- [ ] Invalid mode returns `422`.
+- [x] `POST /api/search` returns `200` with HTML fragment for plain search.
+- [x] `POST /api/search` returns `200` with HTML fragment for regex search.
+- [x] `GET /api/search/export` returns `200` for plain search.
+- [x] Zero-result export does not fail with `NameError`.
+- [x] Result fragment rendering is safe for query text containing HTML and script delimiters.
+- [x] Corpus file traversal attempts are blocked.
+- [x] Blank search input returns `422`.
+- [x] Invalid POST mode returns `422`.
+- [ ] Invalid export/SSE mode returns structured 4xx.
 - [ ] Invalid regex returns structured 4xx.
-- [ ] Negative limit is rejected.
-- [ ] `source_ids=[]` has explicit documented behavior.
-- [ ] "Select None" in the UI matches the documented behavior.
-- [ ] Export honors the same source filters as POST search.
-- [ ] Reindexing twice does not change counts or create duplicates/orphans.
-- [ ] Morphological behavior matches its documented promise.
-- [ ] Automated tests run through a documented command.
+- [x] Negative limit is rejected on POST search.
+- [x] `source_ids=[]` has explicit documented behavior.
+- [x] "Select None" in the UI matches the documented behavior.
+- [x] Export honors the same source filters as POST search.
+- [ ] Plain search with multiple tokens preserves the intended non-phrase behavior or is intentionally documented otherwise.
+- [ ] Reindexing handles files removed from `data.txt` and does not leave stale sources behind.
+- [ ] The current "morphological" feature is renamed/documented honestly if it remains stem-oriented only.
+- [x] Automated API tests run through a documented command from `web/`.
 - [ ] `ai_status.md` no longer overstates readiness.
 
 ## Revised Immediate Task List For Gemini Flash
 
-Work this exact list before any more UI polish:
+Work this exact list before another review:
 
-1. Fix `group.items` in `result_fragment.html`.
-2. Import and test `render_standalone` in `search.py`.
-3. Turn on safe HTML escaping and remove header injection.
-4. Close the Windows traversal hole in `corpus_sync.py`.
-5. Add request validation and FTS-safe query construction.
-6. Make `source_ids=[]` semantics explicit and fix the frontend "Select None" path.
-7. Make export honor the same search filters as the POST endpoint.
-8. Redesign ingest so scheduled reindexing is idempotent.
-9. Decide whether morphology is truly inflection-aware; then either implement it or rename/document it honestly.
-10. Add regression tests proving the above.
+1. Restore intended plain-search semantics for multi-token queries. Do not silently force exact-phrase matching unless the product explicitly wants that.
+2. Improve ingest reconciliation so files removed from `Programdata/data.txt` are removed from `sources` and `corpus_lines`, or switch to a clean rebuild/swap approach.
+3. Rename/document the current "morphological" feature honestly as a stem/root lookup feature if full inflection-aware search is not being implemented now.
+4. Make export and SSE reject invalid `mode` values with structured 4xx responses, matching POST behavior.
+5. Add or update tests for:
+   - multi-token plain search semantics
+   - removed-file ingest reconciliation
+   - renamed morphology surface/docs
+   - invalid GET mode handling
 
 ## Notes For Gemini Flash
 
