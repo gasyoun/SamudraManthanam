@@ -117,3 +117,20 @@ async def test_multi_query_header_does_not_duplicate_ordinal():
     fragment = response.json()["html_fragment"]
     assert "2-та" not in fragment
     assert "в 2-х поисковых запросах" in fragment
+
+@pytest.mark.asyncio
+async def test_morphological_search_metadata():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.post("/api/search", json={
+            "query": "svasti",
+            "mode": "morphological"
+        })
+    assert response.status_code == 200
+    data = response.json()
+    assert "search_metadata" in data
+    assert data["search_metadata"] is not None
+    assert "stems" in data["search_metadata"]
+    assert "variants" in data["search_metadata"]
+    # "svasti" should at least expand to itself
+    assert "svasti" in data["search_metadata"]["stems"]

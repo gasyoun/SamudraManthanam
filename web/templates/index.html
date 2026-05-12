@@ -190,7 +190,7 @@
                         <select id="mode">
                             <option value="plain">Обычный</option>
                             <option value="regex">Regex</option>
-                            <option value="morphological">Морфологический (по основам)</option>
+                            <option value="morphological">Поиск по основам (Stem/Root)</option>
                         </select>
                     </div>
                     <div class="option-item">
@@ -207,6 +207,7 @@
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <label>Источники:</label>
                         <div>
+                            <span id="sourceCount" style="font-size: 0.8rem; margin-right: 1rem; color: #666;">Загрузка...</span>
                             <button type="button" id="selectAll">Все</button>
                             <button type="button" id="selectNone">Ни одного</button>
                         </div>

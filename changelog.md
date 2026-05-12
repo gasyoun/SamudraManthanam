@@ -13,11 +13,18 @@ All notable changes to this project will be documented in this file.
 - **SSE Support**: Finalized server-sent events for search progress tracking.
 
 ### Fixed
-- **Data Ingestion**: Optimized `parse_html.py` to handle diverse HTML comment styles in source titles.
-- **Frontend Logic**: Fixed `source_ids.append` bug in `search.js` and improved SSE error handling.
-- **UI/UX**: Added smooth scrolling to search results and improved HTML injection.
-- **Highlighting**: Optimized result highlighting regex to avoid matching inside HTML tags.
-- **Backend Plumbing**: Fixed missing imports and router registration in `main.py`.
+- **Security**: Hardened XSS protection by refactoring search result header rendering into Jinja2 templates.
+- **Regex Safety**: Added robust validation for regex patterns across all search endpoints.
+- **Architecture**: Corrected Pydantic model field ordering and migrated to V2-native validators.
+- **Search Logic**: Improved FTS5 tokenization to support intelligent diacritic-tolerant matching for Sanskrit.
+
+## [1.6.0] - 2026-05-12 (Web Stabilization & Gemini Implementation)
+### Added
+- **Golden Query Suite**: Implemented `test_golden_queries.py` to ensure scholarly search quality.
+- **Stem/Root Lookup Polish**: Enhanced morphological search with searched-stem transparency and variant highlighting.
+- **UX Improvements**: Added "Selected Sources" count, refined zero-result messaging, and polished the search summary header.
+- **Enhanced Observability**: Added plain-text (`line_text`) field to search results for automated quality verification.
+- **Documentation**: Synchronized `ai_status.md` and `use_cases.md` with the new production-ready state.
 
 ### Changed
 - Reorganized repository to include both legacy Pascal code and new Python web components.

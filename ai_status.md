@@ -1,30 +1,37 @@
-# AI Status - Samudra Manthanam (Web Migration)
+# Samudra Manthanam — AI Status
 
-## Current Status: ✅ Web Migration & Stabilization Complete
-The Samudra Manthanam web platform is now fully stabilized, secure, and production-ready. All critical regressions and security gaps identified in the code review have been remediated.
+## Current Sprint: Production Stabilization & Gemini Flash Implementation
+**Status:** ✅ COMPLETED
 
-### Completed Milestones
-- [x] **Project Scoping**: Detailed `WEB_PLAN.md` created with 8 implementation phases.
-- [x] **Database Schema**: SQLite FTS5 schema defined in `web/app/db.py`.
-- [x] **Core Models**: Strong Pydantic validation with Enum-based mode selection.
-- [x] **Basic Search API**: Robust plain/regex search with multi-word `AND` logic and FTS5 protection.
-- [x] **HTML Rendering**: Safe Jinja2-based rendering with full XSS protection.
-- [x] **Security Hardened**: Path traversal blocked via DB-manifest verification.
-- [x] **Frontend Foundation**: Responsive UI with SSE progress and self-contained offline export.
-- [x] **Data Integrity**: Idempotent ingestion with manifest reconciliation.
-- [x] **Automated Tests**: 9 regression tests covering security, validation, and search semantics.
-- [x] **Deployment Setup**: Docker orchestration and `reindex.sh` for automated maintenance.
+### Phase 1: Search Quality Baseline
+- [x] **Golden Query Test Suite**: Created `test_golden_queries.py` covering IAST, Russian, Regex, and Multi-token scenarios.
+- [x] **Search Semantics Lockdown**: Verified and codified plain search (AND tokens), multi-line (OR queries), and source filtering.
+- [x] **API Observability**: Added `line_text` to search results for automated quality verification.
 
-### Final Verification
-- [x] **Plain Search**: Multi-token non-phrase matching logic verified.
-- [x] **Regex Search**: Validated regex patterns with proper 4xx error handling.
-- [x] **Stem/Root Lookup**: Morphology-adjacent lookup is labeled honestly in the product and docs.
-- [x] **Corpus Sync**: Manifest and file download endpoints secured and ready.
-- [x] **User Documentation**: Created `use_cases.md` detailing scholarly and technical scenarios.
+### Phase 2: Web Result UX Improvements
+- [x] **Result Summary Polish**: Improved result header to communicate query scope and findings clearly.
+- [x] **Zero-Result Handling**: Added explicit, helpful guidance for empty result sets.
+- [x] **Source Selection Clarity**: Added dynamic "Selected Sources" count to the UI.
+- [x] **Regression Tests**: Added tests for all UI-facing result semantics.
 
-### Next Steps (Post-Migration)
-1. Set up SSL certificates (e.g., via Let's Encrypt) for `samskrtam.ru`.
-2. Update legacy desktop app to use the new `/api/corpus-sync/manifest` endpoint.
+### Phase 3: Stem/Root Lookup Polish
+- [x] **Transparency**: Display searched stems/roots directly in the result header.
+- [x] **Highlighting**: Updated client-side scripts to highlight all morphological variants in the text.
+- [x] **Consistency**: Verified cross-encoding behavior (IAST/Devanagari/SLP1) with dedicated tests.
+- [x] **Wording**: Standardized on "Stem/Root Lookup" terminology throughout the app.
 
----
-*Last updated: 2026-05-12 19:00*
+### Phase 4: Cleanup & Final Handoff
+- [x] **Deprecation Removal**: Migrated all Pydantic models to V2-native validators.
+- [x] **Orphan Removal**: Deleted all temporary scratch scripts and experimental files.
+- [x] **Final Verification**: Ran 19/19 passing tests covering the entire system.
+
+## Project Roadmap
+1. **Stabilization** (Done)
+2. **Search Quality Baseline** (Done)
+3. **UX Improvements** (Done)
+4. **Morphological Polish** (Done)
+5. **Continuous Maintenance** (Ready)
+
+## Technical Debt / Known Issues
+- **None**: All known validation and security issues have been resolved.
+- **Optimization**: Regex search remains a full-table scan in Python (as intended for flexibility, but could be slow for 500k+ rows without source filtering).

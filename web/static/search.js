@@ -13,11 +13,32 @@ $(document).ready(function() {
                     </div>
                 `);
             });
+            updateSourceCount();
         });
 
+    function updateSourceCount() {
+        const total = $('#sourcesGrid input').length;
+        const selected = $('#sourcesGrid input:checked').length;
+        if (selected === total) {
+            $('#sourceCount').text('Выбраны все источники');
+        } else if (selected === 0) {
+            $('#sourceCount').text('Источники не выбраны');
+        } else {
+            $('#sourceCount').text(`Выбрано источников: ${selected} из ${total}`);
+        }
+    }
+
+    $(document).on('change', '#sourcesGrid input', updateSourceCount);
+
     // Select All / None
-    $('#selectAll').click(() => $('#sourcesGrid input').prop('checked', true));
-    $('#selectNone').click(() => $('#sourcesGrid input').prop('checked', false));
+    $('#selectAll').click(() => {
+        $('#sourcesGrid input').prop('checked', true);
+        updateSourceCount();
+    });
+    $('#selectNone').click(() => {
+        $('#sourcesGrid input').prop('checked', false);
+        updateSourceCount();
+    });
 
     // Form submit
     $('#searchForm').submit(function(e) {

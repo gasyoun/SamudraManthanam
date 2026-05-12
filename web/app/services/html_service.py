@@ -46,7 +46,7 @@ def sklonenie_naideno_v_y_istochnikah(y: int) -> str:
     else:
         return f" в {get_count_suffix(y)} источниках"
 
-def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bool = False) -> str:
+def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bool = False, search_metadata: Optional[Dict[str, Any]] = None) -> str:
     # Group results by source
     grouped = {}
     for r in results:
@@ -78,6 +78,7 @@ def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bo
         sources_hit=sources_hit,
         groups=sorted_groups,
         limit_reached=limit_reached,
+        search_metadata=search_metadata,
         # Helper functions for the template
         get_count_suffix=get_count_suffix,
         sklonenie_v_n_poiskovyh_zaprosah=sklonenie_v_n_poiskovyh_zaprosah,

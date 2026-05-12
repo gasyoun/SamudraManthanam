@@ -19,6 +19,7 @@ DB_PATH = os.environ.get("DB_PATH", "corpus.db")
 async def post_search(request: SearchRequest):
     start_time = time.time()
     db = await get_db(DB_PATH)
+    search_metadata = None
     try:
         if request.mode == "plain":
             results = await search_plain(
@@ -31,16 +32,21 @@ async def post_search(request: SearchRequest):
                 request.source_ids, request.limit
             )
         elif request.mode == "morphological":
-            results = await search_morphological(
+            morph_data = await search_morphological(
                 db, request.query, request.source_ids, request.limit
             )
+            results = morph_data["results"]
+            search_metadata = {
+                "stems": morph_data["stems"],
+                "variants": morph_data["variants"]
+            }
         else:
             results = []
             
         elapsed_ms = (time.time() - start_time) * 1000
         sources_hit = len(set(r["source_id"] for r in results))
         
-        html_fragment = render_fragment(request.query, results)
+        html_fragment = render_fragment(request.query, results, search_metadata=search_metadata)
         
         return SearchResult(
             query=request.query,
@@ -48,7 +54,8 @@ async def post_search(request: SearchRequest):
             elapsed_ms=elapsed_ms,
             sources_hit=sources_hit,
             results=[SearchResultItem(**r) for r in results],
-            html_fragment=html_fragment
+            html_fragment=html_fragment,
+            search_metadata=search_metadata
         )
     finally:
         await db.close()
@@ -100,8 +107,9 @@ async def get_search_stream(request: Request, query: str, mode: SearchMode = Sea
                     res = await search_plain(db, query, case_sensitive, whole_word, [sid], 5000)
                 elif mode == SearchMode.regex:
                     res = await search_regex(db, query, case_sensitive, [sid], 5000)
-                elif mode == SearchMode.morphological:
-                    res = await search_morphological(db, query, [sid], 5000)
+                elif request.mode == SearchMode.morphological:
+                    morph_data = await search_morphological(db, query, [sid], 5000)
+                    res = morph_data["results"]
                 else:
                     res = []
                 
@@ -152,6 +160,7 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
                 raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
 
     db = await get_db(DB_PATH)
+    search_metadata = None
     try:
         limit = 5000
         if mode == SearchMode.plain:
@@ -159,12 +168,17 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
         elif mode == SearchMode.regex:
             results = await search_regex(db, query, case_sensitive, source_ids, limit)
         elif mode == SearchMode.morphological:
-            results = await search_morphological(db, query, source_ids, limit)
+            morph_data = await search_morphological(db, query, source_ids, limit)
+            results = morph_data["results"]
+            search_metadata = {
+                "stems": morph_data["stems"],
+                "variants": morph_data["variants"]
+            }
         else:
             results = []
             
         limit_reached = len(results) >= limit
-        fragment = render_fragment(query, results, limit_reached=limit_reached)
+        fragment = render_fragment(query, results, limit_reached=limit_reached, search_metadata=search_metadata)
         html = render_standalone(query, fragment)
         
         headers = {"Content-Disposition": f'attachment; filename="{query}.html"'}

@@ -41,6 +41,7 @@ class SearchResultItem(BaseModel):
     line_num: int
     link_id: Optional[str] = ""
     line_html: str
+    line_text: str
 
 class SearchResult(BaseModel):
     query: str
@@ -49,6 +50,7 @@ class SearchResult(BaseModel):
     sources_hit: int
     results: List[SearchResultItem]
     html_fragment: Optional[str] = None
+    search_metadata: Optional[Dict[str, Any]] = None
 
 class SourceInfo(BaseModel):
     id: int
