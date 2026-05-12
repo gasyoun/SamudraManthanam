@@ -1,0 +1,138 @@
+unit winutils;
+
+{$mode objfpc}{$H+}
+
+interface
+
+
+uses
+  Windows,Classes, SysUtils;
+
+procedure DeleteFilesFromDir(ADir:string;Mask:string);
+procedure GetFilesByMask(const SourceDir,mask:string;var Files:TStringList);
+Function CleanFileName (AFileName:string):string;
+Function GetUniqueFileName(const FileName: string):string;
+Function GetValidFileName(const FileName: string): string;
+function GetProcessorCount: Integer;
+procedure CreateEmptyFile(const FileName: string);
+function DownloadFile(const url, filename: string): Boolean;
+//function CheckForUpdates(const serverUrl: string; const currentVersion: string): Boolean;
+
+implementation
+
+Uses fphttpclient;
+procedure CreateEmptyFile(const FileName: string);
+var
+  F: File;
+begin
+  AssignFile(F, FileName);
+  Rewrite(F);
+  CloseFile(F);
+end;
+function GetProcessorCount: Integer;
+var
+  SystemInfo: SYSTEM_INFO;
+begin
+  GetSystemInfo(SystemInfo);
+  Result := SystemInfo.dwNumberOfProcessors;
+end;
+function GetValidFileName(const FileName: string): string;
+const
+  InvalidChars: set of Char = ['/', '\', ':', '*', '?', '"', '<', '>', '|'];
+var
+  i: Integer;
+begin
+  Result := FileName;
+  for i := 1 to Length(Result) do
+    if CharInSet(Result[i], InvalidChars) then
+      Result[i] := '_'; // заменяем недопустимый символ на символ подчеркивания
+  Result:=StringReplace(Result,' ','_',[rfReplaceAll]);// заменяем пробел на подчеркивание
+  Result:=StringReplace(Result,'__','_',[rfReplaceAll]);// заменяем два подчеркивания на одно
+end;
+
+Function GetUniqueFileName(const FileName: string):string;
+var
+  NewFileName: string;
+  Counter: integer;
+begin
+  if FileExists(FileName) then
+  begin
+    Counter := 1;
+    repeat
+      NewFileName := ChangeFileExt(FileName, '') + '('+IntToStr(Counter) + ')'+ExtractFileExt(FileName);
+      Inc(Counter);
+    until not FileExists(NewFileName);
+  end
+  else
+    NewFileName := FileName;
+  Result:=NewFileName;
+end;
+procedure DeleteFilesFromDir(ADir:string;Mask:string);
+var
+  SearchRec: TSearchRec;
+  result:integer;
+begin
+  Result := FindFirst(ADir+Mask, faAnyFile, SearchRec);
+  while Result = 0 do
+  begin
+    DeleteFile(Adir+SearchRec.Name);
+    Result := FindNext(SearchRec);
+  end;
+  FindClose(SearchRec);
+end;
+
+procedure GetFilesByMask(const SourceDir,mask:string;var Files:TStringList);
+var
+  SearchRec: TSearchRec;
+  result:integer;
+begin
+  Result := FindFirst(SourceDir+mask, faArchive, SearchRec);
+  while Result = 0 do
+  begin
+   Files.Add(SourceDir+SearchRec.Name);
+   Result := FindNext(SearchRec);
+  end;
+  FindClose(SearchRec);
+end;
+
+function CleanFileName(AFileName: string): string;
+var
+  Path:string;
+begin
+{Какие символы не могут использоваться в имени файла?
+Ответы1. В Windows система не позволит использовать в именах файлов следущие символы, так как они являются служебными:
+\ / : * ? " < > | + Пробел и точка также не допускаются в конце имени файла.}
+  Path:=ExtractFilePath(AFileName);
+  Result:= ExtractFileName(AFileName);
+  Result:= StringReplace(Result, '\', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '/', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, ':', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '*', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '?', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '"', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '<', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '>', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, ':', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '|', '_', [rfReplaceAll]);
+  Result:= StringReplace(Result, '+', '_', [rfReplaceAll]);
+  Result:= Path+Result;
+end;
+
+function DownloadFile(const url, filename: string): Boolean;
+var
+  http: TFPHTTPClient;
+begin
+  http := TFPHTTPClient.Create(nil);
+  try
+    http.AllowRedirect := True;
+    http.Get(url, filename);
+    Result := True;
+  except
+    Result := False;
+  end;
+  http.Free;
+end;
+
+
+end.
+

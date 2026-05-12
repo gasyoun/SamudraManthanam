@@ -1,0 +1,366 @@
+unit textu;
+
+{$mode objfpc}{$H+}
+
+interface
+
+
+uses
+  Classes, SysUtils, lazutf8, clipbrd;
+function CutNextFromEnd(var Source: string): string;
+function CutNextUseDelimiterNoTrim(var Source: string;Delimiter:string): string;
+function IsUtf8CharInLimits(const p, left, right: PChar): boolean;
+Function GetNilsBefore(const S:string; strlength:integer; nonils:boolean):string;
+function RemoveHTMLTags(const Input: string): string; //chatGPT
+Function DelHTMLTagsFromString(Const Sc:string):string;
+function Sklonenie_Naideno_X_zapisey(X: integer): string;
+function Sklonenie_Naideno_v_Y_istochnikah(Y: integer): string;
+function Sklonenie_v_N_poiskovyh_zaprosah(number: Integer): string;
+function GetCountSuffix(count: integer): string;
+function Sklonenie_X_zapisey(X: integer): string;
+function LastPos(const SubStr, Str: string): Integer; //OpenAI
+function GetIDStr(S:string;FromPos:integer):string; // возвращает то, что в кавычках в строке: ID="1.1"
+function ExtractLastChars(const AStr: string; const ACount: Integer): string;
+procedure CopyStringsToClipboard(StringsList: TStrings);
+
+implementation
+uses RegExpr;
+{------------------------------------------------------------------------------}
+{function IsUtf8CharRus(const p: PChar): boolean;
+  begin
+    // Кириллица упорядочена в таблице Unicode по алфавиту, при этом сначала
+    //   идут заглавные буквы, а потом строчные, т.е. [А...Я, а..я]
+    // Таким образом заглавная "А" и строчная "я" являются левой и правой
+    //   границами диапазона
+    Result := IsUtf8CharInLimits(p, 'А', 'я');
+  end;}
+function IsUtf8CharInLimits(const p, left, right: PChar): boolean;
+  var
+    CharLen: integer; // длина UTF в байтах, здесь не нужна, просто требуется в функции
+    U: integer; // Юникод символа
+  begin
+    U := UTF8CharacterToUnicode(p, CharLen);
+    if U = 0 then
+      begin
+        Result := false;
+        exit;
+      end;
+    Result := (
+      (U >= UTF8CharacterToUnicode(left, CharLen)) and
+      (U <= UTF8CharacterToUnicode(right, CharLen)));
+  end;
+
+function InvertStr(const S:string):String;
+var
+ i:integer;
+begin
+ result:='';
+ for i:=1 to Length(S) do result:=ConCat(result,S[Length(S)-i+1]);
+end;
+
+function CutNextFromEnd(var Source: string): string;
+var
+ S:string;
+ PosSpace:byte;
+begin
+ S:=InvertStr(Source);
+ S:=Trim(S);
+ S:=S+' ';
+ PosSpace:=Pos(' ',s);
+ result:=InvertStr(Trim(Copy(S,1,PosSpace)));
+ Delete(S,1,PosSpace);
+ Source:=InvertStr(Trim(S));
+end;
+
+function CutNextUseDelimiterNoTrim(var Source: string;Delimiter:string): string;
+var
+ S:string;
+ PosSpace:integer;
+begin
+ S:=Source;
+ PosSpace:=Pos(Delimiter,s);
+ if PosSpace=0 then
+ begin
+  result:=S;
+  Source:='';
+  exit;
+ end;
+ result:=Trim(Copy(S,1,PosSpace-1));
+ Delete(S,1,PosSpace+Length(Delimiter)-1);
+ Source:=S;
+end;
+
+Function GetNilsBefore(const S:string; strlength:integer; nonils:boolean):string;
+var
+ NilSstr:string;
+ i:integer;
+begin
+  result:=S;
+  if nonils then exit;
+  for i:=1 to strlength-Length(S) do NilsStr:=NilsStr+'0';
+  result:=Nilsstr+S;
+end;
+
+{function DelHTMLTagsFromString(Const Sc: string): string;
+var
+ S,S_i,S_i_p1,S_res:string;
+ i,L:integer;
+ PrevSpace,bNowTag:boolean;
+begin
+  if Sc='' then begin Result:=''; exit; end;
+  if Pos('<',Sc)=0 then begin Result:=Sc; exit; end;
+  S:=Sc+' ';
+  S_i:='';
+  bNowTag:=false;
+  S_res:='';
+  repeat
+    L:=Pos( '<!--',S);
+    i:=Pos( '-->',S);
+    if i>L then Delete(S,L,i-L+3) else break;
+  until False;
+  for i:=1 to UTF8Length(S)-1 do
+  begin
+   S_i:=UTF8Copy(s, i, 1);
+   S_i_p1:=UTF8Copy(s, i+1, 1);
+
+   if (S_i='<') and (Utf8ToAnsi(S_i_p1)[1] in ['a'..'z','A'..'Z','/','!']) then begin bNowTag:=True; S_res:=Concat(S_Res, ' '); continue end;
+   if (S_i='>') and bNowTag then begin bNowTag:=false; S_res:=Concat(S_Res, ' '); continue end;
+   if not bNowTag then
+     S_res:=Concat(S_Res, S_i);
+  end;
+  repeat
+   S_i:=S_res;
+   S_res:=StringReplace(S_res,'  ',' ',[rfReplaceAll, rfIgnoreCase]);
+  until S_res=S_i;
+  if S_res[1]=' ' then Delete(S_res,1,1);
+  L:=Length(S_res);
+  if L<>0 then
+   begin
+    if S_res[L]=' ' then SetLength(S_res,L-1);
+   end;
+  Result:=S_res;
+end;}
+
+function RemoveHTMLTags(const Input: string): string; //chatGPT
+var
+  Regex: TRegExpr;
+begin
+  Regex := TRegExpr.Create;
+  try
+    // Регулярное выражение для поиска HTML-тегов
+    Regex.Expression := '</?[\w\s="''-]+>';
+    // Заменяем все совпадения пустой строкой
+    Result := Regex.Replace(Input, ' ');
+  finally
+    Regex.Free;
+  end;
+end;
+
+function DelHTMLTagsFromString(Const Sc: string): string; //my
+var
+ S,S_i_p1,S_res:string;
+ i,L:integer;
+begin
+  if Sc='' then begin Result:=''; exit; end;
+  if Pos('<',Sc)=0 then begin Result:=Sc; exit; end;
+  S:=Sc;
+  //удаляем вначале комментарии, так как внутри их могут быть теги
+  repeat
+    L:=UTF8Pos( '<!--',S);
+    i:=UTF8Pos( '-->',S);
+    if L=0 then break;
+    if i>L then UTF8Delete(S,L,i-L+UTF8Length('-->')) else break;
+  until False;
+  // ещем тег, и если он подходящий, то удаляем, если нет, перебрасываем в новую строку
+  S_Res:='';
+  repeat
+    L:=UTF8Pos( '<',S);
+    i:=UTF8Pos( '>',S);
+    if L=0 then begin S_Res:=S_res+' '+S; break; end; // нет знака открытия тега - выход из цикла.
+    if i=0 then begin S_Res:=S_res+' '+S; break; end; // нет знака закрытия тега - выход из цикла.
+    S_i_p1:=UTF8Copy(s, L+1, UTF8Length('A')); // смотрим, какая буква за открытием тега
+    if S_i_p1[1] in ['a'..'z','A'..'Z','/','!'] then // если тег
+     begin
+      if L<>1 then S_Res:=S_Res+' '+UTF8Copy(S,1, L-1) else S_Res:=S_Res+' '; // добавляем все, что до тега в результат
+      UTF8Delete(S,1,i); // удаляем тег из строки
+     end
+      else // если не тег
+      begin
+       S_Res:=S_Res+' '+UTF8Copy(S,1, i); // Перебрасываем в новую строку
+       UTF8Delete(S,1,i); // удаляем псевдотег из строки
+//       ShowMessage ('Error in the string: '+ S);
+      end;
+  until False;
+  // замена двух пробелов на один
+  repeat
+   S:=S_res;
+   S_res:=StringReplace(S_res,'  ',' ',[rfReplaceAll, rfIgnoreCase]);
+  until S_res=S;
+  if UTF8Copy(S_Res,1, 1) = ' ' then UTF8Delete(S_Res,1, 1);
+  L:=UTF8Length(S_Res);
+  if UTF8Copy(S_Res,L, 1) = ' ' then UTF8Delete(S_Res,L, 1);
+  Result:=S_Res;
+end;
+
+
+function Sklonenie_v_N_poiskovyh_zaprosah(number: Integer): string;
+begin
+  Result:=' в ' +GetCountSuffix(number);
+  case number mod 10 of
+    1: Result := Result+' поисковом запросе';
+    else Result := Result+' поисковых запросах';
+  end;
+end;
+
+function Sklonenie_X_zapisey(X: integer): string;
+begin
+  if (X mod 10 = 1) and (X mod 100 <> 11) then
+    Result := IntToStr(X) + ' запись'
+  else if ((X mod 10 = 2) or (X mod 10 = 3) or (X mod 10 = 4)) and ((X mod 100 < 10) or (X mod 100 > 20)) then
+    Result := IntToStr(X) + ' записи'
+  else
+    Result := IntToStr(X) + ' записей';
+end;
+
+function Sklonenie_Naideno_X_zapisey(X: integer): string;
+begin
+  if (X mod 10 = 1) and (X mod 100 <> 11) then
+    Result := 'найдена ' + IntToStr(X) + ' запись'
+  else if ((X mod 10 = 2) or (X mod 10 = 3) or (X mod 10 = 4)) and ((X mod 100 < 10) or (X mod 100 > 20)) then
+    Result := 'найдено ' + IntToStr(X) + ' записи'
+  else
+    Result := 'найдено ' + IntToStr(X) + ' записей';
+end;
+
+function Sklonenie_Naideno_v_Y_istochnikah(Y: integer): string;
+begin
+  if Y mod 10 = 1 then
+    Result := ' в ' + GetCountSuffix(Y) + ' источнике'
+  else
+    Result := ' в ' + GetCountSuffix(Y) + ' источниках';
+end;
+
+function GetCountSuffix(count: integer): string;
+begin
+  if (count = 100) then Result := '-та' else
+  if (count = 90) then Result := '-та' else
+  if (count = 40) then Result := '-ка' else
+  if (count <= 10) or (count > 20) then
+    case count mod 10 of
+      1: Result := '-м';
+      2..4: Result := '-х';
+      7, 8: Result := '-ми';
+      else Result := '-ти';
+    end
+  else Result := '-ти';
+  Result:=IntToStr(count)+Result;
+end;
+
+function PosEx(const SubStr, Str: string; Offset: Integer = 1): Integer; //OpenAI
+var
+  P: PChar;
+begin
+  Result := 0;
+  P := PChar(Str) + Offset - 1;
+  if (Offset >= 1) and (Offset <= Length(Str)) then
+  begin
+    P := StrScan(P, PChar(SubStr)[0]);
+    while P <> nil do
+    begin
+      if StrLComp(P, PChar(SubStr), Length(SubStr)) = 0 then
+      begin
+        Result := P - PChar(Str) + 1;
+        Exit;
+      end;
+      Inc(P);
+      P := StrScan(P, PChar(SubStr)[0]);
+    end;
+  end;
+end;
+
+function LastPos(const SubStr, Str: string): Integer; //OpenAI
+var
+  LastFoundPos, PosFound: Integer;
+begin
+  LastFoundPos := 0;
+  PosFound := Pos(SubStr, Str);
+
+  while PosFound > 0 do
+  begin
+    LastFoundPos := PosFound;
+    PosFound := PosEx(SubStr, Str, PosFound + 1);
+  end;
+
+  Result := LastFoundPos;
+end;
+
+function GetIDStr(S:string;FromPos:integer):string;
+var
+  Pos1,Pos2,i:integer;
+begin
+ result:='';
+ if Length(S)=0 then exit;
+ Pos1:=0;
+ Pos2:=0;
+ for i:=FromPos to Length(S) do
+ begin
+  if S[i]='"' then
+   begin
+    if Pos1=0 then Pos1:=i else Pos2:=i;
+   end;
+  if (Pos1<>0)and (Pos2<>0) then break;
+ end;
+ if (Pos1=0)or (Pos2=0) then Result:=''
+ else Result:=Copy(S,Pos1+1,Pos2-Pos1-1);
+
+end;
+
+function ExtractLastChars(const AStr: string; const ACount: Integer): string;
+var
+  Len, CharPos, CharLen, CutPos: Integer;
+begin
+  Result := '';
+  Len := Length(AStr);
+
+  if Len > 0 then
+  begin
+    CutPos := Len;
+    CharPos := 1;
+
+    while (CharPos <= ACount) and (CutPos > 0) do
+    begin
+      Dec(CutPos);
+      // Из-за того, что UTF8 - переменной длины, нужно правильно перемещаться
+      // по символам, чтобы не обрезать середину многобайтового символа.
+      CharLen := UTF8CharacterLength(PChar(AStr) + CutPos);
+      Dec(CharPos, CharLen);
+    end;
+
+    Result := Copy(AStr, CutPos + 1, Len - CutPos);
+  end;
+end;
+
+procedure CopyStringsToClipboard(StringsList: TStrings);
+var FullText:string;
+  i:integer;
+  begin
+   FullText := '';
+  // Создаем временную строку для хранения всего текста из списка
+
+  // Объединяем все строки из списка в одну строку, разделяя их переводами строки
+  for i := 0 to StringsList.Count - 1 do
+  begin
+    FullText := FullText + StringsList[i] + #13#10;
+  end;
+
+  // Удаляем последний лишний перевод строки
+  if FullText <> '' then
+    Delete(FullText, Length(FullText), 1);
+
+  // Копируем полученный текст в буфер обмена
+  Clipboard.AsText := FullText;
+end;
+
+end.
+
+

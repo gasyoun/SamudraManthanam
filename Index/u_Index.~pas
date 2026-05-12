@@ -1,0 +1,150 @@
+unit u_Index;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ComCtrls;
+
+type
+  TForm1 = class(TForm)
+    Label1: TLabel;
+    Button1: TButton;
+    StatusBar1: TStatusBar;
+    Button2: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+  InputFileName:string;
+  ResFileName:string;
+  FoundCount:integer;
+  FilesList:TStringList;
+  sTextToFind:widestring;
+    { Private declarations }
+  public
+  Procedure ScanFile (AFileName:string;AText:widestring);
+  Procedure FindText(AText_To_Find:widestring; Num:integer);
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+const
+ text_to_search_file='text_to_search.txt';
+implementation
+ Uses ShellApi, clipbrd;
+
+{$R *.dfm}
+
+{ TForm1 }
+
+procedure TForm1.ScanFile(AFileName: string; AText: widestring);
+var
+ F1,F2:textFile;
+ S:widestring;
+ bFound:boolean;
+ FirstStr:widestring;
+ shortFN:string;
+ i:integer;
+begin
+ bFound:=false;
+ shortFN:=ExtractFileName(AFileName);
+ AssignFile(F1,AFileName);
+ Reset(F1);
+ readln(F1,FirstStr);
+ i:=1;
+  repeat
+   inc(i);
+   readln(F1,S);
+   StatusBar1.SimpleText:=shortFN+' line '+IntToStr(i);
+   StatusBar1.Refresh;
+   if Pos(AText,S)>0 then
+    begin
+     if not bFound then
+      begin
+       AssignFile(F2,ResFileName);
+       if not FileExists(ResFileName) then
+        begin
+         Rewrite(F2);
+         writeln(F2,'<h1>',AnsiToUtf8('Результаты поиска для "'),sTextToFind,'"</h1>','<br>');
+        end
+         else Append(F2);
+       bFound:=True;
+       writeln(F2,'<h2>',FirstStr,'</h2>','<br>');
+      end;
+     inc(FoundCount);
+     writeln(F2,'<h3>'+IntToStr (FoundCount)+'</h3>','<br>');
+     writeln(F2,S,'<br>');
+    end;
+  until EOF(F1);
+ CloseFile(F1);
+ if bFound then CloseFile(F2);
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+ i:integer;
+begin
+ InputFileName:=ExtractFilePath(ParamStr(0))+'\'+text_to_search_file;
+ FilesList:=TStringList.Create;
+ FilesList.LoadFromFile(ExtractFileDir(ParamStr(0))+'\data.txt');
+ for i:=1 to FilesList.Count do
+  FilesList[i-1]:=ExtractFileDir(ParamStr(0))+'\Data\'+FilesList[i-1];
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+ F:textFile;
+ S:widestring;
+ i:integer;
+begin
+ AssignFile(F,InputFileName);
+ Reset(F);
+ i:=0;
+ Repeat
+  inc(i);
+  readln(F,S);
+  FindText(S,i);
+ until EOF(F);
+ CloseFile(F);
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+ FileName:string;
+begin
+ FileName:=ExtractFilePath(ParamStr(0))+'\'+text_to_search_file;
+ ShellExecute(Application.Handle, 'open', PChar(FileName), nil, nil, SW_SHOWNORMAL);
+end;
+
+Procedure TForm1.FindText(AText_To_Find:widestring; Num:integer);
+var
+ i:integer;
+ TextToSet:string;
+begin
+ sTextToFind:=AText_To_Find;
+ ResFileName:=ExtractFileDir(ParamStr(0))+'\search'+IntToStr(Num)+'.html';
+ DeleteFile(ResFileName);
+ FoundCount:=0;
+ for i:=1 to FilesList.Count do
+  ScanFile (FilesList[i-1],sTextToFind);
+ StatusBar1.SimpleText:='Найдено '+IntToStr(FoundCount)+ ' записей.';
+ StatusBar1.Refresh;
+ ShellExecute(Application.Handle, 'open', PChar(ResFileName), nil, nil, SW_SHOWNORMAL);
+{ TextToSet:='Арджуна';
+ SendMessage(3413358,WM_KEYDOWN,VK_F,Integer(TextToset));}
+ Clipboard.AsText:=UTF8ToAnsi(sTextToFind);
+ Sleep (2000);
+ keybd_event(VK_CONTROL, MapVirtualKey(VK_CONTROL, 0), 0, 0);
+ keybd_event(Ord('F'), MapVirtualKey(Ord('F'), 0), 0, 0);
+ keybd_event(Ord('F'), MapVirtualKey(Ord('F'), 0), KEYEVENTF_KEYUP, 0);
+ keybd_event(VK_CONTROL, MapVirtualKey(VK_CONTROL, 0), KEYEVENTF_KEYUP, 0);
+
+ keybd_event(VK_CONTROL, MapVirtualKey(VK_CONTROL, 0), 0, 0);
+ keybd_event(Ord('V'), MapVirtualKey(Ord('V'), 0), 0, 0);
+ keybd_event(Ord('V'), MapVirtualKey(Ord('V'), 0), KEYEVENTF_KEYUP, 0);
+ keybd_event(VK_CONTROL, MapVirtualKey(VK_CONTROL, 0), KEYEVENTF_KEYUP, 0)
+end;
+
+end.

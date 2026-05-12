@@ -1,0 +1,58 @@
+object UpdateForm: TUpdateForm
+  Left = 256
+  Height = 180
+  Top = 145
+  Width = 420
+  Caption = 'Обновление программы'
+  ClientHeight = 180
+  ClientWidth = 420
+  Position = poScreenCenter
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object lblStatus: TLabel
+    Left = 16
+    Height = 15
+    Top = 20
+    Width = 76
+    Caption = 'Подготовка...'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblSpeed: TLabel
+    Left = 16
+    Height = 1
+    Top = 44
+    Width = 1
+  end
+  object ProgressBar1: TProgressBar
+    Left = 16
+    Height = 22
+    Top = 72
+    Width = 388
+    Style = pbstMarquee
+    TabOrder = 0
+  end
+  object lblPercent: TLabel
+    Left = 190
+    Height = 15
+    Top = 102
+    Width = 16
+    Alignment = taCenter
+    Caption = '0%'
+  end
+  object btnCancel: TButton
+    Left = 155
+    Height = 30
+    Top = 132
+    Width = 110
+    Caption = 'Отмена'
+    TabOrder = 1
+    OnClick = btnCancelClick
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 256
+    Top = 32
+  end
+end

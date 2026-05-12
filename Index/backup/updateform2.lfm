@@ -1,0 +1,8 @@
+object UpdateForm2: TUpdateForm2
+  Left = 256
+  Height = 288
+  Top = 145
+  Width = 470
+  Caption = 'Обновление программы'
+  LCLVersion = '4.2.0.0'
+end

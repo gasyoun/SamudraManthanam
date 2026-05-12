@@ -1,0 +1,16 @@
+ Progress: Найдены все файлы модулей
+Index_pr.lpr(1,18) Note: После имени модуля добавлена директива MODE Delphi.
+ : 
+ : *** Преобразование файлов модулей, принадлежащих проекту/пакету ***
+u_Index.pas Note: Кодировка изменена с cp1251 на UTF-8
+u_Index.pas Note: Модуль "Windows" в выражении Uses заменён на "LCLIntf, LCLType, LMessages".
+u_Index.pas Note: Модуль "ShellApi" удалён из выражения Uses.
+u_Index.pas(1,14) Note: После имени модуля добавлена директива MODE Delphi.
+u_Index.pas(134,2) Note: Вызов ShellExecute(Application.Handle, 'open', PChar(ResFileName), nil, nil, SW_SHOWNORMAL); заменён на  OpenDocument(PChar(ResFileName)); { *Преобразовано из ShellExecute* }
+u_Index.pas(118,2) Note: Вызов ShellExecute(Application.Handle, 'open', PChar(FileName), nil, nil, SW_SHOWNORMAL); заменён на  OpenDocument(PChar(FileName)); { *Преобразовано из ShellExecute* }
+ : 
+ : *** Исправление списков используемых модулей и файлов форм ***
+u_Index.pas Note: Удалено свойство "TextHeight".
+u_Index.pas Note: Удалено свойство "OldCreateOrder".
+ Progress: Преобразование заняло: 00:00:04
+ : Преобразование завершено.

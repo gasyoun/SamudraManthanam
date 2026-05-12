@@ -1,0 +1,16 @@
+удаление в списке "Найдено" работает только для одного элемента
+
+Скрипт для вставки в html и подсветки. Можно несколько слов подряд.
+
+<script>
+window.onload = function() {
+    var searchTerm = "атман"; // Текст, который вы ищете
+    var pageContent = document.body.innerHTML;
+    var highlightedContent = pageContent.replace(new RegExp(searchTerm, 'gi'), '<span style="background-color: yellow;">$&</span>');
+    document.body.innerHTML = highlightedContent;
+};
+</script>
+
+Вопрос на будущее:
+Как сделать, чтобы html запускался с разными скриптами? Если нужно выделить в одном окне одно, а в другом другое...???
+

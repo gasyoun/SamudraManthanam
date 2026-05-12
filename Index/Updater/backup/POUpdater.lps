@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="POUpdater.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="35"/>
+        <CursorPos X="5" Y="69"/>
+        <UsageCount Value="46"/>
+        <Loaded Value="True"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="29">
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="26" Column="52" TopLine="10"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="6" Column="47"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="51" Column="30" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="5" Column="12"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="57" Column="5" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="9" Column="11"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="46" Column="26" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="51" Column="53" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="4" Column="25"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="8" Column="17"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="18" Column="38"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="12" Column="25"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="12" Column="25"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="46" Column="17" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="9" Column="4"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="46" Column="26" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="51" Column="53" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="9" Column="11"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="46" Column="26" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="51" Column="53" TopLine="23"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="16" Column="60"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="71" Column="5" TopLine="37"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="10" Column="18"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="41" Column="35" TopLine="24"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="40" TopLine="24"/>
+      </Position>
+      <Position>
+        <Filename Value="POUpdater.lpr"/>
+        <Caret Line="69" Column="5" TopLine="35"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkAddress"/>
+        <Address Value="4296810502"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\fsources.pas"/>
+        <Line Value="80"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\u_Index.pas"/>
+        <Line Value="361"/>
+      </Item>
+    </BreakPoints>
+    <Watches>
+      <Item>
+        <Expression Value="bFilesStatusArr"/>
+      </Item>
+      <Item>
+        <Expression Value="Index"/>
+      </Item>
+    </Watches>
+  </Debugging>
+</CONFIG>

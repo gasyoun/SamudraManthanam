@@ -1,0 +1,37 @@
+object UpdateForm: TUpdateForm
+  Caption = 'Обновление программы'
+  Width = 420
+  Height = 200
+  Position = poScreenCenter
+
+  object lblStatus: TLabel
+    Left = 16; Top = 20
+    Caption = 'Подготовка...'
+    Font.Style = [fsBold]
+  end
+
+  object lblSpeed: TLabel
+    Left = 16; Top = 44
+    Caption = ''
+    Font.Color = clGray
+  end
+
+  object ProgressBar1: TProgressBar
+    Left = 16; Top = 72
+    Width = 380; Height = 22
+    Min = 0; Max = 100
+  end
+
+  object lblPercent: TLabel
+    Left = 186; Top = 102
+    Caption = '0%'
+    Alignment = taCenter
+  end
+
+  object btnCancel: TButton
+    Left = 155; Top = 130
+    Width = 100; Height = 32
+    Caption = 'Отмена'
+    OnClick = btnCancelClick
+  end
+end

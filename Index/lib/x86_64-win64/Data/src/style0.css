@@ -1,0 +1,211 @@
+@font-face {
+    font-family: Charis;
+    src: url(fonts/charis-sil.ttf);
+}
+
+@font-face {
+    font-family: Charis-Italic;
+    src: url(fonts/charis-sil-italic.ttf);
+}
+
+@font-face {
+    font-family: Charis-Bold;
+    src: url(fonts/charis-sil-bold.ttf);
+}
+
+body {
+    font-family: Charis;
+    width: 1100px;
+    margin: 0 auto;
+}
+
+sup, .comment_number {
+    color: #FDA50F;
+    font-family: Charis-Bold;
+    cursor: pointer;
+    /* номер сносок */ 
+}
+
+a {
+    text-decoration: none;
+}
+
+.headers {
+    text-align: center;
+    margin: 50px 0;
+}
+
+.header {
+    text-transform: uppercase;
+}
+
+.header_1 {
+    font-size: 50px;
+    color: #a52a2a;
+    /* Махабхарата */ 
+}
+
+.header_2 {
+    font-size: 20px;
+}
+
+.header_3 {
+    font-size: 28px;
+}
+
+.header_5, .chapter_title {
+    margin-top: 30px;
+    font-size: 18px;
+    font-family: Charis-Bold;
+}
+
+.header_year {
+    margin-top: 100px;
+    font-size: 16px;
+    font-family: Charis-Bold;
+}
+
+.header_annotation {
+    margin-top: 100px;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.annotation_item {
+    font-size: 14px;
+    text-align: justify;
+    text-indent: 1.5em;
+    display: block;
+}
+
+.contents {
+}
+
+.content_item_big {
+    text-align: left;
+    width: 100%;
+    margin-left: 60px
+}
+.content_item {
+    display: inline-block;
+    width: 16%;
+}
+
+.content_splitter, .chapter_splitter {
+    height: 150px;
+}
+
+.content_title  a {
+    color: #6495ed;
+    font-family: Charis-Bold;
+    font-size: 18px;
+    /* Глава 1 */ 
+}
+
+.chapters {
+}
+
+.chapter_content {
+    margin-bottom: 20px;
+}
+
+.chapter_content, .clear {
+    clear: both;
+}
+
+.chapter_content > .chapter_block {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.comments {
+    margin-bottom: 25px;
+    font-size: 16px;
+    text-align: justify;
+}
+
+.sanskrit {
+    font-family: Sahitya;
+    font-size: 25px;
+}
+
+.person_translation, .person_iast {
+    color: #FDA50F;
+}
+
+.comment_text {
+    text-align: justify;
+}
+
+.iast {
+/* санскритский транслит */ 
+    font-size: 16px;
+    text-align: left;
+    padding-right: 10px;
+    width: 440px;
+    color: #708090;  
+/*    margin-left: 20px; 
+    text-indent:-20px; 
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;*/
+
+}
+
+.iast_author, .translation_author {
+    font-family: Charis-Italic;
+}
+
+.translation {
+/* русский перевод */ 
+    font-size: 18px;
+    text-align: justify;
+    width: 620px;
+}
+.comments {
+/* русские комментарии */ 
+    margin-bottom: 30px;
+    font-size: 18px;
+    text-align: justify;
+    color: #5f5f5f;    
+}
+
+.chapter {
+    margin-bottom: 60px;
+}
+
+/* номер шлоки, санскрит, перевод и комментарий (если есть) ... - для цитирования */ 
+.citation_block {
+}
+
+.range {
+    float: right;
+    display: block;
+    color: #000;
+    font-family: Charis-Bold;
+}
+
+.endchapter_sanskrit {
+/* русский конец главы "Такова в ..." */ 
+    font-size: 16px;
+    text-align: center;
+    color: #708090;  
+}
+.endchapter {
+/* русский конец главы "Такова в ..." */ 
+    font-size: 18px;
+    text-align: center;
+    font-family: Charis-Italic;
+}
+
+.endbook {
+/* русский конец сказания, книги "КОНЕЦ "*/ 
+    text-align: center;
+    font-size: 18px;
+}
+@keyframes fire {
+    30%, 70% {color: red;}
+}
+
+.clipboard-processed, .clipboard-processed * {
+    animation: fire 1500ms 1;
+}

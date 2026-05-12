@@ -1,0 +1,50 @@
+object UpdateForm: TUpdateForm
+  Left = 256
+  Height = 248
+  Top = 145
+  Width = 470
+  Caption = 'Обновление программы'
+  ClientHeight = 248
+  ClientWidth = 470
+  LCLVersion = '4.2.0.0'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object lblStatus: TLabel
+    Left = 117
+    Height = 15
+    Top = 41
+    Width = 45
+    Caption = 'lblStatus'
+  end
+  object ProgressBar1: TProgressBar
+    Left = 88
+    Height = 20
+    Top = 93
+    Width = 280
+    TabOrder = 0
+  end
+  object lblSpeed: TLabel
+    Left = 138
+    Height = 15
+    Top = 119
+    Width = 47
+    Caption = 'asdasdas'
+  end
+  object lblPercent: TLabel
+    Left = 161
+    Height = 15
+    Top = 166
+    Width = 16
+    Alignment = taCenter
+    Caption = '0%'
+  end
+  object btnCancel: TButton
+    Left = 176
+    Height = 25
+    Top = 208
+    Width = 75
+    Caption = 'Отмена'
+    TabOrder = 1
+    OnClick = btnCancelClick
+  end
+end
