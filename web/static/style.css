@@ -16,14 +16,28 @@
 body {
     font-family: Charis;
     width: 1100px;
+    max-width: 100%;
     margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1100px) {
+    body {
+        width: 100%;
+    }
+    .citation_block {
+        overflow-x: auto;
+    }
+    table {
+        width: 100% !important;
+    }
 }
 
 sup, .comment_number {
     color: #FDA50F;
     font-family: Charis-Bold;
     cursor: pointer;
-    /* номер сносок */ 
 }
 
 a {
@@ -35,15 +49,10 @@ a {
     margin: 10px 0;
 }
 
-.header {
-/*    text-transform: uppercase;*/
-}
-
 .header_1 {
     margin-top: 20px;
     font-size: 24px;
     color: #a52a2a;
-    /* Махабхарата */ 
 }
 
 .header_2 {
@@ -99,9 +108,6 @@ a {
     display: block;
 }
 
-.contents {
-}
-
 .content_item_big {
     text-align: left;
     width: 100%;
@@ -122,15 +128,18 @@ a {
     background-color: cyan;
 }
 .highlight.active {
-    border: 2px solid red; /* Пример рамки для активного выделения */
+    border: 2px solid red;
+    outline: 2px solid red;
 }
 .button-container {
-    position: fixed; /* Фиксированное позиционирование */
-    top: 0; /* Расположение сверху */
-    left: 0; /* Расположение слева */
-    background-color: white; /* Фон контейнера */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 10px;
-    z-index: 999; /* Выставляем z-index, чтобы контейнер был поверх других элементов */
+    z-index: 999;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .content_splitter, .chapter_splitter {
@@ -141,7 +150,6 @@ a {
     color: #6495ed;
     font-family: Charis-Bold;
     font-size: 18px;
-    /* Глава 1 */ 
 }
 .content_title_big  a {
     margin-top: 20px;
@@ -149,23 +157,11 @@ a {
     color: #a52a2a;
     font-family: Charis-Bold;
     font-size: 20px;
-    /* Глава 1 */ 
-}
-
-.chapters {
 }
 
 .chapter_content {
     margin-bottom: 20px;
-}
-
-.chapter_content, .clear {
     clear: both;
-}
-
-.chapter_content > .chapter_block {
-    display: inline-block;
-    vertical-align: top;
 }
 
 .comments {
@@ -188,19 +184,13 @@ a {
 }
 
 .iast {
-/* санскритский транслит */ 
     font-size: 16px;
     text-align: left;
     padding-right: 10px;
     width: 440px;
     color: #708090;  
-/*    margin-left: 20px; 
-    text-indent:-20px; 
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;*/
     word-wrap: break-word;
     word-break: break-word;
-
 }
 
 .iast_author, .translation_author {
@@ -208,13 +198,11 @@ a {
 }
 
 .translation {
-/* русский перевод */ 
     font-size: 18px;
     text-align: justify;
     width: 620px;
 }
 .comments {
-/* русские комментарии */ 
     margin-bottom: 30px;
     font-size: 18px;
     text-align: justify;
@@ -225,10 +213,6 @@ a {
     margin-bottom: 60px;
 }
 
-/* номер шлоки, санскрит, перевод и комментарий (если есть) ... - для цитирования */ 
-.citation_block {
-}
-
 .range {
     float: right;
     display: block;
@@ -237,30 +221,21 @@ a {
 }
 
 .endchapter_sanskrit {
-/* русский конец главы "Такова в ..." */ 
     font-size: 16px;
     text-align: center;
     color: #708090;  
 }
 .endchapter {
-/* русский конец главы "Такова в ..." */ 
     font-size: 18px;
     text-align: center;
     font-family: Charis-Italic;
 }
 
 .endbook {
-/* русский конец сказания, книги "КОНЕЦ "*/ 
     text-align: center;
     font-size: 18px;
 }
-@keyframes fire {
-    30%, 70% {color: red;}
-}
 
-.clipboard-processed, .clipboard-processed * {
-    animation: fire 1500ms 1;
-}
 .blue-text {
      color: SteelBlue;
      font-style: italic;

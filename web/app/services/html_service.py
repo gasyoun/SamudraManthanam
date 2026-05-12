@@ -43,7 +43,7 @@ def sklonenie_naideno_v_y_istochnikah(y: int) -> str:
     else:
         return f" в {get_count_suffix(y)} источниках"
 
-def render_fragment(query: str, results: List[Dict[str, Any]]) -> str:
+def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bool = False) -> str:
     # Group results by source
     grouped = {}
     for r in results:
@@ -61,14 +61,22 @@ def render_fragment(query: str, results: List[Dict[str, Any]]) -> str:
     # Create the header sentence
     total = len(results)
     sources_hit = len(grouped)
-    header = f"При пахтании... {sklonenie_v_n_poiskovyh_zaprosah(1)} для слова „{query}“ {sklonenie_naideno_x_zapisey(total)}{sklonenie_naideno_v_y_istochnikah(sources_hit)}"
+    
+    # Handle multi-line query display
+    query_display = query.replace('\n', ', ')
+    query_count = len([q for q in query.split('\n') if q.strip()])
+    
+    header = f"При пахтании... {sklonenie_v_n_poiskovyh_zaprosah(query_count)} для слова „{query_display}“ {sklonenie_naideno_x_zapisey(total)}{sklonenie_naideno_v_y_istochnikah(sources_hit)}"
+    if limit_reached:
+        header += " (Превышен лимит записей!)"
     
     template = env.get_template("result_fragment.html")
     return template.render(
         query=query,
         header=header,
         groups=sorted_groups,
-        total=total
+        total=total,
+        limit_reached=limit_reached
     )
 
 def render_full_page(query: str, fragment: str) -> str:
@@ -76,4 +84,28 @@ def render_full_page(query: str, fragment: str) -> str:
     return template.render(
         query=query,
         fragment=fragment
+    )
+
+def render_standalone(query: str, fragment: str) -> str:
+    # Read assets to inline
+    static_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "static")
+    
+    try:
+        with open(os.path.join(static_path, "style.css"), "r", encoding="utf-8") as f:
+            css = f.read()
+    except:
+        css = ""
+        
+    try:
+        with open(os.path.join(static_path, "scripts", "selection.js"), "r", encoding="utf-8") as f:
+            selection_js = f.read()
+    except:
+        selection_js = ""
+        
+    template = env.get_template("standalone_page.html")
+    return template.render(
+        query=query,
+        fragment=fragment,
+        css=css,
+        selection_js=selection_js
     )

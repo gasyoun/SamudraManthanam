@@ -118,15 +118,17 @@ async def get_search_stream(query: str, mode: str = "plain", case_sensitive: boo
 async def get_export(query: str, mode: str = "plain", case_sensitive: bool = False, whole_word: bool = False):
     db = await get_db(DB_PATH)
     try:
+        limit = 5000
         if mode == "plain":
-            results = await search_plain(db, query, case_sensitive, whole_word, None, 5000)
+            results = await search_plain(db, query, case_sensitive, whole_word, None, limit)
         elif mode == "regex":
-            results = await search_regex(db, query, case_sensitive, None, 5000)
+            results = await search_regex(db, query, case_sensitive, None, limit)
         else:
             results = []
             
-        fragment = render_fragment(query, results)
-        html = render_full_page(query, fragment)
+        limit_reached = len(results) >= limit
+        fragment = render_fragment(query, results, limit_reached=limit_reached)
+        html = render_standalone(query, fragment)
         
         headers = {"Content-Disposition": f'attachment; filename="{query}.html"'}
         return HTMLResponse(content=html, headers=headers)

@@ -63,15 +63,21 @@ async def expand_word(slp1_word: str, db: aiosqlite.Connection) -> List[str]:
     return stems_list
 
 async def search_morphological(db: aiosqlite.Connection, query: str, source_ids: List[int], limit: int) -> List[Dict]:
-    encoding = detect_encoding(query)
-    slp1 = to_slp1(query, encoding)
-    
-    stems = await expand_word(slp1, db)
-    
-    # Expand each stem to all 3 encodings
+    # Handle multi-line queries
+    queries = [q.strip() for q in query.split('\n') if q.strip()]
+    if not queries:
+        return []
+        
     variants = set()
-    for s in stems:
-        variants.update(to_all_encodings(s))
+    for q in queries:
+        encoding = detect_encoding(q)
+        slp1 = to_slp1(q, encoding)
+        
+        stems = await expand_word(slp1, db)
+        
+        # Expand each stem to all 3 encodings
+        for s in stems:
+            variants.update(to_all_encodings(s))
     
     # Run search for each variant and union
     all_results = []

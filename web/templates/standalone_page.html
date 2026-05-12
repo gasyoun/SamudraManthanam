@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ query }} — Пахтанье океана</title>
+    <style>
+        {{ css | safe }}
+        
+        /* Additional overrides for standalone mode */
+        .highlight { background-color: #fff176; padding: 0 2px; border-radius: 3px; }
+        .highlight.active { border: 2px solid red; outline: 2px solid red; }
+        
+        @media (max-width: 1100px) {
+            body { width: 100%; padding: 10px; box-sizing: border-box; }
+            .citation_block { width: 100%; overflow-x: auto; }
+            table { width: 100% !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="results">
+        {{ fragment | safe }}
+    </div>
+    
+    <script>
+        // Injected core scripts for standalone navigation
+        {{ selection_js | safe }}
+        
+        // Auto-run initialization
+        (function() {
+            // Re-bind highlight logic if not already executed by fragment
+            if (typeof initHighlighting === 'function') initHighlighting();
+        })();
+    </script>
+</body>
+</html>
