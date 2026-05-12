@@ -9,6 +9,28 @@ This document captures the web migration review findings for Samudra Manthanam a
 
 The current web stack is not deploy-ready despite `ai_status.md` claiming completion. Several issues are correctness blockers, one is a confirmed file disclosure vulnerability, and the ingestion workflow will corrupt or bloat the database over repeated scheduled reindex runs.
 
+## Fifth Review After Gemini Commit `f8c85e8`
+
+Gemini Flash's fourth repair round successfully closed the last API correctness item from the prior review.
+
+### Rechecks That Now Pass
+
+The following checks were rerun against commit `f8c85e8`:
+
+- invalid regex in `POST /api/search` now returns `422`
+- invalid regex in `GET /api/search/export` now returns `400`
+- invalid regex in `GET /api/search/stream` now returns `400`
+- `python -m pytest -q tests\test_api.py` from `web/` -> `9 passed`
+
+### Remaining Issues After The Fifth Review
+
+1. The repository still overpromises the current morphology feature in docs/status files even though the implementation remains stem-oriented rather than truly inflection-aware.
+2. The Pydantic validators in `web/app/models.py` still use v1-style `@validator`, which now emits deprecation warnings under Pydantic v2. This is not a blocker, but it is worth cleaning up.
+
+### Current Verdict
+
+The implementation itself is now in good shape for this stabilization round. The remaining work is primarily documentation honesty plus a small maintenance cleanup for validator deprecation warnings.
+
 ## Fourth Review After Gemini Commit `aed425d`
 
 Gemini Flash's third repair round closed most of the remaining checklist from the prior review.
@@ -1027,12 +1049,9 @@ Exit criteria:
 
 ## Recommended Order Of Execution
 
-1. Return structured 4xx errors for invalid regex input instead of silently returning zero results.
-2. Finish the morphology honesty pass across docs/status files, not just the dropdown label.
-3. Strengthen the new regression tests:
-   - assert meaningful multi-token search behavior
-   - add removed-file ingest reconciliation coverage
-4. Reconcile status/docs after the above land.
+1. Finish the morphology honesty pass across docs/status files, not just the dropdown label.
+2. Optionally migrate Pydantic v1-style validators to `@field_validator` so the test suite is warning-cleaner under Pydantic v2.
+3. Reconcile status/docs after the above land.
 
 ## Suggested Acceptance Checklist
 
@@ -1045,7 +1064,7 @@ Exit criteria:
 - [x] Blank search input returns `422`.
 - [x] Invalid POST mode returns `422`.
 - [x] Invalid export/SSE mode returns structured 4xx.
-- [ ] Invalid regex returns structured 4xx.
+- [x] Invalid regex returns structured 4xx.
 - [x] Negative limit is rejected on POST search.
 - [x] `source_ids=[]` has explicit documented behavior.
 - [x] "Select None" in the UI matches the documented behavior.
@@ -1055,22 +1074,19 @@ Exit criteria:
 - [ ] The current "morphological" feature is renamed/documented honestly if it remains stem-oriented only.
 - [x] Automated API tests run through a documented command from `web/`.
 - [ ] `ai_status.md` no longer overstates readiness.
+- [ ] Pydantic validators are migrated from deprecated v1-style `@validator` to v2-style `@field_validator` if warning cleanup is desired.
 
 ## Revised Immediate Task List For Gemini Flash
 
 Work this exact list before another review:
 
-1. Treat invalid regex input as a client error and return a structured 4xx response instead of `200` plus empty results.
-2. Finish the morphology honesty pass across:
+1. Finish the morphology honesty pass across:
    - `README.md`
    - `use_cases.md`
    - `WEB_PLAN.md`
    - `ai_status.md`
    so the repo no longer claims inflection-aware behavior that is not implemented.
-3. Strengthen tests:
-   - make `test_multi_token_plain_search` assert a real expected outcome
-   - add a regression test proving removed manifest entries are pruned during ingest
-   - add an invalid-regex API test once the 4xx behavior is implemented
+2. Optionally migrate the validators in `web/app/models.py` to `@field_validator` to remove current Pydantic v2 deprecation warnings.
 
 ## Notes For Gemini Flash
 
