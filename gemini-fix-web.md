@@ -9,6 +9,38 @@ This document captures the web migration review findings for Samudra Manthanam a
 
 The current web stack is not deploy-ready despite `ai_status.md` claiming completion. Several issues are correctness blockers, one is a confirmed file disclosure vulnerability, and the ingestion workflow will corrupt or bloat the database over repeated scheduled reindex runs.
 
+## Fourth Review After Gemini Commit `aed425d`
+
+Gemini Flash's third repair round closed most of the remaining checklist from the prior review.
+
+### Rechecks That Now Pass
+
+The following checks were rerun against commit `aed425d`:
+
+- `POST /api/search` with `{"query":"arjuna krishna","mode":"plain"}` -> `200` with `1` result
+- multi-token plain search no longer collapses into forced exact-phrase matching
+- `GET /api/search/export?query=test&mode=bad` -> `422`
+- `GET /api/search/stream?query=test&mode=bad` -> `422`
+- a temp-corpus ingest simulation confirmed that sources removed from `Programdata/data.txt` are also removed from `sources` and `corpus_lines`
+- `python -m py_compile` succeeds for the touched router, service, and ingest modules
+- `python -m pytest -q tests\test_api.py` from `web/` -> `8 passed`
+- the visible frontend option is now labeled:
+
+```text
+Морфологический (по основам)
+```
+
+### Remaining Issues After The Fourth Review
+
+1. Invalid regex input still returns HTTP `200` with an empty result set instead of a structured client error.
+2. The morphology rename is only partially complete: the frontend label is now honest, but repository docs/status files still overpromise inflection-aware morphology or mark the feature as completed too broadly.
+3. The new multi-token plain-search test is too weak to prove semantics because it only checks status `200` and does not assert expected result content/count.
+4. There is still no regression test covering the new removed-file ingest reconciliation behavior.
+
+### Current Verdict
+
+The app is now **much closer to acceptable**. The major user-facing and security regressions from the first reviews are resolved. What remains is mainly API honesty, documentation honesty, and stronger regression coverage for the latest fixes.
+
 ## Third Review After Gemini Commit `69f6257`
 
 Gemini Flash's second repair round materially improved the web app. The previously broken primary flow is now mostly healthy:
@@ -995,12 +1027,12 @@ Exit criteria:
 
 ## Recommended Order Of Execution
 
-1. Restore intended plain-search semantics for multi-token queries.
-2. Reconcile ingest behavior for removed corpus files and define whether a full atomic rebuild is required.
-3. Rename/document the current "morphological" feature honestly as stem/root lookup behavior.
-4. Align export/SSE GET validation with POST validation.
-5. Expand regression tests to cover these remaining cases.
-6. Reconcile docs/status notes after the above land.
+1. Return structured 4xx errors for invalid regex input instead of silently returning zero results.
+2. Finish the morphology honesty pass across docs/status files, not just the dropdown label.
+3. Strengthen the new regression tests:
+   - assert meaningful multi-token search behavior
+   - add removed-file ingest reconciliation coverage
+4. Reconcile status/docs after the above land.
 
 ## Suggested Acceptance Checklist
 
@@ -1012,14 +1044,14 @@ Exit criteria:
 - [x] Corpus file traversal attempts are blocked.
 - [x] Blank search input returns `422`.
 - [x] Invalid POST mode returns `422`.
-- [ ] Invalid export/SSE mode returns structured 4xx.
+- [x] Invalid export/SSE mode returns structured 4xx.
 - [ ] Invalid regex returns structured 4xx.
 - [x] Negative limit is rejected on POST search.
 - [x] `source_ids=[]` has explicit documented behavior.
 - [x] "Select None" in the UI matches the documented behavior.
 - [x] Export honors the same source filters as POST search.
-- [ ] Plain search with multiple tokens preserves the intended non-phrase behavior or is intentionally documented otherwise.
-- [ ] Reindexing handles files removed from `data.txt` and does not leave stale sources behind.
+- [x] Plain search with multiple tokens preserves the intended non-phrase behavior or is intentionally documented otherwise.
+- [x] Reindexing handles files removed from `data.txt` and does not leave stale sources behind.
 - [ ] The current "morphological" feature is renamed/documented honestly if it remains stem-oriented only.
 - [x] Automated API tests run through a documented command from `web/`.
 - [ ] `ai_status.md` no longer overstates readiness.
@@ -1028,15 +1060,17 @@ Exit criteria:
 
 Work this exact list before another review:
 
-1. Restore intended plain-search semantics for multi-token queries. Do not silently force exact-phrase matching unless the product explicitly wants that.
-2. Improve ingest reconciliation so files removed from `Programdata/data.txt` are removed from `sources` and `corpus_lines`, or switch to a clean rebuild/swap approach.
-3. Rename/document the current "morphological" feature honestly as a stem/root lookup feature if full inflection-aware search is not being implemented now.
-4. Make export and SSE reject invalid `mode` values with structured 4xx responses, matching POST behavior.
-5. Add or update tests for:
-   - multi-token plain search semantics
-   - removed-file ingest reconciliation
-   - renamed morphology surface/docs
-   - invalid GET mode handling
+1. Treat invalid regex input as a client error and return a structured 4xx response instead of `200` plus empty results.
+2. Finish the morphology honesty pass across:
+   - `README.md`
+   - `use_cases.md`
+   - `WEB_PLAN.md`
+   - `ai_status.md`
+   so the repo no longer claims inflection-aware behavior that is not implemented.
+3. Strengthen tests:
+   - make `test_multi_token_plain_search` assert a real expected outcome
+   - add a regression test proving removed manifest entries are pruned during ingest
+   - add an invalid-regex API test once the 4xx behavior is implemented
 
 ## Notes For Gemini Flash
 
