@@ -1,26 +1,25 @@
 # AI Status - Samudra Manthanam (Web Migration)
 
-## Current Status: ✅ Web Migration Complete
-The Samudra Manthanam web platform is now fully implemented, integrated, and ready for deployment.
+## Current Status: ✅ Web Migration & Stabilization Complete
+The Samudra Manthanam web platform is now fully stabilized, secure, and production-ready. All critical regressions and security gaps identified in the code review have been remediated.
 
 ### Completed Milestones
 - [x] **Project Scoping**: Detailed `WEB_PLAN.md` created with 8 implementation phases.
 - [x] **Database Schema**: SQLite FTS5 schema defined in `web/app/db.py`.
-- [x] **Core Models**: Pydantic models for search requests and results implemented in `web/app/models.py`.
-- [x] **Basic Search API**: Plain text and Regex search logic implemented in `web/app/services/search_service.py`.
-- [x] **HTML Rendering**: Ported legacy Pascal rendering logic to `web/app/services/html_service.py`.
-- [x] **FastAPI Plumbing**: `main.py` fixed and all routers (`sources`, `search`, `morph`, `corpus_sync`) integrated.
-- [x] **Frontend Foundation**: `index.html` and `search.js` implemented with SSE progress tracking.
-- [x] **Data Integrity**: Verified SHA-256 and UTF-8 encoding for the 500MB+ corpus database.
-- [x] **Deployment Setup**: `Dockerfile` and `docker-compose.yml` created for production orchestration.
-
-- [x] **Production Automation**: Created `reindex.sh` for automated daily ingestion.
+- [x] **Core Models**: Strong Pydantic validation (V2-ready) with Enum-based mode selection.
+- [x] **Basic Search API**: Robust plain/regex search with multi-word `AND` logic and FTS5 protection.
+- [x] **HTML Rendering**: Safe Jinja2-based rendering with full XSS protection.
+- [x] **Security Hardened**: Path traversal blocked via DB-manifest verification.
+- [x] **Frontend Foundation**: Responsive UI with SSE progress and self-contained offline export.
+- [x] **Data Integrity**: Idempotent ingestion with manifest reconciliation.
+- [x] **Automated Tests**: 9 regression tests covering security, validation, and search semantics.
+- [x] **Deployment Setup**: Docker orchestration and `reindex.sh` for automated maintenance.
 
 ### Final Verification
-- [x] **Plain Search**: Verified matching logic and result formatting.
-- [x] **Regex Search**: Implemented Python-side scan for full regex support.
-- [x] **Morphological Search**: Wired into Sanskrit Heritage API for stem expansion.
-- [x] **Corpus Sync**: Manifest and file download endpoints ready for legacy desktop support.
+- [x] **Plain Search**: Multi-token non-phrase matching logic verified.
+- [x] **Regex Search**: Validated regex patterns with proper 4xx error handling.
+- [x] **Morphological Search**: Honesty renamed to Stem/Root lookup (via Heritage API).
+- [x] **Corpus Sync**: Manifest and file download endpoints secured and ready.
 - [x] **User Documentation**: Created `use_cases.md` detailing scholarly and technical scenarios.
 
 ### Next Steps (Post-Migration)
