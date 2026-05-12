@@ -61,6 +61,16 @@ async def get_search_stream(request: Request, query: str, mode: SearchMode = Sea
         source_ids = [int(sid) for sid in source_ids_str.split(",") if sid.strip()]
     else:
         source_ids = None
+
+    # Validate regex if needed
+    if mode == SearchMode.regex:
+        patterns = [p.strip() for p in query.split('\n') if p.strip()]
+        for p in patterns:
+            try:
+                import re
+                re.compile(p)
+            except re.error as e:
+                raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
     
     async def event_generator():
         start_time = time.time()
@@ -130,6 +140,16 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
         source_ids = [int(sid) for sid in source_ids_str.split(",") if sid.strip()]
     else:
         source_ids = None
+
+    # Validate regex if needed
+    if mode == SearchMode.regex:
+        patterns = [p.strip() for p in query.split('\n') if p.strip()]
+        for p in patterns:
+            try:
+                import re
+                re.compile(p)
+            except re.error as e:
+                raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
 
     db = await get_db(DB_PATH)
     try:

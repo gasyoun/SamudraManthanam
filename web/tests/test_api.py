@@ -89,3 +89,18 @@ async def test_invalid_get_mode_stream():
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         response = await ac.get("/api/search/stream?query=test&mode=bad")
     assert response.status_code == 422
+
+@pytest.mark.asyncio
+async def test_invalid_regex():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        # Invalid regex in POST
+        response = await ac.post("/api/search", json={
+            "query": "[", 
+            "mode": "regex"
+        })
+        assert response.status_code == 422
+        
+        # Invalid regex in GET
+        response = await ac.get("/api/search/export?query=%5B&mode=regex")
+        assert response.status_code == 400

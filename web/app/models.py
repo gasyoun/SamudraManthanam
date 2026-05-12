@@ -8,8 +8,8 @@ class SearchMode(str, Enum):
     morphological = "morphological"
 
 class SearchRequest(BaseModel):
-    query: str = Field(..., min_length=1)
     mode: SearchMode = SearchMode.plain
+    query: str = Field(..., min_length=1)
     case_sensitive: bool = False
     whole_word: bool = False
     source_ids: Optional[List[int]] = None
@@ -19,6 +19,18 @@ class SearchRequest(BaseModel):
     def query_not_empty(cls, v):
         if not v.strip():
             raise ValueError('query cannot be empty or just whitespace')
+        return v
+
+    @validator('query')
+    def validate_regex(cls, v, values):
+        if values.get('mode') == SearchMode.regex:
+            patterns = [p.strip() for p in v.split('\n') if p.strip()]
+            for p in patterns:
+                try:
+                    import re
+                    re.compile(p)
+                except re.error as e:
+                    raise ValueError(f'Invalid regex pattern: {p} ({e})')
         return v
 
 class SearchResultItem(BaseModel):
