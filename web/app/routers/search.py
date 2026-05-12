@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 import time
 import os
 import json
@@ -6,8 +6,8 @@ import asyncio
 from sse_starlette.sse import EventSourceResponse
 from app.db import get_db
 from app.models import SearchRequest, SearchResult, SearchResultItem
+from app.services.html_service import render_fragment, render_full_page, render_standalone
 from app.services.search_service import search_plain, search_regex
-from app.services.html_service import render_fragment, render_full_page
 from app.services.morph_service import search_morphological
 from fastapi.responses import HTMLResponse
 
@@ -54,9 +54,13 @@ async def post_search(request: SearchRequest):
         await db.close()
 
 @router.get("/stream")
-async def get_search_stream(query: str, mode: str = "plain", case_sensitive: bool = False, whole_word: bool = False, source_ids: str = None):
-    # source_ids comes as comma-separated string in GET
-    sids = [int(s) for s in source_ids.split(",")] if source_ids else None
+async def get_search_stream(request: Request, query: str, mode: str = "plain", case_sensitive: bool = False, whole_word: bool = False):
+    # Handle source_ids from query params
+    source_ids_str = request.query_params.get("source_ids")
+    if source_ids_str is not None:
+        source_ids = [int(sid) for sid in source_ids_str.split(",") if sid.strip()]
+    else:
+        source_ids = None
     
     async def event_generator():
         start_time = time.time()
@@ -64,9 +68,13 @@ async def get_search_stream(query: str, mode: str = "plain", case_sensitive: boo
         try:
             # For SSE, we scan source-by-source to report progress
             # First, get sources
-            if sids:
-                sql = f"SELECT id FROM sources WHERE id IN ({','.join(['?']*len(sids))}) ORDER BY sort_order"
-                params = sids
+            if source_ids is not None:
+                if len(source_ids) == 0:
+                    yield {"data": json.dumps({"type": "done", "total": 0, "elapsed_ms": 0})}
+                    return
+                placeholders = ",".join(['?'] * len(source_ids))
+                sql = f"SELECT id FROM sources WHERE id IN ({placeholders}) ORDER BY sort_order"
+                params = source_ids
             else:
                 sql = "SELECT id FROM sources ORDER BY sort_order"
                 params = []
@@ -115,14 +123,23 @@ async def get_search_stream(query: str, mode: str = "plain", case_sensitive: boo
     return EventSourceResponse(event_generator())
 
 @router.get("/export", response_class=HTMLResponse)
-async def get_export(query: str, mode: str = "plain", case_sensitive: bool = False, whole_word: bool = False):
+async def get_export(request: Request, query: str, mode: str = "plain", case_sensitive: bool = False, whole_word: bool = False):
+    # Handle source_ids from query params
+    source_ids_str = request.query_params.get("source_ids")
+    if source_ids_str is not None:
+        source_ids = [int(sid) for sid in source_ids_str.split(",") if sid.strip()]
+    else:
+        source_ids = None
+
     db = await get_db(DB_PATH)
     try:
         limit = 5000
         if mode == "plain":
-            results = await search_plain(db, query, case_sensitive, whole_word, None, limit)
+            results = await search_plain(db, query, case_sensitive, whole_word, source_ids, limit)
         elif mode == "regex":
-            results = await search_regex(db, query, case_sensitive, None, limit)
+            results = await search_regex(db, query, case_sensitive, source_ids, limit)
+        elif mode == "morphological":
+            results = await search_morphological(db, query, source_ids, limit)
         else:
             results = []
             

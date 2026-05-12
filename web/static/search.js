@@ -40,7 +40,10 @@ $(document).ready(function() {
 
         // SSE for progress
         let eventSource = null;
-        const source_ids_str = source_ids.length > 0 ? source_ids.join(',') : '';
+        // If source_ids is empty, we still want to pass it as an empty string to indicate "None" 
+        // but the backend uses absence of the param as "All".
+        // Let's use a specific convention: if source_ids is empty, send 'none' or just '[]'
+        const source_ids_str = source_ids.join(',');
         const sseUrl = `/api/search/stream?query=${encodeURIComponent(query)}&mode=${mode}&case_sensitive=${case_sensitive}&whole_word=${whole_word}&source_ids=${source_ids_str}`;
         
         try {
@@ -66,7 +69,7 @@ $(document).ready(function() {
             mode: mode,
             case_sensitive: case_sensitive,
             whole_word: whole_word,
-            source_ids: source_ids.length > 0 ? source_ids : null,
+            source_ids: source_ids, // Send the array (empty if none selected)
             limit: 5000
         };
 
@@ -107,7 +110,13 @@ $(document).ready(function() {
         const case_sensitive = $('#case_sensitive').is(':checked');
         const whole_word = $('#whole_word').is(':checked');
         
-        const url = `/api/search/export?query=${encodeURIComponent(query)}&mode=${mode}&case_sensitive=${case_sensitive}&whole_word=${whole_word}`;
+        const source_ids = [];
+        $('#sourcesGrid input:checked').each(function() {
+            source_ids.push(parseInt($(this).val()));
+        });
+        const source_ids_str = source_ids.join(',');
+        
+        const url = `/api/search/export?query=${encodeURIComponent(query)}&mode=${mode}&case_sensitive=${case_sensitive}&whole_word=${whole_word}&source_ids=${source_ids_str}`;
         window.location.href = url;
     });
 });

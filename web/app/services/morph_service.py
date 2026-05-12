@@ -62,10 +62,13 @@ async def expand_word(slp1_word: str, db: aiosqlite.Connection) -> List[str]:
     
     return stems_list
 
-async def search_morphological(db: aiosqlite.Connection, query: str, source_ids: List[int], limit: int) -> List[Dict]:
+async def search_morphological(db: aiosqlite.Connection, query: str, source_ids: Optional[List[int]], limit: int) -> List[Dict]:
     # Handle multi-line queries
     queries = [q.strip() for q in query.split('\n') if q.strip()]
     if not queries:
+        return []
+        
+    if source_ids is not None and len(source_ids) == 0:
         return []
         
     variants = set()

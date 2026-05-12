@@ -44,17 +44,21 @@ async def ingest(corpus_path: str, db_path: str):
         sha256 = get_sha256(file_path)
         size = os.path.getsize(file_path)
 
-        # Insert source
+        # Clean up existing data for this filename to ensure idempotency
+        async with db.execute("SELECT id FROM sources WHERE filename = ?", (filename,)) as c:
+            row = await c.fetchone()
+            if row:
+                old_source_id = row[0]
+                await db.execute("DELETE FROM corpus_lines WHERE source_id = ?", (old_source_id,))
+                await db.execute("DELETE FROM sources WHERE id = ?", (old_source_id,))
+
+        # Insert fresh source record
         cursor = await db.execute(
-            "INSERT OR REPLACE INTO sources (filename, title, sort_order, sha256, size) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO sources (filename, title, sort_order, sha256, size) VALUES (?, ?, ?, ?, ?)",
             (filename, title, idx, sha256, size)
         )
         source_id = cursor.lastrowid
-        if not source_id: # If replaced, we need to fetch the ID
-             async with db.execute("SELECT id FROM sources WHERE filename = ?", (filename,)) as c:
-                 row = await c.fetchone()
-                 source_id = row[0]
-
+        
         print(f"[{idx+1}/{len(filenames)}] Ingesting {filename}: {title}")
 
         # Bulk insert lines

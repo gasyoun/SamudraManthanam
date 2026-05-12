@@ -22,9 +22,23 @@ async def get_manifest():
         await db.close()
 
 @router.get("/file/{filename}")
-async def get_file(filename: str):
-    file_path = os.path.join(CORPUS_PATH, "Data", filename)
-    if not os.path.exists(file_path):
-        raise HTTPException(status_code=404, detail="File not found")
-    
-    return FileResponse(file_path)
+async def get_corpus_file(filename: str):
+    # Sanitize filename to prevent path traversal
+    safe_filename = os.path.basename(filename)
+    if safe_filename != filename:
+         raise HTTPException(status_code=400, detail="Invalid filename")
+
+    db = await get_db(DB_PATH)
+    try:
+        # Verify file exists in database manifest
+        async with db.execute("SELECT 1 FROM sources WHERE filename = ?", (safe_filename,)) as cursor:
+            if not await cursor.fetchone():
+                raise HTTPException(status_code=404, detail="File not found in manifest")
+                
+        file_path = os.path.join(CORPUS_PATH, "Data", safe_filename)
+        if not os.path.exists(file_path):
+            raise HTTPException(status_code=404, detail="Physical file not found")
+        
+        return FileResponse(file_path)
+    finally:
+        await db.close()

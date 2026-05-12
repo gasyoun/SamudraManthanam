@@ -1,13 +1,25 @@
-from pydantic import BaseModel
-from typing import List, Optional
+from pydantic import BaseModel, Field, validator
+from typing import List, Optional, Dict, Any
+from enum import Enum
+
+class SearchMode(str, Enum):
+    plain = "plain"
+    regex = "regex"
+    morphological = "morphological"
 
 class SearchRequest(BaseModel):
-    query: str
-    mode: str = "plain"  # "plain" | "regex" | "morphological"
+    query: str = Field(..., min_length=1)
+    mode: SearchMode = SearchMode.plain
     case_sensitive: bool = False
     whole_word: bool = False
     source_ids: Optional[List[int]] = None
-    limit: int = 5000
+    limit: int = Field(5000, ge=1, le=5000)
+
+    @validator('query')
+    def query_not_empty(cls, v):
+        if not v.strip():
+            raise ValueError('query cannot be empty or just whitespace')
+        return v
 
 class SearchResultItem(BaseModel):
     source_id: int

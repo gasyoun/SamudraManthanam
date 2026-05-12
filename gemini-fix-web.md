@@ -9,6 +9,79 @@ This document captures the web migration review findings for Samudra Manthanam a
 
 The current web stack is not deploy-ready despite `ai_status.md` claiming completion. Several issues are correctness blockers, one is a confirmed file disclosure vulnerability, and the ingestion workflow will corrupt or bloat the database over repeated scheduled reindex runs.
 
+## Second Review After Gemini Commit `6d5ce4a`
+
+Gemini Flash made a follow-up repair commit after the first review. That commit improved a few secondary areas:
+
+- safer JavaScript literal serialization with `tojson`
+- multi-line query support attempts in search and morphology
+- a standalone HTML export concept
+- navigation and responsive styling changes
+
+However, the core repair effort is **not complete**. A second review on 2026-05-12 confirmed that several priority-0 defects remain, and export gained a new runtime regression.
+
+### Reconfirmed Failures
+
+1. `POST /api/search` with normal non-empty result sets still returns HTTP 500.
+2. `GET /api/search/export` still returns HTTP 500.
+3. Windows path traversal in `/api/corpus-sync/file/{filename}` is still exploitable.
+4. Ingestion is still not idempotent and remains unsafe for scheduled reindexing.
+5. Query-driven HTML/script injection still exists through the rendered header text.
+6. FTS parser failures for punctuation-heavy input still produce server errors.
+7. "Select None" still means "search all sources" in practice.
+8. Morphological search still does not satisfy the promised inflection-aware behavior.
+
+### New Regression Introduced By The Follow-Up Commit
+
+`web/app/routers/search.py` now calls:
+
+```python
+render_standalone(query, fragment)
+```
+
+but the router still imports:
+
+```python
+from app.services.html_service import render_fragment, render_full_page
+```
+
+This means export can fail with:
+
+```text
+NameError: name 'render_standalone' is not defined
+```
+
+even for queries that produce zero results and therefore avoid the separate fragment-rendering crash.
+
+### Runtime Rechecks Performed
+
+The following checks were re-run against commit `6d5ce4a`:
+
+- `POST /api/search` with `{"query":"arjuna","mode":"plain"}` -> `500`
+- `POST /api/search` with `{"query":"arjuna","mode":"regex"}` -> `500`
+- `POST /api/search` with `{"query":"arjuna","mode":"bad-mode"}` -> `200` with empty results
+- `POST /api/search` with blank query -> `200` with empty results
+- `POST /api/search` with `source_ids=[]` -> `500`
+- `POST /api/search` with negative limit -> `500`
+- `GET /api/search/export?query=arjuna&mode=plain` -> `500`
+- `GET /api/search/export?query=qwertyzqwertyz&mode=plain` -> `NameError` for missing `render_standalone`
+- plain search for `-`, `foo-bar`, `a:b`, and unterminated quotes still raises SQLite FTS errors
+- traversal request `/api/corpus-sync/file/..%5CProgramdata%5Cdata.txt` still returns `200`
+- injected query `</script><script>globalThis.XSS=1</script>` still appears in rendered header HTML
+- `expand_word("arjuna")` still returned only `["arjuna"]`
+
+### Files Still Needing Immediate Attention
+
+- `web/templates/result_fragment.html`
+- `web/app/routers/search.py`
+- `web/app/routers/corpus_sync.py`
+- `web/ingest/ingest.py`
+- `web/app/services/html_service.py`
+- `web/app/services/search_service.py`
+- `web/app/models.py`
+- `web/static/search.js`
+- `web/app/services/morph_service.py`
+
 ## Current Architecture Snapshot
 
 The repository is a hybrid system:
@@ -40,6 +113,7 @@ Priority 0:
 1. Search responses that include rendered result HTML can crash with HTTP 500.
 2. Corpus sync file download is vulnerable to Windows path traversal.
 3. Scheduled reindexing is not idempotent and will append duplicate corpus rows or orphan rows over time.
+4. Export now also has a missing-import regression around `render_standalone`.
 
 Priority 1:
 
@@ -108,6 +182,16 @@ Required tests:
 - Response includes non-empty `html_fragment`.
 - `GET /api/search/export` returns `200` for the same query.
 
+Second-review status:
+
+- **Still broken in commit `6d5ce4a`.**
+- The template still uses `group.items`.
+- Direct rendering still raises:
+
+```text
+TypeError: 'builtin_function_or_method' object is not iterable
+```
+
 ### P0-2: Corpus Sync Path Traversal On Windows
 
 File:
@@ -165,6 +249,17 @@ Required tests:
 - `..%5CProgramdata%5Cdata.txt` returns `404` or `400`.
 - `..%2FProgramdata%2Fdata.txt` returns `404` or `400`.
 - Encoded or mixed separators remain blocked.
+
+Second-review status:
+
+- **Still exploitable in commit `6d5ce4a`.**
+- Request:
+
+```text
+/api/corpus-sync/file/..%5CProgramdata%5Cdata.txt
+```
+
+still returned HTTP `200`.
 
 ### P0-3: Reindexing Is Not Idempotent And Will Degrade The Database
 
@@ -236,6 +331,46 @@ Required tests:
 - Assert zero duplicate `(source_id, line_num)` groups.
 - Assert zero orphan `corpus_lines`.
 - Assert manifest data still matches source records.
+
+Second-review status:
+
+- **No meaningful fix was made in commit `6d5ce4a`.**
+- `INSERT OR REPLACE INTO sources ...` and unconditional `INSERT INTO corpus_lines ...` remain in place.
+
+### P0-4: Export Has A New Missing-Import Regression
+
+Files:
+
+- `web/app/routers/search.py`
+- `web/app/services/html_service.py`
+
+Observed behavior:
+
+- Export now calls `render_standalone(...)`.
+- The router still imports `render_fragment, render_full_page`.
+- No import for `render_standalone` exists.
+
+Runtime confirmation:
+
+- A query that avoids the result-fragment crash still fails export with:
+
+```text
+NameError: name 'render_standalone' is not defined
+```
+
+Required fix:
+
+1. Import `render_standalone` correctly.
+2. Remove the unused `render_full_page` import if it is no longer used.
+3. Add export regression tests for:
+   - zero-result export
+   - non-empty-result export
+   - unsupported mode behavior
+
+Required tests:
+
+- `GET /api/search/export?query=qwertyzqwertyz&mode=plain` returns `200`.
+- `GET /api/search/export?query=arjuna&mode=plain` returns `200` after fragment rendering is fixed.
 
 ### P1-4: Search Input Causes FTS5 Parser Failures And HTTP 500s
 
@@ -457,6 +592,13 @@ Required tests:
 - The inline highlight script remains valid JS.
 - No additional `<script>` tag appears from query content.
 
+Second-review status:
+
+- **Only partially addressed in commit `6d5ce4a`.**
+- `query | tojson` now protects the JavaScript literal.
+- But `header` still embeds raw query text while the custom Jinja `Environment(...)` still lacks autoescape.
+- The injected payload remains present in rendered HTML header text.
+
 ### P1-9: Morphological Search Does Not Match The Stated Requirement
 
 Files:
@@ -522,6 +664,12 @@ Required tests:
 - Query for `arjuna` returns known inflected forms if that is the required product behavior.
 - Cache hit and cache miss paths are both tested.
 - API outage degrades gracefully with structured metadata or warning behavior.
+
+Second-review status:
+
+- **Still not fixed functionally.**
+- Multi-line handling was added, but the underlying expansion strategy is unchanged.
+- `expand_word("arjuna")` still returned only `["arjuna"]` during recheck.
 
 ### P2-10: Model Validation And Error Semantics Need Tightening
 
@@ -802,20 +950,22 @@ Exit criteria:
 ## Recommended Order Of Execution
 
 1. Rendering crash
-2. Script injection hardening
-3. Corpus sync traversal fix
-4. Input validation + FTS hardening
-5. Source filter/export consistency
-6. Idempotent ingest redesign
-7. Morphology decision and implementation
-8. Test suite expansion
-9. Documentation cleanup
+2. Export missing-import regression
+3. Script injection hardening
+4. Corpus sync traversal fix
+5. Input validation + FTS hardening
+6. Source filter/export consistency
+7. Idempotent ingest redesign
+8. Morphology decision and implementation
+9. Test suite expansion
+10. Documentation cleanup
 
 ## Suggested Acceptance Checklist
 
 - [ ] `POST /api/search` returns `200` with HTML fragment for plain search.
 - [ ] `POST /api/search` returns `200` with HTML fragment for regex search.
 - [ ] `GET /api/search/export` returns `200` for plain search.
+- [ ] Zero-result export does not fail with `NameError`.
 - [ ] Result fragment rendering is safe for query text containing HTML and script delimiters.
 - [ ] Corpus file traversal attempts are blocked.
 - [ ] Blank search input returns `422`.
@@ -829,6 +979,21 @@ Exit criteria:
 - [ ] Morphological behavior matches its documented promise.
 - [ ] Automated tests run through a documented command.
 - [ ] `ai_status.md` no longer overstates readiness.
+
+## Revised Immediate Task List For Gemini Flash
+
+Work this exact list before any more UI polish:
+
+1. Fix `group.items` in `result_fragment.html`.
+2. Import and test `render_standalone` in `search.py`.
+3. Turn on safe HTML escaping and remove header injection.
+4. Close the Windows traversal hole in `corpus_sync.py`.
+5. Add request validation and FTS-safe query construction.
+6. Make `source_ids=[]` semantics explicit and fix the frontend "Select None" path.
+7. Make export honor the same search filters as the POST endpoint.
+8. Redesign ingest so scheduled reindexing is idempotent.
+9. Decide whether morphology is truly inflection-aware; then either implement it or rename/document it honestly.
+10. Add regression tests proving the above.
 
 ## Notes For Gemini Flash
 

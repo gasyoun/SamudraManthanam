@@ -1,10 +1,13 @@
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 import os
 from typing import List, Dict, Any
 
-# Setup Jinja2 environment
+# Setup Jinja2 environment with autoescape
 template_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "templates")
-env = Environment(loader=FileSystemLoader(template_dir))
+env = Environment(
+    loader=FileSystemLoader(template_dir),
+    autoescape=select_autoescape(['html', 'xml'])
+)
 
 def get_count_suffix(count: int) -> str:
     if count == 100: return f"{count}-та"

@@ -14,17 +14,17 @@
 <div class="contents">
     {% for group in groups %}
         <div class="content_item">
-            <a href="#chapter_{{ loop.index }}">{{ group.title }}</a>
+            <a href="#chapter_{{ loop.index }}">{{ group['title'] }}</a>
         </div>
     {% endfor %}
 </div>
 <div class="chapters">
     {% for group in groups %}
     <div class="chapter">
-        <div class="chapter_title" id="chapter_{{ loop.index }}">{{ loop.index }}. {{ group.title }}</div>
-        {% for item in group.items %}
+        <div class="chapter_title" id="chapter_{{ loop.index }}">{{ loop.index }}. {{ group['title'] }}</div>
+        {% for item in group['items'] %}
             <div class="citation_block">
-                {{ item.line_html | safe }}
+                {{ item['line_html'] | safe }}
             </div>
         {% endfor %}
         <hr>
