@@ -9,6 +9,65 @@ This document captures the web migration review findings for Samudra Manthanam a
 
 The current web stack is not deploy-ready despite `ai_status.md` claiming completion. Several issues are correctness blockers, one is a confirmed file disclosure vulnerability, and the ingestion workflow will corrupt or bloat the database over repeated scheduled reindex runs.
 
+## Eighth Review After Gemini Commit `6cc2fa4`
+
+Gemini Flash's newest implementation round added useful groundwork from `roadmap.md` and `gemini-implementation-plan.md`, including:
+
+- source-count feedback in the web UI
+- zero-result result text
+- search metadata plumbing for stem/root lookup
+- new golden-query and morphology test files
+
+However, the round also introduced two production-facing regressions and several test/status mismatches that should be fixed before calling this phase complete.
+
+### Rechecks Performed
+
+- `python -m pytest -q tests` from `web/` -> `19 passed`
+- `python -m pytest -q` from `web/` -> `1 failed, 19 passed`
+  - failure source: `web/test_search.py` still performs a live HTTP request to `http://localhost:8000` and is collected by default pytest discovery
+- direct ASGI request to:
+
+```text
+/api/search/stream?query=svasti&mode=morphological
+```
+
+raises:
+
+```text
+AttributeError: 'Request' object has no attribute 'mode'
+```
+
+### Remaining Issues After The Eighth Review
+
+1. **P1 - Morphological SSE is broken.**
+   - `web/app/routers/search.py` checks `request.mode` inside the SSE generator.
+   - Here `request` is a FastAPI `Request`, so morphological streaming crashes before it can complete.
+   - This is a real user-facing regression because the browser opens SSE before every search.
+
+2. **P1 - The new annotations are not safe for the declared Python 3.11 runtime.**
+   - `Dockerfile` still targets `python:3.11-slim`.
+   - `web/app/services/html_service.py` now uses `Optional[...]` without importing `Optional`.
+   - `web/app/services/morph_service.py` now uses `Optional[...]` and `Any` without importing them.
+   - Local Python 3.14 test runs mask this because deferred annotation evaluation is more forgiving, but the project-declared 3.11 runtime will raise import-time `NameError` unless the missing typing names are imported or postponed annotations are enabled intentionally.
+
+3. **P2 - The new "golden query" suite does not yet justify the completion claims.**
+   - `web/tests/test_golden_queries.py::test_golden_query_plain_russian` only asserts `data["total"] >= 0`, which can never fail meaningfully.
+   - `test_golden_query_multi_token` does not assert that any results exist before validating them, so an empty result set passes.
+   - `ai_status.md` says cross-encoding behavior is verified, but `web/tests/test_morph.py` only checks helper conversion functions, not end-to-end search parity between equivalent IAST / Devanagari inputs.
+
+4. **P2 - `line_text` was added to the public search API solely to support tests, increasing payload size for broad searches.**
+   - `web/app/models.py` now exposes `line_text` on every result item.
+   - `search.js` does not use it; the UI renders from `html_fragment`.
+   - With result limits up to 5000, this duplicates a large amount of corpus text in the JSON response. Prefer service-level assertions, dedicated debug fixtures, or an opt-in/debug response shape instead of inflating the default client payload.
+
+5. **P2 - Status/changelog text overstates readiness.**
+   - `ai_status.md` says `19/19` tests cover the entire system and claims no known issues remain, but default `pytest -q` is still red and morphological SSE is broken.
+   - `changelog.md` claims "intelligent diacritic-tolerant matching" without a corresponding implementation change in this round.
+
+### Current Verdict
+
+This round made useful progress on the roadmap, but it is **not complete**. Gemini should fix the two runtime regressions first, then tighten the test strategy and documentation so the completion claims match what the repository actually proves.
+
 ## Seventh Review After Gemini Commit `3c76d75`
 
 Gemini Flash's latest round updated `ai_status.md`, but it did **not** resolve the remaining docs/model/header items from the prior review.
@@ -1111,10 +1170,18 @@ Exit criteria:
 
 ## Recommended Order Of Execution
 
-1. Completed: morphology wording is now aligned across `README.md`, `use_cases.md`, and `WEB_PLAN.md`.
-2. Completed: the multi-query result-header wording regression is removed from `result_fragment.html`.
-3. Completed: `web/app/models.py` now uses Pydantic v2 validation APIs, and `ai_status.md` no longer overclaims the old mixed state.
-4. Remaining: keep future morphology planning scoped to what the implementation can actually guarantee.
+1. Fix the two runtime regressions first:
+   - replace `request.mode` with the actual `mode` parameter in SSE morphological dispatch
+   - restore Python 3.11-safe typing imports in `html_service.py` and `morph_service.py`
+2. Add regression tests for the repaired runtime paths:
+   - morphological SSE should stream successfully
+   - app/module import path should remain compatible with the declared runtime target
+3. Repair the test/status accuracy problems:
+   - stop default `pytest -q` from collecting the live-server smoke script, or formalize it as an integration test with proper markers
+   - strengthen the golden-query tests so they can actually fail on behavior regressions
+   - add end-to-end cross-encoding lookup coverage if claiming that behavior is verified
+4. Reconsider whether `line_text` belongs in the default public search response. If it is only for tests, remove or gate it.
+5. Update `ai_status.md` and `changelog.md` only after the above are true.
 
 ## Suggested Acceptance Checklist
 
@@ -1139,10 +1206,26 @@ Exit criteria:
 - [x] `ai_status.md` no longer overstates readiness.
 - [x] Pydantic validators are migrated from deprecated v1-style `@validator` to v2-style validation APIs.
 - [x] Multi-query result headers do not duplicate the query-count ordinal.
+- [ ] Morphological SSE does not crash and produces progress/done events.
+- [ ] Services import cleanly under the declared Python 3.11 deployment target.
+- [ ] Default `python -m pytest -q` from `web/` is not red because of a stray live-server smoke script.
+- [ ] Golden-query tests contain meaningful assertions that fail on real regressions.
+- [ ] Cross-encoding stem/root search claims are backed by end-to-end tests, not only helper-function tests.
+- [ ] Default public search payload is reviewed so test-only observability does not unnecessarily bloat production responses.
+- [ ] `ai_status.md` and `changelog.md` match the verified repo state.
 
 ## Revised Immediate Task List For Gemini Flash
 
-No handoff items remain from the latest review round. The morphology wording, result-header phrasing, Pydantic validator/status mismatch, and a dedicated header regression test have all been addressed directly in the repository.
+1. Fix `web/app/routers/search.py` so morphological SSE uses the `mode` query parameter instead of `request.mode`.
+2. Fix `web/app/services/html_service.py` and `web/app/services/morph_service.py` typing imports so the Dockerfile's Python 3.11 runtime does not break on import.
+3. Add a regression test that exercises `/api/search/stream?...&mode=morphological`.
+4. Resolve the stray `web/test_search.py` collection problem so plain `python -m pytest -q` from `web/` is not red.
+5. Strengthen `web/tests/test_golden_queries.py`:
+   - replace the no-op Russian assertion
+   - require non-empty multi-token results before checking row contents
+6. Add an end-to-end lookup test showing equivalent supported behavior for an IAST and Devanagari input, or remove the unsupported completion claim from `ai_status.md`.
+7. Decide whether `line_text` should remain in the public API response. If not, rewrite tests around service-level validation or a debug-only path.
+8. Reconcile `ai_status.md` and `changelog.md` after the fixes land.
 
 
 ## Notes For Gemini Flash
