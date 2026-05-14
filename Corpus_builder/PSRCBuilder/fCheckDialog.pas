@@ -1,0 +1,223 @@
+unit fCheckDialog;
+
+interface
+
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
+  Buttons, ExtCtrls;
+
+type
+  TOKBottomDlg = class(TForm)
+    OKBtn: TButton;
+    CancelBtn: TButton;
+    Label1: TLabel;
+    E_Chapter: TEdit;
+    Label2: TLabel;
+    E_Shloka: TEdit;
+    Label3: TLabel;
+    E_Comment: TEdit;
+    Label4: TLabel;
+    E_Page: TEdit;
+    Bevel1: TBevel;
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+  private
+  MhList:TstringList;
+  function CheckChapters:boolean;
+  function CheckShlokas:boolean;
+  function CheckComments:boolean;
+  function CheckPages:boolean;
+
+    { Private declarations }
+  public
+  ErrList:TStringList;
+  Procedure CheckAll(AFileName:string);
+    { Public declarations }
+  end;
+
+var
+  OKBottomDlg: TOKBottomDlg;
+
+implementation
+ uses textu, dialogs;
+{$R *.dfm}
+
+{ TOKBottomDlg }
+
+procedure TOKBottomDlg.CheckAll(AFileName:string);
+begin
+ MhList:=TStringList.Create;
+ MhList.LoadFromFile(AFileName);
+ ErrList.Clear;
+ if not CheckChapters then exit;
+ if not CheckShlokas then exit;
+ if not CheckComments then exit;
+ if not CheckPages then exit;
+ MhList.Free;
+end;
+
+function TOKBottomDlg.CheckChapters:boolean;
+var
+ i:integer;
+ S:string;
+ N:integer;
+ S_N:string;
+begin
+ N:=0;
+ for i:=1 to MhList.Count do
+ begin
+  S:=MhList[i-1];
+  if Pos(E_Chapter.Text,S)=1 then
+  begin
+   inc(n);
+   CutNextUseDelimiter(S, ' ' );
+   if Pos('(',S) <>0
+    then S_N:=CutNextUseDelimiter(S, '(' )
+    else S_N:=CutNextUseDelimiter(S, ' ' );
+   if IntToStr(N) <> S_N then ErrList.Add(' - Ошибка в нумерации главы: '+MhList[i-1]);
+  end;
+ end;
+ ErrList.Add(' - Всего глав: '+IntToStr(n));
+ if ErrList.Count>1 then ErrList.Add(' - Исправьте ошибку и перезапустите процедуру.');
+ Result:=ErrList.Count=1;
+end;
+
+Function TOKBottomDlg.CheckComments:boolean;
+var
+ i:integer;
+ S:string;
+ IsComment:boolean;
+ N_Comm:integer;
+ N_Comm_All:integer;
+ N_Chapter:integer;
+ N_Prev:integer;
+ S_N:string;
+ N_tmp,Code:integer;
+ S_N_Prev:string;
+ NewChapter:boolean;
+ label 2;
+begin
+ N_Comm:=0;
+ N_Comm_All:=0;
+ N_Chapter:=0;
+ NewChapter:=False;
+ // бежим по тексту, вырезаем внутренности, смотрим ...
+ for i:=1 to MhList.Count do
+ begin
+  S:=MhList[i-1];
+  if Pos(E_Chapter.Text,S)=1 then begin inc(N_Chapter); NewChapter:=True; end;
+  repeat
+   IsComment:=(Pos(E_Comment.Text[1],S)>0)and (Pos(E_Comment.Text[3],S)>0);
+   if not IsComment then break;
+   CutNextUseDelimiter(S,E_Comment.Text[1]);
+   S_N:=CutNextUseDelimiter(S,E_Comment.Text[3]);
+   2:
+   Val(S_N,N_tmp,Code);
+   if Code=0 then
+    begin
+     inc(N_Comm_All);
+     if N_tmp=1 then N_Comm:=1 else inc(N_Comm);
+     if (N_Comm_All>1) and (N_tmp=1) then
+     begin
+       if not NewChapter then
+       ErrList.Add(' - Непоследовательный комментарий '+S_N+' после '+S_N_Prev+ ' к главе '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60));
+//       ErrList.Add(' - Возожно непоследовательный комментарий '+S_N+ ' к главе '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60)+'...');
+
+//       ErrList.Add(' - Комментарий '+IntTOstr(N_Chapter-1)+': '+IntTOstr(N_Prev)+' комментариев');
+       N_Comm:=N_tmp;//дожно быть 1
+       NewChapter:=False;
+     end else
+      if N_Comm<>N_tmp then
+      begin
+       ErrList.Add(' - Непоследовательный комментарий '+S_N+' после '+S_N_Prev+ ' к главе '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60));
+       N_Comm:=StrToINt(S_N);
+      end;
+     N_Prev:=N_tmp;
+     S_N_Prev:=S_N;
+    end else
+    begin
+     if Pos('(',S_N)>0 then begin S_N:=Copy(S_N,Pos('(',S_N)+1,4); goto 2; end;
+    end;
+  until False;
+ end;
+ ErrList.Add(' - Всего расставлено комментариев : '+IntToStr(N_Comm_All));
+ Result:=True;
+end;
+
+Function TOKBottomDlg.CheckPages:boolean;
+var
+ i,n:integer;
+ S:string;
+ Diff:integer;
+ N_Prev,S_N:string;
+ FirstPage:boolean;
+begin
+ FirstPage:=True;
+ n:=0;
+ for i:=1 to MhList.Count do
+ begin
+  S:=MhList[i-1];
+  if Pos(E_Page.Text[1],S)=1 then
+  try
+   inc(n);
+   CutNextUseDelimiter(S, E_Page.Text[1] );
+   S_N:=CutNextUseDelimiter(S, E_Page.Text[3] );
+   if FirstPage then N_Prev:=IntToStr(StrToInt(S_N)-1);
+   Diff:=StrToInt(S_N)-StrToInt(N_Prev);
+   if (Diff<>1) then ErrList.Add(' - Ошибка в нумерации страницы: '+MhList[i-1]);
+   N_Prev:=S_N;
+   FirstPage:=false;
+  except
+   ShowMessage('Ошибка в строке '+IntToStr(i));
+  end;
+ end;
+ ErrList.Add(' - Всего пронумеровано страниц: '+IntToStr(n));
+ Result:=ErrList.Count=1;
+end;
+
+Function TOKBottomDlg.CheckShlokas:boolean;
+var
+ i:integer;
+ S:string;
+ N_Shl,N_Shl_all:integer;
+ S_N:string;
+ Prev_N,N1,N2:integer;
+ NewChapter:boolean;
+ ChapterStr:string;
+begin
+ N_Shl_all:=0;
+ for i:=1 to MhList.Count do
+ try
+  S:=MhList[i-1];
+  if Pos(E_Chapter.Text,S)=1 then begin ChapterStr:=MhList[i-1]; NewChapter:=True; end;// шлока
+  if (Pos(E_Shloka.Text[1],S)=1)and ((Pos(E_Shloka.Text[3],S)<>1)) then // шлока
+  begin
+   inc(N_Shl_all);
+   CutNextUseDelimiter(S, E_Shloka.Text[1] );
+   S_N:=CutNextUseDelimiter(S, E_Shloka.Text[3] );
+   if pos('-',S_N)=0
+    then begin N1:=StrToInt(S_N); N2:=N1; end
+    else begin N1:=StrToInt(CutNextUseDelimiter(S_N,'-'));N2:=StrToInt(S_N) end;
+   if NewChapter then Prev_N:=0;
+   if N1-Prev_N<>1 then ErrList.Add(' - Сбой в нумерации шлок. '+ IntToStr(N1)+ ' после номера '+IntToStr(Prev_N)+' в '+ChapterStr+': '+Copy (MhList[i-1],1,60));
+   Prev_N:=N2;
+   NewChapter :=False;
+  end;
+ Except
+  ShowMessage('Error in the line '+IntTOStr(i));
+ end;
+ ErrList.Add(' - Всего шлок: '+IntToStr(N_Shl_all));
+ Result:=True;
+end;
+
+procedure TOKBottomDlg.FormCreate(Sender: TObject);
+begin
+ ErrList:=TStringList.Create;
+ ErrList.Clear;
+end;
+
+procedure TOKBottomDlg.FormDestroy(Sender: TObject);
+begin
+ ErrList.Free;
+end;
+
+end.

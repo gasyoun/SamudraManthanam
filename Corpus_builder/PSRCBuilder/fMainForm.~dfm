@@ -1,0 +1,240 @@
+object Form1: TForm1
+  Left = 154
+  Top = 38
+  Width = 1305
+  Height = 750
+  Caption = 'Form1'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Menu = MainMenu1
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 0
+    Top = 370
+    Width = 1289
+    Height = 13
+    Align = alBottom
+    Caption = 'Memo2'
+  end
+  object Label2: TLabel
+    Left = 0
+    Top = 0
+    Width = 1289
+    Height = 13
+    Align = alTop
+    Caption = 'Memo1'
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 672
+    Width = 1289
+    Height = 19
+    Panels = <>
+  end
+  object Memo2: TMemo
+    Left = 0
+    Top = 383
+    Width = 1289
+    Height = 289
+    Align = alBottom
+    ScrollBars = ssBoth
+    TabOrder = 1
+    WordWrap = False
+  end
+  object Memo1: TMemo
+    Left = 0
+    Top = 13
+    Width = 1289
+    Height = 289
+    Align = alTop
+    ScrollBars = ssBoth
+    TabOrder = 2
+    WordWrap = False
+  end
+  object MainMenu1: TMainMenu
+    Left = 360
+    Top = 96
+    object N8: TMenuItem
+      Caption = #1060#1072#1081#1083
+      object N9: TMenuItem
+        Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' MEMO1'
+        ShortCut = 16467
+        OnClick = N9Click
+      end
+      object RichEdit2: TMenuItem
+        Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' Memo2'
+        OnClick = RichEdit2Click
+      end
+    end
+    object N5: TMenuItem
+      Caption = #1055#1088#1072#1074#1082#1072
+      object N6: TMenuItem
+        Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100
+        OnClick = N6Click
+      end
+    end
+    object N19: TMenuItem
+      Caption = #1057#1086#1073#1088#1072#1090#1100' '#1082#1086#1088#1087#1091#1089
+      object HTML1: TMenuItem
+        Caption = 'Corpus_html build One Book'
+        OnClick = HTML1Click
+      end
+      object CorpushtmlbuildManyBooks1: TMenuItem
+        Caption = 'Corpus_html build Many Books'
+        OnClick = CorpushtmlbuildManyBooks1Click
+      end
+      object CorpushtmlbuildManyBooks2: TMenuItem
+        Caption = 'Corpus_html build Many Books in One File (Ex. ChUp)'
+        ShortCut = 16504
+        OnClick = CorpushtmlbuildManyBooks2Click
+      end
+      object N2: TMenuItem
+        Caption = #1055#1088#1086#1074#1077#1088#1082#1072'_'#1055#1077#1088#1077#1074#1086#1076#1072
+        OnClick = N2Click
+      end
+      object IAST3: TMenuItem
+        Caption = #1057#1075#1077#1085#1077#1088#1080#1088#1086#1074#1072#1090#1100' '#1087#1091#1089#1090#1091#1102' '#1082#1085#1080#1075#1091' '#1085#1072' '#1086#1089#1085#1086#1074#1077' IAST'
+        OnClick = IAST3Click
+      end
+    end
+    object N3: TMenuItem
+      Caption = #1057#1082#1086#1088#1088#1077#1082#1090#1080#1088#1086#1074#1072#1090#1100
+      object N17: TMenuItem
+        Caption = #1047#1072#1084#1077#1085#1080#1090#1100' '#1082#1086#1088#1086#1090#1082#1086#1077' '#1090#1080#1088#1077' '#1085#1072' '#1084#1080#1085#1091#1089' '#1074' '#1085#1086#1084#1077#1088#1072#1093' '#1096#1083#1086#1082' ('#1074#1089#1077' '#1082#1085#1080#1075#1080')'
+        OnClick = N17Click
+      end
+      object N11: TMenuItem
+        Caption = #1085#1086#1084#1077#1088#1072' '#1096#1083#1086#1082' '#1074' '#1052#1061'1'
+        OnClick = N11Click
+      end
+      object N4: TMenuItem
+        Caption = #1085#1086#1084#1077#1088#1072' '#1082#1086#1084#1084#1077#1085#1090#1072#1088#1080#1077#1074
+        OnClick = N4Click
+      end
+      object N21: TMenuItem
+        Caption = '#'#1055#1077#1089#1085#1100' '#1074' '#1056#1072#1084#1072#1103#1085#1077
+        OnClick = N21Click
+      end
+      object N31: TMenuItem
+        Caption = #1085#1086#1084#1077#1088#1072' '#1096#1083#1086#1082' '#1074' '#1052#1061'3 '#1080' '#1056#1072#1084#1072#1103#1085#1077
+        OnClick = N31Click
+      end
+      object N51: TMenuItem
+        Caption = #1053#1086#1084#1077#1088#1072' '#1089#1090#1088#1072#1085#1080#1094' '#1074' '#1052#1061'5 '
+        OnClick = N51Click
+      end
+      object N81: TMenuItem
+        Caption = #1053#1086#1084#1077#1088#1072' '#1089#1090#1088#1072#1085#1080#1094' '#1074' '#1052#1061'8'
+        OnClick = N81Click
+      end
+      object N52: TMenuItem
+        Caption = #1053#1086#1084#1077#1088#1072' '#1096#1083#1086#1082' '#1052#1061'5'
+        OnClick = N52Click
+      end
+      object N61: TMenuItem
+        Caption = #1053#1086#1084#1077#1088#1072' '#1096#1083#1086#1082' '#1074' '#1085#1072#1095#1072#1083#1086' '#1052#1061'6'
+        OnClick = N61Click
+      end
+      object N141: TMenuItem
+        Caption = #1053#1086#1084#1077#1088#1072' '#1096#1083#1086#1082' '#1052#1061'14'
+        OnClick = N141Click
+      end
+      object N7AliceEdition1: TMenuItem
+        Caption = #1048#1079#1074#1083#1077#1095#1100' '#1082#1086#1084#1084#1077#1085#1090#1072#1088#1080#1080' '#1080#1079' '#1052#1061'7 Alice Edition'
+        OnClick = N7AliceEdition1Click
+      end
+      object N10: TMenuItem
+        Caption = #1055#1086#1089#1090#1072#1074#1080#1090#1100' '#1085#1086#1084#1077#1088#1072' '#1082#1086#1084#1084'. '#1074' '#1089#1082#1086#1073#1082#1080' ('#1083#1102#1073#1072#1103' '#1082#1085#1080#1075#1072')'
+        OnClick = N10Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object N7: TMenuItem
+        Caption = #1057#1082#1086#1088#1088#1077#1082#1090#1080#1088#1086#1074#1072#1090#1100' '#1091#1082#1072#1079#1072#1090#1077#1083#1100
+        OnClick = N7Click
+      end
+      object N22: TMenuItem
+        Caption = #1053#1086#1084#1077#1088' '#1089#1090#1088#1072#1085#1080#1094#1099' '#1074' '#1040#1090#1093#1072#1088#1074#1072#1074#1077#1076#1077
+        OnClick = N22Click
+      end
+      object N20: TMenuItem
+        Caption = #1053#1086#1084#1077#1088' '#1089#1090#1088#1072#1085#1080#1094#1099' ('#1087#1083#1102#1089', '#1084#1080#1085#1091#1089')'
+        OnClick = N20Click
+      end
+      object IAST1: TMenuItem
+        Caption = #1055#1086#1076#1075#1086#1090#1086#1074#1080#1090#1100' '#1096#1083#1086#1082#1080'  IAST '#1076#1083#1103' '#1082#1086#1088#1087#1091#1089#1072
+        OnClick = IAST1Click
+      end
+      object DandaItem: TMenuItem
+        Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1076#1074#1086#1081#1085#1091#1102' '#1076#1072#1085#1076#1091' '#1074' '#1082#1086#1085#1094#1077' '#1096#1083#1086#1082' '#1085#1072' IAST'
+        OnClick = DandaItemClick
+      end
+      object Danda_Space: TMenuItem
+        Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1087#1088#1086#1073#1077#1083' '#1087#1077#1088#1077#1076' '#1076#1072#1085#1076#1072#1084#1080
+        OnClick = Danda_SpaceClick
+      end
+      object IAST2: TMenuItem
+        Caption = #1055#1088#1086#1074#1077#1088#1080#1090#1100' IAST '#1092#1072#1081#1083' '#1089#1086' '#1096#1083#1086#1082#1072#1084#1080'  '#1085#1072' '#1087#1088#1077#1076#1084#1077#1090' '#1086#1076#1080#1085#1072#1082#1086#1074#1099#1093' '#1096#1083#1086#1082
+        OnClick = IAST2Click
+      end
+      object N23: TMenuItem
+        Caption = #1057#1090#1072#1090#1100#1080' '#1089#1083#1086#1074#1072#1088#1103' '#1040#1087#1090#1077
+        OnClick = N23Click
+      end
+    end
+    object N12: TMenuItem
+      Caption = #1059#1090#1080#1083#1080#1090#1099
+      object N13: TMenuItem
+        Caption = #1057#1076#1077#1083#1072#1090#1100' '#1089#1083#1086#1074#1072#1088#1100' '#1080#1079' '#1091#1082#1072#1079#1072#1090#1077#1083#1103
+        OnClick = N13Click
+      end
+      object N14: TMenuItem
+        Caption = #1057#1086#1088#1090#1080#1088#1086#1074#1082#1072' '#1089#1087#1080#1089#1082#1072
+        OnClick = N14Click
+      end
+      object N15: TMenuItem
+        Caption = #1055#1086#1080#1089#1082' '#1089#1083#1086#1074' '#1074' '#1090#1077#1082#1089#1090#1077' ('#1087#1077#1088#1074#1086#1077' '#1074#1093#1086#1078#1076#1077#1085#1080#1077')'
+        OnClick = N15Click
+      end
+      object N16: TMenuItem
+        Caption = #1047#1072#1084#1077#1085#1072' '#1089#1083#1086#1074' '#1080#1079' Memo1 '#1074' Memo2'
+        OnClick = N16Click
+      end
+      object N18: TMenuItem
+        Caption = #1050#1072#1074#1099#1095#1082#1080
+        OnClick = N18Click
+      end
+      object ValmikiExtractItem: TMenuItem
+        Caption = #1048#1079#1074#1083#1077#1095#1100' '#1076#1077#1074#1072#1085#1072#1075#1072#1088#1080' valmikiramayan.net'
+        OnClick = ValmikiExtractItemClick
+      end
+      object N121: TMenuItem
+        Caption = #1055#1088#1086#1074#1077#1088#1082#1072' '#1087#1077#1088#1077#1085#1086#1089#1072' '#1092#1072#1081#1083#1072' 1 '#1074#1085#1091#1090#1088#1100' 2'
+        OnClick = N121Click
+      end
+      object Memo1Memo21: TMenuItem
+        Caption = #1057#1072#1084#1072#1089#1099' '#1074' '#1056#1072#1084#1086#1076#1072#1085#1090#1077' (Memo1->Memo2)'
+        OnClick = Memo1Memo21Click
+      end
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Text files|*.txt|HTML|*.htm*'
+    Left = 152
+    Top = 8
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = 'txt'
+    Filter = 'Text Files|*.txt'
+    Left = 208
+    Top = 8
+  end
+end
