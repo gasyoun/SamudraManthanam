@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.10.0] - 2026-05-15 (Track A — Corpus Publication Workflow)
+### Added
+- **`web/ingest/validate.py`**: `ValidationReport` dataclass + `validate_corpus()` — checks manifest existence, duplicate entries, missing files, and malformed/absent title comments. Errors block publish; missing titles are warnings only.
+- **`web/ingest/publish.py`**: Atomic publish pipeline with six guarded steps: validate → ingest into temp DB → `PRAGMA integrity_check` → smoke-check row counts → timestamped backup → `Path.replace()` atomic swap. Also exposes individual helpers (`integrity_check`, `smoke_check`, `do_backup`, `atomic_swap`) for scripting. CLI via `python ingest/publish.py --help`.
+- **`reindex.sh` (rewritten)**: No-Docker VPS-friendly shell script; drives `publish.py` via env vars (`CORPUS_PATH`, `DB_PATH`, `NEXT_DB_PATH`, `BACKUP_DIR`, `VENV`, `MIN_SOURCES`). Activates virtualenv if `VENV` is set.
+- **`web/tests/test_publish.py`**: 12 hermetic tests covering validate_corpus (ok / no-manifest / missing-file / duplicate / no-title), integrity_check (ok / corrupt), smoke_check, do_backup (creates file / missing source), and atomic_swap (replace / fresh install).
+
 ## [1.9.1] - 2026-05-15 (Scholarly Workbench — Track B, continued)
 ### Added
 - **Export result count**: Standalone HTML export now shows "Найдено: N записей" in the metadata header.
