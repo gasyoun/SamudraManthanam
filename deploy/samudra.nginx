@@ -1,0 +1,30 @@
+# Nginx site config for Samudra Manthanam
+# Replace <YOUR_DOMAIN> with the actual domain name.
+# After initial HTTP setup, run: certbot --nginx -d <YOUR_DOMAIN>
+# Certbot will rewrite this file to add HTTPS automatically.
+
+server {
+    listen 80;
+    server_name <YOUR_DOMAIN>;
+
+    # Serve static assets directly — bypasses Python entirely
+    location /static/ {
+        alias /opt/samudra/web/static/;
+        expires 7d;
+        access_log off;
+        add_header Cache-Control "public, max-age=604800, immutable";
+    }
+
+    # Proxy everything else to uvicorn
+    location / {
+        proxy_pass         http://127.0.0.1:8000;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+
+        # Allow SSE (search stream) to keep connections open
+        proxy_read_timeout 120s;
+        proxy_buffering    off;
+    }
+}

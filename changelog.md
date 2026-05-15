@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.0] - 2026-05-15 (Track C — No-Docker VPS Deployment)
+### Added
+- **`DEPLOYMENT.md`**: Step-by-step VPS setup guide covering prerequisites, directory layout, venv creation, `.env` configuration, initial corpus build, systemd service install, nginx reverse proxy, HTTPS via certbot, cron-based publish automation, rollback procedure.
+- **`deploy/samudra.service`**: Ready-to-install systemd unit file — uvicorn on `127.0.0.1:8000`, `EnvironmentFile` for secrets, `PrivateTmp`, 2-worker default.
+- **`deploy/samudra.nginx`**: nginx site config — static files served directly with `expires 7d`, proxy pass to uvicorn with SSE-safe `proxy_buffering off` and 120 s read timeout.
+- **`web/scripts/smoke_check.py`**: Standalone post-publish health check — verifies DB exists, queries source/line counts and corpus version, exits 1 if below `--min-sources`. Safe for cron or monitoring scripts.
+
 ## [1.10.0] - 2026-05-15 (Track A — Corpus Publication Workflow)
 ### Added
 - **`web/ingest/validate.py`**: `ValidationReport` dataclass + `validate_corpus()` — checks manifest existence, duplicate entries, missing files, and malformed/absent title comments. Errors block publish; missing titles are warnings only.
