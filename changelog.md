@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.1] - 2026-05-15 (Engaged-user CTA)
+### Added
+- **Search-count engagement signal**: localStorage tracks searches per browser; after 3 searches a sliding bottom-of-page banner surfaces a stronger course CTA — *"Похоже, вы серьёзно изучаете санскрит. Курс грамматики поможет читать тексты системно."* Distinct `utm_medium=engaged_banner` for conversion attribution. Dismissal is sticky across sessions. Hidden entirely when `SYSTEMA_SANSCRITICUM_URL` is unset.
+- **`test_funnel.py`**: 2 new tests verifying the banner element + UTM are rendered when `SS_URL` is set and absent when unset.
+
 ## [1.12.0] - 2026-05-15 (Funnel foundations — Systema Sanscriticum cross-link, OG, SEO)
 ### Added
 - **`SYSTEMA_SANSCRITICUM_URL` setting + cross-link banner**: When set, a "Курс грамматики →" CTA appears in the navbar (index) and source view header. Distinct `utm_medium` per placement (`navbar` vs `source_view`) so analytics can attribute conversions by surface. Hidden cleanly when the env var is empty.

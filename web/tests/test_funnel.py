@@ -106,3 +106,31 @@ def test_source_view_cross_link_uses_distinct_utm_medium(test_db):
         assert "utm_medium=source_view" in body
     finally:
         settings.SYSTEMA_SANSCRITICUM_URL = old
+
+
+# ── Engaged-user CTA banner ───────────────────────────────────────────────────
+
+def test_engaged_cta_present_when_ss_url_set(test_db):
+    """The HTML for the engaged-user CTA must be in the page when SS URL is set.
+    JS decides whether to actually display it based on localStorage search count."""
+    old = settings.SYSTEMA_SANSCRITICUM_URL
+    settings.SYSTEMA_SANSCRITICUM_URL = "https://systema-sanscriticum.ru"
+    try:
+        response = client.get("/")
+        body = response.text
+        assert 'id="engagedCta"' in body
+        assert "utm_medium=engaged_banner" in body  # distinct attribution surface
+        assert "Узнать →" in body
+    finally:
+        settings.SYSTEMA_SANSCRITICUM_URL = old
+
+
+def test_engaged_cta_hidden_when_ss_url_unset(test_db):
+    old = settings.SYSTEMA_SANSCRITICUM_URL
+    settings.SYSTEMA_SANSCRITICUM_URL = ""
+    try:
+        response = client.get("/")
+        # No CTA element should be rendered at all when SS_URL is empty
+        assert 'id="engagedCta"' not in response.text
+    finally:
+        settings.SYSTEMA_SANSCRITICUM_URL = old

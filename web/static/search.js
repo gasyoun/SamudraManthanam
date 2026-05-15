@@ -1,6 +1,43 @@
 $(document).ready(function() {
     let totalSourceCount = 0;
 
+    // ── Engaged-user CTA ──────────────────────────────────────────────────────
+    // After SEARCH_THRESHOLD searches in this browser, surface a stronger CTA
+    // toward the paid course. Dismissal is sticky across page loads.
+    const SEARCH_THRESHOLD = 3;
+
+    function maybeShowEngagedCta() {
+        const cta = document.getElementById('engagedCta');
+        if (!cta) return;  // SYSTEMA_SANSCRITICUM_URL not configured
+        if (localStorage.getItem('engagedCtaDismissed') === '1') return;
+        const count = parseInt(localStorage.getItem('searchCount') || '0', 10);
+        if (count < SEARCH_THRESHOLD) return;
+
+        const link = document.getElementById('engagedCtaLink');
+        if (link) link.href = cta.dataset.ssUrl;
+        cta.style.display = 'flex';
+        // Two-frame defer so the transition runs (display:none → flex isn't transitionable directly)
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            cta.style.opacity = '1';
+            cta.style.transform = 'translateX(-50%) translateY(0)';
+        }));
+    }
+    function incrementSearchCount() {
+        const count = parseInt(localStorage.getItem('searchCount') || '0', 10) + 1;
+        localStorage.setItem('searchCount', String(count));
+        if (count >= SEARCH_THRESHOLD) maybeShowEngagedCta();
+    }
+    $(document).on('click', '#engagedCtaClose', function() {
+        const cta = document.getElementById('engagedCta');
+        if (!cta) return;
+        cta.style.opacity = '0';
+        cta.style.transform = 'translateX(-50%) translateY(20px)';
+        setTimeout(() => { cta.style.display = 'none'; }, 400);
+        localStorage.setItem('engagedCtaDismissed', '1');
+    });
+    // Show on page load if the user already crossed the threshold on a prior visit
+    maybeShowEngagedCta();
+
     // ── Sources ──────────────────────────────────────────────────────────────
     fetch('/api/sources')
         .then(response => response.json())
@@ -104,6 +141,9 @@ $(document).ready(function() {
 
         // Update URL bar so the search is bookmarkable / shareable
         history.pushState({}, '', buildPermalink(query, mode, case_sensitive, whole_word, source_ids));
+
+        // Count this search toward the engaged-user CTA threshold
+        incrementSearchCount();
 
         $('#progressContainer').show();
         $('#searchProgress').val(0);
