@@ -81,11 +81,13 @@ async def expand_word(slp1_word: str) -> List[str]:
     if cached is not None:
         return cached
 
-    url = f"https://sanskrit.inria.fr/cgi-bin/SKT/sktlex.cgi?lex=SH&q={slp1_word}&t=xml"
+    # Pass query params through httpx so '&' / '=' / unicode are safely encoded.
+    url = "https://sanskrit.inria.fr/cgi-bin/SKT/sktlex.cgi"
+    params = {"lex": "SH", "q": slp1_word, "t": "xml"}
     stems: Set[str] = {slp1_word}
     try:
         async with httpx.AsyncClient() as client:
-            response = await client.get(url, timeout=5.0)
+            response = await client.get(url, params=params, timeout=5.0)
             if response.status_code == 200:
                 for s in re.findall(r'<stem>(.*?)</stem>', response.text):
                     stems.add(s)

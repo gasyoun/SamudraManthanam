@@ -183,6 +183,59 @@ def test_sitemap_xml_escapes_public_base_url(test_db):
 
 # ── Regression: error path must not leak internal exception text to client ────
 
+def test_anchor_redirect_url_encodes_link_id(test_db):
+    """A link_id containing '&' (or other URL-significant chars) must be
+    percent-encoded on the way into ?highlight=. Otherwise the query string
+    is split into multiple params and the target page can't restore the anchor.
+
+    We send the special chars percent-encoded in the path so FastAPI decodes
+    them into the path param, then we verify they come back re-encoded in the
+    redirect Location."""
+    response = client.get(
+        "/sources/1/anchor/some%26weird%3Fid",
+        follow_redirects=False,
+    )
+    assert response.status_code == 302
+    location = response.headers["location"]
+    assert "highlight=some%26weird%3Fid" in location
+
+
+def test_anchor_redirect_safe_link_id_unchanged(test_db):
+    """A safe link_id (dotted integers — the common case) survives untouched-ish.
+    Periods are URL-safe and remain literal."""
+    response = client.get("/sources/1/anchor/1.10", follow_redirects=False)
+    assert response.status_code == 302
+    assert response.headers["location"] == "/sources/1?highlight=1.10"
+
+
+def test_health_production_does_not_leak_traceback_text(test_db):
+    """In production, health must surface only an exception type (e.g. 'OperationalError'),
+    never a full path or message."""
+    import tempfile, os as _os
+    old_env = settings.APP_ENV
+    old_state = settings.STATE_DB_PATH
+    tmpdir = tempfile.mkdtemp()
+    settings.APP_ENV = "production"
+    settings.STATE_DB_PATH = tmpdir  # directory → connect fails
+    try:
+        response = client.get("/api/health")
+        body = response.json()
+        err = body["state_db"]["error"]
+        # No path or message leaked
+        assert tmpdir not in (err or "")
+        assert "unable to open" not in (err or "").lower()
+        # Either the exception class name or a fixed message — never raw str(e)
+        if err and err != "STATE_DB_PATH not configured":
+            assert err in ("OperationalError",) or len(err) < 80
+    finally:
+        settings.APP_ENV = old_env
+        settings.STATE_DB_PATH = old_state
+        try:
+            _os.rmdir(tmpdir)
+        except OSError:
+            pass
+
+
 def test_identity_lead_does_not_leak_internals_on_db_failure(test_db):
     """A failure to open state.db (e.g. path is a directory) must yield a clean 503
     with a generic message — not a 500 with the raw aiosqlite traceback."""

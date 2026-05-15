@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from urllib.parse import quote
 from app.db import get_db
 from app.settings import settings
 import os
@@ -53,5 +54,11 @@ async def view_line_context(request: Request, source_id: int, line_num: int):
 
 @router.get("/{source_id}/anchor/{link_id}", response_class=RedirectResponse)
 async def anchor_redirect(source_id: int, link_id: str):
-    """Stable permalink for a line identified by its link_id attribute."""
-    return RedirectResponse(url=f"/sources/{source_id}?highlight={link_id}", status_code=302)
+    """Stable permalink for a line identified by its link_id attribute.
+
+    `link_id` may contain characters that have meaning in URLs (`&`, `#`, `?`, `=`).
+    quote() with `safe=''` ensures all of them are percent-encoded so the
+    `highlight` query param survives intact through the redirect.
+    """
+    safe_link = quote(link_id, safe="")
+    return RedirectResponse(url=f"/sources/{source_id}?highlight={safe_link}", status_code=302)

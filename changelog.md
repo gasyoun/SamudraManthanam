@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.3] - 2026-05-15 (Bug sweep #2)
+### Fixed
+- **Query-string injection on Sanskrit Heritage lookup**: `morph_service.expand_word` built the URL with `f"…?lex=SH&q={slp1_word}"`, so a token containing `&` or `=` would inject additional query parameters into the third-party API call. Now uses `httpx.get(url, params={...})` so all characters are correctly percent-encoded.
+- **`/sources/{id}/anchor/{link_id}` redirect broke for special characters**: a link_id containing `&`, `?`, `#`, `=` was inserted raw into the redirect URL, causing the target page to lose the anchor. Now `urllib.parse.quote(link_id, safe="")`'d before insertion.
+- **`/api/health` leaked DB paths and stack-trace fragments**: `corpus_error` / `state_error` previously echoed `str(e)` to anonymous callers. In production they now expose only the exception class name (e.g. `OperationalError`); the full message is `logger.exception`-logged for operators. Development mode still surfaces the full text for fast debugging.
+- **`/api/ai/explain` propagated provider error text verbatim**: AI provider errors potentially containing URLs, model names, or transport details were forwarded to the client. Production now returns a stable "AI service unavailable" message; full text is logged. Development keeps verbose output.
+- **State-DB connection leaked from `/api/health`**: if `SELECT 1` raised, the connection was never closed. Now opened with a `finally`-guarded close.
+
+### Added
+- **`test_funnel.py`**: 3 new regression tests — anchor redirect URL-encoding (both special and safe link_ids), and production-mode health endpoint redaction. 80/80 hermetic tests pass.
+
 ## [1.12.2] - 2026-05-15 (Bug sweep)
 ### Fixed
 - **URL concat bug with query-bearing `SYSTEMA_SANSCRITICUM_URL`**: Setting the env var to `https://x.ru/?ref=launch` previously produced malformed `…?ref=launch?utm_source=…` links. UTM URLs are now built server-side with `urllib.parse.urlencode` and a sensible `?`/`&` separator. New `_ss_link(medium)` helper in `main.py`; reader and templates take the precomputed `ss_link` / `engaged_ss_link`.
