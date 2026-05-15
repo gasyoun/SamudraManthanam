@@ -6,12 +6,18 @@ $(document).ready(function() {
             const grid = $('#sourcesGrid');
             grid.empty();
             sources.forEach(source => {
-                grid.append(`
-                    <div class="option-item">
-                        <input type="checkbox" id="src_${source.id}" value="${source.id}" checked>
-                        <label for="src_${source.id}" style="font-size: 0.8rem;">${source.title}</label>
-                    </div>
-                `);
+                const item = $('<div>').addClass('option-item');
+                const checkbox = $('<input>')
+                    .attr('type', 'checkbox')
+                    .attr('id', `src_${source.id}`)
+                    .val(source.id)
+                    .prop('checked', true);
+                const label = $('<label>')
+                    .attr('for', `src_${source.id}`)
+                    .css('font-size', '0.8rem')
+                    .text(source.title);
+                item.append(checkbox, label);
+                grid.append(item);
             });
             updateSourceCount();
         });
@@ -59,31 +65,7 @@ $(document).ready(function() {
         $('#progressText').text('Поиск...');
         $('#results-area').empty().append('<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>');
 
-        // SSE for progress
-        let eventSource = null;
-        // If source_ids is empty, we still want to pass it as an empty string to indicate "None" 
-        // but the backend uses absence of the param as "All".
-        // Let's use a specific convention: if source_ids is empty, send 'none' or just '[]'
-        const source_ids_str = source_ids.join(',');
-        const sseUrl = `/api/search/stream?query=${encodeURIComponent(query)}&mode=${mode}&case_sensitive=${case_sensitive}&whole_word=${whole_word}&source_ids=${source_ids_str}`;
-        
-        try {
-            eventSource = new EventSource(sseUrl);
-            eventSource.onmessage = function(event) {
-                const data = JSON.parse(event.data);
-                if (data.type === 'progress') {
-                    $('#searchProgress').val(data.percent);
-                    $('#progressText').text(`Поиск... Найдено: ${data.found_so_far}`);
-                } else if (data.type === 'done') {
-                    eventSource.close();
-                }
-            };
-            eventSource.onerror = function() {
-                if (eventSource) eventSource.close();
-            };
-        } catch (e) {
-            console.error("SSE Error:", e);
-        }
+        $('#searchProgress').val(30);
 
         const requestData = {
             query: query,
@@ -105,7 +87,7 @@ $(document).ready(function() {
             return response.json();
         })
         .then(data => {
-            if (eventSource) eventSource.close();
+            $('#searchProgress').val(100);
             $('#progressContainer').hide();
             if (data.html_fragment) {
                 $('#results-area').html(data.html_fragment);
@@ -116,7 +98,6 @@ $(document).ready(function() {
             }
         })
         .catch(error => {
-            if (eventSource) eventSource.close();
             $('#progressContainer').hide();
             $('#results-area').html(`<p style="color: red;">Ошибка при поиске: ${error.message}</p>`);
             console.error('Search error:', error);

@@ -13,7 +13,11 @@ def escape_fts(term: str, whole_word: bool = False) -> str:
         # For non-whole-word, we split into words and combine with AND
         # to avoid forcing a strict phrase match unless the user typed one.
         # We append * for prefix matching.
-        tokens = [f'"{t.replace("\"", "\"\"")}"*' for t in safe.split() if t.strip()]
+        tokens = []
+        for token in safe.split():
+            if token.strip():
+                escaped_token = token.replace('"', '""')
+                tokens.append(f'"{escaped_token}"*')
         if not tokens:
             return f'"{safe}"*'
         return " AND ".join(tokens)
@@ -48,6 +52,7 @@ async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: boo
         JOIN sources s ON cl.source_id = s.id
         WHERE corpus_lines MATCH ?
         {source_filter}
+        ORDER BY s.sort_order, cl.line_num
         LIMIT ?
     """
     
@@ -113,6 +118,7 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
         FROM corpus_lines cl
         JOIN sources s ON cl.source_id = s.id
         {source_filter}
+        ORDER BY s.sort_order, cl.line_num
     """
     
     results = []

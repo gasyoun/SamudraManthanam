@@ -3,6 +3,8 @@ import time
 import os
 import json
 import asyncio
+import re
+from urllib.parse import quote
 from sse_starlette.sse import EventSourceResponse
 from app.db import get_db
 from app.models import SearchRequest, SearchResult, SearchResultItem, SearchMode
@@ -13,6 +15,24 @@ from fastapi.responses import HTMLResponse
 from app.settings import settings
 
 router = APIRouter(prefix="/api/search", tags=["search"])
+
+
+def parse_source_ids(source_ids_str: str | None) -> list[int] | None:
+    if source_ids_str is None:
+        return None
+
+    try:
+        return [int(sid) for sid in source_ids_str.split(",") if sid.strip()]
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail="source_ids must be a comma-separated list of integers") from exc
+
+
+def export_filename(query: str) -> str:
+    safe = re.sub(r"[^A-Za-z0-9._-]+", "_", query).strip("._")
+    if not safe:
+        safe = "search"
+    return f"{safe[:80]}.html"
+
 
 @router.post("", response_model=SearchResult)
 async def post_search(request: SearchRequest):
@@ -46,18 +66,13 @@ async def post_search(request: SearchRequest):
 @router.get("/stream")
 async def get_search_stream(request: Request, query: str, mode: SearchMode = SearchMode.plain, case_sensitive: bool = False, whole_word: bool = False):
     # Handle source_ids from query params
-    source_ids_str = request.query_params.get("source_ids")
-    if source_ids_str is not None:
-        source_ids = [int(sid) for sid in source_ids_str.split(",") if sid.strip()]
-    else:
-        source_ids = None
+    source_ids = parse_source_ids(request.query_params.get("source_ids"))
 
     # Validate regex if needed
     if mode == SearchMode.regex:
         patterns = [p.strip() for p in query.split('\n') if p.strip()]
         for p in patterns:
             try:
-                import re
                 re.compile(p)
             except re.error as e:
                 raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
@@ -126,18 +141,13 @@ async def get_search_stream(request: Request, query: str, mode: SearchMode = Sea
 @router.get("/export", response_class=HTMLResponse)
 async def get_export(request: Request, query: str, mode: SearchMode = SearchMode.plain, case_sensitive: bool = False, whole_word: bool = False):
     # Handle source_ids from query params
-    source_ids_str = request.query_params.get("source_ids")
-    if source_ids_str is not None:
-        source_ids = [int(sid) for sid in source_ids_str.split(",") if sid.strip()]
-    else:
-        source_ids = None
+    source_ids = parse_source_ids(request.query_params.get("source_ids"))
 
     # Validate regex if needed
     if mode == SearchMode.regex:
         patterns = [p.strip() for p in query.split('\n') if p.strip()]
         for p in patterns:
             try:
-                import re
                 re.compile(p)
             except re.error as e:
                 raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
@@ -157,7 +167,9 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
         fragment = render_fragment(query, results, limit_reached=limit_reached, search_metadata=search_metadata)
         html = render_standalone(query, fragment)
         
-        headers = {"Content-Disposition": f'attachment; filename="{query}.html"'}
+        filename = export_filename(query)
+        encoded_filename = quote(filename)
+        headers = {"Content-Disposition": f"attachment; filename=\"{filename}\"; filename*=UTF-8''{encoded_filename}"}
         return HTMLResponse(content=html, headers=headers)
     finally:
         await db.close()

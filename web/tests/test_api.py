@@ -91,6 +91,24 @@ async def test_invalid_get_mode_stream():
     assert response.status_code == 422
 
 @pytest.mark.asyncio
+async def test_invalid_get_source_ids():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/export?query=test&source_ids=1,nope")
+    assert response.status_code == 422
+
+@pytest.mark.asyncio
+async def test_export_filename_is_sanitized():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/export?query=arjuna%22%0D%0AX-Bad%3Ayes&mode=plain")
+    assert response.status_code == 200
+    content_disposition = response.headers["content-disposition"]
+    assert "\r" not in content_disposition
+    assert "\n" not in content_disposition
+    assert "X-Bad:yes" not in content_disposition
+
+@pytest.mark.asyncio
 async def test_invalid_regex():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
@@ -145,4 +163,3 @@ async def test_search_stream_morphological():
     assert "text/event-stream" in response.headers["content-type"]
     # Check for progress or done events
     assert "progress" in response.text or "done" in response.text
-
