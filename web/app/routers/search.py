@@ -3,7 +3,7 @@ import time
 import os
 import json
 import re
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 from sse_starlette.sse import EventSourceResponse
 from app.db import get_db
 from app.models import SearchRequest, SearchResult, SearchResultItem, SearchMode
@@ -213,12 +213,27 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
         
         # Collect export metadata
         corpus_version = await get_corpus_version(db)
+
+        # Build a live-search permalink so the reader can reopen this query in the app
+        qs: list[tuple] = [("q", query)]
+        if mode != SearchMode.plain:
+            qs.append(("mode", str(mode)))
+        if case_sensitive:
+            qs.append(("cs", "1"))
+        if whole_word:
+            qs.append(("ww", "1"))
+        if source_ids:
+            qs.append(("src", ",".join(str(s) for s in source_ids)))
+        live_search_url = "/?" + urlencode(qs)
+
         metadata = {
             "query": query,
             "mode": mode,
+            "result_count": len(results),
             "corpus_version": corpus_version,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "source_filter": f"{len(source_ids)} selected" if source_ids else "all"
+            "source_filter": f"{len(source_ids)} selected" if source_ids else "all",
+            "live_search_url": live_search_url,
         }
         
         html = render_standalone(query, fragment, metadata=metadata)

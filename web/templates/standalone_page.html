@@ -22,10 +22,14 @@
     <div class="export-metadata" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem;">
         <strong>Запрос:</strong> {{ metadata.query }}<br>
         <strong>Режим:</strong> {{ metadata.mode }}<br>
+        <strong>Найдено:</strong> {{ metadata.result_count }} записей<br>
         <strong>Версия корпуса:</strong> {{ metadata.corpus_version or 'неизвестно' }}<br>
         <strong>Сгенерировано:</strong> {{ metadata.timestamp }}<br>
         {% if metadata.source_filter %}
         <strong>Фильтр источников:</strong> {{ metadata.source_filter }}<br>
+        {% endif %}
+        {% if metadata.live_search_url %}
+        <a href="{{ metadata.live_search_url }}" style="display:inline-block;margin-top:8px;color:#e67e22;text-decoration:none;font-weight:600;">← Открыть в поиске</a>
         {% endif %}
     </div>
     {% endif %}
