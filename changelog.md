@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.1] - 2026-05-15 (Scholarly Workbench — Track B, continued)
+### Added
+- **Export result count**: Standalone HTML export now shows "Найдено: N записей" in the metadata header.
+- **Export live search link**: "← Открыть в поиске" link in the export header reconstructs the full permalink and links back to the live app with all original query parameters pre-filled.
+
+### Fixed
+- **Morph cache migrated to state.db**: `morph_cache` moved from `corpus.db` to `state.db` — corpus DB is now strictly read-only post-ingest as intended. `expand_word` no longer writes to the corpus connection.
+- **Morph logging**: `print()` error output replaced with `logging.warning()` throughout `morph_service.py`.
+- **Morph graceful degradation**: Network failure always returns at least the input word with no crash; unset `STATE_DB_PATH` skips cache silently without error.
+
 ## [1.9.0] - 2026-05-15 (Scholarly Workbench — Track B)
 ### Added
 - **Search permalink URLs**: URL bar now reflects every search (`?q=...&mode=...&cs=&ww=&src=`). Loading such a URL restores form state and re-runs the search automatically — searches are bookmarkable and shareable.
