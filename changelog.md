@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.5] - 2026-05-15 (Bug sweep #4)
+### Fixed
+- **Dead prev / next / nearest navigation buttons on the main `/` page**: `selection.js` (which binds those buttons and the `a` / `s` / `d` keyboard shortcuts) was only inlined into the standalone HTML export. On the live site the buttons appeared in the result fragment but had no effect. Now loaded as a static script alongside `search.js`; `selection.js` also looks for either `#results` (standalone) or `#results-area` (live) for its index-reset observer.
+- **`/api/ai/explain` accepted unbounded `context_lines`**: an abuser could POST 10,000 lines × 100KB and burn the AI-provider budget. `AIRequest` now caps the list at 50 items, each ≤ 2000 chars, plus `query` length ≤ 1000.
+- **`/api/corrections/propose` accepted unbounded `old_text` / `new_text`**: state.db could be filled with multi-megabyte spam. `CorrectionProposal` now requires `1–10000` chars for both fields, `email` ≤ 320 (RFC 5321), and `source_id` / `line_num` ≥ 1.
+- **`test_phase3.test_correction_proposal` mutated `settings.APP_ENV` without restoring**: dev mode could leak into later tests. Now `try/finally`-restored. Similar fix in `test_phase4.test_ai_explain_unconfigured` which previously relied on whatever `APP_ENV` an earlier test had left behind.
+
+### Added
+- **`test_phase4.py`**: 4 new tests covering AI context_lines cap (count + per-line) and corrections payload bounds (size + empty). 86/86 hermetic tests pass.
+
 ## [1.12.4] - 2026-05-15 (Bug sweep #3)
 ### Security
 - **CORS fail-open in production with unset `ALLOWED_ORIGINS`** (HIGH): `if not origins or settings.APP_ENV == "development"` — the `or` meant an operator who forgot to set `ALLOWED_ORIGINS` in production shipped `allow_origins=["*"]`. Replaced `or` with `and` so wildcard is reserved for *development with no allowlist*. Production with unset origins now fails closed (`allow_origins=[]`).

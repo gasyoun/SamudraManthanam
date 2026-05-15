@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Request, Query
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, List
 import datetime
 from app.state_db import get_state_db
@@ -8,11 +8,11 @@ from app.settings import settings
 router = APIRouter(prefix="/api/corrections", tags=["corrections"])
 
 class CorrectionProposal(BaseModel):
-    source_id: int
-    line_num: int
-    old_text: str
-    new_text: str
-    email: Optional[str] = None # Link to user if available
+    source_id: int = Field(..., ge=1)
+    line_num: int = Field(..., ge=1)
+    old_text: str = Field(..., min_length=1, max_length=10000)
+    new_text: str = Field(..., min_length=1, max_length=10000)
+    email: Optional[str] = Field(None, max_length=320)  # RFC 5321 max email length
 
 @router.post("/propose")
 async def propose_correction(proposal: CorrectionProposal):

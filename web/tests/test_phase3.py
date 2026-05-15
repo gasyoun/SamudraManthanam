@@ -102,11 +102,16 @@ async def test_correction_proposal():
     assert response.status_code == 200
     assert response.json()["status"] == "success"
     
-    # Verify pending (dev key required)
+    # Verify pending (dev key required). Restore APP_ENV to avoid leaking dev
+    # mode into later tests that depend on production-mode behavior.
+    old_env = settings.APP_ENV
     settings.APP_ENV = "development"
-    response = client.get("/api/corrections/pending?key=dev")
-    assert response.status_code == 200
-    data = response.json()
-    assert len(data) == 1
-    assert data[0]["new_text"] == "new"
-    assert data[0]["status"] == "pending"
+    try:
+        response = client.get("/api/corrections/pending?key=dev")
+        assert response.status_code == 200
+        data = response.json()
+        assert len(data) == 1
+        assert data[0]["new_text"] == "new"
+        assert data[0]["status"] == "pending"
+    finally:
+        settings.APP_ENV = old_env

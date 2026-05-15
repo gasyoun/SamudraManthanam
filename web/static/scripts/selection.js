@@ -81,7 +81,8 @@
     const observer = new MutationObserver(() => {
         currentIndex = -1;
     });
-    const resultsContainer = document.getElementById('results');
+    // Standalone export uses #results; the main app uses #results-area.
+    const resultsContainer = document.getElementById('results') || document.getElementById('results-area');
     if (resultsContainer) {
         observer.observe(resultsContainer, { childList: true });
     }
