@@ -97,7 +97,7 @@ if `CORPUS_PATH` is not configured, and path traversal sanitisation still runs f
 **Fixed:** Converted to `pydantic-settings` `BaseSettings`. Tests now use dependency injection or controlled overrides.
 
 ### A4 · SSE stream endpoint is architectural waste
-**Fixed:** Removed redundant SSE logic in favor of a robust unified search dispatch.
+**Partially addressed:** `GET /api/search/stream` remains in `web/app/routers/search.py` — it was retained intentionally to support future progress-bar UX for large corpora. The unified `dispatch_search` is now the canonical search path; the SSE endpoint delegates to it per-source. Whether to keep or remove it should be decided before the next release.
 
 ### A5 · No rate limiting on any endpoint
 **Fixed:** Implemented `MAX_SCANNED_ROWS` and timeouts for regex searches. Global rate limiting deferred to VPS-level Nginx config as per target architecture.

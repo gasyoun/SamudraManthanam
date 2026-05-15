@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Query
 from pydantic import BaseModel
 from typing import Optional, List
 import datetime
 from app.state_db import get_state_db
+from app.settings import settings
 
 router = APIRouter(prefix="/api/corrections", tags=["corrections"])
 
@@ -40,7 +41,10 @@ async def propose_correction(proposal: CorrectionProposal):
         await db.close()
 
 @router.get("/pending")
-async def get_pending_corrections():
+async def get_pending_corrections(key: str = Query(...)):
+    if not settings.ADMIN_SECRET_KEY or key != settings.ADMIN_SECRET_KEY:
+        if settings.APP_ENV != "development" or key != "dev":
+            raise HTTPException(status_code=403, detail="Forbidden")
     db = await get_state_db()
     if not db:
         return []

@@ -11,8 +11,8 @@ env = Environment(
 
 def get_count_suffix(count: int) -> str:
     if count == 100: return f"{count}-та"
-    if count == 90: return f"{count}-та"
-    if count == 40: return f"{count}-ка"
+    if count % 100 == 90: return f"{count}-та"
+    if count % 100 == 40: return f"{count}-ка"
     
     if (count <= 10) or (count > 20):
         m = count % 10

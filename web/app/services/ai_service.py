@@ -1,3 +1,4 @@
+import asyncio
 import httpx
 import json
 from app.settings import settings
@@ -57,5 +58,7 @@ async def explain_with_ai(query: str, context_lines: List[str]) -> Dict[str, Any
                 "model": data.get("model"),
                 "usage": data.get("usage")
             }
+        except asyncio.CancelledError:
+            raise
         except Exception as e:
             return {"error": f"AI provider error: {str(e)}"}

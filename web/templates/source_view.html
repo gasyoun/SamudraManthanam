@@ -142,6 +142,7 @@
                         {{ line.link_id or line.line_num }}
                     </div>
                     <div class="line-text">
+                        {# safe: line_html is ingest-produced corpus HTML, never user input #}
                         {{ line.line_html | safe }}
                     </div>
                 </div>

@@ -65,8 +65,9 @@ async def test_correction_proposal():
     assert response.status_code == 200
     assert response.json()["status"] == "success"
     
-    # Verify pending
-    response = client.get("/api/corrections/pending")
+    # Verify pending (dev key required)
+    settings.APP_ENV = "development"
+    response = client.get("/api/corrections/pending?key=dev")
     assert response.status_code == 200
     data = response.json()
     assert len(data) == 1
