@@ -20,7 +20,7 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="662"/>
+        <TopLine Value="663"/>
         <CursorPos X="3" Y="680"/>
         <UsageCount Value="220"/>
         <Loaded Value="True"/>
@@ -189,7 +189,6 @@
         <CursorPos X="18" Y="19"/>
         <UsageCount Value="32"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit21>
       <Unit22>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-json\src\jsonparser.pp"/>
