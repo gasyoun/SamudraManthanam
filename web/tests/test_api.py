@@ -134,3 +134,15 @@ async def test_morphological_search_metadata():
     assert "variants" in data["search_metadata"]
     # "svasti" should at least expand to itself
     assert "svasti" in data["search_metadata"]["stems"]
+
+@pytest.mark.asyncio
+async def test_search_stream_morphological():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/stream?query=svasti&mode=morphological")
+    assert response.status_code == 200
+    # SSE response
+    assert "text/event-stream" in response.headers["content-type"]
+    # Check for progress or done events
+    assert "progress" in response.text or "done" in response.text
+

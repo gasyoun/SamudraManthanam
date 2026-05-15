@@ -3,14 +3,15 @@ from fastapi.responses import FileResponse
 import os
 from app.db import get_db
 
+from app.settings import settings
+
 router = APIRouter(prefix="/api/corpus-sync", tags=["sync"])
 
-DB_PATH = os.environ.get("DB_PATH", "corpus.db")
 CORPUS_PATH = os.environ.get("CORPUS_PATH", "../Index/lib/x86_64-win64")
 
 @router.get("/manifest")
 async def get_manifest():
-    db = await get_db(DB_PATH)
+    db = await get_db(settings.DB_PATH)
     try:
         async with db.execute("SELECT filename, sha256, size FROM sources") as cursor:
             rows = await cursor.fetchall()
@@ -28,7 +29,7 @@ async def get_corpus_file(filename: str):
     if safe_filename != filename:
          raise HTTPException(status_code=400, detail="Invalid filename")
 
-    db = await get_db(DB_PATH)
+    db = await get_db(settings.DB_PATH)
     try:
         # Verify file exists in database manifest
         async with db.execute("SELECT 1 FROM sources WHERE filename = ?", (safe_filename,)) as cursor:

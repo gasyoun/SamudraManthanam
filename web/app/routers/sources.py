@@ -4,14 +4,13 @@ import os
 from app.db import get_db
 from app.models import SourceInfo
 
-router = APIRouter(prefix="/api/sources", tags=["sources"])
+from app.settings import settings
 
-# Get DB path from environment or default
-DB_PATH = os.environ.get("DB_PATH", "corpus.db")
+router = APIRouter(prefix="/api/sources", tags=["sources"])
 
 @router.get("", response_model=List[SourceInfo])
 async def get_sources():
-    db = await get_db(DB_PATH)
+    db = await get_db(settings.DB_PATH)
     try:
         async with db.execute("SELECT id, filename, title, sort_order FROM sources ORDER BY sort_order") as cursor:
             rows = await cursor.fetchall()

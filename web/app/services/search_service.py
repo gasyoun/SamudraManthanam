@@ -11,7 +11,7 @@ def escape_fts(term: str, whole_word: bool = False) -> str:
     else:
         # For non-whole-word, we split into words and combine with AND
         # to avoid forcing a strict phrase match unless the user typed one.
-        tokens = [f'"{t.replace('"', '""')}"' for t in safe.split() if t.strip()]
+        tokens = [f'"{t.replace("\"", "\"\"")}"' for t in safe.split() if t.strip()]
         if not tokens:
             return f'"{safe}"'
         return " AND ".join(tokens)

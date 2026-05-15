@@ -4,7 +4,7 @@ import httpx
 import json
 import aiosqlite
 import re
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Optional, Any
 
 DEVANAGARI_RANGE = range(0x0900, 0x0980)
 IAST_MARKERS = set('āīūṛṝḷṃḥñṭḍṇśṣ')

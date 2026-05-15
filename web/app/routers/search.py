@@ -11,14 +11,14 @@ from app.services.search_service import search_plain, search_regex
 from app.services.morph_service import search_morphological
 from fastapi.responses import HTMLResponse
 
-router = APIRouter(prefix="/api/search", tags=["search"])
+from app.settings import settings
 
-DB_PATH = os.environ.get("DB_PATH", "corpus.db")
+router = APIRouter(prefix="/api/search", tags=["search"])
 
 @router.post("", response_model=SearchResult)
 async def post_search(request: SearchRequest):
     start_time = time.time()
-    db = await get_db(DB_PATH)
+    db = await get_db(settings.DB_PATH)
     search_metadata = None
     try:
         if request.mode == "plain":
@@ -81,7 +81,7 @@ async def get_search_stream(request: Request, query: str, mode: SearchMode = Sea
     
     async def event_generator():
         start_time = time.time()
-        db = await get_db(DB_PATH)
+        db = await get_db(settings.DB_PATH)
         try:
             # For SSE, we scan source-by-source to report progress
             # First, get sources
@@ -107,7 +107,7 @@ async def get_search_stream(request: Request, query: str, mode: SearchMode = Sea
                     res = await search_plain(db, query, case_sensitive, whole_word, [sid], 5000)
                 elif mode == SearchMode.regex:
                     res = await search_regex(db, query, case_sensitive, [sid], 5000)
-                elif request.mode == SearchMode.morphological:
+                elif mode == SearchMode.morphological:
                     morph_data = await search_morphological(db, query, [sid], 5000)
                     res = morph_data["results"]
                 else:
@@ -159,7 +159,7 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
             except re.error as e:
                 raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
 
-    db = await get_db(DB_PATH)
+    db = await get_db(settings.DB_PATH)
     search_metadata = None
     try:
         limit = 5000

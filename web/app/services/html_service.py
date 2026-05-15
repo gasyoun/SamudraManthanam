@@ -1,6 +1,6 @@
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import os
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 # Setup Jinja2 environment with autoescape
 template_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "templates")
