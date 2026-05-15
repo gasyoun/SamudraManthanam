@@ -13,7 +13,7 @@ templates = Jinja2Templates(directory="templates")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,  # cannot combine wildcard origin with credentials; tighten with ALLOWED_ORIGINS in Phase 1
     allow_methods=["*"],
     allow_headers=["*"],
 )

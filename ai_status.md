@@ -39,3 +39,38 @@
 - **Optimization**: Regex search remains a full-table scan but is now protected by a 5-second timeout (Task 4.2).
 - **Tests**: Hermetic tests are implemented (Phase 2); `corpus.db` is only used when `USE_REAL_CORPUS=1` is set.
 
+---
+
+## Pre-Gemini Flash Audit (2026-05-15)
+**Status:** ✅ All critical bugs and security issues fixed. See `PRE_GEMINI_AUDIT.md` for full findings.
+
+### Bugs Fixed
+- [x] **B1 – Limit before Python filter**: SQL LIMIT now over-fetches when Python whole-word/case filter is active; final limit applied after filter.
+- [x] **B2 – Whole-word multi-token broken**: `escape_fts` now quotes each token individually (no phrase wrapping); Python filter checks each word with `\b` independently.
+- [x] **B3 – Groups sorted by source_id not sort_order**: `render_fragment` now preserves SQL insertion order via `dict.values()`.
+- [x] **B4 – `<head>` filter dropped content lines**: Filter now matches only structural HTML-only lines via anchored regex.
+- [x] **B5 – Chapter stored with raw HTML markup**: `remove_html_tags()` applied to H1 capture group before storing.
+
+### Security Fixes
+- [x] **S1 – CORS wildcard + credentials=True**: Changed to `allow_credentials=False`; comment marks Phase 1 ALLOWED_ORIGINS task.
+- [x] **S2 – No max_length on query**: Added `max_length=1000` to `SearchRequest.query`.
+- [x] **S3 – Bare except in render_standalone**: Changed to `except OSError`.
+- [x] **S4 – CORPUS_PATH hard-coded Windows path**: Moved to `settings.CORPUS_PATH`; endpoint returns 503 when unconfigured, 400 for traversal (sanitisation runs first).
+
+### Quality Fixes
+- [x] **Q1 – Dead import `asyncio`**: Removed from `search.py`.
+- [x] **Q2 – Stale hardcoded version "2026.05"**: Manifest now reads `corpus_meta` for version; omits field if table absent.
+
+### Documentation
+- [x] Added `PRE_GEMINI_AUDIT.md` with all 26 findings and fix status.
+- [x] Added `STATUS: SUPERSEDED` banners to `WEB_PLAN.md`, `roadmap.md`, `gemini-implementation-plan.md`.
+- [x] Added `PRE_GEMINI_AUDIT.md` and updated reading order in `DOCUMENTATION_INDEX.md`.
+
+### Open for Gemini Flash Phase 1
+- `settings.py` → convert to `pydantic-settings` `BaseSettings` with all env vars.
+- Create `state_db.py` and schema.
+- Create `/api/health` endpoint.
+- CORS tightening with `ALLOWED_ORIGINS`.
+- Move `morph_cache` to `state.db`.
+- VPS deployment docs.
+

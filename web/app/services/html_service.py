@@ -47,19 +47,16 @@ def sklonenie_naideno_v_y_istochnikah(y: int) -> str:
         return f" в {get_count_suffix(y)} источниках"
 
 def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bool = False, search_metadata: Optional[Dict[str, Any]] = None) -> str:
-    # Group results by source
+    # Group results preserving SQL order (sort_order, then line_num).
+    # Do NOT re-sort by source_id — that breaks sources with sort_order != id.
     grouped = {}
     for r in results:
         sid = r["source_id"]
         if sid not in grouped:
-            grouped[sid] = {
-                "title": r["source_title"],
-                "items": []
-            }
+            grouped[sid] = {"title": r["source_title"], "items": []}
         grouped[sid]["items"].append(r)
-    
-    # Sort groups by source_id (or title)
-    sorted_groups = [grouped[sid] for sid in sorted(grouped.keys())]
+
+    sorted_groups = list(grouped.values())  # dict preserves insertion order (Python 3.7+)
     
     # Create the header sentence
     total = len(results)
@@ -100,13 +97,13 @@ def render_standalone(query: str, fragment: str) -> str:
     try:
         with open(os.path.join(static_path, "style.css"), "r", encoding="utf-8") as f:
             css = f.read()
-    except:
+    except OSError:
         css = ""
-        
+
     try:
         with open(os.path.join(static_path, "scripts", "selection.js"), "r", encoding="utf-8") as f:
             selection_js = f.read()
-    except:
+    except OSError:
         selection_js = ""
         
     template = env.get_template("standalone_page.html")

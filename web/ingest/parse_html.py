@@ -39,7 +39,7 @@ def parse_corpus_file(path: str) -> Iterator[Dict]:
         if not line:
             continue
             
-        if '<head>' in line.lower():
+        if re.match(r'^\s*</?(?:html|head|body)[^>]*>\s*$', line, flags=re.IGNORECASE):
             continue
             
         # extract link_id: find id="..." attribute value
@@ -49,7 +49,7 @@ def parse_corpus_file(path: str) -> Iterator[Dict]:
         # extract chapter: if line contains <H1>...</H1>, update running chapter var
         chapter_match = re.search(r'<H1>(.*?)</H1>', line, flags=re.IGNORECASE)
         if chapter_match:
-            current_chapter = chapter_match.group(1)
+            current_chapter = remove_html_tags(chapter_match.group(1))
             
         # strip text from <span class="endchapter"> to end of line
         line_clean = re.sub(r'<span class="endchapter">.*', '', line, flags=re.IGNORECASE)

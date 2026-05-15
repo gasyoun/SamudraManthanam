@@ -56,10 +56,17 @@ async def expand_word(slp1_word: str, db: aiosqlite.Connection) -> List[str]:
         print(f"Morph expansion error: {e}")
 
     stems_list = list(stems)
-    # Save to cache
-    await db.execute("INSERT OR REPLACE INTO morph_cache (query, stems) VALUES (?, ?)", (slp1_word, json.dumps(stems_list)))
-    await db.commit()
-    
+    # Write-through cache to corpus.db (temporary; moves to state.db in Phase 1).
+    # Wrapped so a read-only corpus.db or concurrent-write failure never breaks search.
+    try:
+        await db.execute(
+            "INSERT OR REPLACE INTO morph_cache (query, stems) VALUES (?, ?)",
+            (slp1_word, json.dumps(stems_list))
+        )
+        await db.commit()
+    except Exception:
+        pass
+
     return stems_list
 
 async def search_morphological(db: aiosqlite.Connection, query: str, source_ids: Optional[List[int]], limit: int) -> Dict[str, Any]:

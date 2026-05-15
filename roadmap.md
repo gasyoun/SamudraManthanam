@@ -1,5 +1,7 @@
 # Samudra Manthanam - 1-Month Development Roadmap
 
+> **STATUS: SUPERSEDED** — Older 1-month roadmap with stale ordering. Current roadmap: `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`. Current Gemini index: `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`.
+
 ## Planning Window
 
 **Dates:** May 13, 2026 to June 12, 2026  

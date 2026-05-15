@@ -9,7 +9,7 @@ class SearchMode(str, Enum):
 
 class SearchRequest(BaseModel):
     mode: SearchMode = SearchMode.plain
-    query: str = Field(..., min_length=1)
+    query: str = Field(..., min_length=1, max_length=1000)
     case_sensitive: bool = False
     whole_word: bool = False
     source_ids: Optional[List[int]] = None

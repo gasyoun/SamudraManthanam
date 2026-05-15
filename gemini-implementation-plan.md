@@ -1,5 +1,7 @@
 # Gemini Flash Implementation Plan
 
+> **STATUS: SUPERSEDED** — Older long-form Gemini plan. Use `GEMINI_FLASH_IMPLEMENTATION_PLAN.md` as the current index.
+
 ## Purpose
 
 This document converts `roadmap.md` into a concrete execution plan for Gemini Flash.

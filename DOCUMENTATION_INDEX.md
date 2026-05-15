@@ -24,6 +24,7 @@ Purpose: tell humans and Gemini Flash which Markdown files are current, supporti
 - `use_cases.md`: user scenarios.
 - `ai_status.md`: previous AI implementation status.
 - `CODE_ARCHITECTURE_REVIEW.md`: earlier code/architecture review; useful for historical findings.
+- `PRE_GEMINI_AUDIT.md`: full pre-Gemini code and architecture audit (2026-05-15). Lists every bug, security issue, and open architecture problem with fix status. Read before starting Phase 1.
 
 ## Historical or Partly Superseded Docs
 
@@ -39,11 +40,12 @@ These files may contain useful context, but Gemini Flash should not treat them a
 ## Reading Order For Gemini Flash
 
 1. `DOCUMENTATION_INDEX.md`
-2. `TARGET_ARCHITECTURE.md`
-3. `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`
-4. `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`
-5. `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`
-6. The relevant `GEMINI_FLASH_PHASE_*.md`
+2. `PRE_GEMINI_AUDIT.md` ← read this before touching any code
+3. `TARGET_ARCHITECTURE.md`
+4. `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`
+5. `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`
+6. `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`
+7. The relevant `GEMINI_FLASH_PHASE_*.md`
 
 ## Conflict Rule
 

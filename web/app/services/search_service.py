@@ -4,48 +4,44 @@ import time
 from typing import List, Dict, Any, Optional
 
 def escape_fts(term: str, whole_word: bool = False) -> str:
-    # Remove characters that have special meaning in FTS5
-    # and wrap in quotes if whole_word is requested.
-    safe = term.replace('"', '""')
-    if whole_word:
-        return f'"{safe}"'
-    else:
-        # For non-whole-word, we split into words and combine with AND
-        # to avoid forcing a strict phrase match unless the user typed one.
-        # We append * for prefix matching.
-        tokens = []
-        for token in safe.split():
-            if token.strip():
-                escaped_token = token.replace('"', '""')
-                tokens.append(f'"{escaped_token}"*')
-        if not tokens:
-            return f'"{safe}"*'
-        return " AND ".join(tokens)
+    tokens = [t for t in term.split() if t]
+    if not tokens:
+        safe = term.replace('"', '""')
+        return f'"{safe}"' if whole_word else f'"{safe}"*'
+    parts = []
+    for token in tokens:
+        safe = token.replace('"', '""')
+        # whole_word: exact token match (no prefix *); prefix mode: trailing *
+        parts.append(f'"{safe}"' if whole_word else f'"{safe}"*')
+    return " AND ".join(parts)
 
 async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: bool, whole_word: bool, source_ids: Optional[List[int]], limit: int) -> List[Dict[str, Any]]:
-    # Handle multi-line queries
     queries = [q.strip() for q in query.split('\n') if q.strip()]
     if not queries:
         return []
-    
-    # Build FTS5 query string using OR for multiple lines
-    # Each line's tokens are joined by AND, lines themselves by OR
+
     fts_parts = [escape_fts(q, whole_word) for q in queries]
     fts_query = " OR ".join(fts_parts)
-    
+
     source_filter = ""
     params = [fts_query]
-    
+
     if source_ids is not None:
-        # If source_ids is empty list, the query should return nothing (P1-6)
         if len(source_ids) == 0:
             return []
         placeholders = ",".join("?" * len(source_ids))
         source_filter = f"AND source_id IN ({placeholders})"
         params.extend(source_ids)
-    
-    params.append(limit)
-    
+
+    needs_python_filter = case_sensitive or whole_word
+    if needs_python_filter:
+        # Over-fetch so Python filtering can still fill `limit` results.
+        # FTS5 returns case-insensitive candidates; Python narrows to correct case/boundary.
+        sql_limit = min(limit * 10, 50000)
+    else:
+        sql_limit = limit
+    params.append(sql_limit)
+
     sql = f"""
         SELECT cl.source_id, s.title as source_title, cl.line_num, cl.link_id, cl.chapter, cl.line_html, cl.line_text
         FROM corpus_lines cl
@@ -55,38 +51,40 @@ async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: boo
         ORDER BY s.sort_order, cl.line_num
         LIMIT ?
     """
-    
+
     async with db.execute(sql, params) as cursor:
         rows = await cursor.fetchall()
         results = [dict(row) for row in rows]
-        
-    # Apply reliable Python-side filtering for case sensitivity and whole word
-    if case_sensitive or whole_word:
-        filtered = []
-        for r in results:
-            text = r["line_text"]
-            match = False
-            for q in queries:
-                if whole_word:
-                    # Simple whole word check using boundaries
-                    pattern = rf'\b{re.escape(q)}\b'
-                    if re.search(pattern, text, 0 if case_sensitive else re.IGNORECASE):
-                        match = True
-                        break
-                else:
-                    if case_sensitive:
-                        if q in text:
-                            match = True
-                            break
-                    else:
-                        if q.lower() in text.lower():
-                            match = True
-                            break
-            if match:
-                filtered.append(r)
-        return filtered
-        
-    return results
+
+    if not needs_python_filter:
+        return results
+
+    filtered = []
+    for r in results:
+        text = r["line_text"]
+        matched = False
+        for q in queries:
+            words = [t for t in q.split() if t]
+            if not words:
+                continue
+            if whole_word:
+                # Each token must appear as a whole word independently (not as a phrase)
+                if all(
+                    re.search(rf'\b{re.escape(w)}\b', text, 0 if case_sensitive else re.IGNORECASE)
+                    for w in words
+                ):
+                    matched = True
+                    break
+            else:
+                # case_sensitive=True, whole_word=False: each token as case-sensitive substring
+                if all(w in text for w in words):
+                    matched = True
+                    break
+        if matched:
+            filtered.append(r)
+            if len(filtered) >= limit:
+                break
+    return filtered
 
 async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: bool, source_ids: Optional[List[int]], limit: int) -> List[Dict[str, Any]]:
     # Handle multi-line patterns

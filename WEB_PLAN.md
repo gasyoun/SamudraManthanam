@@ -1,5 +1,7 @@
 # Web Application — Architecture & Implementation Plan
 
+> **STATUS: SUPERSEDED** — This is the original from-scratch Docker-era plan. Do not treat it as current instructions. Current architecture: `TARGET_ARCHITECTURE.md`. Current Gemini index: `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`.
+
 > This document is a complete technical specification for Gemini Flash (or any AI agent) to implement the browser-based version of Samudra Manthanam from scratch. Read it fully before writing any code.
 
 ---
