@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.9.0] - 2026-05-15 (Scholarly Workbench — Track B)
+### Added
+- **Search permalink URLs**: URL bar now reflects every search (`?q=...&mode=...&cs=&ww=&src=`). Loading such a URL restores form state and re-runs the search automatically — searches are bookmarkable and shareable.
+- **Context window** (`GET /api/search/context`): Returns up to 20 corpus lines surrounding any source/line pair. Each search result now has an expand toggle (≡/▲) that lazy-fetches ±5 lines on first open and shows them inline without leaving the page. Validated: `window` clamped 1–20 by FastAPI.
+- **Citation copy button** (⎘): One-click clipboard copy of the stable anchor permalink for each result line. Falls back to `prompt()` when the Clipboard API is unavailable.
+- **Anchor permalink route** (`GET /sources/{source_id}/anchor/{link_id}`): Stable URL for a corpus line identified by its `link_id` attribute (e.g. `/sources/1/anchor/1.10`). Redirects 302 to the reader with the highlight parameter set.
+
 ## [1.8.1] - 2026-05-15 (Post-Review Hardening)
 ### Fixed
 - **Startup schema init**: `init_state_db` is now called via a FastAPI `lifespan` handler — on a clean install the first request to `/api/identity/lead` or `/api/corrections/propose` no longer fails with `OperationalError: no such table`.
