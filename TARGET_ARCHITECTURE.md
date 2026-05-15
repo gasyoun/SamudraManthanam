@@ -6,6 +6,8 @@ Source document: `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`
 
 This document describes the target architecture for the next 6 months. It is written for Gemini Flash and future implementation agents. The goal is to make architectural boundaries explicit before adding deployment, identity, AI, and corpus editing features.
 
+Status: current target proposal. Read `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` before treating decisions here as final.
+
 ## 1. Product Shape
 
 Samudra Manthanam should become a public Sanskrit/Russian scholarly research platform with three layers:
@@ -19,6 +21,8 @@ The first deployment target should be a VPS without Docker.
 The large generated `corpus.db` should live on the VPS filesystem, not in GitHub. GitHub stores code, docs, scripts, and tests.
 
 ## 2. Key Architecture Decisions
+
+These decisions are current defaults, not irreversible commitments. The critique document marks several of them as provisional.
 
 ### 2.1 Use SQLite FTS5 for Corpus Search
 

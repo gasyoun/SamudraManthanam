@@ -4,10 +4,12 @@ This is the short index for Gemini Flash. Each linked phase file is under 100 li
 
 Read first:
 
-1. `TARGET_ARCHITECTURE.md`
-2. `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`
-3. This file
-4. The phase file for the current task
+1. `DOCUMENTATION_INDEX.md`
+2. `TARGET_ARCHITECTURE.md`
+3. `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`
+4. `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`
+5. This file
+6. The phase file for the current task
 
 ## North Star
 
@@ -18,6 +20,8 @@ Build Samudra Manthanam into a Sanskrit/Russian research platform in this order:
 3. Email identity, correction proposals, and AI assistance.
 
 ## Hard Architecture Decisions
+
+Treat these as defaults. If `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` marks one as provisional, ask before implementing a large change.
 
 - First serious deploy target: VPS without Docker.
 - GitHub stores code, not the generated `corpus.db`.

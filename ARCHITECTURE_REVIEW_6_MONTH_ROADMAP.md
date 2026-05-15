@@ -6,6 +6,8 @@ Audience: project owner, Gemini Flash, future implementation agents.
 
 This document turns the current codebase review and product answers into a 6-month technical roadmap. It is intentionally written as an implementation brief: Gemini Flash should be able to pick up each task, make a small change, run checks, and leave a clear result.
 
+Status: roadmap proposal. Read `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` for challenged decisions and questions before starting large implementation work.
+
 ## Planning Inputs
 
 Primary 6-month goals, in priority order:
