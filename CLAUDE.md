@@ -83,17 +83,21 @@ The modern web-based search engine is built with **FastAPI** and **SQLite (FTS5)
 
 ### Commands
 - Run dev server: `cd web; python -m uvicorn app.main:app --reload`
-- Run tests: `cd web; python -m pytest tests/`
+- Run hermetic tests: `cd web; $env:PYTHONPATH="."; python -m pytest -m "not corpus"`
+- Run full corpus tests: `cd web; $env:PYTHONPATH="."; $env:USE_REAL_CORPUS="1"; python -m pytest -m "corpus"`
 - Build search database: `./build-web-db.ps1`
 - Re-index (Docker): `./reindex.sh`
 
 ### Testing Strategy
 - **API Contract**: `tests/test_api.py` (validation, security, parity).
 - **Search Quality**: `tests/test_golden_queries.py` (IAST, multi-token, Russian).
+- **Search Contract**: `tests/test_contract.py` (prefix matching and AND logic).
 - **Morphology**: `tests/test_morph.py` (transliteration and stem lookup).
 
 ### Architecture
-- `search_service.py`: Core FTS5 logic for plain and regex search.
-- `morph_service.py`: Stem/Root lookup using external API (Sanskrit Heritage).
+- `dispatch_service.py`: Unified entry point for all search modes.
+- `search_service.py`: Core FTS5 logic (plain search with prefix matching).
+- `morph_service.py`: Stem/Root lookup using external API.
 - `html_service.py`: Secure Jinja2-based result fragment rendering.
+- `settings.py`: Centralized configuration (DB_PATH).
 - `models.py`: Pydantic V2 models for API requests/responses.

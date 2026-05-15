@@ -1,5 +1,6 @@
 import re
 import aiosqlite
+import time
 from typing import List, Dict, Any, Optional
 
 def escape_fts(term: str, whole_word: bool = False) -> str:
@@ -11,9 +12,10 @@ def escape_fts(term: str, whole_word: bool = False) -> str:
     else:
         # For non-whole-word, we split into words and combine with AND
         # to avoid forcing a strict phrase match unless the user typed one.
-        tokens = [f'"{t.replace("\"", "\"\"")}"' for t in safe.split() if t.strip()]
+        # We append * for prefix matching.
+        tokens = [f'"{t.replace("\"", "\"\"")}"*' for t in safe.split() if t.strip()]
         if not tokens:
-            return f'"{safe}"'
+            return f'"{safe}"*'
         return " AND ".join(tokens)
 
 async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: bool, whole_word: bool, source_ids: Optional[List[int]], limit: int) -> List[Dict[str, Any]]:
@@ -114,8 +116,14 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
     """
     
     results = []
+    start_time = time.time()
+    MAX_TIME = 5.0 # seconds
+    
     async with db.execute(sql, params) as cursor:
         async for row in cursor:
+            # Check timeout
+            if time.time() - start_time > MAX_TIME:
+                break
             matched = False
             for cp in compiled_patterns:
                 if cp.search(row["line_text"]):

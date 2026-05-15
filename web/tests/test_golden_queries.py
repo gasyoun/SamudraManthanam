@@ -3,6 +3,7 @@ import re
 from httpx import AsyncClient, ASGITransport
 from app.main import app
 
+@pytest.mark.corpus
 @pytest.mark.asyncio
 async def test_golden_query_plain_iast():
     transport = ASGITransport(app=app)
@@ -17,6 +18,7 @@ async def test_golden_query_plain_iast():
     assert data["total"] > 0
     assert any("svasti" in item["line_text"].lower() for item in data["results"])
 
+@pytest.mark.corpus
 @pytest.mark.asyncio
 async def test_golden_query_plain_russian():
     transport = ASGITransport(app=app)
@@ -32,6 +34,7 @@ async def test_golden_query_plain_russian():
     # But for a scholarly corpus, 'быть' is very likely.
     assert data["total"] >= 0 
 
+@pytest.mark.corpus
 @pytest.mark.asyncio
 async def test_golden_query_regex():
     transport = ASGITransport(app=app)
@@ -62,6 +65,7 @@ def normalize_for_test(text: str) -> str:
         res = res.replace(k, v)
     return res
 
+@pytest.mark.corpus
 @pytest.mark.asyncio
 async def test_golden_query_multi_token():
     transport = ASGITransport(app=app)
@@ -78,6 +82,7 @@ async def test_golden_query_multi_token():
         text = normalize_for_test(item["line_text"])
         assert "sat" in text and "tat" in text
 
+@pytest.mark.corpus
 @pytest.mark.asyncio
 async def test_golden_query_multi_line():
     transport = ASGITransport(app=app)
@@ -95,6 +100,7 @@ async def test_golden_query_multi_line():
         text = normalize_for_test(item["line_text"])
         assert "svasti" in text or "arjuna" in text
 
+@pytest.mark.corpus
 @pytest.mark.asyncio
 async def test_golden_query_zero_results():
     transport = ASGITransport(app=app)

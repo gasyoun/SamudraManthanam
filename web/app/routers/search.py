@@ -7,8 +7,7 @@ from sse_starlette.sse import EventSourceResponse
 from app.db import get_db
 from app.models import SearchRequest, SearchResult, SearchResultItem, SearchMode
 from app.services.html_service import render_fragment, render_full_page, render_standalone
-from app.services.search_service import search_plain, search_regex
-from app.services.morph_service import search_morphological
+from app.services.dispatch_service import dispatch_search
 from fastapi.responses import HTMLResponse
 
 from app.settings import settings
@@ -21,28 +20,12 @@ async def post_search(request: SearchRequest):
     db = await get_db(settings.DB_PATH)
     search_metadata = None
     try:
-        if request.mode == "plain":
-            results = await search_plain(
-                db, request.query, request.case_sensitive, 
-                request.whole_word, request.source_ids, request.limit
-            )
-        elif request.mode == "regex":
-            results = await search_regex(
-                db, request.query, request.case_sensitive, 
-                request.source_ids, request.limit
-            )
-        elif request.mode == "morphological":
-            morph_data = await search_morphological(
-                db, request.query, request.source_ids, request.limit
-            )
-            results = morph_data["results"]
-            search_metadata = {
-                "stems": morph_data["stems"],
-                "variants": morph_data["variants"]
-            }
-        else:
-            results = []
-            
+        search_data = await dispatch_search(
+            db, request.query, request.mode, request.case_sensitive, 
+            request.whole_word, request.source_ids, request.limit
+        )
+        results = search_data["results"]
+        search_metadata = search_data["search_metadata"]
         elapsed_ms = (time.time() - start_time) * 1000
         sources_hit = len(set(r["source_id"] for r in results))
         
@@ -99,19 +82,19 @@ async def get_search_stream(request: Request, query: str, mode: SearchMode = Sea
             async with db.execute(sql, params) as cursor:
                 sources = await cursor.fetchall()
             
+            if not sources:
+                yield {"data": json.dumps({"type": "done", "total": 0, "elapsed_ms": 0})}
+                return
+            
             total_found = 0
             for i, source in enumerate(sources):
                 sid = source[0]
                 # Search only in this source
-                if mode == SearchMode.plain:
-                    res = await search_plain(db, query, case_sensitive, whole_word, [sid], 5000)
-                elif mode == SearchMode.regex:
-                    res = await search_regex(db, query, case_sensitive, [sid], 5000)
-                elif mode == SearchMode.morphological:
-                    morph_data = await search_morphological(db, query, [sid], 5000)
-                    res = morph_data["results"]
-                else:
-                    res = []
+                search_data = await dispatch_search(
+                    db, query, mode, case_sensitive, whole_word, [sid], 5000
+                )
+                res = search_data["results"]
+
                 
                 total_found += len(res)
                 percent = int((i + 1) / len(sources) * 100)
@@ -163,19 +146,12 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
     search_metadata = None
     try:
         limit = 5000
-        if mode == SearchMode.plain:
-            results = await search_plain(db, query, case_sensitive, whole_word, source_ids, limit)
-        elif mode == SearchMode.regex:
-            results = await search_regex(db, query, case_sensitive, source_ids, limit)
-        elif mode == SearchMode.morphological:
-            morph_data = await search_morphological(db, query, source_ids, limit)
-            results = morph_data["results"]
-            search_metadata = {
-                "stems": morph_data["stems"],
-                "variants": morph_data["variants"]
-            }
-        else:
-            results = []
+        search_data = await dispatch_search(
+            db, query, mode, case_sensitive, whole_word, source_ids, limit
+        )
+        results = search_data["results"]
+        search_metadata = search_data["search_metadata"]
+
             
         limit_reached = len(results) >= limit
         fragment = render_fragment(query, results, limit_reached=limit_reached, search_metadata=search_metadata)

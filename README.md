@@ -120,6 +120,15 @@ For Docker Compose, create `web/corpus.db` before starting the container because
 
 If a prebuilt database must be distributed, use a GitHub Release asset or another artifact store rather than committing the SQLite file to normal Git history.
 
+### Search Behavior
+The web platform's search behavior is governed by the **[Search Contract](web/SEARCH_CONTRACT.md)**. Key differences from the desktop version:
+- **Prefix matching** is enabled by default (`arjun` matches `arjuna`).
+- **AND logic** is used for multi-token searches.
+- **Resource limits** (5s timeout) protect regex searches.
+
+### Configuration
+The app uses `web/app/settings.py` for configuration. The database path can be overridden via the `DB_PATH` environment variable.
+
 ---
 
 ## Roadmap

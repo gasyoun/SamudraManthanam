@@ -14,6 +14,9 @@ def event_loop():
 
 @pytest_asyncio.fixture(scope="session")
 async def test_db(tmp_path_factory):
+    if os.environ.get("USE_REAL_CORPUS"):
+        return settings.DB_PATH
+
     # Create a temporary DB file
     tmp_dir = tmp_path_factory.mktemp("db")
     db_path = str(tmp_dir / "test_corpus.db")
