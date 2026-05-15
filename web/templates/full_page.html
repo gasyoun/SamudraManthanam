@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ query }} — Пахтанье океана</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .highlight { background-color: yellow; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div id="results">
+        {{ fragment | safe }}
+    </div>
+    
+    <script src="/static/scripts/jquery-3.6.0.min.js"></script>
+    <script src="/static/scripts/clipboard.min.js"></script>
+    <script src="/static/scripts/clicktoquote.js"></script>
+    <script src="/static/scripts/selection.js"></script>
+</body>
+</html>

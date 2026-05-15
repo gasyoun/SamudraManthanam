@@ -76,3 +76,28 @@ Record limit: `iRecordLimit = 5000` (defined in `uabstractthread.pas` initializa
 - UTF-8 strings: use `lazUTF8` functions (`UTF8Length`, `UTF8Copy`, `UTF8Delete`) for multi-byte-safe operations; byte-based `Length`/`Pos`/`Copy` are used where the strings are known ASCII or where tags are being stripped.
 - Source file metadata (caption/title) is stored as the **first line** of each corpus HTML file in the form `<!-- Title text -->`; `FormatFileInfo` strips the comment wrapper to extract the display name.
 - The `.no_tags` sidecar files alongside each corpus HTML contain the same lines with HTML tags removed, used for case-insensitive plain-text searching (though `ScanFile2` currently searches the raw HTML line — see the duplicate assignment of `Str` at lines 548–549 of `uabstractthread.pas`).
+
+## Web Platform
+
+The modern web-based search engine is built with **FastAPI** and **SQLite (FTS5)**.
+
+### Commands
+- Run dev server: `cd web; python -m uvicorn app.main:app --reload`
+- Run hermetic tests: `cd web; $env:PYTHONPATH="."; python -m pytest -m "not corpus"`
+- Run full corpus tests: `cd web; $env:PYTHONPATH="."; $env:USE_REAL_CORPUS="1"; python -m pytest -m "corpus"`
+- Build search database: `./build-web-db.ps1`
+- Re-index (Docker): `./reindex.sh`
+
+### Testing Strategy
+- **API Contract**: `tests/test_api.py` (validation, security, parity).
+- **Search Quality**: `tests/test_golden_queries.py` (IAST, multi-token, Russian).
+- **Search Contract**: `tests/test_contract.py` (prefix matching and AND logic).
+- **Morphology**: `tests/test_morph.py` (transliteration and stem lookup).
+
+### Architecture
+- `dispatch_service.py`: Unified entry point for all search modes.
+- `search_service.py`: Core FTS5 logic (plain search with prefix matching).
+- `morph_service.py`: Stem/Root lookup using external API.
+- `html_service.py`: Secure Jinja2-based result fragment rendering.
+- `settings.py`: Centralized configuration (DB_PATH).
+- `models.py`: Pydantic V2 models for API requests/responses.

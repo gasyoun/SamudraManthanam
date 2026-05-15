@@ -1,0 +1,88 @@
+<div class="button-container">
+    <button id="prevButton">&lt;</button>
+    <button id="nearestButton">=</button>
+    <button id="nextButton">&gt;</button>
+</div>
+<div class="header header_1">
+    {% if total == 0 %}
+        По запросу „{{ query_display }}“ ничего не найдено.
+        <div style="font-size: 14px; margin-top: 5px; font-weight: normal; color: #666;">
+            Попробуйте изменить условия поиска или проверить правильность написания.
+        </div>
+    {% else %}
+        При пахтании океана
+        {{ sklonenie_v_n_poiskovyh_zaprosah(query_count) }}
+        для слова „{{ query_display }}“
+        {{ sklonenie_naideno_x_zapisey(total) }}
+        {{ sklonenie_naideno_v_y_istochnikah(sources_hit) }}
+        {% if search_metadata and search_metadata.stems %}
+            <div style="font-size: 0.9rem; color: #555; margin-top: 5px; font-weight: normal;">
+                Поиск по основам: 
+                {% for stem in search_metadata.stems %}
+                    <span style="font-style: italic;">{{ stem }}</span>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if limit_reached %}
+            <div class="red-text" style="font-size: 16px; margin-top: 10px;">
+                ⚠️ Внимание: Показаны первые 5000 записей. Пожалуйста, уточните запрос.
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+<div class="contents">
+    {% for group in groups %}
+        <div class="content_item">
+            <a href="#chapter_{{ loop.index }}">{{ group['title'] }}</a>
+        </div>
+    {% endfor %}
+</div>
+<div class="chapters">
+    {% for group in groups %}
+    <div class="chapter">
+        <div class="chapter_title" id="chapter_{{ loop.index }}">{{ loop.index }}. {{ group['title'] }}</div>
+        {% for item in group['items'] %}
+            <div class="citation_block">
+                {{ item['line_html'] | safe }}
+            </div>
+        {% endfor %}
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    function initHighlighting() {
+        const query = {{ query | tojson }};
+        let terms = query.split('\n').map(t => t.strip ? t.strip() : t.trim()).filter(t => t.length > 0);
+        
+        {% if search_metadata and search_metadata.variants %}
+            const variants = {{ search_metadata.variants | tojson }};
+            // Merge variants, avoiding duplicates
+            const termSet = new Set(terms);
+            variants.forEach(v => termSet.add(v));
+            terms = Array.from(termSet);
+        {% endif %}
+
+        if (terms.length === 0) return;
+        
+        const citationBlocks = document.querySelectorAll('.citation_block');
+        
+        // Sort terms by length (longest first) to avoid partial highlighting within longer matches
+        terms.sort((a, b) => b.length - a.length);
+
+        citationBlocks.forEach(block => {
+            let html = block.innerHTML;
+            terms.forEach(term => {
+                const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                // Regex that avoids matching inside HTML tags and already highlighted spans
+                const regex = new RegExp(`(${escaped})(?![^<]*>)`, 'gi');
+                html = html.replace(regex, '<span class="highlight">$1</span>');
+            });
+            block.innerHTML = html;
+        });
+    }
+    
+    // Run immediately
+    initHighlighting();
+</script>

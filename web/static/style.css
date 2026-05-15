@@ -1,0 +1,246 @@
+@font-face {
+    font-family: Charis;
+    src: url(fonts/charis-sil.ttf);
+}
+
+@font-face {
+    font-family: Charis-Italic;
+    src: url(fonts/charis-sil-italic.ttf);
+}
+
+@font-face {
+    font-family: Charis-Bold;
+    src: url(fonts/charis-sil-bold.ttf);
+}
+
+body {
+    font-family: Charis;
+    width: 1100px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 1100px) {
+    body {
+        width: 100%;
+    }
+    .citation_block {
+        overflow-x: auto;
+    }
+    table {
+        width: 100% !important;
+    }
+}
+
+sup, .comment_number {
+    color: #FDA50F;
+    font-family: Charis-Bold;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+.headers {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.header_1 {
+    margin-top: 20px;
+    font-size: 24px;
+    color: #a52a2a;
+}
+
+.header_2 {
+    font-size: 20px;
+}
+
+.header_3 {
+    color: red;
+    font-size: 18px;
+    text-align: center;
+}
+
+.header_table_row2 {
+    color: red;
+    font-size: 18px;
+    text-align: center;
+}
+
+.header_table_row1 {
+    color: blue;
+    font-size: 18px;
+    text-align: left;
+}
+.header_table_row3 {
+    color: blue;
+    font-size: 18px;
+    text-align: right;
+}
+.header_5, .chapter_title {
+    color: green;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-family: Charis-Bold;
+}
+
+.header_year {
+    margin-top: 100px;
+    font-size: 16px;
+    font-family: Charis-Bold;
+}
+
+.header_annotation {
+    margin-top: 100px;
+    font-size: 14px;
+    text-align: justify;
+}
+
+.annotation_item {
+    font-size: 14px;
+    text-align: justify;
+    text-indent: 1.5em;
+    display: block;
+}
+
+.content_item_big {
+    text-align: left;
+    width: 100%;
+    margin-left: 60px
+}
+.content_item {
+    display: inline-block;
+    width: 16%;
+}
+
+.highlight {
+    background-color: yellow;
+}
+.highlight-1 {
+    background-color: yellow;
+}
+.highlight-2 {
+    background-color: cyan;
+}
+.highlight.active {
+    border: 2px solid red;
+    outline: 2px solid red;
+}
+.button-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    z-index: 999;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.content_splitter, .chapter_splitter {
+    height: 150px;
+}
+
+.content_title  a {
+    color: #6495ed;
+    font-family: Charis-Bold;
+    font-size: 18px;
+}
+.content_title_big  a {
+    margin-top: 20px;
+    margin-left: -20px;
+    color: #a52a2a;
+    font-family: Charis-Bold;
+    font-size: 20px;
+}
+
+.chapter_content {
+    margin-bottom: 20px;
+    clear: both;
+}
+
+.comments {
+    margin-bottom: 25px;
+    font-size: 16px;
+    text-align: justify;
+}
+
+.sanskrit {
+    font-family: Sahitya;
+    font-size: 25px;
+}
+
+.person_translation, .person_iast {
+    color: #FDA50F;
+}
+
+.comment_text {
+    text-align: justify;
+}
+
+.iast {
+    font-size: 16px;
+    text-align: left;
+    padding-right: 10px;
+    width: 440px;
+    color: #708090;  
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.iast_author, .translation_author {
+    font-family: Charis-Italic;
+}
+
+.translation {
+    font-size: 18px;
+    text-align: justify;
+    width: 620px;
+}
+.comments {
+    margin-bottom: 30px;
+    font-size: 18px;
+    text-align: justify;
+    color: #5f5f5f;    
+}
+
+.chapter {
+    margin-bottom: 60px;
+}
+
+.range {
+    float: right;
+    display: block;
+    color: #000;
+    font-family: Charis-Bold;
+}
+
+.endchapter_sanskrit {
+    font-size: 16px;
+    text-align: center;
+    color: #708090;  
+}
+.endchapter {
+    font-size: 18px;
+    text-align: center;
+    font-family: Charis-Italic;
+}
+
+.endbook {
+    text-align: center;
+    font-size: 18px;
+}
+
+.blue-text {
+     color: SteelBlue;
+     font-style: italic;
+}
+
+.red-text {
+     color: red;
+}
