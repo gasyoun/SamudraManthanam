@@ -3,8 +3,11 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 import datetime
 import hashlib
+import logging
 import aiosqlite
 from app.state_db import get_state_db
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/identity", tags=["identity"])
 
@@ -20,7 +23,11 @@ class LeadRequest(BaseModel):
 
 @router.post("/lead")
 async def post_lead(request: Request, lead: LeadRequest):
-    db = await get_state_db()
+    try:
+        db = await get_state_db()
+    except Exception:
+        logger.exception("identity.lead: failed to open state DB")
+        raise HTTPException(status_code=503, detail="Identity service unavailable")
     if not db:
         raise HTTPException(status_code=503, detail="Identity service unavailable")
 
@@ -66,8 +73,12 @@ async def post_lead(request: Request, lead: LeadRequest):
         
         await db.commit()
         return {"status": "success", "user_id": user_id}
-    except Exception as e:
+    except HTTPException:
         await db.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
+        raise
+    except Exception:
+        await db.rollback()
+        logger.exception("identity.lead failed for email=%s", lead.email)
+        raise HTTPException(status_code=500, detail="Internal server error")
     finally:
         await db.close()

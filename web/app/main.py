@@ -55,13 +55,30 @@ static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 if os.path.exists(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
-def _template_context(**extra) -> dict:
+def _ss_link(medium: str) -> str:
+    """Build a UTM-tagged link to Systema Sanscriticum.
+    Handles the case where SYSTEMA_SANSCRITICUM_URL already contains a query string."""
+    from urllib.parse import urlencode, urlparse
+    base = settings.SYSTEMA_SANSCRITICUM_URL
+    if not base:
+        return ""
+    qs = urlencode({
+        "utm_source": "samudramanthanam",
+        "utm_medium": medium,
+        "utm_campaign": "cross_link",
+    })
+    sep = "&" if urlparse(base).query else "?"
+    return f"{base}{sep}{qs}"
+
+
+def _template_context(*, ss_medium: str = "", **extra) -> dict:
     """Common template context — site metadata + cross-link target."""
     base = {
         "site_name": "Пахтанье океана",
         "site_description": settings.SITE_DESCRIPTION,
         "public_base_url": settings.PUBLIC_BASE_URL,
-        "ss_url": settings.SYSTEMA_SANSCRITICUM_URL,
+        "ss_url": settings.SYSTEMA_SANSCRITICUM_URL,  # presence-check only
+        "ss_link": _ss_link(ss_medium) if ss_medium else "",
     }
     base.update(extra)
     return base
@@ -73,6 +90,8 @@ async def root(request: Request):
         request=request,
         name="index.html",
         context=_template_context(
+            ss_medium="navbar",
+            engaged_ss_link=_ss_link("engaged_banner"),
             og_title="Пахтанье океана — поиск по санскрито-русскому корпусу",
             og_description=settings.SITE_DESCRIPTION,
             og_url=settings.PUBLIC_BASE_URL or "/",
@@ -89,7 +108,10 @@ async def robots():
 @app.get("/sitemap.xml")
 async def sitemap():
     from fastapi.responses import Response
-    base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
+    from xml.sax.saxutils import escape as xml_escape
+
+    raw_base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
+    base = xml_escape(raw_base)  # PUBLIC_BASE_URL is operator-controlled; & must become &amp;
 
     # Collect source IDs from the corpus DB so each source page is indexable.
     source_ids: list[int] = []

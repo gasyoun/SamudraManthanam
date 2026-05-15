@@ -9,6 +9,7 @@ $(document).ready(function() {
     function maybeShowEngagedCta() {
         const cta = document.getElementById('engagedCta');
         if (!cta) return;  // SYSTEMA_SANSCRITICUM_URL not configured
+        if (cta.style.display === 'flex') return;  // already showing — don't re-animate
         if (localStorage.getItem('engagedCtaDismissed') === '1') return;
         const count = parseInt(localStorage.getItem('searchCount') || '0', 10);
         if (count < SEARCH_THRESHOLD) return;
@@ -75,11 +76,22 @@ $(document).ready(function() {
         }
     }
 
-    // ── Permalink: restore state from URL on page load ────────────────────────
+    // ── Permalink: restore state from URL on page load + popstate ────────────
     function restoreFromUrl() {
         const params = new URLSearchParams(window.location.search);
         const q = params.get('q');
-        if (!q) return;
+        if (!q) {
+            // Back-navigation to a URL with no query: reset visible state so the
+            // page matches the address bar instead of showing stale results.
+            $('#query').val('');
+            $('#mode').val('plain');
+            $('#case_sensitive').prop('checked', false);
+            $('#whole_word').prop('checked', false);
+            $('#sourcesGrid input').prop('checked', true);
+            updateSourceCount();
+            $('#results-area').empty();
+            return;
+        }
 
         $('#query').val(q);
         $('#mode').val(params.get('mode') || 'plain');

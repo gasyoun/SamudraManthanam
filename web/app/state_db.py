@@ -42,12 +42,18 @@ async def init_state_db(db):
     );
     """)
 
-    # Idempotent migration: add columns to pre-existing users tables
+    # Idempotent migration: add columns to pre-existing users tables.
+    # The per-column try/except guards against a race where two workers both
+    # see the column as missing and both attempt the ALTER concurrently —
+    # the loser raises "duplicate column name", which is safe to swallow.
     async with db.execute("PRAGMA table_info(users)") as cursor:
         existing_cols = {row[1] for row in await cursor.fetchall()}
     for col in ("telegram_username", "utm_source", "utm_medium", "utm_campaign"):
         if col not in existing_cols:
-            await db.execute(f"ALTER TABLE users ADD COLUMN {col} TEXT")
+            try:
+                await db.execute(f"ALTER TABLE users ADD COLUMN {col} TEXT")
+            except aiosqlite.OperationalError:
+                pass  # another worker won the race
 
     await db.execute("""
     CREATE TABLE IF NOT EXISTS consent (

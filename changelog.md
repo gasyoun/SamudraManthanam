@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.2] - 2026-05-15 (Bug sweep)
+### Fixed
+- **URL concat bug with query-bearing `SYSTEMA_SANSCRITICUM_URL`**: Setting the env var to `https://x.ru/?ref=launch` previously produced malformed `…?ref=launch?utm_source=…` links. UTM URLs are now built server-side with `urllib.parse.urlencode` and a sensible `?`/`&` separator. New `_ss_link(medium)` helper in `main.py`; reader and templates take the precomputed `ss_link` / `engaged_ss_link`.
+- **`restoreFromUrl` left stale state on back-to-empty navigation**: clicking back from `?q=X` to `/` left the form populated and old results visible. Now clears query/mode/filters/results on a no-query URL.
+- **`state.db` migration race**: two workers starting concurrently could both attempt the same `ALTER TABLE ADD COLUMN`, crashing the loser with "duplicate column name". Each ALTER is now wrapped in `try/except aiosqlite.OperationalError`.
+- **Sitemap XML breakage with `&` in `PUBLIC_BASE_URL`**: an operator-set base URL containing `&` produced invalid XML. Now `xml_escape`d before insertion.
+- **Internal exception text leaked to clients**: `identity.lead` and `admin.vacuum` raised `HTTPException(500, detail=str(e))`, exposing tracebacks/paths. Replaced with generic "Internal server error" message + `logger.exception(...)` for operators.
+- **DB-open failure in `identity.lead` returned 500 instead of 503**: `await get_state_db()` was outside the try block, so an open failure bypassed the handler. Now wrapped — yields a clean 503 with no leak.
+- **Engaged CTA re-animated when already visible**: clicking search after the banner appeared briefly re-played the slide-in animation. Now skips re-animation if `display === 'flex'`.
+
+### Added
+- **`test_funnel.py`**: 4 new regression tests — UTM URL building with both `?`-bearing and plain base URLs, sitemap validity with `&` in base URL (parses with `xml.etree.ElementTree`), and identity lead 503 cleanliness on state DB failure. 77/77 hermetic tests pass.
+
 ## [1.12.1] - 2026-05-15 (Engaged-user CTA)
 ### Added
 - **Search-count engagement signal**: localStorage tracks searches per browser; after 3 searches a sliding bottom-of-page banner surfaces a stronger course CTA — *"Похоже, вы серьёзно изучаете санскрит. Курс грамматики поможет читать тексты системно."* Distinct `utm_medium=engaged_banner` for conversion attribution. Dismissal is sticky across sessions. Hidden entirely when `SYSTEMA_SANSCRITICUM_URL` is unset.

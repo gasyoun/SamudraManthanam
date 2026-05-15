@@ -28,6 +28,7 @@ async def view_source(request: Request, source_id: int, highlight: str = None):
             
         source_dict = dict(source)
         base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
+        from app.main import _ss_link
         return templates.TemplateResponse(
             request=request,
             name="source_view.html",
@@ -37,6 +38,7 @@ async def view_source(request: Request, source_id: int, highlight: str = None):
                 "highlight": highlight,
                 "site_name": "Пахтанье океана",
                 "ss_url": settings.SYSTEMA_SANSCRITICUM_URL,
+                "ss_link": _ss_link("source_view"),
                 "og_title": f"{source_dict.get('title', 'Источник')} — Пахтанье океана",
                 "og_description": f"Параллельный санскрито-русский текст: {source_dict.get('title', '')}",
                 "og_url": f"{base}/sources/{source_id}",

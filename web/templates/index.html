@@ -299,8 +299,8 @@
     <nav class="navbar">
         <h1>ПАХТАНЬЕ ОКЕАНА</h1>
         <div class="links" style="display:flex; gap:1rem; align-items:center;">
-            {% if ss_url %}
-            <a href="{{ ss_url }}?utm_source=samudramanthanam&utm_medium=navbar&utm_campaign=cross_link"
+            {% if ss_link %}
+            <a href="{{ ss_link }}"
                target="_blank"
                rel="noopener"
                style="color:#ffd479; text-decoration:none; font-weight:600; font-size:0.9rem; padding:0.3rem 0.8rem; border:1px solid #ffd479; border-radius:6px; transition:background 0.2s;"
@@ -412,10 +412,10 @@
         </div>
     </div>
 
-    {% if ss_url %}
+    {% if engaged_ss_link %}
     <!-- Engaged-user CTA: surfaced via JS after >=3 searches in this session -->
     <div id="engagedCta"
-         data-ss-url="{{ ss_url }}?utm_source=samudramanthanam&utm_medium=engaged_banner&utm_campaign=cross_link"
+         data-ss-url="{{ engaged_ss_link }}"
          style="display:none; position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px); opacity:0; z-index:1002;
                 background:linear-gradient(135deg,#2c3e50,#4b79a1); color:white; padding:0.9rem 1.4rem; border-radius:12px;
                 box-shadow:0 8px 32px rgba(0,0,0,0.25); align-items:center; gap:1rem; max-width:540px;

@@ -134,3 +134,75 @@ def test_engaged_cta_hidden_when_ss_url_unset(test_db):
         assert 'id="engagedCta"' not in response.text
     finally:
         settings.SYSTEMA_SANSCRITICUM_URL = old
+
+
+# ── Regression: SS_URL with existing query string must not produce ??-URLs ────
+
+def test_ss_url_with_existing_query_string_uses_ampersand(test_db):
+    """If operator sets SYSTEMA_SANSCRITICUM_URL=https://x.ru/?ref=y, the resulting
+    link must be ...?ref=y&utm_source=..., not ...?ref=y?utm_source=... (broken)."""
+    old = settings.SYSTEMA_SANSCRITICUM_URL
+    settings.SYSTEMA_SANSCRITICUM_URL = "https://systema-sanscriticum.ru/?ref=launch"
+    try:
+        body = client.get("/").text
+        # The malformed double-? must not appear
+        assert "?ref=launch?utm_source" not in body
+        # The correctly joined URL must appear (with & separating UTM)
+        assert "?ref=launch&amp;utm_source=samudramanthanam" in body or \
+               "?ref=launch&utm_source=samudramanthanam" in body
+    finally:
+        settings.SYSTEMA_SANSCRITICUM_URL = old
+
+
+def test_ss_url_plain_still_uses_question_mark(test_db):
+    """If SYSTEMA_SANSCRITICUM_URL has no query string, the UTM gets a leading ?."""
+    old = settings.SYSTEMA_SANSCRITICUM_URL
+    settings.SYSTEMA_SANSCRITICUM_URL = "https://systema-sanscriticum.ru"
+    try:
+        body = client.get("/").text
+        assert "https://systema-sanscriticum.ru?utm_source=samudramanthanam" in body
+    finally:
+        settings.SYSTEMA_SANSCRITICUM_URL = old
+
+
+# ── Regression: sitemap must produce valid XML when PUBLIC_BASE_URL has & ─────
+
+def test_sitemap_xml_escapes_public_base_url(test_db):
+    """A PUBLIC_BASE_URL containing & must be XML-escaped or the document is malformed."""
+    import xml.etree.ElementTree as ET
+    old = settings.PUBLIC_BASE_URL
+    settings.PUBLIC_BASE_URL = "https://example.com/?token=a&b=c"
+    try:
+        response = client.get("/sitemap.xml")
+        assert response.status_code == 200
+        # Must parse as valid XML
+        ET.fromstring(response.text)
+    finally:
+        settings.PUBLIC_BASE_URL = old
+
+
+# ── Regression: error path must not leak internal exception text to client ────
+
+def test_identity_lead_does_not_leak_internals_on_db_failure(test_db):
+    """A failure to open state.db (e.g. path is a directory) must yield a clean 503
+    with a generic message — not a 500 with the raw aiosqlite traceback."""
+    import tempfile, os as _os
+    old_state = settings.STATE_DB_PATH
+    tmpdir = tempfile.mkdtemp()
+    settings.STATE_DB_PATH = tmpdir  # a directory, not a file → aiosqlite.connect fails
+    try:
+        response = client.post("/api/identity/lead", json={
+            "email": "boom@example.com",
+            "consent_data": True,
+            "consent_marketing": False,
+        })
+        assert response.status_code == 503
+        detail = response.json()["detail"]
+        # Must not contain raw exception text (paths, sqlite error names, etc.)
+        assert "Identity service unavailable" == detail
+    finally:
+        settings.STATE_DB_PATH = old_state
+        try:
+            _os.rmdir(tmpdir)
+        except OSError:
+            pass

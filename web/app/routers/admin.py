@@ -1,7 +1,9 @@
+import logging
 from fastapi import APIRouter, HTTPException, Query
 from app.state_db import get_state_db
 from app.settings import settings
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
 @router.post("/vacuum")
@@ -24,7 +26,8 @@ async def post_vacuum(key: str = Query(...)):
     try:
         await db.execute("VACUUM")
         return {"status": "success", "message": "State database vacuumed and optimized"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        logger.exception("admin.vacuum failed")
+        raise HTTPException(status_code=500, detail="Internal server error")
     finally:
         await db.close()
