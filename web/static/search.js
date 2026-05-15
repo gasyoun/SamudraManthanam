@@ -76,6 +76,8 @@ $(document).ready(function() {
         return '?' + params.toString();
     }
 
+    window.addEventListener('popstate', restoreFromUrl);
+
     $(document).on('change', '#sourcesGrid input', updateSourceCount);
 
     $('#selectAll').click(() => {

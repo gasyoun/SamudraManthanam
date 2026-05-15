@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.11.1] - 2026-05-15 (Search URL popstate)
+### Fixed
+- **Browser back/forward now re-runs the search**: `window.addEventListener('popstate', restoreFromUrl)` wires the existing permalink restore logic to browser history navigation. Previously, back/forward changed the URL but left stale results on screen.
+
 ## [1.11.0] - 2026-05-15 (Track C — No-Docker VPS Deployment)
 ### Added
 - **`DEPLOYMENT.md`**: Step-by-step VPS setup guide covering prerequisites, directory layout, venv creation, `.env` configuration, initial corpus build, systemd service install, nginx reverse proxy, HTTPS via certbot, cron-based publish automation, rollback procedure.
