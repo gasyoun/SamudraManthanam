@@ -9,7 +9,8 @@
 
 ### Phase 2: Hermetic Testing (P1)
 - [x] **Task 2.1: Remove Ad Hoc Scripts**: Moved `test_search.py` and `test_services.py` to `web/scripts/` to avoid pytest collection.
-- [ ] **Task 2.2: Tiny SQLite Fixture DB**: Create a small DB for tests to remove dependency on 521MB `corpus.db`.
+- [x] **Task 2.2: Tiny SQLite Fixture DB**: Created `conftest.py` with a temporary DB fixture. Centralized settings in `settings.py` for easy overriding. Tests are now hermetic.
+- [ ] **Task 2.3: Split Full-Corpus Tests**: Mark tests that can run against the full corpus with a `corpus` marker.
 ### Production Stabilization & Gemini Flash Implementation
 **Status:** ✅ COMPLETED
 
