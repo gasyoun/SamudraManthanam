@@ -104,13 +104,19 @@ async def ingest(corpus_path: str, db_path: str):
 
         await db.commit()
     
-    # Insert metadata
+    # Insert metadata. source_count comes from the actual rows in `sources`,
+    # not len(filenames) — they diverge if any files were skipped due to a
+    # missing file warning above.
     import datetime
+    async with db.execute("SELECT COUNT(*) FROM sources") as cursor:
+        row = await cursor.fetchone()
+        actual_source_count = row[0]
+
     version = f"v{datetime.datetime.now().strftime('%Y.%m.%d')}"
     meta = [
         ("corpus_version", version),
         ("generated_at", datetime.datetime.now().isoformat()),
-        ("source_count", str(len(filenames))),
+        ("source_count", str(actual_source_count)),
     ]
     await db.execute("DELETE FROM corpus_meta")
     await db.executemany("INSERT INTO corpus_meta (key, value) VALUES (?, ?)", meta)

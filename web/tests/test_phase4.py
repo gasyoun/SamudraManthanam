@@ -67,6 +67,52 @@ def test_correction_propose_rejects_empty_text():
     })
     assert response.status_code == 422
 
+
+# ── Input bounds on /api/morph/{word} ─────────────────────────────────────────
+
+def test_morph_rejects_oversized_word():
+    """A megabyte-sized word in the path must be rejected before reaching the
+    external Sanskrit Heritage API."""
+    response = client.get("/api/morph/" + "a" * 5000)
+    assert response.status_code == 422
+
+
+# ── ingest source_count reflects actual rows, not manifest length ─────────────
+
+def test_ingest_source_count_matches_actual_rows(tmp_path):
+    """Regression: ingest used to record len(filenames) as source_count, which
+    overstated reality when files were skipped. It must now read the actual
+    sources table row count."""
+    import asyncio
+    import sqlite3
+    from ingest.ingest import ingest
+
+    # Build a tiny corpus where one file in the manifest is missing on disk
+    corpus = tmp_path / "corpus"
+    (corpus / "Programdata").mkdir(parents=True)
+    (corpus / "Data").mkdir()
+    (corpus / "Programdata" / "data.txt").write_text(
+        "present.html\nmissing.html\n", encoding="utf-8"
+    )
+    (corpus / "Data" / "present.html").write_text(
+        "<!-- Present -->\n<p>some text</p>\n", encoding="utf-8"
+    )
+
+    db_path = str(tmp_path / "test_corpus.db")
+    asyncio.run(ingest(str(corpus), db_path))
+
+    con = sqlite3.connect(db_path)
+    try:
+        actual_rows = con.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
+        recorded = con.execute(
+            "SELECT value FROM corpus_meta WHERE key = 'source_count'"
+        ).fetchone()[0]
+    finally:
+        con.close()
+
+    assert actual_rows == 1  # manifest had 2 but one was skipped
+    assert recorded == "1"   # source_count must reflect reality, not the manifest
+
 @pytest.mark.asyncio
 async def test_ai_service_call_mocked():
     settings.AI_BASE_URL = "https://api.openai.com/v1"

@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, HTTPException, Request, Query
 from pydantic import BaseModel, Field
 from typing import Optional, List
@@ -5,7 +6,21 @@ import datetime
 from app.state_db import get_state_db
 from app.settings import settings
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/corrections", tags=["corrections"])
+
+
+async def _open_state_db():
+    """Open state.db with a clean 503 on configuration / connection failure.
+    Mirrors the pattern in identity.py — avoids leaking raw aiosqlite tracebacks."""
+    try:
+        db = await get_state_db()
+    except Exception:
+        logger.exception("corrections: failed to open state DB")
+        raise HTTPException(status_code=503, detail="State service unavailable")
+    if not db:
+        raise HTTPException(status_code=503, detail="State service unavailable")
+    return db
 
 class CorrectionProposal(BaseModel):
     source_id: int = Field(..., ge=1)
@@ -16,10 +31,7 @@ class CorrectionProposal(BaseModel):
 
 @router.post("/propose")
 async def propose_correction(proposal: CorrectionProposal):
-    db = await get_state_db()
-    if not db:
-        raise HTTPException(status_code=503, detail="State service unavailable")
-        
+    db = await _open_state_db()
     try:
         now = datetime.datetime.now().isoformat()
         user_id = None
@@ -45,7 +57,11 @@ async def get_pending_corrections(key: str = Query(...)):
     if not settings.ADMIN_SECRET_KEY or key != settings.ADMIN_SECRET_KEY:
         if settings.APP_ENV != "development" or key != "dev":
             raise HTTPException(status_code=403, detail="Forbidden")
-    db = await get_state_db()
+    try:
+        db = await get_state_db()
+    except Exception:
+        logger.exception("corrections.pending: failed to open state DB")
+        return []
     if not db:
         return []
     try:

@@ -19,10 +19,14 @@ async def post_vacuum(key: str = Query(...)):
         if key != "dev":
             raise HTTPException(status_code=403, detail="Forbidden: Use 'dev' key in non-production")
 
-    db = await get_state_db()
+    try:
+        db = await get_state_db()
+    except Exception:
+        logger.exception("admin.vacuum: failed to open state DB")
+        raise HTTPException(status_code=503, detail="State DB not available")
     if not db:
         raise HTTPException(status_code=503, detail="State DB not available")
-        
+
     try:
         await db.execute("VACUUM")
         return {"status": "success", "message": "State database vacuumed and optimized"}

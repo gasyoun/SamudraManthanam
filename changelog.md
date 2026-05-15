@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.6] - 2026-05-15 (Bug sweep #5)
+### Fixed
+- **`ingest.py` recorded `source_count` from `len(filenames)`**, which overstated reality when the ingest skipped a missing file. The recorded count now comes from `SELECT COUNT(*) FROM sources` after all inserts so `corpus_meta.source_count` matches the actual rows in the DB.
+- **`/api/morph/{word}` accepted unbounded path length**: a megabyte word would still go through `to_slp1` and an HTTPS lookup to Sanskrit Heritage. Now `Path(..., min_length=1, max_length=200)`.
+- **`get_state_db()` called outside try in three handlers** (`corrections.propose`, `corrections.pending`, `admin.vacuum`): a config or connection failure leaked tracebacks via FastAPI's default 500 handler. All three now follow the identity.py pattern — wrapped, logged, and returned as a clean 503 (or empty list, for `/pending`).
+
+### Removed
+- **`web/static/scripts/selection0.js`**: dead — referenced nowhere, had drifted from `selection.js`.
+
+### Added
+- **`test_phase4.py`**: 2 new regression tests — morph route length cap, and `source_count` reflecting actual rows after a skipped file (the ingest fix). 88/88 hermetic tests pass.
+
 ## [1.12.5] - 2026-05-15 (Bug sweep #4)
 ### Fixed
 - **Dead prev / next / nearest navigation buttons on the main `/` page**: `selection.js` (which binds those buttons and the `a` / `s` / `d` keyboard shortcuts) was only inlined into the standalone HTML export. On the live site the buttons appeared in the result fragment but had no effect. Now loaded as a static script alongside `search.js`; `selection.js` also looks for either `#results` (standalone) or `#results-area` (live) for its index-reset observer.
