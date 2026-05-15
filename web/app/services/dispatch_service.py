@@ -22,7 +22,9 @@ async def dispatch_search(
     if mode == SearchMode.plain:
         results = await search_plain(db, query, case_sensitive, whole_word, source_ids, limit)
     elif mode == SearchMode.regex:
-        results = await search_regex(db, query, case_sensitive, source_ids, limit)
+        regex_data = await search_regex(db, query, case_sensitive, source_ids, limit)
+        results = regex_data["results"]
+        search_metadata = regex_data["search_metadata"]
     elif mode == SearchMode.morphological:
         morph_data = await search_morphological(db, query, source_ids, limit)
         results = morph_data["results"]

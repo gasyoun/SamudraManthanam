@@ -103,8 +103,20 @@ async def ingest(corpus_path: str, db_path: str):
             )
 
         await db.commit()
+    
+    # Insert metadata
+    import datetime
+    version = f"v{datetime.datetime.now().strftime('%Y.%m.%d')}"
+    meta = [
+        ("corpus_version", version),
+        ("generated_at", datetime.datetime.now().isoformat()),
+        ("source_count", str(len(filenames))),
+    ]
+    await db.execute("DELETE FROM corpus_meta")
+    await db.executemany("INSERT INTO corpus_meta (key, value) VALUES (?, ?)", meta)
+    await db.commit()
 
-    print("Ingestion complete.")
+    print(f"Ingestion complete. Corpus Version: {version}")
     await db.close()
 
 if __name__ == "__main__":

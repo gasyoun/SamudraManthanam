@@ -167,6 +167,117 @@
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        /* AI Panel Styles */
+        .ai-panel {
+            position: fixed;
+            right: -450px;
+            top: 0;
+            width: 400px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-panel.active {
+            right: 0;
+        }
+
+        .ai-panel-header {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-panel-header h3 {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .ai-panel-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .ai-text {
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .ai-panel-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            background: #fcfcfc;
+            color: #999;
+        }
+
+        .close-panel {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #999;
+        }
+
+        .btn-ai {
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .btn-ai:hover {
+            background-color: #a29bfe;
+        }
     </style>
 </head>
 <body>
@@ -229,6 +340,46 @@
 
         <div id="results-area">
             <!-- Results injected here -->
+        </div>
+    </div>
+
+    <!-- AI Explanation Panel -->
+    <div id="aiPanel" class="ai-panel">
+        <div class="ai-panel-header">
+            <h3>AI Разбор</h3>
+            <span class="close-panel" id="closeAiPanel">&times;</span>
+        </div>
+        <div class="ai-panel-body">
+            <div id="aiLoading" class="skeleton" style="display: none; height: 100px;"></div>
+            <div id="aiContent" class="ai-text"></div>
+        </div>
+        <div class="ai-panel-footer">
+            <small>Ответ сгенерирован ИИ на основе предоставленного контекста.</small>
+        </div>
+    </div>
+
+    <!-- Lead Capture Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLead">&times;</span>
+            <h2 style="font-family: 'Outfit', sans-serif; margin-top: 0;">Интересно?</h2>
+            <p style="font-size: 0.9rem; color: #666;">Оставьте свою почту, чтобы следить за развитием проекта и получать обновления корпуса.</p>
+            <form id="leadForm" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                <input type="text" id="leadName" placeholder="Ваше имя" style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
+                <input type="email" id="leadEmail" placeholder="Email" required style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
+                <div style="font-size: 0.75rem; color: #777;">
+                    <label style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.5rem;">
+                        <input type="checkbox" id="consent_data" required style="margin-top: 3px;">
+                        <span>Я согласен на обработку персональных данных для связи по проекту.</span>
+                    </label>
+                    <label style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                        <input type="checkbox" id="consent_marketing" style="margin-top: 3px;">
+                        <span>Я хочу получать информацию о новых функциях и текстах.</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Подписаться</button>
+            </form>
+            <div id="leadMessage" style="margin-top: 1rem; display: none; text-align: center; font-size: 0.9rem; font-weight: 600; color: #27ae60;"></div>
         </div>
     </div>
 

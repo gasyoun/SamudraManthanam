@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.0] - 2026-05-15 (Samudra Manthanam Web Phase 1-5 Complete)
+### Added
+- **Centralized Settings**: Migrated to Pydantic-Settings with `APP_ENV` and CORS management.
+- **State Database**: Decoupled mutable data (`state.db`) from the read-only corpus.
+- **Scholarly Reader**: Implemented full-text viewing with chapter navigation and line highlighting.
+- **AI Explanation Engine**: Context-aware AI analysis with scholarly system prompts and provider abstraction.
+- **Identity & Corrections**: Lead capture system with consent tracking and correction proposal API.
+- **Corpus Integrity**: Added `corpus_meta` for versioning and health endpoints for system diagnostics.
+- **SEO & Operations**: Added `robots.txt`, `sitemap.xml`, and administrative `VACUUM` support.
+
+### Fixed
+- **Regex Safety**: Implemented row-scanning limits and metadata reporting to prevent CPU exhaustion.
+- **CORS Hardening**: Enforced `ALLOWED_ORIGINS` filtering in production.
+- **Export Metadata**: Added query, mode, and corpus version to standalone result pages.
+
 ## [1.7.0] - 2026-05-15 (Hardening & Operational Readiness)
 ### Added
 - **Hermetic Test Suite**: Implementation of a tiny SQLite fixture database for fast, isolated CI/CD testing.

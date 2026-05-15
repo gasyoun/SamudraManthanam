@@ -86,11 +86,11 @@ async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: boo
                 break
     return filtered
 
-async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: bool, source_ids: Optional[List[int]], limit: int) -> List[Dict[str, Any]]:
+async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: bool, source_ids: Optional[List[int]], limit: int) -> Dict[str, Any]:
     # Handle multi-line patterns
     patterns = [p.strip() for p in pattern.split('\n') if p.strip()]
     if not patterns:
-        return []
+        return {"results": [], "search_metadata": None}
         
     flags = 0 if case_sensitive else re.IGNORECASE
     compiled_patterns = []
@@ -101,13 +101,13 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
             continue
             
     if not compiled_patterns:
-        return []
+        return {"results": [], "search_metadata": None}
         
     source_filter = ""
     params = []
     if source_ids is not None:
         if len(source_ids) == 0:
-            return []
+            return {"results": [], "search_metadata": None}
         source_filter = f"WHERE source_id IN ({','.join('?'*len(source_ids))})"
         params.extend(source_ids)
         
@@ -122,12 +122,22 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
     results = []
     start_time = time.time()
     MAX_TIME = 5.0 # seconds
+    MAX_SCANNED_ROWS = 1000000 # 1M rows budget
+    
+    scanned_rows = 0
+    timeout = False
+    budget_exceeded = False
     
     async with db.execute(sql, params) as cursor:
         async for row in cursor:
-            # Check timeout
+            scanned_rows += 1
             if time.time() - start_time > MAX_TIME:
+                timeout = True
                 break
+            if scanned_rows > MAX_SCANNED_ROWS:
+                budget_exceeded = True
+                break
+                
             matched = False
             for cp in compiled_patterns:
                 if cp.search(row["line_text"]):
@@ -138,4 +148,13 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
                 results.append(dict(row))
                 if len(results) >= limit:
                     break
-    return results
+                    
+    return {
+        "results": results,
+        "search_metadata": {
+            "scanned_rows": scanned_rows,
+            "timeout": timeout,
+            "budget_exceeded": budget_exceeded,
+            "truncated": timeout or budget_exceeded
+        }
+    }

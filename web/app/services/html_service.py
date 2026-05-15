@@ -90,7 +90,7 @@ def render_full_page(query: str, fragment: str) -> str:
         fragment=fragment
     )
 
-def render_standalone(query: str, fragment: str) -> str:
+def render_standalone(query: str, fragment: str, metadata: Optional[Dict[str, Any]] = None) -> str:
     # Read assets to inline
     static_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "static")
     
@@ -111,5 +111,6 @@ def render_standalone(query: str, fragment: str) -> str:
         query=query,
         fragment=fragment,
         css=css,
-        selection_js=selection_js
+        selection_js=selection_js,
+        metadata=metadata
     )

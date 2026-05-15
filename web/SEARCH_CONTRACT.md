@@ -24,7 +24,7 @@ The default search mode designed for scholarly inquiries.
 ## 3. Regex Search (`mode="regex"`)
 - **Syntax**: Supports standard Python `re` syntax.
 - **Scope**: Matches are performed against the plain-text version of the corpus lines.
-- **Resource Constraints**: Regex searches are currently full-table scans. Future optimizations should maintain substring-match semantics.
+- **Resource Constraints**: Regex searches have a **5-second timeout** and a **1-million row scan budget** to prevent CPU exhaustion. If the budget is exceeded, results are truncated and the `truncated` flag is set in `search_metadata`.
 
 ## 4. Morphological Search (`mode="morphological"`)
 - **Expansion**: Uses the Sanskrit Heritage API (via `morph_service.py`) to expand a query into its stems and variants.

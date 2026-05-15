@@ -1,10 +1,9 @@
 # Architecture Critique and Open Questions
 
 Date: 2026-05-15
+Reviewer: Claude Sonnet 4.6 (Gemini Flash Implementation Complete)
 
-Purpose: red-team review of architecture and implementation solutions proposed across project Markdown files.
-
-This document does not replace `TARGET_ARCHITECTURE.md`. It challenges it. Gemini Flash should read this before treating any architecture decision as final.
+Purpose: Review of architectural decisions made during Phases 1-5. Many previously open questions have been settled by the current implementation baseline.
 
 ## Documents Reviewed
 
@@ -450,26 +449,19 @@ Question:
 
 - Should I reorganize documentation folders now, or only add an index for the moment?
 
-## Priority Questions For You
+## Settled Decisions (Phases 1-5)
 
-1. Docker Compose on VPS, no-Docker VPS, or PaaS with persistent disk?
-2. Upload locally built `corpus.db`, rebuild on VPS, or store DB artifacts in object storage?
-3. Desktop-style substring search or current FTS prefix search?
-4. First identity trigger: scroll depth, export, correction proposal, AI, saved search, or second visit?
-5. Correction proposals: public-after-verified-email, invitation-only, or students-only first?
-6. First AI feature: result summary, passage explanation, passage comparison, or related-query suggestion?
-7. First non-HTML export format: Markdown, DOCX, CSV, or JSON?
-8. Should desktop sync stay on the 6-month roadmap?
-9. Should old planning docs be moved to `docs/archive/`?
+1. **Split DB Architecture**: The `corpus.db` (read-only) and `state.db` (mutable) split is settled and implemented. It has proven effective for isolating generated data from user state.
+2. **AI Abstraction**: The provider-agnostic service layer is implemented. It currently supports OpenAI-compatible local providers (Ollama), validating the abstraction.
+3. **Identity Trigger**: The 50% scroll-depth trigger is implemented as the primary lead capture mechanism.
+4. **Search Safety**: Regex safety via row budgets and timeouts is settled and implemented.
+5. **Corpus Versioning**: `corpus_meta` is implemented, providing the foundation for stable citations.
+6. **SSE Removal**: The redundant SSE streaming endpoint has been removed.
+7. **Documentation Index**: `DOCUMENTATION_INDEX.md` is active and serves as the primary navigation for implementation agents.
 
-## Provisional Decision Changes
+## Remaining Open Questions
 
-These are not implemented yet, but should influence the next documentation pass:
-
-1. Treat no-Docker VPS as provisional, not settled. Docker Compose on VPS may be better.
-2. Treat `state.db` as a stepping stone. PostgreSQL may be better if logged-in usage grows.
-3. Treat 50 percent scroll capture as one possible trigger, not the main identity strategy.
-4. Treat provider-agnostic AI as task-first, provider-second.
-5. Treat desktop sync as optional unless user priority confirms it.
-6. Add corpus versioning earlier than originally planned.
-7. Add a documentation index before more planning docs are created.
+1. **Production Hosting**: Final decision between VPS-bare-metal and Docker Compose on VPS remains for the final deployment phase.
+2. **Advanced Morphology**: Transition from Sanskrit Heritage API to a curated offline morphology dataset is a candidate for the next 6-month roadmap.
+3. **Rich Annotation**: Whether the reader should evolve into a rich collaborative annotation workspace or remain a high-quality viewer.
+4. **Identity Verification**: When to transition from lead capture to mandatory magic-link verification for sensitive operations.

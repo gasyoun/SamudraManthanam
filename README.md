@@ -2,19 +2,19 @@
 
 A parallel Sanskrit–Russian corpus search tool developed by the [Society of Sanskrit Enthusiasts](https://samskrtam.ru). The name refers to the mythological churning of the cosmic ocean (*Samudra Manthanam*), here used as a metaphor for extracting meaning from an ocean of words.
 
-**Current version:** 1.5.1 · **Platform:** Windows (x86-64) · **Language:** Russian UI
+**Current version:** 1.8.0 · **Platform:** Web (FastAPI) / Legacy Windows · **Language:** Russian UI
 
 ---
 
 ## What it does
 
-The application lets you search a curated parallel corpus of Sanskrit texts alongside their Russian translations. For each search query it:
+Samudra Manthanam is a public Sanskrit/Russian scholarly research platform with three primary layers:
 
-- scans the full corpus in parallel (one thread per query, up to CPU core count)
-- produces a standalone HTML result file with a table of contents, chapter grouping, and highlighted matches
-- opens the result in the default browser with the search term pre-pasted into the browser find bar
+1. **Fast Corpus Search**: Full-text search across parallel Sanskrit texts and Russian translations with support for plain text, regex, and morphological (stem/root) expansion.
+2. **Scholarly Reader**: A dedicated reading workbench for exploring texts in context, with chapter navigation, stable line-level anchors, and citation tools.
+3. **Research Workbench**: Advanced features including AI-powered passage analysis, user identity (lead capture), and a scholarly correction proposal system.
 
-Supported search modes: plain text, whole-word, case-sensitive, and regular expressions. Multiple queries can be batched (one per line) and processed concurrently.
+The platform is designed to be accessible from any device without installation, while maintaining compatibility with existing desktop workflows.
 
 ---
 
@@ -131,23 +131,16 @@ The app uses `web/app/settings.py` for configuration. The database path can be o
 
 ---
 
-## Roadmap
+## Roadmap (Next 6 Months)
 
-### 1. Web application
+### 1. Advanced Morphology
+Transition from external API calls to a curated, offline-ready Sanskrit/Russian lexical database for deeper morphological search and variant analysis.
 
-The highest priority for the next major version is migrating from a Windows desktop app to a **browser-based web application** hosted at [samskrtam.ru](https://samskrtam.ru). Goals:
+### 2. Collaborative Annotation
+Enhance the Scholarly Reader into a full-featured annotation workspace where users can attach personal notes and scholarly commentary to corpus lines.
 
-- Make the corpus accessible without any local installation
-- Enable full corpus search from any device and operating system
-- Keep result HTML format compatible with the current desktop output
-
-### 2. Stem/root lookup
-
-Add stem/root-aware lookup that helps users explore related Sanskrit forms across mixed encodings (IAST, SLP1, Devanagari). The current web implementation exposes this honestly as stem/root lookup rather than promising complete inflection expansion.
-
-### 3. Online corpus sync
-
-Serve the corpus directly from the web backend, eliminating the need to ship large data files with every release. Users of the desktop version would be able to pull corpus updates independently of the application update cycle.
+### 3. Corpus builder integration
+Streamline the workflow for applying approved correction proposals back to the canonical corpus source files with automated regression testing.
 
 ---
 

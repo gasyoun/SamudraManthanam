@@ -16,6 +16,11 @@ from app.settings import settings
 router = APIRouter(prefix="/api/search", tags=["search"])
 
 
+import logging
+from datetime import datetime
+
+logger = logging.getLogger(__name__)
+
 def parse_source_ids(source_ids_str: str | None) -> list[int] | None:
     if source_ids_str is None:
         return None
@@ -33,6 +38,15 @@ def export_filename(query: str) -> str:
     return f"{safe[:80]}.html"
 
 
+async def get_corpus_version(db) -> str | None:
+    try:
+        async with db.execute("SELECT value FROM corpus_meta WHERE key = 'corpus_version'") as cursor:
+            row = await cursor.fetchone()
+            return row[0] if row else None
+    except Exception:
+        return None
+
+
 @router.post("", response_model=SearchResult)
 async def post_search(request: SearchRequest):
     start_time = time.time()
@@ -47,6 +61,10 @@ async def post_search(request: SearchRequest):
         search_metadata = search_data["search_metadata"]
         elapsed_ms = (time.time() - start_time) * 1000
         sources_hit = len(set(r["source_id"] for r in results))
+        
+        # Telemetry: Log search parameters and performance (omitting full query in production)
+        log_query = request.query if settings.APP_ENV == "development" else f"{request.query[:50]}..."
+        logger.info(f"search: mode={request.mode} query='{log_query}' sources={len(request.source_ids) if request.source_ids else 'all'} total={len(results)} elapsed={elapsed_ms:.2f}ms")
         
         html_fragment = render_fragment(request.query, results, search_metadata=search_metadata)
         
@@ -164,7 +182,18 @@ async def get_export(request: Request, query: str, mode: SearchMode = SearchMode
             
         limit_reached = len(results) >= limit
         fragment = render_fragment(query, results, limit_reached=limit_reached, search_metadata=search_metadata)
-        html = render_standalone(query, fragment)
+        
+        # Collect export metadata
+        corpus_version = await get_corpus_version(db)
+        metadata = {
+            "query": query,
+            "mode": mode,
+            "corpus_version": corpus_version,
+            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "source_filter": f"{len(source_ids)} selected" if source_ids else "all"
+        }
+        
+        html = render_standalone(query, fragment, metadata=metadata)
         
         filename = export_filename(query)
         encoded_filename = quote(filename)

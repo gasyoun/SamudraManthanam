@@ -121,4 +121,82 @@ $(document).ready(function() {
         const url = `/api/search/export?query=${encodeURIComponent(query)}&mode=${mode}&case_sensitive=${case_sensitive}&whole_word=${whole_word}&source_ids=${source_ids_str}`;
         window.location.href = url;
     });
+
+    // Lead Capture Logic
+    let leadTriggered = false;
+    $(window).scroll(function() {
+        if (!leadTriggered && $(window).scrollTop() + $(window).height() > $(document).height() * 0.5) {
+            // Only trigger if we have results (meaning user is actually engaged)
+            if ($('#results-area .citation_block').length > 0) {
+                $('#leadModal').fadeIn();
+                leadTriggered = true;
+            }
+        }
+    });
+
+    $('#closeLead').click(() => $('#leadModal').fadeOut());
+    $(window).click((e) => { if (e.target.id === 'leadModal') $('#leadModal').fadeOut(); });
+
+    $('#leadForm').submit(function(e) {
+        e.preventDefault();
+        const data = {
+            email: $('#leadEmail').val(),
+            name: $('#leadName').val(),
+            consent_data: $('#consent_data').is(':checked'),
+            consent_marketing: $('#consent_marketing').is(':checked')
+        };
+
+        fetch('/api/identity/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(res => {
+            if (res.status === 'success') {
+                $('#leadForm').hide();
+                $('#leadMessage').text('Спасибо! Мы будем на связи.').fadeIn();
+                setTimeout(() => $('#leadModal').fadeOut(), 3000);
+            } else {
+                alert('Ошибка: ' + (res.detail || 'неизвестная ошибка'));
+            }
+        })
+        .catch(err => alert('Ошибка при отправке: ' + err));
+    });
+
+    // AI Panel Logic
+    $(document).on('click', '#askAiBtn', function() {
+        const query = $('#query').val();
+        const contextLines = [];
+        $('.citation_block').each(function() {
+            const text = $(this).attr('data-text');
+            if (text) contextLines.push(text);
+            if (contextLines.length >= 25) return false; // Max context rows
+        });
+
+        $('#aiPanel').addClass('active');
+        $('#aiLoading').show();
+        $('#aiContent').empty();
+
+        fetch('/api/ai/explain', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: query, context_lines: contextLines })
+        })
+        .then(response => response.json())
+        .then(data => {
+            $('#aiLoading').hide();
+            if (data.explanation) {
+                $('#aiContent').text(data.explanation);
+            } else {
+                $('#aiContent').text('Ошибка: ' + (data.detail || 'не удалось получить ответ от ИИ.'));
+            }
+        })
+        .catch(err => {
+            $('#aiLoading').hide();
+            $('#aiContent').text('Ошибка сети: ' + err);
+        });
+    });
+
+    $('#closeAiPanel').click(() => $('#aiPanel').removeClass('active'));
 });

@@ -11,11 +11,11 @@ Purpose: tell humans and Gemini Flash which Markdown files are current, supporti
 - `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`: critique of proposed architecture and open decisions.
 - `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`: 6-month roadmap and Gemini backlog.
 - `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`: current Gemini Flash index.
-- `GEMINI_FLASH_PHASE_01_FOUNDATION.md`: foundation tasks.
-- `GEMINI_FLASH_PHASE_02_SEARCH_READER.md`: search and reader tasks.
-- `GEMINI_FLASH_PHASE_03_IDENTITY_CORRECTIONS.md`: identity and corrections tasks.
-- `GEMINI_FLASH_PHASE_04_AI.md`: AI tasks.
-- `GEMINI_FLASH_PHASE_05_DEPLOY_OPERATIONS.md`: deployment and operations tasks.
+- `GEMINI_FLASH_PHASE_01_FOUNDATION.md`: [COMPLETE] foundation tasks.
+- `GEMINI_FLASH_PHASE_02_SEARCH_READER.md`: [COMPLETE] search and reader tasks.
+- `GEMINI_FLASH_PHASE_03_IDENTITY_CORRECTIONS.md`: [COMPLETE] identity and corrections tasks.
+- `GEMINI_FLASH_PHASE_04_AI.md`: [COMPLETE] AI tasks.
+- `GEMINI_FLASH_PHASE_05_DEPLOY_OPERATIONS.md`: [COMPLETE] deployment and operations tasks.
 - `changelog.md`: notable changes.
 
 ## Current Supporting Docs

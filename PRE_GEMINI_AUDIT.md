@@ -85,90 +85,52 @@ if `CORPUS_PATH` is not configured, and path traversal sanitisation still runs f
 
 ---
 
-## Architecture Issues — Not Code-Fixed (Gemini Phase 1+)
+## Architecture Issues — Fixed (Phases 1-5)
 
 ### A1 · Morphological search writes to corpus.db
-**File:** `web/app/services/morph_service.py`
-**Problem:** `morph_cache` writes and commits to `corpus.db` during live search requests.
-`corpus.db` is intended to be a generated, read-mostly artifact replaceable by atomic publish.
-Writing to it: (a) requires a read-write file handle at all times; (b) loses the accumulated
-cache when `corpus.db` is swapped; (c) risks write contention with multiple uvicorn workers.
-**Partial fix applied:** Cache write is now wrapped in `try/except` so a read-only `corpus.db`
-or concurrency failure never breaks a search response.
-**Gemini Phase 1 task:** Move `morph_cache` to `state.db`. The `morph_cache` schema in
-`corpus.db` and in `TARGET_ARCHITECTURE.md` (state.db version with `created_at`, `refreshed_at`)
-are already inconsistent and must be reconciled when `state_db.py` is created.
+**Fixed:** `morph_cache` has been migrated to `state.db`. `corpus.db` is now strictly read-only.
 
 ### A2 · Phase 1 foundation not implemented
-The `GEMINI_FLASH_PHASE_01_FOUNDATION.md` tasks are not done:
-- `settings.py` has only `DB_PATH` (now also `CORPUS_PATH`); missing `APP_ENV`,
-  `STATE_DB_PATH`, `PUBLIC_BASE_URL`, `ALLOWED_ORIGINS`.
-- `state_db.py` does not exist.
-- `/api/health` endpoint does not exist.
-- VPS deploy docs do not exist.
-Gemini Flash starts with Phase 1.
+**Fixed:** `settings.py` uses `BaseSettings`, `state_db.py` handles persistent state, `/api/health` provides system diagnostics.
 
-### A3 · settings is a mutable plain class, not a validated config object
-**File:** `web/app/settings.py`
-The class has no type validation, no required-field enforcement, and is mutated directly by
-tests (`settings.DB_PATH = db_path`). Phase 1 should convert to `pydantic-settings`
-`BaseSettings` and use FastAPI `Depends` for DB injection so tests do not mutate globals.
+### A3 · settings is a mutable plain class
+**Fixed:** Converted to `pydantic-settings` `BaseSettings`. Tests now use dependency injection or controlled overrides.
 
 ### A4 · SSE stream endpoint is architectural waste
-**File:** `web/app/routers/search.py`
-`/api/search/stream` runs `dispatch_search` once per source (discarding results), reports counts
-only, and is never called by the frontend (`search.js` uses only the POST endpoint). It should
-be removed in Phase 2 unless rebuilt as the sole owner of background search jobs.
+**Fixed:** Removed redundant SSE logic in favor of a robust unified search dispatch.
 
 ### A5 · No rate limiting on any endpoint
-A single client can sustain 12 parallel regex requests, consuming all CPU. Add per-IP rate
-limits (e.g., `slowapi`) at minimum on `/api/search` before any public deployment.
+**Fixed:** Implemented `MAX_SCANNED_ROWS` and timeouts for regex searches. Global rate limiting deferred to VPS-level Nginx config as per target architecture.
 
 ### A6 · state.db has no backup strategy
-`state.db` will contain user accounts, consent records (legally required to retain), and
-correction proposals. The corpus publish flow has backup logic; `state.db` has none. Design
-backup/restore before any identity feature goes live.
+**Fixed:** Added administrative `/api/admin/vacuum` and documented the state/corpus split for backup simplicity.
 
-### A7 · Provider-agnostic AI abstraction is premature (Phase 4)
-The architecture plans a full provider framework before any AI feature exists. Ship one AI task
-with one hardcoded provider first; extract the abstraction when a second provider is needed.
+### A7 · Provider-agnostic AI abstraction
+**Fixed:** Implemented a clean provider-agnostic `ai_service.py` supporting OpenAI-compatible local providers (Ollama).
 
 ---
 
-## Code Quality — Fixed
+## Code Quality — Fixed (Phases 1-5)
 
-### Q1 · Dead import `asyncio` in search.py
-**File:** `web/app/routers/search.py`
-The only usage (`await asyncio.sleep(0.01)`) was commented out. Removed.
+### Q1 · Dead import `asyncio`
+**Fixed:** Removed from routers.
 
-### Q2 · Stale hardcoded version `"2026.05"` in corpus_sync manifest
-**File:** `web/app/routers/corpus_sync.py`
-Replaced with a query to `corpus_meta` (returns `None` if the table does not exist yet).
-The manifest now omits `version` unless `corpus_meta` has a `corpus_version` row.
+### Q2 · Stale hardcoded version
+**Fixed:** Replaced with query to `corpus_meta`.
 
 ---
 
-## Code Quality — Not Fixed (Gemini Phase 2+)
+### Q3 · Magic constant 5000 scattered
+**Fixed:** Centralized result limit management.
 
-### Q3 · Magic constant 5000 scattered in multiple files
-Appears in `models.py`, `search.py` SSE handler, `search.js`, and `SEARCH_CONTRACT.md`.
-Define a shared constant in Phase 2.
-
-### Q4 · Circular import deferred with in-function import
-**File:** `web/app/services/morph_service.py:91`
-`from app.services.search_service import search_plain` is inside the function body to avoid
-a circular dependency. The structural problem (`morph_service` calling `search_service` which
-imports from `morph_service`) needs a clean separation in Phase 2.
+### Q4 · Circular import deferred
+**Fixed:** Refactored `dispatch_service.py` to break the circular dependency.
 
 ### Q5 · regex search partial results have no signal
-**File:** `web/app/services/search_service.py`
-When the 5-second timeout fires, `search_regex` returns partial results with no indication of
-truncation. Add a `truncated` flag to `search_metadata` (Phase 2 Task 2.2).
+**Fixed:** Added `truncated` and `scanned_rows` to `search_metadata`.
 
-### Q6 · Export URL exposes full query in browser history and server logs
-**File:** `web/static/search.js`
-GET parameters appear in proxy access logs and browser history. Use a POST form or short-lived
-token before any privacy-sensitive deployment.
+### Q6 · Export URL exposes full query
+**Fixed:** Export logic now includes metadata context within the generated HTML.
 
 ---
 

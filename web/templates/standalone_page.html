@@ -18,6 +18,18 @@
     </style>
 </head>
 <body>
+    {% if metadata %}
+    <div class="export-metadata" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem;">
+        <strong>Запрос:</strong> {{ metadata.query }}<br>
+        <strong>Режим:</strong> {{ metadata.mode }}<br>
+        <strong>Версия корпуса:</strong> {{ metadata.corpus_version or 'неизвестно' }}<br>
+        <strong>Сгенерировано:</strong> {{ metadata.timestamp }}<br>
+        {% if metadata.source_filter %}
+        <strong>Фильтр источников:</strong> {{ metadata.source_filter }}<br>
+        {% endif %}
+    </div>
+    {% endif %}
+    
     <div id="results">
         {{ fragment | safe }}
     </div>

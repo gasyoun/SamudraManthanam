@@ -39,4 +39,11 @@ async def create_schema(db):
     
     # Enable WAL mode for better concurrency
     await db.execute("PRAGMA journal_mode=WAL")
+    await db.execute("""
+    CREATE TABLE IF NOT EXISTS corpus_meta (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL
+    );
+    """)
+    
     await db.commit()
