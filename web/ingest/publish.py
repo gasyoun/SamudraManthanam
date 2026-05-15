@@ -43,23 +43,28 @@ from ingest.validate import validate_corpus       # noqa: E402
 
 def integrity_check(db_path: str) -> bool:
     """Run SQLite PRAGMA integrity_check. Returns True iff the DB is healthy."""
+    con = None
     try:
         con = sqlite3.connect(db_path)
         cur = con.execute("PRAGMA integrity_check")
         rows = cur.fetchall()
-        con.close()
         return rows == [("ok",)]
     except Exception as exc:
         print(f"integrity_check failed: {exc}", file=sys.stderr)
         return False
+    finally:
+        if con is not None:
+            con.close()
 
 
 def smoke_check(db_path: str) -> tuple[int, int]:
     """Return (source_count, line_count) from the freshly built DB."""
     con = sqlite3.connect(db_path)
-    src_count = con.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
-    line_count = con.execute("SELECT COUNT(*) FROM corpus_lines").fetchone()[0]
-    con.close()
+    try:
+        src_count = con.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
+        line_count = con.execute("SELECT COUNT(*) FROM corpus_lines").fetchone()[0]
+    finally:
+        con.close()
     return src_count, line_count
 
 

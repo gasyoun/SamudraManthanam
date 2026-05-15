@@ -40,6 +40,12 @@ $(document).ready(function() {
     maybeShowEngagedCta();
 
     // ── Sources ──────────────────────────────────────────────────────────────
+    // Disable Find/HTML buttons until sources resolve — submitting earlier would
+    // send source_ids=[] and the server (correctly) returns no results, leaving
+    // the user staring at "Результатов не найдено." with no idea why.
+    let sourcesLoaded = false;
+    $('#searchForm button[type="submit"], #exportBtn').prop('disabled', true);
+
     fetch('/api/sources')
         .then(response => response.json())
         .then(sources => {
@@ -60,8 +66,14 @@ $(document).ready(function() {
                 item.append(checkbox, label);
                 grid.append(item);
             });
+            sourcesLoaded = true;
+            $('#searchForm button[type="submit"], #exportBtn').prop('disabled', false);
             updateSourceCount();
             restoreFromUrl();
+        })
+        .catch(err => {
+            console.error('Failed to load sources:', err);
+            $('#sourceCount').text('Не удалось загрузить источники. Перезагрузите страницу.');
         });
 
     function updateSourceCount() {

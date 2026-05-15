@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.4] - 2026-05-15 (Bug sweep #3)
+### Security
+- **CORS fail-open in production with unset `ALLOWED_ORIGINS`** (HIGH): `if not origins or settings.APP_ENV == "development"` — the `or` meant an operator who forgot to set `ALLOWED_ORIGINS` in production shipped `allow_origins=["*"]`. Replaced `or` with `and` so wildcard is reserved for *development with no allowlist*. Production with unset origins now fails closed (`allow_origins=[]`).
+
+### Fixed
+- **`publish.py smoke_check` connection leak**: if either `SELECT COUNT(*)` raised, the SQLite connection was never closed. Now `try/finally`-guarded.
+- **`publish.py integrity_check` connection leak**: same pattern — exception inside the try meant the connection wasn't closed before returning. Now finally-guarded.
+- **Search submitted before `/api/sources` loaded sent `source_ids=[]`**: the user got an empty result with no indication that sources hadn't loaded yet. Find + HTML buttons now disabled until sources resolve. On fetch failure, a clear Russian-language error appears in place of the source counter.
+
+### Added
+- **`test_cors.py`**: 2 new tests — the regression for production-with-unset (the bug fixed here), and a verification that explicit dev origins are respected (the test previously expected the buggy behavior of forced-wildcard in dev). 82/82 hermetic tests pass.
+
 ## [1.12.3] - 2026-05-15 (Bug sweep #2)
 ### Fixed
 - **Query-string injection on Sanskrit Heritage lookup**: `morph_service.expand_word` built the URL with `f"…?lex=SH&q={slp1_word}"`, so a token containing `&` or `=` would inject additional query parameters into the third-party API call. Now uses `httpx.get(url, params={...})` so all characters are correctly percent-encoded.

@@ -21,14 +21,14 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Samudra Manthanam API", lifespan=lifespan)
 templates = Jinja2Templates(directory="templates")
 
-# Configure CORS
+# Configure CORS. Wildcard "*" is ONLY used in development with no explicit list —
+# production with an unset ALLOWED_ORIGINS results in `[]` (no cross-origin requests
+# permitted), which fails closed instead of fails open.
 origins = [o.strip() for o in settings.ALLOWED_ORIGINS.split(",") if o.strip()]
-if not origins or settings.APP_ENV == "development":
+if not origins and settings.APP_ENV == "development":
     origins = ["*"]
 
-allow_credentials = False
-if origins != ["*"]:
-    allow_credentials = True
+allow_credentials = origins != ["*"] and bool(origins)
 
 app.add_middleware(
     CORSMiddleware,
