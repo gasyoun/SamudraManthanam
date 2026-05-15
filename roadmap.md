@@ -61,9 +61,8 @@ That means:
    - zero-result messaging
    - source-hit visibility
 4. Audit and clarify current query semantics:
-   - plain search token behavior
-   - multi-line query behavior
    - source selection states
+67. **(Hardening)** Implement hermetic testing and unified search dispatch.
 
 **Acceptance checks**
 
@@ -209,11 +208,12 @@ The system has four major parts:
    - primary code under `Index/` and `Units/`
    - important sync/update logic in `Units/UpdateChecker.pas`
 2. **Web application**
-   - FastAPI app under `web/app/`
-   - HTTP routers plus service modules
-3. **Corpus ingestion pipeline**
-   - Python ingest under `web/ingest/`
-   - generates `web/corpus.db`
+    - Python ingest under `web/ingest/`
+    - generates `web/corpus.db`
+5. **Testing & Hardening Infrastructure**
+    - Hermetic test suite with SQLite fixtures
+    - Centralized `settings.py` for environment management
+    - Search contract enforcement
 4. **Operational/deployment layer**
    - Docker/nginx/reindex workflow
    - large generated SQLite DB stays out of Git
@@ -238,8 +238,10 @@ Keep responsibilities split this way:
   - lookup-preview API only
 - `web/app/routers/corpus_sync.py`
   - manifest and file-serving sync endpoints
+- `web/app/services/dispatch_service.py`
+  - unified search dispatch entry point
 - `web/app/services/search_service.py`
-  - plain and regex search mechanics
+  - core FTS5 logic with prefix matching support
 - `web/app/services/morph_service.py`
   - encoding normalization
   - lookup expansion
@@ -247,6 +249,8 @@ Keep responsibilities split this way:
 - `web/app/services/html_service.py`
   - result fragment rendering
   - standalone/export rendering
+- `web/app/settings.py`
+  - centralized configuration (DB paths, timeouts)
 - `web/app/db.py`
   - SQLite connection and schema work
 

@@ -10,7 +10,7 @@ This document outlines the primary ways scholars, students, and developers inter
     2. Enters "dharma" in IAST.
     3. Selects only "Махабхарата. Книга 1" from the source grid.
     4. Clicks "Найти".
-- **Outcome:** The system performs a stem/root-oriented lookup and returns high-fidelity citations with both the original Sanskrit (often in IAST/Devanagari) and the corresponding Russian translation.
+- **Outcome**: The system performs a stem/root-oriented lookup. If "Plain Search" was used, the scholar benefits from **prefix matching** (e.g., `dharm` matches `dharma`, `dharmasya`), catching many inflected forms without a full morphological expansion. Results are returned with high-fidelity citations.
 
 ## 2. Translation Audit & Verification
 **User:** A translator working on a new Russian version of the Bhagavad Gita.

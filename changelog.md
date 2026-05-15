@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - Web Migration Phase
+## [1.7.0] - 2026-05-15 (Hardening & Operational Readiness)
+### Added
+- **Hermetic Test Suite**: Implementation of a tiny SQLite fixture database for fast, isolated CI/CD testing.
+- **Search Contract**: Formalized search engine semantics in `SEARCH_CONTRACT.md`.
+- **Prefix Matching**: Enabled `arjun*` matching by default for scholarly search.
+- **Unified Dispatch**: Created `dispatch_service.py` to consolidate all search mode logic.
+- **Resource Safety**: Added a 5-second timeout to regex table scans.
+
+### Fixed
+- **Python 3.11 Compatibility**: Resolved nested f-string syntax errors and missing typing imports.
+- **Morphological SSE Bug**: Fixed progress tracking typo for morphological searches.
+- **Architecture Cleanup**: Moved ad-hoc scripts to `web/scripts/` and centralized configuration in `settings.py`.
+
+## [Unreleased]
 
 ### Added
 - **User Documentation**: Created `use_cases.md` detailing scholarly and technical scenarios for the platform.
