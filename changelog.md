@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.8.1] - 2026-05-15 (Post-Review Hardening)
+### Fixed
+- **Startup schema init**: `init_state_db` is now called via a FastAPI `lifespan` handler — on a clean install the first request to `/api/identity/lead` or `/api/corrections/propose` no longer fails with `OperationalError: no such table`.
+- **Admin key decoupled from AI key**: `ADMIN_SECRET_KEY` is now a separate setting; `admin.py` no longer uses `AI_API_KEY` as a proxy secret.
+- **Corrections `/pending` authenticated**: `GET /api/corrections/pending` now requires the admin key, preventing anonymous access to pending correction data.
+- **Bare `except` narrowed in identity router**: `except:` replaced with `except aiosqlite.IntegrityError:` so disk-full and WAL-lock errors propagate correctly instead of being silently swallowed.
+- **Health endpoint connection leak**: Corpus DB connection is now always closed in a `finally` block on both success and error paths.
+- **`get_count_suffix` modulo fix**: Special cases for 90 and 40 now use `count % 100` so 190, 290, 140, 240, etc. produce correct Russian suffixes.
+- **`CancelledError` propagation in AI service**: `asyncio.CancelledError` is re-raised before the general `except Exception` handler so FastAPI can cleanly cancel in-flight AI requests on client disconnect.
+- **`test_phase3.py` import order**: `import os` was referenced before being imported, causing `NameError` on fixture teardown.
+- **Audit doc corrected**: `PRE_GEMINI_AUDIT.md` A4 now accurately states that the SSE endpoint was retained intentionally rather than removed.
+
 ## [1.8.0] - 2026-05-15 (Samudra Manthanam Web Phase 1-5 Complete)
 ### Added
 - **Centralized Settings**: Migrated to Pydantic-Settings with `APP_ENV` and CORS management.
