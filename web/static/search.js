@@ -1,8 +1,11 @@
 $(document).ready(function() {
-    // Populate sources
+    let totalSourceCount = 0;
+
+    // ── Sources ──────────────────────────────────────────────────────────────
     fetch('/api/sources')
         .then(response => response.json())
         .then(sources => {
+            totalSourceCount = sources.length;
             const grid = $('#sourcesGrid');
             grid.empty();
             sources.forEach(source => {
@@ -20,6 +23,7 @@ $(document).ready(function() {
                 grid.append(item);
             });
             updateSourceCount();
+            restoreFromUrl();
         });
 
     function updateSourceCount() {
@@ -34,9 +38,46 @@ $(document).ready(function() {
         }
     }
 
+    // ── Permalink: restore state from URL on page load ────────────────────────
+    function restoreFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get('q');
+        if (!q) return;
+
+        $('#query').val(q);
+        $('#mode').val(params.get('mode') || 'plain');
+        $('#case_sensitive').prop('checked', params.get('cs') === '1');
+        $('#whole_word').prop('checked', params.get('ww') === '1');
+
+        const srcParam = params.get('src');
+        if (srcParam !== null) {
+            $('#sourcesGrid input').prop('checked', false);
+            if (srcParam) {
+                const ids = new Set(srcParam.split(',').map(Number));
+                $('#sourcesGrid input').each(function() {
+                    if (ids.has(parseInt($(this).val()))) $(this).prop('checked', true);
+                });
+            }
+        }
+        updateSourceCount();
+        $('#searchForm').trigger('submit');
+    }
+
+    // ── Permalink: build URL from current search state ────────────────────────
+    function buildPermalink(query, mode, case_sensitive, whole_word, source_ids) {
+        const params = new URLSearchParams();
+        params.set('q', query);
+        if (mode && mode !== 'plain') params.set('mode', mode);
+        if (case_sensitive) params.set('cs', '1');
+        if (whole_word) params.set('ww', '1');
+        if (source_ids.length !== totalSourceCount) {
+            params.set('src', source_ids.join(','));
+        }
+        return '?' + params.toString();
+    }
+
     $(document).on('change', '#sourcesGrid input', updateSourceCount);
 
-    // Select All / None
     $('#selectAll').click(() => {
         $('#sourcesGrid input').prop('checked', true);
         updateSourceCount();
@@ -46,41 +87,32 @@ $(document).ready(function() {
         updateSourceCount();
     });
 
-    // Form submit
+    // ── Search ────────────────────────────────────────────────────────────────
     $('#searchForm').submit(function(e) {
         e.preventDefault();
         const query = $('#query').val();
         const mode = $('#mode').val();
         const case_sensitive = $('#case_sensitive').is(':checked');
         const whole_word = $('#whole_word').is(':checked');
-        
+
         const source_ids = [];
         $('#sourcesGrid input:checked').each(function() {
             source_ids.push(parseInt($(this).val()));
         });
 
-        // Show progress
+        // Update URL bar so the search is bookmarkable / shareable
+        history.pushState({}, '', buildPermalink(query, mode, case_sensitive, whole_word, source_ids));
+
         $('#progressContainer').show();
         $('#searchProgress').val(0);
         $('#progressText').text('Поиск...');
         $('#results-area').empty().append('<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>');
-
         $('#searchProgress').val(30);
 
-        const requestData = {
-            query: query,
-            mode: mode,
-            case_sensitive: case_sensitive,
-            whole_word: whole_word,
-            source_ids: source_ids, // Send the array (empty if none selected)
-            limit: 5000
-        };
-
-        // Post search
         fetch('/api/search', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestData)
+            body: JSON.stringify({ query, mode, case_sensitive, whole_word, source_ids, limit: 5000 })
         })
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
@@ -91,7 +123,6 @@ $(document).ready(function() {
             $('#progressContainer').hide();
             if (data.html_fragment) {
                 $('#results-area').html(data.html_fragment);
-                // Initialize scroll to top of results if needed
                 window.scrollTo({ top: $('#results-area').offset().top - 20, behavior: 'smooth' });
             } else {
                 $('#results-area').html('<p>Результатов не найдено.</p>');
@@ -104,29 +135,94 @@ $(document).ready(function() {
         });
     });
 
-    // Export button
+    // ── Export ────────────────────────────────────────────────────────────────
     $('#exportBtn').click(function() {
         const query = $('#query').val();
         if (!query) return;
         const mode = $('#mode').val();
         const case_sensitive = $('#case_sensitive').is(':checked');
         const whole_word = $('#whole_word').is(':checked');
-        
+
         const source_ids = [];
         $('#sourcesGrid input:checked').each(function() {
             source_ids.push(parseInt($(this).val()));
         });
-        const source_ids_str = source_ids.join(',');
-        
-        const url = `/api/search/export?query=${encodeURIComponent(query)}&mode=${mode}&case_sensitive=${case_sensitive}&whole_word=${whole_word}&source_ids=${source_ids_str}`;
+        const url = `/api/search/export?query=${encodeURIComponent(query)}&mode=${mode}&case_sensitive=${case_sensitive}&whole_word=${whole_word}&source_ids=${source_ids.join(',')}`;
         window.location.href = url;
     });
 
-    // Lead Capture Logic
+    // ── Context window ────────────────────────────────────────────────────────
+    $(document).on('click', '.btn-context', function() {
+        const btn = $(this);
+        const block = btn.closest('.citation_block');
+        const panel = block.find('.context-panel');
+
+        if (panel.is(':visible')) {
+            panel.slideUp(150);
+            btn.text('≡');
+            return;
+        }
+        if (panel.data('loaded')) {
+            panel.slideDown(150);
+            btn.text('▲');
+            return;
+        }
+
+        const sourceId = btn.data('source-id');
+        const lineNum  = btn.data('line-num');
+        btn.prop('disabled', true).text('…');
+
+        fetch(`/api/search/context?source_id=${sourceId}&line_num=${lineNum}&window=5`)
+            .then(r => r.json())
+            .then(data => {
+                let html = '<div class="ctx-lines">';
+                data.before.forEach(l => {
+                    html += ctxLineHtml(l, false);
+                });
+                if (data.current) {
+                    html += ctxLineHtml(data.current, true);
+                }
+                data.after.forEach(l => {
+                    html += ctxLineHtml(l, false);
+                });
+                html += '</div>';
+                panel.html(html).data('loaded', true).slideDown(150);
+                btn.prop('disabled', false).text('▲');
+            })
+            .catch(() => {
+                panel.html('<p style="color:#c00;font-size:0.8rem;margin:2px 0">Ошибка загрузки контекста</p>')
+                     .data('loaded', true).slideDown(150);
+                btn.prop('disabled', false).text('≡');
+            });
+    });
+
+    function ctxLineHtml(line, isFocal) {
+        const num = escHtml(String(line.link_id || line.line_num));
+        const focal = isFocal ? 'font-weight:600;' : 'opacity:0.75;';
+        return `<div style="display:grid;grid-template-columns:3rem 1fr;gap:0.5rem;padding:2px 0;${focal}">` +
+               `<span style="text-align:right;color:#aaa;font-size:0.75rem;padding-top:0.1rem;">${num}</span>` +
+               `<span>${line.line_html}</span>` +
+               `</div>`;
+    }
+
+    // ── Copy citation URL ─────────────────────────────────────────────────────
+    $(document).on('click', '.btn-copy-citation', function() {
+        const btn = $(this);
+        const url = window.location.origin + btn.data('citation-url');
+        const orig = btn.text();
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(url)
+                .then(() => { btn.text('✓'); setTimeout(() => btn.text(orig), 1500); })
+                .catch(() => prompt('Скопируйте ссылку:', url));
+        } else {
+            prompt('Скопируйте ссылку:', url);
+        }
+    });
+
+    // ── Lead capture ──────────────────────────────────────────────────────────
     let leadTriggered = false;
     $(window).scroll(function() {
         if (!leadTriggered && $(window).scrollTop() + $(window).height() > $(document).height() * 0.5) {
-            // Only trigger if we have results (meaning user is actually engaged)
             if ($('#results-area .citation_block').length > 0) {
                 $('#leadModal').fadeIn();
                 leadTriggered = true;
@@ -145,7 +241,6 @@ $(document).ready(function() {
             consent_data: $('#consent_data').is(':checked'),
             consent_marketing: $('#consent_marketing').is(':checked')
         };
-
         fetch('/api/identity/lead', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -164,14 +259,14 @@ $(document).ready(function() {
         .catch(err => alert('Ошибка при отправке: ' + err));
     });
 
-    // AI Panel Logic
+    // ── AI panel ──────────────────────────────────────────────────────────────
     $(document).on('click', '#askAiBtn', function() {
         const query = $('#query').val();
         const contextLines = [];
         $('.citation_block').each(function() {
             const text = $(this).attr('data-text');
             if (text) contextLines.push(text);
-            if (contextLines.length >= 25) return false; // Max context rows
+            if (contextLines.length >= 25) return false;
         });
 
         $('#aiPanel').addClass('active');
@@ -181,7 +276,7 @@ $(document).ready(function() {
         fetch('/api/ai/explain', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: query, context_lines: contextLines })
+            body: JSON.stringify({ query, context_lines: contextLines })
         })
         .then(response => response.json())
         .then(data => {
@@ -200,3 +295,11 @@ $(document).ready(function() {
 
     $('#closeAiPanel').click(() => $('#aiPanel').removeClass('active'));
 });
+
+function escHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Query
 import time
 import os
 import json
@@ -154,6 +154,34 @@ async def get_search_stream(request: Request, query: str, mode: SearchMode = Sea
             await db.close()
 
     return EventSourceResponse(event_generator())
+
+@router.get("/context")
+async def get_context(
+    source_id: int,
+    line_num: int,
+    window: int = Query(default=5, ge=1, le=20),
+):
+    """Return up to `window` lines before and after `line_num` in the given source."""
+    db = await get_db(settings.DB_PATH)
+    try:
+        async with db.execute(
+            """SELECT line_num, link_id, chapter, line_html
+               FROM corpus_lines
+               WHERE source_id = ? AND line_num BETWEEN ? AND ?
+               ORDER BY line_num""",
+            (source_id, line_num - window, line_num + window),
+        ) as cursor:
+            rows = await cursor.fetchall()
+            lines = [dict(r) for r in rows]
+
+        return {
+            "before":  [l for l in lines if l["line_num"] < line_num],
+            "current": next((l for l in lines if l["line_num"] == line_num), None),
+            "after":   [l for l in lines if l["line_num"] > line_num],
+        }
+    finally:
+        await db.close()
+
 
 @router.get("/export", response_class=HTMLResponse)
 async def get_export(request: Request, query: str, mode: SearchMode = SearchMode.plain, case_sensitive: bool = False, whole_word: bool = False):

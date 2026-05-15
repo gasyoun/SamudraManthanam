@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from app.db import get_db
 from app.settings import settings
@@ -40,5 +40,9 @@ async def view_source(request: Request, source_id: int, highlight: str = None):
 
 @router.get("/{source_id}/line/{line_num}", response_class=HTMLResponse)
 async def view_line_context(request: Request, source_id: int, line_num: int):
-    # Redirect to the main source view with a highlight parameter
     return await view_source(request, source_id, highlight=str(line_num))
+
+@router.get("/{source_id}/anchor/{link_id}", response_class=RedirectResponse)
+async def anchor_redirect(source_id: int, link_id: str):
+    """Stable permalink for a line identified by its link_id attribute."""
+    return RedirectResponse(url=f"/sources/{source_id}?highlight={link_id}", status_code=302)
