@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from app.routers import sources, search, morph, corpus_sync, health, reader, identity, corrections, ai, admin
 from app.settings import settings
 from app.state_db import get_state_db, init_state_db
+from app.db import get_db
 import os
 
 @asynccontextmanager
@@ -54,24 +55,65 @@ static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 if os.path.exists(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
+def _template_context(**extra) -> dict:
+    """Common template context — site metadata + cross-link target."""
+    base = {
+        "site_name": "Пахтанье океана",
+        "site_description": settings.SITE_DESCRIPTION,
+        "public_base_url": settings.PUBLIC_BASE_URL,
+        "ss_url": settings.SYSTEMA_SANSCRITICUM_URL,
+    }
+    base.update(extra)
+    return base
+
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context=_template_context(
+            og_title="Пахтанье океана — поиск по санскрито-русскому корпусу",
+            og_description=settings.SITE_DESCRIPTION,
+            og_url=settings.PUBLIC_BASE_URL or "/",
+        ),
+    )
 
 @app.get("/robots.txt")
 async def robots():
-    content = "User-agent: *\nDisallow: /api/\nAllow: /\nSitemap: /sitemap.xml"
+    sitemap_url = (settings.PUBLIC_BASE_URL.rstrip("/") + "/sitemap.xml") if settings.PUBLIC_BASE_URL else "/sitemap.xml"
+    content = f"User-agent: *\nDisallow: /api/\nAllow: /\nSitemap: {sitemap_url}\n"
     from fastapi.responses import Response
     return Response(content=content, media_type="text/plain")
 
 @app.get("/sitemap.xml")
 async def sitemap():
-    content = """<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>/</loc><priority>1.0</priority></url>
-  <url><loc>/api/health</loc><priority>0.1</priority></url>
-</urlset>"""
     from fastapi.responses import Response
+    base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
+
+    # Collect source IDs from the corpus DB so each source page is indexable.
+    source_ids: list[int] = []
+    try:
+        db = await get_db(settings.DB_PATH)
+        try:
+            async with db.execute("SELECT id FROM sources ORDER BY sort_order") as cursor:
+                source_ids = [row[0] for row in await cursor.fetchall()]
+        finally:
+            await db.close()
+    except Exception:
+        # Sitemap should still serve even if corpus DB is briefly unavailable.
+        source_ids = []
+
+    urls = [f"  <url><loc>{base}/</loc><priority>1.0</priority></url>"]
+    for sid in source_ids:
+        urls.append(f"  <url><loc>{base}/sources/{sid}</loc><priority>0.8</priority></url>")
+
+    content = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(urls)
+        + "\n</urlset>\n"
+    )
     return Response(content=content, media_type="application/xml")
 
 if __name__ == "__main__":

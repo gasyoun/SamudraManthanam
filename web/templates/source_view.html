@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ source.title }} — Samudra Manthanam</title>
+    <title>{{ og_title or source.title }}</title>
+    <meta name="description" content="{{ og_description or source.title }}">
+
+    <!-- Open Graph / Telegram / VK link previews -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="{{ site_name or 'Пахтанье океана' }}">
+    <meta property="og:title" content="{{ og_title or source.title }}">
+    <meta property="og:description" content="{{ og_description or source.title }}">
+    <meta property="og:url" content="{{ og_url or '' }}">
+    <meta property="og:locale" content="ru_RU">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ og_title or source.title }}">
+    <meta name="twitter:description" content="{{ og_description or source.title }}">
+
     <link rel="stylesheet" href="/static/style.css">
     <style>
         :root {
@@ -125,7 +139,18 @@
     <header>
         <div class="header-content">
             <h1>{{ source.title }}</h1>
-            <a href="/" class="back-link">← Назад к поиску</a>
+            <div style="display:flex; gap:1rem; align-items:center;">
+                {% if ss_url %}
+                <a href="{{ ss_url }}?utm_source=samudramanthanam&utm_medium=source_view&utm_campaign=cross_link"
+                   target="_blank"
+                   rel="noopener"
+                   style="color:#e67e22; text-decoration:none; font-weight:600; font-size:0.85rem; padding:0.3rem 0.7rem; border:1px solid #e67e22; border-radius:6px;"
+                   title="Курс грамматики санскрита для русскоязычных">
+                    Курс грамматики →
+                </a>
+                {% endif %}
+                <a href="/" class="back-link">← Назад к поиску</a>
+            </div>
         </div>
     </header>
 

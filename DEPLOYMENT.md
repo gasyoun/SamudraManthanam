@@ -82,6 +82,12 @@ ALLOWED_ORIGINS=https://<YOUR_DOMAIN>
 # Admin API key (for /api/admin/vacuum and /api/corrections/pending)
 ADMIN_SECRET_KEY=<generate a long random string>
 
+# Cross-link target — paid course platform (leave blank to hide the CTA banner)
+SYSTEMA_SANSCRITICUM_URL=https://systema-sanscriticum.ru
+
+# Custom site description used in OG tags + meta description (optional)
+SITE_DESCRIPTION=Поисковая система по санскрито-русскому параллельному корпусу.
+
 # AI explanation backend (optional — leave blank to disable)
 AI_PROVIDER=openai-compatible
 AI_BASE_URL=

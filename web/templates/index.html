@@ -3,7 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пахтанье океана — Samudra Manthanam</title>
+    <title>{{ og_title or "Пахтанье океана — Samudra Manthanam" }}</title>
+    <meta name="description" content="{{ og_description or site_description }}">
+
+    <!-- Open Graph / Telegram / VK link previews -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site_name or 'Пахтанье океана' }}">
+    <meta property="og:title" content="{{ og_title or 'Пахтанье океана — Samudra Manthanam' }}">
+    <meta property="og:description" content="{{ og_description or site_description }}">
+    <meta property="og:url" content="{{ og_url or '/' }}">
+    <meta property="og:locale" content="ru_RU">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ og_title or 'Пахтанье океана' }}">
+    <meta name="twitter:description" content="{{ og_description or site_description }}">
+
     <link rel="stylesheet" href="/static/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -283,7 +298,20 @@
 <body>
     <nav class="navbar">
         <h1>ПАХТАНЬЕ ОКЕАНА</h1>
-        <div class="links">samskrtam.ru</div>
+        <div class="links" style="display:flex; gap:1rem; align-items:center;">
+            {% if ss_url %}
+            <a href="{{ ss_url }}?utm_source=samudramanthanam&utm_medium=navbar&utm_campaign=cross_link"
+               target="_blank"
+               rel="noopener"
+               style="color:#ffd479; text-decoration:none; font-weight:600; font-size:0.9rem; padding:0.3rem 0.8rem; border:1px solid #ffd479; border-radius:6px; transition:background 0.2s;"
+               onmouseover="this.style.background='rgba(255,212,121,0.15)'"
+               onmouseout="this.style.background='transparent'"
+               title="Курс грамматики санскрита для русскоязычных">
+                Курс грамматики →
+            </a>
+            {% endif %}
+            <span style="opacity:0.7;">samskrtam.ru</span>
+        </div>
     </nav>
 
     <div class="container">
@@ -367,6 +395,7 @@
             <form id="leadForm" style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <input type="text" id="leadName" placeholder="Ваше имя" style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
                 <input type="email" id="leadEmail" placeholder="Email" required style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
+                <input type="text" id="leadTelegram" placeholder="Telegram (@username) — необязательно" style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
                 <div style="font-size: 0.75rem; color: #777;">
                     <label style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.5rem;">
                         <input type="checkbox" id="consent_data" required style="margin-top: 3px;">

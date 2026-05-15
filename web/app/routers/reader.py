@@ -26,13 +26,20 @@ async def view_source(request: Request, source_id: int, highlight: str = None):
             rows = await cursor.fetchall()
             lines = [dict(r) for r in rows]
             
+        source_dict = dict(source)
+        base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
         return templates.TemplateResponse(
             request=request,
             name="source_view.html",
             context={
-                "source": dict(source),
+                "source": source_dict,
                 "lines": lines,
-                "highlight": highlight
+                "highlight": highlight,
+                "site_name": "Пахтанье океана",
+                "ss_url": settings.SYSTEMA_SANSCRITICUM_URL,
+                "og_title": f"{source_dict.get('title', 'Источник')} — Пахтанье океана",
+                "og_description": f"Параллельный санскрито-русский текст: {source_dict.get('title', '')}",
+                "og_url": f"{base}/sources/{source_id}",
             }
         )
     finally:

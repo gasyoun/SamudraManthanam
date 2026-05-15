@@ -34,9 +34,20 @@ async def init_state_db(db):
         id INTEGER PRIMARY KEY,
         email TEXT UNIQUE NOT NULL,
         name TEXT,
+        telegram_username TEXT,
+        utm_source TEXT,
+        utm_medium TEXT,
+        utm_campaign TEXT,
         created_at TEXT NOT NULL
     );
     """)
+
+    # Idempotent migration: add columns to pre-existing users tables
+    async with db.execute("PRAGMA table_info(users)") as cursor:
+        existing_cols = {row[1] for row in await cursor.fetchall()}
+    for col in ("telegram_username", "utm_source", "utm_medium", "utm_campaign"):
+        if col not in existing_cols:
+            await db.execute(f"ALTER TABLE users ADD COLUMN {col} TEXT")
 
     await db.execute("""
     CREATE TABLE IF NOT EXISTS consent (

@@ -11,6 +11,10 @@ router = APIRouter(prefix="/api/identity", tags=["identity"])
 class LeadRequest(BaseModel):
     email: EmailStr
     name: Optional[str] = None
+    telegram_username: Optional[str] = None
+    utm_source: Optional[str] = None
+    utm_medium: Optional[str] = None
+    utm_campaign: Optional[str] = None
     consent_data: bool
     consent_marketing: bool
 
@@ -19,25 +23,30 @@ async def post_lead(request: Request, lead: LeadRequest):
     db = await get_state_db()
     if not db:
         raise HTTPException(status_code=503, detail="Identity service unavailable")
-        
+
     try:
         now = datetime.datetime.now().isoformat()
         # Use client host for IP hash (truncated for privacy)
         client_host = request.client.host if request.client else "unknown"
         ip_hash = hashlib.sha256(client_host.encode()).hexdigest()[:16]
-        
-        # 1. Store/Update User
-        # Note: SQLite doesn't have ON CONFLICT DO UPDATE in all versions, 
-        # but modern ones used by aiosqlite usually do.
+
+        # 1. Store/Update User. UTM fields are write-once (first-touch attribution);
+        #    telegram_username is overwritten on each submit if provided.
         try:
             await db.execute(
-                "INSERT INTO users (email, name, created_at) VALUES (?, ?, ?)",
-                (lead.email, lead.name, now)
+                """INSERT INTO users
+                   (email, name, telegram_username, utm_source, utm_medium, utm_campaign, created_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                (lead.email, lead.name, lead.telegram_username,
+                 lead.utm_source, lead.utm_medium, lead.utm_campaign, now)
             )
         except aiosqlite.IntegrityError:
             await db.execute(
-                "UPDATE users SET name = ? WHERE email = ?",
-                (lead.name, lead.email)
+                """UPDATE users
+                   SET name = COALESCE(?, name),
+                       telegram_username = COALESCE(?, telegram_username)
+                   WHERE email = ?""",
+                (lead.name, lead.telegram_username, lead.email)
             )
         
         # Get user id

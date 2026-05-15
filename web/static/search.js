@@ -221,6 +221,27 @@ $(document).ready(function() {
         }
     });
 
+    // ── Social share buttons (Telegram / VK / WhatsApp) ───────────────────────
+    function openShare(network, btn) {
+        const path  = btn.data('share-url');
+        const title = btn.data('share-title') || 'Пахтанье океана';
+        const url   = window.location.origin + path;
+        const text  = `${title} — Пахтанье океана`;
+
+        let target;
+        if (network === 'tg') {
+            target = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+        } else if (network === 'vk') {
+            target = `https://vk.com/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`;
+        } else if (network === 'wa') {
+            target = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+        }
+        window.open(target, '_blank', 'noopener,width=600,height=600');
+    }
+    $(document).on('click', '.btn-share-tg', function() { openShare('tg', $(this)); });
+    $(document).on('click', '.btn-share-vk', function() { openShare('vk', $(this)); });
+    $(document).on('click', '.btn-share-wa', function() { openShare('wa', $(this)); });
+
     // ── Lead capture ──────────────────────────────────────────────────────────
     let leadTriggered = false;
     $(window).scroll(function() {
@@ -235,11 +256,25 @@ $(document).ready(function() {
     $('#closeLead').click(() => $('#leadModal').fadeOut());
     $(window).click((e) => { if (e.target.id === 'leadModal') $('#leadModal').fadeOut(); });
 
+    // Capture UTM params on first page load; persist for the session so the lead
+    // form can attribute the visitor's original referral source.
+    (function captureUtm() {
+        const p = new URLSearchParams(window.location.search);
+        ['utm_source', 'utm_medium', 'utm_campaign'].forEach(k => {
+            const v = p.get(k);
+            if (v && !sessionStorage.getItem(k)) sessionStorage.setItem(k, v);
+        });
+    })();
+
     $('#leadForm').submit(function(e) {
         e.preventDefault();
         const data = {
             email: $('#leadEmail').val(),
-            name: $('#leadName').val(),
+            name: $('#leadName').val() || null,
+            telegram_username: $('#leadTelegram').val() || null,
+            utm_source: sessionStorage.getItem('utm_source') || null,
+            utm_medium: sessionStorage.getItem('utm_medium') || null,
+            utm_campaign: sessionStorage.getItem('utm_campaign') || null,
             consent_data: $('#consent_data').is(':checked'),
             consent_marketing: $('#consent_marketing').is(':checked')
         };

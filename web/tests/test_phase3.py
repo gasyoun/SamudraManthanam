@@ -47,6 +47,43 @@ async def test_identity_lead_invalid_email():
     assert response.status_code == 422 # Pydantic validation error
 
 @pytest.mark.asyncio
+async def test_identity_lead_persists_telegram_and_utm():
+    """Telegram username + UTM params land in the users table."""
+    response = client.post("/api/identity/lead", json={
+        "email": "tg-user@example.com",
+        "name": "Telegram User",
+        "telegram_username": "@sanskritfan",
+        "utm_source": "telegram",
+        "utm_medium": "channel_post",
+        "utm_campaign": "grammar_launch",
+        "consent_data": True,
+        "consent_marketing": True
+    })
+    assert response.status_code == 200
+
+    async with aiosqlite.connect(settings.STATE_DB_PATH) as db:
+        db.row_factory = aiosqlite.Row
+        async with db.execute(
+            "SELECT telegram_username, utm_source, utm_medium, utm_campaign FROM users WHERE email = 'tg-user@example.com'"
+        ) as cursor:
+            row = await cursor.fetchone()
+            assert row is not None
+            assert row["telegram_username"] == "@sanskritfan"
+            assert row["utm_source"] == "telegram"
+            assert row["utm_medium"] == "channel_post"
+            assert row["utm_campaign"] == "grammar_launch"
+
+@pytest.mark.asyncio
+async def test_identity_lead_backwards_compat_omits_new_fields():
+    """Old clients that don't send telegram/utm still succeed (fields are optional)."""
+    response = client.post("/api/identity/lead", json={
+        "email": "legacy@example.com",
+        "consent_data": True,
+        "consent_marketing": False
+    })
+    assert response.status_code == 200
+
+@pytest.mark.asyncio
 async def test_correction_proposal():
     # First create a user
     client.post("/api/identity/lead", json={

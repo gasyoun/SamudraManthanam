@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.0] - 2026-05-15 (Funnel foundations — Systema Sanscriticum cross-link, OG, SEO)
+### Added
+- **`SYSTEMA_SANSCRITICUM_URL` setting + cross-link banner**: When set, a "Курс грамматики →" CTA appears in the navbar (index) and source view header. Distinct `utm_medium` per placement (`navbar` vs `source_view`) so analytics can attribute conversions by surface. Hidden cleanly when the env var is empty.
+- **Open Graph / Twitter / VK link-preview meta tags** on `/` and `/sources/{id}` — `og:title`, `og:description`, `og:url`, `og:type`, `og:locale=ru_RU`, plus Twitter Card. Telegram and VK link shares now render as proper preview cards instead of bare URLs.
+- **Sitemap expansion**: `/sitemap.xml` now lists every source page (`/sources/{id}`) so search engines can index the corpus. Uses `PUBLIC_BASE_URL` for absolute URLs when set. `robots.txt` points at the absolute sitemap URL.
+- **Site-wide description setting** (`SITE_DESCRIPTION`) drives meta description + OG description with a single source of truth.
+- **Telegram username on lead capture**: optional `@username` field added to the form and `users.telegram_username` column. Migration is idempotent — existing deploys gain the column on next startup.
+- **UTM attribution capture**: `utm_source` / `utm_medium` / `utm_campaign` captured from URL on page load, persisted in `sessionStorage`, attached to lead submissions, and stored in `users` columns. First-touch attribution (UTM only writes on INSERT; updates preserve original values).
+- **Social share buttons** (Telegram, VK, WhatsApp) on every citation result — pre-fill text + permalink, open in popup. Brand-coloured letters (TG / VK / WA) for unambiguous identification.
+- **`test_funnel.py`**: 8 new tests covering sitemap contents, OG tag presence on both routes, cross-link banner visibility under different `SYSTEMA_SANSCRITICUM_URL` states, UTM tagging.
+- **`test_phase3.py`**: 2 new tests verifying lead capture persists telegram_username + UTM, and that legacy clients omitting the new fields still succeed.
+
+### Fixed
+- **`TemplateResponse` signature**: Migrated `/` route to the FastAPI keyword-arg form (`request=`, `name=`, `context=`) matching the rest of the codebase. The old positional form was triggering a Jinja2 cache-key error on dict contexts.
+
 ## [1.11.1] - 2026-05-15 (Search URL popstate)
 ### Fixed
 - **Browser back/forward now re-runs the search**: `window.addEventListener('popstate', restoreFromUrl)` wires the existing permalink restore logic to browser history navigation. Previously, back/forward changed the URL but left stale results on screen.

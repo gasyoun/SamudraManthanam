@@ -9,6 +9,10 @@ class Settings(BaseSettings):
     PUBLIC_BASE_URL: str = ""
     ALLOWED_ORIGINS: str = ""
 
+    # Funnel / marketing
+    SYSTEMA_SANSCRITICUM_URL: str = ""
+    SITE_DESCRIPTION: str = "Поисковая система по санскрито-русскому параллельному корпусу: «Бхагавадгита», «Махабхарата», упанишады и другие тексты."
+
     # Admin
     ADMIN_SECRET_KEY: str = ""
 
