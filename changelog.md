@@ -18,6 +18,9 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **Target Architecture**: Added `TARGET_ARCHITECTURE.md` describing the VPS/no-Docker target architecture, `corpus.db`/`state.db` split, AI provider abstraction, identity, correction proposals, and corpus publication flow.
+- **6-Month Roadmap**: Added `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md` with phased plans for corpus/search engine, scholarly workbench, and research platform development.
+- **Gemini Flash Phase Plans**: Split the implementation plan into short under-100-line phase files for foundation, search/reader, identity/corrections, AI, and deployment/operations.
 - **User Documentation**: Created `use_cases.md` detailing scholarly and technical scenarios for the platform.
 - **Production Automation**: Created `reindex.sh` to facilitate daily automated re-indexing via Docker.
 - **Deployment Infrastructure**: Added `Dockerfile` and `docker-compose.yml` for containerized deployment.
