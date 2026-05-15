@@ -8,154 +8,124 @@ Scope: All new/modified files from the Gemini Flash implementation (Phase 1–5 
 
 ## Summary
 
-Gemini Flash delivered a substantial implementation: five new routers, a state-database layer, AI integration, an admin endpoint, a reader view, and a full test suite across four new test files. The architectural intent (corpus/state split, provider-agnostic AI, pydantic-settings, health endpoint) is correctly executed. Several real bugs and one medium security issue remain.
+Gemini Flash delivered a substantial implementation: five new routers, a state-database layer, AI integration, an admin endpoint, a reader view, and a full test suite across four new test files. The architectural intent (corpus/state split, provider-agnostic AI, pydantic-settings, health endpoint) is correctly executed. Several real bugs and one medium security issue were found and have since been fixed.
 
-**Pass / Fix count:** 3 critical fixes required · 4 medium · 4 quality nits
+**Final status:** All critical and medium issues resolved. One design note (M3) deferred. 37/37 hermetic tests pass.
 
 ---
 
 ## Critical Bugs
 
-### C1 · `test_phase3.py` uses `os` before importing it
+### C1 · `test_phase3.py` uses `os` before importing it — FIXED (commit a4f9486)
 
 **File:** `web/tests/test_phase3.py:20`  
-```python
-    if os.path.exists(db_path):   # line 20 — os is imported on line 22
-        os.remove(db_path)
-```
-`import os` appears *after* the fixture that uses it. The module will crash with `NameError: name 'os' is not defined` whenever pytest tears down the fixture.
+`import os` appeared *after* the fixture that used it. The module would crash with `NameError: name 'os' is not defined` whenever pytest tore down the fixture.
 
-**Fix:** Move `import os` to the top of the file (before the fixture).
+**Fix applied:** Moved `import os` and `import pytest_asyncio` to the top of the file.
 
 ---
 
-### C2 · `get_state_db()` creates a new connection on every call — never pooled, never initialised
+### C2 · `get_state_db()` never initialised on startup — FIXED (commit a4f9486)
 
-**Files:** `web/app/state_db.py`, every router that calls `get_state_db()`
+**Files:** `web/app/main.py`, `web/app/state_db.py`
 
-`get_state_db()` opens a fresh `aiosqlite` connection each time, but `init_state_db()` is **never called** from `main.py` or any startup hook. The first request to `/api/identity/lead` or `/api/corrections/propose` will fail with `OperationalError: no such table: users` on a clean install.
+`init_state_db()` was never called from `main.py`. The first request to `/api/identity/lead` or `/api/corrections/propose` on a clean install would fail with `OperationalError: no such table: users`. Tests passed only because each fixture created the schema explicitly.
 
-**Fix:** Call `init_state_db` once at application startup via a FastAPI `lifespan` handler:
-
-```python
-# main.py
-from contextlib import asynccontextmanager
-from app.state_db import get_state_db, init_state_db
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    if settings.STATE_DB_PATH:
-        db = await get_state_db()
-        await init_state_db(db)
-        await db.close()
-    yield
-
-app = FastAPI(title="Samudra Manthanam API", lifespan=lifespan)
-```
-
-The tests work only because each test fixture creates the schema explicitly — on a real server this path is never taken.
+**Fix applied:** Added a `lifespan` handler to `main.py` that calls `init_state_db` at startup when `STATE_DB_PATH` is configured.
 
 ---
 
-### C3 · `admin.py` uses `AI_API_KEY` as the admin secret
+### C3 · `admin.py` used `AI_API_KEY` as the admin secret — FIXED (commit a4f9486)
 
-**File:** `web/app/routers/admin.py:14`  
-```python
-if settings.APP_ENV == "production" and key != settings.AI_API_KEY:
-```
-Using the AI provider credential as an admin key is an anti-pattern: it couples two unrelated secrets, so rotating the AI key automatically revokes admin access and vice versa. If `AI_API_KEY` is ever logged (e.g., in an error trace), the admin endpoint becomes open.
+**File:** `web/app/routers/admin.py`
 
-**Fix:** Add a dedicated `ADMIN_SECRET_KEY: str = ""` to `settings.py` and check that instead:
-```python
-if not settings.ADMIN_SECRET_KEY or key != settings.ADMIN_SECRET_KEY:
-    raise HTTPException(status_code=403, detail="Forbidden")
-```
+Using the AI provider credential as an admin key couples two unrelated secrets. Rotating the AI key would silently revoke admin access; a logged error trace could expose the admin endpoint.
+
+**Fix applied:** Added a dedicated `ADMIN_SECRET_KEY: str = ""` field to `settings.py`. The vacuum endpoint now checks `ADMIN_SECRET_KEY` instead of `AI_API_KEY`.
 
 ---
 
 ## Medium Issues
 
-### M1 · `corrections.py` `/pending` endpoint is unauthenticated
+### M1 · `/pending` corrections endpoint was unauthenticated — FIXED (commit 2c5d792)
 
-**File:** `web/app/routers/corrections.py:42`  
-`GET /api/corrections/pending` returns all pending corrections to anyone. This leaks user emails (via `user_id` joins) and corpus details to anonymous callers. At minimum it should require the admin key.
+**File:** `web/app/routers/corrections.py`
 
-**Fix:** Add a `key: str = Query(...)` parameter and validate it the same way `admin.py` does.
+`GET /api/corrections/pending` returned all pending corrections to any anonymous caller, leaking corpus details and user association data.
 
----
-
-### M2 · `identity.py` swallows the INSERT exception unconditionally
-
-**File:** `web/app/routers/identity.py:31–42`  
-```python
-try:
-    await db.execute("INSERT INTO users ...")
-except:           # bare except — catches everything
-    await db.execute("UPDATE users SET name = ...")
-```
-A bare `except` catches `KeyboardInterrupt`, `SystemExit`, and `CancelledError`. If the INSERT fails for any reason other than a UNIQUE constraint (e.g. disk full, WAL lock), the code falls through to an UPDATE that silently does nothing.
-
-**Fix:** Catch `aiosqlite.IntegrityError` specifically:
-```python
-except aiosqlite.IntegrityError:
-    await db.execute("UPDATE users SET name = ? WHERE email = ?", ...)
-```
+**Fix applied:** Endpoint now requires `?key=` query parameter, validated against `ADMIN_SECRET_KEY` in production and `"dev"` in development.
 
 ---
 
-### M3 · `reader.py` loads all lines for a source into memory
+### M2 · `identity.py` bare `except` swallowed all exceptions — FIXED (commit a4f9486)
 
-**File:** `web/app/routers/reader.py:22–27`  
-```python
-rows = await cursor.fetchall()
-lines = [dict(r) for r in rows]
-```
-For a large corpus file (thousands of lines), this materialises everything into memory before the first byte of HTML is sent. For a source-reader page this is acceptable now but will become a bottleneck as the corpus grows.
+**File:** `web/app/routers/identity.py`
 
-This is a design note, not an immediate bug. Consider streaming rows with `async for row in cursor` directly into the template if Jinja2 streaming is adopted.
+A bare `except:` block caught `KeyboardInterrupt`, `SystemExit`, and `CancelledError`. A disk-full or WAL-lock failure would fall through to an UPDATE that silently did nothing.
+
+**Fix applied:** Changed to `except aiosqlite.IntegrityError:` so only the UNIQUE constraint violation is caught.
 
 ---
 
-### M4 · `health.py` opens but never closes `corpus.db` on the error path
+### M3 · `reader.py` loads all lines for a source into memory — DEFERRED (design note)
 
-**File:** `web/app/routers/health.py:19–35`  
-The `corpus_ok = True` path explicitly calls `await db.close()`, but if `db.execute("SELECT COUNT(*) FROM sources")` raises, the connection is abandoned. The `get_db()` function returns a raw `aiosqlite.Connection`, not a context manager.
+**File:** `web/app/routers/reader.py:22–27`
 
-**Fix:** Wrap in `try/finally`:
-```python
-db = await get_db(settings.DB_PATH)
-try:
-    ...
-    corpus_ok = True
-except Exception as e:
-    corpus_error = str(e)
-finally:
-    await db.close()
-```
+`cursor.fetchall()` materialises every line for a source before the first byte of HTML is sent. Acceptable for current corpus sizes; will become a bottleneck if sources grow large.
+
+**No code change.** Consider streaming via `async for row in cursor` if Jinja2 streaming is adopted in a future iteration.
+
+---
+
+### M4 · `health.py` leaked corpus DB connection on error path — FIXED (commit a4f9486)
+
+**File:** `web/app/routers/health.py`
+
+`await db.close()` was only called on the success path. An exception during the `SELECT COUNT(*)` query would abandon the connection.
+
+**Fix applied:** Wrapped the corpus DB check in `try/finally` so the connection is always closed.
 
 ---
 
 ## Quality Nits
 
-### Q1 · `get_count_suffix` has hardcoded special cases for 90 and 100
+### Q1 · `get_count_suffix` hardcoded exact matches for 90 and 40 — FIXED (commit 2c5d792)
 
-**File:** `web/app/services/html_service.py:13–15`  
-The `-та` suffix for 90 and 100 is correct Russian, but the `if` chain will silently produce wrong output for 190, 200, etc. because the special-case block runs before the modulo logic. Consider using `count % 100` for the 90/40/100 checks.
+**File:** `web/app/services/html_service.py`
 
-### Q2 · `source_view.html` renders `line.line_html` with `| safe`
+`count == 90` and `count == 40` would produce wrong output for 190, 290, 140, 240, etc.
 
-**File:** `web/templates/source_view.html:145`  
-`{{ line.line_html | safe }}` disables autoescape. This is intentional (the HTML comes from the corpus), but if the ingest pipeline ever ingests user-controlled content (e.g., corrections), this becomes an XSS vector. A comment marking the intent would prevent a future reviewer from "fixing" it by accident.
+**Fix applied:** Changed to `count % 100 == 90` and `count % 100 == 40`.
 
-### Q3 · `ai_service.py` catches all exceptions and returns `{"error": ...}`
+---
 
-**File:** `web/app/services/ai_service.py:60`  
-`except Exception as e` catches `CancelledError` in Python 3.8+, which should propagate to allow FastAPI to cancel in-flight requests properly. Use `except (httpx.HTTPError, httpx.TimeoutException, Exception) as e` and re-raise `asyncio.CancelledError`.
+### Q2 · `source_view.html` `| safe` had no explanatory comment — FIXED (commit 2c5d792)
 
-### Q4 · SSE endpoint in `search.py` is still present
+**File:** `web/templates/source_view.html`
 
-**File:** `web/app/routers/search.py:83`  
-The `PRE_GEMINI_AUDIT.md` records A4 as "Fixed: Removed redundant SSE logic", but `GET /api/search/stream` still exists in the code. Either the audit note is wrong, or the SSE endpoint was re-added. Confirm whether this is intentional and, if so, update the audit note.
+`{{ line.line_html | safe }}` disables autoescape without explanation, risking a well-intentioned future "fix" that breaks corpus rendering.
+
+**Fix applied:** Added a Jinja2 comment noting that `line_html` is ingest-produced corpus HTML, not user input.
+
+---
+
+### Q3 · `ai_service.py` caught `CancelledError` — FIXED (commit 2c5d792)
+
+**File:** `web/app/services/ai_service.py`
+
+`except Exception` in Python 3.8+ catches `asyncio.CancelledError`, preventing FastAPI from cleanly cancelling in-flight AI requests when a client disconnects.
+
+**Fix applied:** Added `except asyncio.CancelledError: raise` before the general `except Exception` handler.
+
+---
+
+### Q4 · Audit doc incorrectly stated SSE endpoint was removed — FIXED (commit 2c5d792)
+
+**File:** `PRE_GEMINI_AUDIT.md`
+
+A4 read "Fixed: Removed redundant SSE logic" but `GET /api/search/stream` was still present.
+
+**Fix applied:** Corrected A4 to reflect that the endpoint was retained intentionally for future progress-bar UX, and flags it as a decision point before the next release.
 
 ---
 
@@ -170,14 +140,18 @@ The `PRE_GEMINI_AUDIT.md` records A4 as "Fixed: Removed redundant SSE logic", bu
 
 ---
 
-## Required Actions (Priority Order)
+## Actions — All Resolved
 
-| # | File | Action |
+| # | File | Status |
 |---|------|--------|
-| C1 | `web/tests/test_phase3.py` | Move `import os` to top |
-| C2 | `web/app/main.py`, `state_db.py` | Add `lifespan` startup that calls `init_state_db` |
-| C3 | `web/app/routers/admin.py`, `settings.py` | Add dedicated `ADMIN_SECRET_KEY` setting |
-| M1 | `web/app/routers/corrections.py` | Authenticate `/pending` with admin key |
-| M2 | `web/app/routers/identity.py` | Catch `aiosqlite.IntegrityError` not bare `except` |
-| M4 | `web/app/routers/health.py` | Wrap corpus DB check in `try/finally` |
-| Q4 | `web/PRE_GEMINI_AUDIT.md` | Clarify SSE endpoint status |
+| C1 | `web/tests/test_phase3.py` | Fixed — commit a4f9486 |
+| C2 | `web/app/main.py`, `state_db.py` | Fixed — commit a4f9486 |
+| C3 | `web/app/routers/admin.py`, `settings.py` | Fixed — commit a4f9486 |
+| M1 | `web/app/routers/corrections.py` | Fixed — commit 2c5d792 |
+| M2 | `web/app/routers/identity.py` | Fixed — commit a4f9486 |
+| M3 | `web/app/routers/reader.py` | Deferred — design note only |
+| M4 | `web/app/routers/health.py` | Fixed — commit a4f9486 |
+| Q1 | `web/app/services/html_service.py` | Fixed — commit 2c5d792 |
+| Q2 | `web/templates/source_view.html` | Fixed — commit 2c5d792 |
+| Q3 | `web/app/services/ai_service.py` | Fixed — commit 2c5d792 |
+| Q4 | `PRE_GEMINI_AUDIT.md` | Fixed — commit 2c5d792 |
