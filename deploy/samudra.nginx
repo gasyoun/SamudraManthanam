@@ -1,11 +1,23 @@
 # Nginx site config for Samudra Manthanam
 # Replace <YOUR_DOMAIN> with the actual domain name.
-# After initial HTTP setup, run: certbot --nginx -d <YOUR_DOMAIN>
-# Certbot will rewrite this file to add HTTPS automatically.
+#
+# Bootstrap order:
+#   1. Install THIS file (HTTP-only) at /etc/nginx/sites-available/samudra.
+#   2. Run: certbot --nginx -d <YOUR_DOMAIN> --redirect
+#      The --redirect flag forces certbot to add a 301 HTTP→HTTPS rule
+#      automatically; without it, the operator must answer "2" interactively.
+#   3. After certbot succeeds, MOVE the security headers from the commented
+#      block at the bottom of this file into the HTTPS server certbot wrote.
 
 server {
     listen 80;
     server_name <YOUR_DOMAIN>;
+
+    # ACME challenge survives even after the HTTPS redirect is added —
+    # nginx serves the challenge before applying the redirect.
+    location /.well-known/acme-challenge/ {
+        root /var/www/html;
+    }
 
     # Serve static assets directly — bypasses Python entirely
     location /static/ {
@@ -28,3 +40,18 @@ server {
         proxy_buffering    off;
     }
 }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Security headers to add to the HTTPS server block AFTER certbot rewrites
+# this file. Paste these inside the `server { listen 443 ssl ... }` block
+# that certbot creates:
+#
+#     # HSTS — force HTTPS for 1 year. Only enable AFTER confirming HTTPS works,
+#     # otherwise browsers cache the policy and lock users out on cert problems.
+#     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+#     add_header X-Content-Type-Options    "nosniff" always;
+#     add_header X-Frame-Options           "SAMEORIGIN" always;
+#     add_header Referrer-Policy           "strict-origin-when-cross-origin" always;
+#     add_header Permissions-Policy        "geolocation=(), microphone=(), camera=()" always;
+#
+# ─────────────────────────────────────────────────────────────────────────────

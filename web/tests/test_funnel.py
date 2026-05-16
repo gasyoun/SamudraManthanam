@@ -183,6 +183,36 @@ def test_sitemap_xml_escapes_public_base_url(test_db):
 
 # ── Regression: error path must not leak internal exception text to client ────
 
+def test_lifespan_survives_state_db_init_failure(test_db):
+    """REGRESSION: a misconfigured STATE_DB_PATH (pointing at a directory) used to
+    crash the whole app at startup. Now the lifespan handler logs and continues so
+    corpus search keeps working in degraded mode."""
+    import tempfile, os as _os
+    from fastapi.testclient import TestClient
+    from app.main import app
+
+    old_state = settings.STATE_DB_PATH
+    tmpdir = tempfile.mkdtemp()
+    settings.STATE_DB_PATH = tmpdir  # directory → connect fails
+    try:
+        # Entering this context triggers the lifespan handler — it must NOT raise.
+        with TestClient(app) as client_local:
+            # Corpus search still works
+            response = client_local.post("/api/search", json={"query": "arjuna", "mode": "plain"})
+            assert response.status_code == 200
+            # State-dependent endpoint gives a clean 503, not 500 with traceback
+            response = client_local.post("/api/identity/lead", json={
+                "email": "x@example.com", "consent_data": True, "consent_marketing": False,
+            })
+            assert response.status_code == 503
+    finally:
+        settings.STATE_DB_PATH = old_state
+        try:
+            _os.rmdir(tmpdir)
+        except OSError:
+            pass
+
+
 def test_anchor_redirect_url_encodes_link_id(test_db):
     """A link_id containing '&' (or other URL-significant chars) must be
     percent-encoded on the way into ?highlight=. Otherwise the query string

@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,12 +11,31 @@ from app.state_db import get_state_db, init_state_db
 from app.db import get_db
 import os
 
+logger = logging.getLogger(__name__)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """Run startup tasks. A failed state.db init must NOT crash the whole app —
+    the corpus search should keep working in degraded mode while the operator
+    fixes the state DB. State-dependent routes will surface clean 503s."""
     if settings.STATE_DB_PATH:
-        db = await get_state_db()
-        await init_state_db(db)
-        await db.close()
+        db = None
+        try:
+            db = await get_state_db()
+            if db is not None:
+                await init_state_db(db)
+        except Exception:
+            logger.exception(
+                "lifespan: state DB init failed; identity/corrections/AI cache "
+                "endpoints will return 503 until the operator fixes STATE_DB_PATH"
+            )
+        finally:
+            if db is not None:
+                try:
+                    await db.close()
+                except Exception:
+                    logger.exception("lifespan: failed to close state DB after init")
     yield
 
 app = FastAPI(title="Samudra Manthanam API", lifespan=lifespan)

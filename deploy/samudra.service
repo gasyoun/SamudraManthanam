@@ -13,8 +13,38 @@ ExecStart=/opt/samudra/venv/bin/uvicorn app.main:app \
     --workers 2
 Restart=on-failure
 RestartSec=5
-# Prevent the process from writing to the real root filesystem
+
+# ── Hardening ────────────────────────────────────────────────────────────────
+# The app needs to read /opt/samudra/{web,venv,corpus} and write to
+# /opt/samudra/{db,state.db,backups}. Everything else is read-only or
+# inaccessible. Comment out any line that breaks your specific setup.
+
+# Filesystem
 PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/samudra
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+
+# Privileges
+NoNewPrivileges=yes
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictSUIDSGID=yes
+
+# Namespaces and network
+RestrictNamespaces=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=yes
+MemoryDenyWriteExecute=no  # Python's CPython needs JIT-style write+exec at import time
+RestrictRealtime=yes
+
+# System calls
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
 
 [Install]
 WantedBy=multi-user.target

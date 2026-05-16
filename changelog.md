@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.7] - 2026-05-15 (Bug sweep #6 — operational hardening)
+### Fixed
+- **`lifespan` crashed the whole app if `init_state_db` failed**: a misconfigured `STATE_DB_PATH` (pointing at a directory, wrong permissions) used to abort startup, leaving uvicorn in a restart loop with no useful log. Now the handler catches, logs once with `logger.exception`, and continues — corpus search keeps working while operators fix the state DB; state-dependent endpoints surface clean 503s.
+- **`lifespan` leaked the state-DB connection on init failure**: the open `db.close()` was after `init_state_db(db)` and never ran if init raised. Now `finally`-guarded.
+
+### Added
+- **`deploy/samudra.service` hardening directives**: `ProtectSystem=strict` with explicit `ReadWritePaths=/opt/samudra`, `ProtectHome=yes`, `ProtectKernel*=yes`, `NoNewPrivileges=yes`, `CapabilityBoundingSet=`, `RestrictNamespaces=yes`, `RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX`, `LockPersonality=yes`, `SystemCallFilter=@system-service`. Defense in depth if the FastAPI process is compromised.
+- **`deploy/samudra.nginx` rewritten for safe certbot bootstrap**: explicit `/.well-known/acme-challenge/` location so certbot renewals work even after HTTPS redirect is added; documented `certbot --redirect` flag so operators don't miss the interactive prompt; security-header snippet (HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy) ready to paste into the HTTPS server block certbot creates.
+- **`test_funnel.test_lifespan_survives_state_db_init_failure`**: regression — confirms the app boots cleanly with a broken `STATE_DB_PATH`, corpus search keeps working, identity endpoint gives a clean 503. 89/89 hermetic tests pass.
+
+### Known issue (not fixed)
+- **`web/static/scripts/wrapLatinInBlue_history.js/` is a directory containing `wrapLatinInBlue.js`** — legacy desktop-app filesystem layout. Corpus HTML referencing the script as a JS path silently 404s in the web context. The "wrap Latin in blue" decorative effect is broken in the web app but was working in the legacy desktop. Investigation needed before fixing (need to know the exact `<script src>` corpus HTML uses).
+
 ## [1.12.6] - 2026-05-15 (Bug sweep #5)
 ### Fixed
 - **`ingest.py` recorded `source_count` from `len(filenames)`**, which overstated reality when the ingest skipped a missing file. The recorded count now comes from `SELECT COUNT(*) FROM sources` after all inserts so `corpus_meta.source_count` matches the actual rows in the DB.
