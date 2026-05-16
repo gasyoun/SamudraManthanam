@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.0] - 2026-05-16 (Feature: server-rendered /search page)
+
+### Added
+- **`GET /search?q=…`** — server-rendered search results page, the SEO surface for content queries. Distinct from `/` (live JS app) and `/api/search` (JSON API). Results are in the initial HTML payload — Googlebot doesn't need to execute JS to see them. Form is plain GET, so the page is functional without scripts.
+- **Canonical URL normalisation**: `<link rel="canonical">` points at a deterministic form — query lowercased + stripped, default params (`mode=plain`, `cs=0`, `ww=0`, no `src`) dropped, source IDs sorted ascending. Mixed-case / reordered URLs converge on one canonical, preventing duplicate-content penalties. Verified end-to-end:
+  - `?q=Кришна&cs=1` → `q=кришна&cs=1`
+  - `?q=  Karma  ` → `q=karma`
+  - `?q=dharma&mode=plain&cs=0&ww=0&src=219,217,204` → `q=dharma&src=204,217,219`
+- **`noindex,follow` for junk pages**: 1-character queries, regex mode, zero-result pages get the robots meta to keep crawl budget clean. Normal multi-character plain queries with hits stay indexable.
+- **JSON-LD `SearchResultsPage`** with `ItemList` numberOfItems and a `WebSite` parent carrying a `SearchAction` so Google can render a sitelinks search box. Emitted only when the page is indexable.
+- **Cross-link integration retained**: the page reuses `html_service.render_fragment`, so the `⇔ переводы` cross-links from v1.13.1 work automatically. A search for "дхарма" renders 147 compare buttons in the server HTML; "карма" 403; "Кришна" 1030.
+
+### Files
+- `web/app/routers/search_page.py` — handler + `_canonical_search_url`, `_parse_source_ids`, `_should_noindex` helpers.
+- `web/templates/search_page.html` — full page shell with navbar, form (plain GET), result fragment slot, JSON-LD, canonical/OG/Twitter meta.
+- `web/app/main.py` — router registration.
+- `web/tests/test_search_page.py` — 22 tests covering canonical normalisation, noindex rules, empty/normal/short/zero-result/regex paths, form input echo, malformed-input defence, oversized-query rejection, and regression check that `/` still serves the live app.
+
+### Notes
+- The live JS app at `/` is unchanged. The "Живой поиск ↗" link in the `/search` navbar points back to it.
+- 153/153 hermetic tests pass. Pre-existing `test_publish.py` collection error remains unrelated.
+
 ## [1.13.2] - 2026-05-16 (Feature: per-work index page + sitemap entries)
 
 ### Added

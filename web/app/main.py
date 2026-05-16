@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from app.routers import sources, search, morph, corpus_sync, health, reader, identity, corrections, ai, admin, compare
+from app.routers import sources, search, morph, corpus_sync, health, reader, identity, corrections, ai, admin, compare, search_page
 from app.settings import settings
 from app.state_db import get_state_db, init_state_db
 from app.db import get_db
@@ -108,6 +108,7 @@ app.include_router(corrections.router)
 app.include_router(ai.router)
 app.include_router(admin.router)
 app.include_router(compare.router)
+app.include_router(search_page.router)
 
 # Mount static files
 static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static")

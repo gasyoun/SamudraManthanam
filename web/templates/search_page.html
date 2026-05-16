@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ og_title }}</title>
+    <meta name="description" content="{{ og_description }}">
+    {% if noindex %}<meta name="robots" content="noindex,follow">{% endif %}
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:title" content="{{ og_title }}">
+    <meta property="og:description" content="{{ og_description }}">
+    <meta property="og:url" content="{{ og_url }}">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:locale:alternate" content="sa_IN">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ og_title }}">
+    <meta name="twitter:description" content="{{ og_description }}">
+
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --bg: #f8f9fa;
+            --line-border: #eee;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #2c3e50, #4b79a1);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .navbar a.brand {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+        form.search-form {
+            background: white;
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--line-border);
+            margin-bottom: 1rem;
+        }
+        .search-row {
+            display: flex;
+            gap: 0.7rem;
+            margin-bottom: 0.7rem;
+            flex-wrap: wrap;
+        }
+        input[type="text"] {
+            flex: 1;
+            min-width: 240px;
+            padding: 0.7rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        input[type="text"]:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        button.submit {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        button.submit:hover { background: #d35400; }
+        .options {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            font-size: 0.88rem;
+            color: #555;
+            align-items: center;
+        }
+        .options label { display: flex; gap: 0.4rem; align-items: center; cursor: pointer; }
+        .options select { padding: 0.25rem 0.4rem; border: 1px solid #ddd; border-radius: 5px; }
+        .stats {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 1rem;
+            padding: 0 0.3rem;
+        }
+        .empty-state {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            color: #888;
+            border: 1px solid var(--line-border);
+        }
+        #results-area { margin-top: 1rem; }
+        .highlight {
+            background-color: #fff176;
+            padding: 0 2px;
+            border-radius: 3px;
+        }
+        a.live-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        a.live-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="brand" href="/">ПАХТАНЬЕ ОКЕАНА</a>
+        <div style="display:flex; gap:1rem; align-items:center;">
+            {% if ss_link %}
+            <a href="{{ ss_link }}"
+               target="_blank"
+               rel="noopener"
+               style="color:#ffd479; text-decoration:none; font-weight:600; font-size:0.85rem; padding:0.25rem 0.7rem; border:1px solid #ffd479; border-radius:6px;"
+               title="Курс грамматики санскрита для русскоязычных">
+                Курс грамматики →
+            </a>
+            {% endif %}
+            <a href="/" class="live-link" style="color: rgba(255,255,255,0.85);">
+                Живой поиск ↗
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <form class="search-form" action="/search" method="get">
+            <div class="search-row">
+                <input type="text"
+                       name="q"
+                       value="{{ query }}"
+                       placeholder="Введите слово на русском, санскрите (IAST) или деванагари"
+                       autofocus>
+                <button type="submit" class="submit">Найти</button>
+            </div>
+            <div class="options">
+                <label>
+                    Режим:
+                    <select name="mode">
+                        <option value="plain"         {% if mode == 'plain'         %}selected{% endif %}>Обычный</option>
+                        <option value="regex"         {% if mode == 'regex'         %}selected{% endif %}>Regex</option>
+                        <option value="morphological" {% if mode == 'morphological' %}selected{% endif %}>По основам</option>
+                    </select>
+                </label>
+                <label>
+                    <input type="checkbox" name="cs" value="1" {% if case_sensitive %}checked{% endif %}>
+                    Учитывать регистр
+                </label>
+                <label>
+                    <input type="checkbox" name="ww" value="1" {% if whole_word %}checked{% endif %}>
+                    Целое слово
+                </label>
+                {% if source_ids_raw %}
+                    {# Preserve the user's source filter across re-submits #}
+                    <input type="hidden" name="src" value="{{ source_ids_raw }}">
+                {% endif %}
+            </div>
+        </form>
+
+        {% if query %}
+            <div class="stats">
+                {% if total %}
+                    Найдено <strong>{{ total }}</strong> {{ 'результат' if total == 1 else ('результата' if total < 5 else 'результатов') }}
+                    {% if elapsed_ms %}за {{ '%.0f' % elapsed_ms }} мс{% endif %}.
+                {% else %}
+                    Ничего не найдено по запросу «{{ query }}».
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div id="results-area">
+            {% if results_fragment %}
+                {# safe: results_fragment is produced by html_service.render_fragment with autoescape on #}
+                {{ results_fragment | safe }}
+            {% elif query and not total %}
+                <div class="empty-state">
+                    <p>Попробуйте изменить условия поиска или проверить правильность написания.</p>
+                    <p><a href="/" class="live-link">↗ Открыть живой поиск</a></p>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <p>Введите запрос для поиска по параллельному санскрито-русскому корпусу.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {# JSON-LD: SearchResultsPage with ItemList of Quotation entries. Helps
+       search engines understand this is a SERP-style page over scholarly content. #}
+    {% if query and total %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SearchResultsPage",
+      "@id": "{{ canonical_url }}",
+      "name": {{ og_title | tojson }},
+      "description": {{ og_description | tojson }},
+      "inLanguage": "ru",
+      "url": "{{ canonical_url }}",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": {{ site_name | tojson }},
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "{{ public_base_url }}/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": {{ total }}
+      }
+    }
+    </script>
+    {% endif %}
+</body>
+</html>
