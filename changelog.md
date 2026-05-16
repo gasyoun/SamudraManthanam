@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.0] - 2026-05-16 (Feature: multi-translation comparison route)
+
+### Added
+- **`GET /compare/{work_slug}/{ch}.{v}`** — server-rendered multi-translation comparison view. For one verse coordinate, fetches every configured source and renders them side-by-side grouped by role (translation / anthology / commentary / context). End-to-end against the real corpus:
+  - Bhagavadgītā 1.1 surfaces **14 hits** — 10 Russian translations (Petrov 1788 through Blinderman 2016), 1 collected-translations anthology, 2 medieval Sanskrit commentaries (Rāmānuja's Gītābhāṣya and Abhinavagupta's Gītārthasaṃgraha), and the Mahābhārata Bhīṣma-parvan source resolved via `chapter_offset=22` bridge (Gītā 1.1 → MBh `link_id=23.1`).
+  - Yoga-Sūtra 2.46 surfaces 4 hits (3 standalone translations + 11-translation anthology).
+  - Śatakatraya 1.1 surfaces both Serebryakov and Leonov.
+- **Range-merge fallback**: a request for verse 1.5 will match a source whose `citation_block` is keyed `1.3-7` (covering 1.5), with the page badge `в блоке 1.3-7` shown so users see why the verse appears in a merged stanza.
+- **IAST extraction**: Sanskrit `<div class="chapter_block iast">` content is pulled from the first source that has it and shown once at the top, then stripped from per-source HTML to avoid 10× duplication.
+- **JSON-LD on every comparison page** (`WebPage` → `mainEntity: Quotation` → `workTranslation: [Quotation, …]`) with `inLanguage: "sa"` on the original and `inLanguage: "ru"` per translation. Plus `rel=canonical`, OG/Twitter card meta, and `og:locale:alternate=sa_IN` for parallel-language signal.
+- **Files**: `web/app/compare_config.py` (work definitions for `bhagavadgita`, `yogasutra`, `shatakatrayam`), `web/app/services/compare_service.py` (data layer with `_link_id_covers`, `_split_iast_and_translation`, `get_comparison`), `web/app/routers/compare.py` (HTTP layer with validation, prev/next pager), `web/templates/compare_view.html` (responsive layout with role-grouped sections), and 17 unit tests in `web/tests/test_compare.py`.
+
+### Notes
+- **Buddhacarita is deliberately excluded** — Leonov (Sanskrit critical edition, 14 cantos) and Balmont (1913, translated from Beal's English of the Chinese/Tibetan expanded text, 29 cantos) coincidentally share `id="X.Y"` but address completely different source verses; spot-check at canto 1 verses 5/10/40 showed full content divergence by verse 1.5.
+- **Sitemap not updated** in this commit — ~1,200 comparison URLs (BhG ~700 + YS ~195 + Śatakatraya ~300) are a separate concern. Hold off until per-work index pages exist.
+- **Cross-link from search results** to comparison view is not yet wired — needs a small `result_fragment.html` change to detect when a hit's source is in the comparison-eligible set.
+- **107/107 hermetic tests pass** (+17 new). Pre-existing `test_publish.py` collection error remains unrelated and unchanged.
+
 ## [1.12.10] - 2026-05-16 (Bug sweep #10)
 ### Fixed
 - **Ingest extracted useless page-style `link_id` for Mahābhārata Bhīṣma-parvan and Gītagovinda**: the original regex `re.search(r'id=...')` matched the *first* `id=` on the line, which for these older corpus files is the `<div class="range">` bibliographic-page identifier ("Махабхарата 2009 (VI): 9"), not a URL-routable verse anchor. As a result `corpus_lines.link_id` for ~1,337 Bhīṣma-parvan verses and all 289 Gītagovinda verses pointed at non-routable strings, preventing deep linking from search results into source view.
