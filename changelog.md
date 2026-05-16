@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.3] - 2026-05-17 (Feature: `<lastmod>` on sitemap entries)
+
+### Added
+- **`<lastmod>YYYY-MM-DD</lastmod>` on every sitemap URL**, sourced from `corpus_meta.generated_at` (written by `ingest.ingest`). All 1,420 sitemap URLs now carry the corpus-build date as a freshness signal so Google can prioritise re-crawling after a re-ingest. Verified end-to-end on the live corpus: sitemap grew from 102 KB → 145 KB with `<lastmod>2026-05-16</lastmod>` on every `<url>` entry.
+- **`_get_corpus_lastmod(db)`** helper parses the full ISO timestamp written by ingest down to date-only form (`'2026-05-17T12:34:56.789012'` → `'2026-05-17'`). W3C-DTF compliant; Google honours daily granularity for crawl signalling.
+
+### Fail-soft behaviour
+- Missing `corpus_meta.generated_at` → no `<lastmod>` emitted, sitemap still serves and remains well-formed XML.
+- Malformed `generated_at` value → same fall-back. A single bad date would otherwise make Google reject the whole sitemap; the shape check (`YYYY-MM-DD` form) catches it locally and degrades to no-lastmod.
+
+### Files
+- `web/app/main.py` — `_get_corpus_lastmod` + threading `<lastmod>` through every URL builder in `/sitemap.xml`.
+- `web/tests/test_sitemap_lastmod.py` — 8 tests covering parser (date extraction, missing/malformed handling), HTTP-level lastmod-per-URL parity, well-formed XML preservation, format validation, and fail-soft on malformed corpus_meta.
+
+### Notes
+- 222/222 hermetic tests pass.
+- All URLs share the same lastmod because each one's content depends on the same corpus build (source pages directly, /compare/* and /q/* via FTS hits). Per-source ingest timestamps would need a schema change; deferred.
+
 ## [1.15.2] - 2026-05-16 (Feature: structured author on source-page JSON-LD)
 
 ### Added

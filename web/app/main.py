@@ -166,6 +166,36 @@ async def robots():
     from fastapi.responses import Response
     return Response(content=content, media_type="text/plain")
 
+async def _get_corpus_lastmod(db) -> str:
+    """Return the corpus-build date in `YYYY-MM-DD` form for `<lastmod>`,
+    or an empty string when `corpus_meta.generated_at` is missing/unparseable.
+
+    `generated_at` is written by `ingest.ingest` as a full ISO timestamp
+    (`2026-05-17T12:34:56.789012`); the sitemap only needs the date prefix.
+    Date-only is W3C-DTF compliant and sufficient for crawl-freshness
+    signalling — Google honours daily granularity for `<lastmod>`.
+    """
+    try:
+        async with db.execute(
+            "SELECT value FROM corpus_meta WHERE key = 'generated_at'"
+        ) as cursor:
+            row = await cursor.fetchone()
+        if not row or not row[0]:
+            return ""
+        # The DB stores ISO 8601; sitemaps spec accepts YYYY-MM-DD. Take
+        # the first 10 chars — robust to either '2026-05-17' or full
+        # `2026-05-17T12:34:56.789012`.
+        candidate = str(row[0])[:10]
+        # Sanity-check the shape so a malformed value doesn't make every
+        # `<lastmod>` invalid; Google will reject the whole sitemap on
+        # malformed dates.
+        if len(candidate) == 10 and candidate[4] == "-" and candidate[7] == "-":
+            return candidate
+        return ""
+    except Exception:
+        return ""
+
+
 @app.get("/sitemap.xml")
 async def sitemap():
     from fastapi.responses import Response
@@ -181,6 +211,7 @@ async def sitemap():
     # root + any successfully-fetched lists, fail-soft.
     source_ids: list[int] = []
     work_verses: dict[str, list[tuple[int, int]]] = {}
+    lastmod = ""
     try:
         db = await get_db(settings.DB_PATH)
         try:
@@ -191,25 +222,31 @@ async def sitemap():
                     work_verses[work_slug] = await enumerate_verses(db, work_slug)
                 except Exception:
                     work_verses[work_slug] = []
+            lastmod = await _get_corpus_lastmod(db)
         finally:
             await db.close()
     except Exception:
         source_ids = []
 
-    urls = [f"  <url><loc>{base}/</loc><priority>1.0</priority></url>"]
+    # All URLs share the same lastmod because each one's content depends on
+    # the corpus build (source pages directly, /compare and /q via FTS hits).
+    # If we ever store per-source ingest timestamps we'd thread them through.
+    lm = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
+
+    urls = [f"  <url><loc>{base}/</loc>{lm}<priority>1.0</priority></url>"]
     for sid in source_ids:
-        urls.append(f"  <url><loc>{base}/sources/{sid}</loc><priority>0.8</priority></url>")
+        urls.append(f"  <url><loc>{base}/sources/{sid}</loc>{lm}<priority>0.8</priority></url>")
     # Per-work index hub pages (priority 0.9 — high-value SEO landing pages)
     for work_slug in WORKS:
-        urls.append(f"  <url><loc>{base}/compare/{work_slug}</loc><priority>0.9</priority></url>")
+        urls.append(f"  <url><loc>{base}/compare/{work_slug}</loc>{lm}<priority>0.9</priority></url>")
     # Leaf comparison URLs (priority 0.7 — many of them, each unique on RuNet)
     for work_slug, verses in work_verses.items():
         for ch, v in verses:
-            urls.append(f"  <url><loc>{base}/compare/{work_slug}/{ch}.{v}</loc><priority>0.7</priority></url>")
+            urls.append(f"  <url><loc>{base}/compare/{work_slug}/{ch}.{v}</loc>{lm}<priority>0.7</priority></url>")
     # Popular-query landing pages (priority 0.9 — high-intent SEO targets)
     from app.popular_terms import POPULAR_TERMS
     for slug in POPULAR_TERMS:
-        urls.append(f"  <url><loc>{base}/q/{slug}</loc><priority>0.9</priority></url>")
+        urls.append(f"  <url><loc>{base}/q/{slug}</loc>{lm}<priority>0.9</priority></url>")
 
     content = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
