@@ -75,6 +75,13 @@
                                 data-share-title="{{ item.source_title or '' }}"
                                 title="Поделиться в WhatsApp"
                                 style="background:none;border:1px solid #ddd;border-radius:3px;cursor:pointer;font-size:0.7rem;padding:1px 5px;color:#25d366;line-height:1.4;font-weight:600;">WA</button>
+                        {% if item.compare_url %}
+                        <a href="{{ item.compare_url }}"
+                           target="_blank"
+                           rel="noopener"
+                           title="Сравнить переводы этого стиха"
+                           style="background:none;border:1px solid #e67e22;border-radius:3px;font-size:0.7rem;padding:1px 5px;color:#e67e22;line-height:1.4;font-weight:600;text-decoration:none;">⇔ переводы</a>
+                        {% endif %}
                         <a href="/sources/{{ item.source_id }}?highlight={{ item.line_num }}" target="_blank" title="Открыть в источнике" style="color: #e67e22; text-decoration: none; font-weight: 600;">
                             {{ item.link_id or item.line_num }} ↗
                         </a>

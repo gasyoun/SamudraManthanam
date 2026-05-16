@@ -43,7 +43,8 @@ async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: boo
     params.append(sql_limit)
 
     sql = f"""
-        SELECT cl.source_id, s.title as source_title, cl.line_num, cl.link_id, cl.chapter, cl.line_html, cl.line_text
+        SELECT cl.source_id, s.title as source_title, s.filename as source_filename,
+               cl.line_num, cl.link_id, cl.chapter, cl.line_html, cl.line_text
         FROM corpus_lines cl
         JOIN sources s ON cl.source_id = s.id
         WHERE corpus_lines MATCH ?
@@ -112,7 +113,8 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
         params.extend(source_ids)
         
     sql = f"""
-        SELECT cl.source_id, s.title as source_title, cl.line_num, cl.link_id, cl.chapter, cl.line_html, cl.line_text
+        SELECT cl.source_id, s.title as source_title, s.filename as source_filename,
+               cl.line_num, cl.link_id, cl.chapter, cl.line_html, cl.line_text
         FROM corpus_lines cl
         JOIN sources s ON cl.source_id = s.id
         {source_filter}

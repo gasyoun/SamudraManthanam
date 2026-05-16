@@ -2,6 +2,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 import os
 from typing import List, Dict, Any, Optional
 
+from app.services.compare_service import compare_url_for_hit
+
 # Setup Jinja2 environment with autoescape
 template_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "templates")
 env = Environment(
@@ -49,11 +51,18 @@ def sklonenie_naideno_v_y_istochnikah(y: int) -> str:
 def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bool = False, search_metadata: Optional[Dict[str, Any]] = None) -> str:
     # Group results preserving SQL order (sort_order, then line_num).
     # Do NOT re-sort by source_id — that breaks sources with sort_order != id.
+    # Each item gets enriched with `compare_url` so the template can render a
+    # cross-link to /compare/{work}/{ch}.{v} for hits in comparison-eligible
+    # sources (None for the rest, which most sources are).
     grouped = {}
     for r in results:
         sid = r["source_id"]
         if sid not in grouped:
             grouped[sid] = {"title": r["source_title"], "items": []}
+        r["compare_url"] = compare_url_for_hit(
+            r.get("source_filename", "") or "",
+            r.get("link_id", "") or "",
+        )
         grouped[sid]["items"].append(r)
 
     sorted_groups = list(grouped.values())  # dict preserves insertion order (Python 3.7+)

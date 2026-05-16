@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.1] - 2026-05-16 (Feature: search-result cross-link to comparison view)
+
+### Added
+- **Search results now surface a `⇔ переводы` cross-link** next to the `↗` source-view link whenever the hit's source is in any work's comparison set (Bhagavadgītā: 10 translations + 1 anthology + 2 commentaries + MBh-Bhīṣma bridge; Yoga-Sūtra: 4 sources; Śatakatraya: 2 sources). Clicking it opens `/compare/{work}/{ch}.{v}` in a new tab. For the rest of the corpus (Ṛgveda, Atharvaveda, Upaniṣads, Rāmāyaṇa, dictionaries, etc.) no link is rendered.
+- **MBh-Bhīṣma bridge applies the inverse chapter offset**: a search hit at `link_id="23.1"` cross-links to `/compare/bhagavadgita/1.1`, letting users pivot from Erman's prose rendering to the 14-way Gītā comparison. Pre-Gītā (Bhīṣma chapters 1–22) and post-Gītā (chapters 41–117) hits are silently excluded — verified end-to-end: a search for "дхармы" inside Bhīṣma-parvan renders the compare link only for the `23.1` hit, not for the 8 surrounding battle-narrative range-merged blocks.
+- **Range-merged link_ids** like `1.5-7` route to the first verse (`/compare/.../1.5`); the comparison page's own range-fallback then resurfaces the same merged block on the destination.
+
+### Changed
+- `web/app/services/search_service.py` SQL selects `s.filename as source_filename` (both plain and regex paths) so the renderer has the data it needs without an extra query.
+- `web/app/services/html_service.py` enriches each result item with `compare_url` before grouping; the value is `None` for non-eligible sources and missing/empty link_ids.
+- `web/app/services/compare_service.py` gains `compare_url_for_hit(filename, link_id)` with a reverse filename→work index built once at import.
+- `web/templates/result_fragment.html` conditionally renders the `⇔ переводы` button before the source-view `↗`.
+
+### Tests
+- 11 new tests in `test_compare.py`: helper unit coverage (standalone, bridge, range-merge, out-of-range, non-comparison, empty) + rendering integration (eligible hit shows button, MBh bridge hit shows BhG URL, Ṛgveda hit omits link, missing filename is safe). 118/118 hermetic tests pass.
+
 ## [1.13.0] - 2026-05-16 (Feature: multi-translation comparison route)
 
 ### Added

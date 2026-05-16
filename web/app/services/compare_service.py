@@ -41,9 +41,68 @@ class VerseHit:
 
 
 _RANGE_LINK_ID = re.compile(r"^(\d+)\.(\d+)-(\d+)$")
+_EXACT_LINK_ID = re.compile(r"^(\d+)\.(\d+)$")
 _IAST_BLOCK = re.compile(
     r'<div class="chapter_block iast">.*?</div>', re.DOTALL | re.IGNORECASE
 )
+
+
+def _build_filename_to_work() -> dict[str, tuple[str, int]]:
+    """Reverse-lookup: corpus filename → (work_slug, chapter_offset_to_canonical).
+
+    `chapter_offset_to_canonical` is the amount to ADD to the source's chapter
+    number to get the canonical work's chapter. For standalone sources this is
+    0; for bridge sources it's `-bridge.chapter_offset` (e.g. Bhīṣma adhyāya 23
+    + (-22) = Gītā chapter 1).
+    """
+    idx: dict[str, tuple[str, int]] = {}
+    for slug, work in WORKS.items():
+        for src in work["sources"]:
+            idx[src["filename"]] = (slug, 0)
+        for bridge in work.get("bridges", []):
+            idx[bridge["filename"]] = (slug, -bridge["chapter_offset"])
+    return idx
+
+
+_FILENAME_TO_WORK = _build_filename_to_work()
+
+
+def compare_url_for_hit(source_filename: str, link_id: str) -> str | None:
+    """Return ``/compare/{work}/{ch}.{v}`` for a search hit, or None if not eligible.
+
+    Used by ``html_service.render_fragment`` to surface a "Сравнить переводы"
+    cross-link next to each search result whose source participates in a
+    comparison view.
+
+    Handles:
+    - filenames not in any work's source list → None (most of the corpus).
+    - link_ids like ``chapter_1`` or empty → None.
+    - range-merged link_ids (``1.5-7``) → uses the first verse in the range
+      (``/compare/.../1.5``); the comparison page itself handles range fallback.
+    - bridge sources (e.g. MBh Bhīṣma-parvan) → applies the inverse chapter
+      offset so a hit at ``link_id="23.1"`` maps to ``/compare/bhagavadgita/1.1``,
+      and silently returns None when the bridge link_id falls outside the
+      canonical work's chapter range (e.g. Bhīṣma chapter 5, before the Gītā).
+    """
+    if not source_filename or not link_id:
+        return None
+    entry = _FILENAME_TO_WORK.get(source_filename)
+    if entry is None:
+        return None
+    work_slug, ch_offset = entry
+
+    m = _EXACT_LINK_ID.match(link_id) or _RANGE_LINK_ID.match(link_id)
+    if not m:
+        return None
+    ch_src = int(m.group(1))
+    v = int(m.group(2))
+
+    target_ch = ch_src + ch_offset
+    if target_ch < 1 or v < 1:
+        return None
+    if target_ch > WORKS[work_slug]["chapter_count"]:
+        return None
+    return f"/compare/{work_slug}/{target_ch}.{v}"
 
 
 def _link_id_covers(link_id: str, ch: int, v: int) -> bool:

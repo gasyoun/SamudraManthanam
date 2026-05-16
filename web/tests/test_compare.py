@@ -17,8 +17,10 @@ from app.settings import settings
 from app.services.compare_service import (
     _link_id_covers,
     _split_iast_and_translation,
+    compare_url_for_hit,
     get_comparison,
 )
+from app.services.html_service import render_fragment
 
 client = TestClient(app)
 
@@ -64,6 +66,131 @@ def test_split_iast_no_iast_returns_original():
     iast, rest = _split_iast_and_translation(line)
     assert iast == ""
     assert rest == line
+
+
+# ── compare_url_for_hit (reverse-routing for search-result cross-links) ──────
+
+def test_compare_url_for_standalone_bhg_source():
+    assert compare_url_for_hit("bhagavadgita-smirnov.html", "1.1") == "/compare/bhagavadgita/1.1"
+    assert compare_url_for_hit("bhagavadgita-erman.html", "18.78") == "/compare/bhagavadgita/18.78"
+
+
+def test_compare_url_for_yogasutra_and_shatakatraya():
+    assert compare_url_for_hit("yoga-sutry_sharma.html", "2.46") == "/compare/yogasutra/2.46"
+    assert compare_url_for_hit("shatakatrayam.html", "1.1") == "/compare/shatakatrayam/1.1"
+
+
+def test_compare_url_for_mbh_bridge_applies_inverse_chapter_offset():
+    # BhG 1.1 lives at Bhīṣma-parvan adhyāya 23.1 (config offset = 22).
+    assert compare_url_for_hit("06_mahabharata-bhishmaparva.html", "23.1") == "/compare/bhagavadgita/1.1"
+    # BhG 18.78 = Bhīṣma 40.78.
+    assert compare_url_for_hit("06_mahabharata-bhishmaparva.html", "40.78") == "/compare/bhagavadgita/18.78"
+
+
+def test_compare_url_for_mbh_outside_gita_chapters_returns_none():
+    # Bhīṣma chapter 1 (book intro, before Gītā) → target chapter = -21.
+    assert compare_url_for_hit("06_mahabharata-bhishmaparva.html", "1.1") is None
+    # Bhīṣma chapter 22 (just before Gītā) → target chapter = 0.
+    assert compare_url_for_hit("06_mahabharata-bhishmaparva.html", "22.1") is None
+    # Bhīṣma chapter 50 (after Gītā 40) → target 28 > 18.
+    assert compare_url_for_hit("06_mahabharata-bhishmaparva.html", "50.1") is None
+
+
+def test_compare_url_uses_first_verse_of_range_merged_block():
+    # A search hit landing on a merged "1.5-7" block links to the first verse.
+    assert compare_url_for_hit("bhagavadgita-radha.html", "1.5-7") == "/compare/bhagavadgita/1.5"
+
+
+def test_compare_url_returns_none_for_non_comparison_source():
+    assert compare_url_for_hit("01_rigveda.html", "1.1") is None
+    assert compare_url_for_hit("kama-sutra.html", "1.1") is None
+
+
+def test_compare_url_returns_none_for_chapter_anchor_or_empty():
+    assert compare_url_for_hit("bhagavadgita-smirnov.html", "chapter_1") is None
+    assert compare_url_for_hit("bhagavadgita-smirnov.html", "") is None
+    assert compare_url_for_hit("", "1.1") is None
+
+
+# ── Search-result rendering integration: cross-link appears for eligible hits ─
+
+def test_search_results_render_compare_link_for_eligible_source():
+    # Mimic the dict shape that search_service.search_plain emits AFTER the
+    # source_filename SQL addition. render_fragment enriches with compare_url
+    # and renders the ⇔ button.
+    results = [
+        {
+            "source_id": 101,
+            "source_title": "Бхагавад-Гита (1977); Б. Л. Смирнов",
+            "source_filename": "bhagavadgita-smirnov.html",
+            "line_num": 5,
+            "link_id": "1.1",
+            "chapter": "Глава I",
+            "line_html": "<div class='citation_block' id='1.1'>На поле дхармы</div>",
+            "line_text": "На поле дхармы",
+        }
+    ]
+    html = render_fragment("дхарма", results)
+    assert 'href="/compare/bhagavadgita/1.1"' in html
+    assert "⇔ переводы" in html
+
+
+def test_search_results_render_compare_link_for_mbh_bridge_hit():
+    # A hit in MBh Bhīṣma-parvan at link_id="23.1" should cross-link to
+    # /compare/bhagavadgita/1.1 — letting users pivot from Erman's prose
+    # rendering to the 14-way BhG comparison.
+    results = [
+        {
+            "source_id": 204,
+            "source_title": "Махабхарата VI (2009); В.Г. Эрман",
+            "source_filename": "06_mahabharata-bhishmaparva.html",
+            "line_num": 158,
+            "link_id": "23.1",
+            "chapter": "",
+            "line_html": "<div class='citation_block'>Дхритараштра сказал</div>",
+            "line_text": "Дхритараштра сказал",
+        }
+    ]
+    html = render_fragment("дхритараштра", results)
+    assert 'href="/compare/bhagavadgita/1.1"' in html
+
+
+def test_search_results_omit_compare_link_for_non_eligible_source():
+    # Ṛgveda is not in compare_config → no compare link rendered.
+    results = [
+        {
+            "source_id": 1,
+            "source_title": "Ригведа. Мандала I",
+            "source_filename": "01_rigveda.html",
+            "line_num": 1,
+            "link_id": "1.1.1",
+            "chapter": "",
+            "line_html": "<div>agnimīḷe purohitaṃ</div>",
+            "line_text": "agnimīḷe purohitaṃ",
+        }
+    ]
+    html = render_fragment("agni", results)
+    assert "/compare/" not in html
+    assert "⇔ переводы" not in html
+
+
+def test_search_results_omit_compare_link_when_source_filename_missing():
+    # Defensive: results lacking source_filename (e.g. from legacy code paths)
+    # must not crash and must not surface a misrouted link.
+    results = [
+        {
+            "source_id": 1,
+            "source_title": "Some source",
+            # source_filename intentionally absent
+            "line_num": 1,
+            "link_id": "1.1",
+            "chapter": "",
+            "line_html": "<div>text</div>",
+            "line_text": "text",
+        }
+    ]
+    html = render_fragment("text", results)
+    assert "/compare/" not in html
 
 
 # ── Fixture: seed BhG-style sources ───────────────────────────────────────────
