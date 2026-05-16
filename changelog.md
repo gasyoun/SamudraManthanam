@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.2] - 2026-05-16 (Feature: structured author on source-page JSON-LD)
+
+### Added
+- **`Book.author` JSON-LD field** when the source title attributes a Sanskrit-tradition writer. Curated allow-list (`KNOWN_SANSKRIT_AUTHORS`) of 11 names: Абхинавагупта, Ашвагхоша, Бильхана, Бхартрихари, Ватсьяяна, Ватсьяянга Маланга, Джаядева, Калидаса, Патанджали, Рамануджа, Ямуначарья. Detector supports both title conventions seen in the corpus: prefix form (`"Бхартрихари. Шатакатраям"`) and suffix form (`"Шатакатраям. Бхартрихари (1979)"`, `"Рагхуванша. Род Рагху. Калидаса (1996)"`). Longer names win on a prefix match (so "Ватсьяянга Маланга" beats any one-word substring).
+- **False-positive guard**: work titles that contain periods but aren't author-prefixed — `"Ригведа. Мандала I"`, `"Атхарваведа. Книга 1"`, `"Махабхарата VI"` — correctly return empty author. Verified by dedicated regression test.
+
+### Coverage on live corpus
+- 14 of 148 sources now carry a structured author: 2× Rāmānuja, 1× Yāmunācārya, 1× Abhinavagupta, 2× Kālidāsa, 1× Jayadeva, 2× Aśvaghoṣa, 1× Bilhaṇa, 1× Vātsyāyana, 2× Bhartṛhari (both Leonov prefix-form and Serebryakov suffix-form), 1× Patañjali.
+
+### Notes
+- `Book.author` and `Book.translator` coexist when both are detected — the modern translator is a separate field from the original work's author.
+- Anonymous works (Mahābhārata, Bhagavadgītā, Vedas, Upaniṣads) deliberately have no author — we don't fabricate "Vyāsa" for MBh or similar attributions.
+- 9 new tests covering single-word and multi-word prefix detection, suffix-segment detection, false-positive guard, anonymous-work omission, JSON-LD field emission. 214/214 hermetic tests pass.
+
 ## [1.15.1] - 2026-05-16 (Feature: per-line Quotation JSON-LD on source pages)
 
 ### Added

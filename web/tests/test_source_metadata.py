@@ -17,6 +17,7 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 from app.services.source_metadata import (
+    KNOWN_SANSKRIT_AUTHORS,
     build_breadcrumb_jsonld,
     build_line_quotation,
     build_source_jsonld,
@@ -35,6 +36,7 @@ def test_parse_title_with_year_and_translator():
         "name": "Махабхарата VI (2009); В.Г. Эрман",
         "translator": "В.Г. Эрман",
         "year": "2009",
+        "author": "",
     }
 
 
@@ -67,13 +69,102 @@ def test_parse_title_handles_extra_whitespace():
 
 def test_parse_title_empty_string():
     out = parse_source_title("")
-    assert out == {"name": "", "translator": "", "year": ""}
+    assert out == {"name": "", "translator": "", "year": "", "author": ""}
 
 
 def test_parse_title_18th_century_year():
     # Verify the year regex doesn't fail on early publications.
     out = parse_source_title("БАГУАТ-ГЕТА (1788); А.А. Петров")
     assert out["year"] == "1788"
+
+
+# ── Author detection ────────────────────────────────────────────────────────
+
+def test_parse_title_detects_single_word_author():
+    out = parse_source_title("Бхартрихари. Шатакатраям (2020); М. В. Леонов")
+    assert out["author"] == "Бхартрихари"
+    assert out["translator"] == "М. В. Леонов"
+    assert out["year"] == "2020"
+
+
+def test_parse_title_detects_multi_word_author():
+    # The longer-prefix-wins rule: "Ватсьяянга Маланга" must beat any partial match.
+    out = parse_source_title("Ватсьяянга Маланга. Камасутра (2000); А. Я. Сыркин")
+    assert out["author"] == "Ватсьяянга Маланга"
+
+
+def test_parse_title_detects_kalidasa():
+    out = parse_source_title("Калидаса. Облако-вестник (1914); П. Риттер")
+    assert out["author"] == "Калидаса"
+
+
+def test_parse_title_detects_jayadeva():
+    out = parse_source_title("Джаядева. Гитаговинда (2020); А.Я. Сыркин")
+    assert out["author"] == "Джаядева"
+
+
+def test_parse_title_detects_author_as_suffix_segment():
+    # Serebryakov's edition reverses the convention to "Work. Author (Year)".
+    out = parse_source_title("Шатакатраям. Бхартрихари (1979); И.Д. Серебряков")
+    assert out["author"] == "Бхартрихари"
+    assert out["translator"] == "И.Д. Серебряков"
+    assert out["year"] == "1979"
+
+
+def test_parse_title_detects_author_after_subpart_segment():
+    # Erman's Raghuvaṃśa has author as the third segment.
+    out = parse_source_title("Рагхуванша. Род Рагху. Калидаса (1996); В.Г. Эрман")
+    assert out["author"] == "Калидаса"
+
+
+def test_parse_title_does_not_misdetect_work_name_prefix():
+    # "Ригведа." is part of the work name, not an author. The detector
+    # must return "" here (false-positive guard).
+    out = parse_source_title("Ригведа. Мандала I (1989); Т.Я. Елизаренкова")
+    assert out["author"] == ""
+    out = parse_source_title("Атхарваведа. Книга 1 (2005); Т.Я. Елизаренкова")
+    assert out["author"] == ""
+    out = parse_source_title("Махабхарата VI (2009); В.Г. Эрман")
+    assert out["author"] == ""
+
+
+def test_parse_title_anonymous_works_have_empty_author():
+    # Major works that are anonymous in this corpus's titling convention.
+    for title in (
+        "Бхагавад-Гита (1977); Б. Л. Смирнов",
+        "Иша упанишада (1992); А.Я. Сыркин",
+        "Рамаяна I (2006); П.А. Гринцер",
+        "Хатха Йога Прадипика; Шайлендра Шарма",
+    ):
+        assert parse_source_title(title)["author"] == "", f"misdetected author in {title!r}"
+
+
+def test_known_authors_registry_is_non_empty():
+    # Safety net: if a refactor accidentally empties this, every author-
+    # bearing title would silently lose its structured author field.
+    assert len(KNOWN_SANSKRIT_AUTHORS) >= 10
+
+
+def test_jsonld_emits_author_when_detected():
+    source = {"id": 1, "title": "Бхартрихари. Шатакатраям (2020); М. В. Леонов"}
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/1", site_name="Site",
+    )
+    assert jsonld["author"]["@type"] == "Person"
+    assert jsonld["author"]["name"] == "Бхартрихари"
+    # Translator is a separate field — both should coexist.
+    assert jsonld["translator"]["name"] == "М. В. Леонов"
+
+
+def test_jsonld_omits_author_when_anonymous_work():
+    source = {"id": 1, "title": "Махабхарата VI (2009); В.Г. Эрман"}
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/1", site_name="Site",
+    )
+    assert "author" not in jsonld
+    # Translator + year still emitted.
+    assert jsonld["translator"]["name"] == "В.Г. Эрман"
+    assert jsonld["datePublished"] == "2009"
 
 
 # ── build_source_jsonld — only emits fields that exist ───────────────────────

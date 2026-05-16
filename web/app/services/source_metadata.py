@@ -37,6 +37,31 @@ from urllib.parse import quote
 # appear anywhere in the work-part (usually trailing, but occasionally inline).
 _YEAR_IN_PARENS = re.compile(r"\((\d{4})\)")
 
+# Known Sanskrit-tradition author names whose titles use the pattern
+# "{Author}. {Work}" in the corpus database. We curate this set rather than
+# regex-detecting an author prefix because work names like "Ригведа.",
+# "Атхарваведа.", "Махабхарата." also end in a period before a subpart
+# specifier, and we don't want to mis-classify "Ригведа. Мандала I" as
+# "Author: Ригведа, Work: Мандала I".
+#
+# Sorted longest-first at lookup time so multi-word author names take
+# precedence over a substring (`"Ватсьяянга Маланга"` before `"Ватсьяянга"`).
+# Adding a new author: just add the Cyrillic-form prefix that appears in
+# `sources.title` before the first ". ".
+KNOWN_SANSKRIT_AUTHORS: frozenset[str] = frozenset({
+    "Абхинавагупта",
+    "Ашвагхоша",
+    "Бильхана",
+    "Бхартрихари",
+    "Ватсьяяна",
+    "Ватсьяянга Маланга",
+    "Джаядева",
+    "Калидаса",
+    "Патанджали",
+    "Рамануджа",
+    "Ямуначарья",
+})
+
 # Per-line Quotation `text` is capped to keep JSON-LD payload bounded for the
 # handful of sources that pack extensive footnote prose into a single
 # corpus_lines row (Smirnov BhG is the worst offender at ~6 KB/line).
@@ -49,16 +74,54 @@ _MAX_QUOTATION_TEXT = 1500
 _DEFAULT_HASPART_SAMPLE = 20
 
 
-def parse_source_title(title: str) -> dict:
-    """Decompose a corpus source title into name / translator / year fields.
+def _detect_author(work_part: str) -> str:
+    """Detect a Sanskrit-tradition author name in the work-part.
 
-    Returns a dict with keys `name`, `translator`, `year`. Missing fields are
-    empty strings. The `name` is always the original `title` — we don't strip
-    the year or translator from it because the full string is what users
-    expect to see as the page heading.
+    Two title conventions exist in the corpus, both supported here:
+
+    1. **Prefix:** "Author. Work" — e.g. "Бхартрихари. Шатакатраям". Most
+       common; checked first.
+    2. **Suffix:** "Work. Author" or "Work. Subpart. Author" — e.g. the
+       Serebryakov edition "Шатакатраям. Бхартрихари (1979)" and Erman's
+       "Рагхуванша. Род Рагху. Калидаса (1996)". The author appears as its
+       own dot-separated segment, optionally followed by a `(year)` paren.
+
+    Longer names win (so 'Ватсьяянга Маланга' beats any partial match).
+    Returns the author or ''.
+    """
+    stripped = work_part.strip()
+    sorted_authors = sorted(KNOWN_SANSKRIT_AUTHORS, key=len, reverse=True)
+
+    for author in sorted_authors:
+        if stripped.startswith(author + ". "):
+            return author
+
+    # Suffix form: iterate segments after the first; trim a trailing `(YYYY)`
+    # before comparing so "Бхартрихари (1979)" still matches "Бхартрихари".
+    segments = [s.strip() for s in stripped.split(". ")]
+    for seg in segments[1:]:
+        cleaned = _YEAR_IN_PARENS.sub("", seg).strip()
+        if cleaned in KNOWN_SANSKRIT_AUTHORS:
+            return cleaned
+    return ""
+
+
+def parse_source_title(title: str) -> dict:
+    """Decompose a corpus source title into name / translator / year / author.
+
+    Returns a dict with keys `name`, `translator`, `year`, `author`. Missing
+    fields are empty strings. The `name` is always the original `title` — we
+    don't strip the year or translator from it because the full string is
+    what users expect to see as the page heading.
+
+    `author` is detected only for titles whose work-part begins with a curated
+    Sanskrit-author name (`KNOWN_SANSKRIT_AUTHORS`). Anonymous works
+    (Mahābhārata, Bhagavadgītā, Ṛgveda, Upaniṣads, etc.) correctly return
+    an empty author — including any whose title happens to contain a period,
+    like "Ригведа. Мандала I".
     """
     if not title:
-        return {"name": "", "translator": "", "year": ""}
+        return {"name": "", "translator": "", "year": "", "author": ""}
 
     work_part, _, translator_part = title.partition(";")
 
@@ -66,11 +129,13 @@ def parse_source_title(title: str) -> dict:
     year = year_match.group(1) if year_match else ""
 
     translator = translator_part.strip()
+    author = _detect_author(work_part)
 
     return {
         "name": title.strip(),
         "translator": translator,
         "year": year,
+        "author": author,
     }
 
 
@@ -166,6 +231,17 @@ def build_source_jsonld(
             "name": site_name,
         },
     }
+
+    if parsed["author"]:
+        # `author` is the Sanskrit-tradition writer the work is attributed to
+        # (e.g. Bhartṛhari, Aśvaghoṣa, Kālidāsa). Distinct from `translator`,
+        # which is the modern person who rendered it into Russian.
+        # Anonymous works (Mahābhārata, Bhagavadgītā, Vedas, most Upaniṣads)
+        # have no author here — we don't fabricate "Vyāsa" for MBh etc.
+        jsonld["author"] = {
+            "@type": "Person",
+            "name": parsed["author"],
+        }
 
     if parsed["translator"]:
         # Person is the right type when we have a single named individual.
