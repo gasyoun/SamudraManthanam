@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ og_title or source.title }}</title>
     <meta name="description" content="{{ og_description or source.title }}">
+    {% if canonical_url %}<link rel="canonical" href="{{ canonical_url }}">{% endif %}
 
     <!-- Open Graph / Telegram / VK link previews -->
     <meta property="og:type" content="article">
@@ -184,5 +185,18 @@
             }
         });
     </script>
+
+    {# JSON-LD: Book entity + breadcrumb. Built server-side in source_metadata.py
+       so tests can validate the structured-data shape independently. #}
+    {% if source_jsonld %}
+    <script type="application/ld+json">
+    {{ source_jsonld | tojson }}
+    </script>
+    {% endif %}
+    {% if breadcrumb_jsonld %}
+    <script type="application/ld+json">
+    {{ breadcrumb_jsonld | tojson }}
+    </script>
+    {% endif %}
 </body>
 </html>

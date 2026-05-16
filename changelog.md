@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.14.1] - 2026-05-16 (Feature: JSON-LD on source pages)
+
+### Added
+- **`Book` JSON-LD on every `/sources/{id}` page** — schema.org graph with `@id`, `name`, `url`, `inLanguage: "ru"`, `translator` (Person), `datePublished`, and a `WebSite` parent. Smoke-verified on five real sources: Smirnov BhG (1977), Erman MBh VI (2009), Sürkin Īśa Upaniṣad (1992), Bhartṛhari Śatakatraya (2020), and Buddhacarita (no year — `datePublished` correctly omitted rather than emitted empty).
+- **`BreadcrumbList` JSON-LD** — minimal two-step Site → Source breadcrumb. Parent-work levels (Mahābhārata → Bhīṣma-parvan) are deferred until a curated work-registry exists.
+- **`<link rel="canonical">`** added to source pages.
+- **`web/app/services/source_metadata.py`** — `parse_source_title(title)` decomposes the loose `[Author. ]Work (Year); Translator` convention used across the corpus. The full title stays as `name`; year and translator are extracted independently and only emitted when present, so anthologies (no translator) and undated translations (no year) don't pollute the JSON-LD with empty strings. Verified against the seven shape variants observed in the live corpus (with/without year, with/without author prefix, with/without semicolon, 18th-century years).
+
+### Files
+- `web/app/services/source_metadata.py` — parser + JSON-LD builders.
+- `web/app/routers/reader.py` — calls builders, threads context into template.
+- `web/templates/source_view.html` — renders canonical link + two JSON-LD `<script>` blocks.
+- `web/tests/test_source_metadata.py` — 16 tests (7 parser, 5 builder, 2 breadcrumb, 2 HTTP integration).
+
+### Notes
+- 169/169 hermetic tests pass.
+- **Deliberately deferred**: per-line `Quotation` entries (would balloon page weight to 100-200 KB for large works); parent-work `isPartOf` detection; structured author (the prefix in "Бхартрихари. Шатакатраям" → `author: Person`).
+
 ## [1.14.0] - 2026-05-16 (Feature: server-rendered /search page)
 
 ### Added

@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from urllib.parse import quote
 from app.db import get_db
+from app.services.source_metadata import build_breadcrumb_jsonld, build_source_jsonld
 from app.settings import settings
 import os
 
@@ -30,6 +31,22 @@ async def view_source(request: Request, source_id: int, highlight: str = None):
         source_dict = dict(source)
         base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
         from app.main import _ss_link
+
+        site_name = "Пахтанье океана"
+        canonical_url = f"{base}/sources/{source_id}"
+        # Build JSON-LD ahead of render so the template just dumps it. Keeping
+        # the schema generation in the service module means tests can validate
+        # the structured-data shape without spinning up the HTTP layer.
+        source_jsonld = build_source_jsonld(
+            source=source_dict, canonical_url=canonical_url, site_name=site_name,
+        )
+        breadcrumb_jsonld = build_breadcrumb_jsonld(
+            source_title=source_dict.get("title", ""),
+            source_url=canonical_url,
+            site_name=site_name,
+            site_url=base or "/",
+        )
+
         return templates.TemplateResponse(
             request=request,
             name="source_view.html",
@@ -37,12 +54,15 @@ async def view_source(request: Request, source_id: int, highlight: str = None):
                 "source": source_dict,
                 "lines": lines,
                 "highlight": highlight,
-                "site_name": "Пахтанье океана",
+                "site_name": site_name,
                 "ss_url": settings.SYSTEMA_SANSCRITICUM_URL,
                 "ss_link": _ss_link("source_view"),
                 "og_title": f"{source_dict.get('title', 'Источник')} — Пахтанье океана",
                 "og_description": f"Параллельный санскрито-русский текст: {source_dict.get('title', '')}",
-                "og_url": f"{base}/sources/{source_id}",
+                "og_url": canonical_url,
+                "canonical_url": canonical_url,
+                "source_jsonld": source_jsonld,
+                "breadcrumb_jsonld": breadcrumb_jsonld,
             }
         )
     finally:
