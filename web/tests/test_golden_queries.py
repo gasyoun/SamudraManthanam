@@ -21,18 +21,21 @@ async def test_golden_query_plain_iast():
 @pytest.mark.corpus
 @pytest.mark.asyncio
 async def test_golden_query_plain_russian():
+    """Russian-language search must return at least one match for an extremely
+    common verb. The previous assertion `data["total"] >= 0` was trivially true
+    and provided false coverage."""
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
-        # Search for 'быть' (to be) - likely in translations
+        # 'быть' (to be) is the most common Russian verb — should appear in every
+        # translation in the corpus.
         response = await ac.post("/api/search", json={
             "query": "быть",
             "mode": "plain"
         })
     assert response.status_code == 200
     data = response.json()
-    # If the corpus is small or 'быть' is not found, we might need a better word.
-    # But for a scholarly corpus, 'быть' is very likely.
-    assert data["total"] >= 0 
+    assert data["total"] > 0, "Russian 'быть' should match in any real corpus"
+    assert any("быть" in item["line_text"].lower() for item in data["results"])
 
 @pytest.mark.corpus
 @pytest.mark.asyncio
