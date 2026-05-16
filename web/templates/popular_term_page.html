@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ og_title }} | {{ site_name }}</title>
+    <meta name="description" content="{{ og_description }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:title" content="{{ og_title }}">
+    <meta property="og:description" content="{{ og_description }}">
+    <meta property="og:url" content="{{ og_url }}">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:locale:alternate" content="sa_IN">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ og_title }}">
+    <meta name="twitter:description" content="{{ og_description }}">
+
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --bg: #fdfcfb;
+            --line-border: #eee;
+            --term-bg: #fef9f3;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            margin: 0;
+            line-height: 1.6;
+        }
+        header.page {
+            background: white;
+            padding: 1.2rem 2rem;
+            border-bottom: 1px solid var(--line-border);
+        }
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .breadcrumb {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        .breadcrumb a { color: var(--accent); text-decoration: none; }
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .term-hero {
+            background: var(--term-bg);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem 1.8rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+        }
+        h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        .term-forms {
+            color: #777;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Charis SIL', 'Sanskrit2003', serif;
+        }
+        .term-forms .iast { font-style: italic; }
+        .term-forms .devanagari { font-size: 1.2rem; }
+        .definition {
+            font-size: 1.05rem;
+            color: #444;
+        }
+        .examples-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin: 2rem 0 0.8rem 0;
+            border-bottom: 1px solid var(--line-border);
+            padding-bottom: 0.4rem;
+        }
+        .examples-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        .examples-header .stats { color: #888; font-size: 0.85rem; }
+        .all-results-link {
+            display: inline-block;
+            margin: 1.5rem 0;
+            padding: 0.6rem 1.2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .all-results-link:hover { background: #d35400; }
+        .related {
+            margin-top: 2.5rem;
+            padding: 1.2rem 1.5rem;
+            background: white;
+            border: 1px solid var(--line-border);
+            border-radius: 8px;
+        }
+        .related h3 {
+            margin: 0 0 0.8rem 0;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        .related-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .related-grid a {
+            text-decoration: none;
+            color: var(--primary);
+            background: var(--term-bg);
+            border: 1px solid #f0e0c8;
+            border-radius: 4px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.9rem;
+        }
+        .related-grid a:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .empty-state {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--line-border);
+            color: #888;
+            text-align: center;
+        }
+        .highlight {
+            background-color: #fff176;
+            padding: 0 2px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header class="page">
+        <div class="header-content">
+            <div class="breadcrumb">
+                <a href="/">Поиск</a> ›
+                <a href="/search">Указатель</a> ›
+                {{ term }}
+            </div>
+            {% if ss_link %}
+            <a href="{{ ss_link }}" target="_blank" rel="noopener"
+               style="color:var(--accent); text-decoration:none; font-weight:600; font-size:0.85rem;
+                      padding:0.3rem 0.7rem; border:1px solid var(--accent); border-radius:6px;"
+               title="Курс грамматики санскрита для русскоязычных">
+                Курс грамматики →
+            </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main>
+        <section class="term-hero">
+            <h1>{{ term }}</h1>
+            <p class="term-forms">
+                <span class="iast">{{ iast }}</span> · <span class="devanagari">{{ devanagari }}</span>
+            </p>
+            {% if definition %}
+            <p class="definition">{{ definition }}</p>
+            {% endif %}
+        </section>
+
+        <div class="examples-header">
+            <h2>Примеры из санскрито-русского корпуса</h2>
+            <span class="stats">{% if total %}показаны первые {{ total }}{% else %}не найдено{% endif %}</span>
+        </div>
+
+        {% if total %}
+            {# safe: results_fragment is produced by html_service.render_fragment with autoescape on #}
+            {{ results_fragment | safe }}
+
+            <a class="all-results-link" href="{{ full_search_url }}">
+                Все результаты по запросу «{{ term }}» →
+            </a>
+        {% else %}
+            <div class="empty-state">
+                <p>В корпусе пока нет примеров со словом «{{ term }}».</p>
+                <p><a href="{{ full_search_url }}">Попробовать полнотекстовый поиск →</a></p>
+            </div>
+        {% endif %}
+
+        {% if related %}
+        <aside class="related">
+            <h3>Связанные понятия</h3>
+            <div class="related-grid">
+                {% for rel in related %}
+                    <a href="/q/{{ rel.slug }}">{{ rel.term }}</a>
+                {% endfor %}
+            </div>
+        </aside>
+        {% endif %}
+    </main>
+
+    {# JSON-LD: DefinedTerm inside a WebPage. Search engines surface DefinedTerm
+       results in knowledge-panel-style cards for glossary-style content. #}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": "{{ canonical_url }}",
+      "name": {{ og_title | tojson }},
+      "description": {{ og_description | tojson }},
+      "inLanguage": "ru",
+      "url": "{{ canonical_url }}",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": {{ site_name | tojson }}
+      },
+      "mainEntity": {
+        "@type": "DefinedTerm",
+        "name": {{ term | tojson }},
+        "alternateName": [{{ iast | tojson }}, {{ devanagari | tojson }}]
+        {% if definition %},
+        "description": {{ definition | tojson }}
+        {% endif %}
+      }
+    }
+    </script>
+</body>
+</html>

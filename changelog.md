@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.0] - 2026-05-16 (Feature: popular-query landing pages)
+
+### Added
+- **`GET /q/{slug}`** — SEO landing pages for ~30 high-intent Russian-language Sanskrit-studies queries. Each page renders a curated definition, IAST + Devanagari forms, 20 example verses from the primary corpus, related-term cross-links, and a "Все результаты →" deep-link to `/search?q={term}`. Canonical lowercase URL, OG/Twitter card, `DefinedTerm` JSON-LD inside a `WebPage`.
+- **`web/app/popular_terms.py`** — registry of 30 terms across two tiers: 19 concepts (дхарма, карма, атман, брахман, мокша, сансара, йога, бхакти, нирвана, аватара, гуна, ом, мантра, дхьяна, варна, ашрама, веды, упанишады, пуруша) + 11 proper nouns (Кришна, Арджуна, Шива, Вишну, Брахма, Рама, Индра, Сарасвати, Лакшми, Хануман, Ганеша). Each entry carries Cyrillic display term + IAST + Devanagari + short neutral definition + `search_query` (morphological root for FTS5 prefix matching: "дхарм" matches дхарма/дхармы/дхарме/дхарму) + bidirectional `related` cross-links.
+- **`REFERENCE_WORK_FILENAMES`** — exclusion set of 20 dictionary/lexicon/encyclopedia source filenames (Smirnov, Monier-Williams, Apte, KEWA, Vasmer, encyclopedias of Indian philosophy & mythology, per-work indexes). Landing pages restrict to corpus-text sources so example verses come from the Ṛgveda / Mahābhārata / Upaniṣads / Bhagavadgītā rather than dictionary glosses. Dictionary search remains unaffected on `/search` and `/api/search`. Verified end-to-end: `/q/dharma` now surfaces Ṛgveda mandala VIII/X, Mahābhārata I; `/q/atman` surfaces Atharvaveda 10–11, Mahābhārata III; `/q/moksha` hits Mahābhārata IX/XV with 5 ⇔ переводы cross-links flowing through to the Gītā comparison view.
+- **Sitemap inclusion** — all 30 `/q/{slug}` URLs at priority 0.9.
+
+### Files
+- `web/app/popular_terms.py` — term registry + REFERENCE_WORK_FILENAMES.
+- `web/app/routers/popular_terms.py` — handler + `_fetch_primary_source_ids` (excludes reference works).
+- `web/templates/popular_term_page.html` — full page with hero (term + forms + definition), corpus examples block (reuses `result_fragment.html`), related-term grid, JSON-LD DefinedTerm.
+- `web/app/main.py` — router registration + sitemap entries.
+- `web/tests/test_popular_terms.py` — 21 tests: registry integrity (slug shape, bidirectional related links, no self-references, case-insensitive lookup), HTTP routing (200 / 404 / canonical / case-insensitivity / oversized / punctuation defence), template content (definition, forms, related, full-search link), JSON-LD validity, sitemap inclusion, reference-work exclusion sanity.
+
+### Notes
+- 190/190 hermetic tests pass.
+- The ⇔ переводы compare-link from v1.13.1 surfaces automatically on landing pages whose hits land in comparison-eligible sources (Bhagavadgītā, Yoga-Sūtra, Śatakatraya, MBh-Bhīṣma-parvan).
+
 ## [1.14.1] - 2026-05-16 (Feature: JSON-LD on source pages)
 
 ### Added

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from app.routers import sources, search, morph, corpus_sync, health, reader, identity, corrections, ai, admin, compare, search_page
+from app.routers import sources, search, morph, corpus_sync, health, reader, identity, corrections, ai, admin, compare, search_page, popular_terms
 from app.settings import settings
 from app.state_db import get_state_db, init_state_db
 from app.db import get_db
@@ -109,6 +109,7 @@ app.include_router(ai.router)
 app.include_router(admin.router)
 app.include_router(compare.router)
 app.include_router(search_page.router)
+app.include_router(popular_terms.router)
 
 # Mount static files
 static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static")
@@ -205,6 +206,10 @@ async def sitemap():
     for work_slug, verses in work_verses.items():
         for ch, v in verses:
             urls.append(f"  <url><loc>{base}/compare/{work_slug}/{ch}.{v}</loc><priority>0.7</priority></url>")
+    # Popular-query landing pages (priority 0.9 — high-intent SEO targets)
+    from app.popular_terms import POPULAR_TERMS
+    for slug in POPULAR_TERMS:
+        urls.append(f"  <url><loc>{base}/q/{slug}</loc><priority>0.9</priority></url>")
 
     content = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
