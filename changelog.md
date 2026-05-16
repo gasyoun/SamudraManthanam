@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.4] - 2026-05-17 (Feature: IAST alternateName on author Person)
+
+### Added
+- **Author IAST as `alternateName`** on the JSON-LD `Person` entity. The 14 source pages with detected authors now emit both the Cyrillic display form and the standard scholarly IAST transliteration — giving Google an unambiguous Latin-alphabet handle for disambiguation and Knowledge-Graph linking. Verified end-to-end on five real source pages including prefix-form (Bhartṛhari at sid=281), suffix-form (Bhartṛhari at sid=282), and multi-word (Vātsyāyana Mallanāga at sid=270).
+- **`_AUTHOR_IAST` mapping** in `source_metadata.py`: 11 entries covering Abhinavagupta, Aśvaghoṣa, Bilhaṇa, Bhartṛhari, Vātsyāyana, Vātsyāyana Mallanāga, Jayadeva, Kālidāsa, Patañjali, Rāmānuja, Yāmunācārya.
+
+### Changed
+- **`KNOWN_SANSKRIT_AUTHORS` is now derived from `_AUTHOR_IAST.keys()`** — single source of truth so adding a new author requires one entry, not two. Existing membership tests (`in`, `len()`) continue to work unchanged.
+
+### Tests
+- 6 new tests: IAST mapping covers every known author, IAST values are Latin-only (catches accidental Cyrillic copy-paste), alternateName emission for prefix-form detection, Kālidāsa-specific shape, multi-word author IAST, suffix-form detection still attaches IAST. 228/228 hermetic tests pass.
+
 ## [1.15.3] - 2026-05-17 (Feature: `<lastmod>` on sitemap entries)
 
 ### Added

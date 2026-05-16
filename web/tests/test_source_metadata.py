@@ -18,6 +18,7 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.services.source_metadata import (
     KNOWN_SANSKRIT_AUTHORS,
+    _AUTHOR_IAST,
     build_breadcrumb_jsonld,
     build_line_quotation,
     build_source_jsonld,
@@ -165,6 +166,66 @@ def test_jsonld_omits_author_when_anonymous_work():
     # Translator + year still emitted.
     assert jsonld["translator"]["name"] == "В.Г. Эрман"
     assert jsonld["datePublished"] == "2009"
+
+
+# ── IAST alternateName on author Person ─────────────────────────────────────
+
+def test_iast_mapping_covers_every_known_author():
+    # If a name is in the detector set but missing from the IAST mapping,
+    # we'd emit a `Person` without `alternateName` for it. Single-source-of-
+    # truth: the public set is derived from the mapping's keys, so this is
+    # tautological — but the test still guards against accidental divergence
+    # if someone splits the two declarations.
+    for author in KNOWN_SANSKRIT_AUTHORS:
+        assert author in _AUTHOR_IAST, f"{author!r} missing IAST entry"
+        assert _AUTHOR_IAST[author], f"{author!r} has empty IAST value"
+
+
+def test_iast_values_are_ascii_or_combining_diacritics_only():
+    # IAST is Latin-with-diacritics — no Cyrillic should leak in. Catches
+    # a copy-paste mistake where a Russian form ends up as the IAST value.
+    for ru, iast in _AUTHOR_IAST.items():
+        for ch in iast:
+            # Reject Cyrillic block (U+0400–U+04FF).
+            assert not (0x0400 <= ord(ch) <= 0x04FF), (
+                f"{ru!r}: IAST value {iast!r} contains Cyrillic char {ch!r}"
+            )
+
+
+def test_jsonld_author_includes_iast_alternate_name():
+    source = {"id": 1, "title": "Бхартрихари. Шатакатраям (2020); М. В. Леонов"}
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/1", site_name="Site",
+    )
+    assert jsonld["author"]["name"] == "Бхартрихари"
+    assert jsonld["author"]["alternateName"] == "Bhartṛhari"
+
+
+def test_jsonld_iast_for_kalidasa():
+    source = {"id": 1, "title": "Калидаса. Облако-вестник (1914); П. Риттер"}
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/1", site_name="Site",
+    )
+    assert jsonld["author"]["alternateName"] == "Kālidāsa"
+
+
+def test_jsonld_iast_for_multi_word_author():
+    source = {"id": 1, "title": "Ватсьяянга Маланга. Камасутра (2000); А. Я. Сыркин"}
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/1", site_name="Site",
+    )
+    assert jsonld["author"]["name"] == "Ватсьяянга Маланга"
+    assert jsonld["author"]["alternateName"] == "Vātsyāyana Mallanāga"
+
+
+def test_jsonld_iast_for_suffix_form_author():
+    # Serebryakov edition uses suffix form: "Work. Author (Year)".
+    # IAST should still attach.
+    source = {"id": 1, "title": "Шатакатраям. Бхартрихари (1979); И.Д. Серебряков"}
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/1", site_name="Site",
+    )
+    assert jsonld["author"]["alternateName"] == "Bhartṛhari"
 
 
 # ── build_source_jsonld — only emits fields that exist ───────────────────────

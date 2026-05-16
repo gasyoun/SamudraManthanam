@@ -38,29 +38,39 @@ from urllib.parse import quote
 _YEAR_IN_PARENS = re.compile(r"\((\d{4})\)")
 
 # Known Sanskrit-tradition author names whose titles use the pattern
-# "{Author}. {Work}" in the corpus database. We curate this set rather than
-# regex-detecting an author prefix because work names like "Ригведа.",
-# "Атхарваведа.", "Махабхарата." also end in a period before a subpart
-# specifier, and we don't want to mis-classify "Ригведа. Мандала I" as
+# "{Author}. {Work}" in the corpus database, mapped to standard scholarly
+# IAST transliterations. We curate this list rather than regex-detecting an
+# author prefix because work names like "Ригведа.", "Атхарваведа.",
+# "Махабхарата." also end in a period before a subpart specifier, and we
+# don't want to mis-classify "Ригведа. Мандала I" as
 # "Author: Ригведа, Work: Мандала I".
+#
+# IAST values populate the `Person.alternateName` field in the JSON-LD —
+# giving Google an unambiguous Latin-alphabet handle on each author, which
+# helps disambiguation across languages and improves Knowledge-Graph linking.
 #
 # Sorted longest-first at lookup time so multi-word author names take
 # precedence over a substring (`"Ватсьяянга Маланга"` before `"Ватсьяянга"`).
-# Adding a new author: just add the Cyrillic-form prefix that appears in
-# `sources.title` before the first ". ".
-KNOWN_SANSKRIT_AUTHORS: frozenset[str] = frozenset({
-    "Абхинавагупта",
-    "Ашвагхоша",
-    "Бильхана",
-    "Бхартрихари",
-    "Ватсьяяна",
-    "Ватсьяянга Маланга",
-    "Джаядева",
-    "Калидаса",
-    "Патанджали",
-    "Рамануджа",
-    "Ямуначарья",
-})
+# Adding a new author: add an entry here and the prefix-form detector picks
+# it up automatically.
+_AUTHOR_IAST: dict[str, str] = {
+    "Абхинавагупта":      "Abhinavagupta",
+    "Ашвагхоша":          "Aśvaghoṣa",
+    "Бильхана":           "Bilhaṇa",
+    "Бхартрихари":        "Bhartṛhari",
+    "Ватсьяяна":          "Vātsyāyana",
+    "Ватсьяянга Маланга": "Vātsyāyana Mallanāga",
+    "Джаядева":           "Jayadeva",
+    "Калидаса":           "Kālidāsa",
+    "Патанджали":         "Patañjali",
+    "Рамануджа":          "Rāmānuja",
+    "Ямуначарья":         "Yāmunācārya",
+}
+
+# Public membership set — derived from the IAST mapping to keep a single
+# source of truth. Detector code iterates this; JSON-LD builder looks up
+# IAST values directly from `_AUTHOR_IAST` when emitting alternateName.
+KNOWN_SANSKRIT_AUTHORS: frozenset[str] = frozenset(_AUTHOR_IAST.keys())
 
 # Per-line Quotation `text` is capped to keep JSON-LD payload bounded for the
 # handful of sources that pack extensive footnote prose into a single
@@ -238,10 +248,16 @@ def build_source_jsonld(
         # which is the modern person who rendered it into Russian.
         # Anonymous works (Mahābhārata, Bhagavadgītā, Vedas, most Upaniṣads)
         # have no author here — we don't fabricate "Vyāsa" for MBh etc.
-        jsonld["author"] = {
+        author_entity: dict = {
             "@type": "Person",
             "name": parsed["author"],
         }
+        # Add the IAST form as `alternateName` so Google has an unambiguous
+        # Latin-alphabet handle for disambiguation / Knowledge-Graph linking.
+        iast = _AUTHOR_IAST.get(parsed["author"])
+        if iast:
+            author_entity["alternateName"] = iast
+        jsonld["author"] = author_entity
 
     if parsed["translator"]:
         # Person is the right type when we have a single named individual.
