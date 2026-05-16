@@ -7,11 +7,24 @@ import aiosqlite
 
 client = TestClient(app)
 
-def test_health_ok(test_db):
-    # test_db fixture already sets settings.DB_PATH
-    # We need a state_db too for full 'ok'
-    # Actually conftest.py doesn't set STATE_DB_PATH
-    pass
+@pytest.mark.asyncio
+async def test_health_ok(test_db, tmp_path):
+    """The health endpoint must return status=ok when both DBs are reachable and
+    the corpus has sources. (The previous version of this test was a `pass`
+    placeholder that gave false coverage.)"""
+    state_db_path = str(tmp_path / "state_health_ok.db")
+    settings.STATE_DB_PATH = state_db_path
+    async with aiosqlite.connect(state_db_path) as db:
+        await init_state_db(db)
+
+    response = client.get("/api/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
+    assert data["corpus_db"]["ok"] is True
+    assert data["corpus_db"]["source_count"] >= 1  # conftest fixture seeds sources
+    assert data["state_db"]["ok"] is True
+    assert isinstance(data["corpus_db"]["metadata"], dict)
 
 @pytest.mark.asyncio
 async def test_health_logic(test_db, tmp_path):

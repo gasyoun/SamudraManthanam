@@ -14,11 +14,49 @@ import os
 logger = logging.getLogger(__name__)
 
 
+async def _check_corpus_db() -> None:
+    """Log a clear warning at startup if corpus.db is missing or has no sources.
+
+    `aiosqlite.connect` will silently CREATE an empty SQLite file at the path
+    if it doesn't exist, so missing-corpus shows up downstream as "no results"
+    instead of a startup error. This one-shot probe surfaces the misconfig to
+    operators via logs without crashing the app.
+    """
+    if not os.path.exists(settings.DB_PATH):
+        logger.warning(
+            "lifespan: corpus DB does not exist at DB_PATH=%s — aiosqlite will "
+            "create an empty file on first access; the app will serve zero "
+            "search results until the corpus is ingested.", settings.DB_PATH
+        )
+        return
+    try:
+        db = await get_db(settings.DB_PATH)
+        try:
+            async with db.execute("SELECT COUNT(*) FROM sources") as cursor:
+                row = await cursor.fetchone()
+                count = row[0] if row else 0
+            if count == 0:
+                logger.warning(
+                    "lifespan: corpus DB at %s has zero sources — search will "
+                    "return no results until an ingest completes.", settings.DB_PATH
+                )
+            else:
+                logger.info("lifespan: corpus DB OK — %d sources loaded.", count)
+        finally:
+            await db.close()
+    except Exception:
+        logger.exception(
+            "lifespan: corpus DB probe failed at DB_PATH=%s — search routes will "
+            "return 500 until the corpus is fixed.", settings.DB_PATH
+        )
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Run startup tasks. A failed state.db init must NOT crash the whole app —
     the corpus search should keep working in degraded mode while the operator
     fixes the state DB. State-dependent routes will surface clean 503s."""
+    await _check_corpus_db()
     if settings.STATE_DB_PATH:
         db = None
         try:

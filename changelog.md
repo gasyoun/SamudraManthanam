@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.8] - 2026-05-16 (Bug sweep #7)
+### Fixed
+- **`test_health_ok` was a `pass` placeholder**: looked like a real test in the suite count but exercised nothing — gave false coverage for the `/api/health` happy path. Replaced with a real assertion that both DBs are reachable, `status=="ok"`, and `source_count >= 1`.
+- **Lifespan never warned about missing or empty corpus DB**: `aiosqlite.connect` silently creates an empty SQLite file at `DB_PATH` if none exists, so a misconfigured deploy showed up as "search returns no results" with no clear diagnostic. Lifespan now probes `corpus.db` at startup and logs a clear warning if the file is missing, the `sources` table is empty, or the probe raises. The app still starts (corpus might be intentionally swapped in later), so this is a log-only signal — but the operator now sees the misconfig immediately.
+
 ## [1.12.7] - 2026-05-15 (Bug sweep #6 — operational hardening)
 ### Fixed
 - **`lifespan` crashed the whole app if `init_state_db` failed**: a misconfigured `STATE_DB_PATH` (pointing at a directory, wrong permissions) used to abort startup, leaving uvicorn in a restart loop with no useful log. Now the handler catches, logs once with `logger.exception`, and continues — corpus search keeps working while operators fix the state DB; state-dependent endpoints surface clean 503s.
