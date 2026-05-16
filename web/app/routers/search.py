@@ -81,7 +81,13 @@ async def post_search(request: SearchRequest):
         await db.close()
 
 @router.get("/stream")
-async def get_search_stream(request: Request, query: str, mode: SearchMode = SearchMode.plain, case_sensitive: bool = False, whole_word: bool = False):
+async def get_search_stream(
+    request: Request,
+    query: str = Query(..., min_length=1, max_length=1000),
+    mode: SearchMode = SearchMode.plain,
+    case_sensitive: bool = False,
+    whole_word: bool = False,
+):
     # Handle source_ids from query params
     source_ids = parse_source_ids(request.query_params.get("source_ids"))
 
@@ -184,7 +190,13 @@ async def get_context(
 
 
 @router.get("/export", response_class=HTMLResponse)
-async def get_export(request: Request, query: str, mode: SearchMode = SearchMode.plain, case_sensitive: bool = False, whole_word: bool = False):
+async def get_export(
+    request: Request,
+    query: str = Query(..., min_length=1, max_length=1000),
+    mode: SearchMode = SearchMode.plain,
+    case_sensitive: bool = False,
+    whole_word: bool = False,
+):
     # Handle source_ids from query params
     source_ids = parse_source_ids(request.query_params.get("source_ids"))
 

@@ -97,6 +97,35 @@ async def test_invalid_get_source_ids():
         response = await ac.get("/api/search/export?query=test&source_ids=1,nope")
     assert response.status_code == 422
 
+
+@pytest.mark.asyncio
+async def test_export_rejects_unbounded_query():
+    """REGRESSION: GET /api/search/export used to accept arbitrarily long
+    `query` strings while POST /api/search was capped at 1000. Now both share
+    the same Pydantic-equivalent constraint."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/export?query=" + "a" * 2000 + "&mode=plain")
+    assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_export_rejects_empty_query():
+    """The export endpoint must require a non-empty query, just like POST."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/export?query=&mode=plain")
+    assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_stream_rejects_unbounded_query():
+    """Same bound applies to the SSE endpoint."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/stream?query=" + "a" * 2000 + "&mode=plain")
+    assert response.status_code == 422
+
 @pytest.mark.asyncio
 async def test_export_filename_is_sanitized():
     transport = ASGITransport(app=app)

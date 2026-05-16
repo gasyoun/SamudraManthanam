@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.9] - 2026-05-16 (Bug sweep #8)
+### Fixed
+- **GET `/api/search/export` and `/api/search/stream` accepted unbounded `query`** while POST `/api/search` was capped at 1000 chars by Pydantic — inconsistent validation across the same logical input. A 60KB regex pattern through GET would slip past, eating CPU on `re.compile`. Both GET endpoints now use `Query(..., min_length=1, max_length=1000)`.
+
+### Added
+- **`test_api.py`**: 3 new regression tests — export rejects oversized + empty queries, stream rejects oversized query. 92/92 hermetic tests pass.
+
 ## [1.12.8] - 2026-05-16 (Bug sweep #7)
 ### Fixed
 - **`test_health_ok` was a `pass` placeholder**: looked like a real test in the suite count but exercised nothing — gave false coverage for the `/api/health` happy path. Replaced with a real assertion that both DBs are reachable, `status=="ok"`, and `source_count >= 1`.
