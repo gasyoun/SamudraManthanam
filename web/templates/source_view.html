@@ -198,5 +198,12 @@
     {{ breadcrumb_jsonld | tojson }}
     </script>
     {% endif %}
+    {# When ?highlight=X is in the URL, surface that verse as a top-level
+       Quotation so the specific page variant gets its own structured data. #}
+    {% if highlight_jsonld %}
+    <script type="application/ld+json">
+    {{ highlight_jsonld | tojson }}
+    </script>
+    {% endif %}
 </body>
 </html>

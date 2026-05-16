@@ -18,6 +18,7 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.services.source_metadata import (
     build_breadcrumb_jsonld,
+    build_line_quotation,
     build_source_jsonld,
     parse_source_title,
 )
@@ -213,3 +214,165 @@ def test_source_view_emits_canonical_link(source_with_translator):
     r = client.get(f"/sources/{source_with_translator}")
     assert 'rel="canonical"' in r.text
     assert f'/sources/{source_with_translator}' in r.text
+
+
+# ── hasPart sample on Book ──────────────────────────────────────────────────
+
+def test_jsonld_haspart_includes_sample_lines_when_provided():
+    source = {"id": 5, "title": "Test (2020); Тест"}
+    lines = [
+        {"line_num": 1, "link_id": "1.1", "line_text": "first verse", "chapter": "Глава I"},
+        {"line_num": 2, "link_id": "1.2", "line_text": "second verse", "chapter": "Глава I"},
+    ]
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/5", site_name="Site",
+        sample_lines=lines,
+    )
+    assert jsonld["numberOfItems"] == 2
+    assert "hasPart" in jsonld
+    assert len(jsonld["hasPart"]) == 2
+    assert jsonld["hasPart"][0]["@type"] == "Quotation"
+    assert jsonld["hasPart"][0]["text"] == "first verse"
+
+
+def test_jsonld_haspart_caps_at_sample_size():
+    # 30 lines → with default cap of 20, only 20 appear in hasPart but the
+    # numberOfItems count reflects the FULL filtered set.
+    source = {"id": 5, "title": "Test"}
+    lines = [
+        {"line_num": i, "link_id": f"1.{i}", "line_text": f"verse {i}", "chapter": ""}
+        for i in range(1, 31)
+    ]
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/5", site_name="Site",
+        sample_lines=lines,
+    )
+    assert jsonld["numberOfItems"] == 30
+    assert len(jsonld["hasPart"]) == 20
+
+
+def test_jsonld_haspart_skips_empty_text_lines():
+    # Chapter-header rows have line_text=="" and should NOT count or appear.
+    source = {"id": 5, "title": "Test"}
+    lines = [
+        {"line_num": 1, "link_id": "chapter_1", "line_text": "", "chapter": ""},
+        {"line_num": 2, "link_id": "1.1", "line_text": "real verse", "chapter": ""},
+        {"line_num": 3, "link_id": "1.2", "line_text": "another", "chapter": ""},
+    ]
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/5", site_name="Site",
+        sample_lines=lines,
+    )
+    assert jsonld["numberOfItems"] == 2
+    assert all(p["text"] for p in jsonld["hasPart"])
+
+
+def test_jsonld_haspart_omitted_when_no_sample_lines():
+    source = {"id": 5, "title": "Test"}
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="/sources/5", site_name="Site",
+    )
+    assert "hasPart" not in jsonld
+    assert "numberOfItems" not in jsonld
+
+
+def test_jsonld_haspart_links_use_base_url_when_provided():
+    source = {"id": 5, "title": "Test"}
+    lines = [{"line_num": 1, "link_id": "1.1", "line_text": "v", "chapter": ""}]
+    jsonld = build_source_jsonld(
+        source=source, canonical_url="https://samskrtam.ru/sources/5",
+        site_name="Site", sample_lines=lines, base_url="https://samskrtam.ru",
+    )
+    assert jsonld["hasPart"][0]["@id"].startswith("https://samskrtam.ru/sources/5?highlight=1.1")
+
+
+# ── Per-line Quotation builder ──────────────────────────────────────────────
+
+def test_line_quotation_minimal_shape():
+    line = {"line_num": 10, "link_id": "1.1", "line_text": "dharma quote",
+            "chapter": "Глава I"}
+    q = build_line_quotation(
+        line=line, source_id=5, source_url="/sources/5",
+    )
+    assert q["@type"] == "Quotation"
+    assert q["@id"].endswith("/sources/5?highlight=1.1")
+    assert q["text"] == "dharma quote"
+    assert q["inLanguage"] == "ru"
+    assert q["isPartOf"] == {"@id": "/sources/5"}
+    assert q["citation"] == "Глава I, 1.1"
+
+
+def test_line_quotation_falls_back_to_line_num_when_no_link_id():
+    line = {"line_num": 42, "link_id": "", "line_text": "verse text", "chapter": ""}
+    q = build_line_quotation(
+        line=line, source_id=5, source_url="/sources/5",
+    )
+    assert q["@id"].endswith("highlight=42")
+    assert "citation" not in q  # no chapter, no citation field
+
+
+def test_line_quotation_url_encodes_link_id():
+    # link_ids like "1.3-6" must be URL-safe.
+    line = {"line_num": 10, "link_id": "1.3-6", "line_text": "x", "chapter": ""}
+    q = build_line_quotation(
+        line=line, source_id=5, source_url="/sources/5",
+    )
+    assert "highlight=1.3-6" in q["@id"]
+
+
+def test_line_quotation_truncates_pathological_long_text():
+    # Some Smirnov-edition lines pack ~6 KB of footnote prose; cap at 1500 chars.
+    line = {"line_num": 1, "link_id": "1.1", "line_text": "x" * 5000, "chapter": ""}
+    q = build_line_quotation(
+        line=line, source_id=5, source_url="/sources/5",
+    )
+    assert len(q["text"]) <= 1500 + 1  # +1 for the ellipsis character
+    assert q["text"].endswith("…")
+
+
+# ── HTTP integration for the new blocks ─────────────────────────────────────
+
+def test_source_view_emits_haspart_in_book_jsonld(source_with_translator):
+    r = client.get(f"/sources/{source_with_translator}")
+    body = r.text
+    blocks = re.findall(
+        r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
+        body, re.DOTALL,
+    )
+    book = json.loads(blocks[0])
+    assert book["@type"] == "Book"
+    assert book.get("numberOfItems", 0) >= 1
+    assert "hasPart" in book
+
+
+def test_source_view_without_highlight_emits_two_jsonld_blocks(source_with_translator):
+    r = client.get(f"/sources/{source_with_translator}")
+    blocks = re.findall(
+        r'<script type="application/ld\+json">',
+        r.text,
+    )
+    # Book + BreadcrumbList. No highlight → no third block.
+    assert len(blocks) == 2
+
+
+def test_source_view_with_highlight_emits_third_quotation_block(source_with_translator):
+    r = client.get(f"/sources/{source_with_translator}?highlight=1.1")
+    blocks = re.findall(
+        r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
+        r.text, re.DOTALL,
+    )
+    assert len(blocks) == 3
+    quotation = json.loads(blocks[2])
+    assert quotation["@type"] == "Quotation"
+    assert "highlight=1.1" in quotation["@id"]
+
+
+def test_source_view_with_unmatched_highlight_does_not_emit_quotation(source_with_translator):
+    # Highlight that doesn't resolve to any line → no third block emitted,
+    # don't fabricate a Quotation with empty text.
+    r = client.get(f"/sources/{source_with_translator}?highlight=nope")
+    blocks = re.findall(
+        r'<script type="application/ld\+json">',
+        r.text,
+    )
+    assert len(blocks) == 2

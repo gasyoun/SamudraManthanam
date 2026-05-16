@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.1] - 2026-05-16 (Feature: per-line Quotation JSON-LD on source pages)
+
+### Added
+- **`Book.hasPart` sample + `numberOfItems` on every source page** — the existing `Book` JSON-LD now nests up to 20 `Quotation` entries (the first verses with non-empty text) and carries a `numberOfItems` count of the full filtered verse set. Live measurements: Smirnov BhG `numberOfItems=720`, Bhīṣma-parvan `1459`, Īśa Upaniṣad `22`. Each hasPart entry has `@id` pointing at the `?highlight=` URL for that verse, so Google can crawl them as distinct sub-entities.
+- **Per-page highlighted Quotation** — when `?highlight=X` is in the URL (typical for a deep link from a search hit or the comparison view), a third top-level `<script type="application/ld+json">` is emitted carrying just the highlighted verse as a `Quotation` with `@id` = canonical URL of that page variant, `isPartOf` linking back to the Book, and `citation` from chapter + link_id when available. Falls back to two-block output when the highlight doesn't resolve to any line — never fabricates structured data from missing content.
+- **`line_text` truncation cap (1500 chars)** — protects against the few Smirnov-edition rows that pack ~6 KB of footnote prose into a single corpus_lines row. Most real verses are well under the cap.
+
+### Changed
+- **`reader.py` SQL now selects `line_text`** in addition to `line_html` so the JSON-LD builder has the plain-text content it needs. The template's display continues to use `line_html`.
+- **`source_metadata.build_source_jsonld`** gains optional `sample_lines`, `sample_size`, and `base_url` keyword args. Existing calls without samples continue to work unchanged.
+- **`source_metadata.build_line_quotation`** is the new single-Quotation builder used for the highlighted-line block.
+
+### Files
+- `web/app/services/source_metadata.py` — new builders + truncation helper.
+- `web/app/routers/reader.py` — selects `line_text`, constructs highlight Quotation when present.
+- `web/templates/source_view.html` — conditional third JSON-LD block.
+- `web/tests/test_source_metadata.py` — 13 new tests: hasPart cap enforcement, empty-text skipping, missing-sample omission, base_url plumbing, single-Quotation shape, line_num fallback, URL encoding of `1.3-6` ranges, truncation cap, HTTP integration for hasPart, two-block vs three-block emission, unmatched-highlight defence.
+
+### Notes
+- 203/203 hermetic tests pass.
+- Page-weight verification on real corpus: JSON-LD overhead is 10-22 KB per source page even for the 2.5 MB Bhīṣma-parvan — well within proportional bounds.
+
 ## [1.15.0] - 2026-05-16 (Feature: popular-query landing pages)
 
 ### Added

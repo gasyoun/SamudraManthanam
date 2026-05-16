@@ -31,10 +31,22 @@ What's NOT in scope yet
   "ru" at the page level which is honest about the rendered surface.
 """
 import re
+from urllib.parse import quote
 
 # Matches a 4-digit year inside parentheses. Anchored loosely so years can
 # appear anywhere in the work-part (usually trailing, but occasionally inline).
 _YEAR_IN_PARENS = re.compile(r"\((\d{4})\)")
+
+# Per-line Quotation `text` is capped to keep JSON-LD payload bounded for the
+# handful of sources that pack extensive footnote prose into a single
+# corpus_lines row (Smirnov BhG is the worst offender at ~6 KB/line).
+# Most real verses are well under this — the cap mostly affects fringe rows.
+_MAX_QUOTATION_TEXT = 1500
+
+# Cap on hasPart sample size for the Book entity. Bigger payloads risk
+# crowding the page weight for crawlers without proportional SEO value;
+# the highlighted-line Quotation handles deep-link cases separately.
+_DEFAULT_HASPART_SAMPLE = 20
 
 
 def parse_source_title(title: str) -> dict:
@@ -62,15 +74,83 @@ def parse_source_title(title: str) -> dict:
     }
 
 
-def build_source_jsonld(*, source: dict, canonical_url: str, site_name: str) -> dict:
+def _truncate(text: str, max_chars: int = _MAX_QUOTATION_TEXT) -> str:
+    """Hard-truncate at `max_chars` with an ellipsis. Used to keep JSON-LD
+    payload sizes bounded on the few sources with very long packed lines."""
+    if not text:
+        return ""
+    if len(text) <= max_chars:
+        return text
+    return text[:max_chars].rstrip() + "…"
+
+
+def _line_anchor_url(*, base_url: str, source_id: int, link_id: str | None) -> str:
+    """Stable anchor URL for a single verse on a source page.
+
+    Uses `?highlight=` rather than `#fragment` because Google indexes query
+    strings as distinct URLs but treats `#fragment` as a within-page hash —
+    deep links via `?highlight=` get their own SERP entries.
+    """
+    safe = quote(link_id or "", safe="")
+    return f"{base_url}/sources/{source_id}?highlight={safe}"
+
+
+def build_line_quotation(*, line: dict, source_id: int, source_url: str, base_url: str = "") -> dict:
+    """Build a single `Quotation` JSON-LD entity for one corpus line.
+
+    The `@id` doubles as the URL the verse can be deep-linked to (the
+    `?highlight=` form already implemented by the reader route). `isPartOf`
+    threads back to the parent Book by its @id so the relationship is
+    discoverable when the Quotation is crawled standalone.
+    """
+    link_id = line.get("link_id") or str(line.get("line_num") or "")
+    quotation: dict = {
+        "@context": "https://schema.org",
+        "@type": "Quotation",
+        "@id": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
+        "text": _truncate(line.get("line_text", "")),
+        "inLanguage": "ru",
+        "isPartOf": {"@id": source_url},
+        "url": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
+    }
+    if line.get("chapter"):
+        quotation["citation"] = f"{line['chapter']}, {link_id}" if link_id else line["chapter"]
+    return quotation
+
+
+def _line_haspart_entry(*, line: dict, source_id: int, base_url: str) -> dict:
+    """Compact Quotation for inclusion inside Book.hasPart (no @context, no
+    redundant @id collisions; relies on the parent graph for namespacing)."""
+    link_id = line.get("link_id") or str(line.get("line_num") or "")
+    return {
+        "@type": "Quotation",
+        "@id": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
+        "text": _truncate(line.get("line_text", "")),
+        "inLanguage": "ru",
+    }
+
+
+def build_source_jsonld(
+    *,
+    source: dict,
+    canonical_url: str,
+    site_name: str,
+    sample_lines: list[dict] | None = None,
+    sample_size: int = _DEFAULT_HASPART_SAMPLE,
+    base_url: str = "",
+) -> dict:
     """Build a schema.org Book entity for a `/sources/{id}` page.
 
     The Book is the right primary type even for translated material — Google's
     own examples use Book for translated literary works, with `translator` and
     `inLanguage` as siblings.
 
-    We also nest a `WebSite` parent so the SearchAction (declared elsewhere)
-    is discoverable from any source page Google indexes.
+    When `sample_lines` is provided, the first `sample_size` entries with a
+    non-empty `line_text` are emitted as nested `Quotation` items inside
+    `hasPart` plus a `numberOfItems` count of the FULL sample provided (i.e.
+    the caller passes all lines; we sample here so the cap is enforced in
+    one place). Lines with empty text — typically chapter-anchor or header
+    rows — are skipped.
     """
     parsed = parse_source_title(source.get("title", ""))
 
@@ -98,6 +178,16 @@ def build_source_jsonld(*, source: dict, canonical_url: str, site_name: str) -> 
 
     if parsed["year"]:
         jsonld["datePublished"] = parsed["year"]
+
+    if sample_lines:
+        verse_lines = [l for l in sample_lines if l.get("line_text")]
+        jsonld["numberOfItems"] = len(verse_lines)
+        source_id = source.get("id")
+        if source_id is not None:
+            jsonld["hasPart"] = [
+                _line_haspart_entry(line=l, source_id=source_id, base_url=base_url)
+                for l in verse_lines[:sample_size]
+            ]
 
     return jsonld
 
