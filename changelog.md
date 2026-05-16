@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.12.10] - 2026-05-16 (Bug sweep #10)
+### Fixed
+- **Ingest extracted useless page-style `link_id` for Mahābhārata Bhīṣma-parvan and Gītagovinda**: the original regex `re.search(r'id=...')` matched the *first* `id=` on the line, which for these older corpus files is the `<div class="range">` bibliographic-page identifier ("Махабхарата 2009 (VI): 9"), not a URL-routable verse anchor. As a result `corpus_lines.link_id` for ~1,337 Bhīṣma-parvan verses and all 289 Gītagovinda verses pointed at non-routable strings, preventing deep linking from search results into source view.
+- New `_extract_link_id(line)` helper in `parse_html.py` with three priorities: (1) `id="..."` on a `class="citation_block"` div, (2) parse the trailing `CHAPTER. VERSE` (or `CHAPTER. VERSE_RANGE` for merged stanzas) from a `class="range" title="..."` element, (3) any `id="..."` on the line. Range-only lines whose title isn't parseable now return empty rather than leak the bibliographic page id.
+
+### Added
+- **`web/tests/test_parse_html.py`**: 10 unit tests covering Smirnov-style clean ids (regression), Bhīṣma-parvan + Gītagovinda fallbacks, range-merged stanzas (`1.3-6`), MBh-internal numbering for chapter 23+ (Gītā in Bhīṣma-parvan), chapter-title fallthrough, and the page-id-leak regression case.
+- Smoke-verified on real corpus: Bhīṣma-parvan now yields 750 clean `X.Y` + 587 range-merged `X.Y-Z` anchors; Gītagovinda all 289 verses; Smirnov BhG unchanged at 701 anchors. 90/90 hermetic tests pass.
+
+### Operator action required
+- A re-ingest (`python -m ingest.ingest --corpus-path ... --db-path corpus.db`) is needed to repopulate `corpus_lines.link_id` with the new values. Existing search/source routes will then deep-link MBh and Gītagovinda verses correctly.
+
 ## [1.12.9] - 2026-05-16 (Bug sweep #8)
 ### Fixed
 - **GET `/api/search/export` and `/api/search/stream` accepted unbounded `query`** while POST `/api/search` was capped at 1000 chars by Pydantic — inconsistent validation across the same logical input. A 60KB regex pattern through GET would slip past, eating CPU on `re.compile`. Both GET endpoints now use `Query(..., min_length=1, max_length=1000)`.
