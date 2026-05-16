@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.13.2] - 2026-05-16 (Feature: per-work index page + sitemap entries)
+
+### Added
+- **`GET /compare/{work_slug}`** — per-work hub page listing every chapter with a grid of verse links. Acts as the navigation root for `/compare/{work}/{ch}.{v}` leaves and as a crawlable internal-linking hub. Renders against the real corpus at 89 KB for Bhagavadgītā (18 chapters / 734 verses), 27 KB for Yoga-Sūtra (4 / 195), 39 KB for Śatakatraya (3 / 309). Includes canonical link, OG/Twitter card, and JSON-LD `WebPage` → `mainEntity: ItemList` of 18/4/3 chapters.
+- **`compare_service.enumerate_verses(db, work_slug)`** — returns the sorted `(chapter, verse)` set where the comparison view will surface at least one hit. Aggregates across every source listed for a work, expands range-merged link_ids (`1.3-6` → 4 pairs), and applies the inverse chapter offset for bridge sources (MBh Bhīṣma adhyāyas 23-40 → BhG chapters 1-18; pre- and post-Gītā Bhīṣma chapters are silently dropped). Helper `_expand_link_id(link_id)` factored out for reuse.
+- **`/sitemap.xml`** now includes the 3 per-work hubs (priority 0.9) and **1,238 leaf comparison URLs** (priority 0.7): 734 Bhagavadgītā, 195 Yoga-Sūtra, 309 Śatakatraya. Total sitemap size ≈ 102 KB, 1,390 `<url>` entries — comfortably under the 50K-URL / 50 MB single-sitemap limit. Each URL is genuinely unique on the Russian-language web.
+
+### Tests
+- 13 new tests in `test_compare.py`: `_expand_link_id` helper coverage (exact, range, single-verse range, inverted range, non-verse anchors), `enumerate_verses` against fixtures (cross-source aggregation + range expansion, out-of-range bridge chapters dropped, unknown work returns empty), HTTP-level index route (hub renders, 404 on unknown work, empty-chapter messaging for Yoga-Sūtra without fixture data), and sitemap inclusion (all three hubs present, leaf URLs from BhG fixtures present). 131/131 hermetic tests pass.
+
 ## [1.13.1] - 2026-05-16 (Feature: search-result cross-link to comparison view)
 
 ### Added

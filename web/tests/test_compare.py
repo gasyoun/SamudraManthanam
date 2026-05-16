@@ -15,9 +15,11 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.settings import settings
 from app.services.compare_service import (
+    _expand_link_id,
     _link_id_covers,
     _split_iast_and_translation,
     compare_url_for_hit,
+    enumerate_verses,
     get_comparison,
 )
 from app.services.html_service import render_fragment
@@ -383,3 +385,138 @@ def test_route_404_for_unknown_verse_with_no_data(bhg_db):
 def test_route_rejects_oversized_verse_id():
     r = client.get("/compare/bhagavadgita/" + "1" * 20)
     assert r.status_code == 400
+
+
+# ── _expand_link_id helper ───────────────────────────────────────────────────
+
+def test_expand_link_id_exact():
+    assert list(_expand_link_id("1.5")) == [(1, 5)]
+
+
+def test_expand_link_id_range_inclusive():
+    assert list(_expand_link_id("1.3-6")) == [(1, 3), (1, 4), (1, 5), (1, 6)]
+
+
+def test_expand_link_id_single_verse_range():
+    assert list(_expand_link_id("2.10-10")) == [(2, 10)]
+
+
+def test_expand_link_id_inverted_range_yields_nothing():
+    # Defensive: malformed "1.7-3" must not yield negative-range pairs.
+    assert list(_expand_link_id("1.7-3")) == []
+
+
+def test_expand_link_id_non_verse_anchors_yield_nothing():
+    assert list(_expand_link_id("chapter_1")) == []
+    assert list(_expand_link_id("")) == []
+    assert list(_expand_link_id("Махабхарата (VI): 9")) == []
+
+
+# ── enumerate_verses (per-work verse aggregation) ────────────────────────────
+
+@pytest.mark.asyncio
+async def test_enumerate_verses_aggregates_across_sources_and_expands_ranges(bhg_db):
+    db = await aiosqlite.connect(settings.DB_PATH)
+    db.row_factory = aiosqlite.Row
+    try:
+        verses = await enumerate_verses(db, "bhagavadgita")
+    finally:
+        await db.close()
+    # Fixtures inserted: Smirnov 1.1, Erman 1.1, Radha 1.5-7 (→ 1.5/1.6/1.7),
+    # MBh Bhīṣma 23.1 (→ Gītā 1.1).
+    assert (1, 1) in verses
+    assert (1, 5) in verses
+    assert (1, 6) in verses
+    assert (1, 7) in verses
+    # No verse from fixtures lands outside chapter 1.
+    assert all(ch == 1 for ch, _ in verses)
+
+
+@pytest.mark.asyncio
+async def test_enumerate_verses_drops_out_of_range_bridge_chapters(bhg_db):
+    # Insert a Bhīṣma row at link_id="1.1" (book intro, BEFORE the Gītā).
+    db = await aiosqlite.connect(settings.DB_PATH)
+    db.row_factory = aiosqlite.Row
+    try:
+        await db.execute(
+            "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num, link_id, chapter) "
+            "VALUES ('intro', '<div>intro</div>', 104, 10, '1.1', '')"
+        )
+        await db.commit()
+        verses = await enumerate_verses(db, "bhagavadgita")
+        # 1.1 + (-22) = -21, must be dropped.
+        # No way to assert "absent" precisely, but the MBh's own 23.1 hit
+        # already adds (1,1); the pre-Gītā 1.1 must not have created (-21,1).
+        assert all(ch >= 1 for ch, _ in verses)
+        assert (-21, 1) not in verses
+    finally:
+        # Clean up the extra row
+        await db.execute("DELETE FROM corpus_lines WHERE source_id = 104 AND link_id = '1.1' AND line_num = 10")
+        await db.commit()
+        await db.close()
+
+
+@pytest.mark.asyncio
+async def test_enumerate_verses_unknown_work_returns_empty():
+    db = await aiosqlite.connect(settings.DB_PATH)
+    db.row_factory = aiosqlite.Row
+    try:
+        verses = await enumerate_verses(db, "ramayana")
+    finally:
+        await db.close()
+    assert verses == []
+
+
+# ── /compare/{work_slug} index route ─────────────────────────────────────────
+
+def test_index_route_renders_work_hub(bhg_db):
+    r = client.get("/compare/bhagavadgita")
+    assert r.status_code == 200
+    assert "Бхагавадгита" in r.text
+    # All 18 chapter sections rendered, even empty ones.
+    assert "Глава 1" in r.text
+    assert "Глава 18" in r.text
+    # Chapter 1 has the four fixture verses; verify their links are emitted.
+    assert "/compare/bhagavadgita/1.1" in r.text
+    assert "/compare/bhagavadgita/1.5" in r.text
+    assert "/compare/bhagavadgita/1.6" in r.text
+    assert "/compare/bhagavadgita/1.7" in r.text
+    # JSON-LD ItemList present
+    assert "ItemList" in r.text
+    # Canonical link
+    assert 'rel="canonical"' in r.text
+
+
+def test_index_route_unknown_work_returns_404():
+    r = client.get("/compare/ramayana")
+    assert r.status_code == 404
+
+
+def test_index_route_for_yogasutra_renders_without_fixture_data():
+    # No fixtures for yogasutra, but route should still serve the hub with all
+    # 4 chapters and empty verse grids.
+    r = client.get("/compare/yogasutra")
+    assert r.status_code == 200
+    assert "Йога-сутры" in r.text
+    assert "Глава 4" in r.text
+    # Empty-chapter messaging surfaces somewhere on the page.
+    assert "пока не доступны" in r.text
+
+
+# ── /sitemap.xml includes compare hub + leaf URLs ────────────────────────────
+
+def test_sitemap_includes_compare_hub_pages_for_each_work(bhg_db):
+    r = client.get("/sitemap.xml")
+    assert r.status_code == 200
+    body = r.text
+    for slug in ("bhagavadgita", "yogasutra", "shatakatrayam"):
+        assert f"/compare/{slug}<" in body, f"hub for {slug} missing"
+
+
+def test_sitemap_includes_leaf_compare_urls_from_fixtures(bhg_db):
+    r = client.get("/sitemap.xml")
+    body = r.text
+    # bhg_db seeded BhG 1.1 plus the 1.5-7 range — all four should appear.
+    for path in ("/compare/bhagavadgita/1.1<", "/compare/bhagavadgita/1.5<",
+                 "/compare/bhagavadgita/1.6<", "/compare/bhagavadgita/1.7<"):
+        assert path in body, f"missing leaf URL {path}"

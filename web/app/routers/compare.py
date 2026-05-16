@@ -17,7 +17,7 @@ from fastapi.templating import Jinja2Templates
 
 from app.compare_config import WORKS
 from app.db import get_db
-from app.services.compare_service import get_comparison
+from app.services.compare_service import enumerate_verses, get_comparison
 from app.settings import settings
 
 router = APIRouter(prefix="/compare", tags=["compare"])
@@ -27,6 +27,58 @@ templates = Jinja2Templates(directory="templates")
 # are intentionally rejected — canonical URLs are always single verses.
 _VERSE_PATTERN = re.compile(r"^(\d+)\.(\d+)$")
 _VERSE_ID_MAX_LEN = 16
+
+
+@router.get("/{work_slug}", response_class=HTMLResponse)
+async def view_work_index(request: Request, work_slug: str):
+    """Per-work hub page — lists every chapter with all verse links.
+
+    Acts as the navigation root for `/compare/{work_slug}/{ch}.{v}` leaf pages
+    and as a crawlable hub for search engines. Verse counts come from the
+    actual corpus (aggregated across all configured sources, with range-merged
+    blocks expanded), so the index reflects what the comparison view will
+    actually render.
+    """
+    if work_slug not in WORKS:
+        raise HTTPException(status_code=404, detail=f"Unknown work: {work_slug}")
+    work = WORKS[work_slug]
+
+    db = await get_db(settings.DB_PATH)
+    try:
+        verses = await enumerate_verses(db, work_slug)
+    finally:
+        await db.close()
+
+    # Group verses by chapter for the template
+    chapters: dict[int, list[int]] = {ch: [] for ch in range(1, work["chapter_count"] + 1)}
+    for ch, v in verses:
+        chapters.setdefault(ch, []).append(v)
+
+    base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
+    canonical_url = f"{base}/compare/{work_slug}"
+
+    from app.main import _ss_link
+
+    return templates.TemplateResponse(
+        request=request,
+        name="compare_index.html",
+        context={
+            "work_slug": work_slug,
+            "work_title": work["title"],
+            "work_title_iast": work["title_iast"],
+            "description": work["description"],
+            "chapter_count": work["chapter_count"],
+            "source_count": len(work["sources"]) + len(work.get("bridges", [])),
+            "total_verses": len(verses),
+            "chapters": chapters,
+            "canonical_url": canonical_url,
+            "og_title": f"{work['title']} — переводы и комментарии",
+            "og_description": work["description"],
+            "og_url": canonical_url,
+            "site_name": "Пахтанье океана",
+            "ss_link": _ss_link("compare_index"),
+        },
+    )
 
 
 @router.get("/{work_slug}/{verse_id}", response_class=HTMLResponse)

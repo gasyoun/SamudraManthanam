@@ -186,6 +186,74 @@ def _make_hit(src_cfg: dict, row: dict, is_range: bool) -> VerseHit:
     )
 
 
+def _expand_link_id(link_id: str):
+    """Yield every (chapter, verse) pair covered by a single link_id.
+
+    "1.5"   → (1, 5)
+    "1.3-6" → (1, 3), (1, 4), (1, 5), (1, 6)
+    anything else (chapter anchors, empty, bibliographic refs) → no yield.
+    """
+    m = _EXACT_LINK_ID.match(link_id)
+    if m:
+        yield int(m.group(1)), int(m.group(2))
+        return
+    m = _RANGE_LINK_ID.match(link_id)
+    if m:
+        ch = int(m.group(1))
+        first = int(m.group(2))
+        last = int(m.group(3))
+        if first <= last:
+            for v in range(first, last + 1):
+                yield ch, v
+
+
+async def enumerate_verses(db, work_slug: str) -> list[tuple[int, int]]:
+    """Return the sorted set of (chapter, verse) pairs for which
+    `/compare/{work_slug}/{ch}.{v}` would render at least one hit.
+
+    Used by the per-work index page and the sitemap. Aggregates across every
+    source listed in `compare_config.WORKS[work_slug]`, expanding range-merged
+    link_ids and applying the inverse chapter offset for bridge sources.
+    Out-of-range chapters (e.g. pre-Gītā or post-Gītā Bhīṣma) are dropped.
+    """
+    work = WORKS.get(work_slug)
+    if work is None:
+        return []
+    chapter_count = work["chapter_count"]
+    seen: set[tuple[int, int]] = set()
+
+    filenames = [s["filename"] for s in work["sources"]]
+    if filenames:
+        placeholders = ",".join("?" * len(filenames))
+        sql = f"""
+            SELECT DISTINCT cl.link_id
+            FROM corpus_lines cl
+            JOIN sources s ON cl.source_id = s.id
+            WHERE s.filename IN ({placeholders}) AND cl.link_id != ''
+        """
+        async with db.execute(sql, filenames) as cur:
+            async for row in cur:
+                for ch, v in _expand_link_id(row["link_id"]):
+                    if 1 <= ch <= chapter_count and v >= 1:
+                        seen.add((ch, v))
+
+    for bridge in work.get("bridges", []):
+        sql_bridge = """
+            SELECT DISTINCT cl.link_id
+            FROM corpus_lines cl
+            JOIN sources s ON cl.source_id = s.id
+            WHERE s.filename = ? AND cl.link_id != ''
+        """
+        async with db.execute(sql_bridge, (bridge["filename"],)) as cur:
+            async for row in cur:
+                for ch_src, v in _expand_link_id(row["link_id"]):
+                    target_ch = ch_src - bridge["chapter_offset"]
+                    if 1 <= target_ch <= chapter_count and v >= 1:
+                        seen.add((target_ch, v))
+
+    return sorted(seen)
+
+
 async def get_comparison(db, work_slug: str, ch: int, v: int) -> dict[str, Any] | None:
     """Resolve a verse across all sources configured for `work_slug`.
 

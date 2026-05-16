@@ -168,26 +168,42 @@ async def robots():
 async def sitemap():
     from fastapi.responses import Response
     from xml.sax.saxutils import escape as xml_escape
+    from app.compare_config import WORKS
+    from app.services.compare_service import enumerate_verses
 
     raw_base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
     base = xml_escape(raw_base)  # PUBLIC_BASE_URL is operator-controlled; & must become &amp;
 
-    # Collect source IDs from the corpus DB so each source page is indexable.
+    # Collect source IDs and per-work verse coordinates. Both depend on the
+    # corpus DB; if it's briefly unavailable the sitemap still serves the
+    # root + any successfully-fetched lists, fail-soft.
     source_ids: list[int] = []
+    work_verses: dict[str, list[tuple[int, int]]] = {}
     try:
         db = await get_db(settings.DB_PATH)
         try:
             async with db.execute("SELECT id FROM sources ORDER BY sort_order") as cursor:
                 source_ids = [row[0] for row in await cursor.fetchall()]
+            for work_slug in WORKS:
+                try:
+                    work_verses[work_slug] = await enumerate_verses(db, work_slug)
+                except Exception:
+                    work_verses[work_slug] = []
         finally:
             await db.close()
     except Exception:
-        # Sitemap should still serve even if corpus DB is briefly unavailable.
         source_ids = []
 
     urls = [f"  <url><loc>{base}/</loc><priority>1.0</priority></url>"]
     for sid in source_ids:
         urls.append(f"  <url><loc>{base}/sources/{sid}</loc><priority>0.8</priority></url>")
+    # Per-work index hub pages (priority 0.9 — high-value SEO landing pages)
+    for work_slug in WORKS:
+        urls.append(f"  <url><loc>{base}/compare/{work_slug}</loc><priority>0.9</priority></url>")
+    # Leaf comparison URLs (priority 0.7 — many of them, each unique on RuNet)
+    for work_slug, verses in work_verses.items():
+        for ch, v in verses:
+            urls.append(f"  <url><loc>{base}/compare/{work_slug}/{ch}.{v}</loc><priority>0.7</priority></url>")
 
     content = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
