@@ -33,6 +33,8 @@ What's NOT in scope yet
 import re
 from urllib.parse import quote
 
+from app.parent_works import detect_parent_work
+
 # Matches a 4-digit year inside parentheses. Anchored loosely so years can
 # appear anywhere in the work-part (usually trailing, but occasionally inline).
 _YEAR_IN_PARENS = re.compile(r"\((\d{4})\)")
@@ -229,6 +231,26 @@ def build_source_jsonld(
     """
     parsed = parse_source_title(source.get("title", ""))
 
+    # Build `isPartOf`: always the WebSite; additionally a parent Book when
+    # the filename pattern matches a known volume / edition / commentary.
+    # Schema.org allows an array here, which Google parses fine.
+    is_part_of: list[dict] | dict
+    site_entry = {"@type": "WebSite", "name": site_name}
+    parent = detect_parent_work(source.get("filename", ""))
+    if parent:
+        is_part_of = [
+            site_entry,
+            {
+                "@type": "Book",
+                "name": parent["name"],
+                "alternateName": parent["alternateName"],
+            },
+        ]
+    else:
+        # Single dict (not a 1-element list) preserves the shape existing
+        # consumers / tests expect when no parent is known.
+        is_part_of = site_entry
+
     jsonld: dict = {
         "@context": "https://schema.org",
         "@type": "Book",
@@ -236,10 +258,7 @@ def build_source_jsonld(
         "name": parsed["name"],
         "url": canonical_url,
         "inLanguage": "ru",
-        "isPartOf": {
-            "@type": "WebSite",
-            "name": site_name,
-        },
+        "isPartOf": is_part_of,
     }
 
     if parsed["author"]:

@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.5] - 2026-05-17 (Feature: parent-work `isPartOf` on source pages)
+
+### Added
+- **`parent_works.detect_parent_work(filename)`** — filename-pattern registry mapping ~73 corpus sources to their parent works. Three relationship kinds collapsed into `isPartOf` for v1 simplicity: volumes (parvans / mandalas / kāṇḍas / books), editions/translations (BhG, Yoga-Sūtra, Śatakatraya, Buddhacarita), and commentaries (Rāmānuja Gītābhāṣya, Abhinavagupta Gītārthasaṃgraha, Yāmunācārya summary).
+- **`Book.isPartOf` becomes a 2-element array** when a parent is detected — `[WebSite, parent Book]`. Stays as a single dict when no parent matches (preserves backward-compat). Each parent Book entry carries both Cyrillic `name` and IAST `alternateName`, e.g. `{"name": "Махабхарата", "alternateName": "Mahābhārata"}`.
+
+### Coverage on live corpus (73 / 148 sources)
+- 19× Atharvaveda books (Books 1–19, Elizarenkova)
+- 18× Mahābhārata parvans (I–XVIII, multiple translators)
+- 14× Bhagavadgītā (10 translations + 1 anthology + 3 commentaries)
+- 10× Ṛgveda maṇḍalas (I–X, Elizarenkova)
+- 4× Rāmāyaṇa kāṇḍas (Grintser + Leonov)
+- 4× Yoga-Sūtra editions (3 standalone + 1 anthology)
+- 2× Buddhacarita (Leonov Sanskrit + Balmont 1913)
+- 2× Śatakatraya (Leonov + Serebryakov)
+
+Remaining 75 sources are standalone works (single Upaniṣads, Kāmasūtra, Manusmṛti, Kālidāsa kāvyas, etc.) with no obvious parent. Adding Upaniṣads as a corpus parent is feasible follow-up but semantically weaker (each is a distinct work, not a volume of a single book).
+
+### Files
+- `web/app/parent_works.py` — new registry module with `_PARENT_WORK_PATTERNS` and `detect_parent_work` lookup.
+- `web/app/services/source_metadata.py` — imports the registry, builds `isPartOf` as list-or-dict accordingly.
+- `web/tests/test_parent_works.py` — 13 tests covering each parent-work category, false-positive guard (anchored patterns, unrelated filenames), and the list-vs-dict shape preservation.
+
+### Notes
+- 241/241 hermetic tests pass.
+- Schema.org purist would prefer `exampleOfWork` for translations and `about` for commentaries; collapsed into `isPartOf` for v1 — Google parses both leniently and the simpler model keeps the registry maintainable.
+
 ## [1.15.4] - 2026-05-17 (Feature: IAST alternateName on author Person)
 
 ### Added
