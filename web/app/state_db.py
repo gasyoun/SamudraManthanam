@@ -80,6 +80,23 @@ async def init_state_db(db):
         FOREIGN KEY (user_id) REFERENCES users(id)
     );
     """)
-    
+
+    # AI response cache. `request_hash` includes the system prompt + user
+    # prompt + model so a prompt-template change automatically invalidates
+    # affected entries. `created_at` is Unix epoch seconds so we can do
+    # TTL math without parsing ISO strings on every read.
+    await db.execute("""
+    CREATE TABLE IF NOT EXISTS ai_cache (
+        request_hash TEXT PRIMARY KEY,
+        task         TEXT NOT NULL,
+        response     TEXT NOT NULL, -- JSON payload returned to the caller
+        model        TEXT,
+        created_at   INTEGER NOT NULL,
+        latency_ms   INTEGER
+    );
+    """)
+    await db.execute("CREATE INDEX IF NOT EXISTS idx_ai_cache_created_at ON ai_cache(created_at)")
+    await db.execute("CREATE INDEX IF NOT EXISTS idx_ai_cache_task ON ai_cache(task)")
+
     await db.execute("PRAGMA journal_mode=WAL")
     await db.commit()

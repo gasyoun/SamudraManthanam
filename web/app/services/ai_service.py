@@ -2,6 +2,8 @@ import asyncio
 import httpx
 import json
 import re
+import time
+from app.services.ai_cache import cache_get, cache_put, hash_request
 from app.settings import settings
 from typing import List, Dict, Any
 
@@ -18,17 +20,38 @@ def _plain(text: str) -> str:
     return re.sub(r"\s+", " ", _STRIP_TAGS.sub("", text)).strip()
 
 
-async def _openai_chat(system_prompt: str, user_prompt: str, *, temperature: float = 0.2, timeout: float = 60.0) -> Dict[str, Any]:
-    """Shared OpenAI-compatible /chat/completions call. Returns either
-    `{'content', 'model', 'usage'}` on success or `{'error'}` on failure.
+async def _openai_chat(
+    system_prompt: str,
+    user_prompt: str,
+    *,
+    temperature: float = 0.2,
+    timeout: float = 60.0,
+    task: str = "generic",
+) -> Dict[str, Any]:
+    """Shared OpenAI-compatible /chat/completions call with response cache.
 
-    All AI service functions converge here so the error-handling, headers,
-    and URL-building stay in one place. Provider-agnostic: works with any
-    base_url that exposes the OpenAI chat/completions schema (OpenAI,
-    Ollama-with-openai-shim, vLLM, LM Studio, etc.).
+    Returns either `{'content', 'model', 'usage'}` on success or
+    `{'error'}` on failure. Successful responses are written to the
+    ai_cache table keyed by SHA-256(system + user + model) — repeat
+    callers get an instant cached return with `'cached': True` set so
+    operators can distinguish hits in logs.
+
+    All AI service functions converge here so the error-handling,
+    headers, URL-building, AND caching stay in one place.
+    Provider-agnostic: works with any base_url that exposes the OpenAI
+    chat/completions schema (OpenAI, Ollama-with-openai-shim, vLLM,
+    LM Studio, etc.).
     """
     if not settings.AI_BASE_URL:
         return {"error": "AI service (AI_BASE_URL) not configured"}
+
+    request_hash = hash_request(system_prompt, user_prompt, settings.AI_MODEL)
+    cached = await cache_get(request_hash)
+    if cached is not None:
+        # Mark as cache hit so callers / operators can distinguish without
+        # tracking it separately at every callsite.
+        cached["cached"] = True
+        return cached
 
     payload = {
         "model": settings.AI_MODEL,
@@ -43,16 +66,28 @@ async def _openai_chat(system_prompt: str, user_prompt: str, *, temperature: flo
         headers["Authorization"] = f"Bearer {settings.AI_API_KEY}"
 
     url = f"{settings.AI_BASE_URL.rstrip('/')}/chat/completions"
+    start_ts = time.monotonic()
     async with httpx.AsyncClient() as client:
         try:
             response = await client.post(url, json=payload, headers=headers, timeout=timeout)
             response.raise_for_status()
             data = response.json()
-            return {
+            result = {
                 "content": data["choices"][0]["message"]["content"],
                 "model": data.get("model"),
                 "usage": data.get("usage"),
             }
+            latency_ms = int((time.monotonic() - start_ts) * 1000)
+            # Cache write is fail-soft — if state.db is unavailable we
+            # still return the live response to the caller.
+            await cache_put(
+                request_hash=request_hash,
+                task=task,
+                response=result,
+                model=result.get("model"),
+                latency_ms=latency_ms,
+            )
+            return result
         except asyncio.CancelledError:
             raise
         except Exception as e:
@@ -81,13 +116,16 @@ async def explain_with_ai(query: str, context_lines: List[str]) -> Dict[str, Any
         f"Контекст (строки из корпуса):\n{context_str}\n\nПроанализируй и объясни."
     )
 
-    result = await _openai_chat(system_prompt, user_prompt, temperature=0.2, timeout=45.0)
+    result = await _openai_chat(
+        system_prompt, user_prompt, temperature=0.2, timeout=45.0, task="explain",
+    )
     if "error" in result:
         return result
     return {
         "explanation": result["content"],
         "model": result.get("model"),
         "usage": result.get("usage"),
+        "cached": bool(result.get("cached")),
     }
 
 
@@ -174,11 +212,15 @@ async def compare_translations(
         translations=translations,
     )
 
-    result = await _openai_chat(system_prompt, user_prompt, temperature=0.2, timeout=60.0)
+    result = await _openai_chat(
+        system_prompt, user_prompt, temperature=0.2, timeout=60.0,
+        task="compare_translations",
+    )
     if "error" in result:
         return result
     return {
         "synthesis": result["content"],
         "model": result.get("model"),
         "usage": result.get("usage"),
+        "cached": bool(result.get("cached")),
     }

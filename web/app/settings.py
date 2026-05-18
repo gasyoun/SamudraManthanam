@@ -22,6 +22,12 @@ class Settings(BaseSettings):
     AI_API_KEY: str = ""
     AI_MODEL: str = "gpt-3.5-turbo" # or local model name
 
+    # AI response cache — avoids re-billing the provider for identical
+    # (system_prompt + user_prompt + model) requests. Backed by state.db's
+    # ai_cache table; falls back to a no-op when STATE_DB_PATH is unset.
+    AI_CACHE_ENABLED: bool = True
+    AI_CACHE_TTL_DAYS: int = 30
+
     model_config = ConfigDict(
         env_file=".env",
         extra="allow"

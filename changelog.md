@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.20.1] - 2026-05-18 (Feature: AI response cache)
+
+### Added
+- **`ai_cache` table on `state.db`** — `(request_hash PRIMARY KEY, task, response, model, created_at, latency_ms)` plus indexes on `created_at` and `task`. Idempotent migration via `init_state_db`.
+- **`web/app/services/ai_cache.py`** with three public helpers:
+  - `hash_request(system, user, model)` — SHA-256 of canonical JSON. Includes both prompts AND the model so a prompt-template tweak in `ai_service.py` automatically invalidates affected entries, and different models cache separately.
+  - `cache_get(request_hash)` — returns the cached `response` dict or None on miss/stale/error.
+  - `cache_put(request_hash=, task=, response=, model=, latency_ms=)` — INSERT OR REPLACE, refreshes TTL on rewrite.
+  - `cache_stats()` — `{total, task_<name>: count, ...}` for admin diagnostics.
+- **`AI_CACHE_ENABLED` (default True) and `AI_CACHE_TTL_DAYS` (default 30)** settings. TTL is checked on read; no background sweeper needed at current scale.
+- **Cache hit/miss visible to callers**: successful responses include `cached: True` when served from the cache, `False` (or absent) otherwise. Operators can grep logs for `cached` to track hit rate without extra instrumentation.
+
+### Changed
+- `_openai_chat` in `ai_service.py` now consults the cache before calling the provider, writes successful responses back, and propagates the `cached` flag. Cache failures are swallowed — a broken `state.db` never blocks AI requests, just degrades to live-call-every-time.
+- `explain_with_ai` and `compare_translations` thread a `task` label into the cache (`"explain"`, `"compare_translations"`) so `cache_stats` can categorise hits.
+
+### Fail-soft contract
+- `STATE_DB_PATH` unset → cache is a no-op (every call goes live).
+- `AI_CACHE_ENABLED=False` → same.
+- DB row corrupted or schema missing → exception swallowed, miss returned, live call proceeds.
+- Provider 5xx → error result is NEVER cached (would poison the cache with transient failures).
+
+### Tests
+- 17 new tests in `test_ai_cache.py`:
+  - Hash determinism + sensitivity to each of system/user/model.
+  - Unicode + empty-input handling.
+  - Round-trip put/get, REPLACE semantics, TTL expiry.
+  - Disabled-by-flag fail-soft path.
+  - `STATE_DB_PATH=""` fail-soft path (cache silently skipped).
+  - `cache_stats` task tallies.
+  - End-to-end through `_openai_chat`: provider hit on first call, cache hit on second (verified by `mock_post.call_count == 1`), prompts cache separately, error responses are NOT cached.
+- 368/368 hermetic tests pass.
+
+### Cost impact
+- For the AI compare feature (v1.20.0), each unique BhG verse comparison goes to the provider ONCE per 30-day window. Repeated visitors hit cache. Operators get the `cached` flag in responses + per-task counts via `cache_stats` for monitoring.
+
 ## [1.20.0] - 2026-05-18 (Feature: AI translation-comparison synthesis)
 
 ### Added
