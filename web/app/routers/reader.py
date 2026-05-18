@@ -207,6 +207,7 @@ async def view_source(
                 "og_title": f"{source_dict.get('title', 'Источник')} — Пахтанье океана",
                 "og_description": f"Параллельный санскрито-русский текст: {source_dict.get('title', '')}",
                 "og_url": canonical_url,
+                "og_type": "article",
                 "canonical_url": canonical_url,
                 "hreflang_alternates": hreflang_alternates,
                 "source_jsonld": source_jsonld,

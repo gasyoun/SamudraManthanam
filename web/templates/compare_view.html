@@ -1,300 +1,234 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ og_title }} | {{ site_name }}</title>
-    <meta name="description" content="{{ og_description }}">
-    <link rel="canonical" href="{{ canonical_url }}">
+{% extends "_base.html" %}
 
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="{{ site_name }}">
-    <meta property="og:title" content="{{ og_title }}">
-    <meta property="og:description" content="{{ og_description }}">
-    <meta property="og:url" content="{{ og_url }}">
-    <meta property="og:locale" content="ru_RU">
-    <meta property="og:locale:alternate" content="sa_IN">
+{% block title %}{{ og_title }} | {{ site_name }}{% endblock %}
 
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{ og_title }}">
-    <meta name="twitter:description" content="{{ og_description }}">
-
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #e67e22;
-            --bg: #fdfcfb;
-            --text: #2c3e50;
-            --line-border: #eee;
-            --iast-bg: #fef9f3;
-            --commentary-bg: #f3f7fb;
-            --context-bg: #faf6fb;
-            --range-tag-bg: #fff3cd;
-        }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            line-height: 1.6;
-        }
-        header.page {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--line-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-        }
-        .header-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: var(--primary);
-        }
-        h1 small {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: #888;
-            margin-top: 0.2rem;
-            letter-spacing: 0;
-        }
-        .breadcrumb {
-            color: #888;
-            font-size: 0.85rem;
-        }
-        .breadcrumb a { color: var(--accent); text-decoration: none; }
-        .nav-pager { display: flex; gap: 0.5rem; }
-        .nav-pager a {
-            text-decoration: none;
-            color: var(--accent);
-            padding: 0.3rem 0.7rem;
-            border: 1px solid var(--accent);
-            border-radius: 6px;
-            font-size: 0.85rem;
-        }
-        .nav-pager a:hover { background: #fff5e9; }
-        .nav-pager .disabled { color: #ccc; border-color: #eee; pointer-events: none; }
-
-        main {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .iast-canonical {
-            background: var(--iast-bg);
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 2rem;
-            border-left: 4px solid var(--accent);
-            border-radius: 0 6px 6px 0;
-            font-family: 'Charis SIL', 'Sanskrit2003', serif;
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-        .iast-canonical .label {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 0.4rem;
-        }
-
-        .summary {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .translation {
-            background: white;
-            border: 1px solid var(--line-border);
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            padding: 1.2rem 1.5rem;
-        }
-        .translation.role-commentary { background: var(--commentary-bg); border-left: 3px solid #4a76a8; }
-        .translation.role-context    { background: var(--context-bg);    border-left: 3px solid #8e44ad; }
-        .translation.role-anthology  { border-left: 3px solid #16a085; }
-
-        .translation header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 0.6rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .translation h2 {
-            margin: 0;
-            font-size: 1rem;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        .role-tag {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #888;
-        }
-        .range-tag {
-            display: inline-block;
-            font-size: 0.75rem;
-            background: var(--range-tag-bg);
-            color: #7a5a00;
-            padding: 0.1rem 0.5rem;
-            border-radius: 3px;
-            margin-left: 0.5rem;
-        }
-        .translation .text { font-size: 1rem; }
-        .translation footer {
-            margin-top: 0.7rem;
-            font-size: 0.8rem;
-            color: #999;
-        }
-        .translation footer a { color: var(--accent); text-decoration: none; }
-
-        .section-divider {
-            margin: 2rem 0 1rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #888;
-            border-bottom: 1px solid var(--line-border);
-            padding-bottom: 0.3rem;
-        }
-
-        @media (max-width: 768px) {
-            header.page { padding: 1rem; }
-            main { padding: 0 1rem; }
-            .translation { padding: 1rem; }
-        }
-    </style>
-</head>
-<body>
-    <header class="page">
-        <div class="header-content">
-            <div>
-                <div class="breadcrumb">
-                    <a href="/">Поиск</a> ›
-                    <a href="/compare/{{ work_slug }}/1.1">{{ work_title }}</a> ›
-                    Глава {{ chapter }}
-                </div>
-                <h1>
-                    {{ work_title }} {{ chapter }}.{{ verse }}
-                    <small>{{ work_title_iast }} {{ chapter }}.{{ verse }} — {{ translation_count }} переводов{% if commentary_count %}, {{ commentary_count }} комментар{{ 'ий' if commentary_count == 1 else 'ия' if commentary_count < 5 else 'иев' }}{% endif %}</small>
-                </h1>
-            </div>
-            <nav class="nav-pager">
-                <a href="{{ prev_url }}" {% if not prev_url %}class="disabled"{% endif %}>← {{ chapter }}.{{ verse - 1 }}</a>
-                <a href="{{ next_url }}">{{ chapter }}.{{ verse + 1 }} →</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        {% if canonical_iast %}
-        <div class="iast-canonical">
-            <div class="label">Санскрит (IAST)</div>
-            {# safe: canonical_iast is ingest-produced corpus HTML, never user input #}
-            {{ canonical_iast | safe }}
-        </div>
-        {% endif %}
-
-        <p class="summary">{{ description }}</p>
-
-        {% set ns = namespace(last_role='') %}
-        {% for hit in hits %}
-            {% if hit.role != ns.last_role %}
-                <div class="section-divider">
-                    {% if hit.role == 'translation' %}Переводы
-                    {% elif hit.role == 'anthology' %}Сборники
-                    {% elif hit.role == 'commentary' %}Комментарии
-                    {% elif hit.role == 'context' %}Контекст в составе текста
-                    {% else %}{{ hit.role }}{% endif %}
-                </div>
-                {% set ns.last_role = hit.role %}
-            {% endif %}
-            <article class="translation role-{{ hit.role }}">
-                <header>
-                    <h2>
-                        {{ hit.label }}
-                        {% if hit.is_range_match %}
-                            <span class="range-tag" title="Стих входит в объединённый блок">в блоке {{ hit.link_id }}</span>
-                        {% endif %}
-                    </h2>
-                    <span class="role-tag">{{ hit.source_title }}</span>
-                </header>
-                <div class="text">
-                    {# safe: translation_html is ingest-produced corpus HTML #}
-                    {{ hit.translation_html | safe }}
-                </div>
-                <footer>
-                    <a href="/sources/{{ hit.source_slug or hit.source_id }}?highlight={{ hit.link_id }}" target="_blank" rel="noopener">
-                        Открыть в источнике →
-                    </a>
-                </footer>
-            </article>
-        {% endfor %}
-    </main>
-
-    {# JSON-LD structured data: a WebPage whose mainEntity is the Sanskrit Quotation,
-       with workTranslation entries for each Russian rendering. Helps search engines
-       understand this as a parallel-translation reference page. #}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": "{{ canonical_url }}",
-      "name": {{ og_title | tojson }},
-      "description": {{ og_description | tojson }},
-      "inLanguage": "ru",
-      "url": "{{ canonical_url }}",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": {{ site_name | tojson }}
-      },
-      "mainEntity": {
-        "@type": "Quotation",
-        "name": {{ (work_title_iast ~ ' ' ~ chapter ~ '.' ~ verse) | tojson }},
-        "inLanguage": "sa",
-        {% if hits %}
-        "text": {{ hits[0].line_text | tojson }},
-        {% endif %}
-        "isPartOf": {
-          "@type": "Book",
-          "name": {{ work_title_iast | tojson }},
-          "alternateName": {{ work_title | tojson }}
-        },
-        "workTranslation": [
-          {% for hit in hits if hit.role in ('translation', 'anthology') %}
-          {
-            "@type": "Quotation",
-            "inLanguage": "ru",
-            "text": {{ hit.line_text | tojson }},
-            "translator": {
-              "@type": "CreativeWork",
-              "name": {{ hit.source_title | tojson }}
-            }
-          }{% if not loop.last %},{% endif %}
-          {% endfor %}
-        ]
-      }
+{% block extra_head %}
+<style>
+    .iast-canonical {
+        background: var(--term-bg);
+        padding: 1.2rem 1.5rem;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--accent);
+        border-radius: 0 6px 6px 0;
+        font-family: var(--font-serif);
+        font-size: 1.1rem;
+        line-height: 1.5;
     }
-    </script>
-</body>
-</html>
+    .iast-canonical .label {
+        font-family: var(--font-ui);
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.4rem;
+    }
+
+    .summary { color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    .translation {
+        background: white;
+        border: 1px solid var(--line-border);
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        padding: 1.2rem 1.5rem;
+    }
+    .translation.role-commentary { background: var(--commentary-bg); border-left: 3px solid #4a76a8; }
+    .translation.role-context    { background: var(--context-bg);    border-left: 3px solid #8e44ad; }
+    .translation.role-anthology  { border-left: 3px solid #16a085; }
+
+    .translation header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.6rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .translation h2 {
+        margin: 0;
+        font-size: 1rem;
+        color: var(--primary);
+        font-weight: 600;
+    }
+    .role-tag {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+    }
+    .range-tag {
+        display: inline-block;
+        font-size: 0.75rem;
+        background: var(--range-tag-bg);
+        color: #7a5a00;
+        padding: 0.1rem 0.5rem;
+        border-radius: 3px;
+        margin-left: 0.5rem;
+    }
+    .translation .text { font-size: 1rem; }
+    .translation footer { margin-top: 0.7rem; font-size: 0.8rem; color: #999; }
+
+    .pager-toolbar {
+        max-width: 1100px;
+        margin: 0 auto 1.5rem;
+        padding: 0 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    .pager h1 {
+        margin: 0;
+        font-size: 1.4rem;
+        color: var(--primary);
+    }
+    .pager h1 small {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 400;
+        color: var(--text-muted);
+        margin-top: 0.2rem;
+    }
+    .nav-pager { display: flex; gap: 0.5rem; }
+    .nav-pager a {
+        text-decoration: none;
+        color: var(--accent);
+        padding: 0.3rem 0.7rem;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        font-size: 0.85rem;
+    }
+    .nav-pager a:hover { background: #fff5e9; text-decoration: none; }
+    .nav-pager .disabled { color: #ccc; border-color: #eee; pointer-events: none; }
+
+    main { max-width: 1100px; margin: 1rem auto 2rem; padding: 0 1.5rem; }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<nav class="site-navbar site-navbar-light">
+    <div class="site-navbar-inner">
+        <a class="site-brand" href="/">ПАХТАНЬЕ ОКЕАНА</a>
+        <div class="site-navlinks">
+            {% if ss_link %}
+            <a class="site-navlink-cta" href="{{ ss_link }}" target="_blank" rel="noopener"
+               title="Курс грамматики санскрита для русскоязычных">
+                Курс грамматики →
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="pager-toolbar">
+    <div class="pager">
+        <div class="site-breadcrumb">
+            <a href="/">Поиск</a> ›
+            <a href="/compare/{{ work_slug }}">{{ work_title }}</a> ›
+            Глава {{ chapter }}
+        </div>
+        <h1>
+            {{ work_title }} {{ chapter }}.{{ verse }}
+            <small>{{ work_title_iast }} {{ chapter }}.{{ verse }} — {{ translation_count }} переводов{% if commentary_count %}, {{ commentary_count }} комментар{{ 'ий' if commentary_count == 1 else 'ия' if commentary_count < 5 else 'иев' }}{% endif %}</small>
+        </h1>
+    </div>
+    <nav class="nav-pager">
+        <a href="{{ prev_url }}" {% if not prev_url %}class="disabled"{% endif %}>← {{ chapter }}.{{ verse - 1 }}</a>
+        <a href="{{ next_url }}">{{ chapter }}.{{ verse + 1 }} →</a>
+    </nav>
+</div>
+
+<main>
+    {% if canonical_iast %}
+    <div class="iast-canonical">
+        <div class="label">Санскрит (IAST)</div>
+        {# safe: canonical_iast is ingest-produced corpus HTML #}
+        {{ canonical_iast | safe }}
+    </div>
+    {% endif %}
+
+    <p class="summary">{{ description }}</p>
+
+    {% set ns = namespace(last_role='') %}
+    {% for hit in hits %}
+        {% if hit.role != ns.last_role %}
+            <div class="site-section-divider">
+                {% if hit.role == 'translation' %}Переводы
+                {% elif hit.role == 'anthology' %}Сборники
+                {% elif hit.role == 'commentary' %}Комментарии
+                {% elif hit.role == 'context' %}Контекст в составе текста
+                {% else %}{{ hit.role }}{% endif %}
+            </div>
+            {% set ns.last_role = hit.role %}
+        {% endif %}
+        <article class="translation role-{{ hit.role }}">
+            <header>
+                <h2>
+                    {{ hit.label }}
+                    {% if hit.is_range_match %}
+                        <span class="range-tag" title="Стих входит в объединённый блок">в блоке {{ hit.link_id }}</span>
+                    {% endif %}
+                </h2>
+                <span class="role-tag">{{ hit.source_title }}</span>
+            </header>
+            <div class="text">
+                {{ hit.translation_html | safe }}
+            </div>
+            <footer>
+                <a href="/sources/{{ hit.source_slug or hit.source_id }}?highlight={{ hit.link_id }}" target="_blank" rel="noopener">
+                    Открыть в источнике →
+                </a>
+            </footer>
+        </article>
+    {% endfor %}
+</main>
+{% endblock %}
+
+{% block extra_body %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "{{ canonical_url }}",
+  "name": {{ og_title | tojson }},
+  "description": {{ og_description | tojson }},
+  "inLanguage": "ru",
+  "url": "{{ canonical_url }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": {{ site_name | tojson }}
+  },
+  "mainEntity": {
+    "@type": "Quotation",
+    "name": {{ (work_title_iast ~ ' ' ~ chapter ~ '.' ~ verse) | tojson }},
+    "inLanguage": "sa",
+    {% if hits %}
+    "text": {{ hits[0].line_text | tojson }},
+    {% endif %}
+    "isPartOf": {
+      "@type": "Book",
+      "name": {{ work_title_iast | tojson }},
+      "alternateName": {{ work_title | tojson }}
+    },
+    "workTranslation": [
+      {% for hit in hits if hit.role in ('translation', 'anthology') %}
+      {
+        "@type": "Quotation",
+        "inLanguage": "ru",
+        "text": {{ hit.line_text | tojson }},
+        "translator": {
+          "@type": "CreativeWork",
+          "name": {{ hit.source_title | tojson }}
+        }
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+{% endblock %}

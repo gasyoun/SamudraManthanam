@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.17.0] - 2026-05-18 (Feature: design system refactor — Jinja base + site.css)
+
+### Added
+- **`web/static/site.css`** — shared design system: CSS variables (`--primary`, `--accent`, `--bg`, `--text-muted`, etc.), navbar/`site-container`/`site-hero`/`site-breadcrumb`/`site-empty`/`site-stats` components, `.btn`/`.btn-primary`/`.btn-secondary`/`.btn-ghost` button system, responsive breakpoints. Loaded AFTER `style.css` so it overrides the legacy corpus-content stylesheet's body styling without affecting the desktop-exported standalone HTML (which only loads `style.css`).
+- **`web/templates/_base.html`** — Jinja base with parameterised blocks: `title`, `meta` (default OG/Twitter card with canonical and hreflang plumbing), `extra_head` (per-page CSS), `navbar` (overridable for reader pages with their own sticky header), `navlinks` (per-page nav button set), `content`, `extra_body` (JSON-LD scripts).
+
+### Changed
+- **All 5 page templates now `{% extends "_base.html" %}`** and own only their unique CSS:
+  - `index.html`: 439 → 281 lines (search card / modal / AI panel kept locally; navbar + meta come from base).
+  - `popular_term_page.html`: 247 → 135 lines.
+  - `compare_index.html`: 207 → 129 lines.
+  - `search_page.html`: 226 → 136 lines.
+  - `source_view.html`: 188 → 153 lines (overrides `navbar` block to use its sticky reader-header instead).
+  - `compare_view.html`: rewrites the navbar via override since it uses the light-variant chrome.
+- **`_base.html` emits hreflang alternates** from a context-supplied `hreflang_alternates` list, replacing the inline `{% for %}` loop that previously lived in `source_view.html`. The reader route's context shape already matches.
+- **`/sources/{slug}` route adds `og_type="article"`** to the template context so the base template's OG block emits `article` instead of the default `website`.
+- **CSS tokens unified** across pages: every template references the same `--accent: #e67e22` / `--primary: #2c3e50` / etc. Previously, `index.html` used `--accent-color: #3498db` (different blue) and other pages used `--accent: #e67e22` (orange). The orange is canonical now; the index search card still uses #3498db locally for the "Найти" button to preserve that page's existing identity.
+
+### Backward compatibility
+- `style.css` is **untouched** — the desktop Lazarus app's exported standalone HTML continues to render identically.
+- `result_fragment.html`, `standalone_page.html`, `full_page.html` are unchanged (they're either embedded fragments or downloadable exports, not full pages).
+
+### Tests
+- All 299 hermetic tests pass — the existing OG / canonical / breadcrumb / JSON-LD assertions effectively serve as snapshot tests for the refactor.
+- Live-corpus smoke across all 6 page types confirms 200 responses, both stylesheets loaded, navbar present on chrome-using pages, suppressed on reader pages (intentional).
+
+### Notes
+- New pages should `{% extends "_base.html" %}` and provide only the blocks they need to override. Adding a page now costs ~40 lines instead of ~150.
+- `site.css` is loaded by every template — no per-page CSS hash invalidation; one shared cache key. Browser caching wins.
+
 ## [1.16.2] - 2026-05-18 (Feature: slug-based source URLs)
 
 ### Added

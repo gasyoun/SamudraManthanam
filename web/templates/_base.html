@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ og_title or site_name }}{% endblock %}</title>
+
+    {# Common SEO meta. Pages override individual values via og_title etc.,
+       or override the entire block for non-standard shapes. #}
+    {% block meta %}
+    <meta name="description" content="{{ og_description or site_description }}">
+    {% if noindex %}<meta name="robots" content="noindex,follow">{% endif %}
+    {% if canonical_url %}<link rel="canonical" href="{{ canonical_url }}">{% endif %}
+    {% for alt in hreflang_alternates or [] %}
+    <link rel="alternate" hreflang="{{ alt.hreflang }}" href="{{ alt.url }}">
+    {% endfor %}
+
+    {# Open Graph / Telegram / VK link previews. #}
+    <meta property="og:type" content="{{ og_type or 'website' }}">
+    <meta property="og:site_name" content="{{ site_name or 'Пахтанье океана' }}">
+    <meta property="og:title" content="{{ og_title or site_name }}">
+    <meta property="og:description" content="{{ og_description or site_description }}">
+    <meta property="og:url" content="{{ og_url or canonical_url or '/' }}">
+    <meta property="og:locale" content="ru_RU">
+    {% if og_locale_alternate %}
+    <meta property="og:locale:alternate" content="{{ og_locale_alternate }}">
+    {% endif %}
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ og_title or site_name }}">
+    <meta name="twitter:description" content="{{ og_description or site_description }}">
+    {% endblock %}
+
+    {# Order matters: style.css is the legacy corpus stylesheet (shared with
+       desktop exports); site.css owns chrome and tokens. Last-load wins on
+       ties so site.css can override body font etc. without harming the
+       embedded corpus markup which uses more specific selectors. #}
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/site.css">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+    {% block navbar %}
+    <nav class="site-navbar {% if navbar_light %}site-navbar-light{% endif %}">
+        <div class="site-navbar-inner">
+            <a class="site-brand" href="/">{% block brand %}ПАХТАНЬЕ ОКЕАНА{% endblock %}</a>
+            <div class="site-navlinks">
+                {% block navlinks %}
+                {% if ss_link %}
+                <a class="site-navlink-cta" href="{{ ss_link }}" target="_blank" rel="noopener"
+                   title="Курс грамматики санскрита для русскоязычных">
+                    Курс грамматики →
+                </a>
+                {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </nav>
+    {% endblock %}
+
+    {% block content %}{% endblock %}
+
+    {% block extra_body %}{% endblock %}
+</body>
+</html>

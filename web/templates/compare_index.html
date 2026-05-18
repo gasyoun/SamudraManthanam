@@ -1,216 +1,129 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ og_title }} | {{ site_name }}</title>
-    <meta name="description" content="{{ og_description }}">
-    <link rel="canonical" href="{{ canonical_url }}">
+{% extends "_base.html" %}
 
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ site_name }}">
-    <meta property="og:title" content="{{ og_title }}">
-    <meta property="og:description" content="{{ og_description }}">
-    <meta property="og:url" content="{{ og_url }}">
-    <meta property="og:locale" content="ru_RU">
-    <meta property="og:locale:alternate" content="sa_IN">
+{% block title %}{{ og_title }} | {{ site_name }}{% endblock %}
 
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{ og_title }}">
-    <meta name="twitter:description" content="{{ og_description }}">
+{% block extra_head %}
+<style>
+    main { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
 
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #e67e22;
-            --bg: #fdfcfb;
-            --text: #2c3e50;
-            --line-border: #eee;
-            --chapter-bg: #fef9f3;
-        }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            line-height: 1.6;
-        }
-        header.page {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--line-border);
-        }
-        .header-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        h1 small {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: #888;
-            margin-top: 0.2rem;
-        }
-        .breadcrumb {
-            color: #888;
-            font-size: 0.85rem;
-        }
-        .breadcrumb a { color: var(--accent); text-decoration: none; }
-        main {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-        .description {
-            color: #555;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        .stats {
-            color: #888;
-            font-size: 0.85rem;
-            margin-bottom: 2rem;
-        }
-        .chapter {
-            background: white;
-            border: 1px solid var(--line-border);
-            border-left: 4px solid var(--accent);
-            border-radius: 6px;
-            margin-bottom: 1.5rem;
-            padding: 1.2rem 1.5rem;
-        }
-        .chapter h2 {
-            margin: 0 0 0.8rem 0;
-            font-size: 1.1rem;
-            color: var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-        .chapter h2 .verse-count {
-            font-size: 0.8rem;
-            font-weight: 400;
-            color: #999;
-        }
-        .verse-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-        }
-        .verse-grid a {
-            text-decoration: none;
-            color: var(--primary);
-            background: var(--chapter-bg);
-            border: 1px solid #f0e0c8;
-            border-radius: 4px;
-            padding: 0.25rem 0.55rem;
-            font-size: 0.85rem;
-            font-variant-numeric: tabular-nums;
-        }
-        .verse-grid a:hover {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-        .chapter.empty {
-            opacity: 0.5;
-            border-left-color: #ccc;
-        }
-        .chapter.empty .verse-grid {
-            color: #999;
-            font-size: 0.9rem;
-        }
-        @media (max-width: 600px) {
-            main { padding: 0 1rem; }
-            .chapter { padding: 1rem; }
-        }
-    </style>
-</head>
-<body>
-    <header class="page">
-        <div class="header-content">
-            <div>
-                <div class="breadcrumb">
-                    <a href="/">Поиск</a> ›
-                    {{ work_title }}
-                </div>
-                <h1>
-                    {{ work_title }}: переводы и комментарии
-                    <small>{{ work_title_iast }} — {{ source_count }} источников, {{ total_verses }} стихов</small>
-                </h1>
-            </div>
-        </div>
-    </header>
+    .description { color: #555; font-size: 1rem; margin-bottom: 0.5rem; }
 
-    <main>
-        <p class="description">{{ description }}</p>
-        <p class="stats">Выберите стих, чтобы открыть сравнение всех переводов.</p>
-
-        {% for ch in range(1, chapter_count + 1) %}
-            {% set verses = chapters.get(ch, []) %}
-            <section class="chapter{% if not verses %} empty{% endif %}">
-                <h2>
-                    Глава {{ ch }}
-                    <span class="verse-count">{{ verses | length }} стих{{ 'ов' if verses|length != 1 else '' }}</span>
-                </h2>
-                <div class="verse-grid">
-                    {% if verses %}
-                        {% for v in verses %}
-                            <a href="/compare/{{ work_slug }}/{{ ch }}.{{ v }}">{{ ch }}.{{ v }}</a>
-                        {% endfor %}
-                    {% else %}
-                        <em>Стихи этой главы пока не доступны для сравнения</em>
-                    {% endif %}
-                </div>
-            </section>
-        {% endfor %}
-    </main>
-
-    {# JSON-LD: WebPage + ItemList of chapters so search engines understand the hub structure #}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": "{{ canonical_url }}",
-      "name": {{ og_title | tojson }},
-      "description": {{ og_description | tojson }},
-      "inLanguage": "ru",
-      "url": "{{ canonical_url }}",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": {{ site_name | tojson }}
-      },
-      "about": {
-        "@type": "Book",
-        "name": {{ work_title_iast | tojson }},
-        "alternateName": {{ work_title | tojson }}
-      },
-      "mainEntity": {
-        "@type": "ItemList",
-        "numberOfItems": {{ chapter_count }},
-        "itemListElement": [
-          {% for ch in range(1, chapter_count + 1) %}
-          {
-            "@type": "ListItem",
-            "position": {{ ch }},
-            "name": "Глава {{ ch }}",
-            "url": "{{ canonical_url }}/{{ ch }}.1"
-          }{% if not loop.last %},{% endif %}
-          {% endfor %}
-        ]
-      }
+    .chapter {
+        background: white;
+        border: 1px solid var(--line-border);
+        border-left: 4px solid var(--accent);
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+        padding: 1.2rem 1.5rem;
     }
-    </script>
-</body>
-</html>
+    .chapter h2 {
+        margin: 0 0 0.8rem 0;
+        font-size: 1.1rem;
+        color: var(--primary);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+    .chapter h2 .verse-count {
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: var(--text-muted);
+    }
+    .verse-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+    }
+    .verse-grid a {
+        text-decoration: none;
+        color: var(--primary);
+        background: var(--term-bg);
+        border: 1px solid #f0e0c8;
+        border-radius: 4px;
+        padding: 0.25rem 0.55rem;
+        font-size: 0.85rem;
+        font-variant-numeric: tabular-nums;
+    }
+    .verse-grid a:hover {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+    }
+    .chapter.empty { opacity: 0.5; border-left-color: #ccc; }
+    .chapter.empty .verse-grid { color: var(--text-muted); font-size: 0.9rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="site-breadcrumb" style="margin: 0 0 1rem 0;">
+        <a href="/">Поиск</a> › {{ work_title }}
+    </div>
+
+    <section class="site-hero">
+        <h1>
+            {{ work_title }}: переводы и комментарии
+            <small>{{ work_title_iast }} — {{ source_count }} источников, {{ total_verses }} стихов</small>
+        </h1>
+    </section>
+
+    <p class="description">{{ description }}</p>
+    <p class="site-stats">Выберите стих, чтобы открыть сравнение всех переводов.</p>
+
+    {% for ch in range(1, chapter_count + 1) %}
+        {% set verses = chapters.get(ch, []) %}
+        <section class="chapter{% if not verses %} empty{% endif %}">
+            <h2>
+                Глава {{ ch }}
+                <span class="verse-count">{{ verses | length }} стих{{ 'ов' if verses|length != 1 else '' }}</span>
+            </h2>
+            <div class="verse-grid">
+                {% if verses %}
+                    {% for v in verses %}
+                        <a href="/compare/{{ work_slug }}/{{ ch }}.{{ v }}">{{ ch }}.{{ v }}</a>
+                    {% endfor %}
+                {% else %}
+                    <em>Стихи этой главы пока не доступны для сравнения</em>
+                {% endif %}
+            </div>
+        </section>
+    {% endfor %}
+</main>
+{% endblock %}
+
+{% block extra_body %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "{{ canonical_url }}",
+  "name": {{ og_title | tojson }},
+  "description": {{ og_description | tojson }},
+  "inLanguage": "ru",
+  "url": "{{ canonical_url }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": {{ site_name | tojson }}
+  },
+  "about": {
+    "@type": "Book",
+    "name": {{ work_title_iast | tojson }},
+    "alternateName": {{ work_title | tojson }}
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ chapter_count }},
+    "itemListElement": [
+      {% for ch in range(1, chapter_count + 1) %}
+      {
+        "@type": "ListItem",
+        "position": {{ ch }},
+        "name": "Глава {{ ch }}",
+        "url": "{{ canonical_url }}/{{ ch }}.1"
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,274 @@
+/* site.css — shared design system for /, /search, /sources/{slug},
+ * /compare/*, /q/{slug}.
+ *
+ * Loaded AFTER style.css. style.css is the legacy corpus-content stylesheet,
+ * shared with the Lazarus-built standalone HTML exports; this file owns the
+ * site chrome (navbar, container, design tokens) without touching it.
+ *
+ * Body font-family wins on site pages because order trumps specificity for
+ * tied selectors. The .iast / .translation / .citation_block rules inside
+ * style.css continue to cascade for corpus content embedded in source pages.
+ */
+
+/* ── Design tokens ──────────────────────────────────────────────────────── */
+:root {
+    --primary: #2c3e50;
+    --accent: #e67e22;
+    --bg: #fdfcfb;
+    --bg-alt: #f8f9fa;
+    --text: #333;
+    --text-muted: #888;
+    --line-border: #eee;
+    --term-bg: #fef9f3;
+    --commentary-bg: #f3f7fb;
+    --context-bg: #faf6fb;
+    --range-tag-bg: #fff3cd;
+    --highlight: #fff176;
+    --highlight-active-border: red;
+
+    /* Spacing */
+    --gutter: 1rem;
+    --container-max: 1100px;
+
+    /* Typography */
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Outfit', 'Inter', sans-serif;
+    --font-serif: 'Charis SIL', 'Charis', 'Sanskrit2003', serif;
+}
+
+/* ── Base layout ─────────────────────────────────────────────────────────── */
+body {
+    font-family: var(--font-ui);
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    /* Override style.css width: 1100px for site pages — chrome wants the
+     * full viewport, content uses .site-container instead. */
+    width: 100%;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+.site-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* ── Navbar ──────────────────────────────────────────────────────────────── */
+.site-navbar {
+    background: linear-gradient(135deg, #2c3e50, #4b79a1);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.site-navbar-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.site-brand {
+    font-family: var(--font-display);
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+.site-brand:hover { text-decoration: none; color: white; }
+
+.site-navlinks {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.site-navlink-cta {
+    color: #ffd479;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #ffd479;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.site-navlink-cta:hover {
+    background: rgba(255, 212, 121, 0.15);
+    text-decoration: none;
+    color: #ffd479;
+}
+
+.site-navlink-back {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 0.85rem;
+}
+.site-navlink-back:hover { color: white; text-decoration: underline; }
+
+/* On non-gradient navbar variants (white header on /sources, /compare),
+ * .site-navbar.site-navbar-light overrides the gradient. Reader-style pages
+ * use this so the chapter content stays the visual focus. */
+.site-navbar.site-navbar-light {
+    background: white;
+    color: var(--primary);
+    border-bottom: 1px solid var(--line-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+.site-navbar.site-navbar-light .site-brand { color: var(--primary); }
+.site-navbar.site-navbar-light .site-navlink-cta {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+.site-navbar.site-navbar-light .site-navlink-cta:hover {
+    background: #fff5e9;
+    color: var(--accent);
+}
+.site-navbar.site-navbar-light .site-navlink-back {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ── Breadcrumb ──────────────────────────────────────────────────────────── */
+.site-breadcrumb {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+.site-breadcrumb a {
+    color: var(--accent);
+    text-decoration: none;
+}
+.site-breadcrumb a:hover { text-decoration: underline; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #d35400;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+.btn-secondary:hover { background: #fff5e9; text-decoration: none; }
+
+.btn-ghost {
+    background: none;
+    border: 1px solid #ddd;
+    color: #aaa;
+    font-size: 0.7rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    line-height: 1.4;
+}
+
+/* ── Hero block (term hero, source hero, etc.) ───────────────────────────── */
+.site-hero {
+    background: var(--term-bg);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem 1.8rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 8px 8px 0;
+}
+.site-hero h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+    color: var(--primary);
+}
+.site-hero h1 small {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+    letter-spacing: 0;
+}
+.site-hero .iast-form {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+.site-hero .definition {
+    font-size: 1.05rem;
+    color: #444;
+    margin: 0.8rem 0 0 0;
+}
+
+/* ── Section dividers ────────────────────────────────────────────────────── */
+.site-section-divider {
+    margin: 2rem 0 0.8rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--line-border);
+    padding-bottom: 0.3rem;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.site-empty {
+    background: white;
+    padding: 2rem 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--line-border);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* ── Stats / metadata strip ──────────────────────────────────────────────── */
+.site-stats {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+/* ── Highlights (search result emphasis) ─────────────────────────────────── */
+.highlight {
+    background-color: var(--highlight);
+    padding: 0 2px;
+    border-radius: 3px;
+}
+.highlight.active {
+    border: 2px solid var(--highlight-active-border);
+    outline: 2px solid var(--highlight-active-border);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .site-container, .site-navbar-inner { padding: 0 1rem; }
+    .site-navbar { padding: 1rem; }
+    .site-hero { padding: 1.2rem 1.3rem; }
+    .site-hero h1 { font-size: 1.5rem; }
+}

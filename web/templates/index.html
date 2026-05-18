@@ -1,439 +1,281 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ og_title or "Пахтанье океана — Samudra Manthanam" }}</title>
-    <meta name="description" content="{{ og_description or site_description }}">
+{% extends "_base.html" %}
 
-    <!-- Open Graph / Telegram / VK link previews -->
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ site_name or 'Пахтанье океана' }}">
-    <meta property="og:title" content="{{ og_title or 'Пахтанье океана — Samudra Manthanam' }}">
-    <meta property="og:description" content="{{ og_description or site_description }}">
-    <meta property="og:url" content="{{ og_url or '/' }}">
-    <meta property="og:locale" content="ru_RU">
+{% block title %}{{ og_title or "Пахтанье океана — Samudra Manthanam" }}{% endblock %}
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="{{ og_title or 'Пахтанье океана' }}">
-    <meta name="twitter:description" content="{{ og_description or site_description }}">
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    /* Index-only: glassmorphic search card, sources grid, lead modal,
+     * AI panel, engaged CTA. Site chrome (navbar, container, base body)
+     * comes from site.css; this block scopes to the live-app components. */
 
-    <link rel="stylesheet" href="/static/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #2c3e50;
-            --accent-color: #3498db;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
-            --glass-bg: rgba(255, 255, 255, 0.8);
-        }
+    .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+    /* Search card and form */
+    .search-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+        border: 1px solid rgba(255,255,255,0.3);
+        margin-bottom: 2rem;
+    }
+    .search-form { display: flex; flex-direction: column; gap: 1rem; }
+    .search-input-group { display: flex; gap: 1rem; }
+    input[type="text"] {
+        flex: 1;
+        padding: 0.8rem 1.2rem;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+    input[type="text"]:focus { border-color: #3498db; outline: none; }
+    .search-card button.btn-primary {
+        background-color: #3498db;
+        padding: 0.8rem 2rem;
+        border-radius: 10px;
+    }
+    .search-card button.btn-primary:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
 
-        .navbar {
-            background: linear-gradient(135deg, #2c3e50, #4b79a1);
-            color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .options-group { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; }
+    .option-item { display: flex; align-items: center; gap: 0.5rem; }
 
-        .navbar h1 {
-            font-family: 'Outfit', sans-serif;
-            margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-        }
+    .sources-selector { margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem; }
+    .sources-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 0.5rem;
+        max-height: 200px;
+        overflow-y: auto;
+        margin-top: 1rem;
+        padding: 0.5rem;
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
+    .progress-container { display: none; margin: 1rem 0; }
+    progress { width: 100%; height: 10px; border-radius: 5px; }
 
-        .search-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.3);
-            margin-bottom: 2rem;
-        }
+    #results-area { margin-top: 2rem; }
 
-        .search-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+    /* Skeleton loader */
+    .skeleton {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        height: 20px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+    @keyframes loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
 
-        .search-input-group {
-            display: flex;
-            gap: 1rem;
-        }
+    /* Lead-capture modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        backdrop-filter: blur(5px);
+    }
+    .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 2rem;
+        border-radius: 15px;
+        width: 90%; max-width: 400px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        position: relative;
+    }
+    .close {
+        position: absolute; right: 1.5rem; top: 1rem;
+        font-size: 1.5rem; font-weight: bold; cursor: pointer; color: #aaa;
+    }
 
-        input[type="text"] {
-            flex: 1;
-            padding: 0.8rem 1.2rem;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
+    /* AI panel — slides in from right */
+    .ai-panel {
+        position: fixed;
+        right: -450px; top: 0;
+        width: 400px; height: 100%;
+        background: white;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        z-index: 1001;
+        transition: right 0.3s ease;
+        display: flex; flex-direction: column;
+    }
+    .ai-panel.active { right: 0; }
+    .ai-panel-header {
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-bottom: 1px solid #eee;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .ai-panel-header h3 { margin: 0; font-family: 'Outfit', sans-serif; font-size: 1.2rem; }
+    .ai-panel-body { padding: 1.5rem; overflow-y: auto; flex: 1; }
+    .ai-text { font-size: 0.95rem; white-space: pre-wrap; line-height: 1.5; }
+    .ai-panel-footer { padding: 1rem 1.5rem; border-top: 1px solid #eee; background: #fcfcfc; color: #999; }
+    .close-panel { cursor: pointer; font-size: 1.5rem; color: #999; }
 
-        input[type="text"]:focus {
-            border-color: var(--accent-color);
-            outline: none;
-        }
+    .btn-ai {
+        background-color: #6c5ce7;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: flex; align-items: center; gap: 0.5rem;
+        transition: background 0.2s;
+    }
+    .btn-ai:hover { background-color: #a29bfe; }
+</style>
+{% endblock %}
 
-        button.btn-primary {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-        }
+{% block navlinks %}
+{% if ss_link %}
+<a class="site-navlink-cta" href="{{ ss_link }}" target="_blank" rel="noopener"
+   title="Курс грамматики санскрита для русскоязычных">
+    Курс грамматики →
+</a>
+{% endif %}
+<span style="opacity:0.7;">samskrtam.ru</span>
+{% endblock %}
 
-        button.btn-primary:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-
-        .options-group {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
-        }
-
-        .option-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .sources-selector {
-            margin-top: 1rem;
-            border-top: 1px solid #eee;
-            padding-top: 1rem;
-        }
-
-        .sources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 0.5rem;
-            max-height: 200px;
-            overflow-y: auto;
-            margin-top: 1rem;
-            padding: 0.5rem;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .progress-container {
-            display: none;
-            margin: 1rem 0;
-        }
-
-        progress {
-            width: 100%;
-            height: 10px;
-            border-radius: 5px;
-        }
-
-        #results-area {
-            margin-top: 2rem;
-        }
-
-        .highlight {
-            background-color: #fff176;
-            padding: 0 2px;
-            border-radius: 3px;
-        }
-        
-        /* Skeleton loading */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            height: 20px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-        
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 10% auto;
-            padding: 2rem;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .close {
-            position: absolute;
-            right: 1.5rem;
-            top: 1rem;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            color: #aaa;
-        }
-
-        /* AI Panel Styles */
-        .ai-panel {
-            position: fixed;
-            right: -450px;
-            top: 0;
-            width: 400px;
-            height: 100%;
-            background: white;
-            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-            z-index: 1001;
-            transition: right 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .ai-panel.active {
-            right: 0;
-        }
-
-        .ai-panel-header {
-            padding: 1.5rem;
-            background: #f8f9fa;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ai-panel-header h3 {
-            margin: 0;
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.2rem;
-        }
-
-        .ai-panel-body {
-            padding: 1.5rem;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .ai-text {
-            font-size: 0.95rem;
-            white-space: pre-wrap;
-            line-height: 1.5;
-        }
-
-        .ai-panel-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #eee;
-            background: #fcfcfc;
-            color: #999;
-        }
-
-        .close-panel {
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #999;
-        }
-
-        .btn-ai {
-            background-color: #6c5ce7;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: background 0.2s;
-        }
-
-        .btn-ai:hover {
-            background-color: #a29bfe;
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <h1>ПАХТАНЬЕ ОКЕАНА</h1>
-        <div class="links" style="display:flex; gap:1rem; align-items:center;">
-            {% if ss_link %}
-            <a href="{{ ss_link }}"
-               target="_blank"
-               rel="noopener"
-               style="color:#ffd479; text-decoration:none; font-weight:600; font-size:0.9rem; padding:0.3rem 0.8rem; border:1px solid #ffd479; border-radius:6px; transition:background 0.2s;"
-               onmouseover="this.style.background='rgba(255,212,121,0.15)'"
-               onmouseout="this.style.background='transparent'"
-               title="Курс грамматики санскрита для русскоязычных">
-                Курс грамматики →
-            </a>
-            {% endif %}
-            <span style="opacity:0.7;">samskrtam.ru</span>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="search-card">
-            <form id="searchForm" class="search-form">
-                <div class="search-input-group">
-                    <input type="text" id="query" placeholder="Введите слово для поиска..." required>
-                    <button type="submit" class="btn-primary">Найти</button>
-                    <button type="button" id="exportBtn" class="btn-primary" style="background-color: #27ae60;">HTML</button>
-                </div>
-                
-                <div class="options-group">
-                    <div class="option-item">
-                        <label>Режим:</label>
-                        <select id="mode">
-                            <option value="plain">Обычный</option>
-                            <option value="regex">Regex</option>
-                            <option value="morphological">Поиск по основам (Stem/Root)</option>
-                        </select>
-                    </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="case_sensitive">
-                        <label for="case_sensitive">Учитывать регистр</label>
-                    </div>
-                    <div class="option-item">
-                        <input type="checkbox" id="whole_word">
-                        <label for="whole_word">Целое слово</label>
-                    </div>
-                </div>
-
-                <div class="sources-selector">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <label>Источники:</label>
-                        <div>
-                            <span id="sourceCount" style="font-size: 0.8rem; margin-right: 1rem; color: #666;">Загрузка...</span>
-                            <button type="button" id="selectAll">Все</button>
-                            <button type="button" id="selectNone">Ни одного</button>
-                        </div>
-                    </div>
-                    <div id="sourcesGrid" class="sources-grid">
-                        <!-- Populated via JS -->
-                        <div class="skeleton"></div>
-                        <div class="skeleton"></div>
-                        <div class="skeleton"></div>
-                    </div>
-                </div>
-            </form>
-            
-            <div id="progressContainer" class="progress-container">
-                <div id="progressText" style="font-size: 0.8rem; margin-bottom: 0.3rem;">Поиск...</div>
-                <progress id="searchProgress" value="0" max="100"></progress>
+{% block content %}
+<div class="container">
+    <div class="search-card">
+        <form id="searchForm" class="search-form">
+            <div class="search-input-group">
+                <input type="text" id="query" placeholder="Введите слово для поиска..." required>
+                <button type="submit" class="btn-primary">Найти</button>
+                <button type="button" id="exportBtn" class="btn-primary" style="background-color: #27ae60;">HTML</button>
             </div>
-        </div>
 
-        <div id="results-area">
-            <!-- Results injected here -->
-        </div>
-    </div>
-
-    <!-- AI Explanation Panel -->
-    <div id="aiPanel" class="ai-panel">
-        <div class="ai-panel-header">
-            <h3>AI Разбор</h3>
-            <span class="close-panel" id="closeAiPanel">&times;</span>
-        </div>
-        <div class="ai-panel-body">
-            <div id="aiLoading" class="skeleton" style="display: none; height: 100px;"></div>
-            <div id="aiContent" class="ai-text"></div>
-        </div>
-        <div class="ai-panel-footer">
-            <small>Ответ сгенерирован ИИ на основе предоставленного контекста.</small>
-        </div>
-    </div>
-
-    <!-- Lead Capture Modal -->
-    <div id="leadModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeLead">&times;</span>
-            <h2 style="font-family: 'Outfit', sans-serif; margin-top: 0;">Интересно?</h2>
-            <p style="font-size: 0.9rem; color: #666;">Оставьте свою почту, чтобы следить за развитием проекта и получать обновления корпуса.</p>
-            <form id="leadForm" style="display: flex; flex-direction: column; gap: 0.8rem;">
-                <input type="text" id="leadName" placeholder="Ваше имя" style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
-                <input type="email" id="leadEmail" placeholder="Email" required style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
-                <input type="text" id="leadTelegram" placeholder="Telegram (@username) — необязательно" style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
-                <div style="font-size: 0.75rem; color: #777;">
-                    <label style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.5rem;">
-                        <input type="checkbox" id="consent_data" required style="margin-top: 3px;">
-                        <span>Я согласен на обработку персональных данных для связи по проекту.</span>
-                    </label>
-                    <label style="display: flex; gap: 0.5rem; align-items: flex-start;">
-                        <input type="checkbox" id="consent_marketing" style="margin-top: 3px;">
-                        <span>Я хочу получать информацию о новых функциях и текстах.</span>
-                    </label>
+            <div class="options-group">
+                <div class="option-item">
+                    <label>Режим:</label>
+                    <select id="mode">
+                        <option value="plain">Обычный</option>
+                        <option value="regex">Regex</option>
+                        <option value="morphological">Поиск по основам (Stem/Root)</option>
+                    </select>
                 </div>
-                <button type="submit" class="btn-primary" style="width: 100%;">Подписаться</button>
-            </form>
-            <div id="leadMessage" style="margin-top: 1rem; display: none; text-align: center; font-size: 0.9rem; font-weight: 600; color: #27ae60;"></div>
+                <div class="option-item">
+                    <input type="checkbox" id="case_sensitive">
+                    <label for="case_sensitive">Учитывать регистр</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="whole_word">
+                    <label for="whole_word">Целое слово</label>
+                </div>
+            </div>
+
+            <div class="sources-selector">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label>Источники:</label>
+                    <div>
+                        <span id="sourceCount" style="font-size: 0.8rem; margin-right: 1rem; color: #666;">Загрузка...</span>
+                        <button type="button" id="selectAll">Все</button>
+                        <button type="button" id="selectNone">Ни одного</button>
+                    </div>
+                </div>
+                <div id="sourcesGrid" class="sources-grid">
+                    <div class="skeleton"></div>
+                    <div class="skeleton"></div>
+                    <div class="skeleton"></div>
+                </div>
+            </div>
+        </form>
+
+        <div id="progressContainer" class="progress-container">
+            <div id="progressText" style="font-size: 0.8rem; margin-bottom: 0.3rem;">Поиск...</div>
+            <progress id="searchProgress" value="0" max="100"></progress>
         </div>
     </div>
 
-    {% if engaged_ss_link %}
-    <!-- Engaged-user CTA: surfaced via JS after >=3 searches in this session -->
-    <div id="engagedCta"
-         data-ss-url="{{ engaged_ss_link }}"
-         style="display:none; position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px); opacity:0; z-index:1002;
-                background:linear-gradient(135deg,#2c3e50,#4b79a1); color:white; padding:0.9rem 1.4rem; border-radius:12px;
-                box-shadow:0 8px 32px rgba(0,0,0,0.25); align-items:center; gap:1rem; max-width:540px;
-                font-size:0.9rem; transition:opacity 0.4s ease, transform 0.4s ease;">
-        <span style="flex:1; line-height:1.4;">
-            Похоже, вы серьёзно изучаете санскрит. Курс грамматики поможет вам читать тексты системно.
-        </span>
-        <a id="engagedCtaLink" href="#" target="_blank" rel="noopener"
-           style="background:#ffd479; color:#2c3e50; padding:0.45rem 0.9rem; border-radius:6px; text-decoration:none; font-weight:700; white-space:nowrap;">
-            Узнать →
-        </a>
-        <button id="engagedCtaClose" type="button" aria-label="Закрыть"
-                style="background:transparent; border:none; color:rgba(255,255,255,0.7); font-size:1.3rem; cursor:pointer; padding:0 0.3rem; line-height:1;">×</button>
-    </div>
-    {% endif %}
+    <div id="results-area"></div>
+</div>
 
-    <script src="/static/scripts/jquery-3.6.0.min.js"></script>
-    <script src="/static/scripts/selection.js"></script>
-    <script src="/static/search.js"></script>
-</body>
-</html>
+<!-- AI Explanation Panel -->
+<div id="aiPanel" class="ai-panel">
+    <div class="ai-panel-header">
+        <h3>AI Разбор</h3>
+        <span class="close-panel" id="closeAiPanel">&times;</span>
+    </div>
+    <div class="ai-panel-body">
+        <div id="aiLoading" class="skeleton" style="display: none; height: 100px;"></div>
+        <div id="aiContent" class="ai-text"></div>
+    </div>
+    <div class="ai-panel-footer">
+        <small>Ответ сгенерирован ИИ на основе предоставленного контекста.</small>
+    </div>
+</div>
+
+<!-- Lead Capture Modal -->
+<div id="leadModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeLead">&times;</span>
+        <h2 style="font-family: 'Outfit', sans-serif; margin-top: 0;">Интересно?</h2>
+        <p style="font-size: 0.9rem; color: #666;">Оставьте свою почту, чтобы следить за развитием проекта и получать обновления корпуса.</p>
+        <form id="leadForm" style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <input type="text" id="leadName" placeholder="Ваше имя" style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
+            <input type="email" id="leadEmail" placeholder="Email" required style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
+            <input type="text" id="leadTelegram" placeholder="Telegram (@username) — необязательно" style="width: 100%; box-sizing: border-box; padding: 0.8rem; border: 2px solid #ddd; border-radius: 10px;">
+            <div style="font-size: 0.75rem; color: #777;">
+                <label style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <input type="checkbox" id="consent_data" required style="margin-top: 3px;">
+                    <span>Я согласен на обработку персональных данных для связи по проекту.</span>
+                </label>
+                <label style="display: flex; gap: 0.5rem; align-items: flex-start;">
+                    <input type="checkbox" id="consent_marketing" style="margin-top: 3px;">
+                    <span>Я хочу получать информацию о новых функциях и текстах.</span>
+                </label>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">Подписаться</button>
+        </form>
+        <div id="leadMessage" style="margin-top: 1rem; display: none; text-align: center; font-size: 0.9rem; font-weight: 600; color: #27ae60;"></div>
+    </div>
+</div>
+
+{% if engaged_ss_link %}
+<!-- Engaged-user CTA: surfaced via JS after >=3 searches in this session -->
+<div id="engagedCta"
+     data-ss-url="{{ engaged_ss_link }}"
+     style="display:none; position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px); opacity:0; z-index:1002;
+            background:linear-gradient(135deg,#2c3e50,#4b79a1); color:white; padding:0.9rem 1.4rem; border-radius:12px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.25); align-items:center; gap:1rem; max-width:540px;
+            font-size:0.9rem; transition:opacity 0.4s ease, transform 0.4s ease;">
+    <span style="flex:1; line-height:1.4;">
+        Похоже, вы серьёзно изучаете санскрит. Курс грамматики поможет вам читать тексты системно.
+    </span>
+    <a id="engagedCtaLink" href="#" target="_blank" rel="noopener"
+       style="background:#ffd479; color:#2c3e50; padding:0.45rem 0.9rem; border-radius:6px; text-decoration:none; font-weight:700; white-space:nowrap;">
+        Узнать →
+    </a>
+    <button id="engagedCtaClose" type="button" aria-label="Закрыть"
+            style="background:transparent; border:none; color:rgba(255,255,255,0.7); font-size:1.3rem; cursor:pointer; padding:0 0.3rem; line-height:1;">×</button>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_body %}
+<script src="/static/scripts/jquery-3.6.0.min.js"></script>
+<script src="/static/scripts/selection.js"></script>
+<script src="/static/search.js"></script>
+{% endblock %}
