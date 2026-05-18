@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.16.0] - 2026-05-18 (Feature: `?lang=ru|sa` filter + hreflang on source pages)
+
+### Added
+- **`/sources/{id}?lang=ru` and `?lang=sa`** strip the opposing language's `<div class="chapter_block …">` from each line on parallel-content sources (those packing IAST + Russian in one citation_block). Sanskrit IAST view and Russian-translation view get distinct URLs, distinct canonicals, distinct JSON-LD `inLanguage`, and reciprocal hreflang alternates — the SEO surface a multilingual scholarly corpus needs.
+- **`<link rel="alternate" hreflang>` × 3** on parallel pages: `ru`, `sa`, `x-default`. Each variant declares all three (self-reciprocal) so Google can attribute the same content correctly across language searches.
+- **`web/app/services/language_filter.py`** — three pure helpers:
+  - `normalize_lang(raw)`: lowercase + whitespace-strip + allow-list match. Unknown values silently return None (stray bookmark with `?lang=fr` doesn't 4xx the request).
+  - `filter_html_to_language(line_html, lang)`: regex strip of the opposing chapter_block. Anchored on the class name so non-parallel HTML passes through unchanged.
+  - `is_parallel_source(line_htmls)`: short-circuit scan for `chapter_block iast` markers. Caller samples ~10 lines — one hit classifies the source.
+- **JSON-LD `Book.inLanguage` reflects the filtered surface** (`sa` for `?lang=sa`, otherwise `ru`). The highlighted-line `Quotation.inLanguage` follows the same rule. `build_source_jsonld` and `build_line_quotation` gain an `in_language` kwarg defaulting to `"ru"`.
+
+### Coverage
+- **119 of 148 sources qualify as parallel** on the live corpus (80%) — all 10 Ṛgveda maṇḍalas, 19 Atharvaveda books, every Mahābhārata parvan that ships IAST, all 10 BhG translations that include Sanskrit, 25 Sürkin Upaniṣads, plus most kāvya/sūtra texts. Non-parallel sources (Russian-only prose translations, dictionaries, encyclopedias) keep their existing single-canonical behaviour with no hreflang emission.
+
+### Implementation notes
+- Hreflang URLs preserve `?highlight=` when present — a deep-linked verse URL `/sources/204?highlight=23.1` gets reciprocal alternates `/sources/204?highlight=23.1&lang=ru`, `…&lang=sa`, and bare-form `x-default`.
+- Sitemap entries do NOT yet carry `<xhtml:link>` alternates per Google's hreflang-in-sitemap convention — deferred. Hreflang in the HTML head is the more important signal for v1.
+- Compare-page `_split_iast_and_translation` continues to work independently — `language_filter` re-implements the regex as a module-local constant rather than introducing a cross-service dependency. The two patterns are kept in sync by convention.
+
+### Tests
+- 25 new tests in `test_language_filter.py`:
+  - `normalize_lang` allow-list, case-insensitivity, whitespace handling, unknown-rejection.
+  - `filter_html_to_language` symmetry (`ru`/`sa` strip the opposite block), pass-through on plain HTML, None/empty handling.
+  - `is_parallel_source` short-circuit semantics and empty-input handling.
+  - HTTP integration on a seeded parallel source: 3 hreflang alternates emitted, URLs are reciprocal and well-formed, `?lang=sa` strips Russian, `?lang=ru` strips IAST, canonical follows the variant, unknown lang silently drops, JSON-LD inLanguage reflects filter.
+  - HTTP integration on a seeded Russian-only source: no hreflang emission, `?lang=` is a no-op, canonical still mirrors request.
+- 269/269 hermetic tests pass.
+
 ## [1.15.6] - 2026-05-18 (Feature: sitemap index split)
 
 ### Changed

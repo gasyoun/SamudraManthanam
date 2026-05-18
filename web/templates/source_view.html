@@ -6,6 +6,9 @@
     <title>{{ og_title or source.title }}</title>
     <meta name="description" content="{{ og_description or source.title }}">
     {% if canonical_url %}<link rel="canonical" href="{{ canonical_url }}">{% endif %}
+    {% for alt in hreflang_alternates %}
+    <link rel="alternate" hreflang="{{ alt.hreflang }}" href="{{ alt.url }}">
+    {% endfor %}
 
     <!-- Open Graph / Telegram / VK link previews -->
     <meta property="og:type" content="article">

@@ -172,13 +172,23 @@ def _line_anchor_url(*, base_url: str, source_id: int, link_id: str | None) -> s
     return f"{base_url}/sources/{source_id}?highlight={safe}"
 
 
-def build_line_quotation(*, line: dict, source_id: int, source_url: str, base_url: str = "") -> dict:
+def build_line_quotation(
+    *,
+    line: dict,
+    source_id: int,
+    source_url: str,
+    base_url: str = "",
+    in_language: str = "ru",
+) -> dict:
     """Build a single `Quotation` JSON-LD entity for one corpus line.
 
     The `@id` doubles as the URL the verse can be deep-linked to (the
     `?highlight=` form already implemented by the reader route). `isPartOf`
     threads back to the parent Book by its @id so the relationship is
     discoverable when the Quotation is crawled standalone.
+
+    `in_language` defaults to "ru" but the caller can override to "sa" when
+    the page is serving Sanskrit-IAST-only via `?lang=sa`.
     """
     link_id = line.get("link_id") or str(line.get("line_num") or "")
     quotation: dict = {
@@ -186,7 +196,7 @@ def build_line_quotation(*, line: dict, source_id: int, source_url: str, base_ur
         "@type": "Quotation",
         "@id": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
         "text": _truncate(line.get("line_text", "")),
-        "inLanguage": "ru",
+        "inLanguage": in_language,
         "isPartOf": {"@id": source_url},
         "url": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
     }
@@ -215,6 +225,7 @@ def build_source_jsonld(
     sample_lines: list[dict] | None = None,
     sample_size: int = _DEFAULT_HASPART_SAMPLE,
     base_url: str = "",
+    in_language: str = "ru",
 ) -> dict:
     """Build a schema.org Book entity for a `/sources/{id}` page.
 
@@ -257,7 +268,7 @@ def build_source_jsonld(
         "@id": canonical_url,
         "name": parsed["name"],
         "url": canonical_url,
-        "inLanguage": "ru",
+        "inLanguage": in_language,
         "isPartOf": is_part_of,
     }
 
