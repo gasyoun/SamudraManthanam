@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.19.0] - 2026-05-18 (Feature: result-page visualisations — bar chart + KWIC)
+
+### Added
+- **Per-source hits bar chart** at the top of every multi-source result fragment. Inline SVG, no JS library, sorted by hit count descending, each bar wrapped in an `<a href="#chapter_N">` so clicking jumps to that source's group. SVG `<title>` provides on-hover tooltip with full source name + count. Live coverage: `q=дхарма` → 78 bars; `Кришна` → 75; `yoga` → 87. Suppressed entirely when 0–1 sources are hit (chart adds no info).
+- **KWIC (keyword-in-context) excerpts** per result row — `{before} <mark>{match}</mark> {after}` with 40-char windows on each side and `…` elisions for truncation. Multi-line queries pick the first matching term. Fallback to a leading-window slice when no term matches.
+- **"Компактный вид" toggle button** in the results header (when total > 1). Sets `body.compact-mode` which swaps the per-result display from full `line_html` to just the KWIC preview — turns the page into a corpus-linguistics-style overview for fast scanning. Toggle text flips to "Полный вид" when active.
+
+### Files
+- `web/app/services/html_service.py` — `kwic_excerpt(text, query, window)`, `build_source_chart_data(results)`, plus enrichment of each `r["kwic"]` in `render_fragment`.
+- `web/templates/result_fragment.html` — SVG bar chart block, KWIC preview div per result, compact-toggle button + script + scoped CSS.
+- `web/tests/test_visualisations.py` — 21 tests: KWIC helper (centered/edge/multiline/no-match/empty), chart aggregator (zero/single-source/sort/anchor mapping), rendering integration (chart presence, KWIC blocks, compact toggle).
+
+### Notes
+- All 335 hermetic tests pass.
+- Bar chart is pure server-rendered SVG — works without JS, no Chart.js dep added.
+- KWIC search is case-insensitive substring (`line_text.lower().find`). Regex-mode hits with no literal substring fall through to the no-match fallback path; could be improved by re-matching with the regex but adds complexity.
+- Compact mode is per-pageview, not persisted. Re-toggle per session. Future enhancement: localStorage like the reader's font-size preference.
+
 ## [1.18.0] - 2026-05-18 (Feature: scholarly reader)
 
 ### Added

@@ -28,13 +28,51 @@
                 ⚠️ Внимание: Показаны первые 5000 записей. Пожалуйста, уточните запрос.
             </div>
         {% endif %}
-        <div style="margin-top: 15px;">
+        <div style="margin-top: 15px; display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <button id="askAiBtn" class="btn-ai">
                 <span>✨ Спросить AI о результатах</span>
             </button>
+            {% if total > 1 %}
+            <button id="toggleCompactBtn" type="button"
+                    style="background: white; border: 1px solid #ddd; padding: 0.4rem 0.9rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; color: #555;"
+                    title="Переключить компактный вид с краткими цитатами">
+                ☰ Компактный вид
+            </button>
+            {% endif %}
         </div>
     {% endif %}
 </div>
+
+{# Per-source bar chart: hides when 0-1 sources hit. Pure inline SVG, no JS
+   library. Bars are sorted by count descending in build_source_chart_data;
+   click a bar to jump to that source's group via #chapter_N anchor. #}
+{% if source_chart %}
+{% set chart_max = source_chart | map(attribute='count') | max %}
+{% set chart_count = source_chart | length %}
+{% set chart_height = (chart_count * 24) + 8 %}
+<div class="search-bar-chart" style="background:white;border:1px solid #eee;border-radius:8px;padding:1rem 1.2rem;margin:0.8rem 0;">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.5rem;">
+        <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;">Распределение по источникам</span>
+        <span style="font-size:0.8rem;color:#aaa;">{{ chart_count }} источник{% if chart_count == 1 %}{% elif chart_count < 5 %}а{% else %}ов{% endif %}</span>
+    </div>
+    <svg width="100%" height="{{ chart_height }}" role="img" aria-label="Распределение результатов по источникам">
+        {% for row in source_chart %}
+            {% set bar_width = (row.count / chart_max * 60) %}
+            {% set y = loop.index0 * 24 %}
+            <a href="#{{ row.chart_anchor }}">
+                <rect x="40%" y="{{ y + 4 }}" height="16"
+                      width="{{ bar_width }}%" fill="#e67e22" rx="2" style="cursor:pointer;">
+                    <title>{{ row.title }}: {{ row.count }}</title>
+                </rect>
+                <text x="39%" y="{{ y + 16 }}" text-anchor="end"
+                      style="font-size:0.78rem;fill:#444;cursor:pointer;">{{ row.title[:42] }}{% if row.title | length > 42 %}…{% endif %}</text>
+                <text x="{{ 40 + bar_width + 0.5 }}%" y="{{ y + 16 }}"
+                      style="font-size:0.78rem;fill:#888;font-variant-numeric:tabular-nums;">{{ row.count }}</text>
+            </a>
+        {% endfor %}
+    </svg>
+</div>
+{% endif %}
 <div class="contents">
     {% for group in groups %}
         <div class="content_item">
@@ -87,8 +125,14 @@
                         </a>
                     </div>
                 </div>
+                {# KWIC excerpt — visible only in compact view via .compact-mode body class. #}
+                {% if item.kwic %}
+                <div class="kwic-preview" style="display:none;font-family:monospace;font-size:0.85rem;color:#555;background:#fafbfc;padding:6px 10px;border-radius:3px;margin-bottom:6px;line-height:1.5;border-left:3px solid #e67e22;">
+                    <span style="color:#aaa;">{{ item.kwic.before }}</span><mark style="background:#fff176;padding:0 2px;border-radius:2px;color:#000;">{{ item.kwic.match }}</mark><span style="color:#aaa;">{{ item.kwic.after }}</span>
+                </div>
+                {% endif %}
                 {# safe: line_html is ingest-produced corpus HTML, never user input #}
-                {{ item['line_html'] | safe }}
+                <div class="full-content">{{ item['line_html'] | safe }}</div>
                 <div class="context-panel"
                      style="display:none;margin:6px -2px 2px;padding:6px 8px;background:#f8f9fa;border-left:3px solid #e67e22;border-radius:0 3px 3px 0;font-size:0.88rem;"></div>
             </div>
@@ -98,7 +142,36 @@
     {% endfor %}
 </div>
 
+<style>
+    /* Compact view: KWIC visible, full corpus HTML hidden. Toggled by the
+     * "Компактный вид" button which sets body.compact-mode. Reverting back
+     * via the same button. State is per-pageview (not persisted) — users
+     * who prefer compact can re-toggle each session; future enhancement
+     * could persist via localStorage. */
+    body.compact-mode .kwic-preview { display: block !important; }
+    body.compact-mode .citation_block .full-content { display: none; }
+    body.compact-mode .citation_block .context-panel { display: none !important; }
+    body.compact-mode .citation_block { padding: 4px 0; }
+    body.compact-mode .citation_block hr { display: none; }
+
+    /* Bar chart link styling: rects darken on hover via opacity. */
+    .search-bar-chart svg a { transition: opacity 0.15s; }
+    .search-bar-chart svg a:hover { opacity: 0.75; }
+</style>
+
 <script>
+    // Compact view toggle.
+    (function () {
+        var btn = document.getElementById('toggleCompactBtn');
+        if (!btn) return;
+        btn.addEventListener('click', function () {
+            document.body.classList.toggle('compact-mode');
+            btn.textContent = document.body.classList.contains('compact-mode')
+                ? '☰ Полный вид'
+                : '☰ Компактный вид';
+        });
+    })();
+
     function initHighlighting() {
         const query = {{ query | tojson }};
         let terms = query.split('\n').map(t => t.strip ? t.strip() : t.trim()).filter(t => t.length > 0);
