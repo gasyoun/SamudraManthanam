@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.18.0] - 2026-05-18 (Feature: scholarly reader)
+
+### Added
+- **Sticky chapter sidebar** on `/sources/{slug}` — auto-populated TOC with anchor links to each chapter's first line. Two-track detection: uses the `chapter` DB column when populated (sources with `<H1>` markers), falls back to scanning `line_html` for `<div class="chapter_title">` (the majority of corpus sources). Live coverage: Bhīṣma-parvan 121 entries, Ṛgveda I 191, BhG-Smirnov 18, Kāmasūtra 79. Sources with no chapters (Īśa Upaniṣad etc.) cleanly hide the sidebar and switch to a single-column layout.
+- **Sticky reader toolbar** below the header: `A− / A+` font-size buttons (persisted in `localStorage`), `Оба / Рус / Санскрит` language toggle for parallel sources only, `?` help button.
+- **Per-line copy-citation button** — appears on row hover, copies a markdown-style deep link (`[Source title 1.1](https://samskrtam.ru/sources/slug?highlight=1.1)`) via the Clipboard API with a fallback for non-HTTPS contexts. Flashes `✓` on success.
+- **Keyboard navigation** (`reader.js`, vanilla JS, no jQuery):
+  - `j` / `k` — step through verses with smooth-scroll and visual `.focused` highlight.
+  - `]` / `[` — jump to next / previous chapter heading.
+  - `g g` — top of page (gmail-style double-tap, 500ms window).
+  - `G` — bottom of page.
+  - `?` — toggle a help overlay with all shortcuts.
+- **Mobile sidebar drawer** — at ≤900 px the sidebar collapses to an off-canvas drawer; a `≡ Главы` button in the toolbar slides it in. Tapping a chapter link auto-closes the drawer.
+
+### Files
+- `web/static/scripts/reader.js` — new, vanilla JS, ~210 lines.
+- `web/templates/source_view.html` — sidebar/toolbar markup + new line-row schema (`data-line-num` + `data-link-id` for the copy-citation handler).
+- `web/app/routers/reader.py` — chapter extraction with html-fallback regex, `chapters`/`is_parallel`/`slug` added to template context.
+- `web/tests/test_reader.py` — 15 tests covering chapter sidebar (with and without chapters, fallback detection), toolbar markup (font, lang toggle on parallel only, help button), per-line copy buttons + data attrs, reader.js loaded on `/sources/{slug}` and absent elsewhere.
+
+### Notes
+- 314/314 hermetic tests pass.
+- Font-size and (future) other preferences live in `localStorage` keyed `sm_reader_*` — no server-side state. Works incognito; resets across browsers, fine for scholarly reading.
+- The chapter-extraction fallback is render-time only; `parse_html.py` still only picks up `<H1>` at ingest time. A future ingest improvement could backfill the `chapter` column for chapter_title-style sources, but it isn't required — render-time detection is fast (regex on already-loaded `line_html`).
+
 ## [1.17.0] - 2026-05-18 (Feature: design system refactor — Jinja base + site.css)
 
 ### Added

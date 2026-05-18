@@ -1,3 +1,4 @@
+import re
 from urllib.parse import quote, urlencode
 
 from fastapi import APIRouter, HTTPException, Query, Request
@@ -16,6 +17,18 @@ from app.services.source_metadata import (
     build_source_jsonld,
 )
 from app.settings import settings
+
+# Matches `<div class="chapter_title">…</div>` blocks in corpus line_html.
+# The Lazarus-built corpus uses this class for chapter headings; only a
+# subset of sources additionally wrap chapter names in <H1>. parse_html.py
+# captures the H1 case, so most corpus_lines rows have an empty `chapter`
+# column. This regex is the render-time fallback that lets the sidebar
+# work for the chapter_title-style majority.
+_CHAPTER_TITLE_PATTERN = re.compile(
+    r'<div class="chapter_title"[^>]*>(.*?)</div>',
+    re.IGNORECASE | re.DOTALL,
+)
+_HTML_TAGS = re.compile(r"<[^>]+>")
 
 router = APIRouter(prefix="/sources", tags=["reader"])
 templates = Jinja2Templates(directory="templates")
@@ -108,6 +121,29 @@ async def view_source(
         # as parallel as long as any sampled line has the marker.
         sample_html = [l.get("line_html") or "" for l in lines[:10]]
         parallel = is_parallel_source(sample_html)
+
+        # Build a chapter table-of-contents for the sticky sidebar.
+        # Two detection paths:
+        #   1. Use the `chapter` column when populated (sources with <H1>).
+        #   2. Otherwise scan `line_html` for `<div class="chapter_title">`,
+        #      which the majority of corpus sources use instead.
+        # Dedup by name and skip consecutive repeats so each chapter appears
+        # exactly once.
+        chapters: list[dict] = []
+        seen_chapters: set[str] = set()
+        for line in lines:
+            ch = (line.get("chapter") or "").strip()
+            if not ch:
+                m = _CHAPTER_TITLE_PATTERN.search(line.get("line_html") or "")
+                if m:
+                    ch = _HTML_TAGS.sub("", m.group(1)).strip()
+            if ch and ch not in seen_chapters:
+                seen_chapters.add(ch)
+                chapters.append({
+                    "name": ch,
+                    "line_num": line["line_num"],
+                    "link_id": line.get("link_id") or "",
+                })
 
         # Apply the language filter to display HTML if requested AND
         # meaningful — on non-parallel sources the filter is a no-op anyway,
@@ -210,6 +246,9 @@ async def view_source(
                 "og_type": "article",
                 "canonical_url": canonical_url,
                 "hreflang_alternates": hreflang_alternates,
+                "chapters": chapters,
+                "is_parallel": parallel,
+                "slug": slug,
                 "source_jsonld": source_jsonld,
                 "breadcrumb_jsonld": breadcrumb_jsonld,
                 "highlight_jsonld": highlight_jsonld,

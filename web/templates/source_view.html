@@ -6,11 +6,14 @@
 <style>
     :root {
         --highlight-bg: #fff3e0;
+        --reader-font-size: 1.1rem;     /* tunable by reader.js */
+        --sidebar-width: 240px;
     }
 
+    /* ── Top reader-header (sticky brand + back link) ───────────────── */
     header.reader-header {
         background: white;
-        padding: 1.5rem 2rem;
+        padding: 1rem 1.5rem;
         border-bottom: 1px solid var(--line-border);
         position: sticky;
         top: 0;
@@ -18,7 +21,7 @@
         box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
     .reader-header-inner {
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
@@ -26,7 +29,11 @@
         gap: 1rem;
         flex-wrap: wrap;
     }
-    .reader-header h1 { margin: 0; font-size: 1.5rem; color: var(--primary); }
+    .reader-header h1 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: var(--primary);
+    }
     .back-link {
         text-decoration: none;
         color: var(--accent);
@@ -36,36 +43,176 @@
         gap: 0.5rem;
     }
 
+    /* ── Reader toolbar (sub-bar) ───────────────────────────────────── */
+    .reader-toolbar {
+        background: #fafbfc;
+        border-bottom: 1px solid var(--line-border);
+        padding: 0.5rem 1.5rem;
+        position: sticky;
+        top: 60px;          /* below the reader-header (approx) */
+        z-index: 99;
+    }
+    .reader-toolbar-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        gap: 0.6rem;
+        align-items: center;
+        flex-wrap: wrap;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+    .reader-toolbar .tb-group {
+        display: flex;
+        gap: 0.25rem;
+        align-items: center;
+        padding: 0.15rem 0.5rem;
+        border: 1px solid var(--line-border);
+        border-radius: 6px;
+        background: white;
+    }
+    .reader-toolbar .tb-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.85rem;
+        color: var(--primary);
+        border-radius: 4px;
+    }
+    .reader-toolbar .tb-btn:hover { background: var(--bg-alt); }
+    .reader-toolbar .tb-btn.active {
+        background: var(--accent);
+        color: white;
+    }
+    .reader-toolbar .tb-link {
+        color: var(--accent);
+        text-decoration: none;
+        padding: 0.25rem 0.6rem;
+        border-radius: 4px;
+    }
+    .reader-toolbar .tb-link:hover { background: #fff5e9; }
+    .reader-toolbar .tb-sep {
+        width: 1px;
+        height: 18px;
+        background: var(--line-border);
+        margin: 0 0.3rem;
+    }
+
+    /* ── Layout: sidebar + main ─────────────────────────────────────── */
+    .reader-layout {
+        max-width: 1100px;
+        margin: 1.5rem auto;
+        padding: 0 1.5rem;
+        display: grid;
+        grid-template-columns: var(--sidebar-width) 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+    .reader-layout.no-sidebar {
+        grid-template-columns: 1fr;
+    }
+
+    /* ── Chapter sidebar ────────────────────────────────────────────── */
+    .rdr-sidebar {
+        position: sticky;
+        top: 110px;          /* below header + toolbar */
+        max-height: calc(100vh - 130px);
+        overflow-y: auto;
+        background: white;
+        border: 1px solid var(--line-border);
+        border-radius: 8px;
+        padding: 0.8rem 0;
+        font-size: 0.85rem;
+    }
+    .rdr-sidebar-title {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        padding: 0 1rem 0.5rem;
+        margin: 0;
+        border-bottom: 1px solid var(--line-border);
+    }
+    .rdr-sidebar ol {
+        list-style: none;
+        margin: 0.5rem 0 0 0;
+        padding: 0;
+    }
+    .rdr-sidebar li a {
+        display: block;
+        padding: 0.35rem 1rem;
+        color: var(--text);
+        text-decoration: none;
+        border-left: 3px solid transparent;
+        line-height: 1.3;
+    }
+    .rdr-sidebar li a:hover {
+        background: var(--term-bg);
+        border-left-color: var(--accent);
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    /* ── Main reader column ─────────────────────────────────────────── */
     main.reader {
-        max-width: 1000px;
-        margin: 2rem auto;
-        padding: 0 2rem;
         background: white;
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         border-radius: 8px;
+        padding: 2rem;
     }
 
-    .corpus-content { padding: 2rem 0; }
+    .corpus-content { padding: 0; }
     .line-row {
         display: grid;
-        grid-template-columns: 80px 1fr;
-        gap: 2rem;
-        padding: 0.75rem 0;
+        grid-template-columns: 70px 1fr 30px;
+        gap: 1.2rem;
+        padding: 0.6rem 0;
         border-bottom: 1px solid var(--line-border);
-        transition: background 0.2s;
+        transition: background 0.15s;
+        scroll-margin-top: 140px;     /* leave room under sticky toolbar */
     }
     .line-row:hover { background-color: #fafafa; }
-    .line-row.highlighted {
+    .line-row.highlighted, .line-row.focused {
         background-color: var(--highlight-bg);
         border-left: 4px solid var(--accent);
+        padding-left: 0.5rem;
     }
     .line-meta {
         font-size: 0.85rem;
         color: #999;
         text-align: right;
         padding-top: 0.2rem;
+        font-variant-numeric: tabular-nums;
     }
-    .line-text { font-size: 1.1rem; }
+    .line-text {
+        font-size: var(--reader-font-size);
+    }
+    .line-actions {
+        opacity: 0;
+        transition: opacity 0.15s;
+    }
+    .line-row:hover .line-actions { opacity: 1; }
+    .copy-citation-btn {
+        background: none;
+        border: 1px solid var(--line-border);
+        border-radius: 4px;
+        padding: 0.15rem 0.4rem;
+        cursor: pointer;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        transition: all 0.15s;
+    }
+    .copy-citation-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+    .copy-citation-btn.copied {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+    }
+
     .chapter-heading {
         grid-column: 1 / -1;
         background: #f8f9fa;
@@ -76,17 +223,84 @@
         text-transform: uppercase;
         letter-spacing: 0.05em;
         font-size: 0.9rem;
+        scroll-margin-top: 140px;
     }
 
-    @media (max-width: 768px) {
-        .line-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    /* ── Help overlay (injected by reader.js on ?) ──────────────────── */
+    .rdr-help {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .rdr-help-card {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        max-width: 360px;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+    .rdr-help-card h3 { margin: 0 0 1rem; }
+    .rdr-help-card dl {
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 0.5rem 1rem;
+        margin: 0 0 1.5rem;
+        font-size: 0.9rem;
+    }
+    .rdr-help-card dt {
+        font-family: monospace;
+        background: var(--bg-alt);
+        padding: 0.1rem 0.5rem;
+        border-radius: 3px;
+        text-align: center;
+    }
+    .rdr-help-card dd { margin: 0; }
+
+    /* ── Mobile drawer ──────────────────────────────────────────────── */
+    .rdr-sidebar-toggle {
+        display: none;
+        background: none;
+        border: 1px solid var(--line-border);
+        padding: 0.25rem 0.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+        color: var(--primary);
+    }
+    @media (max-width: 900px) {
+        .reader-layout {
+            grid-template-columns: 1fr;
+            padding: 0 1rem;
+        }
+        .rdr-sidebar {
+            position: fixed;
+            top: 0;
+            left: -260px;
+            width: 240px;
+            max-height: 100vh;
+            height: 100vh;
+            border-radius: 0;
+            transition: left 0.2s ease;
+            z-index: 200;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+        }
+        .rdr-sidebar.open { left: 0; }
+        .rdr-sidebar-toggle { display: inline-block; }
+        main.reader { padding: 1rem; }
+        .line-row {
+            grid-template-columns: 1fr;
+            gap: 0.4rem;
+        }
         .line-meta { text-align: left; }
-        main.reader { padding: 0 1rem; }
+        .line-actions { opacity: 1; }
     }
 </style>
 {% endblock %}
 
-{% block navbar %}{# Reader pages get a custom sticky header below instead. #}{% endblock %}
+{% block navbar %}{# Reader pages use a custom sticky header below. #}{% endblock %}
 
 {% block content %}
 <header class="reader-header">
@@ -105,28 +319,72 @@
     </div>
 </header>
 
-<main class="reader">
-    <div class="corpus-content">
-        {% set last_chapter = None %}
-        {% for line in lines %}
-            {% if line.chapter and line.chapter != last_chapter %}
-                <div class="chapter-heading">{{ line.chapter }}</div>
-                {% set last_chapter = line.chapter %}
-            {% endif %}
-            <div id="L{{ line.line_num }}" class="line-row {{ 'highlighted' if highlight == line.line_num|string or highlight == line.link_id }}">
-                <div class="line-meta">{{ line.link_id or line.line_num }}</div>
-                <div class="line-text">
-                    {# safe: line_html is ingest-produced corpus HTML, never user input #}
-                    {{ line.line_html | safe }}
-                </div>
-            </div>
-        {% endfor %}
+<div class="reader-toolbar">
+    <div class="reader-toolbar-inner">
+        {% if chapters %}
+        <button id="rdr-sidebar-toggle" class="rdr-sidebar-toggle" aria-label="Главы">≡ Главы</button>
+        {% endif %}
+
+        <div class="tb-group" title="Размер шрифта">
+            <button id="rdr-font-smaller" class="tb-btn" aria-label="Уменьшить шрифт">A−</button>
+            <button id="rdr-font-larger"  class="tb-btn" aria-label="Увеличить шрифт">A+</button>
+        </div>
+
+        {% if is_parallel %}
+        <div class="tb-group" title="Язык отображения">
+            <a class="tb-btn {% if not lang %}active{% endif %}" href="?{% if highlight %}highlight={{ highlight }}{% endif %}">Оба</a>
+            <a class="tb-btn {% if lang == 'ru' %}active{% endif %}" href="?{% if highlight %}highlight={{ highlight }}&{% endif %}lang=ru">Рус</a>
+            <a class="tb-btn {% if lang == 'sa' %}active{% endif %}" href="?{% if highlight %}highlight={{ highlight }}&{% endif %}lang=sa">Санскрит</a>
+        </div>
+        {% endif %}
+
+        <div class="tb-sep"></div>
+        <button id="rdr-help-btn" class="tb-btn" title="Сочетания клавиш (?)" style="margin-left:auto;">?</button>
     </div>
-</main>
+</div>
+
+<div class="reader-layout {% if not chapters %}no-sidebar{% endif %}">
+    {% if chapters %}
+    <aside class="rdr-sidebar" aria-label="Главы">
+        <p class="rdr-sidebar-title">Главы ({{ chapters | length }})</p>
+        <ol>
+        {% for ch in chapters %}
+            <li><a href="#L{{ ch.line_num }}">{{ ch.name }}</a></li>
+        {% endfor %}
+        </ol>
+    </aside>
+    {% endif %}
+
+    <main class="reader">
+        <div class="corpus-content">
+            {% set last_chapter = None %}
+            {% for line in lines %}
+                {% if line.chapter and line.chapter != last_chapter %}
+                    <div class="chapter-heading">{{ line.chapter }}</div>
+                    {% set last_chapter = line.chapter %}
+                {% endif %}
+                <div id="L{{ line.line_num }}"
+                     class="line-row {{ 'highlighted' if highlight == line.line_num|string or highlight == line.link_id }}"
+                     data-line-num="{{ line.line_num }}"
+                     data-link-id="{{ line.link_id or '' }}">
+                    <div class="line-meta">{{ line.link_id or line.line_num }}</div>
+                    <div class="line-text">
+                        {# safe: line_html is ingest-produced corpus HTML, never user input #}
+                        {{ line.line_html | safe }}
+                    </div>
+                    <div class="line-actions">
+                        <button class="copy-citation-btn" title="Скопировать ссылку на стих" aria-label="Копировать ссылку">⎘</button>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
 {% endblock %}
 
 {% block extra_body %}
 <script>
+    // Scroll to highlighted line on initial load.
     window.addEventListener('DOMContentLoaded', () => {
         const highlighted = document.querySelector('.highlighted');
         if (highlighted) {
@@ -134,6 +392,7 @@
         }
     });
 </script>
+<script src="/static/scripts/reader.js"></script>
 
 {% if source_jsonld %}
 <script type="application/ld+json">
