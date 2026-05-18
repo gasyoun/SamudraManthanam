@@ -505,16 +505,18 @@ def test_index_route_for_yogasutra_renders_without_fixture_data():
 
 # ── /sitemap.xml includes compare hub + leaf URLs ────────────────────────────
 
-def test_sitemap_includes_compare_hub_pages_for_each_work(bhg_db):
-    r = client.get("/sitemap.xml")
+def test_sitemap_core_includes_compare_hub_pages_for_each_work(bhg_db):
+    # Hub pages live in /sitemap-core.xml after the v1.15.6 sitemap-index split.
+    r = client.get("/sitemap-core.xml")
     assert r.status_code == 200
     body = r.text
     for slug in ("bhagavadgita", "yogasutra", "shatakatrayam"):
         assert f"/compare/{slug}<" in body, f"hub for {slug} missing"
 
 
-def test_sitemap_includes_leaf_compare_urls_from_fixtures(bhg_db):
-    r = client.get("/sitemap.xml")
+def test_sitemap_compare_includes_leaf_urls_from_fixtures(bhg_db):
+    # Leaf URLs live in /sitemap-compare.xml after the split.
+    r = client.get("/sitemap-compare.xml")
     body = r.text
     # bhg_db seeded BhG 1.1 plus the 1.5-7 range — all four should appear.
     for path in ("/compare/bhagavadgita/1.1<", "/compare/bhagavadgita/1.5<",

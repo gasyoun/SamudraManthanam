@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.15.6] - 2026-05-18 (Feature: sitemap index split)
+
+### Changed
+- **`/sitemap.xml` is now a `<sitemapindex>`** referencing three child sitemaps with their own `<lastmod>` per spec. Replaces the previous flat 1,420-URL urlset; total URL coverage is identical but distributed:
+  - **`/sitemap-core.xml`** — 34 high-value URLs: root `/`, 3 work hubs (`/compare/{work}`), 30 popular-query landings (`/q/{slug}`). ~3 KB.
+  - **`/sitemap-sources.xml`** — one URL per source. ~13 KB / ~148 URLs on the live corpus.
+  - **`/sitemap-compare.xml`** — one URL per verse comparison page. ~129 KB / ~1,238 URLs on the live corpus.
+- **Existing `robots.txt` directive `Sitemap: /sitemap.xml` keeps working** — Google transparently follows sitemap-index references to children.
+
+### Why split
+At 1,420 URLs / 145 KB the flat sitemap wasn't near the 50K/50MB cap, but it mixed high-value hub pages with long-tail verse URLs in one document. The split lets crawlers prioritise: `sitemap-core.xml` fetches first (small, hub pages — priorities 0.9–1.0), `sitemap-sources.xml` next, the big `sitemap-compare.xml` last (lower priority 0.7 leaves). Splitting also makes incremental updates cheaper if/when per-sitemap `lastmod` ever diverges.
+
+### Implementation notes
+- Extracted helpers: `_xml_response`, `_render_urlset`, `_render_sitemapindex`, `_sitemap_base`, `_fetch_source_ids`. Three new endpoints, one refactored index endpoint.
+- Each child sitemap independently fetches `corpus_meta.generated_at` so the index's per-child `<lastmod>` can later diverge if we ever ingest per-sitemap (currently they all share the corpus build date).
+- Backward-compat for tests: failing fixture corpora produce empty `<urlset>` envelopes (XML still well-formed, no exception).
+
+### Tests
+- 7 reshaped/new tests in `test_sitemap_lastmod.py`: sitemap-index shape, per-child lastmod, well-formed XML across all 4 endpoints, malformed-corpus_meta fail-soft, format validation across the family.
+- `test_compare.py`, `test_popular_terms.py`, `test_funnel.py` updated to query the new child endpoints rather than the old flat sitemap.
+- 244/244 hermetic tests pass.
+
 ## [1.15.5] - 2026-05-17 (Feature: parent-work `isPartOf` on source pages)
 
 ### Added

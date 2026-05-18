@@ -196,27 +196,140 @@ async def _get_corpus_lastmod(db) -> str:
         return ""
 
 
-@app.get("/sitemap.xml")
-async def sitemap():
+def _xml_response(content: str):
+    """Wrap an XML string in a Response with the correct media type."""
     from fastapi.responses import Response
+    return Response(content=content, media_type="application/xml")
+
+
+def _render_urlset(url_entries: list[str]) -> str:
+    """Wrap a list of `<url>…</url>` strings in a sitemap urlset envelope."""
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(url_entries)
+        + "\n</urlset>\n"
+    )
+
+
+def _render_sitemapindex(sitemap_entries: list[str]) -> str:
+    """Wrap a list of `<sitemap>…</sitemap>` strings in a sitemapindex envelope."""
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(sitemap_entries)
+        + "\n</sitemapindex>\n"
+    )
+
+
+def _sitemap_base() -> str:
+    """XML-escaped `PUBLIC_BASE_URL` (operator-controlled; & must become &amp;)."""
     from xml.sax.saxutils import escape as xml_escape
+    raw_base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
+    return xml_escape(raw_base)
+
+
+async def _fetch_source_ids(db) -> list[int]:
+    async with db.execute("SELECT id FROM sources ORDER BY sort_order") as cursor:
+        return [row[0] for row in await cursor.fetchall()]
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Sitemap index + three child sitemaps.
+#
+# Why split: the previous flat sitemap reached 1,420 URLs and ~145 KB. Splitting
+# into core (~34) / sources (~148) / compare-leaves (~1,238) gives crawlers
+# clearer prioritisation signals and keeps the high-value hub pages off the same
+# document as the long-tail verse URLs. The robots.txt `Sitemap: /sitemap.xml`
+# directive still points at the index — Google transparently follows children.
+# ──────────────────────────────────────────────────────────────────────────────
+
+@app.get("/sitemap.xml")
+async def sitemap_index():
+    """Sitemap index pointing to the three child sitemaps."""
+    base = _sitemap_base()
+    lastmod = ""
+    try:
+        db = await get_db(settings.DB_PATH)
+        try:
+            lastmod = await _get_corpus_lastmod(db)
+        finally:
+            await db.close()
+    except Exception:
+        lastmod = ""
+
+    lm = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
+    entries = [
+        f"  <sitemap><loc>{base}/sitemap-core.xml</loc>{lm}</sitemap>",
+        f"  <sitemap><loc>{base}/sitemap-sources.xml</loc>{lm}</sitemap>",
+        f"  <sitemap><loc>{base}/sitemap-compare.xml</loc>{lm}</sitemap>",
+    ]
+    return _xml_response(_render_sitemapindex(entries))
+
+
+@app.get("/sitemap-core.xml")
+async def sitemap_core():
+    """High-value hub pages: root + 3 work hubs + 30 popular-query landings."""
+    from app.compare_config import WORKS
+    from app.popular_terms import POPULAR_TERMS
+
+    base = _sitemap_base()
+    lastmod = ""
+    try:
+        db = await get_db(settings.DB_PATH)
+        try:
+            lastmod = await _get_corpus_lastmod(db)
+        finally:
+            await db.close()
+    except Exception:
+        lastmod = ""
+
+    lm = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
+    urls = [f"  <url><loc>{base}/</loc>{lm}<priority>1.0</priority></url>"]
+    for work_slug in WORKS:
+        urls.append(f"  <url><loc>{base}/compare/{work_slug}</loc>{lm}<priority>0.9</priority></url>")
+    for slug in POPULAR_TERMS:
+        urls.append(f"  <url><loc>{base}/q/{slug}</loc>{lm}<priority>0.9</priority></url>")
+    return _xml_response(_render_urlset(urls))
+
+
+@app.get("/sitemap-sources.xml")
+async def sitemap_sources():
+    """One entry per `/sources/{id}` (~148 URLs on the live corpus)."""
+    base = _sitemap_base()
+    source_ids: list[int] = []
+    lastmod = ""
+    try:
+        db = await get_db(settings.DB_PATH)
+        try:
+            source_ids = await _fetch_source_ids(db)
+            lastmod = await _get_corpus_lastmod(db)
+        finally:
+            await db.close()
+    except Exception:
+        source_ids = []
+
+    lm = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
+    urls = [
+        f"  <url><loc>{base}/sources/{sid}</loc>{lm}<priority>0.8</priority></url>"
+        for sid in source_ids
+    ]
+    return _xml_response(_render_urlset(urls))
+
+
+@app.get("/sitemap-compare.xml")
+async def sitemap_compare():
+    """Leaf comparison URLs (~1,238 on the live corpus). Each verse where a
+    `/compare/{work}/{ch}.{v}` page would surface at least one hit."""
     from app.compare_config import WORKS
     from app.services.compare_service import enumerate_verses
 
-    raw_base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
-    base = xml_escape(raw_base)  # PUBLIC_BASE_URL is operator-controlled; & must become &amp;
-
-    # Collect source IDs and per-work verse coordinates. Both depend on the
-    # corpus DB; if it's briefly unavailable the sitemap still serves the
-    # root + any successfully-fetched lists, fail-soft.
-    source_ids: list[int] = []
+    base = _sitemap_base()
     work_verses: dict[str, list[tuple[int, int]]] = {}
     lastmod = ""
     try:
         db = await get_db(settings.DB_PATH)
         try:
-            async with db.execute("SELECT id FROM sources ORDER BY sort_order") as cursor:
-                source_ids = [row[0] for row in await cursor.fetchall()]
             for work_slug in WORKS:
                 try:
                     work_verses[work_slug] = await enumerate_verses(db, work_slug)
@@ -226,35 +339,15 @@ async def sitemap():
         finally:
             await db.close()
     except Exception:
-        source_ids = []
+        pass
 
-    # All URLs share the same lastmod because each one's content depends on
-    # the corpus build (source pages directly, /compare and /q via FTS hits).
-    # If we ever store per-source ingest timestamps we'd thread them through.
     lm = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
-
-    urls = [f"  <url><loc>{base}/</loc>{lm}<priority>1.0</priority></url>"]
-    for sid in source_ids:
-        urls.append(f"  <url><loc>{base}/sources/{sid}</loc>{lm}<priority>0.8</priority></url>")
-    # Per-work index hub pages (priority 0.9 — high-value SEO landing pages)
-    for work_slug in WORKS:
-        urls.append(f"  <url><loc>{base}/compare/{work_slug}</loc>{lm}<priority>0.9</priority></url>")
-    # Leaf comparison URLs (priority 0.7 — many of them, each unique on RuNet)
-    for work_slug, verses in work_verses.items():
-        for ch, v in verses:
-            urls.append(f"  <url><loc>{base}/compare/{work_slug}/{ch}.{v}</loc>{lm}<priority>0.7</priority></url>")
-    # Popular-query landing pages (priority 0.9 — high-intent SEO targets)
-    from app.popular_terms import POPULAR_TERMS
-    for slug in POPULAR_TERMS:
-        urls.append(f"  <url><loc>{base}/q/{slug}</loc>{lm}<priority>0.9</priority></url>")
-
-    content = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "\n".join(urls)
-        + "\n</urlset>\n"
-    )
-    return Response(content=content, media_type="application/xml")
+    urls = [
+        f"  <url><loc>{base}/compare/{work_slug}/{ch}.{v}</loc>{lm}<priority>0.7</priority></url>"
+        for work_slug, verses in work_verses.items()
+        for ch, v in verses
+    ]
+    return _xml_response(_render_urlset(urls))
 
 if __name__ == "__main__":
     import uvicorn

@@ -165,8 +165,9 @@ def test_page_emits_canonical_link():
 
 # ── Sitemap integration ──────────────────────────────────────────────────────
 
-def test_sitemap_includes_all_popular_term_urls():
-    r = client.get("/sitemap.xml")
+def test_sitemap_core_includes_all_popular_term_urls():
+    # Popular-term URLs live in /sitemap-core.xml after the v1.15.6 split.
+    r = client.get("/sitemap-core.xml")
     body = r.text
     for slug in POPULAR_TERMS:
         # Asserting `loc` end-tag to avoid partial matches.

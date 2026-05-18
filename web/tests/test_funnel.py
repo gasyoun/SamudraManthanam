@@ -13,24 +13,37 @@ client = TestClient(app)
 # ── Sitemap ───────────────────────────────────────────────────────────────────
 
 def test_sitemap_includes_all_sources(test_db):
-    """Every source must appear in the sitemap for SEO indexing."""
-    response = client.get("/sitemap.xml")
+    """Every source must appear in /sitemap-sources.xml after the v1.15.6
+    sitemap-index split. The root '/' moved to /sitemap-core.xml.
+    """
+    response = client.get("/sitemap-sources.xml")
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("application/xml")
     body = response.text
-    # Conftest seeds 2 sources
+    # Conftest seeds 2 sources.
     assert "/sources/1" in body
     assert "/sources/2" in body
-    assert "<priority>1.0</priority>" in body  # root entry preserved
+
+    # Root entry lives in the core sitemap.
+    core = client.get("/sitemap-core.xml")
+    assert "<priority>1.0</priority>" in core.text
 
 
 def test_sitemap_uses_public_base_url_when_set(test_db):
     old = settings.PUBLIC_BASE_URL
     settings.PUBLIC_BASE_URL = "https://example.com"
     try:
-        response = client.get("/sitemap.xml")
-        assert "https://example.com/sources/1" in response.text
-        assert "https://example.com/</loc>" in response.text
+        # Index references absolute child URLs.
+        idx = client.get("/sitemap.xml")
+        assert "https://example.com/sitemap-sources.xml" in idx.text
+
+        # Source entries in the child are absolute.
+        sources = client.get("/sitemap-sources.xml")
+        assert "https://example.com/sources/1" in sources.text
+
+        # Root '/' in the core sitemap is absolute.
+        core = client.get("/sitemap-core.xml")
+        assert "https://example.com/</loc>" in core.text
     finally:
         settings.PUBLIC_BASE_URL = old
 

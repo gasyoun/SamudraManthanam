@@ -88,50 +88,86 @@ async def test_get_corpus_lastmod_rejects_malformed_value(with_malformed_generat
     assert result == ""
 
 
-# ── HTTP-level: /sitemap.xml output ─────────────────────────────────────────
+# ── HTTP-level: /sitemap.xml output (now a sitemap index) ───────────────────
 
-def test_sitemap_emits_lastmod_when_corpus_meta_populated(with_generated_at):
-    expected = with_generated_at
+# After the v1.15.6 split, /sitemap.xml is a sitemapindex referencing three
+# child sitemaps. The index itself carries <lastmod> on each <sitemap> entry;
+# every child sitemap carries <lastmod> on each <url>.
+
+_CHILD_SITEMAPS = ("/sitemap-core.xml", "/sitemap-sources.xml", "/sitemap-compare.xml")
+
+
+def test_sitemap_index_is_a_sitemapindex_not_a_urlset():
     r = client.get("/sitemap.xml")
     assert r.status_code == 200
     body = r.text
-    # At least one <lastmod> with the date.
-    assert f"<lastmod>{expected}</lastmod>" in body
-    # Should appear on EVERY url entry, not just one — count parity.
-    url_count = body.count("<url>")
-    lastmod_count = body.count(f"<lastmod>{expected}</lastmod>")
-    assert url_count == lastmod_count, (
-        f"every <url> should carry <lastmod>: got {url_count} urls vs {lastmod_count} lastmods"
-    )
+    assert "<sitemapindex" in body
+    assert "<urlset" not in body
+    # All three children referenced.
+    for child in _CHILD_SITEMAPS:
+        assert f"<loc>{child}" in body or f"<loc></loc>".replace("</loc>", child + "</loc>") in body, (
+            f"index should reference {child}"
+        )
 
 
-def test_sitemap_omits_lastmod_when_corpus_meta_empty():
+def test_sitemap_index_emits_lastmod_per_child(with_generated_at):
     r = client.get("/sitemap.xml")
+    expected = with_generated_at
     body = r.text
-    # No populated fixture → no lastmod tags at all.
-    assert "<lastmod>" not in body
+    # Three children → three <lastmod> entries on the index.
+    assert body.count(f"<lastmod>{expected}</lastmod>") == 3
 
 
-def test_sitemap_remains_well_formed_xml_with_lastmod(with_generated_at):
+def test_child_sitemaps_emit_lastmod_when_corpus_meta_populated(with_generated_at):
+    expected = with_generated_at
+    for child in _CHILD_SITEMAPS:
+        r = client.get(child)
+        assert r.status_code == 200, f"{child} did not serve"
+        body = r.text
+        # When the child has no URLs (e.g. /sitemap-compare.xml under the
+        # hermetic fixture that seeds no compare-eligible sources), there's
+        # nothing to attach lastmod to — that's fine. When the child DOES
+        # have URLs, every one of them must carry lastmod.
+        url_count = body.count("<url>")
+        lastmod_count = body.count(f"<lastmod>{expected}</lastmod>")
+        if url_count:
+            assert url_count == lastmod_count, (
+                f"{child}: {url_count} <url> vs {lastmod_count} <lastmod>"
+            )
+
+
+def test_sitemap_index_omits_lastmod_when_corpus_meta_empty():
     r = client.get("/sitemap.xml")
-    # Must still parse — a stray malformed `<lastmod>` would crash XML parsing.
-    ET.fromstring(r.text)
+    assert "<lastmod>" not in r.text
+
+
+def test_child_sitemaps_omit_lastmod_when_corpus_meta_empty():
+    for child in _CHILD_SITEMAPS:
+        r = client.get(child)
+        assert "<lastmod>" not in r.text, f"{child} unexpectedly emitted lastmod"
+
+
+def test_all_sitemaps_remain_well_formed_xml(with_generated_at):
+    for path in ("/sitemap.xml",) + _CHILD_SITEMAPS:
+        r = client.get(path)
+        ET.fromstring(r.text)  # would raise on malformed XML
 
 
 def test_sitemap_lastmod_format_is_yyyy_mm_dd(with_generated_at):
-    r = client.get("/sitemap.xml")
-    # Spec-compliant lastmod is W3C-DTF; date-only YYYY-MM-DD is the
-    # simplest valid form.
-    matches = re.findall(r"<lastmod>([^<]+)</lastmod>", r.text)
-    assert matches, "no <lastmod> tags found"
-    for m in matches:
-        assert re.match(r"^\d{4}-\d{2}-\d{2}$", m), f"bad lastmod format: {m}"
+    # Spec-compliant lastmod is W3C-DTF; date-only YYYY-MM-DD is sufficient.
+    # Check across all four sitemaps.
+    for path in ("/sitemap.xml",) + _CHILD_SITEMAPS:
+        r = client.get(path)
+        matches = re.findall(r"<lastmod>([^<]+)</lastmod>", r.text)
+        for m in matches:
+            assert re.match(r"^\d{4}-\d{2}-\d{2}$", m), f"{path}: bad lastmod {m!r}"
 
 
 def test_sitemap_still_serves_when_corpus_meta_malformed(with_malformed_generated_at):
-    # Malformed corpus_meta.generated_at → fall back to no-lastmod; the
-    # sitemap remains valid and serveable.
-    r = client.get("/sitemap.xml")
-    assert r.status_code == 200
-    assert "<lastmod>" not in r.text
-    ET.fromstring(r.text)  # still well-formed
+    # Malformed corpus_meta.generated_at → fall back to no-lastmod across all
+    # four sitemaps; everything remains valid and serveable.
+    for path in ("/sitemap.xml",) + _CHILD_SITEMAPS:
+        r = client.get(path)
+        assert r.status_code == 200, f"{path} did not serve"
+        assert "<lastmod>" not in r.text, f"{path} leaked lastmod from malformed data"
+        ET.fromstring(r.text)
