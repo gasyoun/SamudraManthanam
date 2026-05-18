@@ -28,6 +28,7 @@ from app.compare_config import WORKS
 class VerseHit:
     source_filename: str
     source_id: int          # current numeric source id (unstable across re-ingests)
+    source_slug: str        # stable slug (used in template URL building)
     source_title: str
     label: str              # human-readable per compare_config (e.g. "Смирнов 1977")
     role: str               # "translation" | "commentary" | "anthology" | "context"
@@ -142,8 +143,8 @@ async def _fetch_verse(db, filename: str, ch: int, v: int) -> tuple[dict | None,
     Returns (row_dict_or_None, is_range_match).
     """
     sql = """
-        SELECT cl.source_id, s.title AS source_title, cl.link_id,
-               cl.line_html, cl.line_text, cl.line_num
+        SELECT cl.source_id, s.title AS source_title, s.slug AS source_slug,
+               cl.link_id, cl.line_html, cl.line_text, cl.line_num
         FROM corpus_lines cl
         JOIN sources s ON cl.source_id = s.id
         WHERE s.filename = ? AND cl.link_id = ?
@@ -155,8 +156,8 @@ async def _fetch_verse(db, filename: str, ch: int, v: int) -> tuple[dict | None,
             return dict(row), False
 
     sql_range = """
-        SELECT cl.source_id, s.title AS source_title, cl.link_id,
-               cl.line_html, cl.line_text, cl.line_num
+        SELECT cl.source_id, s.title AS source_title, s.slug AS source_slug,
+               cl.link_id, cl.line_html, cl.line_text, cl.line_num
         FROM corpus_lines cl
         JOIN sources s ON cl.source_id = s.id
         WHERE s.filename = ? AND cl.link_id GLOB ?
@@ -173,6 +174,7 @@ def _make_hit(src_cfg: dict, row: dict, is_range: bool) -> VerseHit:
     return VerseHit(
         source_filename=src_cfg["filename"],
         source_id=row["source_id"],
+        source_slug=row["source_slug"] or "",
         source_title=row["source_title"],
         label=src_cfg["label"],
         role=src_cfg["role"],

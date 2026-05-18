@@ -57,21 +57,21 @@
                                 title="Показать контекст (±5 строк)"
                                 style="background:none;border:1px solid #ddd;border-radius:3px;cursor:pointer;font-size:0.7rem;padding:1px 5px;color:#aaa;line-height:1.4;">≡</button>
                         <button class="btn-copy-citation"
-                                data-citation-url="/sources/{{ item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
+                                data-citation-url="/sources/{{ item.source_slug or item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
                                 title="Скопировать постоянную ссылку"
                                 style="background:none;border:1px solid #ddd;border-radius:3px;cursor:pointer;font-size:0.7rem;padding:1px 5px;color:#aaa;line-height:1.4;">⎘</button>
                         <button class="btn-share-tg"
-                                data-share-url="/sources/{{ item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
+                                data-share-url="/sources/{{ item.source_slug or item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
                                 data-share-title="{{ item.source_title or '' }}"
                                 title="Поделиться в Telegram"
                                 style="background:none;border:1px solid #ddd;border-radius:3px;cursor:pointer;font-size:0.7rem;padding:1px 5px;color:#2aabee;line-height:1.4;font-weight:600;">TG</button>
                         <button class="btn-share-vk"
-                                data-share-url="/sources/{{ item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
+                                data-share-url="/sources/{{ item.source_slug or item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
                                 data-share-title="{{ item.source_title or '' }}"
                                 title="Поделиться ВКонтакте"
                                 style="background:none;border:1px solid #ddd;border-radius:3px;cursor:pointer;font-size:0.7rem;padding:1px 5px;color:#4a76a8;line-height:1.4;font-weight:600;">VK</button>
                         <button class="btn-share-wa"
-                                data-share-url="/sources/{{ item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
+                                data-share-url="/sources/{{ item.source_slug or item.source_id }}/anchor/{{ item.link_id or item.line_num }}"
                                 data-share-title="{{ item.source_title or '' }}"
                                 title="Поделиться в WhatsApp"
                                 style="background:none;border:1px solid #ddd;border-radius:3px;cursor:pointer;font-size:0.7rem;padding:1px 5px;color:#25d366;line-height:1.4;font-weight:600;">WA</button>
@@ -82,7 +82,7 @@
                            title="Сравнить переводы этого стиха"
                            style="background:none;border:1px solid #e67e22;border-radius:3px;font-size:0.7rem;padding:1px 5px;color:#e67e22;line-height:1.4;font-weight:600;text-decoration:none;">⇔ переводы</a>
                         {% endif %}
-                        <a href="/sources/{{ item.source_id }}?highlight={{ item.line_num }}" target="_blank" title="Открыть в источнике" style="color: #e67e22; text-decoration: none; font-weight: 600;">
+                        <a href="/sources/{{ item.source_slug or item.source_id }}?highlight={{ item.line_num }}" target="_blank" title="Открыть в источнике" style="color: #e67e22; text-decoration: none; font-weight: 600;">
                             {{ item.link_id or item.line_num }} ↗
                         </a>
                     </div>

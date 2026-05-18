@@ -3,6 +3,7 @@ import os
 from typing import List, Dict, Any, Optional
 
 from app.services.compare_service import compare_url_for_hit
+from app.services.slug import derive_slug
 
 # Setup Jinja2 environment with autoescape
 template_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "templates")
@@ -63,6 +64,10 @@ def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bo
             r.get("source_filename", "") or "",
             r.get("link_id", "") or "",
         )
+        # Derive slug from filename so the template can emit slug-form source
+        # URLs without an extra DB lookup. Filename comes from the SQL JOIN
+        # in search_service; derive_slug is cheap (regex + transliteration table).
+        r["source_slug"] = derive_slug(r.get("source_filename", "") or "")
         grouped[sid]["items"].append(r)
 
     sorted_groups = list(grouped.values())  # dict preserves insertion order (Python 3.7+)

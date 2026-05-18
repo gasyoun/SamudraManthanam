@@ -13,16 +13,18 @@ client = TestClient(app)
 # ── Sitemap ───────────────────────────────────────────────────────────────────
 
 def test_sitemap_includes_all_sources(test_db):
-    """Every source must appear in /sitemap-sources.xml after the v1.15.6
-    sitemap-index split. The root '/' moved to /sitemap-core.xml.
+    """Every source must appear in /sitemap-sources.xml using its stable
+    slug (post v1.16.2 — numeric IDs renumber on re-ingest, slugs don't).
+    The root '/' lives in /sitemap-core.xml.
     """
     response = client.get("/sitemap-sources.xml")
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("application/xml")
     body = response.text
-    # Conftest seeds 2 sources.
-    assert "/sources/1" in body
-    assert "/sources/2" in body
+    # Conftest seeds sources with filenames source1.html / source2.html →
+    # slugs 'source1' / 'source2'.
+    assert "/sources/source1" in body
+    assert "/sources/source2" in body
 
     # Root entry lives in the core sitemap.
     core = client.get("/sitemap-core.xml")
@@ -37,9 +39,9 @@ def test_sitemap_uses_public_base_url_when_set(test_db):
         idx = client.get("/sitemap.xml")
         assert "https://example.com/sitemap-sources.xml" in idx.text
 
-        # Source entries in the child are absolute.
+        # Source entries in the child are absolute slug URLs.
         sources = client.get("/sitemap-sources.xml")
-        assert "https://example.com/sources/1" in sources.text
+        assert "https://example.com/sources/source1" in sources.text
 
         # Root '/' in the core sitemap is absolute.
         core = client.get("/sitemap-core.xml")

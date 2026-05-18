@@ -16,7 +16,7 @@ import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
 
-from app.main import app, _fetch_parallel_source_ids
+from app.main import app, _fetch_parallel_source_slugs
 from app.settings import settings
 
 client = TestClient(app)
@@ -29,11 +29,12 @@ _XHTML_NS = "http://www.w3.org/1999/xhtml"
 
 @pytest_asyncio.fixture
 async def parallel_source_in_corpus():
-    """Insert a parallel source (lines carry `chapter_block iast`) at sid=800."""
+    """Insert a parallel source (lines carry `chapter_block iast`). Yields
+    its slug — tests assert on slug-based sitemap URLs."""
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute(
-        "INSERT INTO sources (id, filename, title, sort_order) "
-        "VALUES (800, 'p-src.html', 'Parallel test source', 800)"
+        "INSERT INTO sources (id, filename, title, sort_order, slug) "
+        "VALUES (800, 'p-src.html', 'Parallel test source', 800, 'p-src')"
     )
     await db.execute(
         "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num, link_id, chapter) "
@@ -42,7 +43,7 @@ async def parallel_source_in_corpus():
     )
     await db.commit()
     await db.close()
-    yield 800
+    yield "p-src"
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute("DELETE FROM corpus_lines WHERE source_id = 800")
     await db.execute("DELETE FROM sources WHERE id = 800")
@@ -52,11 +53,11 @@ async def parallel_source_in_corpus():
 
 @pytest_asyncio.fixture
 async def non_parallel_source_in_corpus():
-    """Insert a Russian-only source at sid=801 (no iast marker)."""
+    """Insert a Russian-only source (no iast marker). Yields slug."""
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute(
-        "INSERT INTO sources (id, filename, title, sort_order) "
-        "VALUES (801, 'np-src.html', 'Russian-only test source', 801)"
+        "INSERT INTO sources (id, filename, title, sort_order, slug) "
+        "VALUES (801, 'np-src.html', 'Russian-only test source', 801, 'np-src')"
     )
     await db.execute(
         "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num, link_id, chapter) "
@@ -64,7 +65,7 @@ async def non_parallel_source_in_corpus():
     )
     await db.commit()
     await db.close()
-    yield 801
+    yield "np-src"
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute("DELETE FROM corpus_lines WHERE source_id = 801")
     await db.execute("DELETE FROM sources WHERE id = 801")
@@ -75,23 +76,23 @@ async def non_parallel_source_in_corpus():
 # ── _fetch_parallel_source_ids (SQL helper) ─────────────────────────────────
 
 @pytest.mark.asyncio
-async def test_fetch_parallel_source_ids_finds_parallel(parallel_source_in_corpus):
+async def test_fetch_parallel_source_slugs_finds_parallel(parallel_source_in_corpus):
     db = await aiosqlite.connect(settings.DB_PATH)
     try:
-        ids = await _fetch_parallel_source_ids(db)
+        slugs = await _fetch_parallel_source_slugs(db)
     finally:
         await db.close()
-    assert parallel_source_in_corpus in ids
+    assert parallel_source_in_corpus in slugs
 
 
 @pytest.mark.asyncio
-async def test_fetch_parallel_source_ids_excludes_non_parallel(non_parallel_source_in_corpus):
+async def test_fetch_parallel_source_slugs_excludes_non_parallel(non_parallel_source_in_corpus):
     db = await aiosqlite.connect(settings.DB_PATH)
     try:
-        ids = await _fetch_parallel_source_ids(db)
+        slugs = await _fetch_parallel_source_slugs(db)
     finally:
         await db.close()
-    assert non_parallel_source_in_corpus not in ids
+    assert non_parallel_source_in_corpus not in slugs
 
 
 # ── HTTP integration: sitemap-sources with xhtml:link ───────────────────────
@@ -112,12 +113,12 @@ def test_sitemap_sources_omits_xhtml_namespace_when_no_parallel_sources():
 def test_sitemap_sources_emits_three_url_entries_per_parallel_source(parallel_source_in_corpus):
     r = client.get("/sitemap-sources.xml")
     body = r.text
-    sid = parallel_source_in_corpus
+    slug = parallel_source_in_corpus
     # Three distinct <loc> values: bare, ?lang=ru, ?lang=sa.
     for loc in (
-        f"<loc>/sources/{sid}</loc>",
-        f"<loc>/sources/{sid}?lang=ru</loc>",
-        f"<loc>/sources/{sid}?lang=sa</loc>",
+        f"<loc>/sources/{slug}</loc>",
+        f"<loc>/sources/{slug}?lang=ru</loc>",
+        f"<loc>/sources/{slug}?lang=sa</loc>",
     ):
         assert loc in body, f"missing <url> for {loc}"
 
@@ -125,33 +126,32 @@ def test_sitemap_sources_emits_three_url_entries_per_parallel_source(parallel_so
 def test_sitemap_sources_non_parallel_source_emits_single_entry(non_parallel_source_in_corpus):
     r = client.get("/sitemap-sources.xml")
     body = r.text
-    sid = non_parallel_source_in_corpus
+    slug = non_parallel_source_in_corpus
     # Bare URL appears; ?lang= variants do NOT.
-    assert f"<loc>/sources/{sid}</loc>" in body
-    assert f"/sources/{sid}?lang=ru" not in body
-    assert f"/sources/{sid}?lang=sa" not in body
+    assert f"<loc>/sources/{slug}</loc>" in body
+    assert f"/sources/{slug}?lang=ru" not in body
+    assert f"/sources/{slug}?lang=sa" not in body
 
 
 def test_sitemap_sources_parallel_entries_carry_full_alternate_set(parallel_source_in_corpus):
     r = client.get("/sitemap-sources.xml")
     body = r.text
-    sid = parallel_source_in_corpus
+    slug = parallel_source_in_corpus
 
     # Find each <url> for this source and verify it has all three alternates.
-    # Match the entire <url>…</url> block, then check substrings inside.
-    pattern = re.compile(rf'<url><loc>/sources/{sid}(?:\?lang=(?:ru|sa))?</loc>.*?</url>', re.DOTALL)
+    pattern = re.compile(rf'<url><loc>/sources/{slug}(?:\?lang=(?:ru|sa))?</loc>.*?</url>', re.DOTALL)
     matches = pattern.findall(body)
-    assert len(matches) == 3, f"expected 3 <url> entries for sid={sid}, got {len(matches)}"
+    assert len(matches) == 3, f"expected 3 <url> entries for slug={slug}, got {len(matches)}"
 
     expected_alts = (
-        f'<xhtml:link rel="alternate" hreflang="x-default" href="/sources/{sid}"/>',
-        f'<xhtml:link rel="alternate" hreflang="ru" href="/sources/{sid}?lang=ru"/>',
-        f'<xhtml:link rel="alternate" hreflang="sa" href="/sources/{sid}?lang=sa"/>',
+        f'<xhtml:link rel="alternate" hreflang="x-default" href="/sources/{slug}"/>',
+        f'<xhtml:link rel="alternate" hreflang="ru" href="/sources/{slug}?lang=ru"/>',
+        f'<xhtml:link rel="alternate" hreflang="sa" href="/sources/{slug}?lang=sa"/>',
     )
     for url_block in matches:
         for alt in expected_alts:
             assert alt in url_block, (
-                f"<url> block for sid={sid} missing alternate {alt!r}\nBlock was: {url_block[:300]}"
+                f"<url> block for slug={slug} missing alternate {alt!r}\nBlock was: {url_block[:300]}"
             )
 
 
@@ -173,18 +173,18 @@ def test_sitemap_sources_alternates_are_self_referential(parallel_source_in_corp
     # — Google rejects unilateral hreflang declarations.
     r = client.get("/sitemap-sources.xml")
     body = r.text
-    sid = parallel_source_in_corpus
+    slug = parallel_source_in_corpus
 
     # For the ?lang=ru variant, the ru alternate must point at it.
     ru_block = re.search(
-        rf'<url><loc>/sources/{sid}\?lang=ru</loc>.*?</url>', body, re.DOTALL,
+        rf'<url><loc>/sources/{slug}\?lang=ru</loc>.*?</url>', body, re.DOTALL,
     )
     assert ru_block is not None
-    assert f'hreflang="ru" href="/sources/{sid}?lang=ru"' in ru_block.group(0)
+    assert f'hreflang="ru" href="/sources/{slug}?lang=ru"' in ru_block.group(0)
 
     # For the ?lang=sa variant, the sa alternate must point at it.
     sa_block = re.search(
-        rf'<url><loc>/sources/{sid}\?lang=sa</loc>.*?</url>', body, re.DOTALL,
+        rf'<url><loc>/sources/{slug}\?lang=sa</loc>.*?</url>', body, re.DOTALL,
     )
     assert sa_block is not None
-    assert f'hreflang="sa" href="/sources/{sid}?lang=sa"' in sa_block.group(0)
+    assert f'hreflang="sa" href="/sources/{slug}?lang=sa"' in sa_block.group(0)

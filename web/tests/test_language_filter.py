@@ -143,8 +143,8 @@ async def parallel_source():
     divs — the kind that should get hreflang and respond to ?lang=."""
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute(
-        "INSERT INTO sources (id, filename, title, sort_order) "
-        "VALUES (700, 'parallel-src.html', 'Parallel test source', 700)"
+        "INSERT INTO sources (id, filename, title, sort_order, slug) "
+        "VALUES (700, 'parallel-src.html', 'Parallel test source', 700, 'parallel-src')"
     )
     # 3 lines, all with parallel structure.
     for i, link_id in enumerate(["1.1", "1.2", "1.3"], start=1):
@@ -163,7 +163,9 @@ async def parallel_source():
         )
     await db.commit()
     await db.close()
-    yield 700
+    # Yield the slug — tests should hit the canonical slug URL, not the
+    # legacy numeric form (which 301-redirects but obscures asserts).
+    yield "parallel-src"
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute("DELETE FROM corpus_lines WHERE source_id = 700")
     await db.execute("DELETE FROM sources WHERE id = 700")
@@ -176,8 +178,8 @@ async def non_parallel_source():
     """Seed a source with Russian-only content — hreflang should NOT emit."""
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute(
-        "INSERT INTO sources (id, filename, title, sort_order) "
-        "VALUES (701, 'rus-only-src.html', 'Russian-only test source', 701)"
+        "INSERT INTO sources (id, filename, title, sort_order, slug) "
+        "VALUES (701, 'rus-only-src.html', 'Russian-only test source', 701, 'rus-only-src')"
     )
     await db.execute(
         "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num, link_id, chapter) "
@@ -186,7 +188,7 @@ async def non_parallel_source():
     )
     await db.commit()
     await db.close()
-    yield 701
+    yield "rus-only-src"
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute("DELETE FROM corpus_lines WHERE source_id = 701")
     await db.execute("DELETE FROM sources WHERE id = 701")

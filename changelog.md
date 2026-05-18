@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.16.2] - 2026-05-18 (Feature: slug-based source URLs)
+
+### Added
+- **`/sources/{slug}` is now the canonical source URL**. Slugs are derived from filename (extension stripped, Cyrillic transliterated to Latin, lowercased, hyphen-normalised) and stored in a new `sources.slug` column with a unique index. They survive re-ingests — unlike the numeric `id` which renumbers on every rebuild.
+- **`/sources/{int_id}` issues a 301 redirect** to the canonical slug URL with query string preserved. Lets Google migrate its index without 404s on existing bookmarks.
+- **`web/app/services/slug.py`** — pure `derive_slug` + `make_unique_slug` (collision suffix `-2`, `-3`, …) + Russian→Latin transliteration table. Live verification: 148/148 sources got clean unique slugs without disambiguation suffixes.
+- **Startup migration** (`_ensure_slug_column_and_backfill`) in lifespan: idempotent ALTER TABLE + backfill that runs every boot. Pre-existing corpus.db files transparently gain slug routing on first start of the new code; no operator action required.
+- **Ingest writes slug at insert time** so freshly-built corpus.db ships ready.
+
+### Changed
+- `result_fragment.html`, `compare_view.html`, `source_view.html` emit slug URLs in result links, citation copy URLs, social share URLs, and JSON-LD `@id`s.
+- `/sitemap-sources.xml` emits slug URLs in `<loc>` and `<xhtml:link>` alternates — sitemap entries now survive re-ingest renumbering.
+- `_fetch_source_slugs`, `_fetch_parallel_source_slugs` replace the numeric-ID variants in the sitemap pipeline (legacy `_fetch_source_ids` kept for backward compat).
+- `build_line_quotation`, `_line_haspart_entry` now accept `slug=` instead of `source_id=` and emit slug-form anchor URLs in JSON-LD `@id` and `url`.
+- `compare_service.VerseHit` gains `source_slug` so the compare page can deep-link to the slug-form source URL.
+
+### Tests
+- 24 new tests in `test_slug.py`: transliteration table (all letter classes, multi-char mappings ё/щ/ц/ч/ш, hard/soft signs, non-Cyrillic pass-through, mixed script), `derive_slug` on real-corpus filename shapes (ASCII, Cyrillic, mixed punctuation, underscore preservation, extension stripping), `make_unique_slug` collision resolution and purity.
+- Fixtures in `test_source_metadata.py`, `test_language_filter.py`, `test_sitemap_hreflang.py`, `test_funnel.py`, `conftest.py` updated to seed `sources.slug` and yield slug values.
+- 299/299 hermetic tests pass.
+
+### Live corpus verification
+- Migration: 148/148 sources got unique slugs, zero collisions needed `-2` suffix.
+- Cyrillic transliteration works: `Словарь Смирнова.txt` → `slovar-smirnova`, `Кнауэр.txt` → `knauer`, `Индуизм. Джайнизм. Сикхизм.txt` → `induizm-dzhaynizm-sikkhizm`, `Эрман-Темкин.txt` → `erman-temkin`.
+- Routing: `/sources/bhagavadgita-smirnov` → 200; `/sources/219` → 301 → `/sources/bhagavadgita-smirnov`; `/sources/slovar-smirnova` → 200; `?lang=sa` filter and hreflang alternates work on slug URLs; `/sources/{slug}/anchor/{link_id}` redirects to `/sources/{slug}?highlight={link_id}`.
+
+### Notes
+- Old `/sources/{int_id}` URLs in third-party indexes get 301'd cleanly; after Google re-crawls, only slug URLs remain in the index.
+- `make_unique_slug` falls back to literal "source" for pathological filenames like ".html". None observed in live corpus.
+
 ## [1.16.1] - 2026-05-18 (Feature: `<xhtml:link>` alternates in /sitemap-sources.xml)
 
 ### Added

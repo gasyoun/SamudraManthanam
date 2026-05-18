@@ -11,6 +11,7 @@ sys.path.append(web_dir)
 sys.path.append(script_dir)
 
 from app.db import get_db, create_schema
+from app.services.slug import make_unique_slug
 from parse_html import parse_corpus_file, get_source_title
 
 def get_sha256(file_path):
@@ -50,6 +51,11 @@ async def ingest(corpus_path: str, db_path: str):
                     await db.execute("DELETE FROM sources WHERE id = ?", (sid,))
         await db.commit()
 
+    # Slug uniqueness tracking — built once before the per-source loop, then
+    # extended as each new slug is minted. This lets `make_unique_slug`
+    # disambiguate across the entire ingest batch in one pass.
+    seen_slugs: set[str] = set()
+
     for idx, filename in enumerate(filenames):
         file_path = os.path.join(corpus_path, "Data", filename)
         if not os.path.exists(file_path):
@@ -59,6 +65,8 @@ async def ingest(corpus_path: str, db_path: str):
         title = get_source_title(file_path)
         sha256 = get_sha256(file_path)
         size = os.path.getsize(file_path)
+        slug = make_unique_slug(filename, seen_slugs)
+        seen_slugs.add(slug)
 
         # Clean up existing data for this filename to ensure idempotency
         async with db.execute("SELECT id FROM sources WHERE filename = ?", (filename,)) as c:
@@ -70,8 +78,9 @@ async def ingest(corpus_path: str, db_path: str):
 
         # Insert fresh source record
         cursor = await db.execute(
-            "INSERT INTO sources (filename, title, sort_order, sha256, size) VALUES (?, ?, ?, ?, ?)",
-            (filename, title, idx, sha256, size)
+            "INSERT INTO sources (filename, title, sort_order, sha256, size, slug) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (filename, title, idx, sha256, size, slug)
         )
         source_id = cursor.lastrowid
         

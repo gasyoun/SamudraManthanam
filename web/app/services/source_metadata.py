@@ -161,21 +161,25 @@ def _truncate(text: str, max_chars: int = _MAX_QUOTATION_TEXT) -> str:
     return text[:max_chars].rstrip() + "…"
 
 
-def _line_anchor_url(*, base_url: str, source_id: int, link_id: str | None) -> str:
+def _line_anchor_url(*, base_url: str, slug: str, link_id: str | None) -> str:
     """Stable anchor URL for a single verse on a source page.
 
     Uses `?highlight=` rather than `#fragment` because Google indexes query
     strings as distinct URLs but treats `#fragment` as a within-page hash —
     deep links via `?highlight=` get their own SERP entries.
+
+    `slug` is the slug-form source identifier (preferred over numeric id
+    for URL stability across re-ingests).
     """
-    safe = quote(link_id or "", safe="")
-    return f"{base_url}/sources/{source_id}?highlight={safe}"
+    safe_link = quote(link_id or "", safe="")
+    safe_slug = quote(slug or "", safe="")
+    return f"{base_url}/sources/{safe_slug}?highlight={safe_link}"
 
 
 def build_line_quotation(
     *,
     line: dict,
-    source_id: int,
+    slug: str,
     source_url: str,
     base_url: str = "",
     in_language: str = "ru",
@@ -191,27 +195,28 @@ def build_line_quotation(
     the page is serving Sanskrit-IAST-only via `?lang=sa`.
     """
     link_id = line.get("link_id") or str(line.get("line_num") or "")
+    anchor_url = _line_anchor_url(base_url=base_url, slug=slug, link_id=link_id)
     quotation: dict = {
         "@context": "https://schema.org",
         "@type": "Quotation",
-        "@id": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
+        "@id": anchor_url,
         "text": _truncate(line.get("line_text", "")),
         "inLanguage": in_language,
         "isPartOf": {"@id": source_url},
-        "url": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
+        "url": anchor_url,
     }
     if line.get("chapter"):
         quotation["citation"] = f"{line['chapter']}, {link_id}" if link_id else line["chapter"]
     return quotation
 
 
-def _line_haspart_entry(*, line: dict, source_id: int, base_url: str) -> dict:
+def _line_haspart_entry(*, line: dict, slug: str, base_url: str) -> dict:
     """Compact Quotation for inclusion inside Book.hasPart (no @context, no
     redundant @id collisions; relies on the parent graph for namespacing)."""
     link_id = line.get("link_id") or str(line.get("line_num") or "")
     return {
         "@type": "Quotation",
-        "@id": _line_anchor_url(base_url=base_url, source_id=source_id, link_id=link_id),
+        "@id": _line_anchor_url(base_url=base_url, slug=slug, link_id=link_id),
         "text": _truncate(line.get("line_text", "")),
         "inLanguage": "ru",
     }
@@ -304,10 +309,10 @@ def build_source_jsonld(
     if sample_lines:
         verse_lines = [l for l in sample_lines if l.get("line_text")]
         jsonld["numberOfItems"] = len(verse_lines)
-        source_id = source.get("id")
-        if source_id is not None:
+        slug = source.get("slug")
+        if slug:
             jsonld["hasPart"] = [
-                _line_haspart_entry(line=l, source_id=source_id, base_url=base_url)
+                _line_haspart_entry(line=l, slug=slug, base_url=base_url)
                 for l in verse_lines[:sample_size]
             ]
 

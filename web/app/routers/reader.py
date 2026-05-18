@@ -22,9 +22,9 @@ templates = Jinja2Templates(directory="templates")
 
 
 def _build_variant_url(
-    *, base: str, source_id: int, highlight: str | None, lang: str | None
+    *, base: str, slug: str, highlight: str | None, lang: str | None
 ) -> str:
-    """Build a /sources/{id} URL preserving optional highlight and lang.
+    """Build a /sources/{slug} URL preserving optional highlight and lang.
 
     Used for both the canonical URL of the current variant AND for each
     hreflang alternate. Centralised so the query-string order stays
@@ -37,19 +37,27 @@ def _build_variant_url(
         qs.append(("highlight", highlight))
     if lang:
         qs.append(("lang", lang))
-    path = f"{base}/sources/{source_id}"
+    path = f"{base}/sources/{quote(slug)}"
     return f"{path}?{urlencode(qs)}" if qs else path
 
 
-@router.get("/{source_id}", response_class=HTMLResponse)
+@router.get("/{slug_or_id}", response_class=HTMLResponse)
 async def view_source(
     request: Request,
-    source_id: int,
+    slug_or_id: str,
     highlight: str | None = None,
     lang: str | None = Query(None, max_length=8),
 ):
     """Render a source page with optional `?highlight=` deep-link and
     `?lang=ru|sa` filter on parallel-content sources.
+
+    Accepts both forms for backward compatibility with bookmarks / external
+    indexes:
+
+    * `/sources/{slug}` (canonical) — looks up by `sources.slug`.
+    * `/sources/{int_id}` (legacy) — looks up by `sources.id`, then 301
+      redirects to the slug URL. Lets Google transition its index toward
+      the stable URL.
 
     `lang` is silently normalised — unknown values are ignored (treated as
     "no filter") rather than rejected, so a stray bookmark won't 4xx. The
@@ -60,10 +68,29 @@ async def view_source(
 
     db = await get_db(settings.DB_PATH)
     try:
-        async with db.execute("SELECT * FROM sources WHERE id = ?", (source_id,)) as cursor:
+        # Numeric path param → legacy ID. Look up, redirect to slug URL.
+        if slug_or_id.isdigit():
+            async with db.execute(
+                "SELECT slug FROM sources WHERE id = ?", (int(slug_or_id),),
+            ) as cur:
+                legacy = await cur.fetchone()
+            if not legacy or not legacy[0]:
+                raise HTTPException(status_code=404, detail="Source not found")
+            # Preserve query string on the redirect so highlight/lang survive.
+            target = f"/sources/{quote(legacy[0])}"
+            qs = request.url.query
+            if qs:
+                target += f"?{qs}"
+            return RedirectResponse(target, status_code=301)
+
+        # Slug lookup.
+        async with db.execute(
+            "SELECT * FROM sources WHERE slug = ?", (slug_or_id,),
+        ) as cursor:
             source = await cursor.fetchone()
         if not source:
             raise HTTPException(status_code=404, detail="Source not found")
+        source_id = source["id"]
 
         # `line_text` is used by JSON-LD Quotation entities; the template
         # uses `line_html` for display.
@@ -92,6 +119,7 @@ async def view_source(
                 )
 
         source_dict = dict(source)
+        slug = source_dict["slug"]
         base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
         from app.main import _ss_link
 
@@ -100,7 +128,7 @@ async def view_source(
         # `?lang=` settings emit different canonical URLs so each variant
         # has a clean identity for search engines.
         canonical_url = _build_variant_url(
-            base=base, source_id=source_id, highlight=highlight, lang=normalized_lang,
+            base=base, slug=slug, highlight=highlight, lang=normalized_lang,
         )
 
         # Build hreflang alternates only for parallel sources. For pages
@@ -112,19 +140,19 @@ async def view_source(
                 {
                     "hreflang": "x-default",
                     "url": _build_variant_url(
-                        base=base, source_id=source_id, highlight=highlight, lang=None,
+                        base=base, slug=slug, highlight=highlight, lang=None,
                     ),
                 },
                 {
                     "hreflang": "ru",
                     "url": _build_variant_url(
-                        base=base, source_id=source_id, highlight=highlight, lang="ru",
+                        base=base, slug=slug, highlight=highlight, lang="ru",
                     ),
                 },
                 {
                     "hreflang": "sa",
                     "url": _build_variant_url(
-                        base=base, source_id=source_id, highlight=highlight, lang="sa",
+                        base=base, slug=slug, highlight=highlight, lang="sa",
                     ),
                 },
             ]
@@ -159,7 +187,7 @@ async def view_source(
             if highlighted_line:
                 highlight_jsonld = build_line_quotation(
                     line=highlighted_line,
-                    source_id=source_id,
+                    slug=slug,
                     source_url=canonical_url,
                     base_url=base,
                     in_language=book_in_language,
@@ -190,18 +218,27 @@ async def view_source(
         await db.close()
 
 
-@router.get("/{source_id}/line/{line_num}", response_class=HTMLResponse)
-async def view_line_context(request: Request, source_id: int, line_num: int):
-    return await view_source(request, source_id, highlight=str(line_num))
+@router.get("/{slug_or_id}/line/{line_num}", response_class=HTMLResponse)
+async def view_line_context(request: Request, slug_or_id: str, line_num: int):
+    """Render a source page with the line highlighted. Accepts both slug
+    and legacy numeric forms; `view_source` handles the disambiguation."""
+    return await view_source(request, slug_or_id, highlight=str(line_num))
 
 
-@router.get("/{source_id}/anchor/{link_id}", response_class=RedirectResponse)
-async def anchor_redirect(source_id: int, link_id: str):
+@router.get("/{slug_or_id}/anchor/{link_id}", response_class=RedirectResponse)
+async def anchor_redirect(slug_or_id: str, link_id: str):
     """Stable permalink for a line identified by its link_id attribute.
 
     `link_id` may contain characters that have meaning in URLs (`&`, `#`, `?`, `=`).
-    quote() with `safe=''` ensures all of them are percent-encoded so the
+    `quote(..., safe='')` ensures all of them are percent-encoded so the
     `highlight` query param survives intact through the redirect.
+
+    The redirect target preserves whatever path form the caller used —
+    slug or legacy numeric. Numeric URLs hitting `view_source` will then
+    cascade to a second 301 onto the canonical slug URL.
     """
     safe_link = quote(link_id, safe="")
-    return RedirectResponse(url=f"/sources/{source_id}?highlight={safe_link}", status_code=302)
+    safe_path = quote(slug_or_id, safe="")
+    return RedirectResponse(
+        url=f"/sources/{safe_path}?highlight={safe_link}", status_code=302,
+    )

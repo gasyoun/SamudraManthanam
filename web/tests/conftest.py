@@ -28,9 +28,16 @@ async def test_db(tmp_path_factory):
     await create_schema(db)
     
     # Seed data
-    # 2 sources
-    await db.execute("INSERT INTO sources (id, filename, title, sort_order) VALUES (1, 'source1.html', 'Source 1', 1)")
-    await db.execute("INSERT INTO sources (id, filename, title, sort_order) VALUES (2, 'source2.html', 'Source 2', 2)")
+    # 2 sources, each with a slug populated so /sources/{slug} routes work
+    # without going through the lifespan backfill in tests.
+    await db.execute(
+        "INSERT INTO sources (id, filename, title, sort_order, slug) "
+        "VALUES (1, 'source1.html', 'Source 1', 1, 'source1')"
+    )
+    await db.execute(
+        "INSERT INTO sources (id, filename, title, sort_order, slug) "
+        "VALUES (2, 'source2.html', 'Source 2', 2, 'source2')"
+    )
     
     # Sanskrit/IAST text
     await db.execute("""

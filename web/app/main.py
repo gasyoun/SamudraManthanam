@@ -14,6 +14,66 @@ import os
 logger = logging.getLogger(__name__)
 
 
+async def _ensure_slug_column_and_backfill(db) -> None:
+    """Migrate corpus.db to the slug-routing era.
+
+    Two idempotent steps so an operator can roll back and forward without
+    losing data:
+
+    1. Add the `slug` column if missing (ALTER TABLE; no-op when already
+       present — PRAGMA table_info gates it).
+    2. Backfill `slug` for every row where it's NULL or empty. Slugs are
+       derived from filename via `derive_slug` with `make_unique_slug`
+       collision resolution against the set of slugs already populated.
+
+    Runs at lifespan startup so any pre-migration corpus.db transparently
+    gains slug routing without operator action.
+    """
+    try:
+        async with db.execute("PRAGMA table_info(sources)") as cur:
+            columns = {row[1] for row in await cur.fetchall()}
+        if "slug" not in columns:
+            await db.execute("ALTER TABLE sources ADD COLUMN slug TEXT")
+            await db.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS idx_sources_slug "
+                "ON sources(slug) WHERE slug IS NOT NULL AND slug != ''"
+            )
+            await db.commit()
+            logger.info("lifespan: added sources.slug column")
+    except Exception:
+        logger.exception("lifespan: failed to add sources.slug column")
+        return
+
+    # Backfill any unset slugs. Idempotent.
+    try:
+        async with db.execute(
+            "SELECT id, filename FROM sources "
+            "WHERE slug IS NULL OR slug = '' ORDER BY id"
+        ) as cur:
+            missing = await cur.fetchall()
+        if not missing:
+            return
+
+        # Existing slugs (from prior runs or partial migrations).
+        async with db.execute(
+            "SELECT slug FROM sources WHERE slug IS NOT NULL AND slug != ''"
+        ) as cur:
+            existing = {row[0] for row in await cur.fetchall()}
+
+        from app.services.slug import make_unique_slug
+        for row in missing:
+            slug = make_unique_slug(row[1], existing)
+            existing.add(slug)
+            await db.execute("UPDATE sources SET slug = ? WHERE id = ?", (slug, row[0]))
+        await db.commit()
+        logger.info("lifespan: backfilled slugs for %d source(s)", len(missing))
+    except Exception:
+        logger.exception(
+            "lifespan: slug backfill failed; /sources/{slug} routes may 404 "
+            "for un-migrated rows until next startup or re-ingest"
+        )
+
+
 async def _check_corpus_db() -> None:
     """Log a clear warning at startup if corpus.db is missing or has no sources.
 
@@ -42,6 +102,9 @@ async def _check_corpus_db() -> None:
                 )
             else:
                 logger.info("lifespan: corpus DB OK — %d sources loaded.", count)
+            # Slug routing migration. Idempotent; runs every startup so a
+            # pre-migration corpus.db gains slug URLs without operator action.
+            await _ensure_slug_column_and_backfill(db)
         finally:
             await db.close()
     except Exception:
@@ -236,8 +299,42 @@ def _sitemap_base() -> str:
 
 
 async def _fetch_source_ids(db) -> list[int]:
+    """Legacy: returns numeric IDs. Retained for tests; new code should use
+    `_fetch_source_slugs` so the sitemap emits stable URLs."""
     async with db.execute("SELECT id FROM sources ORDER BY sort_order") as cursor:
         return [row[0] for row in await cursor.fetchall()]
+
+
+async def _fetch_source_slugs(db) -> list[str]:
+    """Return slugs of every source in `sort_order`. Skips rows where the
+    slug is NULL or empty (shouldn't happen post-migration, but defensive)."""
+    async with db.execute(
+        "SELECT slug FROM sources WHERE slug IS NOT NULL AND slug != '' "
+        "ORDER BY sort_order"
+    ) as cursor:
+        return [row[0] for row in await cursor.fetchall()]
+
+
+async def _fetch_parallel_source_slugs(db) -> set[str]:
+    """Return slugs of sources whose corpus_lines carry the `chapter_block
+    iast` marker — i.e. parallel-content sources that earn hreflang
+    alternates in the sitemap.
+    """
+    try:
+        sql = """
+            SELECT s.slug FROM sources s
+            WHERE s.slug IS NOT NULL AND s.slug != ''
+              AND EXISTS (
+                SELECT 1 FROM corpus_lines cl
+                WHERE cl.source_id = s.id
+                  AND cl.line_html LIKE '%chapter_block iast%'
+                LIMIT 1
+              )
+        """
+        async with db.execute(sql) as cursor:
+            return {row[0] for row in await cursor.fetchall()}
+    except Exception:
+        return set()
 
 
 async def _fetch_parallel_source_ids(db) -> set[int]:
@@ -327,31 +424,37 @@ async def sitemap_core():
 
 @app.get("/sitemap-sources.xml")
 async def sitemap_sources():
-    """One entry per `/sources/{id}` for non-parallel sources, three entries
+    """One entry per `/sources/{slug}` for non-parallel sources, three entries
     (bare + `?lang=ru` + `?lang=sa`) for parallel sources. Each parallel
     entry carries the full `<xhtml:link>` hreflang alternate set, which is
     Google's preferred sitemap-level signal for multilingual content.
+    Slug URLs (not numeric IDs) so the sitemap survives re-ingest renumbering.
     """
+    from urllib.parse import quote
+
     base = _sitemap_base()
-    source_ids: list[int] = []
-    parallel_ids: set[int] = set()
+    slugs: list[str] = []
+    parallel_slugs: set[str] = set()
     lastmod = ""
     try:
         db = await get_db(settings.DB_PATH)
         try:
-            source_ids = await _fetch_source_ids(db)
-            parallel_ids = await _fetch_parallel_source_ids(db)
+            slugs = await _fetch_source_slugs(db)
+            parallel_slugs = await _fetch_parallel_source_slugs(db)
             lastmod = await _get_corpus_lastmod(db)
         finally:
             await db.close()
     except Exception:
-        source_ids = []
+        slugs = []
 
     lm = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
     urls: list[str] = []
-    for sid in source_ids:
-        source_url = f"{base}/sources/{sid}"
-        if sid in parallel_ids:
+    for slug in slugs:
+        # Cyrillic-derived slugs are already ASCII via transliteration, but
+        # underscores etc. are URL-safe so `quote` is mostly a no-op here.
+        encoded = quote(slug, safe="-_")
+        source_url = f"{base}/sources/{encoded}"
+        if slug in parallel_slugs:
             # Per Google: each language variant gets its own <url> entry,
             # and each entry repeats the full alternate set (including a
             # self-reference). The bare URL is the x-default.
@@ -369,7 +472,7 @@ async def sitemap_sources():
                 f"  <url><loc>{source_url}</loc>{lm}<priority>0.8</priority></url>"
             )
 
-    return _xml_response(_render_urlset(urls, include_xhtml=bool(parallel_ids)))
+    return _xml_response(_render_urlset(urls, include_xhtml=bool(parallel_slugs)))
 
 
 @app.get("/sitemap-compare.xml")

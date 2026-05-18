@@ -317,11 +317,12 @@ def test_breadcrumb_falls_back_to_root_when_site_url_empty():
 
 @pytest_asyncio.fixture
 async def source_with_translator():
-    """Insert a high-id source that won't collide with conftest fixtures."""
+    """Insert a high-id source that won't collide with conftest fixtures.
+    Yields (numeric_id, slug) so tests can hit either URL form."""
     db = await aiosqlite.connect(settings.DB_PATH)
     await db.execute(
-        "INSERT INTO sources (id, filename, title, sort_order) "
-        "VALUES (500, 'test-src.html', 'Бхагавад-Гита (1977); Б. Л. Смирнов', 500)"
+        "INSERT INTO sources (id, filename, title, sort_order, slug) "
+        "VALUES (500, 'test-src.html', 'Бхагавад-Гита (1977); Б. Л. Смирнов', 500, 'test-src')"
     )
     await db.execute(
         "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num, link_id, chapter) "
@@ -338,7 +339,7 @@ async def source_with_translator():
 
 
 def test_source_view_emits_book_jsonld(source_with_translator):
-    r = client.get(f"/sources/{source_with_translator}")
+    r = client.get("/sources/test-src")
     assert r.status_code == 200
     body = r.text
 
@@ -363,15 +364,16 @@ def test_source_view_emits_book_jsonld(source_with_translator):
 
 
 def test_source_view_emits_canonical_link(source_with_translator):
-    r = client.get(f"/sources/{source_with_translator}")
+    # Hit the slug URL directly; the numeric form 301-redirects to slug.
+    r = client.get("/sources/test-src")
     assert 'rel="canonical"' in r.text
-    assert f'/sources/{source_with_translator}' in r.text
+    assert '/sources/test-src' in r.text
 
 
 # ── hasPart sample on Book ──────────────────────────────────────────────────
 
 def test_jsonld_haspart_includes_sample_lines_when_provided():
-    source = {"id": 5, "title": "Test (2020); Тест"}
+    source = {"id": 5, "slug": "test-src", "title": "Test (2020); Тест"}
     lines = [
         {"line_num": 1, "link_id": "1.1", "line_text": "first verse", "chapter": "Глава I"},
         {"line_num": 2, "link_id": "1.2", "line_text": "second verse", "chapter": "Глава I"},
@@ -390,7 +392,7 @@ def test_jsonld_haspart_includes_sample_lines_when_provided():
 def test_jsonld_haspart_caps_at_sample_size():
     # 30 lines → with default cap of 20, only 20 appear in hasPart but the
     # numberOfItems count reflects the FULL filtered set.
-    source = {"id": 5, "title": "Test"}
+    source = {"id": 5, "slug": "test-src", "title": "Test"}
     lines = [
         {"line_num": i, "link_id": f"1.{i}", "line_text": f"verse {i}", "chapter": ""}
         for i in range(1, 31)
@@ -405,7 +407,7 @@ def test_jsonld_haspart_caps_at_sample_size():
 
 def test_jsonld_haspart_skips_empty_text_lines():
     # Chapter-header rows have line_text=="" and should NOT count or appear.
-    source = {"id": 5, "title": "Test"}
+    source = {"id": 5, "slug": "test-src", "title": "Test"}
     lines = [
         {"line_num": 1, "link_id": "chapter_1", "line_text": "", "chapter": ""},
         {"line_num": 2, "link_id": "1.1", "line_text": "real verse", "chapter": ""},
@@ -420,7 +422,7 @@ def test_jsonld_haspart_skips_empty_text_lines():
 
 
 def test_jsonld_haspart_omitted_when_no_sample_lines():
-    source = {"id": 5, "title": "Test"}
+    source = {"id": 5, "slug": "test-src", "title": "Test"}
     jsonld = build_source_jsonld(
         source=source, canonical_url="/sources/5", site_name="Site",
     )
@@ -429,13 +431,13 @@ def test_jsonld_haspart_omitted_when_no_sample_lines():
 
 
 def test_jsonld_haspart_links_use_base_url_when_provided():
-    source = {"id": 5, "title": "Test"}
+    source = {"id": 5, "slug": "test-src", "title": "Test"}
     lines = [{"line_num": 1, "link_id": "1.1", "line_text": "v", "chapter": ""}]
     jsonld = build_source_jsonld(
         source=source, canonical_url="https://samskrtam.ru/sources/5",
         site_name="Site", sample_lines=lines, base_url="https://samskrtam.ru",
     )
-    assert jsonld["hasPart"][0]["@id"].startswith("https://samskrtam.ru/sources/5?highlight=1.1")
+    assert jsonld["hasPart"][0]["@id"].startswith("https://samskrtam.ru/sources/test-src?highlight=1.1")
 
 
 # ── Per-line Quotation builder ──────────────────────────────────────────────
@@ -444,20 +446,20 @@ def test_line_quotation_minimal_shape():
     line = {"line_num": 10, "link_id": "1.1", "line_text": "dharma quote",
             "chapter": "Глава I"}
     q = build_line_quotation(
-        line=line, source_id=5, source_url="/sources/5",
+        line=line, slug="test-source", source_url="/sources/test-source",
     )
     assert q["@type"] == "Quotation"
-    assert q["@id"].endswith("/sources/5?highlight=1.1")
+    assert q["@id"].endswith("/sources/test-source?highlight=1.1")
     assert q["text"] == "dharma quote"
     assert q["inLanguage"] == "ru"
-    assert q["isPartOf"] == {"@id": "/sources/5"}
+    assert q["isPartOf"] == {"@id": "/sources/test-source"}
     assert q["citation"] == "Глава I, 1.1"
 
 
 def test_line_quotation_falls_back_to_line_num_when_no_link_id():
     line = {"line_num": 42, "link_id": "", "line_text": "verse text", "chapter": ""}
     q = build_line_quotation(
-        line=line, source_id=5, source_url="/sources/5",
+        line=line, slug="test-source", source_url="/sources/test-source",
     )
     assert q["@id"].endswith("highlight=42")
     assert "citation" not in q  # no chapter, no citation field
@@ -467,7 +469,7 @@ def test_line_quotation_url_encodes_link_id():
     # link_ids like "1.3-6" must be URL-safe.
     line = {"line_num": 10, "link_id": "1.3-6", "line_text": "x", "chapter": ""}
     q = build_line_quotation(
-        line=line, source_id=5, source_url="/sources/5",
+        line=line, slug="test-source", source_url="/sources/test-source",
     )
     assert "highlight=1.3-6" in q["@id"]
 
@@ -476,7 +478,7 @@ def test_line_quotation_truncates_pathological_long_text():
     # Some Smirnov-edition lines pack ~6 KB of footnote prose; cap at 1500 chars.
     line = {"line_num": 1, "link_id": "1.1", "line_text": "x" * 5000, "chapter": ""}
     q = build_line_quotation(
-        line=line, source_id=5, source_url="/sources/5",
+        line=line, slug="test-source", source_url="/sources/test-source",
     )
     assert len(q["text"]) <= 1500 + 1  # +1 for the ellipsis character
     assert q["text"].endswith("…")
@@ -485,7 +487,7 @@ def test_line_quotation_truncates_pathological_long_text():
 # ── HTTP integration for the new blocks ─────────────────────────────────────
 
 def test_source_view_emits_haspart_in_book_jsonld(source_with_translator):
-    r = client.get(f"/sources/{source_with_translator}")
+    r = client.get("/sources/test-src")
     body = r.text
     blocks = re.findall(
         r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
@@ -498,7 +500,7 @@ def test_source_view_emits_haspart_in_book_jsonld(source_with_translator):
 
 
 def test_source_view_without_highlight_emits_two_jsonld_blocks(source_with_translator):
-    r = client.get(f"/sources/{source_with_translator}")
+    r = client.get("/sources/test-src")
     blocks = re.findall(
         r'<script type="application/ld\+json">',
         r.text,
@@ -508,7 +510,7 @@ def test_source_view_without_highlight_emits_two_jsonld_blocks(source_with_trans
 
 
 def test_source_view_with_highlight_emits_third_quotation_block(source_with_translator):
-    r = client.get(f"/sources/{source_with_translator}?highlight=1.1")
+    r = client.get("/sources/test-src?highlight=1.1")
     blocks = re.findall(
         r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
         r.text, re.DOTALL,
@@ -522,7 +524,7 @@ def test_source_view_with_highlight_emits_third_quotation_block(source_with_tran
 def test_source_view_with_unmatched_highlight_does_not_emit_quotation(source_with_translator):
     # Highlight that doesn't resolve to any line → no third block emitted,
     # don't fabricate a Quotation with empty text.
-    r = client.get(f"/sources/{source_with_translator}?highlight=nope")
+    r = client.get("/sources/test-src?highlight=nope")
     blocks = re.findall(
         r'<script type="application/ld\+json">',
         r.text,

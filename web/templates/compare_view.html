@@ -244,7 +244,7 @@
                     {{ hit.translation_html | safe }}
                 </div>
                 <footer>
-                    <a href="/sources/{{ hit.source_id }}?highlight={{ hit.link_id }}" target="_blank" rel="noopener">
+                    <a href="/sources/{{ hit.source_slug or hit.source_id }}?highlight={{ hit.link_id }}" target="_blank" rel="noopener">
                         Открыть в источнике →
                     </a>
                 </footer>
