@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.16.1] - 2026-05-18 (Feature: `<xhtml:link>` alternates in /sitemap-sources.xml)
+
+### Added
+- **`/sitemap-sources.xml` now declares hreflang at the sitemap level** per Google's preferred convention for multilingual content. Parallel sources (119 of 148 on the live corpus) emit three `<url>` entries each — bare, `?lang=ru`, `?lang=sa` — and each entry carries the full `<xhtml:link rel="alternate" hreflang="…">` set including a self-reference. Non-parallel sources (dictionaries, Russian-only prose) keep their single-entry shape.
+- **`xmlns:xhtml="http://www.w3.org/1999/xhtml"`** is added to the `<urlset>` element only when at least one parallel source exists in the corpus — keeps the namespace declaration out of dictionary-only corpora.
+- **`_fetch_parallel_source_ids(db)`** — single SQL query with `EXISTS … LIMIT 1` short-circuit detects sources whose `corpus_lines.line_html` carries the `chapter_block iast` marker. Fails soft to an empty set so a DB hiccup degrades to no-hreflang rather than killing the sitemap.
+
+### Math on live corpus
+- **386 `<url>` entries** (was 148): 29 non-parallel × 1 + 119 parallel × 3 = 386.
+- **1,071 `<xhtml:link>` alternates**: 119 sources × 3 variants × 3 alternates per variant.
+- 357 each of `hreflang="ru"` / `hreflang="sa"` / `hreflang="x-default"` — perfectly balanced reciprocal declarations.
+- Sitemap size grew 13 KB → 112 KB; total sitemap surface still well under spec limits.
+- XML well-formed; namespace correctly declared.
+
+### Implementation notes
+- `_render_urlset(urls, include_xhtml=True)` conditionally adds the xhtml namespace to the envelope. Other child sitemaps (`-core`, `-compare`) don't use it.
+- Same hreflang signal now ships in TWO places: in the source page's `<head>` (v1.16.0) and in the sitemap (this version). Google honours both; redundant declarations don't conflict.
+- `/sitemap-compare.xml` is deliberately mono-variant — `/compare/{work}/{ch}.{v}` pages are inherently multilingual (10+ translations side by side), so a `?lang=` filter wouldn't make semantic sense.
+
+### Tests
+- 9 new tests in `test_sitemap_hreflang.py`: SQL helper finds/excludes correctly, namespace declared only when needed, parallel sources emit 3 entries with full alternate set, non-parallel sources stay mono-entry, well-formed XML across the parse, self-referential alternates per variant. 278/278 hermetic tests pass.
+
 ## [1.16.0] - 2026-05-18 (Feature: `?lang=ru|sa` filter + hreflang on source pages)
 
 ### Added

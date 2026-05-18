@@ -202,11 +202,17 @@ def _xml_response(content: str):
     return Response(content=content, media_type="application/xml")
 
 
-def _render_urlset(url_entries: list[str]) -> str:
-    """Wrap a list of `<url>…</url>` strings in a sitemap urlset envelope."""
+def _render_urlset(url_entries: list[str], *, include_xhtml: bool = False) -> str:
+    """Wrap a list of `<url>…</url>` strings in a sitemap urlset envelope.
+
+    `include_xhtml=True` declares the xhtml namespace on the urlset element,
+    which is required when any `<url>` entry inside contains `<xhtml:link>`
+    hreflang alternates (Google's preferred sitemap-level multilingual signal).
+    """
+    xhtml_attr = ' xmlns:xhtml="http://www.w3.org/1999/xhtml"' if include_xhtml else ""
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"{xhtml_attr}>\n'
         + "\n".join(url_entries)
         + "\n</urlset>\n"
     )
@@ -232,6 +238,32 @@ def _sitemap_base() -> str:
 async def _fetch_source_ids(db) -> list[int]:
     async with db.execute("SELECT id FROM sources ORDER BY sort_order") as cursor:
         return [row[0] for row in await cursor.fetchall()]
+
+
+async def _fetch_parallel_source_ids(db) -> set[int]:
+    """Return the set of source IDs whose corpus_lines contain at least one
+    `chapter_block iast` marker — i.e. sources that have parallel Sanskrit +
+    Russian content and therefore deserve hreflang alternates in the sitemap.
+
+    Single SQL pass with EXISTS + LIMIT 1 short-circuit, so per-source work
+    stops at the first qualifying line. On the live ~120k-line corpus this
+    runs in well under a second; not worth pre-computing a column for now.
+    Fails soft to an empty set so the sitemap still serves on errors.
+    """
+    try:
+        sql = """
+            SELECT s.id FROM sources s
+            WHERE EXISTS (
+                SELECT 1 FROM corpus_lines cl
+                WHERE cl.source_id = s.id
+                  AND cl.line_html LIKE '%chapter_block iast%'
+                LIMIT 1
+            )
+        """
+        async with db.execute(sql) as cursor:
+            return {row[0] for row in await cursor.fetchall()}
+    except Exception:
+        return set()
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -295,14 +327,20 @@ async def sitemap_core():
 
 @app.get("/sitemap-sources.xml")
 async def sitemap_sources():
-    """One entry per `/sources/{id}` (~148 URLs on the live corpus)."""
+    """One entry per `/sources/{id}` for non-parallel sources, three entries
+    (bare + `?lang=ru` + `?lang=sa`) for parallel sources. Each parallel
+    entry carries the full `<xhtml:link>` hreflang alternate set, which is
+    Google's preferred sitemap-level signal for multilingual content.
+    """
     base = _sitemap_base()
     source_ids: list[int] = []
+    parallel_ids: set[int] = set()
     lastmod = ""
     try:
         db = await get_db(settings.DB_PATH)
         try:
             source_ids = await _fetch_source_ids(db)
+            parallel_ids = await _fetch_parallel_source_ids(db)
             lastmod = await _get_corpus_lastmod(db)
         finally:
             await db.close()
@@ -310,11 +348,28 @@ async def sitemap_sources():
         source_ids = []
 
     lm = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
-    urls = [
-        f"  <url><loc>{base}/sources/{sid}</loc>{lm}<priority>0.8</priority></url>"
-        for sid in source_ids
-    ]
-    return _xml_response(_render_urlset(urls))
+    urls: list[str] = []
+    for sid in source_ids:
+        source_url = f"{base}/sources/{sid}"
+        if sid in parallel_ids:
+            # Per Google: each language variant gets its own <url> entry,
+            # and each entry repeats the full alternate set (including a
+            # self-reference). The bare URL is the x-default.
+            alternates = (
+                f'<xhtml:link rel="alternate" hreflang="x-default" href="{source_url}"/>'
+                f'<xhtml:link rel="alternate" hreflang="ru" href="{source_url}?lang=ru"/>'
+                f'<xhtml:link rel="alternate" hreflang="sa" href="{source_url}?lang=sa"/>'
+            )
+            for variant_url in (source_url, f"{source_url}?lang=ru", f"{source_url}?lang=sa"):
+                urls.append(
+                    f"  <url><loc>{variant_url}</loc>{lm}<priority>0.8</priority>{alternates}</url>"
+                )
+        else:
+            urls.append(
+                f"  <url><loc>{source_url}</loc>{lm}<priority>0.8</priority></url>"
+            )
+
+    return _xml_response(_render_urlset(urls, include_xhtml=bool(parallel_ids)))
 
 
 @app.get("/sitemap-compare.xml")
