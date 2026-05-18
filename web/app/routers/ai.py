@@ -2,7 +2,7 @@ import logging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, field_validator
 from typing import List
-from app.services.ai_service import explain_with_ai
+from app.services.ai_service import compare_translations, explain_with_ai
 from app.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -12,6 +12,14 @@ router = APIRouter(prefix="/api/ai", tags=["ai"])
 # API client can't blow up the AI-provider bill by sending 10K lines.
 MAX_CONTEXT_LINES = 50
 MAX_CONTEXT_LINE_LEN = 2000
+
+# /compare-translations bounds — each verse comparison sends at most ~14
+# entries on the live corpus (Bhagavadgita with all sources). Cap a bit
+# higher to leave room for future works without making the bound trivially
+# bypassable for a denial-of-wallet attack.
+MAX_COMPARE_TRANSLATIONS = 20
+MAX_COMPARE_TEXT_LEN = 4000
+MAX_COMPARE_LABEL_LEN = 200
 
 
 class AIRequest(BaseModel):
@@ -28,16 +36,53 @@ class AIRequest(BaseModel):
                 )
         return v
 
+
+class TranslationEntry(BaseModel):
+    label: str = Field(..., min_length=1, max_length=MAX_COMPARE_LABEL_LEN)
+    role: str = Field("translation", max_length=32)
+    text: str = Field(..., min_length=1, max_length=MAX_COMPARE_TEXT_LEN)
+
+
+class CompareTranslationsRequest(BaseModel):
+    work_title: str = Field(..., min_length=1, max_length=200)
+    work_title_iast: str = Field("", max_length=200)
+    chapter: int = Field(..., ge=1, le=999)
+    verse: int = Field(..., ge=1, le=9999)
+    iast: str = Field("", max_length=MAX_COMPARE_TEXT_LEN)
+    translations: List[TranslationEntry] = Field(..., min_length=2, max_length=MAX_COMPARE_TRANSLATIONS)
+
+
 @router.post("/explain")
 async def post_explain(request: AIRequest):
-    """
-    Endpoint for context-aware AI explanations of search results.
-    """
+    """Context-aware AI explanation of free-form search results."""
     result = await explain_with_ai(request.query, request.context_lines)
     if "error" in result:
         # ai_service may include provider-internal detail in result["error"]; log
         # it for operators and return a stable client-facing message in production.
         logger.warning("ai.explain returned error: %s", result["error"])
+        detail = result["error"] if settings.APP_ENV == "development" else "AI service unavailable"
+        raise HTTPException(status_code=503, detail=detail)
+    return result
+
+
+@router.post("/compare-translations")
+async def post_compare_translations(request: CompareTranslationsRequest):
+    """Synthesize a scholarly comparison across multiple translations of one verse.
+
+    Powers the "✨ Сравнить переводы" button on `/compare/{work}/{ch}.{v}`.
+    Body shape mirrors the data the comparison page already has on hand,
+    so the frontend just serialises its embedded JSON payload.
+    """
+    result = await compare_translations(
+        work_title=request.work_title,
+        work_title_iast=request.work_title_iast,
+        chapter=request.chapter,
+        verse=request.verse,
+        iast=request.iast,
+        translations=[t.model_dump() for t in request.translations],
+    )
+    if "error" in result:
+        logger.warning("ai.compare_translations returned error: %s", result["error"])
         detail = result["error"] if settings.APP_ENV == "development" else "AI service unavailable"
         raise HTTPException(status_code=503, detail=detail)
     return result

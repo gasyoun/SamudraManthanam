@@ -137,11 +137,76 @@
             <small>{{ work_title_iast }} {{ chapter }}.{{ verse }} — {{ translation_count }} переводов{% if commentary_count %}, {{ commentary_count }} комментар{{ 'ий' if commentary_count == 1 else 'ия' if commentary_count < 5 else 'иев' }}{% endif %}</small>
         </h1>
     </div>
-    <nav class="nav-pager">
-        <a href="{{ prev_url }}" {% if not prev_url %}class="disabled"{% endif %}>← {{ chapter }}.{{ verse - 1 }}</a>
-        <a href="{{ next_url }}">{{ chapter }}.{{ verse + 1 }} →</a>
-    </nav>
+    <div style="display:flex; flex-direction:column; gap:0.5rem; align-items:flex-end;">
+        <nav class="nav-pager">
+            <a href="{{ prev_url }}" {% if not prev_url %}class="disabled"{% endif %}>← {{ chapter }}.{{ verse - 1 }}</a>
+            <a href="{{ next_url }}">{{ chapter }}.{{ verse + 1 }} →</a>
+        </nav>
+        {% if hits | length >= 2 %}
+        <button id="aiCompareBtn" type="button"
+                style="background:#6c5ce7;color:white;border:none;padding:0.45rem 1rem;border-radius:6px;
+                       font-weight:600;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;gap:0.4rem;"
+                title="Спросить AI о расхождениях между переводами">
+            <span>✨</span> Сравнить переводы (AI)
+        </button>
+        {% endif %}
+    </div>
 </div>
+
+{# AI synthesis panel — hidden until the button is clicked. Built server-side
+   with the verse payload embedded as a JSON script tag for the client to read,
+   avoiding a second DB roundtrip. #}
+{% if hits | length >= 2 %}
+<section id="aiSyntheses" style="display:none; max-width:1100px; margin:1rem auto 1.5rem; padding:0 1.5rem;">
+    <div style="background:linear-gradient(135deg,#6c5ce7,#a29bfe); color:white; padding:1.2rem 1.5rem;
+                border-radius:8px 8px 0 0; display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0; font-size:1rem; font-weight:600;">✨ Сравнение переводов (AI)</h2>
+        <button id="aiCloseBtn" type="button"
+                style="background:transparent;border:none;color:white;font-size:1.5rem;cursor:pointer;line-height:1;">&times;</button>
+    </div>
+    <div id="aiBody" style="background:white; border:1px solid var(--line-border); border-top:none;
+                            padding:1.5rem; border-radius:0 0 8px 8px;">
+        <div id="aiLoading" style="color:var(--text-muted); display:flex; align-items:center; gap:0.6rem;">
+            <div class="ai-spinner"></div>
+            Анализирую переводы…
+        </div>
+        <div id="aiSynthesisContent" style="display:none; white-space:pre-wrap; font-size:0.95rem; line-height:1.6;"></div>
+        <div id="aiError" style="display:none; color:#c0392b; font-size:0.9rem;"></div>
+        <div id="aiFooter" style="display:none; margin-top:1rem; padding-top:0.8rem; border-top:1px solid var(--line-border);
+                                  font-size:0.75rem; color:var(--text-muted);"></div>
+    </div>
+</section>
+
+<script id="aiComparePayload" type="application/json">
+{
+    "work_title": {{ work_title | tojson }},
+    "work_title_iast": {{ work_title_iast | tojson }},
+    "chapter": {{ chapter }},
+    "verse": {{ verse }},
+    "iast": {{ (canonical_iast or '') | tojson }},
+    "translations": [
+        {% for hit in hits %}
+        {
+            "label": {{ hit.label | tojson }},
+            "role": {{ hit.role | tojson }},
+            "text": {{ hit.line_text | tojson }}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+
+<style>
+    @keyframes ai-spin { to { transform: rotate(360deg); } }
+    .ai-spinner {
+        width: 16px; height: 16px;
+        border: 2px solid var(--line-border);
+        border-top-color: #6c5ce7;
+        border-radius: 50%;
+        animation: ai-spin 0.8s linear infinite;
+    }
+</style>
+{% endif %}
 
 <main>
     {% if canonical_iast %}
@@ -190,6 +255,77 @@
 {% endblock %}
 
 {% block extra_body %}
+{% if hits | length >= 2 %}
+<script>
+    // ── AI translation-comparison handler ──────────────────────────────────
+    // Stripped HTML out of `line_text` on the server before embedding; just
+    // POST the payload as-is to /api/ai/compare-translations.
+    (function () {
+        var btn = document.getElementById('aiCompareBtn');
+        var section = document.getElementById('aiSyntheses');
+        var closeBtn = document.getElementById('aiCloseBtn');
+        var loading = document.getElementById('aiLoading');
+        var contentEl = document.getElementById('aiSynthesisContent');
+        var errorEl = document.getElementById('aiError');
+        var footerEl = document.getElementById('aiFooter');
+        var payloadScript = document.getElementById('aiComparePayload');
+        if (!btn || !section || !payloadScript) return;
+
+        var fetched = false;     // cache per pageview — don't re-call on second click
+
+        if (closeBtn) closeBtn.addEventListener('click', function () {
+            section.style.display = 'none';
+        });
+
+        btn.addEventListener('click', function () {
+            section.style.display = 'block';
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (fetched) return;
+            fetched = true;
+
+            var payload;
+            try { payload = JSON.parse(payloadScript.textContent); }
+            catch (e) {
+                errorEl.textContent = 'Не удалось прочитать данные стиха.';
+                errorEl.style.display = 'block';
+                loading.style.display = 'none';
+                return;
+            }
+
+            fetch('/api/ai/compare-translations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            }).then(function (r) {
+                return r.json().then(function (data) { return { ok: r.ok, status: r.status, data: data }; });
+            }).then(function (resp) {
+                loading.style.display = 'none';
+                if (!resp.ok) {
+                    var msg = (resp.data && resp.data.detail) || 'Сервис AI недоступен.';
+                    errorEl.textContent = msg;
+                    errorEl.style.display = 'block';
+                    // Allow retry — the failure was external, not in our payload.
+                    fetched = false;
+                    return;
+                }
+                contentEl.textContent = resp.data.synthesis || '';
+                contentEl.style.display = 'block';
+                if (resp.data.model) {
+                    footerEl.textContent = 'Модель: ' + resp.data.model
+                        + ' · Ответ генерируется ИИ на основе переводов, представленных на странице.';
+                    footerEl.style.display = 'block';
+                }
+            }).catch(function (err) {
+                loading.style.display = 'none';
+                errorEl.textContent = 'Сетевая ошибка при обращении к AI: ' + (err && err.message ? err.message : err);
+                errorEl.style.display = 'block';
+                fetched = false;
+            });
+        });
+    })();
+</script>
+{% endif %}
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

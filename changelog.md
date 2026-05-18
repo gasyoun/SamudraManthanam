@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.20.0] - 2026-05-18 (Feature: AI translation-comparison synthesis)
+
+### Added
+- **`POST /api/ai/compare-translations`** — sends one verse's full payload (work title, chapter/verse, IAST, all translations + commentaries with their roles) to the configured LLM provider and returns a scholarly synthesis identifying key Sanskrit terms, translator divergences, and commentary readings.
+- **"✨ Сравнить переводы (AI)" button** on every `/compare/{work}/{ch}.{v}` page with ≥2 hits. Clicking expands a slide-in synthesis panel; result panel is hidden by default to avoid visual clutter. Per-pageview cache prevents re-calling the provider on repeated clicks; transient failures clear the cache so the user can retry.
+- **`build_compare_prompt`** in `ai_service.py` — pure prompt assembler with HTML-tag stripping for embedded commentary markup, role markers (`[commentary]`, `[anthology]`, `[context]`) so the model treats medieval ācāryas differently from modern translators, optional IAST line, numbered translation list. Extracted as a pure function so tests can validate the prompt shape independently of any AI call.
+- **Shared `_openai_chat` helper** consolidates the two AI service functions (`explain_with_ai` and the new `compare_translations`) onto one transport path. Provider-agnostic OpenAI-compatible — works with OpenAI, Ollama-with-openai-shim, vLLM, LM Studio.
+
+### Frontend
+- `compare_view.html` emits the AI payload as `<script id="aiComparePayload" type="application/json">` — embedded server-side so the JS handler doesn't need a second DB roundtrip. Spinner + content + error + footer states; model attribution in the footer.
+
+### Bounds
+- `MAX_COMPARE_TRANSLATIONS = 20` (live max is 14 for BhG; cap gives headroom without trivial denial-of-wallet)
+- `MAX_COMPARE_TEXT_LEN = 4000` per translation
+- `MAX_COMPARE_LABEL_LEN = 200` per label
+- Chapter 1-999, verse 1-9999
+
+### Tests
+- 16 new tests in `test_ai_compare.py`: prompt builder (verse coord, HTML stripping, role markers, IAST handling, numbering), route validation (min 2 translations, oversized text/label, too many translations, chapter bounds), 503 mapping on missing AI_BASE_URL, mocked-provider happy path, template integration (button + payload script + hidden panel). 351/351 hermetic tests pass.
+
+### Live verification
+- `GET /compare/bhagavadgita/2.47` renders the AI button + 14-source payload (10 translations + 1 anthology + 2 commentaries + MBh-Bhīṣma context bridge) with the 141-char IAST string.
+- 503 path verified by clearing `AI_BASE_URL` in test.
+- Compare pages with 0-1 hits (rare, dictionary-only sources) correctly suppress both the button and the payload script.
+
 ## [1.19.0] - 2026-05-18 (Feature: result-page visualisations — bar chart + KWIC)
 
 ### Added
