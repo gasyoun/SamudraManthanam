@@ -6,3 +6,7 @@ web/corpus.db-shm
 # Python bytecode and cache directories
 __pycache__/
 *.py[cod]
+
+# audit sidecars
+.contributing_old.md
+.contributing_audit.txt
