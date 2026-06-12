@@ -7,6 +7,7 @@ Purpose: tell humans and Gemini Flash which Markdown files are current, supporti
 ## Current Primary Docs
 
 - `README.md`: project overview and build/use notes.
+- `ROADMAP_2026_H2_DH_MOBILE.md`: H2 2026 roadmap — DH-standards data layer (stable IDs, JSONL canonical, metadata/rights) + cross-platform offline search via PWA/sqlite-wasm. Supersedes mobile/data-model planning in older docs.
 - `TARGET_ARCHITECTURE.md`: current target architecture.
 - `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`: critique of proposed architecture and open decisions.
 - `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`: 6-month roadmap and Gemini backlog.
