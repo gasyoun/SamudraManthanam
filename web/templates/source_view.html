@@ -34,6 +34,11 @@
         font-size: 1.3rem;
         color: var(--primary);
     }
+    .source-edition-credit {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.15rem;
+    }
     .back-link {
         text-decoration: none;
         color: var(--accent);
@@ -305,7 +310,17 @@
 {% block content %}
 <header class="reader-header">
     <div class="reader-header-inner">
-        <h1>{{ source.title }}</h1>
+        <div>
+            <h1>{{ source.title }}</h1>
+            {% if source.credit %}
+            <div class="source-edition-credit">
+                {%- if source.credit_role %}{{ source.credit_role }}: {% endif -%}
+                {{ source.credit }}{% if source.year %} ({{ source.year }}){% endif %}
+            </div>
+            {% elif source.year %}
+            <div class="source-edition-credit">{{ source.year }}</div>
+            {% endif %}
+        </div>
         <div style="display:flex; gap:1rem; align-items:center;">
             {% if ss_link %}
             <a class="site-navlink-cta" href="{{ ss_link }}" target="_blank" rel="noopener"

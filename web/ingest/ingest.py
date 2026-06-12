@@ -1,4 +1,5 @@
 import asyncio
+import json
 import os
 import argparse
 import hashlib
@@ -85,6 +86,26 @@ async def ingest(corpus_path: str, db_path: str):
         source_id = cursor.lastrowid
         
         print(f"[{idx+1}/{len(filenames)}] Ingesting {filename}: {title}")
+
+        # Load bibliographic metadata from sibling .meta.json if present.
+        meta_json_path = file_path + ".meta.json"
+        if os.path.exists(meta_json_path):
+            with open(meta_json_path, "r", encoding="utf-8") as fh:
+                meta = json.load(fh)
+            await db.execute(
+                "UPDATE sources SET title_en=?, subtitle=?, credit=?, credit_role=?, "
+                "imprint=?, publisher=?, year=? WHERE id=?",
+                (
+                    meta.get("title_en") or None,
+                    meta.get("subtitle") or None,
+                    meta.get("credit") or None,
+                    meta.get("credit_role") or None,
+                    meta.get("imprint") or None,
+                    meta.get("publisher") or None,
+                    meta.get("year"),
+                    source_id,
+                ),
+            )
 
         # Bulk insert lines
         lines_data = []

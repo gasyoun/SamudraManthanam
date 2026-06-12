@@ -12,7 +12,11 @@ router = APIRouter(prefix="/api/sources", tags=["sources"])
 async def get_sources():
     db = await get_db(settings.DB_PATH)
     try:
-        async with db.execute("SELECT id, filename, title, sort_order, slug FROM sources ORDER BY sort_order") as cursor:
+        async with db.execute(
+            "SELECT id, filename, title, sort_order, slug, "
+            "title_en, subtitle, credit, credit_role, imprint, publisher, year "
+            "FROM sources ORDER BY sort_order"
+        ) as cursor:
             rows = await cursor.fetchall()
             return [dict(row) for row in rows]
     finally:

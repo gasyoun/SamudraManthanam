@@ -60,3 +60,11 @@ class SourceInfo(BaseModel):
     # Stable across re-ingests (derived from filename); None only for a
     # pre-migration corpus.db before the lifespan backfill has run.
     slug: Optional[str] = None
+    # Bibliographic fields populated from per-source .meta.json during ingest.
+    title_en: Optional[str] = None
+    subtitle: Optional[str] = None
+    credit: Optional[str] = None
+    credit_role: Optional[str] = None
+    imprint: Optional[str] = None
+    publisher: Optional[str] = None
+    year: Optional[int] = None

@@ -15,9 +15,30 @@ async def create_schema(db):
         sort_order  INTEGER NOT NULL DEFAULT 0,
         sha256      TEXT,
         size        INTEGER,
-        slug        TEXT
+        slug        TEXT,
+        title_en    TEXT,
+        subtitle    TEXT,
+        credit      TEXT,
+        credit_role TEXT,
+        imprint     TEXT,
+        publisher   TEXT,
+        year        INTEGER
     );
     """)
+    # Migrate existing DBs that were created before these columns existed.
+    for _col in [
+        "title_en TEXT",
+        "subtitle TEXT",
+        "credit TEXT",
+        "credit_role TEXT",
+        "imprint TEXT",
+        "publisher TEXT",
+        "year INTEGER",
+    ]:
+        try:
+            await db.execute(f"ALTER TABLE sources ADD COLUMN {_col}")
+        except Exception:
+            pass  # column already present
     # Unique index on slug. `IF NOT EXISTS` + nullable column means existing
     # DBs without slugs populated yet won't violate the constraint at startup;
     # the lifespan backfill fills them in before serving slug URLs.
