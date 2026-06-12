@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.21.0] - 2026-06-12 (Phase 0: DH-standards foundation)
+
+Start of the H2 2026 roadmap (`ROADMAP_2026_H2_DH_MOBILE.md`): stable
+identity, FAIR metadata, and rights clarity ahead of the canonical-JSONL
+data layer and offline-search phases.
+
+### Added
+- **`ROADMAP_2026_H2_DH_MOBILE.md`** — six-month roadmap: DH-standards gap
+  analysis, canonical JSONL layer, PWA + sqlite-wasm offline search, citation
+  and export work. Decisions of 2026-06-12 recorded (rights stay grey, JSONL
+  not TEI, browser PWA not native ports).
+- **`CITATION.cff`** — software citation metadata; explicitly scoped to code.
+- **README "License and corpus rights"** — Apache 2.0 covers code only; the
+  Russian translations carry their own rights and are not redistributable.
+- **Per-source metadata skeletons** — `web/ingest/extract_source_meta.py`
+  generated `Data/<name>.meta.json` for all 148 sources (title, credit,
+  imprint, publisher, year, scripts present, slug). `title_en`, `provenance`,
+  `rights` left empty with `needs_review: true` for an editing pass; 8 sources
+  flagged for missing year. Hand edits win — extraction never overwrites
+  without `--force`.
+- **Corpus version in the footer** — `app/corpus_info.py` snapshots
+  `corpus_meta` at lifespan; `_base.html` gains a footer showing
+  "Корпус: версия N от YYYY-MM-DD" (hidden when corpus.db predates
+  `corpus_meta`). Registered as a Jinja global on all five template envs.
+- 9 new tests (footer rendering ×3, slug filter resolution ×3, canonical
+  slug URL, legacy-id fallback, unknown-token fallback).
+
+### Changed
+- **Search permalinks are now re-ingest-stable.** `/api/sources` returns
+  `slug`; `search.js` writes slugs (not ids) into the `?src=` permalink and
+  accepts both on restore. `GET /search` resolves `src=` slug-first with a
+  legacy numeric-id fallback (`_resolve_source_filter` replaces
+  `_parse_source_ids`); canonical URLs emit sorted slugs. Old numeric
+  bookmarks keep working and canonicalise to slug form.
+- Documentation root decluttered: 14 superseded planning docs moved to
+  `docs/archive/`; `DOCUMENTATION_INDEX.md` rewritten with the new reading
+  order.
+- `.gitignore`: corpus.db backups (`web/corpus.db*`) and `reingest.log`.
+
+### Tests
+- 383 hermetic tests pass (380 before; 3 `_parse_source_ids` unit tests
+  replaced by 6 HTTP-level resolution tests, plus footer coverage).
+
 ## [1.20.1] - 2026-05-18 (Feature: AI response cache)
 
 ### Added
