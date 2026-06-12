@@ -1,62 +1,56 @@
 # Documentation Index
 
-Date: 2026-05-15
+Date: 2026-06-12
 
-Purpose: tell humans and Gemini Flash which Markdown files are current, supporting, or historical.
+Purpose: tell humans and implementation agents which Markdown files are current, supporting, or historical.
 
 ## Current Primary Docs
 
 - `README.md`: project overview and build/use notes.
-- `ROADMAP_2026_H2_DH_MOBILE.md`: H2 2026 roadmap — DH-standards data layer (stable IDs, JSONL canonical, metadata/rights) + cross-platform offline search via PWA/sqlite-wasm. Supersedes mobile/data-model planning in older docs.
+- `ROADMAP_2026_H2_DH_MOBILE.md`: **current roadmap** — DH-standards data layer (stable IDs, JSONL canonical, metadata/rights) + cross-platform offline search via PWA/sqlite-wasm.
 - `TARGET_ARCHITECTURE.md`: current target architecture.
-- `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`: critique of proposed architecture and open decisions.
-- `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`: 6-month roadmap and Gemini backlog.
-- `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`: current Gemini Flash index.
-- `GEMINI_FLASH_PHASE_01_FOUNDATION.md`: [COMPLETE] foundation tasks.
-- `GEMINI_FLASH_PHASE_02_SEARCH_READER.md`: [COMPLETE] search and reader tasks.
-- `GEMINI_FLASH_PHASE_03_IDENTITY_CORRECTIONS.md`: [COMPLETE] identity and corrections tasks.
-- `GEMINI_FLASH_PHASE_04_AI.md`: [COMPLETE] AI tasks.
-- `GEMINI_FLASH_PHASE_05_DEPLOY_OPERATIONS.md`: [COMPLETE] deployment and operations tasks.
+- `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`: architecture critique and open decisions (several now settled by `ROADMAP_2026_H2_DH_MOBILE.md`).
+- `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`: web-platform hardening roadmap (still current for that scope; mobile/data-model planning superseded by `ROADMAP_2026_H2_DH_MOBILE.md`).
 - `changelog.md`: notable changes.
+- `.ai_state.md`: session journal — queue, WIP, hypotheses.
 
 ## Current Supporting Docs
 
 - `web/SEARCH_CONTRACT.md`: search behavior contract.
 - `use_cases.md`: user scenarios.
-- `ai_status.md`: previous AI implementation status.
-- `CODE_ARCHITECTURE_REVIEW.md`: earlier code/architecture review; useful for historical findings.
-- `PRE_GEMINI_AUDIT.md`: full pre-Gemini code and architecture audit (2026-05-15). Lists every bug, security issue, and open architecture problem with fix status. Read before starting Phase 1.
-
-## Historical or Partly Superseded Docs
-
-These files may contain useful context, but Gemini Flash should not treat them as current instructions when they conflict with the primary docs:
-
-- `WEB_PLAN.md`: older from-scratch web architecture plan.
-- `roadmap.md`: older 1-month roadmap.
-- `gemini-implementation-plan.md`: older long-form Gemini plan.
-- `gemini-fix-web.md`: older fix-oriented Gemini note.
-- `CLAUDE.md`: general agent guidance; check against current architecture docs.
+- `DEPLOYMENT.md`: no-Docker VPS deployment guide.
+- `CLAUDE.md`: agent guidance for this repository.
 - `Corpus_builder/CLAUDE.md`: Corpus Builder-specific agent guidance.
 
-## Reading Order For Gemini Flash
+## Historical Docs (`docs/archive/`)
+
+Context only — do not treat as current instructions:
+
+- `docs/archive/WEB_PLAN.md`: older from-scratch web architecture plan.
+- `docs/archive/roadmap.md`: older 1-month roadmap (May–June 2026).
+- `docs/archive/gemini-implementation-plan.md`, `docs/archive/gemini-fix-web.md`, `docs/archive/GEMINI_REVIEW.md`: older Gemini-era plans and reviews.
+- `docs/archive/GEMINI_FLASH_IMPLEMENTATION_PLAN.md` + `docs/archive/GEMINI_FLASH_PHASE_0[1-5]_*.md`: completed Gemini Flash implementation phases (all [COMPLETE]).
+- `docs/archive/CODE_ARCHITECTURE_REVIEW.md`: earlier code/architecture review.
+- `docs/archive/PRE_GEMINI_AUDIT.md`: pre-Gemini audit (2026-05-15); all findings fixed.
+- `docs/archive/ai_status.md`: previous AI implementation status.
+
+## Reading Order For Implementation Agents
 
 1. `DOCUMENTATION_INDEX.md`
-2. `PRE_GEMINI_AUDIT.md` ← read this before touching any code
-3. `TARGET_ARCHITECTURE.md`
-4. `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`
-5. `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`
-6. `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`
-7. The relevant `GEMINI_FLASH_PHASE_*.md`
+2. `CLAUDE.md`
+3. `ROADMAP_2026_H2_DH_MOBILE.md`
+4. `TARGET_ARCHITECTURE.md`
+5. `web/SEARCH_CONTRACT.md`
+6. `.ai_state.md`
 
 ## Conflict Rule
 
 When documents conflict:
 
 1. User messages and latest architecture decisions win.
-2. `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` can mark current decisions as provisional.
+2. `ROADMAP_2026_H2_DH_MOBILE.md` wins over older roadmaps.
 3. `TARGET_ARCHITECTURE.md` wins over older plans.
-4. `GEMINI_FLASH_IMPLEMENTATION_PLAN.md` wins over older Gemini plans.
-5. Historical docs are context only.
+4. Historical docs (`docs/archive/`) are context only.
 
 ## Maintenance Rule
 
