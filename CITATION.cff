@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite it using the metadata below.
+  Note: this citation covers the Samudra Manthanam software only.
+  The corpus texts (Sanskrit sources and Russian translations) carry
+  their own rights and must be cited by their print editions.
+type: software
+title: "Samudra Manthanam — parallel Sanskrit–Russian corpus search"
+abstract: >-
+  Search platform for a parallel Sanskrit–Russian text corpus:
+  full-text, regex, and stem/root search with a scholarly reader,
+  developed by the Society of Sanskrit Enthusiasts (samskrtam.ru).
+authors:
+  - name: "Society of Sanskrit Enthusiasts"
+    website: "https://samskrtam.ru"
+repository-code: "https://github.com/gasyoun/SamudraManthanam"
+url: "https://samskrtam.ru"
+license: Apache-2.0
+version: 1.20.1
+date-released: 2026-05-18
+keywords:
+  - Sanskrit
+  - Russian
+  - parallel corpus
+  - digital humanities
+  - full-text search

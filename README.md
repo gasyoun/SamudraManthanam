@@ -155,6 +155,10 @@ The codebase is Free Pascal / Lazarus in Delphi-compatibility mode (`{$MODE Delp
 
 ---
 
-## License
+## License and corpus rights
+
+**Code:** Apache License 2.0 (see [LICENSE](LICENSE)). Cite the software via [CITATION.cff](CITATION.cff).
+
+**Corpus data:** the Apache license does **not** extend to the corpus texts. The Sanskrit sources are public domain, but the Russian translations (e.g. Т.Я. Елизаренкова's Ригведа, «Наука» editions) remain under the rights of their translators, editors, and publishers. The corpus is provided for non-commercial scholarly use within this application and its search service; it is not offered for redistribution. Cite passages by their print editions (each source page lists edition and translator).
 
 © 2013–2026 Society of Sanskrit Enthusiasts. See [samskrtam.ru](https://samskrtam.ru) for contact and licensing details.
