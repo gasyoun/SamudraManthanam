@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "filename": "Словарь Потаповой.txt",
+  "slug": "slovar-potapovoy",
+  "title_ru": "Словарь к «Рамаяне» (1986); Б.А. Захарьин , В.А. Потапова",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1986,
+  "scripts": [
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

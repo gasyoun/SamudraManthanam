@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-sementsov.html",
+  "slug": "bhagavadgita-sementsov",
+  "title_ru": "Бхагавад-Гита (1999); В. С. Семенцов",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "В.С.Семенцов",
+  "credit_role": "Перевод с санскрита,",
+  "imprint": "Москва, \"Восточная литература\" РАН, 1999",
+  "publisher": "Восточная литература",
+  "year": 1999,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

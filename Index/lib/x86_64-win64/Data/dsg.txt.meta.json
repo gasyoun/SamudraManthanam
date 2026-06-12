@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "dsg.txt",
+  "slug": "dsg",
+  "title_ru": "A DICTIONARY OF SANSKRIT GRAMMAR (1961); KASHINATH VASUDEV ABHYANKAR",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1961,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

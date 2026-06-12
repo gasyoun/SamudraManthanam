@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "kumarasambhava.html",
+  "slug": "kumarasambhava",
+  "title_ru": "Кумарасамбхава (1977); В. Микушевич",
+  "title_en": "",
+  "subtitle": "Рождение Кумары",
+  "credit": "В. Микушевича,",
+  "credit_role": "Перевод",
+  "imprint": "Издательство «Художественная литература», Москва, 1977",
+  "publisher": "Художественная литература",
+  "year": 1977,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "raghuvamsha.html",
+  "slug": "raghuvamsha",
+  "title_ru": "Рагхуванша. Род Рагху. Калидаса (1996); В.Г. Эрман",
+  "title_en": "",
+  "subtitle": "Род Рагху",
+  "credit": "В.Г.Эрман",
+  "credit_role": "Введение, перевод с санскрита и примечания",
+  "imprint": "Санкт-Петербург ♦ 1996",
+  "publisher": "",
+  "year": 1996,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

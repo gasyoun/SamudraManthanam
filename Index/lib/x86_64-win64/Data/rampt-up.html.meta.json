@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "rampt-up.html",
+  "slug": "rampt-up",
+  "title_ru": "Из Рамапурватапания упанишады (1992); А.Я. Сыркин",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "А. Я. Сыркина",
+  "credit_role": "Пер. с санскрита, предисловие и комментарии",
+  "imprint": "Москва: «Наука», 1992",
+  "publisher": "Наука",
+  "year": 1992,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

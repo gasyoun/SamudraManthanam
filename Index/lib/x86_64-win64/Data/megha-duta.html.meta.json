@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "megha-duta.html",
+  "slug": "megha-duta",
+  "title_ru": "Калидаса. Облако-вестник (1914); П. Риттер",
+  "title_en": "",
+  "subtitle": "(Meghadūta)",
+  "credit": "П. Риттера,",
+  "credit_role": "Перевод",
+  "imprint": "ХАРЬКОВЪ. Типографія „Печатное Дѣло“, Конторская, Клещевскій пер., соб. д. № 3. 1914.",
+  "publisher": "",
+  "year": 1914,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

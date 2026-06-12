@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "02_rigveda.html",
+  "slug": "02_rigveda",
+  "title_ru": "Ригведа. Мандала II (1989); Т.Я. Елизаренкова",
+  "title_en": "",
+  "subtitle": "МАНДАЛА II",
+  "credit": "Т.Я. Елизаренкова",
+  "credit_role": "Издание подготовила",
+  "imprint": "М.: \"Наука\" ♦ 1989",
+  "publisher": "Наука",
+  "year": 1989,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

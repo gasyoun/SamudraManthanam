@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "yoga-sutry_zagumennov.html",
+  "slug": "yoga-sutry_zagumennov",
+  "title_ru": "Патанджали. Йога-сутра (1991); Б.И. Загуменнов",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Б.И. Загуменнов",
+  "credit_role": "Вводные статьи, перевод с санскрита, послесловие, примечания, глоссарии",
+  "imprint": "",
+  "publisher": "",
+  "year": 1991,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

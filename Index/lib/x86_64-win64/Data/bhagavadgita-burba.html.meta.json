@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-burba.html",
+  "slug": "bhagavadgita-burba",
+  "title_ru": "Бхагавад-Гита (2009); Д. Бурба",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Д. Бурба",
+  "credit_role": "Перевод с санскрита,",
+  "imprint": "Москва, \"РИПОЛ классик\", 2009",
+  "publisher": "РИПОЛ классик",
+  "year": 2009,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

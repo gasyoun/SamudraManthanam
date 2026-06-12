@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-radha.html",
+  "slug": "bhagavadgita-radha",
+  "title_ru": "Бхагавадгита (2016); Р.Т. Блиндерман",
+  "title_en": "",
+  "subtitle": "«Сарартха-­варшини-­тика»",
+  "credit": "Р.Т.Блиндерман",
+  "credit_role": "в традиции бенгальского вайшнавизма в 3 т.",
+  "imprint": "Москва, Фонд «Золотой Век» ♦ 2016",
+  "publisher": "Золотой Век",
+  "year": 2016,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

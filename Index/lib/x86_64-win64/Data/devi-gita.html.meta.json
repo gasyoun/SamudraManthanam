@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "devi-gita.html",
+  "slug": "devi-gita",
+  "title_ru": "Деви-гита (2005); А. Игнатьев",
+  "title_en": "",
+  "subtitle": "ПРЕДИСЛОВИЕ К ПЕРЕВОДУ ДЕВИ-ГИТЫ",
+  "credit": "А. Игнатьева",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "",
+  "publisher": "",
+  "year": 2005,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

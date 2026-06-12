@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "08_mahabharata-karnaparva.html",
+  "slug": "08_mahabharata-karnaparva",
+  "title_ru": "Махабхарата VIII (1990); Я.В. Васильков, С.Л. Невелева",
+  "title_en": "",
+  "subtitle": "Книга восьмая",
+  "credit": "Я.В.Василькова и С.Л.Невелевой",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "М.:Наука, 1990",
+  "publisher": "",
+  "year": 1990,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

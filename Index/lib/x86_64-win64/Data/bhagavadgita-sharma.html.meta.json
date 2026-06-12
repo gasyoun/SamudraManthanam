@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-sharma.html",
+  "slug": "bhagavadgita-sharma",
+  "title_ru": "Шримад Бхагавад Гита (2015); Ш. Ш. Шарма",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Шайлендра Шарма",
+  "credit_role": "Йогический комментарий",
+  "imprint": "2015",
+  "publisher": "",
+  "year": 2015,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

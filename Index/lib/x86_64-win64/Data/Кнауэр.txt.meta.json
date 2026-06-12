@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "Кнауэр.txt",
+  "slug": "knauer",
+  "title_ru": "Учебник санскритского языка (1908); Ф.И. Кнауэр",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1908,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

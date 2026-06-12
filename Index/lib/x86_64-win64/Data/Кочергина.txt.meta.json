@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "Кочергина.txt",
+  "slug": "kochergina",
+  "title_ru": "Санскритско-русский словарь (1987); В.А. Кочергина",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1987,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

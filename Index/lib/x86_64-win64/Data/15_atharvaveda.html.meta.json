@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "15_atharvaveda.html",
+  "slug": "15_atharvaveda",
+  "title_ru": "Атхарваведа. Книга 15 (2010); Т.Я. Елизаренкова",
+  "title_en": "",
+  "subtitle": "ВОТ ПЯТНАДЦАТАЯ КНИГА",
+  "credit": "Т.Я. Елизаренковой",
+  "credit_role": "Перевод с ведийского языка, вступительная",
+  "imprint": "М.: \"Восточная литература\" ♦ 2010",
+  "publisher": "Восточная литература",
+  "year": 2010,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

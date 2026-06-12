@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-1914.html",
+  "slug": "bhagavadgita-1914",
+  "title_ru": "Бхагавадгита (1914); А.А. Каменская и И.В. де Манциарли",
+  "title_en": "",
+  "subtitle": "ПРЕДИСЛОВИЕ ПЕРЕВОДЧИКА",
+  "credit": "А.А. Каменской и И.В. де Манциарли",
+  "credit_role": "переведенная с английского и санскритского",
+  "imprint": "1914",
+  "publisher": "",
+  "year": 1914,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

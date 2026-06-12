@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "KEWA.txt",
+  "slug": "kewa",
+  "title_ru": "KEWA, A Concise Etymological Sanskrit Dictionary (1953-1980); M. Mayrhofer",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1953,
+  "scripts": [
+    "devanagari",
+    "iast"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

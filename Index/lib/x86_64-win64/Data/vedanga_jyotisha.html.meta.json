@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "vedanga_jyotisha.html",
+  "slug": "vedanga_jyotisha",
+  "title_ru": "Веданга Джйотиша (2025); А.П. Широбоков",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "А.П. Широбоков",
+  "credit_role": "Пер. с санскрита, анализ и примечания",
+  "imprint": "2025",
+  "publisher": "",
+  "year": 2025,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "08_rigveda.html",
+  "slug": "08_rigveda",
+  "title_ru": "Ригведа. Мандала VIII (1999); Т.Я. Елизаренкова",
+  "title_en": "",
+  "subtitle": "МАНДАЛА VIII",
+  "credit": "Т.Я. Елизаренкова",
+  "credit_role": "Издание подготовила",
+  "imprint": "М.: \"Наука\" ♦ 1999",
+  "publisher": "Наука",
+  "year": 1999,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

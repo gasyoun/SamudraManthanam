@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "jabala-up.html",
+  "slug": "jabala-up",
+  "title_ru": "Джабала упанишада (2025); И.Е. Толчельников, М.В. Ишимбаев, В.Н. Кочергин, А.П. Широбоков",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "И.Е. Толчельников, М.В. Ишимбаев, В.Н. Кочергин, А.П. Широбоков",
+  "credit_role": "Пер. с санскрита",
+  "imprint": "2025",
+  "publisher": "",
+  "year": 2025,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

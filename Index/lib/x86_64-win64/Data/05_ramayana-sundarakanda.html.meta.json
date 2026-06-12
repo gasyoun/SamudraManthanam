@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "05_ramayana-sundarakanda.html",
+  "slug": "05_ramayana-sundarakanda",
+  "title_ru": "Рамаяна V (2022) подстрочник; М.В. Леонов",
+  "title_en": "",
+  "subtitle": "Книга пятая",
+  "credit": "М.В. Леонов",
+  "credit_role": "Подстрочник подготовил",
+  "imprint": "М.:«НАУКА», 2024",
+  "publisher": "НАУКА",
+  "year": 2024,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

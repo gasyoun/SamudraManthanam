@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "14_mahabharata-ashvamedhikaparva.html",
+  "slug": "14_mahabharata-ashvamedhikaparva",
+  "title_ru": "Махабхарата XIV (2003); Я.В. Васильков, С.Л. Невелева",
+  "title_en": "",
+  "subtitle": "Книга четырнадцатая",
+  "credit": "Я. В. Васильков и С. Л. Невелева",
+  "credit_role": "Издание подготовили",
+  "imprint": "Санкт-Петербург: «Наука», 2003",
+  "publisher": "Наука",
+  "year": 2003,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

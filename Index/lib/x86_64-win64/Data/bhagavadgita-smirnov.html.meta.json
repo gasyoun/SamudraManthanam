@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-smirnov.html",
+  "slug": "bhagavadgita-smirnov",
+  "title_ru": "Бхагавад-Гита (1977); Б. Л. Смирнов",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Б.Л.Смирнов",
+  "credit_role": "Перевод с санскрита, предисловие,",
+  "imprint": "Ашхабад ♦ 1977",
+  "publisher": "",
+  "year": 1977,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

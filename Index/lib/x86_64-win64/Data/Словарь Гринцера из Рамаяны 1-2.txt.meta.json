@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "Словарь Гринцера из Рамаяны 1-2.txt",
+  "slug": "slovar-grintsera-iz-ramayany-1-2",
+  "title_ru": "Cловарь к «Рамаяне» I-II (2006); П.А. Гринцер",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 2006,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

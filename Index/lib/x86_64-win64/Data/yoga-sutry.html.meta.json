@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "yoga-sutry.html",
+  "slug": "yoga-sutry",
+  "title_ru": "Йога-сутры. 11 переводов; Разные переводчики",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "Источник: www.oum.ru",
+  "imprint": "",
+  "publisher": "",
+  "year": null,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

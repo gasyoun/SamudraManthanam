@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "shiva-sutry_sharma.html",
+  "slug": "shiva-sutry_sharma",
+  "title_ru": "Шива-сутра (2007); Шри Шайлендра Шарма (санскр.), М. Николаева (англ.)",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Гуруджи Шри Шайлендры Шармы",
+  "credit_role": "перевод и комментарии",
+  "imprint": "2007",
+  "publisher": "",
+  "year": 2007,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

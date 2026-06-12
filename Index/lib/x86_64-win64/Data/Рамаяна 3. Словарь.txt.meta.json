@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "Рамаяна 3. Словарь.txt",
+  "slug": "ramayana-3-slovar",
+  "title_ru": "Словарь имен и географических названий к «Рамаяне» III (2006); П.А. Гринцер",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 2006,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

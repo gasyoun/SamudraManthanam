@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "naradasmriti.html",
+  "slug": "naradasmriti",
+  "title_ru": "Нарада-смрити (1998); А.А. Вигасин, А.М. Самозванцева",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "перевод А.А. Вигасина и А.М. Самозванцева,",
+  "credit_role": "Перевод",
+  "imprint": "1998",
+  "publisher": "",
+  "year": 1998,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

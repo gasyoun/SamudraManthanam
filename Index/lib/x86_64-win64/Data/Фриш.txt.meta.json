@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "Фриш.txt",
+  "slug": "frish",
+  "title_ru": "Санскритская хрестоматия. Т. II. Словарь (1956); О. Фриш",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1956,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

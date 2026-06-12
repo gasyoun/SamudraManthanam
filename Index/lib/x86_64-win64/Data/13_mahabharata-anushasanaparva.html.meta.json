@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "13_mahabharata-anushasanaparva.html",
+  "slug": "13_mahabharata-anushasanaparva",
+  "title_ru": "Махабхарата XIII",
+  "title_en": "",
+  "subtitle": "Книга тринадцатая",
+  "credit": "[автор перевода]",
+  "credit_role": "Перевод",
+  "imprint": "[место публикации]",
+  "publisher": "",
+  "year": null,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

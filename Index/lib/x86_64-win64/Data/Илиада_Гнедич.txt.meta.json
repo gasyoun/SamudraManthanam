@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "filename": "Илиада_Гнедич.txt",
+  "slug": "iliada_gnedich",
+  "title_ru": "Илиада Гомера; Н.И. Гнедич (1829)",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1829,
+  "scripts": [
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

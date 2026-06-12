@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "03_ramayana-aranyakanda.html",
+  "slug": "03_ramayana-aranyakanda",
+  "title_ru": "Рамаяна III (2014); П.А. Гринцер",
+  "title_en": "",
+  "subtitle": "Книга третья",
+  "credit": "П.А.Гринцер",
+  "credit_role": "Перевод подготовил",
+  "imprint": "М.:Ладомир ♦ 2014",
+  "publisher": "",
+  "year": 2014,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

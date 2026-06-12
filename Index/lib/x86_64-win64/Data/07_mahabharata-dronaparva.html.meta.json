@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "07_mahabharata-dronaparva.html",
+  "slug": "07_mahabharata-dronaparva",
+  "title_ru": "Махабхарата VII (1993); В.И. Кальянов",
+  "title_en": "",
+  "subtitle": "Книга седьмая",
+  "credit": "В.И.Кальянова",
+  "credit_role": "Перевод с санскрита и комментарии",
+  "imprint": "Санкт-Петербург: «Наука», 1993",
+  "publisher": "Наука",
+  "year": 1993,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

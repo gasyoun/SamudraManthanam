@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "warnemyr.txt",
+  "slug": "warnemyr",
+  "title_ru": "Глагольные корни Уитни (1885); W.D. Whitney",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1885,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

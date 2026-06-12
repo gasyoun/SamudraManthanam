@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "02_mahabharata-sabhaparva.html",
+  "slug": "02_mahabharata-sabhaparva",
+  "title_ru": "Махабхарата II (1962); В.И. Кальянов",
+  "title_en": "",
+  "subtitle": "Книга вторая",
+  "credit": "В.И.Кальянова",
+  "credit_role": "Перевод с санскрита и комментарии",
+  "imprint": "Москва, Ленинград: ♦ 1962, 1992",
+  "publisher": "",
+  "year": 1962,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

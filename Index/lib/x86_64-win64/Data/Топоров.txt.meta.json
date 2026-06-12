@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "filename": "Топоров.txt",
+  "slug": "toporov",
+  "title_ru": "Статьи для мифологических энциклопедий (2014); В.Н. Топоров",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 2014,
+  "scripts": [
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

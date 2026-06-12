@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "buddhacharita.html",
+  "slug": "buddhacharita",
+  "title_ru": "Ашвагхоша. Буддхачарита; М.В. Леонов",
+  "title_en": "",
+  "subtitle": "(Буддхачарита)",
+  "credit": "М. В. Леонова",
+  "credit_role": "Перевод с санскрита, предисловие и примечания",
+  "imprint": "2023",
+  "publisher": "",
+  "year": 2023,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

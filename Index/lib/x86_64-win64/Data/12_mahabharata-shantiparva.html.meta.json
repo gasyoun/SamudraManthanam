@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "12_mahabharata-shantiparva.html",
+  "slug": "12_mahabharata-shantiparva",
+  "title_ru": "Махабхарата XII (2017); С.Л. Невелева",
+  "title_en": "",
+  "subtitle": "Книга двенадцатая",
+  "credit": "С. Л. Невелевой",
+  "credit_role": "Перевод",
+  "imprint": "Письменные памятники Востока, 2017, том 14, № 4 (вып. 31), с. 5–22",
+  "publisher": "",
+  "year": 2017,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

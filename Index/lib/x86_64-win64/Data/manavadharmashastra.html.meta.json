@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "manavadharmashastra.html",
+  "slug": "manavadharmashastra",
+  "title_ru": "Манавадхармашастра (2002); С.Д. Эльманович, Г.И. Ильин",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "С.Д. Эльмановича,",
+  "credit_role": "Перевод",
+  "imprint": "Москва, \"ЭКСМО-Пресс\", 2002",
+  "publisher": "ЭКСМО-Пресс",
+  "year": 2002,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

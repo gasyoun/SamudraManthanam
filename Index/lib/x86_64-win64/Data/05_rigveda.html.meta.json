@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "05_rigveda.html",
+  "slug": "05_rigveda",
+  "title_ru": "Ригведа. Мандала V (1999); Т.Я. Елизаренкова",
+  "title_en": "",
+  "subtitle": "МАНДАЛА V",
+  "credit": "Т.Я. Елизаренкова",
+  "credit_role": "Издание подготовила",
+  "imprint": "М.: \"Наука\" ♦ 1999",
+  "publisher": "Наука",
+  "year": 1999,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

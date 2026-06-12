@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "vedartha-samgraha_ramanuja.html",
+  "slug": "vedartha-samgraha_ramanuja",
+  "title_ru": "Рамануджа. Ведартхасамграха (2007); Р.В. Псху",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Р.В. Псху",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "2007",
+  "publisher": "",
+  "year": 2007,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

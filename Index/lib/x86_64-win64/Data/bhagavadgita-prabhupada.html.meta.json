@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-prabhupada.html",
+  "slug": "bhagavadgita-prabhupada",
+  "title_ru": "Бхагавад-Гита (1984); Свами Прабхупада",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Шри Шримад А.Ч. Бхактиведанта Свами Прабхупада",
+  "credit_role": "Перевод с санскрита на английский",
+  "imprint": "Издательство \"Бхактиведанта Бук Траст\", 1984 г.",
+  "publisher": "Бхактиведанта Бук Траст",
+  "year": 1984,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "Dic_MW.txt",
+  "slug": "dic_mw",
+  "title_ru": "A Sanskrit-English Dictionary (1899); Monier-Williams",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1899,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

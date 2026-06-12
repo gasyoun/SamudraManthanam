@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-erman.html",
+  "slug": "bhagavadgita-erman",
+  "title_ru": "Бхагавад-Гита (2009); В. Г. Эрман",
+  "title_en": "",
+  "subtitle": "из книги",
+  "credit": "В.Г.Эрман",
+  "credit_role": "Издание подготовил",
+  "imprint": "М.:Ладомир ♦ 2009",
+  "publisher": "",
+  "year": 2009,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

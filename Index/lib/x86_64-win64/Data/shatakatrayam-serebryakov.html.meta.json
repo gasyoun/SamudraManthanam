@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "shatakatrayam-serebryakov.html",
+  "slug": "shatakatrayam-serebryakov",
+  "title_ru": "Шатакатраям. Бхартрихари (1979); И.Д. Серебряков",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "И.Д. Серебрякова",
+  "credit_role": "Перевод с санскрита, исследование и комментарий",
+  "imprint": "Главная редакция восточной литературы издательства «Наука», 1979",
+  "publisher": "Наука",
+  "year": 1979,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

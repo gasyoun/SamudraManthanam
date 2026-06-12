@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "shatakatrayam.html",
+  "slug": "shatakatrayam",
+  "title_ru": "Бхартрихари. Шатакатраям (2020); М. В. Леонов",
+  "title_en": "",
+  "subtitle": "Триста строф",
+  "credit": "М.В. Леонова",
+  "credit_role": "Перевод с санскрита, предисловие и примечания",
+  "imprint": "Санкт-Петербург, Нестор-История, 2020",
+  "publisher": "",
+  "year": 2020,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

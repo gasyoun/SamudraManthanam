@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "Статьи Махабхараты.txt",
+  "slug": "stati-makhabkharaty",
+  "title_ru": "Статьи Махабхараты;",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": null,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

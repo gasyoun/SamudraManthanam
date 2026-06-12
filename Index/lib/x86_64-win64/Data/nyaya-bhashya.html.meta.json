@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "nyaya-bhashya.html",
+  "slug": "nyaya-bhashya",
+  "title_ru": "Ньяя-сутры. Ньяя-бхашья; В.К. Шохин",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "В.К. Шохина",
+  "credit_role": "Историко-философское исследование, перевод с санскрита и комментарий",
+  "imprint": "Москва, 2001",
+  "publisher": "",
+  "year": 2001,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

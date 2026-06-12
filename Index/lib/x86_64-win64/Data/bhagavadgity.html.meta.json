@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgity.html",
+  "slug": "bhagavadgity",
+  "title_ru": "Бхагавад-Гита (1788-2016); Сборник переводов",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Институт исследования санскрита",
+  "credit_role": "Сборник переводов на русский",
+  "imprint": "2026",
+  "publisher": "",
+  "year": 2026,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

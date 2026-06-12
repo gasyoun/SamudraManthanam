@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "gitagovinda.html",
+  "slug": "gitagovinda",
+  "title_ru": "Джаядева. Гитаговинда (2020); А.Я. Сыркин",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "А. Я. Сыркина",
+  "credit_role": "Пер. с санскрита, вступит. статья и комментарий",
+  "imprint": "Санкт-Петербург: «Наука», 2020",
+  "publisher": "Наука",
+  "year": 2020,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

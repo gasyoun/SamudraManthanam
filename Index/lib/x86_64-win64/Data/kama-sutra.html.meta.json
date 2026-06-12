@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "kama-sutra.html",
+  "slug": "kama-sutra",
+  "title_ru": "Ватсьяянга Маланга. Камасутра (2000); А. Я. Сыркин",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "А.Я. Сыркин",
+  "credit_role": "Перевод с санскрита, вступительная статья и комментарий",
+  "imprint": "",
+  "publisher": "",
+  "year": 2000,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "hatha-yoga-pradipika.html",
+  "slug": "hatha-yoga-pradipika",
+  "title_ru": "Хатха Йога Прадипика; Шайлендра Шарма",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Шайлендра Шарма",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "",
+  "publisher": "",
+  "year": null,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

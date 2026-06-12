@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "03_atharvaveda.html",
+  "slug": "03_atharvaveda",
+  "title_ru": "Атхарваведа. Книга 3 (2005); Т.Я. Елизаренкова",
+  "title_en": "",
+  "subtitle": "ВОТ ТРЕТЬЯ КНИГА",
+  "credit": "Т.Я. Елизаренковой",
+  "credit_role": "Перевод с ведийского языка, вступительная",
+  "imprint": "М.: \"Восточная литература\" ♦ 2005",
+  "publisher": "Восточная литература",
+  "year": 2005,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

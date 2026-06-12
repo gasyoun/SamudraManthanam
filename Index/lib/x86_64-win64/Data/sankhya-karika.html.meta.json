@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "sankhya-karika.html",
+  "slug": "sankhya-karika",
+  "title_ru": "Санкхья-карика Ишваракришны (1995); В.К. Шохин",
+  "title_en": "",
+  "subtitle": "Ишваракришна",
+  "credit": "В.К. Шохин",
+  "credit_role": "Издание подготовил",
+  "imprint": "\"Ладомир\", Москва, 1995",
+  "publisher": "Ладомир",
+  "year": 1995,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

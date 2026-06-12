@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "Комментарии к Махабхарате.txt",
+  "slug": "kommentarii-k-makhabkharate",
+  "title_ru": "Комментарии к Махабхарате;",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": null,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

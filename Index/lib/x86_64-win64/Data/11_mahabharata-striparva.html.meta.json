@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "11_mahabharata-striparva.html",
+  "slug": "11_mahabharata-striparva",
+  "title_ru": "Махабхарата XI (1998); Я.В. Васильков, С.Л. Невелева",
+  "title_en": "",
+  "subtitle": "Книга одиннадцатая",
+  "credit": "Я. В. Васильков и С. Л. Невелева",
+  "credit_role": "Издание подготовили",
+  "imprint": "Москва ♦ 1998",
+  "publisher": "",
+  "year": 1998,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

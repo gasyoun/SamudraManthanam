@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "vishnu-smriti.html",
+  "slug": "vishnu-smriti",
+  "title_ru": "Вишну-смрити (2007); Н.А.Корнеева",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Н.А.Корнеевой",
+  "credit_role": "Перевод с санскрита, предисловие, комментарий и приложения",
+  "imprint": "Москва, 2007",
+  "publisher": "",
+  "year": 2007,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

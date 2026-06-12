@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "bhagavadgita-1909.html",
+  "slug": "bhagavadgita-1909",
+  "title_ru": "Бхагавадъ-Гита (1909); А.П. Казначеева",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Переводъ въ стихахъ А. П. Казначеевой",
+  "credit_role": "",
+  "imprint": "1909",
+  "publisher": "",
+  "year": 1909,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

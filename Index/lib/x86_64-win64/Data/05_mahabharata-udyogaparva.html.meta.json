@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "05_mahabharata-udyogaparva.html",
+  "slug": "05_mahabharata-udyogaparva",
+  "title_ru": "Махабхарата V (1976); В.И. Кальянов",
+  "title_en": "",
+  "subtitle": "Книга пятая",
+  "credit": "В.И.Кальянова",
+  "credit_role": "Перевод с санскрита и комментарии",
+  "imprint": "Ленинград: ♦ 1976",
+  "publisher": "",
+  "year": 1976,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

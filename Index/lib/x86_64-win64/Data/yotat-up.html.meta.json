@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "yotat-up.html",
+  "slug": "yotat-up",
+  "title_ru": "Йогататтва упанишада (1992); А.Я. Сыркин",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Б. В. Мартынова",
+  "credit_role": "Пер. с санскрита, предисловие и комментарии",
+  "imprint": "Москва: «Наука», 1992",
+  "publisher": "Наука",
+  "year": 1992,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

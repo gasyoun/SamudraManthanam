@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "08_atharvaveda.html",
+  "slug": "08_atharvaveda",
+  "title_ru": "Атхарваведа. Книга 8 (2007); Т.Я. Елизаренкова",
+  "title_en": "",
+  "subtitle": "ВОТ ВОСЬМАЯ КНИГА",
+  "credit": "Т.Я. Елизаренковой",
+  "credit_role": "Перевод с ведийского языка, вступительная",
+  "imprint": "М.: \"Восточная литература\" ♦ 2007",
+  "publisher": "Восточная литература",
+  "year": 2007,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

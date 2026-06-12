@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "yajnavalkyasmriti_add.html",
+  "slug": "yajnavalkyasmriti_add",
+  "title_ru": "Яджнавалкья-смрити. Материалы (1994); А.М. Самозванцев",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "А.М. Самозванцева,",
+  "credit_role": "Перевод",
+  "imprint": "Москва, \"Восточная литература\" РАН, 1994",
+  "publisher": "Восточная литература",
+  "year": 1994,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

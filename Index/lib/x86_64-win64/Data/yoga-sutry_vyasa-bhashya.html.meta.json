@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "yoga-sutry_vyasa-bhashya.html",
+  "slug": "yoga-sutry_vyasa-bhashya",
+  "title_ru": "Вьяса-бхашья (1992); Е.П. Островская и В.И. Рудой",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "Е.П. Островской и В.И. Рудого",
+  "credit_role": "Пер. с санскрита, введение, комментарий и реконструкция системы",
+  "imprint": "Москва, 1992",
+  "publisher": "",
+  "year": 1992,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

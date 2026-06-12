@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "filename": "chaurapanchashika.html",
+  "slug": "chaurapanchashika",
+  "title_ru": "Бильхана. Чаурапанчашика (2020); М. В. Леонов",
+  "title_en": "",
+  "subtitle": "Пятьдесят строф о тайной любви",
+  "credit": "М.В. Леонова",
+  "credit_role": "Перевод с санскрита, предисловие и примечания",
+  "imprint": "Санкт-Петербург, Нестор-История, 2020",
+  "publisher": "",
+  "year": 2020,
+  "scripts": [
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

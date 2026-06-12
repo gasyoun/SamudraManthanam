@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "Словарь Смирнова.txt",
+  "slug": "slovar-smirnova",
+  "title_ru": "Симфонический словарь (1955-1989); Б.Л. Смирнов",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1955,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

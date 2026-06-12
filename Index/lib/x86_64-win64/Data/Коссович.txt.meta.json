@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "Коссович.txt",
+  "slug": "kossovich",
+  "title_ru": "Санскрито-русский словарь (1854); К.А. Коссович",
+  "title_en": "",
+  "subtitle": "",
+  "credit": "",
+  "credit_role": "",
+  "imprint": "",
+  "publisher": "",
+  "year": 1854,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "18_mahabharata-svargarohanikaparva.html",
+  "slug": "18_mahabharata-svargarohanikaparva",
+  "title_ru": "Махабхарата XVIII (2005); Я.В. Васильков, С.Л. Невелева",
+  "title_en": "",
+  "subtitle": "Книга восемнадцатая",
+  "credit": "Я. В. Васильков и С. Л. Невелева",
+  "credit_role": "Издание подготовили",
+  "imprint": "Санкт-Петербург: «Наука», 2005",
+  "publisher": "Наука",
+  "year": 2005,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

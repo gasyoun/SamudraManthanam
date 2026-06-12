@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "09_mahabharata-shalyaparva.html",
+  "slug": "09_mahabharata-shalyaparva",
+  "title_ru": "Махабхарата IX (1996); В.И. Кальянов",
+  "title_en": "",
+  "subtitle": "Книга девятая",
+  "credit": "В.И.Кальянова",
+  "credit_role": "Перевод с санскрита и комментарии",
+  "imprint": "М.:Ладомир, 1996",
+  "publisher": "",
+  "year": 1996,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

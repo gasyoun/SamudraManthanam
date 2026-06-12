@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "gitarthasamgraha-abhinavagupta.html",
+  "slug": "gitarthasamgraha-abhinavagupta",
+  "title_ru": "Абхинавагупта. Гитартхасанграха; О.Н. Ерченков",
+  "title_en": "",
+  "subtitle": "Священная «Бхагавад гита», снабженная комментарием именуемым «Гитартхасанграха», сочиненным великим Учителем Абхинавагуптой",
+  "credit": "О.Н. Ерченков",
+  "credit_role": "Перевод с санскрита, комментарий",
+  "imprint": "",
+  "publisher": "",
+  "year": null,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}

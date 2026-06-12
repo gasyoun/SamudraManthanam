@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "filename": "16_mahabharata-mausalaparva.html",
+  "slug": "16_mahabharata-mausalaparva",
+  "title_ru": "Махабхарата XVI (2005); Я.В. Васильков, С.Л. Невелева",
+  "title_en": "",
+  "subtitle": "Книга шестнадцатая",
+  "credit": "Я. В. Васильков и С. Л. Невелева",
+  "credit_role": "Издание подготовили",
+  "imprint": "Санкт-Петербург: «Наука», 2005",
+  "publisher": "Наука",
+  "year": 2005,
+  "scripts": [
+    "devanagari",
+    "iast",
+    "cyrillic"
+  ],
+  "provenance": "",
+  "rights": "",
+  "needs_review": true
+}
