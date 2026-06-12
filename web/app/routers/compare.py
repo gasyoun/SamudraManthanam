@@ -22,6 +22,8 @@ from app.settings import settings
 
 router = APIRouter(prefix="/compare", tags=["compare"])
 templates = Jinja2Templates(directory="templates")
+from app import corpus_info
+templates.env.globals["corpus_info"] = corpus_info
 
 # Verse id format: `chapter.verse`, both positive integers. Ranges and decimals
 # are intentionally rejected — canonical URLs are always single verses.

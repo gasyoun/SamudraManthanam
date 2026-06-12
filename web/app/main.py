@@ -9,6 +9,7 @@ from app.routers import sources, search, morph, corpus_sync, health, reader, ide
 from app.settings import settings
 from app.state_db import get_state_db, init_state_db
 from app.db import get_db
+from app import corpus_info
 import os
 
 logger = logging.getLogger(__name__)
@@ -105,6 +106,8 @@ async def _check_corpus_db() -> None:
             # Slug routing migration. Idempotent; runs every startup so a
             # pre-migration corpus.db gains slug URLs without operator action.
             await _ensure_slug_column_and_backfill(db)
+            # Snapshot corpus version for the page footer / citations.
+            await corpus_info.load(db)
         finally:
             await db.close()
     except Exception:
@@ -141,6 +144,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Samudra Manthanam API", lifespan=lifespan)
 templates = Jinja2Templates(directory="templates")
+# Module object, not a snapshot — attributes are read at render time, so the
+# footer reflects whatever lifespan loaded.
+templates.env.globals["corpus_info"] = corpus_info
 
 # Configure CORS. Wildcard "*" is ONLY used in development with no explicit list —
 # production with an unset ALLOWED_ORIGINS results in `[]` (no cross-origin requests

@@ -272,3 +272,19 @@ a:hover { text-decoration: underline; }
     .site-hero { padding: 1.2rem 1.3rem; }
     .site-hero h1 { font-size: 1.5rem; }
 }
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+.site-footer {
+    margin-top: 3rem;
+    padding: 1.2rem 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 0.8rem;
+    color: #777;
+}
+.site-footer-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+.site-footer a {
+    color: inherit;
+}

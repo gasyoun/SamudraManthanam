@@ -32,6 +32,8 @@ from app.settings import settings
 
 router = APIRouter(prefix="/q", tags=["popular-terms"])
 templates = Jinja2Templates(directory="templates")
+from app import corpus_info
+templates.env.globals["corpus_info"] = corpus_info
 
 _LANDING_RESULT_LIMIT = 20
 

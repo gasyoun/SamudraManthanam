@@ -57,3 +57,6 @@ class SourceInfo(BaseModel):
     filename: str
     title: str
     sort_order: int
+    # Stable across re-ingests (derived from filename); None only for a
+    # pre-migration corpus.db before the lifespan backfill has run.
+    slug: Optional[str] = None

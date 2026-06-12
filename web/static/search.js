@@ -57,6 +57,7 @@ $(document).ready(function() {
                 const checkbox = $('<input>')
                     .attr('type', 'checkbox')
                     .attr('id', `src_${source.id}`)
+                    .attr('data-slug', source.slug || '')
                     .val(source.id)
                     .prop('checked', true);
                 const label = $('<label>')
@@ -114,9 +115,13 @@ $(document).ready(function() {
         if (srcParam !== null) {
             $('#sourcesGrid input').prop('checked', false);
             if (srcParam) {
-                const ids = new Set(srcParam.split(',').map(Number));
+                // Tokens are slugs (stable across re-ingests). Numeric tokens
+                // are accepted too for old bookmarked URLs that carried ids.
+                const tokens = new Set(srcParam.split(','));
                 $('#sourcesGrid input').each(function() {
-                    if (ids.has(parseInt($(this).val()))) $(this).prop('checked', true);
+                    if (tokens.has($(this).data('slug')) || tokens.has($(this).val())) {
+                        $(this).prop('checked', true);
+                    }
                 });
             }
         }
@@ -132,7 +137,13 @@ $(document).ready(function() {
         if (case_sensitive) params.set('cs', '1');
         if (whole_word) params.set('ww', '1');
         if (source_ids.length !== totalSourceCount) {
-            params.set('src', source_ids.join(','));
+            // Permalinks carry slugs, not ids: ids renumber on every corpus
+            // re-ingest, slugs are derived from filenames and survive.
+            const slugs = [];
+            $('#sourcesGrid input:checked').each(function() {
+                slugs.push($(this).data('slug') || $(this).val());
+            });
+            params.set('src', slugs.join(','));
         }
         return '?' + params.toString();
     }

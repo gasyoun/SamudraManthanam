@@ -32,6 +32,8 @@ _HTML_TAGS = re.compile(r"<[^>]+>")
 
 router = APIRouter(prefix="/sources", tags=["reader"])
 templates = Jinja2Templates(directory="templates")
+from app import corpus_info
+templates.env.globals["corpus_info"] = corpus_info
 
 
 def _build_variant_url(

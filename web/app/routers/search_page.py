@@ -41,29 +41,62 @@ from app.settings import settings
 
 router = APIRouter(tags=["search-page"])
 templates = Jinja2Templates(directory="templates")
+from app import corpus_info
+templates.env.globals["corpus_info"] = corpus_info
 logger = logging.getLogger(__name__)
 
 
-_SOURCE_IDS_PATTERN = re.compile(r"^\d+(,\d+)*$")
+_SOURCE_TOKEN_PATTERN = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
-def _parse_source_ids(raw: Optional[str]) -> Optional[list[int]]:
+async def _resolve_source_filter(
+    db, raw: Optional[str],
+) -> tuple[Optional[list[int]], Optional[list[str]]]:
+    """Resolve a `src=` filter of comma-separated tokens to source ids.
+
+    Tokens are slugs (stable across re-ingests). Purely numeric tokens that
+    don't match any slug are accepted as legacy source ids so pre-slug
+    bookmarks keep working. Returns `(ids, slugs)` — ids feed the search,
+    slugs feed the canonical URL — or `(None, None)` when the filter is
+    absent or nothing resolves (treated as "all sources", matching the old
+    silent-drop semantics).
+    """
     if not raw:
-        return None
-    if not _SOURCE_IDS_PATTERN.match(raw):
-        return None  # silently drop malformed src filter, treat as "all sources"
-    return [int(s) for s in raw.split(",")]
+        return None, None
+    tokens = [t for t in raw.split(",") if t and _SOURCE_TOKEN_PATTERN.match(t)]
+    if not tokens:
+        return None, None
+    resolved: dict[int, str] = {}
+    placeholders = ",".join("?" * len(tokens))
+    async with db.execute(
+        f"SELECT id, slug FROM sources WHERE slug IN ({placeholders})", tokens
+    ) as cur:
+        matched_slugs = set()
+        for row in await cur.fetchall():
+            resolved[row[0]] = row[1]
+            matched_slugs.add(row[1])
+    legacy_ids = [int(t) for t in tokens if t.isdigit() and t not in matched_slugs]
+    if legacy_ids:
+        placeholders = ",".join("?" * len(legacy_ids))
+        async with db.execute(
+            f"SELECT id, slug FROM sources WHERE id IN ({placeholders})", legacy_ids
+        ) as cur:
+            for row in await cur.fetchall():
+                resolved[row[0]] = row[1] or str(row[0])
+    if not resolved:
+        return None, None
+    return sorted(resolved.keys()), sorted(resolved.values())
 
 
 def _canonical_search_url(
     *, base: str, query: str, mode: str, case_sensitive: bool,
-    whole_word: bool, source_ids: Optional[list[int]],
+    whole_word: bool, source_slugs: Optional[list[str]],
 ) -> str:
     """Build a normalised canonical URL.
 
     Normalisation: lowercase + strip query, drop default-valued flags, sort
-    source ids ascending. Empty params are omitted so equivalent searches
-    converge on one URL.
+    source slugs. Empty params are omitted so equivalent searches converge
+    on one URL. Slugs (not ids) keep the canonical stable across re-ingests.
     """
     parts: list[tuple[str, str]] = [("q", query.strip().lower())]
     if mode != "plain":
@@ -72,8 +105,8 @@ def _canonical_search_url(
         parts.append(("cs", "1"))
     if whole_word:
         parts.append(("ww", "1"))
-    if source_ids:
-        parts.append(("src", ",".join(str(s) for s in sorted(source_ids))))
+    if source_slugs:
+        parts.append(("src", ",".join(sorted(source_slugs))))
     return f"{base}/search?{urlencode(parts)}"
 
 
@@ -99,12 +132,11 @@ async def search_page(
     mode: SearchMode = Query(SearchMode.plain),
     cs: bool = Query(False, description="Case sensitive"),
     ww: bool = Query(False, description="Whole word"),
-    src: Optional[str] = Query(None, description="Comma-separated source IDs"),
+    src: Optional[str] = Query(None, description="Comma-separated source slugs (legacy: numeric IDs)"),
 ):
     from app.main import _ss_link, _template_context
 
     base = settings.PUBLIC_BASE_URL.rstrip("/") if settings.PUBLIC_BASE_URL else ""
-    source_ids = _parse_source_ids(src)
 
     # Empty-query landing: show the form, no search executed, noindex.
     if not q.strip():
@@ -133,6 +165,7 @@ async def search_page(
     start = time.time()
     db = await get_db(settings.DB_PATH)
     try:
+        source_ids, source_slugs = await _resolve_source_filter(db, src)
         search_data = await dispatch_search(
             db, q, mode, cs, ww, source_ids, limit=5000
         )
@@ -147,7 +180,7 @@ async def search_page(
 
     canonical_url = _canonical_search_url(
         base=base, query=q, mode=mode.value,
-        case_sensitive=cs, whole_word=ww, source_ids=source_ids,
+        case_sensitive=cs, whole_word=ww, source_slugs=source_slugs,
     )
     noindex = _should_noindex(query=q, mode=mode.value, total=total)
 

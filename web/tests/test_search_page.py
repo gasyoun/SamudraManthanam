@@ -14,7 +14,6 @@ from fastapi.testclient import TestClient
 from app.main import app
 from app.routers.search_page import (
     _canonical_search_url,
-    _parse_source_ids,
     _should_noindex,
 )
 
@@ -26,7 +25,7 @@ client = TestClient(app)
 def test_canonical_lowercases_query_and_strips():
     url = _canonical_search_url(
         base="https://samskrtam.ru", query="  Кришна  ",
-        mode="plain", case_sensitive=False, whole_word=False, source_ids=None,
+        mode="plain", case_sensitive=False, whole_word=False, source_slugs=None,
     )
     assert url == "https://samskrtam.ru/search?q=%D0%BA%D1%80%D0%B8%D1%88%D0%BD%D0%B0"
 
@@ -34,7 +33,7 @@ def test_canonical_lowercases_query_and_strips():
 def test_canonical_drops_default_params():
     url = _canonical_search_url(
         base="", query="dharma", mode="plain",
-        case_sensitive=False, whole_word=False, source_ids=None,
+        case_sensitive=False, whole_word=False, source_slugs=None,
     )
     assert url == "/search?q=dharma"
 
@@ -42,7 +41,7 @@ def test_canonical_drops_default_params():
 def test_canonical_keeps_non_default_flags():
     url = _canonical_search_url(
         base="", query="agni", mode="regex",
-        case_sensitive=True, whole_word=True, source_ids=None,
+        case_sensitive=True, whole_word=True, source_slugs=None,
     )
     assert "q=agni" in url
     assert "mode=regex" in url
@@ -50,31 +49,42 @@ def test_canonical_keeps_non_default_flags():
     assert "ww=1" in url
 
 
-def test_canonical_sorts_source_ids():
+def test_canonical_sorts_source_slugs():
     url = _canonical_search_url(
         base="", query="dharma", mode="plain",
-        case_sensitive=False, whole_word=False, source_ids=[3, 1, 2],
+        case_sensitive=False, whole_word=False,
+        source_slugs=["source2", "source1"],
     )
-    assert "src=1%2C2%2C3" in url  # %2C is url-encoded comma
+    assert "src=source1%2Csource2" in url  # %2C is url-encoded comma
 
 
-# ── _parse_source_ids ────────────────────────────────────────────────────────
+# ── source filter resolution (slugs + legacy ids) ───────────────────────────
 
-def test_parse_source_ids_basic():
-    assert _parse_source_ids("1,2,3") == [1, 2, 3]
+def test_src_slug_filter_narrows_results():
+    # 'svasti' lives in source1 only — filtering to source2 must hide it.
+    r = client.get("/search?q=svasti&src=source1")
+    assert r.status_code == 200
+    assert "svasti arjuna" in r.text
+    r = client.get("/search?q=svasti&src=source2")
+    assert r.status_code == 200
+    assert "svasti arjuna" not in r.text
 
 
-def test_parse_source_ids_empty_returns_none():
-    assert _parse_source_ids(None) is None
-    assert _parse_source_ids("") is None
+def test_src_legacy_numeric_ids_still_resolve():
+    # Pre-slug bookmarks carried numeric ids; they must keep working and
+    # the canonical URL must rewrite them to slugs.
+    r = client.get("/search?q=svasti&src=1")
+    assert r.status_code == 200
+    assert "svasti arjuna" in r.text
+    canon_idx = r.text.index('rel="canonical"')
+    assert "src=source1" in r.text[canon_idx:canon_idx + 300]
 
 
-def test_parse_source_ids_malformed_returns_none():
-    # Defense in depth — malformed src filter must NOT 500 the page; it just
-    # falls back to "all sources" silently.
-    assert _parse_source_ids("1,abc,3") is None
-    assert _parse_source_ids("1;2;3") is None
-    assert _parse_source_ids("'; DROP TABLE sources;--") is None
+def test_src_unknown_tokens_fall_back_to_all_sources():
+    # Unresolvable filter degrades to "all sources" rather than erroring.
+    r = client.get("/search?q=svasti&src=no-such-slug")
+    assert r.status_code == 200
+    assert "svasti arjuna" in r.text
 
 
 # ── _should_noindex ──────────────────────────────────────────────────────────

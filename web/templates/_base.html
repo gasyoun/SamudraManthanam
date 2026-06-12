@@ -62,6 +62,18 @@
 
     {% block content %}{% endblock %}
 
+    {% block footer %}
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            © 2013–2026 Общество ревнителей санскрита
+            {%- if corpus_info and corpus_info.corpus_version %}
+            · Корпус: версия {{ corpus_info.corpus_version }}{% if corpus_info.generated_at %} от {{ corpus_info.generated_at[:10] }}{% endif %}
+            {%- endif %}
+            · <a href="https://github.com/gasyoun/SamudraManthanam" rel="noopener" target="_blank">GitHub</a>
+        </div>
+    </footer>
+    {% endblock %}
+
     {% block extra_body %}{% endblock %}
 </body>
 </html>
