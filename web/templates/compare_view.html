@@ -31,6 +31,11 @@
         border-radius: 6px;
         margin-bottom: 1rem;
         padding: 1.2rem 1.5rem;
+        /* Reset the corpus-content fixed width from style.css — compare cards
+           fill their container width, not a fixed 620 px column. */
+        width: auto;
+        max-width: 100%;
+        float: none;
     }
     .translation.role-commentary { background: var(--commentary-bg); border-left: 3px solid #4a76a8; }
     .translation.role-context    { background: var(--context-bg);    border-left: 3px solid #8e44ad; }
@@ -105,6 +110,20 @@
     .nav-pager .disabled { color: #ccc; border-color: #eee; pointer-events: none; }
 
     main { max-width: 1100px; margin: 1rem auto 2rem; padding: 0 1.5rem; }
+
+    @media (max-width: 480px) {
+        .pager-toolbar { padding: 0 1rem; }
+        .pager h1 { font-size: 1.1rem; }
+        main { padding: 0 1rem; }
+        .translation { padding: 1rem; }
+        .iast-canonical { padding: 1rem; }
+        .nav-pager a {
+            padding: 0.6rem 0.9rem;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+    }
 </style>
 {% endblock %}
 

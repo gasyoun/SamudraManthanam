@@ -302,6 +302,24 @@
         .line-meta { text-align: left; }
         .line-actions { opacity: 1; }
     }
+
+    /* 380 px — tap targets ≥44 px, toolbar fits on one row */
+    @media (max-width: 480px) {
+        .reader-toolbar .tb-btn,
+        .reader-toolbar .tb-offline {
+            min-height: 44px;
+            min-width: 44px;
+            padding: 0 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .reader-toolbar .tb-group { gap: 0; }
+        .reader-header h1 { font-size: 1.1rem; }
+        .reader-toolbar { padding: 0.25rem 0.75rem; }
+        main.reader { padding: 0.75rem; }
+        .copy-citation-btn { min-height: 44px; min-width: 44px; }
+    }
 </style>
 {% endblock %}
 

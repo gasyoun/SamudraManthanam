@@ -257,3 +257,20 @@ a {
 .red-text {
      color: red;
 }
+
+/* ── 380 px responsive — corpus content ─────────────────────────────────────
+   .iast (440 px) and .translation (620 px) are fixed-width in the legacy
+   corpus stylesheet. On narrow screens both overflow — collapse them to full
+   width and stack them vertically under each other.                         */
+@media (max-width: 600px) {
+    body { padding: 0 8px; }
+    .iast       { width: 100%; max-width: 100%; padding-right: 0; float: none; }
+    .translation { width: 100%; max-width: 100%; float: none; }
+    .chapter_content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .citation_block { overflow-x: visible; }
+    .comments { margin-bottom: 12px; }
+}
