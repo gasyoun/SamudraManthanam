@@ -1,20 +1,19 @@
 {
   "schema_version": 1,
-  "filename": "warnemyr.txt",
-  "slug": "warnemyr",
-  "title_ru": "Глагольные корни Уитни (1885); W.D. Whitney",
+  "filename": "Вишну-Пурана.htm",
+  "slug": "vishnu-purana",
+  "title_ru": "Вишну-Пурана. Книга I (1995); Т.К. Посова",
   "title_en": "",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
   "imprint": "",
   "publisher": "",
-  "year": 1885,
+  "year": 1995,
   "scripts": [
-    "iast",
     "cyrillic"
   ],
-  "structure": "dictionary",
+  "structure": "prose",
   "provenance": "",
   "rights": "",
   "needs_review": true

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "filename": "Словарь Гринцера из Рамаяны 1-2.txt",
-  "slug": "slovar-grintsera-iz-ramayany-1-2",
-  "title_ru": "Cловарь к «Рамаяне» I-II (2006); П.А. Гринцер",
+  "filename": "fasmer-dr-ind.htm",
+  "slug": "fasmer-dr-ind",
+  "title_ru": "Этимологический словарь русского языка (1964-1973); М.Фасмер",
   "title_en": "",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
   "imprint": "",
   "publisher": "",
-  "year": 2006,
+  "year": 1964,
   "scripts": [
     "iast",
     "cyrillic"

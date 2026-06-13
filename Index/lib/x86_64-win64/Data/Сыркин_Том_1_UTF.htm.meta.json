@@ -1,20 +1,20 @@
 {
   "schema_version": 1,
-  "filename": "warnemyr.txt",
-  "slug": "warnemyr",
-  "title_ru": "Глагольные корни Уитни (1885); W.D. Whitney",
+  "filename": "Сыркин_Том_1_UTF.htm",
+  "slug": "syrkin_tom_1_utf",
+  "title_ru": "Избранные труды. Т.1; А.Я. Сыркин",
   "title_en": "",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
   "imprint": "",
   "publisher": "",
-  "year": 1885,
+  "year": null,
   "scripts": [
     "iast",
     "cyrillic"
   ],
-  "structure": "dictionary",
+  "structure": "prose",
   "provenance": "",
   "rights": "",
   "needs_review": true

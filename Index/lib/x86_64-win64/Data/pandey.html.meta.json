@@ -13,6 +13,7 @@
   "scripts": [
     "cyrillic"
   ],
+  "structure": "prose",
   "provenance": "",
   "rights": "",
   "needs_review": true

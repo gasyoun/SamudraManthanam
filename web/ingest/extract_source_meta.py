@@ -111,7 +111,8 @@ def main() -> int:
     args = parser.parse_args()
 
     corpus = Path(args.corpus_path)
-    html_files = sorted(corpus.glob("*.html")) + sorted(corpus.glob("*.txt"))
+    html_files = (sorted(corpus.glob("*.html")) + sorted(corpus.glob("*.htm"))
+                  + sorted(corpus.glob("*.txt")))
     html_files = [p for p in html_files if not p.name.endswith(".no_tags")]
     if not html_files:
         print(f"No corpus files found under {corpus}", file=sys.stderr)
