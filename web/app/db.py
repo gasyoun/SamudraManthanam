@@ -47,15 +47,25 @@ async def create_schema(db):
         ON sources(slug) WHERE slug IS NOT NULL AND slug != ''
     """)
 
+    # Migrate FTS5 table if canonical_id column is absent (LINE_ID_SCHEME §6).
+    # FTS5 virtual tables cannot be altered — drop and recreate; ingest will repopulate.
+    async with db.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name='corpus_lines'"
+    ) as _cur:
+        _fts_row = await _cur.fetchone()
+    if _fts_row and "canonical_id" not in (_fts_row[0] or ""):
+        await db.execute("DROP TABLE IF EXISTS corpus_lines")
+
     await db.execute("""
     CREATE VIRTUAL TABLE IF NOT EXISTS corpus_lines USING fts5(
-        line_text,              -- HTML-stripped plain text (what is searched)
-        line_html   UNINDEXED, -- Original HTML line (what is displayed)
-        source_id   UNINDEXED,
-        line_num    UNINDEXED,
-        link_id     UNINDEXED, -- value of id= attribute on the line, if present
-        chapter     UNINDEXED, -- current H1 heading at point of line
-        tokenize="unicode61"    -- Support for IAST diacritics
+        line_text,               -- HTML-stripped plain text (what is searched)
+        line_html    UNINDEXED,  -- Original HTML line (what is displayed)
+        source_id    UNINDEXED,
+        line_num     UNINDEXED,
+        link_id      UNINDEXED,  -- value of id= attribute on the line, if present
+        chapter      UNINDEXED,  -- current H1 heading at point of line
+        canonical_id UNINDEXED,  -- LINE_ID_SCHEME canonical ID (nullable until JSONL ingest)
+        tokenize="unicode61"     -- Support for IAST diacritics
     );
     """)
 

@@ -4,6 +4,7 @@ import os
 import argparse
 import hashlib
 import sys
+from pathlib import Path
 
 # Add necessary directories to sys.path
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -14,6 +15,8 @@ sys.path.append(script_dir)
 from app.db import get_db, create_schema
 from app.services.slug import make_unique_slug
 from parse_html import parse_corpus_file, get_source_title
+
+_JSONL_DIR = Path(web_dir) / "corpus_builder" / "jsonl"
 
 def get_sha256(file_path):
     sha256_hash = hashlib.sha256()
@@ -107,30 +110,54 @@ async def ingest(corpus_path: str, db_path: str):
                 ),
             )
 
-        # Bulk insert lines
+        # Bulk insert lines — prefer JSONL (Phase 1+); fall back to HTML parse.
+        _INSERT = (
+            "INSERT INTO corpus_lines "
+            "(line_text, line_html, source_id, line_num, link_id, chapter, canonical_id) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)"
+        )
         lines_data = []
-        for line_info in parse_corpus_file(file_path):
-            lines_data.append((
-                line_info["line_text"],
-                line_info["line_html"],
-                source_id,
-                line_info["line_num"],
-                line_info["link_id"],
-                line_info["chapter"]
-            ))
-            
-            if len(lines_data) >= 1000:
-                await db.executemany(
-                    "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num, link_id, chapter) VALUES (?, ?, ?, ?, ?, ?)",
-                    lines_data
-                )
-                lines_data = []
-        
+
+        jsonl_path = _JSONL_DIR / f"{slug}.jsonl"
+        if jsonl_path.exists():
+            with open(jsonl_path, encoding="utf-8") as _jf:
+                for _raw in _jf:
+                    _raw = _raw.strip()
+                    if not _raw:
+                        continue
+                    rec = json.loads(_raw)
+                    if rec.get("deleted"):
+                        continue
+                    lines_data.append((
+                        rec.get("text", ""),
+                        rec.get("html", ""),
+                        source_id,
+                        rec.get("seq", 0),
+                        rec.get("passage", ""),
+                        rec.get("chapter"),
+                        rec.get("id"),
+                    ))
+                    if len(lines_data) >= 1000:
+                        await db.executemany(_INSERT, lines_data)
+                        lines_data = []
+        else:
+            print(f"  [warn] no JSONL for {slug!r} — falling back to HTML parse")
+            for line_info in parse_corpus_file(file_path):
+                lines_data.append((
+                    line_info["line_text"],
+                    line_info["line_html"],
+                    source_id,
+                    line_info["line_num"],
+                    line_info["link_id"],
+                    line_info["chapter"],
+                    None,
+                ))
+                if len(lines_data) >= 1000:
+                    await db.executemany(_INSERT, lines_data)
+                    lines_data = []
+
         if lines_data:
-            await db.executemany(
-                "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num, link_id, chapter) VALUES (?, ?, ?, ?, ?, ?)",
-                lines_data
-            )
+            await db.executemany(_INSERT, lines_data)
 
         await db.commit()
     
