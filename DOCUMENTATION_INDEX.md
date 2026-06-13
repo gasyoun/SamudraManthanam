@@ -22,6 +22,7 @@ Purpose: tell humans and implementation agents which Markdown files are current,
 - `docs/ALIGNMENT_SPEC.md`: Sanskrit↔Russian alignment spec (S3).
 - `docs/TAG_CENSUS.md` / `.json`: measured corpus structural inventory (S2 prerequisite).
 - `docs/DESIGN_SESSIONS_PLAN.md`: the five-session frontier plan (S1–S3 done, S4–S5 pending).
+- `docs/PHASE2_PLAN.md`: Phase 2 plan (responsive + PWA shell + offline reader) — the gate before S4; Sonnet-tier, parallelizable with Phase 1.
 
 ## Current Supporting Docs
 

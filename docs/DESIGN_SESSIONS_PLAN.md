@@ -66,6 +66,12 @@ Everything ships inside the app and its search service only.
   separate public download endpoint may be added for it.
 - **Order note:** last of the build sessions; depends on Phase 2 being done and is
   independent of Sessions 2–3.
+- **Gate status (2026-06-12):** Phase 2 — S4's prerequisite — is now **planned** in
+  [PHASE2_PLAN.md](PHASE2_PLAN.md), which defines an explicit "S4 contract surface" (§3):
+  installable PWA shell, `navigator.storage.persist()` durability layer, per-text offline
+  selection module, and offline/online state UX. S4 may be designed as soon as Phase 2 is
+  *implemented* (not just planned). S4's `OFFLINE_SEARCH_DESIGN.md` should consume that
+  contract rather than re-specify the shell.
 
 ## Session 5 — Pre-release review
 
