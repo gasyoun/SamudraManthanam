@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2026-06-13
+
+### Added
+- **Architecture Critique**: Added `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` to challenge proposed solutions, compare alternatives, and collect decision questions.
+- **Documentation Index**: Added `DOCUMENTATION_INDEX.md` to separate current, supporting, and historical Markdown guidance for humans and Gemini Flash.
+- **Target Architecture**: Added `TARGET_ARCHITECTURE.md` describing the VPS/no-Docker target architecture, `corpus.db`/`state.db` split, AI provider abstraction, identity, correction proposals, and corpus publication flow.
+- **6-Month Roadmap**: Added `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md` with phased plans for corpus/search engine, scholarly workbench, and research platform development.
+- **Gemini Flash Phase Plans**: Split the implementation plan into short under-100-line phase files for foundation, search/reader, identity/corrections, AI, and deployment/operations.
+- **User Documentation**: Created `use_cases.md` detailing scholarly and technical scenarios for the platform.
+- **Production Automation**: Created `reindex.sh` to facilitate daily automated re-indexing via Docker.
+- **Deployment Infrastructure**: Added `Dockerfile` and `docker-compose.yml` for containerized deployment.
+- **Testing Suite**: Created `test_services.py` for automated backend validation.
+- **Corpus Sync API**: Integrated `corpus_sync` router for legacy desktop app updates.
+- **SSE Support**: Finalized server-sent events for search progress tracking.
+
+### Fixed
+- **Security**: Hardened XSS protection by refactoring search result header rendering into Jinja2 templates.
+- **Regex Safety**: Added robust validation for regex patterns across all search endpoints.
+- **Architecture**: Corrected Pydantic model field ordering and migrated to V2-native validators.
+- **Search Logic**: Improved FTS5 tokenization to support intelligent diacritic-tolerant matching for Sanskrit.
+
 ## [1.21.0] - 2026-06-12 (Phase 0: DH-standards foundation)
 
 Start of the H2 2026 roadmap (`ROADMAP_2026_H2_DH_MOBILE.md`): stable
@@ -666,27 +687,6 @@ Remaining 75 sources are standalone works (single Upaniṣads, Kāmasūtra, Manu
 - **Python 3.11 Compatibility**: Resolved nested f-string syntax errors and missing typing imports.
 - **Morphological SSE Bug**: Fixed progress tracking typo for morphological searches.
 - **Architecture Cleanup**: Moved ad-hoc scripts to `web/scripts/` and centralized configuration in `settings.py`.
-
-## [Unreleased]
-
-### Added
-- **Architecture Critique**: Added `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` to challenge proposed solutions, compare alternatives, and collect decision questions.
-- **Documentation Index**: Added `DOCUMENTATION_INDEX.md` to separate current, supporting, and historical Markdown guidance for humans and Gemini Flash.
-- **Target Architecture**: Added `TARGET_ARCHITECTURE.md` describing the VPS/no-Docker target architecture, `corpus.db`/`state.db` split, AI provider abstraction, identity, correction proposals, and corpus publication flow.
-- **6-Month Roadmap**: Added `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md` with phased plans for corpus/search engine, scholarly workbench, and research platform development.
-- **Gemini Flash Phase Plans**: Split the implementation plan into short under-100-line phase files for foundation, search/reader, identity/corrections, AI, and deployment/operations.
-- **User Documentation**: Created `use_cases.md` detailing scholarly and technical scenarios for the platform.
-- **Production Automation**: Created `reindex.sh` to facilitate daily automated re-indexing via Docker.
-- **Deployment Infrastructure**: Added `Dockerfile` and `docker-compose.yml` for containerized deployment.
-- **Testing Suite**: Created `test_services.py` for automated backend validation.
-- **Corpus Sync API**: Integrated `corpus_sync` router for legacy desktop app updates.
-- **SSE Support**: Finalized server-sent events for search progress tracking.
-
-### Fixed
-- **Security**: Hardened XSS protection by refactoring search result header rendering into Jinja2 templates.
-- **Regex Safety**: Added robust validation for regex patterns across all search endpoints.
-- **Architecture**: Corrected Pydantic model field ordering and migrated to V2-native validators.
-- **Search Logic**: Improved FTS5 tokenization to support intelligent diacritic-tolerant matching for Sanskrit.
 
 ## [1.6.0] - 2026-05-12 (Web Stabilization & Gemini Implementation)
 ### Added
