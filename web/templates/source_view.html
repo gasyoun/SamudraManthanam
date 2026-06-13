@@ -354,8 +354,14 @@
         {% endif %}
 
         <div class="tb-sep"></div>
-        <button id="rdr-help-btn" class="tb-btn" title="Сочетания клавиш (?)" style="margin-left:auto;">?</button>
+        <button id="rdr-offline-btn" class="tb-btn tb-offline" title="Сохранить для чтения офлайн"
+                data-slug="{{ slug }}" style="margin-left:auto;display:none;">☁ Офлайн</button>
+        <button id="rdr-help-btn" class="tb-btn" title="Сочетания клавиш (?)">?</button>
     </div>
+</div>
+<div id="rdr-offline-progress" style="display:none;padding:.4rem 1.5rem;background:#fff3e0;
+     font-size:.82rem;color:#555;border-bottom:1px solid #eee;">
+    <span id="rdr-offline-msg">Загрузка…</span>
 </div>
 
 <div class="reader-layout {% if not chapters %}no-sidebar{% endif %}">
@@ -408,6 +414,62 @@
     });
 </script>
 <script src="/static/scripts/reader.js"></script>
+<script type="module">
+import { init, isOffline, registerOffline, removeOffline } from '/static/scripts/offline.js';
+
+const btn      = document.getElementById('rdr-offline-btn');
+const progress = document.getElementById('rdr-offline-progress');
+const msg      = document.getElementById('rdr-offline-msg');
+const slug     = btn ? btn.dataset.slug : null;
+
+function setBtn(offline) {
+    if (!btn) return;
+    if (offline) {
+        btn.textContent = '✓ Офлайн';
+        btn.style.color = '#27ae60';
+        btn.title = 'Удалить из офлайн-кэша';
+    } else {
+        btn.textContent = '☁ Офлайн';
+        btn.style.color = '';
+        btn.title = 'Сохранить для чтения офлайн';
+    }
+}
+
+if ('serviceWorker' in navigator && btn) {
+    init().then(() => {
+        btn.style.display = '';
+        setBtn(isOffline(slug));
+    });
+
+    btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        if (isOffline(slug)) {
+            msg.textContent = 'Удаление из кэша…';
+            progress.style.display = 'block';
+            await removeOffline(slug);
+            progress.style.display = 'none';
+            setBtn(false);
+        } else {
+            progress.style.display = 'block';
+            msg.textContent = 'Загрузка страницы…';
+            try {
+                await registerOffline(slug, (loaded, total) => {
+                    const kb = Math.round(loaded / 1024);
+                    const tot = total ? ` / ${Math.round(total / 1024)} КБ` : '';
+                    msg.textContent = `Загружено ${kb}${tot} КБ…`;
+                });
+                msg.textContent = 'Сохранено! Страница доступна офлайн.';
+                setBtn(true);
+                setTimeout(() => { progress.style.display = 'none'; }, 2500);
+            } catch (e) {
+                msg.textContent = `Ошибка: ${e.message}`;
+                setTimeout(() => { progress.style.display = 'none'; }, 3000);
+            }
+        }
+        btn.disabled = false;
+    });
+}
+</script>
 
 {% if source_jsonld %}
 <script type="application/ld+json">

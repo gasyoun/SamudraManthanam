@@ -31,6 +31,18 @@
     <meta name="twitter:description" content="{{ og_description or site_description }}">
     {% endblock %}
 
+    {# PWA shell #}
+    <link rel="manifest" href="/static/manifest.webmanifest">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Пахтанье">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+
+    {# Preload primary reading font subset (woff2, small, needed first paint) #}
+    <link rel="preload" href="/static/fonts/charis-sil.woff2" as="font" type="font/woff2" crossorigin>
+
     {# Order matters: style.css is the legacy corpus stylesheet (shared with
        desktop exports); site.css owns chrome and tokens. Last-load wins on
        ties so site.css can override body font etc. without harming the
@@ -75,5 +87,33 @@
     {% endblock %}
 
     {% block extra_body %}{% endblock %}
+
+    {# PWA service-worker registration + update toast #}
+    <div id="sw-update-toast" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);
+         background:#2c3e50;color:#fff;padding:.75rem 1.25rem;border-radius:8px;
+         font-size:.9rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);
+         display:flex;gap:.75rem;align-items:center;">
+        <span>Обновление готово</span>
+        <button onclick="window.location.reload()" style="background:#e67e22;border:none;color:#fff;
+                padding:.3rem .8rem;border-radius:4px;cursor:pointer;font-size:.85rem;">
+            Обновить
+        </button>
+        <button onclick="document.getElementById('sw-update-toast').style.display='none'"
+                style="background:transparent;border:none;color:#aaa;cursor:pointer;font-size:1rem;line-height:1;">✕</button>
+    </div>
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(reg => {
+            reg.addEventListener('updatefound', () => {
+                const newSW = reg.installing;
+                newSW.addEventListener('statechange', () => {
+                    if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                        document.getElementById('sw-update-toast').style.display = 'flex';
+                    }
+                });
+            });
+        }).catch(() => {});
+    }
+    </script>
 </body>
 </html>

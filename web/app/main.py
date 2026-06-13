@@ -185,6 +185,25 @@ static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file
 if os.path.exists(static_dir):
     app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
+
+@app.get("/sw.js")
+async def service_worker():
+    """Serve the PWA service worker from the root scope.
+
+    The SW file lives in /static/ but must be served from a path whose
+    directory is an ancestor of the scope it controls (/).  FastAPI's
+    StaticFiles mount at /static/ would restrict the SW scope to /static/*,
+    so we expose it here at the root with the Service-Worker-Allowed header
+    that explicitly grants the / scope.
+    """
+    from fastapi.responses import FileResponse
+    sw_path = os.path.join(static_dir, "sw.js")
+    return FileResponse(
+        sw_path,
+        media_type="application/javascript",
+        headers={"Service-Worker-Allowed": "/"},
+    )
+
 def _ss_link(medium: str) -> str:
     """Build a UTM-tagged link to Systema Sanscriticum.
     Handles the case where SYSTEMA_SANSCRITICUM_URL already contains a query string."""
