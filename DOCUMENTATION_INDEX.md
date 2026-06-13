@@ -14,6 +14,15 @@ Purpose: tell humans and implementation agents which Markdown files are current,
 - `changelog.md`: notable changes.
 - `.ai_state.md`: session journal — queue, WIP, hypotheses.
 
+## Phase 1 Design Specs (frozen — DH data layer)
+
+- `docs/IMPLEMENTATION_HANDOFF_PHASE1.md`: **start here to implement Phase 1** — build order, file targets, gates, definition of done.
+- `docs/LINE_ID_SCHEME.md`: frozen `{work}:{passage}` stable-ID contract (S1).
+- `docs/CONVERTER_SPEC.md`: HTML→JSONL converter spec (S2).
+- `docs/ALIGNMENT_SPEC.md`: Sanskrit↔Russian alignment spec (S3).
+- `docs/TAG_CENSUS.md` / `.json`: measured corpus structural inventory (S2 prerequisite).
+- `docs/DESIGN_SESSIONS_PLAN.md`: the five-session frontier plan (S1–S3 done, S4–S5 pending).
+
 ## Current Supporting Docs
 
 - `web/SEARCH_CONTRACT.md`: search behavior contract.
