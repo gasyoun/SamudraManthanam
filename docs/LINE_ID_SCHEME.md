@@ -39,6 +39,25 @@ only 21.3% of lines carry any anchor. Formats found in the wild:
 | `chapter_N` | 3,956 | `chapter_4` | chapter heading anchor, not a verse |
 | other | 406 | `chapter_4C`, `comment_1_0`, `0` | commentary anchors, misc |
 
+### Census findings (2026-06-12, `web/ingest/tag_census.py` → `docs/TAG_CENSUS.md`)
+
+Two facts from the full 148-file census change assumptions made above:
+
+1. **Verse-ID extraction is bimodal.** Of 119 files with `citation_block` divs,
+   **66 carry clean `id="N.N"` anchors; 53 carry none** and depend entirely on the
+   `range`-div title regex (`parse_html.py`) to recover a verse number. The 53 are not
+   marginal — they are the whole Vedic+Epic core: **all 10 Rigveda, 19 Atharvaveda, 18
+   Mahābhārata parvans, 4 Rāmāyaṇa kāṇḍas, Raghuvaṃśa, Gītagovinda.** The converter
+   therefore cannot treat clean `id=` as the primary path; range-title parsing is
+   first-class for the most-cited texts, and any fragility there silently de-anchors the
+   crown jewels. (The structure-class heuristic mis-flagged exactly these 53 as
+   low-confidence "prose" because it only counted clean ids — a useful canary, not a
+   classification to trust.)
+2. **Commentary is pervasive, not an edge case.** `comment_*` anchors number **43,739
+   across 117 sources** (more than the 27,519 `N.N` verse anchors). Treating commentary
+   as a footnote (as §4 currently does, mapping it only to nav anchors) under-serves a
+   third of the addressable, *searchable* content. See open question §8.4.
+
 Known defects the scheme must absorb:
 
 - **41 duplicated `(source, link_id)` pairs** — e.g. `13_mahabharata-anushasanaparva`
@@ -155,6 +174,13 @@ occurrence keeps the bare number so the common case cites cleanly.
 3. ~~Cyrillic-named sources.~~ **Resolved (verified 2026-06-12):** all 20+ Cyrillic
    filenames already transliterate to stable ASCII slugs
    (`Статьи Махабхараты.txt` → `stati-makhabkharaty`); no action needed.
+4. **Commentary addressability (raised by census).** 43,739 `comment_*` blocks are
+   searchable content but §4 only gives them nav anchors. Options: (a) leave as nav-only
+   (`c.N.comm`) — simplest, but commentary hits in search have no stable citation;
+   (b) mint addressable IDs per commentary block keyed to the verse it annotates
+   (`1.1.comm1`, `1.1.comm2`). **Recommendation: (b)** — commentary is a third of the
+   anchored corpus and scholars cite it; the cost is one more passage sub-type in the
+   converter. Needs M.G.'s call before the Phase 1 freeze.
 
 ## 9. Acceptance criteria (for the Phase 1 implementation)
 

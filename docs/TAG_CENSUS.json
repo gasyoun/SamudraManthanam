@@ -1,0 +1,5383 @@
+{
+  "sources": [
+    {
+      "n_lines": 3642,
+      "bytes": 1507351,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 2793,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "á",
+        "̥"
+      ],
+      "filename": "Словарь Смирнова.txt",
+      "slug": "slovar-smirnova",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 3272,
+      "bytes": 523478,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́"
+      ],
+      "filename": "Кнауэр.txt",
+      "slug": "knauer",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 13489,
+      "bytes": 3170769,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "á",
+        "é",
+        "ó",
+        "ú",
+        "́"
+      ],
+      "filename": "Коссович.txt",
+      "slug": "kossovich",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 8157,
+      "bytes": 1210184,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "á",
+        "í"
+      ],
+      "filename": "Фриш.txt",
+      "slug": "frish",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 29181,
+      "bytes": 3204528,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Кочергина.txt",
+      "slug": "kochergina",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 9588,
+      "bytes": 1506538,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 9587,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "KEWA.txt",
+      "slug": "kewa",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 222391,
+      "bytes": 35905853,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 41322,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Dic_MW.txt",
+      "slug": "dic_mw",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 31648,
+      "bytes": 9936300,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Dic_Apte.txt",
+      "slug": "dic_apte",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 4384,
+      "bytes": 4784503,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 24155,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 4383
+      },
+      "id_distinct": 4383,
+      "id_formats": {
+        "N": 4383
+      },
+      "vedic_accents": [
+        "r",
+        "ó",
+        "́"
+      ],
+      "filename": "dsg.txt",
+      "slug": "dsg",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 1414,
+      "bytes": 2207433,
+      "ext": ".htm",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "fasmer-dr-ind.htm",
+      "slug": "fasmer-dr-ind",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 340,
+      "bytes": 69922,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [],
+      "filename": "Словарь Потаповой.txt",
+      "slug": "slovar-potapovoy",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 938,
+      "bytes": 964358,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 25687,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́"
+      ],
+      "filename": "warnemyr.txt",
+      "slug": "warnemyr",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 463,
+      "bytes": 88476,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Словарь Гринцера из Рамаяны 1-2.txt",
+      "slug": "slovar-grintsera-iz-ramayany-1-2",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 209,
+      "bytes": 42986,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Рамаяна 3. Словарь.txt",
+      "slug": "ramayana-3-slovar",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 465,
+      "bytes": 63493,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Словарь Гринцера из Бада Кадамбари.txt",
+      "slug": "slovar-grintsera-iz-bada-kadambari",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 264,
+      "bytes": 5106,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "á"
+      ],
+      "filename": "Топоров.txt",
+      "slug": "toporov",
+      "structure_guess": "dictionary",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 954,
+      "bytes": 1955655,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 353,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "̀",
+        "́"
+      ],
+      "filename": "Индуизм. Джайнизм. Сикхизм.txt",
+      "slug": "induizm-dzhaynizm-sikkhizm",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 553,
+      "bytes": 5555380,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 7003,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "Степанянц.txt",
+      "slug": "stepanyants",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 50,
+      "bytes": 1353704,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 11,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "pandey.html",
+      "slug": "pandey",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 598,
+      "bytes": 46229,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [],
+      "filename": "Эрман-Темкин.txt",
+      "slug": "erman-temkin",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 803,
+      "bytes": 7143717,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 4565,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "á",
+        "ó",
+        "ú",
+        "́"
+      ],
+      "filename": "Mify_759_ind.html",
+      "slug": "mify_759_ind",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 2170,
+      "bytes": 2704455,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1976,
+        "range_div": 1976,
+        "chapter_content": 1976,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 10015,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 2386,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 191,
+        "id_total": 4553
+      },
+      "id_distinct": 2837,
+      "id_formats": {
+        "comment_*": 2386,
+        "chapter_N": 191,
+        "other": 1976
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "01_rigveda.html",
+      "slug": "01_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 475,
+      "bytes": 581824,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 429,
+        "range_div": 429,
+        "chapter_content": 429,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 2212,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 493,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 43,
+        "id_total": 965
+      },
+      "id_distinct": 592,
+      "id_formats": {
+        "comment_*": 493,
+        "chapter_N": 43,
+        "other": 429
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ó",
+        "ú",
+        "́",
+        "̥"
+      ],
+      "filename": "02_rigveda.html",
+      "slug": "02_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 682,
+      "bytes": 798879,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 617,
+        "range_div": 617,
+        "chapter_content": 617,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3057,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 665,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 62,
+        "id_total": 1344
+      },
+      "id_distinct": 811,
+      "id_formats": {
+        "comment_*": 665,
+        "chapter_N": 62,
+        "other": 617
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́"
+      ],
+      "filename": "03_rigveda.html",
+      "slug": "03_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 650,
+      "bytes": 804049,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 589,
+        "range_div": 589,
+        "chapter_content": 589,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3073,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 704,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 58,
+        "id_total": 1351
+      },
+      "id_distinct": 836,
+      "id_formats": {
+        "comment_*": 704,
+        "chapter_N": 58,
+        "other": 589
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "ó",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "04_rigveda.html",
+      "slug": "04_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 815,
+      "bytes": 1003870,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 725,
+        "range_div": 725,
+        "chapter_content": 725,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3660,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 966,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 87,
+        "id_total": 1778
+      },
+      "id_distinct": 1141,
+      "id_formats": {
+        "comment_*": 966,
+        "chapter_N": 87,
+        "other": 725
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́"
+      ],
+      "filename": "05_rigveda.html",
+      "slug": "05_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 843,
+      "bytes": 976320,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 765,
+        "range_div": 765,
+        "chapter_content": 765,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3779,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 820,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 75,
+        "id_total": 1660
+      },
+      "id_distinct": 996,
+      "id_formats": {
+        "comment_*": 820,
+        "chapter_N": 75,
+        "other": 765
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ó",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "06_rigveda.html",
+      "slug": "06_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 948,
+      "bytes": 1157094,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 841,
+        "range_div": 841,
+        "chapter_content": 841,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 4115,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 1036,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 104,
+        "id_total": 1981
+      },
+      "id_distinct": 1264,
+      "id_formats": {
+        "comment_*": 1036,
+        "chapter_N": 104,
+        "other": 841
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "́",
+        "̥"
+      ],
+      "filename": "07_rigveda.html",
+      "slug": "07_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1822,
+      "bytes": 1773054,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1716,
+        "range_div": 1716,
+        "chapter_content": 1716,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 7804,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 1344,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 103,
+        "id_total": 3163
+      },
+      "id_distinct": 1623,
+      "id_formats": {
+        "comment_*": 1344,
+        "chapter_N": 103,
+        "other": 1716
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "08_rigveda.html",
+      "slug": "08_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1225,
+      "bytes": 1290258,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1108,
+        "range_div": 1108,
+        "chapter_content": 1108,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 5002,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 1123,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 114,
+        "id_total": 2345
+      },
+      "id_distinct": 1335,
+      "id_formats": {
+        "comment_*": 1123,
+        "chapter_N": 114,
+        "other": 1108
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "ó",
+        "̀",
+        "́"
+      ],
+      "filename": "09_rigveda.html",
+      "slug": "09_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1945,
+      "bytes": 2625307,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1751,
+        "range_div": 1751,
+        "chapter_content": 1751,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 8966,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 2184,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 191,
+        "id_total": 4126
+      },
+      "id_distinct": 2556,
+      "id_formats": {
+        "comment_*": 2184,
+        "chapter_N": 191,
+        "other": 1751
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "10_rigveda.html",
+      "slug": "10_rigveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 191,
+      "bytes": 206368,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 153,
+        "range_div": 153,
+        "chapter_content": 153,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 825,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 180,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 35,
+        "id_total": 368
+      },
+      "id_distinct": 239,
+      "id_formats": {
+        "comment_*": 180,
+        "chapter_N": 35,
+        "other": 153
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "01_atharvaveda.html",
+      "slug": "01_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 246,
+      "bytes": 261075,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 207,
+        "range_div": 207,
+        "chapter_content": 207,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 900,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 206,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 36,
+        "id_total": 449
+      },
+      "id_distinct": 274,
+      "id_formats": {
+        "comment_*": 206,
+        "chapter_N": 36,
+        "other": 207
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "02_atharvaveda.html",
+      "slug": "02_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 264,
+      "bytes": 301174,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 230,
+        "range_div": 230,
+        "chapter_content": 230,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1193,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 231,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 31,
+        "id_total": 492
+      },
+      "id_distinct": 301,
+      "id_formats": {
+        "comment_*": 231,
+        "chapter_N": 31,
+        "other": 230
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "03_atharvaveda.html",
+      "slug": "03_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 367,
+      "bytes": 428559,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 324,
+        "range_div": 324,
+        "chapter_content": 324,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1660,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 334,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 40,
+        "id_total": 698
+      },
+      "id_distinct": 435,
+      "id_formats": {
+        "comment_*": 334,
+        "chapter_N": 40,
+        "other": 324
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "04_atharvaveda.html",
+      "slug": "04_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 410,
+      "bytes": 434395,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 376,
+        "range_div": 376,
+        "chapter_content": 376,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1762,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 320,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 31,
+        "id_total": 727
+      },
+      "id_distinct": 409,
+      "id_formats": {
+        "comment_*": 320,
+        "chapter_N": 31,
+        "other": 376
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "05_atharvaveda.html",
+      "slug": "05_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 599,
+      "bytes": 641660,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 454,
+        "range_div": 454,
+        "chapter_content": 454,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 2393,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 555,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 142,
+        "id_total": 1151
+      },
+      "id_distinct": 782,
+      "id_formats": {
+        "comment_*": 555,
+        "chapter_N": 142,
+        "other": 454
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "06_atharvaveda.html",
+      "slug": "06_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 412,
+      "bytes": 471975,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 286,
+        "range_div": 286,
+        "chapter_content": 286,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1518,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 457,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 123,
+        "id_total": 866
+      },
+      "id_distinct": 644,
+      "id_formats": {
+        "comment_*": 457,
+        "chapter_N": 123,
+        "other": 286
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "07_atharvaveda.html",
+      "slug": "07_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 278,
+      "bytes": 310383,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 259,
+        "range_div": 259,
+        "chapter_content": 259,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1273,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 220,
+        "chapter_C_anchor": 6,
+        "chapter_anchor": 10,
+        "id_total": 495
+      },
+      "id_distinct": 275,
+      "id_formats": {
+        "comment_*": 220,
+        "chapter_N": 10,
+        "other": 259,
+        "chapter_NC": 6
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "08_atharvaveda.html",
+      "slug": "08_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 322,
+      "bytes": 341279,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 302,
+        "range_div": 302,
+        "chapter_content": 302,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1123,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 260,
+        "chapter_C_anchor": 7,
+        "chapter_anchor": 10,
+        "id_total": 579
+      },
+      "id_distinct": 314,
+      "id_formats": {
+        "comment_*": 260,
+        "chapter_N": 10,
+        "other": 302,
+        "chapter_NC": 7
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "09_atharvaveda.html",
+      "slug": "09_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 363,
+      "bytes": 371645,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 350,
+        "range_div": 350,
+        "chapter_content": 350,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1786,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 226,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 10,
+        "id_total": 586
+      },
+      "id_distinct": 303,
+      "id_formats": {
+        "comment_*": 226,
+        "chapter_N": 10,
+        "other": 350
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ì",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "10_atharvaveda.html",
+      "slug": "10_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 329,
+      "bytes": 343484,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 313,
+        "range_div": 313,
+        "chapter_content": 313,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1576,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 213,
+        "chapter_C_anchor": 3,
+        "chapter_anchor": 10,
+        "id_total": 539
+      },
+      "id_distinct": 281,
+      "id_formats": {
+        "comment_*": 213,
+        "chapter_N": 10,
+        "other": 313,
+        "chapter_NC": 3
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "11_atharvaveda.html",
+      "slug": "11_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 319,
+      "bytes": 298238,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 304,
+        "range_div": 304,
+        "chapter_content": 304,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1282,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 174,
+        "chapter_C_anchor": 7,
+        "chapter_anchor": 5,
+        "id_total": 490
+      },
+      "id_distinct": 228,
+      "id_formats": {
+        "comment_*": 174,
+        "chapter_N": 5,
+        "other": 304,
+        "chapter_NC": 7
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "12_atharvaveda.html",
+      "slug": "12_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 201,
+      "bytes": 194881,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 188,
+        "range_div": 188,
+        "chapter_content": 188,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 814,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 132,
+        "chapter_C_anchor": 6,
+        "chapter_anchor": 4,
+        "id_total": 330
+      },
+      "id_distinct": 165,
+      "id_formats": {
+        "comment_*": 132,
+        "chapter_N": 4,
+        "other": 188,
+        "chapter_NC": 6
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "13_atharvaveda.html",
+      "slug": "13_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 144,
+      "bytes": 150944,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 139,
+        "range_div": 139,
+        "chapter_content": 139,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 726,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 113,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 2,
+        "id_total": 254
+      },
+      "id_distinct": 135,
+      "id_formats": {
+        "comment_*": 113,
+        "chapter_N": 2,
+        "other": 139
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "14_atharvaveda.html",
+      "slug": "14_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 241,
+      "bytes": 154209,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 220,
+        "range_div": 220,
+        "chapter_content": 220,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 239,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 56,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 18,
+        "id_total": 294
+      },
+      "id_distinct": 89,
+      "id_formats": {
+        "comment_*": 56,
+        "chapter_N": 18,
+        "other": 220
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "15_atharvaveda.html",
+      "slug": "15_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 115,
+      "bytes": 91799,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 103,
+        "range_div": 103,
+        "chapter_content": 103,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 168,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 34,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 9,
+        "id_total": 146
+      },
+      "id_distinct": 57,
+      "id_formats": {
+        "comment_*": 34,
+        "chapter_N": 9,
+        "other": 103
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "́",
+        "̥"
+      ],
+      "filename": "16_atharvaveda.html",
+      "slug": "16_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 34,
+      "bytes": 41663,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 30,
+        "range_div": 30,
+        "chapter_content": 30,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 219,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 21,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 1,
+        "id_total": 52
+      },
+      "id_distinct": 32,
+      "id_formats": {
+        "comment_*": 21,
+        "chapter_N": 1,
+        "other": 30
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "17_atharvaveda.html",
+      "slug": "17_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 290,
+      "bytes": 276204,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 283,
+        "range_div": 283,
+        "chapter_content": 283,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1345,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 180,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 4,
+        "id_total": 467
+      },
+      "id_distinct": 224,
+      "id_formats": {
+        "comment_*": 180,
+        "chapter_N": 4,
+        "other": 283
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "18_atharvaveda.html",
+      "slug": "18_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 356,
+      "bytes": 330144,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 311,
+        "range_div": 311,
+        "chapter_content": 311,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1407,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 233,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 42,
+        "id_total": 586
+      },
+      "id_distinct": 328,
+      "id_formats": {
+        "comment_*": 233,
+        "chapter_N": 42,
+        "other": 311
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ò",
+        "ó",
+        "ù",
+        "ú",
+        "̀",
+        "́",
+        "̥"
+      ],
+      "filename": "19_atharvaveda.html",
+      "slug": "19_atharvaveda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1634,
+      "bytes": 3717537,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1387,
+        "range_div": 1387,
+        "chapter_content": 1387,
+        "h1": 0,
+        "endchapter": 225,
+        "br": 17126,
+        "small": 968,
+        "note_like": 0,
+        "comment_anchor": 968,
+        "chapter_C_anchor": 19,
+        "chapter_anchor": 225,
+        "id_total": 2599
+      },
+      "id_distinct": 2094,
+      "id_formats": {
+        "chapter_NC": 19,
+        "chapter_N": 225,
+        "other": 1387,
+        "comment_*": 968
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "́"
+      ],
+      "filename": "01_mahabharata-adiparva.html",
+      "slug": "01_mahabharata-adiparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 522,
+      "bytes": 1743232,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 438,
+        "range_div": 438,
+        "chapter_content": 438,
+        "h1": 0,
+        "endchapter": 71,
+        "br": 5537,
+        "small": 1258,
+        "note_like": 0,
+        "comment_anchor": 1256,
+        "chapter_C_anchor": 9,
+        "chapter_anchor": 72,
+        "id_total": 1775
+      },
+      "id_distinct": 1564,
+      "id_formats": {
+        "chapter_NC": 9,
+        "chapter_N": 72,
+        "other": 438,
+        "comment_*": 1256
+      },
+      "vedic_accents": [
+        "r",
+        "ó",
+        "́"
+      ],
+      "filename": "02_mahabharata-sabhaparva.html",
+      "slug": "02_mahabharata-sabhaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 2361,
+      "bytes": 5579897,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 2033,
+        "range_div": 2033,
+        "chapter_content": 2033,
+        "h1": 0,
+        "endchapter": 299,
+        "br": 23896,
+        "small": 1319,
+        "note_like": 0,
+        "comment_anchor": 1319,
+        "chapter_C_anchor": 26,
+        "chapter_anchor": 299,
+        "id_total": 3677
+      },
+      "id_distinct": 2675,
+      "id_formats": {
+        "chapter_NC": 26,
+        "chapter_N": 299,
+        "other": 2033,
+        "comment_*": 1319
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "03_mahabharata-aranyakaparva.html",
+      "slug": "03_mahabharata-aranyakaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 434,
+      "bytes": 1157953,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 360,
+        "range_div": 360,
+        "chapter_content": 360,
+        "h1": 0,
+        "endchapter": 67,
+        "br": 4325,
+        "small": 476,
+        "note_like": 0,
+        "comment_anchor": 476,
+        "chapter_C_anchor": 4,
+        "chapter_anchor": 67,
+        "id_total": 907
+      },
+      "id_distinct": 738,
+      "id_formats": {
+        "chapter_NC": 4,
+        "chapter_N": 67,
+        "other": 360,
+        "comment_*": 476
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "04_mahabharata-virataparva.html",
+      "slug": "04_mahabharata-virataparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1218,
+      "bytes": 4058045,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1006,
+        "range_div": 1006,
+        "chapter_content": 1006,
+        "h1": 0,
+        "endchapter": 196,
+        "br": 13710,
+        "small": 1866,
+        "note_like": 0,
+        "comment_anchor": 1866,
+        "chapter_C_anchor": 12,
+        "chapter_anchor": 197,
+        "id_total": 3081
+      },
+      "id_distinct": 2705,
+      "id_formats": {
+        "chapter_N": 197,
+        "other": 1006,
+        "comment_*": 1866,
+        "chapter_NC": 12
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "05_mahabharata-udyogaparva.html",
+      "slug": "05_mahabharata-udyogaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1461,
+      "bytes": 2933902,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1337,
+        "range_div": 1337,
+        "chapter_content": 1337,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 11714,
+        "small": 776,
+        "note_like": 0,
+        "comment_anchor": 776,
+        "chapter_C_anchor": 4,
+        "chapter_anchor": 117,
+        "id_total": 2234
+      },
+      "id_distinct": 1318,
+      "id_formats": {
+        "chapter_NC": 4,
+        "chapter_N": 117,
+        "other": 1337,
+        "comment_*": 776
+      },
+      "vedic_accents": [
+        "r",
+        "é"
+      ],
+      "filename": "06_mahabharata-bhishmaparva.html",
+      "slug": "06_mahabharata-bhishmaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1403,
+      "bytes": 4795218,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1219,
+        "range_div": 1219,
+        "chapter_content": 1219,
+        "h1": 0,
+        "endchapter": 173,
+        "br": 17618,
+        "small": 1929,
+        "note_like": 0,
+        "comment_anchor": 1929,
+        "chapter_C_anchor": 8,
+        "chapter_anchor": 173,
+        "id_total": 3329
+      },
+      "id_distinct": 2933,
+      "id_formats": {
+        "chapter_NC": 8,
+        "chapter_N": 173,
+        "other": 1219,
+        "comment_*": 1929
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "07_mahabharata-dronaparva.html",
+      "slug": "07_mahabharata-dronaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 690,
+      "bytes": 2097426,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 618,
+        "range_div": 618,
+        "chapter_content": 618,
+        "h1": 0,
+        "endchapter": 69,
+        "br": 8446,
+        "small": 494,
+        "note_like": 0,
+        "comment_anchor": 490,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 69,
+        "id_total": 1177
+      },
+      "id_distinct": 951,
+      "id_formats": {
+        "chapter_N": 69,
+        "other": 618,
+        "comment_*": 490
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "08_mahabharata-karnaparva.html",
+      "slug": "08_mahabharata-karnaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 604,
+      "bytes": 2051555,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 533,
+        "range_div": 533,
+        "chapter_content": 533,
+        "h1": 0,
+        "endchapter": 64,
+        "br": 7320,
+        "small": 929,
+        "note_like": 0,
+        "comment_anchor": 929,
+        "chapter_C_anchor": 4,
+        "chapter_anchor": 64,
+        "id_total": 1530
+      },
+      "id_distinct": 1379,
+      "id_formats": {
+        "chapter_NC": 4,
+        "chapter_N": 64,
+        "other": 533,
+        "comment_*": 929
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "09_mahabharata-shalyaparva.html",
+      "slug": "09_mahabharata-shalyaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 108,
+      "bytes": 477545,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 85,
+        "range_div": 85,
+        "chapter_content": 85,
+        "h1": 0,
+        "endchapter": 18,
+        "br": 1704,
+        "small": 290,
+        "note_like": 0,
+        "comment_anchor": 290,
+        "chapter_C_anchor": 2,
+        "chapter_anchor": 18,
+        "id_total": 395
+      },
+      "id_distinct": 376,
+      "id_formats": {
+        "chapter_NC": 2,
+        "chapter_N": 18,
+        "other": 85,
+        "comment_*": 290
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "10_mahabharata-sauptikaparva.html",
+      "slug": "10_mahabharata-sauptikaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 155,
+      "bytes": 510599,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 122,
+        "range_div": 122,
+        "chapter_content": 122,
+        "h1": 0,
+        "endchapter": 27,
+        "br": 1644,
+        "small": 224,
+        "note_like": 0,
+        "comment_anchor": 224,
+        "chapter_C_anchor": 3,
+        "chapter_anchor": 27,
+        "id_total": 376
+      },
+      "id_distinct": 326,
+      "id_formats": {
+        "chapter_NC": 3,
+        "chapter_N": 27,
+        "other": 122,
+        "comment_*": 224
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "ó",
+        "́"
+      ],
+      "filename": "11_mahabharata-striparva.html",
+      "slug": "11_mahabharata-striparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 13048,
+      "bytes": 5478837,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 12692,
+        "range_div": 12692,
+        "chapter_content": 12692,
+        "h1": 0,
+        "endchapter": 7,
+        "br": 28717,
+        "small": 140,
+        "note_like": 0,
+        "comment_anchor": 140,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 353,
+        "id_total": 13185
+      },
+      "id_distinct": 513,
+      "id_formats": {
+        "chapter_N": 353,
+        "comment_*": 140,
+        "other": 12692
+      },
+      "vedic_accents": [
+        "r",
+        "á"
+      ],
+      "filename": "12_mahabharata-shantiparva.html",
+      "slug": "12_mahabharata-shantiparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 6694,
+      "bytes": 2760892,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 6537,
+        "range_div": 6537,
+        "chapter_content": 6537,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 14856,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 154,
+        "id_total": 6691
+      },
+      "id_distinct": 155,
+      "id_formats": {
+        "chapter_N": 154,
+        "other": 6537
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "13_mahabharata-anushasanaparva.html",
+      "slug": "13_mahabharata-anushasanaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 619,
+      "bytes": 1854910,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 517,
+        "range_div": 517,
+        "chapter_content": 517,
+        "h1": 0,
+        "endchapter": 96,
+        "br": 6336,
+        "small": 914,
+        "note_like": 0,
+        "comment_anchor": 883,
+        "chapter_C_anchor": 3,
+        "chapter_anchor": 96,
+        "id_total": 1499
+      },
+      "id_distinct": 1250,
+      "id_formats": {
+        "chapter_NC": 3,
+        "chapter_N": 96,
+        "other": 517,
+        "comment_*": 883
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "14_mahabharata-ashvamedhikaparva.html",
+      "slug": "14_mahabharata-ashvamedhikaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 213,
+      "bytes": 688252,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 162,
+        "range_div": 162,
+        "chapter_content": 162,
+        "h1": 0,
+        "endchapter": 47,
+        "br": 2371,
+        "small": 320,
+        "note_like": 0,
+        "comment_anchor": 320,
+        "chapter_C_anchor": 1,
+        "chapter_anchor": 47,
+        "id_total": 530
+      },
+      "id_distinct": 472,
+      "id_formats": {
+        "chapter_N": 47,
+        "other": 162,
+        "comment_*": 320,
+        "chapter_NC": 1
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "́"
+      ],
+      "filename": "15_mahabharata-ashramavasikaparva.html",
+      "slug": "15_mahabharata-ashramavasikaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 54,
+      "bytes": 231746,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 42,
+        "range_div": 42,
+        "chapter_content": 42,
+        "h1": 0,
+        "endchapter": 8,
+        "br": 597,
+        "small": 177,
+        "note_like": 0,
+        "comment_anchor": 177,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 9,
+        "id_total": 228
+      },
+      "id_distinct": 212,
+      "id_formats": {
+        "chapter_N": 9,
+        "other": 42,
+        "comment_*": 177
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "16_mahabharata-mausalaparva.html",
+      "slug": "16_mahabharata-mausalaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 32,
+      "bytes": 91954,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 26,
+        "range_div": 26,
+        "chapter_content": 26,
+        "h1": 0,
+        "endchapter": 3,
+        "br": 261,
+        "small": 61,
+        "note_like": 0,
+        "comment_anchor": 61,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 3,
+        "id_total": 90
+      },
+      "id_distinct": 75,
+      "id_formats": {
+        "chapter_N": 3,
+        "other": 26,
+        "comment_*": 61
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "17_mahabharata-mahaprasthanikaparva.html",
+      "slug": "17_mahabharata-mahaprasthanikaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 36,
+      "bytes": 162685,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 28,
+        "range_div": 28,
+        "chapter_content": 28,
+        "h1": 0,
+        "endchapter": 5,
+        "br": 431,
+        "small": 121,
+        "note_like": 0,
+        "comment_anchor": 121,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 5,
+        "id_total": 154
+      },
+      "id_distinct": 145,
+      "id_formats": {
+        "chapter_N": 5,
+        "other": 28,
+        "comment_*": 121
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "18_mahabharata-svargarohanikaparva.html",
+      "slug": "18_mahabharata-svargarohanikaparva",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 720,
+      "bytes": 830046,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 700,
+        "range_div": 700,
+        "chapter_content": 700,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1527,
+        "small": 320,
+        "note_like": 0,
+        "comment_anchor": 320,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1738
+      },
+      "id_distinct": 1086,
+      "id_formats": {
+        "N": 18,
+        "comment_*": 320,
+        "N.N": 700,
+        "other": 700
+      },
+      "vedic_accents": [
+        "r",
+        "é"
+      ],
+      "filename": "bhagavadgita-erman.html",
+      "slug": "bhagavadgita-erman",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 716,
+      "bytes": 574900,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 696,
+        "range_div": 696,
+        "chapter_content": 696,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3600,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 94,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1504
+      },
+      "id_distinct": 802,
+      "id_formats": {
+        "N": 18,
+        "N.N": 696,
+        "other": 696,
+        "comment_*": 94
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-sementsov.html",
+      "slug": "bhagavadgita-sementsov",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 721,
+      "bytes": 1510497,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 701,
+        "range_div": 701,
+        "chapter_content": 701,
+        "h1": 0,
+        "endchapter": 18,
+        "br": 4410,
+        "small": 593,
+        "note_like": 0,
+        "comment_anchor": 593,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 2013
+      },
+      "id_distinct": 1313,
+      "id_formats": {
+        "N": 18,
+        "N.N": 701,
+        "other": 701,
+        "comment_*": 593
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-smirnov.html",
+      "slug": "bhagavadgita-smirnov",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 739,
+      "bytes": 1791121,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 719,
+        "range_div": 719,
+        "chapter_content": 719,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3150,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 594,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 2050
+      },
+      "id_distinct": 1314,
+      "id_formats": {
+        "N": 18,
+        "N.N": 719,
+        "other": 719,
+        "comment_*": 594
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-burba.html",
+      "slug": "bhagavadgita-burba",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 717,
+      "bytes": 608044,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 697,
+        "range_div": 697,
+        "chapter_content": 697,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1469,
+        "small": 124,
+        "note_like": 0,
+        "comment_anchor": 124,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1536
+      },
+      "id_distinct": 840,
+      "id_formats": {
+        "N": 18,
+        "N.N": 697,
+        "other": 697,
+        "comment_*": 124
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-1788.html",
+      "slug": "bhagavadgita-1788",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 711,
+      "bytes": 833741,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 691,
+        "range_div": 691,
+        "chapter_content": 691,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3581,
+        "small": 567,
+        "note_like": 0,
+        "comment_anchor": 550,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1950
+      },
+      "id_distinct": 1003,
+      "id_formats": {
+        "comment_*": 550,
+        "N": 18,
+        "N.N": 691,
+        "other": 691
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-1909.html",
+      "slug": "bhagavadgita-1909",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 721,
+      "bytes": 705477,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 701,
+        "range_div": 701,
+        "chapter_content": 701,
+        "h1": 0,
+        "endchapter": 18,
+        "br": 1588,
+        "small": 264,
+        "note_like": 0,
+        "comment_anchor": 264,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1684
+      },
+      "id_distinct": 984,
+      "id_formats": {
+        "comment_*": 264,
+        "N": 18,
+        "N.N": 701,
+        "other": 701
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-1914.html",
+      "slug": "bhagavadgita-1914",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 677,
+      "bytes": 3047392,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 657,
+        "range_div": 657,
+        "chapter_content": 657,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 4106,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 624,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1956
+      },
+      "id_distinct": 1300,
+      "id_formats": {
+        "N": 18,
+        "N.N": 657,
+        "other": 657,
+        "comment_*": 624
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "bhagavadgita-prabhupada.html",
+      "slug": "bhagavadgita-prabhupada",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 667,
+      "bytes": 3402133,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 647,
+        "range_div": 647,
+        "chapter_content": 647,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 8937,
+        "small": 1227,
+        "note_like": 0,
+        "comment_anchor": 1227,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 2539
+      },
+      "id_distinct": 1902,
+      "id_formats": {
+        "N": 18,
+        "N.N": 647,
+        "other": 647,
+        "comment_*": 1227
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-radha.html",
+      "slug": "bhagavadgita-radha",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 680,
+      "bytes": 995836,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 660,
+        "range_div": 660,
+        "chapter_content": 660,
+        "h1": 0,
+        "endchapter": 18,
+        "br": 2220,
+        "small": 56,
+        "note_like": 0,
+        "comment_anchor": 57,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1395
+      },
+      "id_distinct": 1157,
+      "id_formats": {
+        "N": 18,
+        "N.N": 660,
+        "other": 660,
+        "comment_*": 57
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "bhagavadgita-sharma.html",
+      "slug": "bhagavadgita-sharma",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 721,
+      "bytes": 3526136,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 701,
+        "range_div": 701,
+        "chapter_content": 701,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 4425,
+        "small": 28,
+        "note_like": 0,
+        "comment_anchor": 28,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1448
+      },
+      "id_distinct": 748,
+      "id_formats": {
+        "N": 18,
+        "N.N": 701,
+        "other": 701,
+        "comment_*": 28
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "bhagavadgity.html",
+      "slug": "bhagavadgity",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 722,
+      "bytes": 2238237,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 702,
+        "range_div": 702,
+        "chapter_content": 702,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 5835,
+        "small": 1612,
+        "note_like": 0,
+        "comment_anchor": 4,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1426
+      },
+      "id_distinct": 1183,
+      "id_formats": {
+        "N": 18,
+        "N.N": 702,
+        "other": 702,
+        "comment_*": 4
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "ramanuja_gitabhashya.html",
+      "slug": "ramanuja_gitabhashya",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 35,
+      "bytes": 34532,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 32,
+        "range_div": 32,
+        "chapter_content": 32,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 64,
+        "small": 14,
+        "note_like": 0,
+        "comment_anchor": 14,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 80
+      },
+      "id_distinct": 52,
+      "id_formats": {
+        "N": 34,
+        "other": 32,
+        "comment_*": 14
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "gitartha-samgraha_yamunacharya.html",
+      "slug": "gitartha-samgraha_yamunacharya",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 770,
+      "bytes": 1419015,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 748,
+        "range_div": 748,
+        "chapter_content": 748,
+        "h1": 0,
+        "endchapter": 17,
+        "br": 3310,
+        "small": 500,
+        "note_like": 0,
+        "comment_anchor": 404,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1920
+      },
+      "id_distinct": 1160,
+      "id_formats": {
+        "N": 20,
+        "N.N": 748,
+        "other": 748,
+        "comment_*": 404
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "gitarthasamgraha-abhinavagupta.html",
+      "slug": "gitarthasamgraha-abhinavagupta",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 2348,
+      "bytes": 1781232,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 2268,
+        "range_div": 2268,
+        "chapter_content": 2268,
+        "h1": 0,
+        "endchapter": 77,
+        "br": 11882,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 596,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 77,
+        "id_total": 2941
+      },
+      "id_distinct": 989,
+      "id_formats": {
+        "chapter_N": 77,
+        "comment_*": 596,
+        "other": 2268
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "́"
+      ],
+      "filename": "01_ramayana-balakanda.html",
+      "slug": "01_ramayana-balakanda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 4429,
+      "bytes": 3140833,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 4307,
+        "range_div": 4307,
+        "chapter_content": 4307,
+        "h1": 0,
+        "endchapter": 118,
+        "br": 23349,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 944,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 119,
+        "id_total": 5370
+      },
+      "id_distinct": 1720,
+      "id_formats": {
+        "chapter_N": 119,
+        "other": 4307,
+        "comment_*": 944
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "02_ramayana-ayodhyakanda.html",
+      "slug": "02_ramayana-ayodhyakanda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 2525,
+      "bytes": 1928835,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 2447,
+        "range_div": 2447,
+        "chapter_content": 2447,
+        "h1": 0,
+        "endchapter": 75,
+        "br": 13249,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 694,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 75,
+        "id_total": 3216
+      },
+      "id_distinct": 1126,
+      "id_formats": {
+        "chapter_N": 75,
+        "other": 2447,
+        "comment_*": 694
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "é",
+        "́"
+      ],
+      "filename": "03_ramayana-aranyakanda.html",
+      "slug": "03_ramayana-aranyakanda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 2930,
+      "bytes": 1771646,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 2859,
+        "range_div": 2859,
+        "chapter_content": 2859,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 9805,
+        "small": 83,
+        "note_like": 0,
+        "comment_anchor": 82,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 68,
+        "id_total": 3009
+      },
+      "id_distinct": 151,
+      "id_formats": {
+        "chapter_N": 68,
+        "other": 2859,
+        "comment_*": 82
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "05_ramayana-sundarakanda.html",
+      "slug": "05_ramayana-sundarakanda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 41,
+      "bytes": 57993,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 33,
+        "range_div": 33,
+        "chapter_content": 33,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 176,
+        "small": 5,
+        "note_like": 0,
+        "comment_anchor": 26,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 103
+      },
+      "id_distinct": 67,
+      "id_formats": {
+        "other": 38,
+        "N": 3,
+        "N.N": 13,
+        "N.N.N": 23,
+        "comment_*": 26
+      },
+      "vedic_accents": [
+        "r",
+        "è",
+        "é",
+        "́"
+      ],
+      "filename": "ait-up.html",
+      "slug": "ait-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 6,
+      "bytes": 11479,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 3,
+        "range_div": 3,
+        "chapter_content": 3,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 15,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 3,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 11
+      },
+      "id_distinct": 10,
+      "id_formats": {
+        "N": 4,
+        "other": 4,
+        "comment_*": 3
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "atma-up.html",
+      "slug": "atma-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 487,
+      "bytes": 965284,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 438,
+        "range_div": 438,
+        "chapter_content": 438,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3614,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 348,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1277
+      },
+      "id_distinct": 680,
+      "id_formats": {
+        "N": 6,
+        "N.N": 47,
+        "comment_*": 348,
+        "N.N.N": 438,
+        "other": 438
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "ú",
+        "́"
+      ],
+      "filename": "br-up.html",
+      "slug": "br-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 25,
+      "bytes": 22072,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 22,
+        "range_div": 22,
+        "chapter_content": 22,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 67,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 11,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 57
+      },
+      "id_distinct": 39,
+      "id_formats": {
+        "N": 23,
+        "other": 23,
+        "comment_*": 11
+      },
+      "vedic_accents": [
+        "r",
+        "é"
+      ],
+      "filename": "brb-up.html",
+      "slug": "brb-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 785,
+      "bytes": 1049615,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 629,
+        "range_div": 629,
+        "chapter_content": 629,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3025,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 464,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1884
+      },
+      "id_distinct": 969,
+      "id_formats": {
+        "N": 8,
+        "N.N": 154,
+        "comment_*": 464,
+        "N.N.N": 629,
+        "other": 629
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "è",
+        "é",
+        "ù",
+        "́"
+      ],
+      "filename": "ch-up.html",
+      "slug": "ch-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 9,
+      "bytes": 16770,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 5,
+        "range_div": 5,
+        "chapter_content": 5,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 20,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 5,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 18
+      },
+      "id_distinct": 13,
+      "id_formats": {
+        "N": 7,
+        "other": 6,
+        "comment_*": 5
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "́"
+      ],
+      "filename": "chag-up.html",
+      "slug": "chag-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 23,
+      "bytes": 30795,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 19,
+        "range_div": 19,
+        "chapter_content": 19,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 69,
+        "small": 4,
+        "note_like": 0,
+        "comment_anchor": 19,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 59
+      },
+      "id_distinct": 41,
+      "id_formats": {
+        "N": 21,
+        "comment_*": 19,
+        "other": 19
+      },
+      "vedic_accents": [
+        "r",
+        "á"
+      ],
+      "filename": "isha-up.html",
+      "slug": "isha-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 5,
+      "bytes": 5551,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1,
+        "range_div": 1,
+        "chapter_content": 1,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 10,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 1,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 5
+      },
+      "id_distinct": 5,
+      "id_formats": {
+        "N": 2,
+        "other": 2,
+        "comment_*": 1
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "jab-up.html",
+      "slug": "jab-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 53,
+      "bytes": 140538,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 42,
+        "range_div": 42,
+        "chapter_content": 42,
+        "h1": 0,
+        "endchapter": 6,
+        "br": 564,
+        "small": 40,
+        "note_like": 0,
+        "comment_anchor": 40,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 134
+      },
+      "id_distinct": 92,
+      "id_formats": {
+        "N": 9,
+        "N.N": 42,
+        "other": 43,
+        "comment_*": 40
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "jabala-up.html",
+      "slug": "jabala-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 28,
+      "bytes": 30601,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 25,
+        "range_div": 25,
+        "chapter_content": 25,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 90,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 17,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 69
+      },
+      "id_distinct": 51,
+      "id_formats": {
+        "N": 26,
+        "other": 26,
+        "comment_*": 17
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "kai-up.html",
+      "slug": "kai-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 5,
+      "bytes": 7822,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1,
+        "range_div": 1,
+        "chapter_content": 1,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 14,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 1,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 6
+      },
+      "id_distinct": 6,
+      "id_formats": {
+        "N": 2,
+        "other": 2,
+        "N.N": 1,
+        "comment_*": 1
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "kan-up.html",
+      "slug": "kan-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 130,
+      "bytes": 153241,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 119,
+        "range_div": 119,
+        "chapter_content": 119,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 427,
+        "small": 3,
+        "note_like": 0,
+        "comment_anchor": 100,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 350
+      },
+      "id_distinct": 197,
+      "id_formats": {
+        "N": 3,
+        "other": 122,
+        "N.N": 6,
+        "N.N.N": 119,
+        "comment_*": 100
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "́"
+      ],
+      "filename": "kat-up.html",
+      "slug": "kat-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 57,
+      "bytes": 178906,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 50,
+        "range_div": 50,
+        "chapter_content": 50,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 823,
+        "small": 4,
+        "note_like": 0,
+        "comment_anchor": 46,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 155
+      },
+      "id_distinct": 106,
+      "id_formats": {
+        "N": 5,
+        "other": 54,
+        "N.N": 50,
+        "comment_*": 46
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "è",
+        "é"
+      ],
+      "filename": "kau-up.html",
+      "slug": "kau-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 42,
+      "bytes": 39752,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 35,
+        "range_div": 35,
+        "chapter_content": 35,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 51,
+        "small": 3,
+        "note_like": 0,
+        "comment_anchor": 24,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 102
+      },
+      "id_distinct": 72,
+      "id_formats": {
+        "N": 5,
+        "other": 38,
+        "N.N": 35,
+        "comment_*": 24
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "kena-up.html",
+      "slug": "kena-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 83,
+      "bytes": 247179,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 73,
+        "range_div": 73,
+        "chapter_content": 73,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 596,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 66,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 221
+      },
+      "id_distinct": 149,
+      "id_formats": {
+        "N": 8,
+        "other": 74,
+        "N.N": 73,
+        "comment_*": 66
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "́"
+      ],
+      "filename": "mai-up.html",
+      "slug": "mai-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 15,
+      "bytes": 20741,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 12,
+        "range_div": 12,
+        "chapter_content": 12,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 26,
+        "small": 2,
+        "note_like": 0,
+        "comment_anchor": 12,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 39
+      },
+      "id_distinct": 30,
+      "id_formats": {
+        "N": 13,
+        "other": 14,
+        "comment_*": 12
+      },
+      "vedic_accents": [
+        "r",
+        "è",
+        "é",
+        "́"
+      ],
+      "filename": "man-up.html",
+      "slug": "man-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 127,
+      "bytes": 87829,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 111,
+        "range_div": 111,
+        "chapter_content": 111,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 167,
+        "small": 2,
+        "note_like": 0,
+        "comment_anchor": 47,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 285
+      },
+      "id_distinct": 174,
+      "id_formats": {
+        "N": 7,
+        "other": 120,
+        "N.N": 111,
+        "comment_*": 47
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "é",
+        "́"
+      ],
+      "filename": "mnar-up.html",
+      "slug": "mnar-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 77,
+      "bytes": 86370,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 65,
+        "range_div": 65,
+        "chapter_content": 65,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 222,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 55,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 196
+      },
+      "id_distinct": 100,
+      "id_formats": {
+        "N": 4,
+        "other": 66,
+        "N.N": 6,
+        "N.N.N": 65,
+        "comment_*": 55
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "mun-up.html",
+      "slug": "mun-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 17,
+      "bytes": 13290,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 11,
+        "range_div": 11,
+        "chapter_content": 11,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 62,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 5,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 32
+      },
+      "id_distinct": 24,
+      "id_formats": {
+        "N": 4,
+        "other": 12,
+        "N.N": 11,
+        "comment_*": 5
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "nr-up.html",
+      "slug": "nr-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 24,
+      "bytes": 28329,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 19,
+        "range_div": 19,
+        "chapter_content": 19,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 107,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 10,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 52
+      },
+      "id_distinct": 41,
+      "id_formats": {
+        "N": 3,
+        "other": 20,
+        "N.N": 19,
+        "comment_*": 10
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "pai-up.html",
+      "slug": "pai-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 76,
+      "bytes": 82648,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 67,
+        "range_div": 67,
+        "chapter_content": 67,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 279,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 41,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 183
+      },
+      "id_distinct": 117,
+      "id_formats": {
+        "N": 7,
+        "other": 68,
+        "N.N": 67,
+        "comment_*": 41
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "pr-up.html",
+      "slug": "pr-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 13,
+      "bytes": 13587,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 10,
+        "range_div": 10,
+        "chapter_content": 10,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 33,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 7,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 29
+      },
+      "id_distinct": 21,
+      "id_formats": {
+        "N": 11,
+        "other": 11,
+        "comment_*": 7
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "rampt-up.html",
+      "slug": "rampt-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 122,
+      "bytes": 148983,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 113,
+        "range_div": 113,
+        "chapter_content": 113,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 403,
+        "small": 2,
+        "note_like": 0,
+        "comment_anchor": 102,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 337
+      },
+      "id_distinct": 225,
+      "id_formats": {
+        "N": 7,
+        "other": 115,
+        "N.N": 113,
+        "comment_*": 102
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "́"
+      ],
+      "filename": "shv-up.html",
+      "slug": "shv-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 20,
+      "bytes": 24714,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 13,
+        "range_div": 13,
+        "chapter_content": 13,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 32,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 11,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 43
+      },
+      "id_distinct": 31,
+      "id_formats": {
+        "N": 5,
+        "other": 14,
+        "N.N": 13,
+        "comment_*": 11
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "sub-up.html",
+      "slug": "sub-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 95,
+      "bytes": 124806,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 58,
+        "range_div": 58,
+        "chapter_content": 58,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 877,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 43,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 195
+      },
+      "id_distinct": 122,
+      "id_formats": {
+        "N": 4,
+        "other": 59,
+        "N.N": 31,
+        "N.N.N": 58,
+        "comment_*": 43
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "́"
+      ],
+      "filename": "tai-up.html",
+      "slug": "tai-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 12,
+      "bytes": 20011,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 9,
+        "range_div": 9,
+        "chapter_content": 9,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 41,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 7,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 27
+      },
+      "id_distinct": 22,
+      "id_formats": {
+        "N": 10,
+        "other": 10,
+        "comment_*": 7
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "vajs-up.html",
+      "slug": "vajs-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 148,
+      "bytes": 178283,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 143,
+        "range_div": 143,
+        "chapter_content": 143,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 305,
+        "small": 145,
+        "note_like": 0,
+        "comment_anchor": 144,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 434
+      },
+      "id_distinct": 290,
+      "id_formats": {
+        "N": 145,
+        "other": 144,
+        "N.N": 1,
+        "comment_*": 144
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "yotat-up.html",
+      "slug": "yotat-up",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 422,
+      "bytes": 947973,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 400,
+        "range_div": 400,
+        "chapter_content": 400,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3433,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 205,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 19,
+        "id_total": 624
+      },
+      "id_distinct": 520,
+      "id_formats": {
+        "chapter_N": 19,
+        "other": 400,
+        "comment_*": 205
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "raghuvamsha.html",
+      "slug": "raghuvamsha",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 328,
+      "bytes": 552872,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 289,
+        "range_div": 289,
+        "chapter_content": 289,
+        "h1": 0,
+        "endchapter": 12,
+        "br": 3021,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 257,
+        "chapter_C_anchor": 24,
+        "chapter_anchor": 12,
+        "id_total": 582
+      },
+      "id_distinct": 280,
+      "id_formats": {
+        "chapter_N": 12,
+        "comment_*": 257,
+        "other": 289,
+        "chapter_NC": 24
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "gitagovinda.html",
+      "slug": "gitagovinda",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1049,
+      "bytes": 949378,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1033,
+        "range_div": 1033,
+        "chapter_content": 1033,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 7182,
+        "small": 163,
+        "note_like": 0,
+        "comment_anchor": 163,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 2243
+      },
+      "id_distinct": 1211,
+      "id_formats": {
+        "N": 14,
+        "N.N": 1033,
+        "other": 1033,
+        "comment_*": 163
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "́"
+      ],
+      "filename": "buddhacharita.html",
+      "slug": "buddhacharita",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 222,
+      "bytes": 242426,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 193,
+        "range_div": 193,
+        "chapter_content": 193,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 2103,
+        "small": 55,
+        "note_like": 0,
+        "comment_anchor": 55,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 468
+      },
+      "id_distinct": 274,
+      "id_formats": {
+        "N": 27,
+        "N.N": 193,
+        "other": 193,
+        "comment_*": 55
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "è",
+        "ó",
+        "́"
+      ],
+      "filename": "amaru-shataka.html",
+      "slug": "amaru-shataka",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 8883,
+      "bytes": 3758109,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 8852,
+        "range_div": 8852,
+        "chapter_content": 8852,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1,
+        "small": 46,
+        "note_like": 0,
+        "comment_anchor": 46,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 17779
+      },
+      "id_distinct": 8928,
+      "id_formats": {
+        "N": 29,
+        "N.N": 8852,
+        "other": 8852,
+        "comment_*": 46
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "buddhacharita-balmont.html",
+      "slug": "buddhacharita-balmont",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 411,
+      "bytes": 744737,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 339,
+        "range_div": 339,
+        "chapter_content": 339,
+        "h1": 0,
+        "endchapter": 69,
+        "br": 1930,
+        "small": 908,
+        "note_like": 0,
+        "comment_anchor": 177,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 925
+      },
+      "id_distinct": 774,
+      "id_formats": {
+        "N": 70,
+        "N.N": 339,
+        "other": 339,
+        "comment_*": 177
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "shukasaptati.html",
+      "slug": "shukasaptati",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 53,
+      "bytes": 63076,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 50,
+        "range_div": 50,
+        "chapter_content": 50,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 550,
+        "small": 11,
+        "note_like": 0,
+        "comment_anchor": 11,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 112
+      },
+      "id_distinct": 63,
+      "id_formats": {
+        "comment_*": 11,
+        "N.N": 1,
+        "N": 50,
+        "other": 50
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "ó"
+      ],
+      "filename": "chaurapanchashika.html",
+      "slug": "chaurapanchashika",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 504,
+      "bytes": 956092,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 492,
+        "range_div": 492,
+        "chapter_content": 492,
+        "h1": 0,
+        "endchapter": 10,
+        "br": 1594,
+        "small": 463,
+        "note_like": 0,
+        "comment_anchor": 463,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1460
+      },
+      "id_distinct": 967,
+      "id_formats": {
+        "N": 13,
+        "N.N": 492,
+        "other": 492,
+        "comment_*": 463
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "devi-gita.html",
+      "slug": "devi-gita",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 1609,
+      "bytes": 1614931,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1502,
+        "range_div": 1502,
+        "chapter_content": 1502,
+        "h1": 0,
+        "endchapter": 10,
+        "br": 4019,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 461,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 3570
+      },
+      "id_distinct": 2064,
+      "id_formats": {
+        "comment_*": 461,
+        "N": 7,
+        "N.N": 36,
+        "other": 1564,
+        "N.N.N": 1502
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "í",
+        "̥"
+      ],
+      "filename": "kama-sutra.html",
+      "slug": "kama-sutra",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 624,
+      "bytes": 510963,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 614,
+        "range_div": 614,
+        "chapter_content": 614,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1960,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 82,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1318
+      },
+      "id_distinct": 702,
+      "id_formats": {
+        "N": 8,
+        "N.N": 614,
+        "other": 614,
+        "comment_*": 82
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "kumarasambhava.html",
+      "slug": "kumarasambhava",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 119,
+      "bytes": 197288,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 115,
+        "range_div": 115,
+        "chapter_content": 115,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 900,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 83,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 315
+      },
+      "id_distinct": 225,
+      "id_formats": {
+        "N": 2,
+        "comment_*": 83,
+        "N.N": 115,
+        "other": 115
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "megha-duta.html",
+      "slug": "megha-duta",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 2700,
+      "bytes": 2687743,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 2686,
+        "range_div": 2686,
+        "chapter_content": 2686,
+        "h1": 0,
+        "endchapter": 12,
+        "br": 5507,
+        "small": 1140,
+        "note_like": 0,
+        "comment_anchor": 1140,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 6524
+      },
+      "id_distinct": 4370,
+      "id_formats": {
+        "N": 12,
+        "N.N": 2686,
+        "other": 2686,
+        "comment_*": 1140
+      },
+      "vedic_accents": [
+        "r",
+        "̥"
+      ],
+      "filename": "manavadharmashastra.html",
+      "slug": "manavadharmashastra",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 632,
+      "bytes": 2143940,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 531,
+        "range_div": 531,
+        "chapter_content": 531,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 5133,
+        "small": 613,
+        "note_like": 0,
+        "comment_anchor": 613,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1774
+      },
+      "id_distinct": 1243,
+      "id_formats": {
+        "N": 6,
+        "comment_*": 613,
+        "N.N": 10,
+        "other": 614,
+        "N.N.N": 531
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "ó",
+        "ù",
+        "́"
+      ],
+      "filename": "nyaya-bhashya.html",
+      "slug": "nyaya-bhashya",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 108,
+      "bytes": 256036,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 105,
+        "range_div": 105,
+        "chapter_content": 105,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 328,
+        "small": 175,
+        "note_like": 0,
+        "comment_anchor": 175,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 387
+      },
+      "id_distinct": 303,
+      "id_formats": {
+        "N": 107,
+        "comment_*": 175,
+        "other": 105
+      },
+      "vedic_accents": [
+        "r",
+        "è"
+      ],
+      "filename": "paramarthasara-abhinavagupta.html",
+      "slug": "paramarthasara-abhinavagupta",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 24,
+      "bytes": 362196,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 21,
+        "range_div": 21,
+        "chapter_content": 21,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 425,
+        "small": 225,
+        "note_like": 0,
+        "comment_anchor": 225,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 269
+      },
+      "id_distinct": 269,
+      "id_formats": {
+        "N": 1,
+        "N.N": 1,
+        "comment_*": 225,
+        "N.N.N": 21,
+        "other": 21
+      },
+      "vedic_accents": [
+        "r",
+        "é"
+      ],
+      "filename": "pratyabhijna-hridaya_kshemaraja.html",
+      "slug": "pratyabhijna-hridaya_kshemaraja",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 291,
+      "bytes": 1080514,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 215,
+        "range_div": 215,
+        "chapter_content": 215,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 1132,
+        "small": 468,
+        "note_like": 0,
+        "comment_anchor": 416,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 921
+      },
+      "id_distinct": 684,
+      "id_formats": {
+        "N": 74,
+        "N.N": 215,
+        "other": 216,
+        "comment_*": 416
+      },
+      "vedic_accents": [
+        "r",
+        "à",
+        "é",
+        "ó"
+      ],
+      "filename": "sankhya-karika.html",
+      "slug": "sankhya-karika",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 82,
+      "bytes": 118416,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 77,
+        "range_div": 77,
+        "chapter_content": 77,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 178,
+        "small": 21,
+        "note_like": 0,
+        "comment_anchor": 21,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 179
+      },
+      "id_distinct": 135,
+      "id_formats": {
+        "N": 4,
+        "comment_*": 21,
+        "N.N": 77,
+        "other": 77
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "shiva-sutry_sharma.html",
+      "slug": "shiva-sutry_sharma",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 211,
+      "bytes": 242316,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 203,
+        "range_div": 203,
+        "chapter_content": 203,
+        "h1": 0,
+        "endchapter": 2,
+        "br": 1065,
+        "small": 17,
+        "note_like": 0,
+        "comment_anchor": 17,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 430
+      },
+      "id_distinct": 224,
+      "id_formats": {
+        "N": 3,
+        "N.N": 87,
+        "N.N.N": 119,
+        "other": 204,
+        "comment_*": 17
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "vedanga_jyotisha.html",
+      "slug": "vedanga_jyotisha",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 150,
+      "bytes": 866634,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 143,
+        "range_div": 143,
+        "chapter_content": 143,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 371,
+        "small": 395,
+        "note_like": 0,
+        "comment_anchor": 395,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 686
+      },
+      "id_distinct": 676,
+      "id_formats": {
+        "N": 145,
+        "other": 146,
+        "comment_*": 395
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "vedartha-samgraha_ramanuja.html",
+      "slug": "vedartha-samgraha_ramanuja",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 352,
+      "bytes": 440029,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 310,
+        "range_div": 310,
+        "chapter_content": 310,
+        "h1": 0,
+        "endchapter": 3,
+        "br": 3101,
+        "small": 130,
+        "note_like": 0,
+        "comment_anchor": 130,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 790
+      },
+      "id_distinct": 481,
+      "id_formats": {
+        "comment_*": 130,
+        "N": 3,
+        "other": 347,
+        "N.N": 310
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "é",
+        "ó"
+      ],
+      "filename": "shatakatrayam.html",
+      "slug": "shatakatrayam",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 331,
+      "bytes": 446892,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 301,
+        "range_div": 301,
+        "chapter_content": 301,
+        "h1": 0,
+        "endchapter": 3,
+        "br": 1246,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 124,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 754
+      },
+      "id_distinct": 510,
+      "id_formats": {
+        "N": 3,
+        "N.N": 301,
+        "other": 326,
+        "comment_*": 124
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "shatakatrayam-serebryakov.html",
+      "slug": "shatakatrayam-serebryakov",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 201,
+      "bytes": 505175,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 195,
+        "range_div": 195,
+        "chapter_content": 195,
+        "h1": 0,
+        "endchapter": 4,
+        "br": 2609,
+        "small": 1,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 394
+      },
+      "id_distinct": 200,
+      "id_formats": {
+        "N.N": 195,
+        "N.N.N": 1,
+        "other": 195,
+        "N": 3
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "yoga-sutry.html",
+      "slug": "yoga-sutry",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 210,
+      "bytes": 1577449,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 203,
+        "range_div": 203,
+        "chapter_content": 203,
+        "h1": 0,
+        "endchapter": 4,
+        "br": 3017,
+        "small": 414,
+        "note_like": 0,
+        "comment_anchor": 940,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1351
+      },
+      "id_distinct": 748,
+      "id_formats": {
+        "N": 5,
+        "comment_*": 940,
+        "N.N": 203,
+        "other": 203
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "yoga-sutry_vyasa-bhashya.html",
+      "slug": "yoga-sutry_vyasa-bhashya",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 201,
+      "bytes": 352164,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 195,
+        "range_div": 195,
+        "chapter_content": 195,
+        "h1": 0,
+        "endchapter": 4,
+        "br": 684,
+        "small": 16,
+        "note_like": 0,
+        "comment_anchor": 16,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 411
+      },
+      "id_distinct": 217,
+      "id_formats": {
+        "N": 5,
+        "comment_*": 16,
+        "N.N": 195,
+        "other": 195
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "yoga-sutry_zagumennov.html",
+      "slug": "yoga-sutry_zagumennov",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 201,
+      "bytes": 289181,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 195,
+        "range_div": 195,
+        "chapter_content": 195,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 621,
+        "small": 51,
+        "note_like": 0,
+        "comment_anchor": 51,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 446
+      },
+      "id_distinct": 331,
+      "id_formats": {
+        "N": 5,
+        "comment_*": 51,
+        "N.N": 195,
+        "other": 195
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "yoga-sutry_sharma.html",
+      "slug": "yoga-sutry_sharma",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 391,
+      "bytes": 445628,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 384,
+        "range_div": 384,
+        "chapter_content": 384,
+        "h1": 0,
+        "endchapter": 4,
+        "br": 966,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 151,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 925
+      },
+      "id_distinct": 535,
+      "id_formats": {
+        "N": 6,
+        "N.N": 384,
+        "other": 384,
+        "comment_*": 151
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "hatha-yoga-pradipika.html",
+      "slug": "hatha-yoga-pradipika",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 1251,
+      "bytes": 1778203,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1172,
+        "range_div": 1172,
+        "chapter_content": 1172,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3,
+        "small": 363,
+        "note_like": 0,
+        "comment_anchor": 363,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 2784
+      },
+      "id_distinct": 1613,
+      "id_formats": {
+        "N": 77,
+        "N.N": 1172,
+        "other": 1172,
+        "comment_*": 363
+      },
+      "vedic_accents": [
+        "r",
+        "é",
+        "ó",
+        "́"
+      ],
+      "filename": "mify-drind.html",
+      "slug": "mify-drind",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 127,
+      "bytes": 1628244,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 945,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "ó"
+      ],
+      "filename": "Йога- Бессмертие и cвобода (Мирча Элиаде, пер. Пахомова).txt",
+      "slug": "yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 1579,
+      "bytes": 1646771,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 27,
+        "endchapter": 0,
+        "br": 14422,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "è",
+        "é",
+        "ù",
+        "́"
+      ],
+      "filename": "Илиада_Гнедич.txt",
+      "slug": "iliada_gnedich",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 170,
+      "bytes": 4458169,
+      "ext": ".htm",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 20,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 8
+      },
+      "id_distinct": 8,
+      "id_formats": {
+        "other": 8
+      },
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Biruni.htm",
+      "slug": "biruni",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 28,
+      "bytes": 529188,
+      "ext": ".htm",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 25,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r"
+      ],
+      "filename": "Вишну-Пурана.htm",
+      "slug": "vishnu-purana",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 11822,
+      "bytes": 4190071,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 17,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "á",
+        "é",
+        "ó",
+        "́"
+      ],
+      "filename": "Комментарии к Махабхарате.txt",
+      "slug": "kommentarii-k-makhabkharate",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 2304,
+      "bytes": 1769878,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 25,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ó",
+        "́"
+      ],
+      "filename": "Статьи Махабхараты.txt",
+      "slug": "stati-makhabkharaty",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 18017,
+      "bytes": 1062107,
+      "ext": ".txt",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 35,
+        "endchapter": 0,
+        "br": 0,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "á",
+        "́"
+      ],
+      "filename": "Указатели Махабхараты.txt",
+      "slug": "ukazateli-makhabkharaty",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    },
+    {
+      "n_lines": 63,
+      "bytes": 2283004,
+      "ext": ".htm",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 0,
+        "range_div": 0,
+        "chapter_content": 0,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 23,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 0,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 0
+      },
+      "id_distinct": 0,
+      "id_formats": {},
+      "vedic_accents": [
+        "r",
+        "à",
+        "á",
+        "è",
+        "é",
+        "í",
+        "ó",
+        "ù",
+        "ú",
+        "́"
+      ],
+      "filename": "Сыркин_Том_1_UTF.htm",
+      "slug": "syrkin_tom_1_utf",
+      "structure_guess": "prose",
+      "structure_confidence": "low"
+    }
+  ],
+  "aggregate_tags": {
+    "citation_block": 88365,
+    "range_div": 88365,
+    "chapter_content": 88365,
+    "h1": 140,
+    "endchapter": 1859,
+    "br": 543077,
+    "small": 23551,
+    "note_like": 0,
+    "comment_anchor": 43739,
+    "chapter_C_anchor": 148,
+    "chapter_anchor": 3956,
+    "id_total": 173182
+  },
+  "aggregate_id_formats": {
+    "N": 5684,
+    "comment_*": 43739,
+    "chapter_N": 3956,
+    "other": 88630,
+    "chapter_NC": 148,
+    "N.N": 27519,
+    "N.N.N": 3506
+  },
+  "class_counts": {
+    "dictionary": 15,
+    "prose": 67,
+    "verse": 66
+  }
+}
