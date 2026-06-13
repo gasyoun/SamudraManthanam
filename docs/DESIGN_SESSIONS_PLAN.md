@@ -36,21 +36,22 @@ Everything ships inside the app and its search service only.
 - **Remaining for S3/M.G.:** n:m alignment edge semantics (range-merge, interpolations)
   → S3; non-tab dictionary `forms` backfill; authoritative `structure` assignment.
 
-## Session 3 — Sanskrit↔Russian alignment spec
+## Session 3 — Sanskrit↔Russian alignment spec ✅ DONE (2026-06-12)
 
-- **Goal:** Spec for explicit alignment groups in the JSONL master (today alignment is
-  implicit in HTML line adjacency).
-- **Inputs:** converter spec; 3–4 hand-picked parallel sources of different shapes
-  (verse-aligned Gītā; range-merged Gītagovinda; prose Vishnu-purāṇa; a
-  Sanskrit-only or Russian-only control).
-- **Deliverable:** `docs/ALIGNMENT_SPEC.md` — alignment-group data model
-  (n:m verse↔translation mapping keyed by canonical IDs), confidence tiers
-  (markup-derived vs heuristic vs manual), gold-standard sample definition
-  (~20 hand-verified pairs to evaluate any automated aligner), and what the reader's
-  `lang=ru|sa` toggle consumes.
-- **Frontier-model leverage:** the n:m edge cases (one Russian stanza translating a
-  verse range; translator's interpolations with no Sanskrit source) are where cheap
-  models produce plausible-but-wrong designs.
+- **Deliverable:** [docs/ALIGNMENT_SPEC.md](ALIGNMENT_SPEC.md)
+- **Decisive finding:** alignment is **extraction, not inference** — Sanskrit and Russian
+  are already interleaved as sibling divs in one `citation_block` (78,219 clean 1:1
+  blocks measured). No statistical aligner needed for v1.
+- **n:m worry resolved:** ranges are pre-merged by the source to translation granularity
+  (`65.1-2` = 2 Sanskrit verses : 1 Russian block, atomic 1:1 at group level). The
+  CONVERTER_SPEC §9.1 n:m concern is pre-solved by the markup.
+- **Real edge cases (bounded):** 2 whole translation-only texts (buddhacharita-balmont,
+  mify-drind, 100% `0:1` monolingual), 10,145 monolingual-Russian blocks, vedanga_jyotisha
+  59% partial, refrains (dhruva), secondary numbering, interleaved nav headings.
+- **Spec includes:** group data model, per-block cardinality (1:1/0:1/1:0), gold-standard
+  regression oracle (~25 hand-verified groups), 5 CI gates, reader-toggle semantics.
+- **Open for M.G.:** compare-route monolingual rows (§9.1); vedanga_jyotisha gap = defect
+  or genuine (§9.2).
 
 ## Session 4 — Offline search design (sqlite-wasm + OPFS)
 
