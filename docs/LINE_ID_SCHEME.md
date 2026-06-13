@@ -1,6 +1,6 @@
 # Stable Line-ID Scheme (`work.chapter.verse`) — Phase 0 Design
 
-**Status:** Draft for review · 2026-06-12
+**Status:** FROZEN for Phase 1 · 2026-06-12 (all §8 decisions settled — see §8)
 **Scope:** Defines the canonical passage-identifier scheme used by citations, permalinks,
 exports, and the Phase 1 JSONL master format. This document is the contract; Phase 1
 implements it.
@@ -99,8 +99,21 @@ Every source is assigned exactly one class in its `.meta.json` (`structure` fiel
   separately addressable in v1; a resolver may map `1.4` → containing range `1.3-6`.
 - Single-chapter works with bare-`N` anchors are normalized to one level: `chaurapanchashika:42`.
 - Chapter headings get `chapter` IDs only for navigation (`:c.1`), never cited as verses.
-  Existing `chapter_N` anchors map to `c.N`; commentary chapter anchors `chapter_NC`
-  map to `c.N.comm`.
+  Existing `chapter_N` anchors map to `c.N`.
+
+### Class A — commentary blocks (per §8.4 decision)
+
+Commentary (`comment_*` anchors — 43,739 across 117 sources) is **addressable, citable
+content**, not a nav anchor. Each commentary block is keyed to the verse it annotates,
+with a 1-based sequence for multiple blocks on the same verse:
+
+- `06_mahabharata-bhishmaparva:6.1.4.comm1` — first commentary block on verse 6.1.4.
+- Commentary attached at chapter level (the `chapter_NC` anchors) keys to the chapter:
+  `08_atharvaveda:c.10.comm1`.
+- Sequence freezes at first mint (same rule as `e{n}`/`p{n}`); an inserted block appends
+  a letter (`comm1b`), never renumbers later blocks.
+- A commentary block whose target verse can't be determined falls back to a document-order
+  paragraph ID within the chapter (`c.10.p7`), flagged for review — never silently dropped.
 
 ### Class B (dictionary) — `e{n}` entry sequence
 
@@ -156,31 +169,28 @@ occurrence keeps the bare number so the common case cites cleanly.
 | `gitagovinda` + `1.3-6` | `gitagovinda:1.3-6` (atomic range) | A |
 | `06_mahabharata-bhishmaparva` + `6.1.4` | `06_mahabharata-bhishmaparva:6.1.4` | A |
 | `13_…anushasanaparva` + second `154.34` | `13_mahabharata-anushasanaparva:154.34b` | A |
-| `08_atharvaveda` + `chapter_10C` | `08_atharvaveda:c.10.comm` | A (nav anchor) |
+| `08_atharvaveda` + `chapter_10C` | `08_atharvaveda:c.10.comm1` | A (commentary) |
+| `06_mahabharata-bhishmaparva` comment block on 6.1.4 | `06_mahabharata-bhishmaparva:6.1.4.comm1` | A (commentary) |
 | `dic_mw` line 15482 (no anchor) | `dic_mw:e15482` | B |
 | `Статьи Махабхараты` ¶17 | `stati-makhabkharaty:p17` | C |
 | `yoga-sutry` (anthology, undated web text) | `yoga-sutry:p{n}` — *prose*, not verse: the compilation has no canonical sūtra numbering of its own | C |
 
-## 8. Open questions (need M.G.'s decision before Phase 1 freeze)
+## 8. Decisions (all settled 2026-06-12 — scheme frozen for Phase 1)
 
-1. **Mahābhārata book number duplication.** `06_mahabharata-bhishmaparva:6.1.4` carries
-   the book number twice (slug prefix + passage). Option (a) keep as-is (faithful to
-   native anchors, zero transformation risk); option (b) strip the book level from the
-   passage where it duplicates the slug. **Recommendation: (a)** — lossless, and the
-   slug prefix is an accident of filing, not part of the citation a scholar reads.
-2. **Dictionaries in scope for v1?** `e{n}` IDs are cheap but only become *useful* with
-   headword metadata. Defer dictionary citation polish to the EN→SA/lexicon workstream?
-   **Recommendation: mint `e{n}` now (free), defer headword metadata.**
+1. **Mahābhārata book number duplication → KEEP AS-IS.** `06_mahabharata-bhishmaparva:6.1.4`
+   keeps the book number in both slug and passage. Lossless; the passage is exactly the
+   native printed anchor, and the slug prefix is a filing accident, not part of the
+   citation a scholar reads. No per-file transformation.
+2. **Dictionaries in v1 → MINT `e{n}` NOW.** Every dictionary line gets a sequence ID
+   (`dic_mw:e15482`) in the converter; richer headword metadata is deferred to the
+   lexicon workstream. Cheap now, makes dictionary hits citable immediately.
 3. ~~Cyrillic-named sources.~~ **Resolved (verified 2026-06-12):** all 20+ Cyrillic
    filenames already transliterate to stable ASCII slugs
    (`Статьи Махабхараты.txt` → `stati-makhabkharaty`); no action needed.
-4. **Commentary addressability (raised by census).** 43,739 `comment_*` blocks are
-   searchable content but §4 only gives them nav anchors. Options: (a) leave as nav-only
-   (`c.N.comm`) — simplest, but commentary hits in search have no stable citation;
-   (b) mint addressable IDs per commentary block keyed to the verse it annotates
-   (`1.1.comm1`, `1.1.comm2`). **Recommendation: (b)** — commentary is a third of the
-   anchored corpus and scholars cite it; the cost is one more passage sub-type in the
-   converter. Needs M.G.'s call before the Phase 1 freeze.
+4. **Commentary addressability → ADDRESSABLE IDs.** Each `comment_*` block gets a citable
+   ID keyed to the verse (or chapter) it annotates: `6.1.4.comm1`, `c.10.comm1` (see §4
+   "Class A — commentary blocks"). Commentary is a third of the anchored corpus and is
+   cited by scholars; the cost is one extra passage sub-type in the converter.
 
 ## 9. Acceptance criteria (for the Phase 1 implementation)
 
@@ -191,4 +201,8 @@ occurrence keeps the bare number so the common case cites cleanly.
 - [ ] All existing `link_id` values map deterministically to canonical IDs
       (table-driven normalization, covered by tests per format class).
 - [ ] `structure` field present in all 148 `.meta.json` files (A/B/C assignment).
+- [ ] All 43,739 `comment_*` blocks get addressable `…commN` IDs; blocks whose target
+      verse is indeterminate fall back to `c.N.pM` and are flagged, not dropped.
+- [ ] Range-title verse extraction covers all 53 range-dependent files (Rigveda,
+      Atharvaveda, Mahābhārata, Rāmāyaṇa, Raghuvaṃśa, Gītagovinda) — tested per file.
 - [ ] Legacy `?highlight={link_id}` URLs keep working.
