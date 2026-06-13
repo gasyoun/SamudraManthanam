@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 from urllib.parse import quote, urlencode
 
 from fastapi import APIRouter, HTTPException, Query, Request
@@ -29,6 +30,84 @@ _CHAPTER_TITLE_PATTERN = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 _HTML_TAGS = re.compile(r"<[^>]+>")
+
+def _merge_jsonl_lines(lines: list[dict]) -> list[dict]:
+    """Group JSONL segment rows by passage and assemble citation_block HTML.
+
+    JSONL ingest emits one corpus_lines row per segment (sa, ru, comm0 …).
+    All segments of one passage share the same link_id.  This function
+    groups them and reconstructs the citation_block / chapter_block HTML
+    structure so the language filter and template behave identically to the
+    legacy HTML-parsed ingest path.
+
+    canonical_id encodes the segment type as a '#seg' suffix, e.g.:
+        rigveda:1.1.1#sa  → Sanskrit
+        rigveda:1.1.1#ru  → Russian translation
+        rigveda:1.1.1#comm0 → first commentary block
+    Records without a '#' in canonical_id (HTML-fallback rows) are grouped
+    by link_id and emitted unchanged via the single-record fallback.
+    """
+    groups: OrderedDict[str, list[dict]] = OrderedDict()
+    for line in lines:
+        key = line.get("link_id") or str(line.get("line_num", ""))
+        if key not in groups:
+            groups[key] = []
+        groups[key].append(line)
+
+    merged: list[dict] = []
+    for key, recs in groups.items():
+        recs_sorted = sorted(recs, key=lambda r: r.get("line_num", 0))
+
+        sa_html = ""
+        ru_html = ""
+        comm_items: list[str] = []
+        chapter = None
+        line_num = recs_sorted[0]["line_num"]
+        link_id = recs_sorted[0].get("link_id", "")
+        line_text = ""
+
+        for rec in recs_sorted:
+            cid = rec.get("canonical_id") or ""
+            h = rec.get("line_html") or ""
+            if cid.endswith("#sa"):
+                sa_html = h
+                chapter = rec.get("chapter")
+                line_text = rec.get("line_text", "")
+            elif cid.endswith("#ru"):
+                ru_html = h
+                if not line_text:
+                    line_text = rec.get("line_text", "")
+            elif "#comm" in cid:
+                comm_items.append(h)
+
+        parts: list[str] = []
+        if sa_html or ru_html:
+            inner = ""
+            if sa_html:
+                inner += f'<div class="chapter_block iast">{sa_html}</div>'
+            if ru_html:
+                inner += f'<div class="chapter_block translation">{ru_html}</div>'
+            parts.append(f'<div class="chapter_content">{inner}</div>')
+        if comm_items:
+            items_html = "".join(
+                f'<div class="comment_item">{c}</div>' for c in comm_items
+            )
+            parts.append(f'<div class="comments">{items_html}</div>')
+
+        passage_html = (
+            "".join(parts) if parts else (recs_sorted[0].get("line_html") or "")
+        )
+
+        merged.append({
+            "line_num": line_num,
+            "link_id": link_id,
+            "chapter": chapter,
+            "line_html": passage_html,
+            "line_text": line_text,
+        })
+
+    return merged
+
 
 router = APIRouter(prefix="/sources", tags=["reader"])
 templates = Jinja2Templates(directory="templates")
@@ -110,17 +189,21 @@ async def view_source(
         # `line_text` is used by JSON-LD Quotation entities; the template
         # uses `line_html` for display.
         async with db.execute(
-            "SELECT line_num, link_id, chapter, line_html, line_text "
+            "SELECT line_num, link_id, chapter, line_html, line_text, canonical_id "
             "FROM corpus_lines WHERE source_id = ? ORDER BY line_num",
             (source_id,)
         ) as cursor:
             rows = await cursor.fetchall()
             lines = [dict(r) for r in rows]
 
-        # Detect parallel structure on a small sample — enough to classify
-        # without scanning the entire source. Sources where the structure
-        # is uneven (some lines have iast, some don't) still get classified
-        # as parallel as long as any sampled line has the marker.
+        # JSONL ingest emits one row per segment (sa/ru/comm). Detect via
+        # the '#seg' suffix in canonical_id and merge segments into full
+        # citation_block HTML before the language filter and template see them.
+        if any("#" in (r.get("canonical_id") or "") for r in lines[:20]):
+            lines = _merge_jsonl_lines(lines)
+
+        # Detect parallel structure AFTER potential JSONL merge so the
+        # assembled HTML carries the chapter_block iast/translation markers.
         sample_html = [l.get("line_html") or "" for l in lines[:10]]
         parallel = is_parallel_source(sample_html)
 
