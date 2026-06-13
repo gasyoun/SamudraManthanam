@@ -21,23 +21,20 @@ Everything ships inside the app and its search service only.
   keep), §8.2 (dictionaries in v1 — recommend mint `e{n}` now).
 - **Unblocks:** Sessions 2 and 3; Phase 4 citations.
 
-## Session 2 — HTML→JSONL converter spec
+## Session 2 — HTML→JSONL converter spec ✅ DONE (2026-06-12)
 
-- **Goal:** Spec (not code) for the converter that turns the 148 presentational HTML/TXT
-  files into the canonical JSONL master, minting canonical IDs per Session 1.
-- **Inputs to bring into the session:**
-  - [docs/LINE_ID_SCHEME.md](LINE_ID_SCHEME.md) (frozen, with §8 decisions made)
-  - [web/ingest/parse_html.py](../web/ingest/parse_html.py) (current extraction logic
-    and its known hacks)
-  - A structural census of all 148 files: tag inventory per file (`citation_block`,
-    `range`, `chapter_content`, `H1`, `endchapter`, footnote spans), produced by a cheap
-    scripted pass *before* the session — do not burn frontier tokens on grep work.
-- **Deliverable:** `docs/CONVERTER_SPEC.md` — JSONL record schema (line text, html,
-  canonical_id, script tags, footnotes, chapter), per-class extraction rules,
-  edge-case inventory (the 41 duplicates, `chapter_NC` commentary anchors, `comment_*`,
-  Vedic accent stripping), validation gates (round-trip + acceptance criteria from
-  Session 1 §9), and the test plan.
-- **Order note:** before Session 3, because alignment operates on converter output.
+- **Deliverable:** [docs/CONVERTER_SPEC.md](CONVERTER_SPEC.md)
+- **Key output:** the structural insight that one source "line" = one `citation_block`
+  bundling Sanskrit + Russian + commentary as sibling divs, which the converter explodes
+  into grouped canonical records. Four parse paths characterized against live data
+  (A-clean / A-range / B-dict / C-prose), JSONL schema with `#sa`/`#ru`/`#comm{n}`
+  segment suffixes, commentary `annotates` linkage, SLP1 + Vedic-accent handling, 7 CI
+  validation gates, conversion run-report.
+- **Findings that fed forward:** Sanskrit↔Russian alignment is already encoded as sibling
+  divs (free group key for S3); dictionaries already carry 4 scripts per line
+  (deva/iast/slp1/cyrillic) — the cross-script layer arrives partly for free.
+- **Remaining for S3/M.G.:** n:m alignment edge semantics (range-merge, interpolations)
+  → S3; non-tab dictionary `forms` backfill; authoritative `structure` assignment.
 
 ## Session 3 — Sanskrit↔Russian alignment spec
 
