@@ -43,7 +43,6 @@ $(document).ready(function() {
     // Disable Find/HTML buttons until sources resolve — submitting earlier would
     // send source_ids=[] and the server (correctly) returns no results, leaving
     // the user staring at "Результатов не найдено." with no idea why.
-    let sourcesLoaded = false;
     $('#searchForm button[type="submit"], #exportBtn').prop('disabled', true);
 
     fetch('/api/sources')
@@ -67,14 +66,24 @@ $(document).ready(function() {
                 item.append(checkbox, label);
                 grid.append(item);
             });
-            sourcesLoaded = true;
             $('#searchForm button[type="submit"], #exportBtn').prop('disabled', false);
             updateSourceCount();
             restoreFromUrl();
         })
         .catch(err => {
             console.error('Failed to load sources:', err);
-            $('#sourceCount').text('Не удалось загрузить источники. Перезагрузите страницу.');
+            if (navigator.onLine === false) {
+                // Offline (e.g. a cached PWA shell): /api/sources can't load, but
+                // offline search must stay reachable — re-enable the Find button.
+                // With no source checkboxes the offline path searches all
+                // installed packs. The HTML-export button stays disabled (it is
+                // a server-only endpoint).
+                $('#searchForm button[type="submit"]').prop('disabled', false);
+                $('#sourcesGrid').empty();
+                $('#sourceCount').text('Нет сети — доступен офлайн-поиск по загруженным текстам.');
+            } else {
+                $('#sourceCount').text('Не удалось загрузить источники. Перезагрузите страницу.');
+            }
         });
 
     function updateSourceCount() {
@@ -180,6 +189,20 @@ $(document).ready(function() {
         // Count this search toward the engaged-user CTA threshold
         incrementSearchCount();
 
+        // ── Offline routing ───────────────────────────────────────────────────
+        // When the network is down and the offline-search bridge is present,
+        // run the query locally instead of hitting /api/search. Gated strictly
+        // on navigator.onLine === false so the online path is never affected.
+        if (navigator.onLine === false && window.SamudraOffline) {
+            if (mode === 'morphological') {
+                $('#progressContainer').hide();
+                $('#results-area').html('<div class="offline-banner">⚡ Офлайн · морфологический поиск (по основам) недоступен без сети. Используйте обычный или regex-поиск.</div>');
+                return;
+            }
+            runOfflineSearch(query, mode, case_sensitive, whole_word, source_ids);
+            return;
+        }
+
         $('#progressContainer').show();
         $('#searchProgress').val(0);
         $('#progressText').text('Поиск...');
@@ -212,10 +235,79 @@ $(document).ready(function() {
         });
     });
 
+    // ── Offline search (local, via window.SamudraOffline bridge) ──────────────
+    function runOfflineSearch(query, mode, case_sensitive, whole_word, source_ids) {
+        $('#progressContainer').show();
+        $('#searchProgress').val(20);
+        $('#progressText').text('Офлайн-поиск…');
+        $('#results-area').empty().append('<div class="skeleton"></div><div class="skeleton"></div>');
+
+        window.SamudraOffline.search({
+            query: query,
+            mode: mode,
+            caseSensitive: case_sensitive,
+            wholeWord: whole_word,
+            sourceIds: source_ids.length ? source_ids : null
+        })
+        .then(function(res) {
+            $('#searchProgress').val(100);
+            $('#progressContainer').hide();
+            $('#results-area').html(window.SamudraOffline.renderHtml(query, res.rows, { timeout: res.timeout }));
+            updateNetPill();
+            if (res.rows.length) {
+                window.scrollTo({ top: $('#results-area').offset().top - 20, behavior: 'smooth' });
+            }
+        })
+        .catch(function(err) {
+            $('#progressContainer').hide();
+            if (err && err.code === 'NO_PACK') {
+                $('#results-area').html('<div class="offline-banner">⚡ Офлайн · нет загруженного индекса для поиска. ' +
+                    '<a href="/offline-settings">Скачать офлайн-поиск</a>, пока есть сеть.</div>');
+            } else {
+                $('#results-area').html('<p style="color: red;">Ошибка офлайн-поиска: ' + escHtml(err && err.message || String(err)) + '</p>');
+            }
+            updateNetPill();
+        });
+    }
+
+    // ── Network-status pill ───────────────────────────────────────────────────
+    function updateNetPill() {
+        var el = document.getElementById('netStatus');
+        if (!el) return;
+        if (navigator.onLine) {
+            el.className = 'option-item online';
+            el.innerHTML = '<span class="dot">●</span> Онлайн';
+            return;
+        }
+        el.className = 'option-item offline';
+        if (window.SamudraOffline && window.SamudraOffline.isAvailable()) {
+            el.innerHTML = '<span class="dot">○</span> Офлайн · локальный поиск';
+        } else if (window.SamudraOffline && window.SamudraOffline.isReady()) {
+            el.innerHTML = '<span class="dot">○</span> Офлайн · <a href="/offline-settings">нет индекса</a>';
+        } else {
+            el.innerHTML = '<span class="dot">○</span> Офлайн';
+        }
+    }
+    window.addEventListener('online', updateNetPill);
+    window.addEventListener('offline', function() {
+        updateNetPill();
+        // Pre-warm the local engine; refresh the pill once a pack is detected.
+        if (window.SamudraOffline) {
+            window.SamudraOffline.whenReady().then(updateNetPill, updateNetPill);
+        }
+    });
+    updateNetPill();
+
     // ── Export ────────────────────────────────────────────────────────────────
     $('#exportBtn').click(function() {
         const query = $('#query').val();
         if (!query) return;
+        // HTML export is a server-only endpoint. Offline, navigating to it would
+        // abandon the SPA for a request that can't complete — guard it.
+        if (navigator.onLine === false) {
+            $('#results-area').html('<div class="offline-banner">⚡ Офлайн · экспорт в HTML недоступен без сети.</div>');
+            return;
+        }
         const mode = $('#mode').val();
         const case_sensitive = $('#case_sensitive').is(':checked');
         const whole_word = $('#whole_word').is(':checked');
@@ -320,6 +412,11 @@ $(document).ready(function() {
     // ── Lead capture ──────────────────────────────────────────────────────────
     let leadTriggered = false;
     $(window).scroll(function() {
+        // The lead form POSTs to /api/identity/lead, which can't complete
+        // offline. Offline results also render .citation_block blocks, so this
+        // trigger would otherwise pop a modal that can't be submitted — gate it
+        // on connectivity.
+        if (navigator.onLine === false) return;
         if (!leadTriggered && $(window).scrollTop() + $(window).height() > $(document).height() * 0.5) {
             if ($('#results-area .citation_block').length > 0) {
                 $('#leadModal').fadeIn();

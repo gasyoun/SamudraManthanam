@@ -2,23 +2,26 @@
  * Service Worker — Пахтанье океана
  *
  * Strategy:
- *   - App-shell assets (CSS, JS, fonts, icons): cache-first (precached on install)
+ *   - Vendored binaries (wasm, fonts, icons): cache-first (stable, immutable)
+ *   - App code (JS/CSS): stale-while-revalidate — serve cache fast AND refresh
+ *     in the background, so an edit/deploy reaches users on the next load
+ *     without a manual version bump. (cache-first would pin stale app code
+ *     forever, defeating the no-cache HTTP policy — DECISIONS_NEEDED D4.)
  *   - HTML navigations: network-first with cache fallback
  *   - API routes (/api/*): network-only (search stays online)
  *
- * Cache version: bump SW_VERSION to force cache refresh on deploy.
  * The activate handler prunes any caches whose name does not start with
- * CACHE_NAME, so old versions are cleaned automatically.
+ * 'samudra-', so old versions are cleaned automatically. SW_VERSION was bumped
+ * to 2 to flush the v1 cache, which had cache-first'd app JS.
  */
 
-const SW_VERSION = '1';
+const SW_VERSION = '2';
 const CACHE_NAME = `samudra-v${SW_VERSION}`;
 
 // Assets to precache on install (app shell).
 // Keep this list small: large corpus reader pages are cached on-demand.
 const PRECACHE_URLS = [
   '/',
-  '/sources',
   '/static/style.css',
   '/static/site.css',
   '/static/manifest.webmanifest',
@@ -39,7 +42,13 @@ const PRECACHE_URLS = [
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS)),
+    caches.open(CACHE_NAME).then((cache) =>
+      // Cache each URL individually and tolerate failures. cache.addAll is
+      // all-or-nothing — a single missing/404 entry would reject the whole
+      // install and the SW would never activate (the PWA silently never works
+      // offline). A failed precache entry just falls back to runtime caching.
+      Promise.allSettled(PRECACHE_URLS.map((u) => cache.add(u))),
+    ),
   );
 });
 
@@ -71,9 +80,17 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Static assets: cache-first (fonts, CSS, JS, images).
+  // Static assets. Vendored binaries are stable → cache-first. App code
+  // (JS/CSS) must stay fresh across deploys → stale-while-revalidate, or the
+  // SW would serve cache-first'd stale code forever (DECISIONS_NEEDED D4).
   if (url.pathname.startsWith('/static/')) {
-    event.respondWith(cacheFirst(request));
+    if (url.pathname.startsWith('/static/wasm/') ||
+        url.pathname.startsWith('/static/fonts/') ||
+        url.pathname.startsWith('/static/icons/')) {
+      event.respondWith(cacheFirst(request));
+    } else {
+      event.respondWith(staleWhileRevalidate(request, event));
+    }
     return;
   }
 
@@ -107,6 +124,30 @@ async function cacheFirst(request) {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
     });
   }
+}
+
+async function staleWhileRevalidate(request, event) {
+  // Serve the cached copy immediately (fast, works offline) while fetching a
+  // fresh copy in the background to update the cache for next time. This keeps
+  // app JS/CSS fresh across deploys without a manual version bump.
+  const cache = await caches.open(CACHE_NAME);
+  const cached = await cache.match(request);
+  const networkFetch = fetch(request)
+    .then((response) => {
+      if (response.ok) cache.put(request, response.clone());
+      return response;
+    })
+    .catch(() => null);
+  // Keep the SW alive until the background refresh completes.
+  if (event) event.waitUntil(networkFetch);
+  return (
+    cached ||
+    (await networkFetch) ||
+    new Response('オフライン — ресурс недоступен', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    })
+  );
 }
 
 async function networkFirst(request) {

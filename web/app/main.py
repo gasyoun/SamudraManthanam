@@ -1,11 +1,17 @@
 import logging
+import mimetypes
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
+
+# Windows registry has no entry for .mjs; without this, Starlette's StaticFiles
+# would serve sqlite3.mjs as application/octet-stream, which Chrome rejects for
+# ES module imports in a module worker (silent [object Event] onerror).
+mimetypes.add_type('text/javascript', '.mjs')
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from app.routers import sources, search, morph, corpus_sync, health, reader, identity, corrections, ai, admin, compare, search_page, popular_terms
+from app.routers import sources, search, morph, corpus_sync, health, reader, identity, corrections, ai, admin, compare, search_page, popular_terms, offline, offline_page
 from app.settings import settings
 from app.state_db import get_state_db, init_state_db
 from app.db import get_db
@@ -165,6 +171,68 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    """Add cross-origin headers so the /offline-settings page can spawn the
+    sqlite-wasm search worker.
+
+    COOP: same-origin — set on all HTML pages.  Combined with COEP on
+    /offline-settings it makes that page cross-origin isolated.  Safe globally:
+    it only restricts what other origins can open/reference this window as; it
+    does not affect resource loading.  (Note: the durable VFS we use,
+    opfs-sahpool, does NOT itself require isolation/SharedArrayBuffer — see
+    docs/OFFLINE_SEARCH_DESIGN.md §12.1.  Whether COEP is removable entirely is
+    tracked in docs/DECISIONS_NEEDED.md.)
+
+    CORP + COEP (require-corp): set on ALL /static/* responses.  /offline-settings
+    is cross-origin isolated, and a cross-origin-isolated document can only spawn
+    a dedicated worker whose OWN top-level script response carries COEP
+    require-corp (and CORP, so the page may fetch it).  The worker script, the
+    wasm glue + binary, and woff2 fonts are all under /static, so both headers go
+    there.  All /static assets are first-party (CORP same-origin only blocks
+    OTHER origins from embedding them).  COEP on a response is IGNORED for
+    ordinary <script>/CSS/font/img loads, so this does not affect index.html
+    (which is NOT cross-origin isolated — the middleware sets only COOP on HTML,
+    never COEP, so its cross-origin Google Fonts keep loading).
+    """
+    response = await call_next(request)
+    ct = response.headers.get("content-type", "")
+    path = request.url.path
+
+    if "text/html" in ct:
+        response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+
+    if path.startswith("/static/"):
+        response.headers["Cross-Origin-Resource-Policy"] = "same-origin"
+        # The /offline-settings page is cross-origin isolated (COEP require-corp).
+        # When such a document spawns a dedicated worker, the worker's OWN
+        # top-level script response must also carry COEP require-corp to join the
+        # isolated agent cluster — without it the worker fails to load with a
+        # detail-less error event.  COEP on a response is ignored for ordinary
+        # <script>/CSS/font/img loads, so this is harmless for index.html (which
+        # is NOT cross-origin isolated and does not enforce COEP on subresources).
+        response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+
+        # Cache policy (DECISIONS_NEEDED D4). App code (JS/CSS) is served
+        # no-cache so the browser revalidates and a deploy/edit reaches users
+        # immediately (a conditional request → 304 when unchanged, fresh on
+        # change — cheap). Large vendored binaries (wasm/fonts) change ~never
+        # and are cached long. Without this, browsers heuristic-cache app JS and
+        # serve stale code (which masqueraded as logic bugs repeatedly). This
+        # mirrors the nginx /static caching used in production, which bypasses
+        # this middleware. Don't clobber Cache-Control if a route already set one.
+        # /static/wasm/* is entirely vendored sqlite-wasm (incl. the large
+        # sqlite3.mjs) and fonts change ~never → cache 1 year. Everything else
+        # (app JS/CSS under /static/scripts, /static/*.js, etc.) → no-cache.
+        if "cache-control" not in response.headers:
+            if path.startswith("/static/wasm/") or path.endswith((".woff2", ".woff", ".ttf")):
+                response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+            elif path.endswith((".js", ".mjs", ".css")):
+                response.headers["Cache-Control"] = "no-cache"
+
+    return response
+
 # Include routers
 app.include_router(sources.router)
 app.include_router(search.router)
@@ -179,6 +247,8 @@ app.include_router(admin.router)
 app.include_router(compare.router)
 app.include_router(search_page.router)
 app.include_router(popular_terms.router)
+app.include_router(offline.router)
+app.include_router(offline_page.router)
 
 # Mount static files
 static_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static")
@@ -201,7 +271,9 @@ async def service_worker():
     return FileResponse(
         sw_path,
         media_type="application/javascript",
-        headers={"Service-Worker-Allowed": "/"},
+        # no-cache so an updated SW is picked up promptly (browsers also cap SW
+        # script caching at 24h, but this revalidates on every load).
+        headers={"Service-Worker-Allowed": "/", "Cache-Control": "no-cache"},
     )
 
 def _ss_link(medium: str) -> str:

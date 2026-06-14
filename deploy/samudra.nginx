@@ -19,12 +19,67 @@ server {
         root /var/www/html;
     }
 
-    # Serve static assets directly — bypasses Python entirely
+    # Serve static assets directly — bypasses Python entirely.
+    #
+    # IMPORTANT: because this bypasses the FastAPI security_headers middleware,
+    # the cross-origin headers it would have added must be replicated here, or
+    # the /offline-settings page (which is cross-origin isolated via COEP) cannot
+    # load the sqlite-wasm search worker: a cross-origin-isolated document can
+    # only spawn a dedicated worker whose own script response carries COEP
+    # require-corp (and CORP). Without these, the worker fails to load with a
+    # detail-less error. COEP on a response is ignored for ordinary
+    # <script>/CSS/font/img loads, so it does not affect index.html.
+    #
+    # CACHING (DECISIONS_NEEDED D4): the app's own JS/CSS URLs are NOT
+    # content-hashed, so caching them `immutable` would serve stale code for days
+    # after a deploy. Split the policy:
+    #   - vendored sqlite-wasm (all of /static/wasm/, incl. the large sqlite3.mjs)
+    #     and fonts change ~never → cache 1 year. This regex location matches
+    #     first (regex > prefix); it uses `root` (not `alias`) so
+    #     /static/wasm/x → /opt/samudra/web/static/wasm/x.
+    #   - everything else (JS/CSS/images) → `no-cache`: the browser revalidates
+    #     (cheap 304 when unchanged) so a deploy reaches users immediately.
+    # add_header does NOT inherit into/from sibling locations, so each repeats
+    # the CORP+COEP pair.
+    location ~* (^/static/wasm/|^/static/.+\.(woff2|woff|ttf)$) {
+        root /opt/samudra/web;
+        access_log off;
+        add_header Cache-Control                "public, max-age=31536000, immutable";
+        add_header Cross-Origin-Resource-Policy "same-origin";
+        add_header Cross-Origin-Embedder-Policy "require-corp";
+    }
+
     location /static/ {
         alias /opt/samudra/web/static/;
-        expires 7d;
         access_log off;
-        add_header Cache-Control "public, max-age=604800, immutable";
+        add_header Cache-Control                "no-cache";
+        add_header Cross-Origin-Resource-Policy "same-origin";
+        add_header Cross-Origin-Embedder-Policy "require-corp";
+    }
+
+    # Offline-search packs (~38-79 MB on the wire, served pre-gzipped by the app
+    # with Content-Encoding: gzip). Pass the body through UNTOUCHED.
+    #   - gzip off:        never re-compress an already-gzipped body (the browser
+    #                      would inflate only the outer layer → corrupt .db).
+    #   - never gunzip on: would inflate the body and strip Content-Encoding,
+    #                      ballooning the wire to ~206 MB and breaking the
+    #                      client's decoded-vs-encoded size math.
+    #   - proxy_buffering off + proxy_max_temp_file_size 0: stream the large body
+    #                      without spooling to a temp file (avoids truncation).
+    #   - 300s timeouts:   tolerate slow mobile clients on a big download.
+    # ALSO: do NOT add application/octet-stream to gzip_types in nginx.conf.
+    location /api/offline-packs/ {
+        proxy_pass         http://127.0.0.1:8000;
+        proxy_set_header   Host              $host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+
+        gzip               off;
+        proxy_buffering    off;
+        proxy_max_temp_file_size 0;
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
     }
 
     # Proxy everything else to uvicorn

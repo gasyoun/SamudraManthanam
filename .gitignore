@@ -12,3 +12,8 @@ __pycache__/
 .contributing_audit.txt
 web/corpus.db*
 reingest.log
+
+# Offline search packs (large binary files built by scripts/build_offline_pack.py)
+web/offline-packs/*.db
+web/offline-packs/*.db.sha256
+web/offline-packs/*.db.gz

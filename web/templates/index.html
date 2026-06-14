@@ -51,6 +51,25 @@
     .options-group { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; }
     .option-item { display: flex; align-items: center; gap: 0.5rem; }
 
+    /* Network-status pill + offline-search affordance */
+    #netStatus { margin-left: auto; font-size: 0.8rem; display: flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
+    #netStatus .dot { font-size: 0.7rem; line-height: 1; }
+    #netStatus.online  { color: #27ae60; }
+    #netStatus.offline { color: #b9770e; }
+    #netStatus a { color: #b9770e; text-decoration: underline; }
+
+    /* Offline result banner — clearly marks degraded local results */
+    .offline-banner {
+        background: #fff8e6;
+        border: 1px solid #f1d9a0;
+        border-left: 4px solid #e6a817;
+        border-radius: 6px;
+        padding: 0.6rem 0.9rem;
+        margin-bottom: 1rem;
+        font-size: 0.88rem;
+        color: #7a5a00;
+    }
+
     .sources-selector { margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem; }
     .sources-grid {
         display: grid;
@@ -184,6 +203,7 @@
                     <input type="checkbox" id="whole_word">
                     <label for="whole_word">Целое слово</label>
                 </div>
+                <div class="option-item" id="netStatus" title="Состояние сети"></div>
             </div>
 
             <div class="sources-selector">
@@ -277,5 +297,8 @@
 {% block extra_body %}
 <script src="/static/scripts/jquery-3.6.0.min.js"></script>
 <script src="/static/scripts/selection.js"></script>
-<script src="/static/search.js"></script>
+<!-- Offline-search bridge (ES module): sets window.SamudraOffline, lazy-loads
+     the sqlite-wasm worker only when the user goes offline. -->
+<script type="module" src="/static/scripts/offline-search-bridge.js?v=3e-2"></script>
+<script src="/static/search.js?v=3e-2"></script>
 {% endblock %}
