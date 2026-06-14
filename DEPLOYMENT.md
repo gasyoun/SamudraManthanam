@@ -177,6 +177,30 @@ certbot --nginx -d <YOUR_DOMAIN>
 
 Certbot rewrites the nginx config and installs an auto-renewal cron job.
 
+### Offline-search packs — do NOT touch the gzip encoding
+
+The optional offline-search feature serves large SQLite packs pre-compressed
+(`/api/offline-packs/{base,dict}.db`, sent with `Content-Encoding: gzip`). The
+shipped `deploy/samudra.nginx` already handles this with a dedicated
+`location /api/offline-packs/` block. Two rules for any nginx edit:
+
+- **Never** add `application/octet-stream` to `gzip_types`, and **never** set
+  `gunzip on;`. Either one corrupts the packs: re-gzipping double-encodes the
+  body (the browser inflates only the outer layer → invalid `.db`), and `gunzip`
+  inflates + strips `Content-Encoding`, ballooning the wire to ~206 MB and
+  breaking the client's progress math. Pass the body through untouched.
+- The `location /static/` block intentionally sets `Cross-Origin-Resource-Policy`
+  and `Cross-Origin-Embedder-Policy` headers. These are **required** — they let
+  the cross-origin-isolated `/offline-settings` page load the search worker.
+  Removing them breaks offline search (the worker fails to load).
+
+Note: the offline-pack page uses `crypto.subtle` (SHA-256 verification), which
+browsers expose only in a **secure context** — serve over HTTPS (or localhost).
+
+Packs are built with `python scripts/build_offline_pack.py` (writes
+`{type}.db`, `{type}.db.gz`, and `{type}.db.sha256` into `web/offline-packs/`).
+The gate is on the gzipped wire size.
+
 ---
 
 ## Ongoing corpus publish

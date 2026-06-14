@@ -1,0 +1,484 @@
+{% extends "_base.html" %}
+
+{% block title %}Офлайн-настройки — {{ site_name }}{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Page uses self-hosted fonts only — safe under COEP: require-corp */
+
+    .os-container { max-width: 860px; margin: 2rem auto; padding: 0 1.5rem; }
+
+    /* Section cards */
+    .os-card {
+        background: white;
+        border: 1px solid var(--line-border);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .os-card h2 {
+        margin: 0 0 1rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--text-muted);
+        font-weight: 600;
+    }
+
+    /* Storage quota bar */
+    .quota-bar-wrap {
+        height: 10px;
+        background: var(--line-border);
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0.5rem 0;
+    }
+    .quota-bar-fill {
+        height: 100%;
+        border-radius: 5px;
+        background: var(--accent);
+        transition: width 0.4s ease;
+        width: 0;
+    }
+    .quota-label { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Pack cards */
+    .pack-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding: 0.9rem 0;
+        border-top: 1px solid var(--line-border);
+    }
+    .pack-row:first-of-type { border-top: none; padding-top: 0; }
+    .pack-info { flex: 1; min-width: 180px; }
+    .pack-info strong { font-size: 0.95rem; color: var(--primary); }
+    .pack-info span  { display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .pack-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+
+    /* Progress bar */
+    .pack-progress {
+        width: 100%;
+        margin-top: 0.5rem;
+        display: none;
+    }
+    .pack-progress progress {
+        width: 100%;
+        height: 6px;
+        border-radius: 3px;
+        accent-color: var(--accent);
+    }
+    .pack-progress .prog-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 0.2rem;
+    }
+
+    /* Status chip */
+    .status-chip {
+        display: inline-block;
+        font-size: 0.72rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+    }
+    .status-chip.installed { background: #e6f9f0; color: #1a7a4a; }
+    .status-chip.missing   { background: var(--range-tag-bg); color: #7a5a00; }
+    .status-chip.loading   { background: #f0f0f0; color: #888; }
+
+    /* VFS info strip */
+    .vfs-strip {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        padding: 0.4rem 0.8rem;
+        background: var(--bg-alt);
+        border-radius: 6px;
+        margin-bottom: 1rem;
+    }
+
+    /* Cached pages list */
+    .cached-item {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.6rem 0;
+        border-top: 1px solid var(--line-border);
+        font-size: 0.9rem;
+    }
+    .cached-item:first-of-type { border-top: none; }
+    .cached-item .ci-title { flex: 1; color: var(--primary); }
+    .cached-item .ci-meta  { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; }
+
+    .os-empty {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+    }
+
+    /* Persist button */
+    .persist-row { margin-top: 0.8rem; }
+
+    @media (max-width: 480px) {
+        .os-container { padding: 0 1rem; }
+        .pack-row     { flex-direction: column; align-items: flex-start; }
+        .pack-actions { width: 100%; }
+    }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<nav class="site-navbar site-navbar-light">
+    <div class="site-navbar-inner">
+        <a class="site-brand" href="/">ПАХТАНЬЕ ОКЕАНА</a>
+        <div class="site-navlinks">
+            <a class="site-navlink-back" href="/">← Поиск</a>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="os-container">
+
+    {# ── VFS / worker status (rendered by JS) ─────────────────────────────── #}
+    <div id="vfsStrip" class="vfs-strip" style="display:none;"></div>
+
+    {# ── Storage quota ─────────────────────────────────────────────────────── #}
+    <div class="os-card">
+        <h2>Хранилище</h2>
+        <div class="quota-bar-wrap">
+            <div id="quotaFill" class="quota-bar-fill"></div>
+        </div>
+        <div id="quotaLabel" class="quota-label">Загрузка…</div>
+        <div class="persist-row">
+            <button id="persistBtn" class="btn btn-secondary" style="font-size:0.8rem;padding:0.35rem 0.8rem;">
+                Закрепить хранилище
+            </button>
+            <span id="persistStatus" style="font-size:0.78rem; color:var(--text-muted); margin-left:0.5rem;"></span>
+        </div>
+    </div>
+
+    {# ── Search packs ──────────────────────────────────────────────────────── #}
+    <div class="os-card">
+        <h2>Поиск офлайн</h2>
+
+        {# base pack #}
+        <div class="pack-row" data-pack="base">
+            <div class="pack-info">
+                <strong>Базовый корпус</strong>
+                <span>Переводы, комментарии, антологии
+                    {%- if base_pack.built %} ·
+                        {%- if base_pack.wire_mb %} {{ base_pack.wire_mb }} МБ скачать ({{ base_pack.size_mb }} МБ на устройстве)
+                        {%- else %} {{ base_pack.size_mb }} МБ{% endif %}
+                    {%- endif %}
+                    {%- if not base_pack.built %} (ещё не собран){% endif %}
+                </span>
+            </div>
+            <div class="pack-actions">
+                <span class="status-chip loading" data-chip="base">…</span>
+                {% if base_pack.built %}
+                <button class="btn btn-secondary btn-install" data-pack="base"
+                        style="display:none;">Скачать</button>
+                <button class="btn btn-secondary btn-remove"  data-pack="base"
+                        style="display:none;color:#c0392b;border-color:#c0392b;">Удалить</button>
+                {% else %}
+                <span style="font-size:0.78rem;color:var(--text-muted);">Пак не собран</span>
+                {% endif %}
+            </div>
+            <div class="pack-progress" id="prog-base">
+                <progress value="0" max="100"></progress>
+                <div class="prog-label" id="prog-base-label"></div>
+            </div>
+        </div>
+
+        {# dict add-on #}
+        <div class="pack-row" data-pack="dict">
+            <div class="pack-info">
+                <strong>Словари (MW + Apte)</strong>
+                <span>Дополнение к базовому корпусу
+                    {%- if dict_pack.built %} ·
+                        {%- if dict_pack.wire_mb %} {{ dict_pack.wire_mb }} МБ скачать ({{ dict_pack.size_mb }} МБ на устройстве)
+                        {%- else %} {{ dict_pack.size_mb }} МБ{% endif %}
+                    {%- endif %}
+                    {%- if not dict_pack.built %} (ещё не собран){% endif %}
+                </span>
+            </div>
+            <div class="pack-actions">
+                <span class="status-chip loading" data-chip="dict">…</span>
+                {% if dict_pack.built %}
+                <button class="btn btn-secondary btn-install" data-pack="dict"
+                        style="display:none;">Скачать</button>
+                <button class="btn btn-secondary btn-remove"  data-pack="dict"
+                        style="display:none;color:#c0392b;border-color:#c0392b;">Удалить</button>
+                {% else %}
+                <span style="font-size:0.78rem;color:var(--text-muted);">Пак не собран</span>
+                {% endif %}
+            </div>
+            <div class="pack-progress" id="prog-dict">
+                <progress value="0" max="100"></progress>
+                <div class="prog-label" id="prog-dict-label"></div>
+            </div>
+        </div>
+    </div>
+
+    {# ── Cached reader pages ───────────────────────────────────────────────── #}
+    <div class="os-card">
+        <h2>Читаемые тексты</h2>
+        <div id="cachedPagesList">
+            <p class="os-empty">Загрузка…</p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script type="module">
+/**
+ * offline_settings.html module script.
+ *
+ * This page carries COEP: require-corp, which means:
+ *   - SharedArrayBuffer is available.
+ *   - The sqlite-wasm sync OPFS VFS can be used (fastest path).
+ *   - All resources MUST be same-origin (no CDN links here).
+ *
+ * Import paths are absolute so they work regardless of the page's URL.
+ */
+import { init as initReader, listOffline, removeOffline,
+         persistRequested, getQuota } from '/static/scripts/offline.js?v=3e-2';
+import { init as initSearch, hasPack, checkVersion,
+         installPack, removePack, status as searchStatus }
+    from '/static/scripts/search-offline.js?v=3e-2';
+
+// ── Utilities ──────────────────────────────────────────────────────────────
+
+function fmt(bytes) {
+    if (bytes < 1024) return bytes + ' Б';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' КБ';
+    return (bytes / 1048576).toFixed(1) + ' МБ';
+}
+
+function relTime(ts) {
+    const diff = Math.round((Date.now() - ts) / 1000);
+    if (diff < 60) return 'только что';
+    if (diff < 3600) return Math.floor(diff / 60) + ' мин назад';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' ч назад';
+    return Math.floor(diff / 86400) + ' д назад';
+}
+
+function setVersionNote(packType, text, isUpdate) {
+    const row = document.querySelector(`.pack-row[data-pack="${packType}"] .pack-info span`);
+    if (!row) return;
+    let note = row.querySelector('.pack-version-note');
+    if (!note) {
+        note = document.createElement('em');
+        note.className = 'pack-version-note';
+        note.style.display = 'block';
+        note.style.marginTop = '0.2rem';
+        row.appendChild(note);
+    }
+    note.textContent = text;
+    note.style.color = isUpdate ? '#c0392b' : 'var(--text-muted)';
+    note.style.fontStyle = isUpdate ? 'normal' : 'italic';
+    note.style.fontWeight = isUpdate ? '600' : 'normal';
+}
+
+// ── Quota ──────────────────────────────────────────────────────────────────
+
+async function renderQuota() {
+    const { usage, quota, percent } = await getQuota();
+    document.getElementById('quotaFill').style.width = percent + '%';
+    document.getElementById('quotaLabel').textContent =
+        quota ? `${fmt(usage)} из ${fmt(quota)} (${percent}%)` : 'Данные недоступны';
+}
+
+// ── Pack state ─────────────────────────────────────────────────────────────
+
+function setChip(packType, state) {
+    const chip = document.querySelector(`[data-chip="${packType}"]`);
+    if (!chip) return;
+    const labels = { installed: '✓ Установлен', missing: 'Не установлен', loading: '…' };
+    chip.textContent = labels[state] || state;
+    chip.className = 'status-chip ' + state;
+}
+
+function showPackButtons(packType, installed) {
+    const installBtn = document.querySelector(`.btn-install[data-pack="${packType}"]`);
+    const removeBtn  = document.querySelector(`.btn-remove[data-pack="${packType}"]`);
+    if (installBtn) installBtn.style.display = installed ? 'none' : '';
+    if (removeBtn)  removeBtn.style.display  = installed ? '' : 'none';
+}
+
+async function refreshPackState(packType) {
+    setChip(packType, 'loading');
+    let installed = false;
+    try {
+        installed = await hasPack(packType);
+    } catch (_) { installed = false; }
+
+    setChip(packType, installed ? 'installed' : 'missing');
+    showPackButtons(packType, installed);
+
+    // Version-sync: compare the installed pack's corpus_version with the
+    // server's current version. Non-blocking; a mismatch is shown as a hint.
+    if (installed) {
+        try {
+            const { installed: have, latest, updateAvailable } = await checkVersion(packType);
+            if (updateAvailable) {
+                setVersionNote(packType, `Доступно обновление: ${have} → ${latest}. Удалите и скачайте заново.`, true);
+            } else if (have) {
+                setVersionNote(packType, `Версия корпуса: ${have}`, false);
+            }
+        } catch (_) { /* ignore — version check is best-effort */ }
+    }
+}
+
+// ── Install / remove ───────────────────────────────────────────────────────
+
+async function handleInstall(packType) {
+    const progWrap  = document.getElementById(`prog-${packType}`);
+    const progBar   = progWrap.querySelector('progress');
+    const progLabel = document.getElementById(`prog-${packType}-label`);
+    const installBtn = document.querySelector(`.btn-install[data-pack="${packType}"]`);
+
+    installBtn.disabled = true;
+    progWrap.style.display = 'block';
+    progBar.value = 0;
+    progLabel.textContent = 'Подготовка…';
+
+    try {
+        const result = await installPack(packType, (pct, received) => {
+            if (pct < 0) {
+                // Indeterminate (server sent no Content-Length) — show bytes.
+                progBar.removeAttribute('value');
+                progLabel.textContent = `Загрузка… ${fmt(received)}`;
+            } else {
+                progBar.value = pct;
+                progLabel.textContent = `Загрузка… ${pct}%`;
+            }
+        });
+        progBar.value = 100;
+        progLabel.textContent = result.persisted
+            ? `Готово · ${fmt(result.byteLength)}`
+            : `Готово (только в памяти — для сохранения нужна кросс-Origin изоляция)`;
+
+        setChip(packType, 'installed');
+        showPackButtons(packType, true);
+    } catch (err) {
+        progLabel.textContent = 'Ошибка: ' + err.message;
+        installBtn.disabled = false;
+    }
+
+    await renderQuota();
+}
+
+async function handleRemove(packType) {
+    const removeBtn = document.querySelector(`.btn-remove[data-pack="${packType}"]`);
+    removeBtn.disabled = true;
+    try {
+        await removePack(packType);
+        setChip(packType, 'missing');
+        showPackButtons(packType, false);
+    } catch (err) {
+        alert('Ошибка при удалении: ' + err.message);
+        removeBtn.disabled = false;
+    }
+    const progWrap = document.getElementById(`prog-${packType}`);
+    if (progWrap) progWrap.style.display = 'none';
+    await renderQuota();
+}
+
+// ── Cached pages list ──────────────────────────────────────────────────────
+
+async function renderCachedPages() {
+    const container = document.getElementById('cachedPagesList');
+    const pages = await listOffline();
+
+    if (!pages.length) {
+        container.innerHTML =
+            '<p class="os-empty">Нет кешированных текстов. ' +
+            'Нажмите «☁ Офлайн» на странице источника, чтобы сохранить текст.</p>';
+        return;
+    }
+
+    container.innerHTML = pages.map(p => `
+        <div class="cached-item" data-slug="${p.slug}">
+            <div class="ci-title">
+                <a href="${p.url}">${p.slug}</a>
+            </div>
+            <span class="ci-meta">${fmt(p.size)} · ${relTime(p.cachedAt)}</span>
+            <button class="btn btn-ghost ci-remove" data-slug="${p.slug}"
+                    style="color:#c0392b;border-color:#c0392b;">Удалить</button>
+        </div>
+    `).join('');
+
+    container.querySelectorAll('.ci-remove').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            btn.disabled = true;
+            try {
+                await removeOffline(btn.dataset.slug);
+                btn.closest('.cached-item').remove();
+                const remaining = container.querySelectorAll('.cached-item');
+                if (!remaining.length) await renderCachedPages();
+            } catch (e) {
+                btn.disabled = false;
+            }
+        });
+    });
+}
+
+// ── Persist button ─────────────────────────────────────────────────────────
+
+document.getElementById('persistBtn').addEventListener('click', async () => {
+    const granted = await persistRequested();
+    document.getElementById('persistStatus').textContent =
+        granted ? '✓ Хранилище закреплено' : 'Не удалось закрепить (требуется разрешение браузера)';
+});
+
+// ── Main ───────────────────────────────────────────────────────────────────
+
+(async () => {
+    // Start both subsystems in parallel
+    const [searchResult] = await Promise.allSettled([
+        initSearch(),
+        initReader(),
+    ]);
+
+    // VFS info strip
+    const vfsStrip = document.getElementById('vfsStrip');
+    if (searchResult.status === 'fulfilled') {
+        const { vfs } = searchResult.value;
+        const vfsLabels = {
+            'opfs-sahpool': '✓ Постоянное хранилище (OPFS SAH Pool)',
+            'opfs-sync':  '⚡ OPFS синхронный (наилучшая производительность)',
+            'opfs-async': '✓ OPFS асинхронный',
+            'memory':     '⚠ Только в памяти — пак не сохраняется между сессиями',
+        };
+        vfsStrip.textContent = 'Движок поиска: ' + (vfsLabels[vfs] || vfs || 'инициализируется');
+        vfsStrip.style.display = 'block';
+    } else {
+        vfsStrip.textContent = 'Движок поиска недоступен: ' + searchResult.reason?.message;
+        vfsStrip.style.display = 'block';
+    }
+
+    // Pack states
+    await Promise.all(['base', 'dict'].map(refreshPackState));
+
+    // Install / remove buttons
+    document.querySelectorAll('.btn-install').forEach(btn => {
+        btn.addEventListener('click', () => handleInstall(btn.dataset.pack));
+    });
+    document.querySelectorAll('.btn-remove').forEach(btn => {
+        btn.addEventListener('click', () => handleRemove(btn.dataset.pack));
+    });
+
+    // Cached reader pages
+    await renderCachedPages();
+
+    // Storage quota
+    await renderQuota();
+})();
+</script>
+{% endblock %}

@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     SYSTEMA_SANSCRITICUM_URL: str = ""
     SITE_DESCRIPTION: str = "Поисковая система по санскрито-русскому параллельному корпусу: «Бхагавадгита», «Махабхарата», упанишады и другие тексты."
 
+    # Offline search packs (built by scripts/build_offline_pack.py)
+    OFFLINE_PACKS_DIR: str = "offline-packs"
+
     # Admin
     ADMIN_SECRET_KEY: str = ""
 
