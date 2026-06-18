@@ -71,6 +71,19 @@ DESC = re.compile(r'name="description" content="([^"]*)"')
 DOC = re.compile(r'href="(/[a-z0-9-]+/[a-z0-9-]+/[a-z0-9-]+/d/doc\d+\.html)"')
 TITLE = re.compile(r'<title>([^<]*)</title>')
 
+# Soft-200 detector: Cloudflare / interstitial / "verify you are human" pages are
+# served WITH status 200 but are not content. Catch them so a block is never cached
+# as a chapter (and never silently skipped by the per-page resume check).
+BLOCK_SIG = re.compile(
+    r'cf-browser-verification|challenge-platform|/cdn-cgi/challenge|'
+    r'Just a moment\.\.\.|Attention Required|Checking your browser|'
+    r'Enable JavaScript and cookies to continue', re.I)
+
+
+def is_block_page(html):
+    """True if an HTTP-200 body looks like a bot-block/challenge rather than content."""
+    return not html or len(html) < 200 or bool(BLOCK_SIG.search(html[:4000]))
+
 # meta-description language/kind markers
 EDITION = re.compile(
     r'\bThe\s+(Sanskrit|Pali|Pāli|Prakrit|Tibetan|Tamil|Telugu|Hindi|Bengali|'
@@ -357,7 +370,7 @@ async def stage_c(workers, a):
             return []                                  # already fully downloaded
         async with sem:
             html = await fetch(client, r["url"])       # landing page -> full doc list
-        if not html:
+        if is_block_page(html):                        # blocked/empty -> leave for retry
             return []
         return [(slug, BASE + d) for d in sorted(set(DOC.findall(html)))]
 
@@ -380,11 +393,12 @@ async def stage_c(workers, a):
         async def grab(slug, url, f):
             async with sem:
                 html = await fetch(client, url)
-            if html is None:
+            if is_block_page(html):                    # don't cache a block/empty page
                 async with lock: failed[0] += 1
                 return
             f.parent.mkdir(parents=True, exist_ok=True)
-            f.write_text(html, encoding="utf-8")
+            # newline="" so raw HTML bytes are preserved verbatim (no CRLF translation)
+            f.write_text(html, encoding="utf-8", newline="")
             async with lock:
                 n[0] += 1
                 if n[0] % 100 == 0:
