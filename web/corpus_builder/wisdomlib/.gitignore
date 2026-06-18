@@ -1,2 +1,5 @@
 # Stage C downloads raw chapter HTML here — bulky, regenerable, not committed.
 content/
+
+# Throwaway operational driver (gentle re-block-aware retry); not part of the API.
+_gentle_retry.py
