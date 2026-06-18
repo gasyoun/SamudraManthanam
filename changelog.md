@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file.
 
+## [wisdomlib-0.0.1] - 2026-06-18
+
+First tagged release of the wisdomlib catalog crawler (a standalone
+corpus-acquisition tool under `web/corpus_builder/wisdomlib/`; versioned
+independently of the main platform, which is at 1.x). Tag: `wisdomlib-v0.0.1`.
+
+### Added
+- **wisdomlib catalog crawler** (`web/corpus_builder/wisdomlib/`, branch
+  `offline-search`) — async indexer of wisdomlib.org as a candidate corpus
+  source. `crawl.py stageA` enumerates 848 non-Marathi entries
+  (`entries_index.jsonl`); `stageB` enriches each landing page into
+  `books_full.jsonl` (source language, English-translation flag, chapter
+  count); `report` writes `CATALOG.md` (848 entries, 122.7M words, 97,263
+  chapters, with breakdowns, top-25, and a fetch-failures table). `stageC`
+  downloads selected books' chapter pages (`/d/docN.html`) into
+  `content/<slug>/` (gitignored), resumable per page and per book.
+- **Shared selection filters** for `stageB`/`stageC`:
+  `--section/--ctype/--lang/--slug/--english/--pali/--min-words/--limit`.
+- **`watch.py`** — Stage C progress watcher (live bar, pages/books done, rate,
+  ETA, stall warning, `--once`, `--supervise`), driven by a run manifest;
+  mirrors the NWS scraper's watcher.
+- **Politeness controls** — `--delay` (jittered, held inside the worker slot),
+  browser-like UA + headers, HTTP/2 (graceful HTTP/1.1 fallback when `h2`
+  is absent), and `Retry-After` handling on 429/503.
+
+### Fixed
+- **Block-page guard** — `is_block_page()` rejects soft-200 Cloudflare/
+  challenge pages so a block is never cached as chapter content nor
+  permanently skipped by the per-page resume check.
+- **Byte-faithful archive** — chapter HTML written with `newline=""` so Windows
+  newline translation no longer rewrites source CRLF.
+
+### Notes
+- wisdomlib has no stated bulk-reuse licence; scraped content is gitignored and
+  provisional. Stage C is currently blocked by a Cloudflare IP block (the
+  catalog build completed before the block); see `.ai_state.md` Dev Notes
+  2026-06-18.
+
 ## [1.0.0] - 2026-06-13
 
 ### Added
