@@ -388,6 +388,14 @@ async def stage_c(workers, a):
             print(f"  (dry-run; {len(pending)} total, nothing written)")
             return
 
+        # manifest so watch.py knows the denominator + can relaunch this selection
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "_manifest.json").write_text(json.dumps({
+            "ts": time.time(), "argv": sys.argv[1:],
+            "books": [[r["slug"], r.get("chapter_count") or 0] for r in chosen],
+            "total_chapters": sum(r.get("chapter_count") or 0 for r in chosen),
+        }), encoding="utf-8")
+
         n = [0]; failed = [0]
 
         async def grab(slug, url, f):
