@@ -50,6 +50,12 @@ from pathlib import Path
 
 import httpx
 
+try:                       # HTTP/2 needs the optional h2 package; fall back if absent
+    import h2  # noqa: F401
+    HTTP2 = True
+except ImportError:
+    HTTP2 = False
+
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
@@ -162,7 +168,7 @@ async def fetch(client, url, tries=4):
 async def stage_a(workers):
     sem = asyncio.Semaphore(workers)
     books = {}
-    async with httpx.AsyncClient(headers=HEADERS, http2=True) as client:
+    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
         async def one(sec):
             async with sem:
                 page = await fetch(client, f"{BASE}/{sec}")
@@ -247,7 +253,7 @@ async def stage_b(workers, a):
     lock = asyncio.Lock()
     n = [0]
     out = out_p.open("a", encoding="utf-8")
-    async with httpx.AsyncClient(headers=HEADERS, http2=True) as client:
+    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
         async def one(e):
             async with sem:
                 html = await fetch(client, e["url"])
@@ -402,7 +408,7 @@ async def stage_c(workers, a):
             return []
         return [(slug, BASE + d) for d in sorted(set(DOC.findall(html)))]
 
-    async with httpx.AsyncClient(headers=HEADERS, http2=True) as client:
+    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
         lists = await asyncio.gather(*(docs_for(client, r) for r in chosen))
         pending = []
         for slug, url in (t for sub in lists for t in sub):
