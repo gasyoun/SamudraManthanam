@@ -1,0 +1,93 @@
+name: wisdomlib gentle crawl
+
+# Autonomous Stage C content download for the wisdomlib crawler, run on a cron
+# WITHOUT needing a local machine. Each scheduled run does ONE bounded, gentle
+# pass; the cron interval itself provides the polite spacing between passes, and
+# the download is resumable across runs via the cache (no in-process sleeping,
+# so we don't burn Actions minutes waiting).
+#
+# IMPORTANT CAVEATS
+#  - GitHub *Pages* cannot do this (static hosting, no server/cron). Actions can.
+#  - schedule/workflow_dispatch only fire for the copy of this file on the
+#    DEFAULT branch (main). The crawler code lives on `offline-search`, so the
+#    job checks that branch out explicitly. This file must be on main for the
+#    cron to actually trigger.
+#  - Runners use GitHub/Azure datacenter IPs. Cloudflare frequently blocks those
+#    ASNs, so Stage C may get 403'd here too — but that's a *different* egress IP
+#    than your laptop, so it may equally sail past the IP-volume block. The
+#    is_block_page() guard means a blocked run is a clean no-op (nothing cached).
+#  - Output is uploaded as an artifact + kept in cache. It is NOT committed:
+#    wisdomlib has no bulk-reuse licence (content/ stays unpublished).
+
+on:
+  schedule:
+    - cron: "17 * * * *"          # hourly at :17 (cron is best-effort, may lag)
+  workflow_dispatch:
+    inputs:
+      filters:
+        description: "stageC selection filters"
+        default: "--lang sanskrit"
+      workers:
+        description: "concurrent workers"
+        default: "1"
+      delay:
+        description: "per-request delay seconds (jittered)"
+        default: "5"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wisdomlib-crawl            # never overlap two crawl runs
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30             # bound each pass (Actions hard-caps at 6h)
+    defaults:
+      run:
+        working-directory: web/corpus_builder/wisdomlib
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: offline-search       # the crawler lives here, not on master
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install "httpx[http2]"
+
+      # Restore previously downloaded chapters so each run resumes. The unique
+      # run-id key always writes a fresh cache; restore-keys pulls the latest.
+      - name: Restore content cache
+        uses: actions/cache@v4
+        with:
+          path: web/corpus_builder/wisdomlib/content
+          key: wisdomlib-content-${{ github.run_id }}
+          restore-keys: wisdomlib-content-
+
+      - name: Gentle Stage C pass
+        run: |
+          python crawl.py stageC \
+            ${{ github.event.inputs.filters || '--lang sanskrit' }} \
+            --workers ${{ github.event.inputs.workers || '1' }} \
+            --delay ${{ github.event.inputs.delay || '5' }}
+          python crawl.py report || true
+
+      - name: Show progress
+        if: always()
+        run: |
+          echo "downloaded chapter files:"
+          find content -name 'doc*.html' 2>/dev/null | wc -l
+
+      - name: Upload content artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wisdomlib-content
+          path: web/corpus_builder/wisdomlib/content
+          retention-days: 30
+          if-no-files-found: ignore
