@@ -4,6 +4,7 @@
 Stage A: enumerate every non-Marathi entry from topic-section listing pages.
 Stage B: fetch each entry's landing page concurrently to enrich it with
          language / translation status / chapter list.
+Stage C: download the actual chapter pages (/d/docN.html) of selected books.
 
 Async + configurable worker pool (httpx). Polite, retrying, resumable.
 robots.txt respected: only section pages and /book|essay|... + /d/docN.html
@@ -14,12 +15,26 @@ Usage:
     python crawl.py stageA                 # build entries_index.jsonl
     python crawl.py stageB [--workers N]    # enrich -> books_full.jsonl (resumable)
     python crawl.py report                  # summarise books_full.jsonl -> CATALOG.md
-    python crawl.py all   [--workers N]     # stageA + stageB + report
+    python crawl.py stageC [filters]        # download chapter pages -> content/<slug>/
+    python crawl.py all   [--workers N]     # stageA + stageB + report (NOT stageC)
+
+Selection filters (apply to stageB's universe and stageC; combine with AND):
+    --section S    only entries in section S        (repeatable / comma-list)
+    --ctype T      only this content type           (book|essay|article|...)
+    --lang L       only this source_lang            (books_full only; sanskrit|pali|...)
+    --slug S       only these explicit slugs        (repeatable / comma-list)
+    --english      only entries with an English translation   (books_full only)
+    --pali / --no-pali   keep / drop Pali entries              (books_full only)
+    --min-words N  only entries of >= N words
+    --limit N      cap the selection at N entries
+    --out DIR      stageC output dir (default: content)
+    --dry-run      stageC: list what would be fetched, fetch nothing
 
 Outputs (in this dir):
     entries_index.jsonl   master list from Stage A
     books_full.jsonl      enriched records from Stage B (one per line, resumable)
     CATALOG.md            human-readable summary built by `report`
+    content/<slug>/*.html raw chapter pages from Stage C (gitignored)
 """
 import re, sys, json, html as ihtml, asyncio, argparse, time
 from collections import Counter
@@ -172,11 +187,12 @@ def classify(rec, html):
     )
 
 
-async def stage_b(workers):
+async def stage_b(workers, a):
     src = HERE / "entries_index.jsonl"
     if not src.exists():
         print("Run stageA first."); return
     entries = [json.loads(l) for l in src.open(encoding="utf-8")]
+    entries = select(entries, a)                       # honour shared CLI filters
     out_p = HERE / "books_full.jsonl"
     done = set()
     if out_p.exists():
@@ -284,18 +300,125 @@ def make_report():
     print(f"report: {n} entries -> {p.name}")
 
 
+def _csv(vals):
+    """Flatten an argparse append-list, splitting comma-lists -> set of tokens."""
+    out = []
+    for v in vals or []:
+        out += [x.strip() for x in v.split(",") if x.strip()]
+    return set(out)
+
+
+def select(records, a):
+    """Apply the shared CLI filters (AND-combined) to a list of records.
+    Missing fields fail the corresponding filter, so lang/english/pali only
+    select meaningfully on books_full.jsonl records (Stage C), not Stage B's
+    leaner entries_index records."""
+    secs, ctypes, langs, slugs = _csv(a.section), _csv(a.ctype), _csv(a.lang), _csv(a.slug)
+    out = []
+    for r in records:
+        if slugs and r.get("slug") not in slugs: continue
+        if secs and not (set(r.get("sections", [])) & secs): continue
+        if ctypes and r.get("ctype") not in ctypes: continue
+        if langs and r.get("source_lang") not in langs: continue
+        if a.english and not r.get("has_english"): continue
+        if a.pali is True and not r.get("is_pali"): continue
+        if a.pali is False and r.get("is_pali"): continue
+        if a.min_words and (r.get("words") or 0) < a.min_words: continue
+        out.append(r)
+    if a.limit:
+        out = out[:a.limit]
+    return out
+
+
+async def stage_c(workers, a):
+    """Download the chapter pages of the selected books into content/<slug>/.
+    Resumable at page granularity: a book whose folder already holds >= its
+    chapter_count docs is skipped without re-fetching the landing page, and any
+    individual page already on disk is never re-fetched."""
+    src = HERE / "books_full.jsonl"
+    if not src.exists():
+        print("Run stageB first."); return
+    recs = [json.loads(l) for l in src.open(encoding="utf-8") if l.strip()]
+    recs = [r for r in recs if not r.get("fetch_failed")]
+    chosen = select(recs, a)
+    out_dir = HERE / a.out
+    print(f"Stage C: {len(chosen)} of {len(recs)} books selected -> {out_dir.name}/, workers={workers}")
+    if not chosen:
+        return
+
+    sem = asyncio.Semaphore(workers)
+    lock = asyncio.Lock()
+
+    async def docs_for(client, r):
+        slug = r["slug"]
+        bdir = out_dir / slug
+        have = len(list(bdir.glob("doc*.html"))) if bdir.exists() else 0
+        if r.get("chapter_count") and have >= r["chapter_count"]:
+            return []                                  # already fully downloaded
+        async with sem:
+            html = await fetch(client, r["url"])       # landing page -> full doc list
+        if not html:
+            return []
+        return [(slug, BASE + d) for d in sorted(set(DOC.findall(html)))]
+
+    async with httpx.AsyncClient(headers={"User-Agent": UA}) as client:
+        lists = await asyncio.gather(*(docs_for(client, r) for r in chosen))
+        pending = []
+        for slug, url in (t for sub in lists for t in sub):
+            f = out_dir / slug / url.rsplit("/", 1)[-1]
+            if not f.exists():
+                pending.append((slug, url, f))
+        print(f"  {len(pending)} chapter pages to fetch")
+        if a.dry_run:
+            for _, url, _f in pending[:50]:
+                print("   ", url)
+            print(f"  (dry-run; {len(pending)} total, nothing written)")
+            return
+
+        n = [0]; failed = [0]
+
+        async def grab(slug, url, f):
+            async with sem:
+                html = await fetch(client, url)
+            if html is None:
+                async with lock: failed[0] += 1
+                return
+            f.parent.mkdir(parents=True, exist_ok=True)
+            f.write_text(html, encoding="utf-8")
+            async with lock:
+                n[0] += 1
+                if n[0] % 100 == 0:
+                    print(f"  {n[0]}/{len(pending)}")
+        await asyncio.gather(*(grab(s, u, f) for s, u, f in pending))
+        print(f"Stage C done: {n[0]} pages written, {failed[0]} failed -> {out_dir}/")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", choices=["stageA", "stageB", "report", "all"])
+    ap.add_argument("stage", choices=["stageA", "stageB", "stageC", "report", "all"])
     ap.add_argument("--workers", type=int, default=16)
+    # shared selection filters (used by stageB and stageC)
+    ap.add_argument("--section", action="append", help="section(s); repeatable or comma-list")
+    ap.add_argument("--ctype", action="append", help="content type(s)")
+    ap.add_argument("--lang", action="append", help="source_lang(s) (books_full only)")
+    ap.add_argument("--slug", action="append", help="explicit slug(s)")
+    ap.add_argument("--english", action="store_true", help="only entries with English translation")
+    ap.add_argument("--pali", dest="pali", action="store_true", default=None, help="keep only Pali")
+    ap.add_argument("--no-pali", dest="pali", action="store_false", help="drop Pali")
+    ap.add_argument("--min-words", type=int, default=0)
+    ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--out", default="content", help="stageC output dir")
+    ap.add_argument("--dry-run", action="store_true", help="stageC: list, don't fetch")
     a = ap.parse_args()
     t0 = time.time()
     if a.stage in ("stageA", "all"):
         asyncio.run(stage_a(a.workers))
     if a.stage in ("stageB", "all"):
-        asyncio.run(stage_b(a.workers))
+        asyncio.run(stage_b(a.workers, a))
     if a.stage in ("report", "all"):
         make_report()
+    if a.stage == "stageC":
+        asyncio.run(stage_c(a.workers, a))
     print(f"elapsed {time.time()-t0:.1f}s")
 
 
