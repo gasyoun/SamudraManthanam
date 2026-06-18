@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+- **wisdomlib `README.md`** — usage, pipeline table, selection filters,
+  politeness/rate-limiting, the Cloudflare situation, and the watcher.
+
+### Changed
+- **Stage C content download validated end-to-end** — with a clear IP, a single
+  book downloads correctly (38/38 Skanda Purāṇa chapters, 0 block pages cached).
+
+### Notes
+- **Cloudflare is an IP-volume limit, not a burst limit.** A broader Stage C run
+  re-triggers a 403 block even at ~2 req/s; the trigger is cumulative requests
+  per IP on a sensitised address, not concurrency. Not a JS/Turnstile challenge
+  and not a header heuristic — a browser engine would not help from a blocked IP.
+  Mitigation: long cooldowns + `--workers 1 --delay 5` in small resumable
+  sessions, or a different egress IP. An (gitignored) `_gentle_retry.py` driver
+  automates cooldown → book-by-book pacing with a re-block circuit breaker.
+
 ## [wisdomlib-0.0.1] - 2026-06-18
 
 First tagged release of the wisdomlib catalog crawler (a standalone
