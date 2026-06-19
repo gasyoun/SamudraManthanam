@@ -220,7 +220,7 @@ This is the audit trail (Cologne `printchange.txt` discipline) and the review su
 ## 10. Acceptance criteria
 
 - [ ] All 148 sources convert; every non-empty source line maps to ≥ 1 JSONL record.
-- [ ] All seven validation gates (§7) green in CI.
+- [ ] All eight validation gates (§7) green in CI.
 - [ ] `corpus.db` build switched to read JSONL; golden queries identical pre/post.
 - [ ] Sanskrit, Russian, and each commentary block independently addressable and
       grouped; alignment group key present on every verse record.

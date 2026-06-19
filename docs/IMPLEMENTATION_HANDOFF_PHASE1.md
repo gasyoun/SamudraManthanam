@@ -13,7 +13,7 @@ don't silently deviate.
 
 1. [LINE_ID_SCHEME.md](LINE_ID_SCHEME.md) — the `{work}:{passage}` ID contract. **FROZEN.**
 2. [CONVERTER_SPEC.md](CONVERTER_SPEC.md) — HTML→JSONL converter: schema, 4 parse paths,
-   commentary, SLP1/accents, 7 gates.
+   commentary, SLP1/accents, 8 gates.
 3. [ALIGNMENT_SPEC.md](ALIGNMENT_SPEC.md) — alignment groups (extraction not inference),
    cardinality, gold oracle, 5 gates.
 4. [TAG_CENSUS.md](TAG_CENSUS.md) / `.json` — the measured corpus inventory the specs cite.
@@ -81,6 +81,8 @@ parse path). Output: `web/corpus_builder/jsonl/<slug>.jsonl`.
 - Compute SLP1 for every `#sa` via `sanscript.transliterate(text, IAST, SLP1)`; store
   accented + stripped forms (CONVERTER_SPEC §5).
 - Write `web/corpus_builder/conversion_report.json` (CONVERTER_SPEC §8).
+- Regenerate the committed canonical corpus with:
+  `python web/corpus_builder/html_to_canonical.py --corpus-path Index/lib/x86_64-win64 --output-dir web/corpus_builder/jsonl --report-path web/corpus_builder/conversion_report.json`.
 - **Gate:** CONVERTER_SPEC §7 gates 1 (ID round-trip stability), 3 (range coverage on the
   53 range files), 4 (commentary subtree coverage), 5 (uniqueness + dup suffixes),
   6 (commentary linkage).
@@ -103,9 +105,11 @@ Create `web/tests/fixtures/alignment_gold.jsonl` (~25 hand-verified groups, ALIG
 
 ### Step 4 — rebase ingest onto JSONL
 
-Switch `ingest.py` (or a new `ingest_jsonl.py` invoked by `build-web-db.ps1`) to read
-`corpus_builder/jsonl/*.jsonl` instead of parsing HTML directly. Add the `canonical_id`
-column + unique index on `corpus_lines` (LINE_ID_SCHEME §6); carry IDs from JSONL.
+Switch `ingest.py` to read `corpus_builder/jsonl/*.jsonl` instead of parsing HTML directly.
+Normal ingest is strict JSONL-only: a missing JSONL file is a build error, not a silent
+HTML fallback. Carry IDs from JSONL into `canonical_id`; while `corpus_lines` remains an
+FTS5 virtual table, enforce `(source_id, canonical_id)` uniqueness with post-ingest
+validation rather than a database unique index.
 
 - **Gate:** CONVERTER_SPEC §7 gate 6 + ALIGNMENT_SPEC §7 gate 4/5 — **golden-query suite
   returns identical hits** from a JSONL-built DB vs the current HTML-built DB. This is the
@@ -123,7 +127,7 @@ divergence** is.
 ## 4. Definition of done
 
 - [ ] All 148 sources convert; every non-empty source line → ≥ 1 JSONL record; no silent drops.
-- [ ] Every CONVERTER_SPEC §7 gate (7) and ALIGNMENT_SPEC §7 gate (5) green in CI.
+- [ ] Every CONVERTER_SPEC §7 gate (8) and ALIGNMENT_SPEC §7 gate (5) green in CI.
 - [ ] `corpus.db` builds from JSONL; `pytest -m "not corpus"` and the golden-query suite
       pass with **identical** results to the pre-change HTML-built DB.
 - [ ] LINE_ID_SCHEME §9 + CONVERTER_SPEC §10 + ALIGNMENT_SPEC §10 acceptance lists satisfied.

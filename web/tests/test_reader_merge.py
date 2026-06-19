@@ -99,8 +99,8 @@ def test_merge_two_passages_ordering():
     assert result[1]["link_id"] == "1.2"
 
 
-def test_merge_html_fallback_passthrough():
-    """Rows without '#' in canonical_id (HTML-parse fallback) pass through as-is."""
+def test_merge_legacy_row_passthrough():
+    """Rows without '#' in canonical_id pass through as-is."""
     rows = [
         _make_row(1, "1.1", "", "<div class='citation_block'>legacy html</div>", "text"),
         _make_row(2, "1.2", "", "<div class='citation_block'>legacy 2</div>", "text2"),
