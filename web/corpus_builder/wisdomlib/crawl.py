@@ -18,6 +18,14 @@ Usage:
     python crawl.py stageC [filters]        # download chapter pages -> content/<slug>/
     python crawl.py all   [--workers N]     # stageA + stageB + report (NOT stageC)
 
+Politeness / rate limiting (any stage):
+    --workers N    concurrent requests (default 16; use 2-4 if Cloudflare pushes back)
+    --delay S      sleep S s (jittered) after each request, held inside the worker
+                   slot -> effective rate ~= workers/S req/s. e.g. --workers 2 --delay 1
+The client uses a browser-like UA + headers and HTTP/2, and honours Retry-After on
+429/503. None of this defeats an interactive JS/Turnstile challenge (httpx runs no
+JS); it only eases heuristic gating. If challenges persist, slow down and wait.
+
 Selection filters (apply to stageB's universe and stageC; combine with AND):
     --section S    only entries in section S        (repeatable / comma-list)
     --ctype T      only this content type           (book|essay|article|...)
@@ -36,18 +44,37 @@ Outputs (in this dir):
     CATALOG.md            human-readable summary built by `report`
     content/<slug>/*.html raw chapter pages from Stage C (gitignored)
 """
-import re, sys, json, html as ihtml, asyncio, argparse, time
+import re, sys, json, html as ihtml, asyncio, argparse, time, random
 from collections import Counter
 from pathlib import Path
 
 import httpx
+
+try:                       # HTTP/2 needs the optional h2 package; fall back if absent
+    import h2  # noqa: F401
+    HTTP2 = True
+except ImportError:
+    HTTP2 = False
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 HERE = Path(__file__).resolve().parent
 BASE = "https://www.wisdomlib.org"
-UA = "Mozilla/5.0 (compatible; samskrtam-corpus-index/1.0; +https://samskrtam.ru)"
+# Browser-like UA + headers reduce Cloudflare bot-heuristic friction (a non-browser
+# UA / bare header set is an easy bot tell). This does NOT defeat a JS/Turnstile
+# challenge — httpx runs no JavaScript — it only helps with heuristic gating.
+UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+HEADERS = {
+    "User-Agent": UA,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,"
+              "image/webp,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Upgrade-Insecure-Requests": "1",
+}
+DELAY = 0.0   # seconds between requests per worker (set from --delay); jittered +0-30%
 
 SKIP_SECTIONS = {"marathi", "books", "gallery", "shop", "glossary"}
 SECTIONS = [
@@ -70,6 +97,19 @@ H3 = re.compile(r'<h3>([^<]+)</h3>')
 DESC = re.compile(r'name="description" content="([^"]*)"')
 DOC = re.compile(r'href="(/[a-z0-9-]+/[a-z0-9-]+/[a-z0-9-]+/d/doc\d+\.html)"')
 TITLE = re.compile(r'<title>([^<]*)</title>')
+
+# Soft-200 detector: Cloudflare / interstitial / "verify you are human" pages are
+# served WITH status 200 but are not content. Catch them so a block is never cached
+# as a chapter (and never silently skipped by the per-page resume check).
+BLOCK_SIG = re.compile(
+    r'cf-browser-verification|challenge-platform|/cdn-cgi/challenge|'
+    r'Just a moment\.\.\.|Attention Required|Checking your browser|'
+    r'Enable JavaScript and cookies to continue', re.I)
+
+
+def is_block_page(html):
+    """True if an HTTP-200 body looks like a bot-block/challenge rather than content."""
+    return not html or len(html) < 200 or bool(BLOCK_SIG.search(html[:4000]))
 
 # meta-description language/kind markers
 EDITION = re.compile(
@@ -108,11 +148,18 @@ async def fetch(client, url, tries=4):
         try:
             r = await client.get(url, timeout=30.0, follow_redirects=True)
             if r.status_code == 200:
+                if DELAY:                              # throttle held inside caller's
+                    await asyncio.sleep(DELAY * (1 + 0.3 * random.random()))  # semaphore
                 return r.text
             if r.status_code in (404, 410):
                 return None
-        except Exception as e:
-            last = e
+            if r.status_code in (429, 503):            # rate-limited -> honour Retry-After
+                ra = r.headers.get("retry-after", "")
+                wait = float(ra) if ra.isdigit() else 5.0 * (k + 1)
+                await asyncio.sleep(wait)
+                continue
+        except Exception:
+            pass
         await asyncio.sleep(1.0 * (k + 1))
     print(f"  FAIL {url}", file=sys.stderr)
     return None
@@ -121,7 +168,7 @@ async def fetch(client, url, tries=4):
 async def stage_a(workers):
     sem = asyncio.Semaphore(workers)
     books = {}
-    async with httpx.AsyncClient(headers={"User-Agent": UA}, http2=False) as client:
+    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
         async def one(sec):
             async with sem:
                 page = await fetch(client, f"{BASE}/{sec}")
@@ -206,7 +253,7 @@ async def stage_b(workers, a):
     lock = asyncio.Lock()
     n = [0]
     out = out_p.open("a", encoding="utf-8")
-    async with httpx.AsyncClient(headers={"User-Agent": UA}) as client:
+    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
         async def one(e):
             async with sem:
                 html = await fetch(client, e["url"])
@@ -357,11 +404,11 @@ async def stage_c(workers, a):
             return []                                  # already fully downloaded
         async with sem:
             html = await fetch(client, r["url"])       # landing page -> full doc list
-        if not html:
+        if is_block_page(html):                        # blocked/empty -> leave for retry
             return []
         return [(slug, BASE + d) for d in sorted(set(DOC.findall(html)))]
 
-    async with httpx.AsyncClient(headers={"User-Agent": UA}) as client:
+    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
         lists = await asyncio.gather(*(docs_for(client, r) for r in chosen))
         pending = []
         for slug, url in (t for sub in lists for t in sub):
@@ -375,16 +422,25 @@ async def stage_c(workers, a):
             print(f"  (dry-run; {len(pending)} total, nothing written)")
             return
 
+        # manifest so watch.py knows the denominator + can relaunch this selection
+        out_dir.mkdir(parents=True, exist_ok=True)
+        (out_dir / "_manifest.json").write_text(json.dumps({
+            "ts": time.time(), "argv": sys.argv[1:],
+            "books": [[r["slug"], r.get("chapter_count") or 0] for r in chosen],
+            "total_chapters": sum(r.get("chapter_count") or 0 for r in chosen),
+        }), encoding="utf-8")
+
         n = [0]; failed = [0]
 
         async def grab(slug, url, f):
             async with sem:
                 html = await fetch(client, url)
-            if html is None:
+            if is_block_page(html):                    # don't cache a block/empty page
                 async with lock: failed[0] += 1
                 return
             f.parent.mkdir(parents=True, exist_ok=True)
-            f.write_text(html, encoding="utf-8")
+            # newline="" so raw HTML bytes are preserved verbatim (no CRLF translation)
+            f.write_text(html, encoding="utf-8", newline="")
             async with lock:
                 n[0] += 1
                 if n[0] % 100 == 0:
@@ -394,9 +450,12 @@ async def stage_c(workers, a):
 
 
 def main():
+    global DELAY
     ap = argparse.ArgumentParser()
     ap.add_argument("stage", choices=["stageA", "stageB", "stageC", "report", "all"])
     ap.add_argument("--workers", type=int, default=16)
+    ap.add_argument("--delay", type=float, default=0.0,
+                    help="seconds between requests per worker (jittered); throttles rate")
     # shared selection filters (used by stageB and stageC)
     ap.add_argument("--section", action="append", help="section(s); repeatable or comma-list")
     ap.add_argument("--ctype", action="append", help="content type(s)")
@@ -410,6 +469,7 @@ def main():
     ap.add_argument("--out", default="content", help="stageC output dir")
     ap.add_argument("--dry-run", action="store_true", help="stageC: list, don't fetch")
     a = ap.parse_args()
+    DELAY = a.delay
     t0 = time.time()
     if a.stage in ("stageA", "all"):
         asyncio.run(stage_a(a.workers))
