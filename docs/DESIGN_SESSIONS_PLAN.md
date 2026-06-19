@@ -28,8 +28,8 @@ Everything ships inside the app and its search service only.
   bundling Sanskrit + Russian + commentary as sibling divs, which the converter explodes
   into grouped canonical records. Four parse paths characterized against live data
   (A-clean / A-range / B-dict / C-prose), JSONL schema with `#sa`/`#ru`/`#comm{n}`
-  segment suffixes, commentary `annotates` linkage, SLP1 + Vedic-accent handling, 7 CI
-  validation gates, conversion run-report.
+  segment suffixes, commentary `annotates` linkage, nested commentary subtree extraction,
+  SLP1 + Vedic-accent handling, 8 CI validation gates, conversion run-report.
 - **Findings that fed forward:** Sanskrit↔Russian alignment is already encoded as sibling
   divs (free group key for S3); dictionaries already carry 4 scripts per line
   (deva/iast/slp1/cyrillic) — the cross-script layer arrives partly for free.
