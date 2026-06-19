@@ -1,10 +1,29 @@
 # Samudra Manthanam — Roadmap H2 2026: DH Standards + Cross-Platform Offline
 
-**Status: CURRENT** (supersedes the mobile/data-model portions of `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`; that document remains current for web-platform hardening).
+**Status: CURRENT / LIVING STATUS** (supersedes the mobile/data-model portions of `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`; that document remains current for web-platform hardening).
 
+**Last updated:** 2026-06-19
 **Window:** mid-June — mid-December 2026
 **Workforce:** maintainer + Claude Code sessions (same model as the v1.x web platform)
 **Audience:** Russian-speaking Sanskrit scholars and students. UI stays Russian; metadata gains an English layer for discoverability only.
+
+---
+
+## Status legend
+
+- **Done:** implemented or specified enough to be treated as a stable input.
+- **In progress:** active implementation/spec work exists, but acceptance is not complete.
+- **Blocked:** technically staged, but waiting on an external condition or rights/ops decision.
+- **Next:** planned near-term work.
+- **Deferred:** intentionally outside the current implementation lane.
+
+## Where things stand (2026-06-19)
+
+- **Phase 0 identity/metadata:** **In progress.** The stable-ID and converter contracts are specified in `docs/LINE_ID_SCHEME.md` and `docs/CONVERTER_SPEC.md`, but source metadata/rights surfacing and UI citation/version work are not fully complete.
+- **Phase 1 canonical JSONL:** **In progress.** The converter exists at `web/corpus_builder/html_to_canonical.py`; specs are frozen enough for implementation; nested commentary extraction is fixed and covered by regression tests. Remaining work: intentional full-corpus JSONL regeneration, full round-trip verification, and switching ingest/build paths to canonical JSONL.
+- **Phase 2/3 offline path:** **Designed / staged.** `docs/PHASE2_PLAN.md` and `docs/OFFLINE_SEARCH_DESIGN.md` contain the current design and implementation findings. Treat those as active design inputs, but do not mark the roadmap acceptance complete until current tests prove the PWA/offline-search gates.
+- **Wisdomlib:** **Blocked candidate.** The catalog/crawler groundwork is complete and hardened, but bulk Stage C content capture is blocked by IP/rate limits and rights posture. It must not block the core Samudra canonical JSONL/offline-search roadmap.
+- **Active PR context:** PR #7 on `offline-search` carries the wisdomlib workflow hardening and converter/commentary documentation updates.
 
 ---
 
@@ -34,7 +53,11 @@
 
 ## Phase 0 — Stable identity & metadata foundation (weeks 1–3)
 
+**Status:** In progress / partially specified.
+
 The cheapest, highest-leverage DH fixes. Everything later builds on these.
+
+**Current notes:** Stable IDs are specified in `docs/LINE_ID_SCHEME.md`; the converter and validation contract are specified in `docs/CONVERTER_SPEC.md`. Remaining Phase 0 work is mostly metadata/rights propagation, corpus version surfacing, and UI/citation visibility.
 
 1. **Stable line identifiers.** Define `work.chapter.verse[.line]` ID scheme; persist it in `corpus_lines` independent of ingest order. Anchor permalinks and the compare route switch from ordinal source IDs to filename/work-slug keys (already flagged in `.ai_state.md` as the long-term fix).
 2. **Per-source metadata files.** `Data/<name>.meta.json` next to each corpus HTML: title (ru/en), translator, print edition, year, scripts present, provenance/digitization notes, rights note. Ingest copies it into `corpus.db`; the web UI source pages and JSON-LD read from it.
@@ -46,7 +69,11 @@ The cheapest, highest-leverage DH fixes. Everything later builds on these.
 
 ## Phase 1 — Canonical data layer (months 1–2)
 
+**Status:** In progress.
+
 Replace "HTML is the truth" with "structured JSONL is the truth".
+
+**Current notes:** `web/corpus_builder/html_to_canonical.py` exists and now extracts each `comment_item` as a full subtree, including nested `<div>` blocks. `docs/CONVERTER_SPEC.md` records this as a validation gate, and `web/tests/test_converter.py` includes a regression test. Next steps are deliberate JSONL regeneration, full-corpus round-trip verification, ingest/build switching, and a decision on which generated artifacts are committed versus local-only.
 
 1. **Converter** `corpus_builder/html_to_canonical.py`: parses each existing HTML file into JSONL records — `{id, work, chapter, verse, seq, lang, script, text, html_class}` — with explicit **alignment groups** linking Sanskrit lines to their Russian translation lines (currently implicit in interleaving).
 2. **Script normalization.** Detect script per segment; store canonical **SLP1** alongside the display form (use `indic-transliteration`/aksharamukha). Query layer expands an IAST/Devanagari/SLP1 query to all stored forms — fixes "same word, different script, different results".
@@ -58,6 +85,10 @@ Replace "HTML is the truth" with "structured JSONL is the truth".
 
 ## Phase 2 — Mobile-ready web + PWA shell (month 3, overlaps Phase 1)
 
+**Status:** Partially designed / next implementation gate. See `docs/PHASE2_PLAN.md`.
+
+Phase 2 stays decoupled from Phase 1 except where the offline reader later consumes the canonical JSONL format.
+
 1. Responsive audit of all templates on 380 px viewports (search, reader, compare); touch-friendly result navigation; Devanagari/IAST font loading strategy for mobile (subset Charis SIL / Sahitya).
 2. **PWA manifest + service worker:** installable on Android/iOS/macOS/Windows; app shell and static assets cached; online search unchanged.
 3. **Offline reader:** user picks texts to keep offline; service worker caches the reader pages + per-text JSON. (First offline milestone, independent of wasm search.)
@@ -65,6 +96,10 @@ Replace "HTML is the truth" with "structured JSONL is the truth".
 **Acceptance:** Lighthouse PWA installable on Android Chrome and iOS Safari; a cached text fully readable in airplane mode.
 
 ## Phase 3 — Full offline search (months 3–5) — the centerpiece
+
+**Status:** Designed / staged. See `docs/OFFLINE_SEARCH_DESIGN.md`.
+
+The offline-search design document records implementation findings, but roadmap acceptance remains open until current tests prove the PWA/offline-search gates end to end.
 
 1. **Slim the database.** Current `corpus.db` ≈ 500 MB because lines are stored twice (HTML + plain) plus FTS index. Build an **offline pack format**: contentless/`content=` FTS5, no stored HTML (rendered from JSONL), per-text packs. Target ≤ 150 MB full corpus, downloadable per text group (Vedas / Epics / Kāvya…).
 2. **sqlite-wasm in the browser** with OPFS storage: the same FTS5 queries run client-side. The `SEARCH_CONTRACT.md` semantics (prefix matching, AND logic) are the shared spec; golden queries run against the wasm build in CI.
@@ -78,12 +113,29 @@ Replace "HTML is the truth" with "structured JSONL is the truth".
 
 ## Phase 4 — Scholarly citation, exports, discoverability (months 5–6)
 
+**Status:** Next / later.
+
+Rights constraints remain unchanged: exporting search results is in scope; public bulk corpus exports remain out of scope.
+
 1. **Citation strings everywhere:** reader, compare, exports emit "Work chapter.verse, trans. X, ed. Y — Samudra Manthanam corpus vN, URL#stable-anchor".
 2. **Structured exports:** JSON and CSV export of search results (query, mode, corpus version, stable IDs) alongside HTML. These export *results*, not bulk texts — staying inside the rights posture.
 3. **Discoverability layer:** English-language per-source metadata pages + JSON-LD (`schema.org/Dataset`-adjacent description of the *service*, `CreativeWork` per text), proper hreflang; UI remains Russian.
 4. **Desktop endgame:** final Lazarus release whose update manifest announces the web/PWA successor; corpus-sync API kept read-only for stragglers; repo section marked maintenance-frozen.
 
 **Acceptance:** a citation pasted into an article resolves to the same line a year later; an English Google query for "Elizarenkova Rigveda parallel corpus" can find the source page.
+
+---
+
+## Candidate Corpus Source: Wisdomlib
+
+**Status:** Blocked candidate.
+
+- **Catalog Stage A/B:** Done. The crawler catalog contains 848 entries and the human-readable summary lives in `web/corpus_builder/wisdomlib/CATALOG.md`.
+- **Stage C crawler:** In progress / hardened. The code is proven on small clear-IP runs and now avoids committing content, validates cache state, and reports blocked runs clearly.
+- **Operational block:** GitHub/datacenter egress is Cloudflare-blocked, and the currently tested hosting-range IP is rate-limited/exhausted. The workflow is manual and self-hosted only.
+- **Required next step:** Install a self-hosted runner on a residential ISP connection, then trigger the `wisdomlib gentle crawl` workflow manually in small resumable passes.
+- **Rights posture:** Stage C output remains cache/artifact-only and is never committed. Wisdomlib has no bulk-reuse license, so downloaded content is provisional and non-redistributable.
+- **Roadmap implication:** Wisdomlib can inform future corpus expansion, but it is not a dependency for the core Samudra canonical JSONL, PWA, or offline-search work.
 
 ---
 
