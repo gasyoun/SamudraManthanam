@@ -75,6 +75,8 @@ HEADERS = {
     "Upgrade-Insecure-Requests": "1",
 }
 DELAY = 0.0   # seconds between requests per worker (set from --delay); jittered +0-30%
+DOCS_MANIFEST = "_docs_manifest.json"
+LAST_RUN = "_last_run.json"
 
 SKIP_SECTIONS = {"marathi", "books", "gallery", "shop", "glossary"}
 SECTIONS = [
@@ -110,6 +112,58 @@ BLOCK_SIG = re.compile(
 def is_block_page(html):
     """True if an HTTP-200 body looks like a bot-block/challenge rather than content."""
     return not html or len(html) < 200 or bool(BLOCK_SIG.search(html[:4000]))
+
+
+def _doc_name(url):
+    return url.rsplit("/", 1)[-1]
+
+
+def _load_json(path, default):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return default
+
+
+def _save_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def _docs_from_landing(html):
+    return sorted(set(DOC.findall(html)))
+
+
+def _urls_from_expected(r, expected):
+    first_doc = r.get("first_doc") or ""
+    if not first_doc or "/" not in first_doc:
+        return []
+    base = first_doc.rsplit("/", 1)[0]
+    return [f"{base}/{name}" for name in expected]
+
+
+def _validate_cached_docs(bdir, expected_names):
+    expected = set(expected_names)
+    valid = set()
+    invalid_removed = 0
+    if not bdir.exists():
+        return valid, invalid_removed
+    for f in bdir.glob("doc*.html"):
+        invalid = f.name not in expected
+        if not invalid:
+            try:
+                invalid = is_block_page(f.read_text(encoding="utf-8"))
+            except Exception:
+                invalid = True
+        if invalid:
+            try:
+                f.unlink()
+                invalid_removed += 1
+            except FileNotFoundError:
+                pass
+        else:
+            valid.add(f.name)
+    return valid, invalid_removed
 
 # meta-description language/kind markers
 EDITION = re.compile(
@@ -379,9 +433,8 @@ def select(records, a):
 
 async def stage_c(workers, a):
     """Download the chapter pages of the selected books into content/<slug>/.
-    Resumable at page granularity: a book whose folder already holds >= its
-    chapter_count docs is skipped without re-fetching the landing page, and any
-    individual page already on disk is never re-fetched."""
+    Resumable at page granularity: cached pages are validated against the
+    expected doc manifest before a book is treated as complete."""
     src = HERE / "books_full.jsonl"
     if not src.exists():
         print("Run stageB first."); return
@@ -395,58 +448,91 @@ async def stage_c(workers, a):
 
     sem = asyncio.Semaphore(workers)
     lock = asyncio.Lock()
+    docs_manifest_path = out_dir / DOCS_MANIFEST
+    docs_manifest = _load_json(docs_manifest_path, {})
+    stats = {
+        "pages_written": 0,
+        "blocked_landings": 0,
+        "blocked_pages": 0,
+        "invalid_cached_files_removed": 0,
+        "pending_pages": 0,
+        "selected_books": len(chosen),
+    }
 
     async def docs_for(client, r):
         slug = r["slug"]
         bdir = out_dir / slug
-        have = len(list(bdir.glob("doc*.html"))) if bdir.exists() else 0
-        if r.get("chapter_count") and have >= r["chapter_count"]:
-            return []                                  # already fully downloaded
-        async with sem:
-            html = await fetch(client, r["url"])       # landing page -> full doc list
-        if is_block_page(html):                        # blocked/empty -> leave for retry
-            return []
-        return [(slug, BASE + d) for d in sorted(set(DOC.findall(html)))]
+        expected = docs_manifest.get(slug)
+        if expected and r.get("chapter_count") and len(expected) < r["chapter_count"]:
+            expected = None
+        urls = _urls_from_expected(r, expected) if expected else []
+        if not urls:
+            async with sem:
+                html = await fetch(client, r["url"])   # landing page -> full doc list
+            if is_block_page(html):                    # blocked/empty -> leave for retry
+                return {"slug": slug, "blocked": True, "docs": [], "invalid": 0}
+            docs = _docs_from_landing(html)
+            expected = [_doc_name(d) for d in docs]
+            docs_manifest[slug] = expected
+            urls = [BASE + d for d in docs]
+
+        valid, invalid = _validate_cached_docs(bdir, expected)
+        pending = [(slug, url) for url in urls if _doc_name(url) not in valid]
+        return {"slug": slug, "blocked": False, "docs": pending, "invalid": invalid}
 
     async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
-        lists = await asyncio.gather(*(docs_for(client, r) for r in chosen))
+        results = await asyncio.gather(*(docs_for(client, r) for r in chosen))
+        out_dir.mkdir(parents=True, exist_ok=True)
+        _save_json(docs_manifest_path, docs_manifest)
         pending = []
-        for slug, url in (t for sub in lists for t in sub):
+        for result in results:
+            if result["blocked"]:
+                stats["blocked_landings"] += 1
+            stats["invalid_cached_files_removed"] += result["invalid"]
+        for slug, url in (t for result in results for t in result["docs"]):
             f = out_dir / slug / url.rsplit("/", 1)[-1]
-            if not f.exists():
-                pending.append((slug, url, f))
+            pending.append((slug, url, f))
+        stats["pending_pages"] = len(pending)
         print(f"  {len(pending)} chapter pages to fetch")
         if a.dry_run:
             for _, url, _f in pending[:50]:
                 print("   ", url)
             print(f"  (dry-run; {len(pending)} total, nothing written)")
+            _save_json(out_dir / LAST_RUN, stats)
             return
 
         # manifest so watch.py knows the denominator + can relaunch this selection
-        out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "_manifest.json").write_text(json.dumps({
             "ts": time.time(), "argv": sys.argv[1:],
             "books": [[r["slug"], r.get("chapter_count") or 0] for r in chosen],
             "total_chapters": sum(r.get("chapter_count") or 0 for r in chosen),
         }), encoding="utf-8")
 
-        n = [0]; failed = [0]
-
         async def grab(slug, url, f):
             async with sem:
                 html = await fetch(client, url)
             if is_block_page(html):                    # don't cache a block/empty page
-                async with lock: failed[0] += 1
+                async with lock:
+                    stats["blocked_pages"] += 1
                 return
             f.parent.mkdir(parents=True, exist_ok=True)
             # newline="" so raw HTML bytes are preserved verbatim (no CRLF translation)
             f.write_text(html, encoding="utf-8", newline="")
             async with lock:
-                n[0] += 1
-                if n[0] % 100 == 0:
-                    print(f"  {n[0]}/{len(pending)}")
+                stats["pages_written"] += 1
+                if stats["pages_written"] % 100 == 0:
+                    print(f"  {stats['pages_written']}/{len(pending)}")
         await asyncio.gather(*(grab(s, u, f) for s, u, f in pending))
-        print(f"Stage C done: {n[0]} pages written, {failed[0]} failed -> {out_dir}/")
+        stats["pending_pages"] = max(0, len(pending) - stats["pages_written"])
+        _save_json(out_dir / LAST_RUN, stats)
+        print(
+            "Stage C done: "
+            f"{stats['pages_written']} pages written, "
+            f"{stats['blocked_landings']} blocked landings, "
+            f"{stats['blocked_pages']} blocked/failed chapter pages, "
+            f"{stats['invalid_cached_files_removed']} invalid cached files removed, "
+            f"{stats['pending_pages']} pending pages -> {out_dir}/"
+        )
 
 
 def main():

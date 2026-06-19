@@ -75,12 +75,15 @@ parse path). Output: `web/corpus_builder/jsonl/<slug>.jsonl`.
   present → clean, else range-title); `dictionary` → B (tab-count sniff per CONVERTER_SPEC
   §3); `prose` → C.
 - Emit records per CONVERTER_SPEC §2 schema with `#sa`/`#ru`/`#comm{n}` segment suffixes.
+- Extract each `comment_item` as a full subtree, depth-counting nested `<div>` elements
+  so long commentary blocks are not truncated at the first inner `</div>`.
 - Mint IDs per LINE_ID_SCHEME (letter-suffix dups, frozen sequences, commentary `…commN`).
 - Compute SLP1 for every `#sa` via `sanscript.transliterate(text, IAST, SLP1)`; store
   accented + stripped forms (CONVERTER_SPEC §5).
 - Write `web/corpus_builder/conversion_report.json` (CONVERTER_SPEC §8).
 - **Gate:** CONVERTER_SPEC §7 gates 1 (ID round-trip stability), 3 (range coverage on the
-  53 range files), 4 (uniqueness + dup suffixes), 5 (commentary linkage).
+  53 range files), 4 (commentary subtree coverage), 5 (uniqueness + dup suffixes),
+  6 (commentary linkage).
 
 ### Step 2 — alignment groups (same converter pass or a thin second pass)
 

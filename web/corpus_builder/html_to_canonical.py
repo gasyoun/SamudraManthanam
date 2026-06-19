@@ -25,12 +25,10 @@ sys.stderr.reconfigure(encoding="utf-8")
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 _WEB_DIR = _REPO_ROOT / "web"
-_INGEST_DIR = _WEB_DIR / "ingest"
 sys.path.insert(0, str(_WEB_DIR))
-sys.path.insert(0, str(_INGEST_DIR))
 
 from app.services.slug import make_unique_slug  # noqa: E402
-from parse_html import (  # noqa: E402
+from ingest.parse_html import (  # noqa: E402
     remove_html_tags,
     VEDIC_MAP,
     _CITATION_BLOCK_ID,
@@ -84,11 +82,38 @@ _COMMENTS_SECTION_RE = re.compile(
     r'<div\s+class=["\']comments["\']\s*>(.*?)</div>\s*</div>\s*$', re.DOTALL
 )
 
-# Individual comment items (within comments section or on full line)
-_COMMENT_ITEM_RE = re.compile(
-    r'<div\s+class=["\']comment_item["\']\s+id=["\']([^"\']+)["\']\s*>(.*?)</div>',
+# Individual comment items — depth-counting to handle nested <div> elements correctly.
+_COMMENT_ITEM_START_RE = re.compile(
+    r'<div\s+class=["\']comment_item["\']\s+id=["\']([^"\']+)["\']\s*>',
     re.DOTALL,
 )
+
+
+def _extract_comment_items(html: str) -> list[tuple[str, str]]:
+    items = []
+    pos = 0
+    while pos < len(html):
+        m = _COMMENT_ITEM_START_RE.search(html, pos)
+        if not m:
+            break
+        anchor_id = m.group(1)
+        inner_start = m.end()
+        depth = 1
+        i = inner_start
+        while i < len(html) and depth > 0:
+            if html[i : i + 4] == "<div":
+                depth += 1
+                i += 4
+            elif html[i : i + 6] == "</div>":
+                depth -= 1
+                if depth == 0:
+                    break
+                i += 6
+            else:
+                i += 1
+        items.append((anchor_id, html[inner_start:i]))
+        pos = i + 6
+    return items
 
 # Parse comment_item id: comment_{chapter}_{verse}[{pada}]  (simple: exact match)
 _COMMENT_ID_RE = re.compile(r"^comment_(\d+)_(\d+)([a-z]?)$")
@@ -647,7 +672,7 @@ def _parse_verse_line(
     if not comments_body:
         comments_body = line
 
-    comm_items = _COMMENT_ITEM_RE.findall(comments_body)
+    comm_items = _extract_comment_items(comments_body)
     mbh_book = _get_mbh_book_num(slug) if "mahabharata" in slug else None
     for anchor_id, comm_inner in comm_items:
         comm_meta = _parse_comment_anchor(anchor_id, current_chapter)

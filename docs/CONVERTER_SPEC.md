@@ -89,8 +89,11 @@ sniff. The census fixes the population of each.
 3. Russian segment = `div.chapter_block.translation` → `lang=ru`, `script=cyrillic`.
    Strip `translation_author` spans into a separate `author` field (display); strip
    inline `a.comment_sub` refs from `text` but keep them in `html`.
-4. Commentary = each `div.comment_item` → `#comm{n}`, `annotates` from its
-   `comment_{ch}_{v}` id (see §4).
+4. Commentary = each complete `div.comment_item` subtree → `#comm{n}`,
+   `annotates` from its `comment_{ch}_{v}` id (see §4). The extractor must
+   depth-count nested `<div>` elements inside a commentary item; a regex that
+   stops at the first `</div>` is invalid because long commentaries can contain
+   nested presentational blocks.
 
 ### Path A-range — verse, no clean id, range-title regex (53 files)
 
@@ -137,6 +140,9 @@ commentary on chapter 2 → `annotates="c.2"`, id `…:c.2.comm1`.
   frozen at first mint.
 - A `comment_item` whose id doesn't parse to a known verse → fall back to
   `c.{ch}.p{n}`, set `"needs_review": true`. **Never drop.**
+- Commentary extraction is subtree-based: preserve the full inner HTML of each
+  `comment_item`, including nested `<div>` content, before stripping tags for
+  plain `text`.
 
 ---
 
@@ -174,13 +180,15 @@ commentary on chapter 2 → `annotates="c.2"`, id `…:c.2.comm1`.
    output for a sample set; zero search-relevant divergence. (Roadmap Phase 1 acceptance.)
 3. **Per-file range-title coverage:** each of the 53 A-range files yields a non-empty
    verse key for ≥ 99% of its `citation_block`s; the shortfall is listed, not swallowed.
-4. **Uniqueness:** `(work, id)` unique; all 41 known duplicate verse numbers carry the
+4. **Commentary subtree coverage:** hermetic parser tests must prove nested
+   `<div>` elements inside `comment_item` do not truncate commentary content.
+5. **Uniqueness:** `(work, id)` unique; all 41 known duplicate verse numbers carry the
    letter-suffix disambiguation from scheme §4.
-5. **Commentary linkage:** every `#comm{n}` record's `annotates` resolves to an existing
+6. **Commentary linkage:** every `#comm{n}` record's `annotates` resolves to an existing
    verse or chapter in the same work, or is flagged `needs_review`.
-6. **Golden queries:** the existing golden-query suite returns identical hits when run
+7. **Golden queries:** the existing golden-query suite returns identical hits when run
    against a DB built from JSONL vs. the current HTML-ingest DB (no search regression).
-7. **Count parity:** line/verse/comment counts per source match a pre-computed census
+8. **Count parity:** line/verse/comment counts per source match a pre-computed census
    baseline within a declared tolerance; deviations itemized.
 
 ---

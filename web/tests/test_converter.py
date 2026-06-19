@@ -18,6 +18,7 @@ sys.path.insert(0, str(_CB_DIR.parent))  # web/ on path so corpus_builder is a p
 
 from corpus_builder.html_to_canonical import (  # noqa: E402
     _parse_comment_anchor,
+    _extract_comment_items,
     _extract_passage_from_range_title,
     _to_slp1,
 )
@@ -138,6 +139,19 @@ def test_anchor_unknown():
     r = _parse_comment_anchor("completely_unrecognized_id", "")
     assert r["annotates"] is None
     assert r["id_type"] == "unknown"
+
+
+def test_comment_items_allow_nested_divs():
+    html = (
+        '<div class="comment_item" id="comment_1_1">'
+        '<p>first</p><div class="nested"><div>inner</div></div>tail'
+        '</div>'
+        '<div class="comment_item" id="comment_1_2">second</div>'
+    )
+    assert _extract_comment_items(html) == [
+        ("comment_1_1", '<p>first</p><div class="nested"><div>inner</div></div>tail'),
+        ("comment_1_2", "second"),
+    ]
 
 
 # ---------------------------------------------------------------------------

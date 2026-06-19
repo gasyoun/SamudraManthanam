@@ -21,15 +21,50 @@ name: wisdomlib gentle crawl
 on:
   workflow_dispatch:
     inputs:
-      filters:
-        description: "stageC selection filters"
-        default: "--lang sanskrit"
+      lang:
+        description: "source language filter (comma-list allowed)"
+        default: "sanskrit"
+        type: string
+      section:
+        description: "topic section filter (comma-list, optional)"
+        default: ""
+        type: string
+      ctype:
+        description: "content type filter (comma-list, optional)"
+        default: ""
+        type: string
+      slug:
+        description: "explicit slug filter (comma-list, optional)"
+        default: ""
+        type: string
+      english:
+        description: "only entries with English translation"
+        default: false
+        type: boolean
+      pali_mode:
+        description: "Pali filter"
+        default: "any"
+        type: choice
+        options:
+          - any
+          - only
+          - exclude
+      min_words:
+        description: "minimum word count"
+        default: "0"
+        type: string
+      limit:
+        description: "maximum selected entries (0 = no limit)"
+        default: "0"
+        type: string
       workers:
         description: "concurrent workers"
         default: "1"
+        type: string
       delay:
         description: "per-request delay seconds (jittered)"
         default: "5"
+        type: string
 
 permissions:
   contents: read
@@ -65,11 +100,19 @@ jobs:
           restore-keys: wisdomlib-content-
 
       - name: Gentle Stage C pass
+        env:
+          WL_LANG: ${{ inputs.lang }}
+          WL_SECTION: ${{ inputs.section }}
+          WL_CTYPE: ${{ inputs.ctype }}
+          WL_SLUG: ${{ inputs.slug }}
+          WL_ENGLISH: ${{ inputs.english }}
+          WL_PALI_MODE: ${{ inputs.pali_mode }}
+          WL_MIN_WORDS: ${{ inputs.min_words }}
+          WL_LIMIT: ${{ inputs.limit }}
+          WL_WORKERS: ${{ inputs.workers }}
+          WL_DELAY: ${{ inputs.delay }}
         run: |
-          python crawl.py stageC \
-            ${{ github.event.inputs.filters || '--lang sanskrit' }} \
-            --workers ${{ github.event.inputs.workers || '1' }} \
-            --delay ${{ github.event.inputs.delay || '5' }}
+          python workflow_stagec.py
           python crawl.py report || true
 
       - name: Show progress
