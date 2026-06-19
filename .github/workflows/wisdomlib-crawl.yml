@@ -14,7 +14,7 @@ name: wisdomlib gentle crawl
 #    gentle defaults (--workers 1 --delay 5); run repeatedly to make progress
 #    (resumable via the content cache).
 #  - workflow_dispatch only fires for the copy of this file on the DEFAULT branch
-#    (main); the crawler code lives on `offline-search`, checked out explicitly.
+#    (main); the crawler code is now on main too (offline-search merged in).
 #  - Output is cached + uploaded as an artifact, NEVER committed: wisdomlib has
 #    no bulk-reuse licence (content/ stays unpublished).
 
@@ -46,9 +46,7 @@ jobs:
       run:
         working-directory: web/corpus_builder/wisdomlib
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: offline-search       # the crawler lives here, not on main
+      - uses: actions/checkout@v4   # crawler code now on the default branch (merged)
 
       - uses: actions/setup-python@v5
         with:

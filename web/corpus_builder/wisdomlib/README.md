@@ -9,6 +9,23 @@ of the main platform (current tag: `wisdomlib-v0.0.1`).
 > provisional** — do not redistribute. The index (`*.jsonl`, `CATALOG.md`) is
 > bibliographic metadata only.
 
+## Install
+
+```sh
+cd web/corpus_builder/wisdomlib
+python -m pip install "httpx[http2]"     # h2 enables HTTP/2 (falls back to 1.1)
+```
+
+Python 3.11+. No other dependencies.
+
+## Quick start
+
+```sh
+python crawl.py all                       # build the index + CATALOG.md (no download)
+python crawl.py stageC --lang sanskrit --workers 1 --delay 5   # download content
+python watch.py 5                         # live progress bar (separate terminal)
+```
+
 ## Pipeline
 
 | Stage | Command | Output |
@@ -35,11 +52,12 @@ AND-combined; repeatable or comma-lists where noted.
 ```
 
 `--lang`/`--english`/`--pali` only select on Stage C (those fields are produced
-*by* Stage B). Example — Sanskrit-source books, polite rate:
+*by* Stage B). Examples:
 
 ```sh
-python crawl.py stageC --lang sanskrit --workers 1 --delay 5
-python watch.py 5     # live progress bar in another terminal
+python crawl.py stageC --lang sanskrit --workers 1 --delay 5   # all Sanskrit books
+python crawl.py stageC --slug the-skanda-purana               # one book
+python crawl.py stageC --section purana --ctype book --dry-run # preview only
 ```
 
 ## Politeness / rate limiting
@@ -51,24 +69,49 @@ python watch.py 5     # live progress bar in another terminal
 - `is_block_page()` rejects soft-200 Cloudflare/challenge pages so a block is
   never cached as content nor permanently skipped by the resume check.
 
-### Cloudflare reality (2026-06-18)
+### Cloudflare reality (measured 2026-06-18/19)
 
-The catalog (A/B) built cleanly, but **Stage C is rate-limited at the IP level**.
-Findings:
+The catalog (A/B) builds cleanly, but **Stage C is gated by a per-IP Cloudflare
+block**. Confirmed findings:
 
-- A single small book downloads fine when the IP is clear (38/38 Skanda Purāṇa
-  chapters verified). But a broader run re-triggers a Cloudflare **403** block —
-  it's driven by **cumulative request volume per IP**, not burst rate, so even
-  2 req/s eventually trips it on a sensitised IP.
+- **Local/hosting IP:** a single small book downloads fine when the IP is clear
+  (38/38 Skanda Purāṇa chapters verified), but volume re-triggers a **403**.
+  It's driven by **cumulative request volume per IP**, not burst rate — even
+  ~2 req/s eventually trips it, and an overnight ultra-gentle run yielded only
+  ~8 pages in 9h before re-blocking.
+- **GitHub-hosted (Azure datacenter) IPs:** **fully blocked** — 3/3 dispatched
+  Actions runs downloaded 0 pages (the landing page itself 403s). So the free
+  cloud-runner route does **not** work.
 - This is **not** a JS/Turnstile challenge (httpx runs no JS — a browser engine
-  wouldn't help) and **not** a header heuristic; it's a per-IP budget.
-- Mitigation: long cooldowns + very gentle pacing (`--workers 1 --delay 5`,
-  small slices), or a **different egress IP**. Everything is resumable, so bulk
-  download is best done as many small sessions over time.
+  wouldn't help) and **not** a header heuristic; it's a per-IP/ASN budget.
+- **The only egress that gets through is a residential connection.** Run from a
+  home network, gently (`--workers 1 --delay 5`), in small resumable sessions.
 
-`_gentle_retry.py` (gitignored operational driver) automates this: cooldown →
-book-by-book at `--workers 1 --delay 5` with a circuit breaker that backs off
-for hours if it detects a re-block.
+`_gentle_retry.py` (gitignored operational driver) automates the local case:
+cooldown → book-by-book at `--workers 1 --delay 5` with a circuit breaker that
+backs off for hours if it detects a re-block.
+
+## Autonomous runs — GitHub Actions (self-hosted runner)
+
+[`.github/workflows/wisdomlib-crawl.yml`](../../../.github/workflows/wisdomlib-crawl.yml)
+runs one bounded, gentle, resumable Stage C pass on demand. Because GitHub's
+own runners are Cloudflare-blocked (above), it is set to `runs-on: self-hosted`
+and `workflow_dispatch` only (no cron). To use it:
+
+1. **Register a runner on a residential machine** (a home PC on a normal ISP):
+   repo **Settings → Actions → Runners → New self-hosted runner**, then run the
+   `config.sh` / `run.sh` commands GitHub shows for that OS, e.g.
+   ```sh
+   ./config.sh --url https://github.com/gasyoun/SamudraManthanam --token <token>
+   ./run.sh
+   ```
+2. **Prepare that machine:** Python 3.11 + `pip install "httpx[http2]"`.
+3. **Trigger:** repo **Actions → "wisdomlib gentle crawl" → Run workflow**
+   (inputs: `filters` default `--lang sanskrit`, `workers` `1`, `delay` `5`).
+4. **Re-run as needed** — each pass resumes via the `content` cache; output is
+   uploaded as the `wisdomlib-content` artifact and **never committed**.
+
+The workflow checks out this repo's default branch for the crawler code.
 
 ## Watcher
 
