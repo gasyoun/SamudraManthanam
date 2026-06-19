@@ -1,13 +1,13 @@
 # Documentation Index
 
-Date: 2026-06-12
+Date: 2026-06-19
 
 Purpose: tell humans and implementation agents which Markdown files are current, supporting, or historical.
 
 ## Current Primary Docs
 
 - `README.md`: project overview and build/use notes.
-- `ROADMAP_2026_H2_DH_MOBILE.md`: **current roadmap** — DH-standards data layer (stable IDs, JSONL canonical, metadata/rights) + cross-platform offline search via PWA/sqlite-wasm.
+- `ROADMAP_2026_H2_DH_MOBILE.md`: **current living status roadmap** — DH-standards data layer (stable IDs, JSONL canonical, metadata/rights), cross-platform offline search via PWA/sqlite-wasm, and current candidate-source status such as Wisdomlib.
 - `TARGET_ARCHITECTURE.md`: current target architecture.
 - `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`: architecture critique and open decisions (several now settled by `ROADMAP_2026_H2_DH_MOBILE.md`).
 - `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`: web-platform hardening roadmap (still current for that scope; mobile/data-model planning superseded by `ROADMAP_2026_H2_DH_MOBILE.md`).
@@ -27,6 +27,8 @@ Purpose: tell humans and implementation agents which Markdown files are current,
 ## Current Supporting Docs
 
 - `web/SEARCH_CONTRACT.md`: search behavior contract.
+- `web/corpus_builder/wisdomlib/README.md`: Wisdomlib crawler operations, rights guardrails, Stage A/B/C commands, Cloudflare/rate-limit reality, and watcher usage.
+- `web/corpus_builder/wisdomlib/CATALOG.md`: Wisdomlib bibliographic catalog summary generated from Stage A/B metadata.
 - `use_cases.md`: user scenarios.
 - `DEPLOYMENT.md`: no-Docker VPS deployment guide.
 - `CLAUDE.md`: agent guidance for this repository.
@@ -52,6 +54,10 @@ Context only — do not treat as current instructions:
 4. `TARGET_ARCHITECTURE.md`
 5. `web/SEARCH_CONTRACT.md`
 6. `.ai_state.md`
+
+## Wisdomlib Status Rule
+
+The current Wisdomlib roadmap/workflow status belongs in `ROADMAP_2026_H2_DH_MOBILE.md` under "Candidate Corpus Source: Wisdomlib". Detailed crawler operation belongs in `web/corpus_builder/wisdomlib/README.md`; the generated bibliographic summary belongs in `web/corpus_builder/wisdomlib/CATALOG.md`.
 
 ## Conflict Rule
 
