@@ -1,27 +1,24 @@
 name: wisdomlib gentle crawl
 
-# Autonomous Stage C content download for the wisdomlib crawler, run on a cron
-# WITHOUT needing a local machine. Each scheduled run does ONE bounded, gentle
-# pass; the cron interval itself provides the polite spacing between passes, and
-# the download is resumable across runs via the cache (no in-process sleeping,
-# so we don't burn Actions minutes waiting).
+# Stage C content download for the wisdomlib crawler, run ON DEMAND on a
+# SELF-HOSTED runner. Each dispatch does one bounded, gentle, resumable pass.
 #
-# IMPORTANT CAVEATS
-#  - GitHub *Pages* cannot do this (static hosting, no server/cron). Actions can.
-#  - schedule/workflow_dispatch only fire for the copy of this file on the
-#    DEFAULT branch (main). The crawler code lives on `offline-search`, so the
-#    job checks that branch out explicitly. This file must be on main for the
-#    cron to actually trigger.
-#  - Runners use GitHub/Azure datacenter IPs. Cloudflare frequently blocks those
-#    ASNs, so Stage C may get 403'd here too — but that's a *different* egress IP
-#    than your laptop, so it may equally sail past the IP-volume block. The
-#    is_block_page() guard means a blocked run is a clean no-op (nothing cached).
-#  - Output is uploaded as an artifact + kept in cache. It is NOT committed:
-#    wisdomlib has no bulk-reuse licence (content/ stays unpublished).
+# WHY self-hosted + manual (decided 2026-06-19)
+#  - GitHub-hosted (Azure datacenter) IPs are Cloudflare-blocked for wisdomlib:
+#    3/3 dispatched test runs downloaded 0 pages. So the hourly cron was removed —
+#    it only produced empty no-ops.
+#  - The ONLY egress that gets past Cloudflare's per-IP block is a residential
+#    connection, so this must run on a self-hosted runner installed on a real
+#    home machine. Set one up via repo Settings > Actions > Runners, then trigger
+#    this workflow manually. It stays subject to the per-IP rate limit, hence the
+#    gentle defaults (--workers 1 --delay 5); run repeatedly to make progress
+#    (resumable via the content cache).
+#  - workflow_dispatch only fires for the copy of this file on the DEFAULT branch
+#    (main); the crawler code lives on `offline-search`, checked out explicitly.
+#  - Output is cached + uploaded as an artifact, NEVER committed: wisdomlib has
+#    no bulk-reuse licence (content/ stays unpublished).
 
 on:
-  schedule:
-    - cron: "17 * * * *"          # hourly at :17 (cron is best-effort, may lag)
   workflow_dispatch:
     inputs:
       filters:
@@ -43,15 +40,15 @@ concurrency:
 
 jobs:
   crawl:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30             # bound each pass (Actions hard-caps at 6h)
+    runs-on: self-hosted           # residential runner — GitHub IPs are CF-blocked
+    timeout-minutes: 60             # bound each pass
     defaults:
       run:
         working-directory: web/corpus_builder/wisdomlib
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: offline-search       # the crawler lives here, not on master
+          ref: offline-search       # the crawler lives here, not on main
 
       - uses: actions/setup-python@v5
         with:
