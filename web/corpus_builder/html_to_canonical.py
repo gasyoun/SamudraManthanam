@@ -2,7 +2,7 @@
 """HTML→JSONL converter for the Samudra Manthanam corpus.
 
 Implements:
-  - CONVERTER_SPEC.md  (4 parse paths, segment schema, commentary, SLP1, 7 gates)
+  - CONVERTER_SPEC.md  (4 parse paths, segment schema, commentary, SLP1, 8 gates)
   - ALIGNMENT_SPEC.md  (group model, cardinality, refrain/alt_ref handling)
   - LINE_ID_SCHEME.md  (canonical passage IDs, duplicate disambiguation)
 

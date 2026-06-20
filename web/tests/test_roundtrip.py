@@ -176,12 +176,9 @@ def test_gate2_jsonl_text_superset_of_original_html(sample_records):
         orig_html = f.read()
     orig_text = _strip_html(orig_html)
 
-    # Scope the comparison to verse (chapter_block) content only.
-    # Commentary truncation in the converter (COMMENT_ITEM_RE stops at the
-    # first nested </div>) is a known limitation: bibliography references
-    # inside nested divs in long commentaries may not appear in JSONL text.
-    # Verse (sa/ru) content is extracted without loss and is the search-
-    # relevant surface for this test.
+    # Scope the comparison to verse (chapter_block) content only. Commentary
+    # has separate subtree extraction coverage in test_converter.py; this
+    # sample gate stays focused on the sa/ru search-relevant surface.
     #
     # Strip <small> tags first: both the converter and parse_html.py
     # intentionally exclude <small> bibliography footnotes from plain text.

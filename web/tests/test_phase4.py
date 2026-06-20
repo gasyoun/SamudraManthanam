@@ -97,9 +97,16 @@ def test_ingest_source_count_matches_actual_rows(tmp_path):
     (corpus / "Data" / "present.html").write_text(
         "<!-- Present -->\n<p>some text</p>\n", encoding="utf-8"
     )
+    jsonl_dir = tmp_path / "jsonl"
+    jsonl_dir.mkdir()
+    (jsonl_dir / "present.jsonl").write_text(
+        '{"id":"present:p1","passage":"p1","seq":1,'
+        '"text":"some text","html":"<p>some text</p>","chapter":""}\n',
+        encoding="utf-8",
+    )
 
     db_path = str(tmp_path / "test_corpus.db")
-    asyncio.run(ingest(str(corpus), db_path))
+    asyncio.run(ingest(str(corpus), db_path, str(jsonl_dir)))
 
     con = sqlite3.connect(db_path)
     try:

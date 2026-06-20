@@ -44,8 +44,8 @@ def _merge_jsonl_lines(lines: list[dict]) -> list[dict]:
         rigveda:1.1.1#sa  → Sanskrit
         rigveda:1.1.1#ru  → Russian translation
         rigveda:1.1.1#comm0 → first commentary block
-    Records without a '#' in canonical_id (HTML-fallback rows) are grouped
-    by link_id and emitted unchanged via the single-record fallback.
+    Records without a '#' in canonical_id (older DB fixtures or manual rows)
+    are grouped by link_id and emitted unchanged via the single-record fallback.
     """
     groups: OrderedDict[str, list[dict]] = OrderedDict()
     for line in lines:
