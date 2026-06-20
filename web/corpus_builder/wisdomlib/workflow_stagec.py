@@ -88,6 +88,16 @@ def build_argv(env=os.environ):
     if limit:
         argv += ["--limit", str(limit)]
 
+    # Refuse a full-corpus crawl with no selection: clearing `lang` (or leaving
+    # every filter blank) would otherwise silently select all ~838 books. Require
+    # at least one selecting filter (or an explicit --limit) to broaden on purpose.
+    SELECTORS = ("--lang", "--section", "--ctype", "--slug",
+                 "--english", "--pali", "--no-pali", "--min-words", "--limit")
+    if not any(flag in argv for flag in SELECTORS):
+        raise ValueError(
+            "no selection filter set — refusing an unfiltered full-corpus crawl; "
+            "set at least one of lang/section/ctype/slug/english/pali/min_words/limit")
+
     argv += ["--workers", str(_int_env(env, "WL_WORKERS", 1, 1, 8))]
     delay = _float_env(env, "WL_DELAY", 5, 0, 3600)
     argv += ["--delay", f"{delay:g}"]

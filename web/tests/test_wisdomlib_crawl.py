@@ -103,6 +103,29 @@ def test_workflow_launcher_rejects_invalid_workers_and_delay():
         workflow_stagec.build_argv({"WL_DELAY": "-1"})
 
 
+def test_workflow_launcher_refuses_unfiltered_full_corpus():
+    # Clearing every filter (notably an empty lang) must not silently select all books.
+    with pytest.raises(ValueError, match="unfiltered full-corpus"):
+        workflow_stagec.build_argv({"WL_LANG": ""})
+    # An explicit non-lang filter is still allowed even with lang cleared.
+    assert "--section" in workflow_stagec.build_argv({"WL_LANG": "", "WL_SECTION": "purana"})
+    assert "--limit" in workflow_stagec.build_argv({"WL_LANG": "", "WL_LIMIT": "5"})
+
+
+def test_validate_cached_docs_keeps_good_files_absent_from_short_expected(tmp_path):
+    # A truncated/partial `expected` list must not delete valid cached chapters.
+    bdir = tmp_path / "test-book"
+    bdir.mkdir()
+    (bdir / "doc1.html").write_text(VALID_HTML, encoding="utf-8")   # in expected
+    (bdir / "doc2.html").write_text(VALID_HTML, encoding="utf-8")   # good, NOT in expected
+    (bdir / "doc3.html").write_text("<html>Just a moment...</html>", encoding="utf-8")  # block
+    valid, removed = crawl._validate_cached_docs(bdir, ["doc1.html"])
+    assert valid == {"doc1.html"}
+    assert removed == 1                                  # only the block page deleted
+    assert (bdir / "doc2.html").exists()                 # good unexpected file preserved
+    assert not (bdir / "doc3.html").exists()
+
+
 @pytest.mark.asyncio
 async def test_stage_c_valid_complete_cache_skips_fetch(monkeypatch, tmp_path):
     _book(tmp_path)

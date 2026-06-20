@@ -149,19 +149,22 @@ def _validate_cached_docs(bdir, expected_names):
     if not bdir.exists():
         return valid, invalid_removed
     for f in bdir.glob("doc*.html"):
-        invalid = f.name not in expected
-        if not invalid:
-            try:
-                invalid = is_block_page(f.read_text(encoding="utf-8"))
-            except Exception:
-                invalid = True
-        if invalid:
+        # Only DELETE a file if it is itself corrupt (a cached block/empty page).
+        # A good file merely absent from `expected` is left in place: `expected`
+        # can be short/stale (a truncated-but-not-blocked landing page yields a
+        # partial doc list), and pruning by name there would destroy valid
+        # chapters and force a re-download against a rate-limited host.
+        try:
+            corrupt = is_block_page(f.read_text(encoding="utf-8"))
+        except Exception:
+            corrupt = True
+        if corrupt:
             try:
                 f.unlink()
                 invalid_removed += 1
             except FileNotFoundError:
                 pass
-        else:
+        elif f.name in expected:
             valid.add(f.name)
     return valid, invalid_removed
 
