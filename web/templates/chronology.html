@@ -1,0 +1,199 @@
+{% extends "_base.html" %}
+
+{% block title %}{{ og_title }}{% endblock %}
+
+{% block extra_head %}
+<style>
+  .chrono { max-width: 1180px; margin: 0 auto; padding: 0 1rem 3rem; }
+  .chrono-intro { margin: 1.2rem 0 0.6rem; color: #4a4a4a; font-size: 0.95rem; max-width: 820px; line-height: 1.55; }
+  .chrono-intro a { color: var(--accent, #9a5b2a); }
+  .chrono-controls { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; align-items: center;
+                     padding: 0.7rem 0; border-bottom: 1px solid var(--line-border, #e4ded2); }
+  .chrono-controls label { font-size: 0.85rem; color: #534c40; cursor: pointer; user-select: none; }
+  .chrono .seg button { font: 0.85rem inherit; border: 1px solid #d8d1c2; background: #fff;
+                        padding: 0.3rem 0.7rem; cursor: pointer; }
+  .chrono .seg button:first-child { border-radius: 6px 0 0 6px; }
+  .chrono .seg button:last-child { border-radius: 0 6px 6px 0; border-left: none; }
+  .chrono .seg button:not(:first-child):not(:last-child) { border-left: none; }
+  .chrono .seg button.on { background: var(--accent, #9a5b2a); color: #fff; border-color: var(--accent, #9a5b2a); }
+  .chrono #plot { width: 100%; display: block; margin-top: 0.4rem; background: #fff;
+                  border: 1px solid var(--line-border, #e4ded2); border-radius: 8px; }
+  .chrono .lane-bg:nth-child(even) { fill: #f5f1e8; }
+  .chrono .lane-lbl { font-size: 11.5px; fill: #6f685c; }
+  .chrono .axis { stroke: #cfc7b6; stroke-width: 1; }
+  .chrono .axis-lbl { font-size: 11px; fill: #8a8276; text-anchor: middle; }
+  .chrono circle.dot { stroke: #fff; stroke-width: 0.8; cursor: pointer; }
+  .chrono circle.dot.lc { stroke-dasharray: 1.5 1.2; opacity: 0.75; }
+  .chrono .tip { position: fixed; pointer-events: none; background: #2b2620; color: #fdfbf6;
+                 padding: 7px 10px; border-radius: 6px; font-size: 12.5px; max-width: 300px;
+                 opacity: 0; transition: opacity 0.08s; z-index: 50; }
+  .chrono .tip b { color: #f1c79a; }
+  .chrono table { border-collapse: collapse; width: 100%; font-size: 0.85rem; margin-top: 1.2rem; }
+  .chrono th, .chrono td { text-align: left; padding: 5px 10px;
+                           border-bottom: 1px solid var(--line-border, #e4ded2); vertical-align: top; }
+  .chrono th { position: sticky; top: 0; background: #f3efe6; cursor: pointer; font-weight: 600; }
+  .chrono td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .chrono .pill { font-size: 11px; padding: 1px 7px; border-radius: 10px; }
+  .chrono .muted { color: #9a9388; }
+  .chrono .conf-low { color: #b06a2a; } .chrono .conf-high { color: #3c7a3c; }
+  .chrono #chrono-count { font-size: 0.85rem; color: #8a8276; }
+  .chrono #chrono-error { color: #b04d54; padding: 1rem 0; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="chrono">
+  <h1 style="margin:1.2rem 0 0.2rem;font-size:1.5rem;">Хронология корпуса</h1>
+  <div class="chrono-intro">
+    Каждый датируемый текст
+    <a href="https://samskrtam.ru/parallel-corpus/">санскрито-русского параллельного корпуса</a>
+    и санскрито-английского корпуса размещён на временной шкале. Датировки взяты из
+    хронологии <b>VisualDCS</b> и здесь не пересчитываются: текст несёт либо собственную
+    дату DCS, либо дату своего периода, либо — для датируемых по автору средневековых
+    сочинений — отмеченную экспертную дату. Схема классификации следует
+    <a href="https://dharmamitra.github.io/sanskrit-dating/sanskrit_chronology_interactive.html">хронологии DharmaMitra</a>.
+    Данные: <a href="/api/chronology">/api/chronology</a>.
+  </div>
+
+  <div class="chrono-controls">
+    <span class="seg" id="chrono-corpus">
+      <button data-v="both" class="on">Оба корпуса</button>
+      <button data-v="parallel-ru">Санскрито-русский</button>
+      <button data-v="wisdomlib-en">Санскрито-английский</button>
+    </span>
+    <label><input type="checkbox" id="chrono-lowconf" checked> показывать неточные датировки</label>
+    <span style="flex:1"></span>
+    <span id="chrono-count"></span>
+  </div>
+
+  <svg id="plot"></svg>
+  <div id="chrono-error"></div>
+
+  <table id="tbl"><thead><tr>
+    <th data-k="date_ce" class="n">Дата</th><th data-k="period">Период</th>
+    <th data-k="title">Текст</th><th data-k="corpus">Корпус</th>
+    <th data-k="method">Источник даты</th><th data-k="confidence">Точн.</th>
+  </tr></thead><tbody></tbody></table>
+
+  <div class="tip" id="tip"></div>
+</div>
+{% endblock %}
+
+{% block extra_body %}
+{% raw %}
+<script>
+(function () {
+  let DB = null, corpus = 'both', showLow = true, sortK = 'date_ce', sortDir = 1, dated = [];
+  let PERIODS = [], COLOR = {}, LANE = {};
+  const PAL = ['#5b8db8','#6aa0c0','#7d9b6a','#b5a23e','#c98a3e','#c2693e','#b04d54',
+               '#9a5b8a','#7a6aa0','#4f8a86','#a08a5a','#8a8276','#b07a3a','#6a8a5a',
+               '#9a9aa0','#a06a4a','#8a5a7a','#7a5a4a'];
+  const $ = s => document.querySelector(s);
+  const fmtDate = d => d < 0 ? (-d) + ' до н.э.' : (d === 0 ? 'ок. 0' : d + ' н.э.');
+  const corpusLabel = c => c === 'parallel-ru' ? 'СА–РУ' : 'СА–EN';
+
+  function visible() {
+    return dated.filter(t => (corpus === 'both' || t.corpus === corpus)
+                          && (showLow || t.confidence !== 'low'));
+  }
+
+  function draw() {
+    const rows = visible();
+    const W = Math.max(document.body.clientWidth - 40, 720), PADL = 150, PADR = 24, PADT = 14;
+    const laneH = 26, H = PADT + PERIODS.length * laneH + 34;
+    const ds = rows.map(r => r.date_ce);
+    const dmin = Math.min(-1400, ...ds), dmax = Math.max(1600, ...ds);
+    const x = d => PADL + (d - dmin) / (dmax - dmin) * (W - PADL - PADR);
+    const svg = $('#plot');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('height', H);
+    let s = '';
+    PERIODS.forEach((p, i) => {
+      const y = PADT + i * laneH;
+      s += `<rect class="lane-bg" x="0" y="${y}" width="${W}" height="${laneH}"></rect>`;
+      s += `<text class="lane-lbl" x="10" y="${y + laneH / 2 + 4}">${p}</text>`;
+    });
+    for (let yr = -1500; yr <= 1600; yr += 500) {
+      if (yr < dmin || yr > dmax) continue;
+      s += `<line class="axis" x1="${x(yr)}" y1="${PADT}" x2="${x(yr)}" y2="${PADT + PERIODS.length * laneH}"></line>`;
+      s += `<text class="axis-lbl" x="${x(yr)}" y="${H - 12}">${fmtDate(yr)}</text>`;
+    }
+    const used = {};
+    rows.forEach(r => {
+      const lane = LANE[r.period] ?? 0, y0 = PADT + lane * laneH + laneH / 2;
+      const key = r.period + '|' + Math.round(x(r.date_ce) / 7);
+      const n = (used[key] = (used[key] || 0) + 1);
+      const off = ((n % 2) ? 1 : -1) * Math.ceil(n / 2) * 4.2;
+      const yy = Math.max(PADT + lane * laneH + 5, Math.min(PADT + lane * laneH + laneH - 5, y0 + off));
+      const lc = r.confidence === 'low' ? ' lc' : '';
+      s += `<circle class="dot${lc}" data-i="${dated.indexOf(r)}" cx="${x(r.date_ce).toFixed(1)}" cy="${yy.toFixed(1)}" r="5" fill="${COLOR[r.period] || '#888'}"></circle>`;
+    });
+    svg.innerHTML = s;
+    $('#chrono-count').textContent = `${rows.length} датированных текстов · ${dated.length} всего`;
+    drawTable(rows);
+  }
+
+  function drawTable(rows) {
+    rows = rows.slice().sort((a, b) => {
+      let x = a[sortK], y = b[sortK];
+      if (x === null) x = 1e9; if (y === null) y = 1e9;
+      return (x > y ? 1 : x < y ? -1 : 0) * sortDir;
+    });
+    $('#tbl tbody').innerHTML = rows.map(r => {
+      const col = COLOR[r.period] || '#999';
+      const alias = (r.dcs_match && r.dcs_match !== r.title)
+        ? ` <span class="muted">→ ${r.dcs_match}</span>` : '';
+      return `<tr>
+        <td class="n">${fmtDate(r.date_ce)}</td>
+        <td><span class="pill" style="background:${col}22;color:${col}">${r.period}</span></td>
+        <td>${r.title}${alias}</td>
+        <td>${corpusLabel(r.corpus)}</td>
+        <td class="muted">${r.method}</td>
+        <td class="conf-${r.confidence}">${r.confidence}</td></tr>`;
+    }).join('');
+  }
+
+  function wire() {
+    const tip = $('#tip'), plot = $('#plot');
+    plot.addEventListener('mousemove', e => {
+      const c = e.target.closest('circle.dot');
+      if (!c) { tip.style.opacity = 0; return; }
+      const r = dated[+c.dataset.i];
+      tip.innerHTML = `<b>${r.title}</b><br>${fmtDate(r.date_ce)} · ${r.period}<br>`
+        + `<span style="opacity:.7">${r.method}${r.dcs_match ? ' · ' + r.dcs_match : ''} · ${r.confidence}</span>`;
+      tip.style.left = Math.min(e.clientX + 14, window.innerWidth - 310) + 'px';
+      tip.style.top = (e.clientY + 16) + 'px';
+      tip.style.opacity = 1;
+    });
+    plot.addEventListener('mouseleave', () => tip.style.opacity = 0);
+    document.querySelectorAll('#chrono-corpus button').forEach(b => b.onclick = () => {
+      document.querySelectorAll('#chrono-corpus button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); corpus = b.dataset.v; draw();
+    });
+    $('#chrono-lowconf').onchange = e => { showLow = e.target.checked; draw(); };
+    document.querySelectorAll('#tbl th').forEach(th => th.onclick = () => {
+      const k = th.dataset.k; sortDir = (sortK === k) ? -sortDir : 1; sortK = k; drawTable(visible());
+    });
+    window.addEventListener('resize', draw);
+  }
+
+  fetch('/api/chronology')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(db => {
+      DB = db;
+      PERIODS = DB.periods.map(p => p.period);
+      COLOR = Object.fromEntries(PERIODS.map((p, i) => [p, PAL[i % PAL.length]]));
+      LANE = Object.fromEntries(PERIODS.map((p, i) => [p, i]));
+      dated = DB.texts.filter(t => t.date_ce !== null);
+      wire();
+      draw();
+    })
+    .catch(err => {
+      $('#chrono-error').textContent =
+        'Не удалось загрузить данные хронологии (' + err.message + '). '
+        + 'Возможно, не выполнен build_chronology.py.';
+    });
+})();
+</script>
+{% endraw %}
+{% endblock %}
