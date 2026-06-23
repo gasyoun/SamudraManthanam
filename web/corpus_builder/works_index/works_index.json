@@ -1,0 +1,2906 @@
+{
+ "about": "Size-and-chronology index of the parallel Sanskrit–Russian corpus. Dates are inherited from chronology/texts_chronology.json (VisualDCS); size 1–10 is log10 of Sanskrit text volume, parts and works on one scale.",
+ "scale": {
+  "metric": "sanskrit_chars",
+  "transform": "log10",
+  "domain_min": 18,
+  "domain_max": 7432078,
+  "domain_note": "smallest literary part to largest whole literary work (Mahābhārata); reference works clamp at 10"
+ },
+ "periods": [
+  {
+   "period": "Vedic Saṃhitā",
+   "bucket_date": -1030
+  },
+  {
+   "period": "Brāhmaṇa",
+   "bucket_date": -792
+  },
+  {
+   "period": "Upaniṣad",
+   "bucket_date": -330
+  },
+  {
+   "period": "Sūtra/Dharma",
+   "bucket_date": -21
+  },
+  {
+   "period": "Buddhist",
+   "bucket_date": 225
+  },
+  {
+   "period": "Arthaśāstra",
+   "bucket_date": 275
+  },
+  {
+   "period": "Epic",
+   "bucket_date": 440
+  },
+  {
+   "period": "Nāṭya",
+   "bucket_date": 550
+  },
+  {
+   "period": "Kāvya",
+   "bucket_date": 582
+  },
+  {
+   "period": "Philosophy",
+   "bucket_date": 600
+  },
+  {
+   "period": "Vyākaraṇa",
+   "bucket_date": 650
+  },
+  {
+   "period": "Purāṇa",
+   "bucket_date": 770
+  },
+  {
+   "period": "Medical",
+   "bucket_date": 886
+  },
+  {
+   "period": "Narrative Prose",
+   "bucket_date": 935
+  },
+  {
+   "period": "Other",
+   "bucket_date": 1034
+  },
+  {
+   "period": "Kośa/Lexicon",
+   "bucket_date": 1112
+  },
+  {
+   "period": "Tantra/Āgama",
+   "bucket_date": 1117
+  },
+  {
+   "period": "Ritual",
+   "bucket_date": 1275
+  }
+ ],
+ "n_works": 86,
+ "n_parts": 148,
+ "works": [
+  {
+   "slug": "rigveda",
+   "title": "Ṛgveda",
+   "ru_title": "01_rigveda.html",
+   "period": "Vedic Saṃhitā",
+   "date_ce": -1350,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Ṛgveda",
+   "size": 9,
+   "sa_chars": 1123288,
+   "sa_segs": 10517,
+   "n_parts": 10,
+   "live_url": "/sources/01_rigveda",
+   "timeline_url": "/chronology?focus=rigveda",
+   "parts": [
+    {
+     "slug": "01_rigveda",
+     "title": "Ṛgveda — 01",
+     "size": 8,
+     "sa_chars": 221960,
+     "sa_segs": 1976,
+     "live_url": "/sources/01_rigveda"
+    },
+    {
+     "slug": "02_rigveda",
+     "title": "Ṛgveda — 02",
+     "size": 7,
+     "sa_chars": 52759,
+     "sa_segs": 429,
+     "live_url": "/sources/02_rigveda"
+    },
+    {
+     "slug": "03_rigveda",
+     "title": "Ṛgveda — 03",
+     "size": 7,
+     "sa_chars": 69693,
+     "sa_segs": 617,
+     "live_url": "/sources/03_rigveda"
+    },
+    {
+     "slug": "04_rigveda",
+     "title": "Ṛgveda — 04",
+     "size": 7,
+     "sa_chars": 65693,
+     "sa_segs": 589,
+     "live_url": "/sources/04_rigveda"
+    },
+    {
+     "slug": "05_rigveda",
+     "title": "Ṛgveda — 05",
+     "size": 7,
+     "sa_chars": 79929,
+     "sa_segs": 725,
+     "live_url": "/sources/05_rigveda"
+    },
+    {
+     "slug": "06_rigveda",
+     "title": "Ṛgveda — 06",
+     "size": 7,
+     "sa_chars": 85717,
+     "sa_segs": 765,
+     "live_url": "/sources/06_rigveda"
+    },
+    {
+     "slug": "07_rigveda",
+     "title": "Ṛgveda — 07",
+     "size": 7,
+     "sa_chars": 96714,
+     "sa_segs": 841,
+     "live_url": "/sources/07_rigveda"
+    },
+    {
+     "slug": "08_rigveda",
+     "title": "Ṛgveda — 08",
+     "size": 7,
+     "sa_chars": 151149,
+     "sa_segs": 1716,
+     "live_url": "/sources/08_rigveda"
+    },
+    {
+     "slug": "09_rigveda",
+     "title": "Ṛgveda — 09",
+     "size": 7,
+     "sa_chars": 100220,
+     "sa_segs": 1108,
+     "live_url": "/sources/09_rigveda"
+    },
+    {
+     "slug": "10_rigveda",
+     "title": "Ṛgveda — 10",
+     "size": 7,
+     "sa_chars": 199454,
+     "sa_segs": 1751,
+     "live_url": "/sources/10_rigveda"
+    }
+   ]
+  },
+  {
+   "slug": "atharvaveda",
+   "title": "Atharvaveda (Śaunaka)",
+   "ru_title": "01_atharvaveda.html",
+   "period": "Vedic Saṃhitā",
+   "date_ce": -1100,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Atharvaveda Śaunaka)",
+   "size": 8,
+   "sa_chars": 503744,
+   "sa_segs": 4832,
+   "n_parts": 19,
+   "live_url": "/sources/01_atharvaveda",
+   "timeline_url": "/chronology?focus=atharvaveda",
+   "parts": [
+    {
+     "slug": "01_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 01",
+     "size": 6,
+     "sa_chars": 15222,
+     "sa_segs": 153,
+     "live_url": "/sources/01_atharvaveda"
+    },
+    {
+     "slug": "02_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 02",
+     "size": 6,
+     "sa_chars": 20744,
+     "sa_segs": 207,
+     "live_url": "/sources/02_atharvaveda"
+    },
+    {
+     "slug": "03_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 03",
+     "size": 6,
+     "sa_chars": 25340,
+     "sa_segs": 230,
+     "live_url": "/sources/03_atharvaveda"
+    },
+    {
+     "slug": "04_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 04",
+     "size": 6,
+     "sa_chars": 36206,
+     "sa_segs": 324,
+     "live_url": "/sources/04_atharvaveda"
+    },
+    {
+     "slug": "05_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 05",
+     "size": 6,
+     "sa_chars": 38970,
+     "sa_segs": 376,
+     "live_url": "/sources/05_atharvaveda"
+    },
+    {
+     "slug": "06_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 06",
+     "size": 6,
+     "sa_chars": 46243,
+     "sa_segs": 454,
+     "live_url": "/sources/06_atharvaveda"
+    },
+    {
+     "slug": "07_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 07",
+     "size": 6,
+     "sa_chars": 31240,
+     "sa_segs": 286,
+     "live_url": "/sources/07_atharvaveda"
+    },
+    {
+     "slug": "08_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 08",
+     "size": 6,
+     "sa_chars": 29820,
+     "sa_segs": 259,
+     "live_url": "/sources/08_atharvaveda"
+    },
+    {
+     "slug": "09_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 09",
+     "size": 6,
+     "sa_chars": 30537,
+     "sa_segs": 302,
+     "live_url": "/sources/09_atharvaveda"
+    },
+    {
+     "slug": "10_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 10",
+     "size": 6,
+     "sa_chars": 39874,
+     "sa_segs": 350,
+     "live_url": "/sources/10_atharvaveda"
+    },
+    {
+     "slug": "11_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 11",
+     "size": 6,
+     "sa_chars": 35725,
+     "sa_segs": 313,
+     "live_url": "/sources/11_atharvaveda"
+    },
+    {
+     "slug": "12_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 12",
+     "size": 6,
+     "sa_chars": 31393,
+     "sa_segs": 304,
+     "live_url": "/sources/12_atharvaveda"
+    },
+    {
+     "slug": "13_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 13",
+     "size": 6,
+     "sa_chars": 19692,
+     "sa_segs": 188,
+     "live_url": "/sources/13_atharvaveda"
+    },
+    {
+     "slug": "14_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 14",
+     "size": 6,
+     "sa_chars": 15302,
+     "sa_segs": 139,
+     "live_url": "/sources/14_atharvaveda"
+    },
+    {
+     "slug": "15_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 15",
+     "size": 6,
+     "sa_chars": 12833,
+     "sa_segs": 220,
+     "live_url": "/sources/15_atharvaveda"
+    },
+    {
+     "slug": "16_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 16",
+     "size": 5,
+     "sa_chars": 7678,
+     "sa_segs": 103,
+     "live_url": "/sources/16_atharvaveda"
+    },
+    {
+     "slug": "17_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 17",
+     "size": 5,
+     "sa_chars": 4830,
+     "sa_segs": 30,
+     "live_url": "/sources/17_atharvaveda"
+    },
+    {
+     "slug": "18_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 18",
+     "size": 6,
+     "sa_chars": 31995,
+     "sa_segs": 283,
+     "live_url": "/sources/18_atharvaveda"
+    },
+    {
+     "slug": "19_atharvaveda",
+     "title": "Atharvaveda (Śaunaka) — 19",
+     "size": 6,
+     "sa_chars": 30100,
+     "sa_segs": 311,
+     "live_url": "/sources/19_atharvaveda"
+    }
+   ]
+  },
+  {
+   "slug": "vedanga_jyotisha",
+   "title": "Vedāṅgajyotiṣa",
+   "ru_title": "vedanga_jyotisha.html",
+   "period": "Vedic Saṃhitā",
+   "date_ce": -400,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 16924,
+   "sa_segs": 84,
+   "n_parts": 1,
+   "live_url": "/sources/vedanga_jyotisha",
+   "timeline_url": "/chronology?focus=vedanga_jyotisha",
+   "parts": [
+    {
+     "slug": "vedanga_jyotisha",
+     "title": "Vedāṅgajyotiṣa",
+     "size": 6,
+     "sa_chars": 16924,
+     "sa_segs": 84,
+     "live_url": "/sources/vedanga_jyotisha"
+    }
+   ]
+  },
+  {
+   "slug": "br-up",
+   "title": "Bṛhadāraṇyaka Upaniṣad",
+   "ru_title": "br-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -599,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Bṛhadāraṇyakopaniṣad",
+   "size": 7,
+   "sa_chars": 126157,
+   "sa_segs": 438,
+   "n_parts": 1,
+   "live_url": "/sources/br-up",
+   "timeline_url": "/chronology?focus=br-up",
+   "parts": [
+    {
+     "slug": "br-up",
+     "title": "Bṛhadāraṇyaka Upaniṣad",
+     "size": 7,
+     "sa_chars": 126157,
+     "sa_segs": 438,
+     "live_url": "/sources/br-up"
+    }
+   ]
+  },
+  {
+   "slug": "ch-up",
+   "title": "Chāndogya Upaniṣad",
+   "ru_title": "ch-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -599,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Chāndogyopaniṣad",
+   "size": 7,
+   "sa_chars": 111110,
+   "sa_segs": 628,
+   "n_parts": 1,
+   "live_url": "/sources/ch-up",
+   "timeline_url": "/chronology?focus=ch-up",
+   "parts": [
+    {
+     "slug": "ch-up",
+     "title": "Chāndogya Upaniṣad",
+     "size": 7,
+     "sa_chars": 111110,
+     "sa_segs": 628,
+     "live_url": "/sources/ch-up"
+    }
+   ]
+  },
+  {
+   "slug": "jabala-up",
+   "title": "Jābāla Upaniṣad (var.)",
+   "ru_title": "jabala-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 36811,
+   "sa_segs": 42,
+   "n_parts": 1,
+   "live_url": "/sources/jabala-up",
+   "timeline_url": "/chronology?focus=jabala-up",
+   "parts": [
+    {
+     "slug": "jabala-up",
+     "title": "Jābāla Upaniṣad (var.)",
+     "size": 6,
+     "sa_chars": 36811,
+     "sa_segs": 42,
+     "live_url": "/sources/jabala-up"
+    }
+   ]
+  },
+  {
+   "slug": "kau-up",
+   "title": "Kauṣītaki Upaniṣad",
+   "ru_title": "kau-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 30125,
+   "sa_segs": 50,
+   "n_parts": 1,
+   "live_url": "/sources/kau-up",
+   "timeline_url": "/chronology?focus=kau-up",
+   "parts": [
+    {
+     "slug": "kau-up",
+     "title": "Kauṣītaki Upaniṣad",
+     "size": 6,
+     "sa_chars": 30125,
+     "sa_segs": 50,
+     "live_url": "/sources/kau-up"
+    }
+   ]
+  },
+  {
+   "slug": "mai-up",
+   "title": "Maitrāyaṇī Upaniṣad",
+   "ru_title": "mai-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 40531,
+   "sa_segs": 73,
+   "n_parts": 1,
+   "live_url": "/sources/mai-up",
+   "timeline_url": "/chronology?focus=mai-up",
+   "parts": [
+    {
+     "slug": "mai-up",
+     "title": "Maitrāyaṇī Upaniṣad",
+     "size": 6,
+     "sa_chars": 40531,
+     "sa_segs": 73,
+     "live_url": "/sources/mai-up"
+    }
+   ]
+  },
+  {
+   "slug": "tai-up",
+   "title": "Taittirīya Upaniṣad",
+   "ru_title": "tai-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 17478,
+   "sa_segs": 58,
+   "n_parts": 1,
+   "live_url": "/sources/tai-up",
+   "timeline_url": "/chronology?focus=tai-up",
+   "parts": [
+    {
+     "slug": "tai-up",
+     "title": "Taittirīya Upaniṣad",
+     "size": 6,
+     "sa_chars": 17478,
+     "sa_segs": 58,
+     "live_url": "/sources/tai-up"
+    }
+   ]
+  },
+  {
+   "slug": "yotat-up",
+   "title": "Yogatattva Upaniṣad",
+   "ru_title": "yotat-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 13905,
+   "sa_segs": 143,
+   "n_parts": 1,
+   "live_url": "/sources/yotat-up",
+   "timeline_url": "/chronology?focus=yotat-up",
+   "parts": [
+    {
+     "slug": "yotat-up",
+     "title": "Yogatattva Upaniṣad",
+     "size": 6,
+     "sa_chars": 13905,
+     "sa_segs": 143,
+     "live_url": "/sources/yotat-up"
+    }
+   ]
+  },
+  {
+   "slug": "ait-up",
+   "title": "Aitareya Upaniṣad",
+   "ru_title": "ait-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 5955,
+   "sa_segs": 33,
+   "n_parts": 1,
+   "live_url": "/sources/ait-up",
+   "timeline_url": "/chronology?focus=ait-up",
+   "parts": [
+    {
+     "slug": "ait-up",
+     "title": "Aitareya Upaniṣad",
+     "size": 5,
+     "sa_chars": 5955,
+     "sa_segs": 33,
+     "live_url": "/sources/ait-up"
+    }
+   ]
+  },
+  {
+   "slug": "kai-up",
+   "title": "Kaivalya Upaniṣad",
+   "ru_title": "kai-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 3359,
+   "sa_segs": 25,
+   "n_parts": 1,
+   "live_url": "/sources/kai-up",
+   "timeline_url": "/chronology?focus=kai-up",
+   "parts": [
+    {
+     "slug": "kai-up",
+     "title": "Kaivalya Upaniṣad",
+     "size": 5,
+     "sa_chars": 3359,
+     "sa_segs": 25,
+     "live_url": "/sources/kai-up"
+    }
+   ]
+  },
+  {
+   "slug": "kena-up",
+   "title": "Kena Upaniṣad",
+   "ru_title": "kena-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 3694,
+   "sa_segs": 35,
+   "n_parts": 1,
+   "live_url": "/sources/kena-up",
+   "timeline_url": "/chronology?focus=kena-up",
+   "parts": [
+    {
+     "slug": "kena-up",
+     "title": "Kena Upaniṣad",
+     "size": 5,
+     "sa_chars": 3694,
+     "sa_segs": 35,
+     "live_url": "/sources/kena-up"
+    }
+   ]
+  },
+  {
+   "slug": "mnar-up",
+   "title": "Mahānārāyaṇa Upaniṣad",
+   "ru_title": "mnar-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 7566,
+   "sa_segs": 111,
+   "n_parts": 1,
+   "live_url": "/sources/mnar-up",
+   "timeline_url": "/chronology?focus=mnar-up",
+   "parts": [
+    {
+     "slug": "mnar-up",
+     "title": "Mahānārāyaṇa Upaniṣad",
+     "size": 5,
+     "sa_chars": 7566,
+     "sa_segs": 111,
+     "live_url": "/sources/mnar-up"
+    }
+   ]
+  },
+  {
+   "slug": "mun-up",
+   "title": "Muṇḍaka Upaniṣad",
+   "ru_title": "mun-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 9213,
+   "sa_segs": 65,
+   "n_parts": 1,
+   "live_url": "/sources/mun-up",
+   "timeline_url": "/chronology?focus=mun-up",
+   "parts": [
+    {
+     "slug": "mun-up",
+     "title": "Muṇḍaka Upaniṣad",
+     "size": 5,
+     "sa_chars": 9213,
+     "sa_segs": 65,
+     "live_url": "/sources/mun-up"
+    }
+   ]
+  },
+  {
+   "slug": "pai-up",
+   "title": "Paiṅgala Upaniṣad",
+   "ru_title": "pai-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 3666,
+   "sa_segs": 19,
+   "n_parts": 1,
+   "live_url": "/sources/pai-up",
+   "timeline_url": "/chronology?focus=pai-up",
+   "parts": [
+    {
+     "slug": "pai-up",
+     "title": "Paiṅgala Upaniṣad",
+     "size": 5,
+     "sa_chars": 3666,
+     "sa_segs": 19,
+     "live_url": "/sources/pai-up"
+    }
+   ]
+  },
+  {
+   "slug": "pr-up",
+   "title": "Praśna Upaniṣad",
+   "ru_title": "pr-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 10604,
+   "sa_segs": 67,
+   "n_parts": 1,
+   "live_url": "/sources/pr-up",
+   "timeline_url": "/chronology?focus=pr-up",
+   "parts": [
+    {
+     "slug": "pr-up",
+     "title": "Praśna Upaniṣad",
+     "size": 5,
+     "sa_chars": 10604,
+     "sa_segs": 67,
+     "live_url": "/sources/pr-up"
+    }
+   ]
+  },
+  {
+   "slug": "sub-up",
+   "title": "Subāla Upaniṣad",
+   "ru_title": "sub-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 2975,
+   "sa_segs": 13,
+   "n_parts": 1,
+   "live_url": "/sources/sub-up",
+   "timeline_url": "/chronology?focus=sub-up",
+   "parts": [
+    {
+     "slug": "sub-up",
+     "title": "Subāla Upaniṣad",
+     "size": 5,
+     "sa_chars": 2975,
+     "sa_segs": 13,
+     "live_url": "/sources/sub-up"
+    }
+   ]
+  },
+  {
+   "slug": "brb-up",
+   "title": "Brahmabindu Upaniṣad",
+   "ru_title": "brb-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 2337,
+   "sa_segs": 22,
+   "n_parts": 1,
+   "live_url": "/sources/brb-up",
+   "timeline_url": "/chronology?focus=brb-up",
+   "parts": [
+    {
+     "slug": "brb-up",
+     "title": "Brahmabindu Upaniṣad",
+     "size": 4,
+     "sa_chars": 2337,
+     "sa_segs": 22,
+     "live_url": "/sources/brb-up"
+    }
+   ]
+  },
+  {
+   "slug": "man-up",
+   "title": "Māṇḍūkya Upaniṣad",
+   "ru_title": "man-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 1660,
+   "sa_segs": 12,
+   "n_parts": 1,
+   "live_url": "/sources/man-up",
+   "timeline_url": "/chronology?focus=man-up",
+   "parts": [
+    {
+     "slug": "man-up",
+     "title": "Māṇḍūkya Upaniṣad",
+     "size": 4,
+     "sa_chars": 1660,
+     "sa_segs": 12,
+     "live_url": "/sources/man-up"
+    }
+   ]
+  },
+  {
+   "slug": "nr-up",
+   "title": "Nṛsiṃhatāpanīya Upaniṣad",
+   "ru_title": "nr-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 2315,
+   "sa_segs": 11,
+   "n_parts": 1,
+   "live_url": "/sources/nr-up",
+   "timeline_url": "/chronology?focus=nr-up",
+   "parts": [
+    {
+     "slug": "nr-up",
+     "title": "Nṛsiṃhatāpanīya Upaniṣad",
+     "size": 4,
+     "sa_chars": 2315,
+     "sa_segs": 11,
+     "live_url": "/sources/nr-up"
+    }
+   ]
+  },
+  {
+   "slug": "rampt-up",
+   "title": "Rāmatāpanīya Upaniṣad",
+   "ru_title": "rampt-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 944,
+   "sa_segs": 10,
+   "n_parts": 1,
+   "live_url": "/sources/rampt-up",
+   "timeline_url": "/chronology?focus=rampt-up",
+   "parts": [
+    {
+     "slug": "rampt-up",
+     "title": "Rāmatāpanīya Upaniṣad",
+     "size": 4,
+     "sa_chars": 944,
+     "sa_segs": 10,
+     "live_url": "/sources/rampt-up"
+    }
+   ]
+  },
+  {
+   "slug": "vajs-up",
+   "title": "Vajrasūcī Upaniṣad",
+   "ru_title": "vajs-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 2321,
+   "sa_segs": 9,
+   "n_parts": 1,
+   "live_url": "/sources/vajs-up",
+   "timeline_url": "/chronology?focus=vajs-up",
+   "parts": [
+    {
+     "slug": "vajs-up",
+     "title": "Vajrasūcī Upaniṣad",
+     "size": 4,
+     "sa_chars": 2321,
+     "sa_segs": 9,
+     "live_url": "/sources/vajs-up"
+    }
+   ]
+  },
+  {
+   "slug": "atma-up",
+   "title": "Ātmā Upaniṣad",
+   "ru_title": "atma-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 1151,
+   "sa_segs": 3,
+   "n_parts": 1,
+   "live_url": "/sources/atma-up",
+   "timeline_url": "/chronology?focus=atma-up",
+   "parts": [
+    {
+     "slug": "atma-up",
+     "title": "Ātmā Upaniṣad",
+     "size": 4,
+     "sa_chars": 1151,
+     "sa_segs": 3,
+     "live_url": "/sources/atma-up"
+    }
+   ]
+  },
+  {
+   "slug": "isha-up",
+   "title": "Īśa Upaniṣad",
+   "ru_title": "isha-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "med",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 2159,
+   "sa_segs": 19,
+   "n_parts": 1,
+   "live_url": "/sources/isha-up",
+   "timeline_url": "/chronology?focus=isha-up",
+   "parts": [
+    {
+     "slug": "isha-up",
+     "title": "Īśa Upaniṣad",
+     "size": 4,
+     "sa_chars": 2159,
+     "sa_segs": 19,
+     "live_url": "/sources/isha-up"
+    }
+   ]
+  },
+  {
+   "slug": "jab-up",
+   "title": "Jābāla Upaniṣad",
+   "ru_title": "jab-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 3,
+   "sa_chars": 374,
+   "sa_segs": 1,
+   "n_parts": 1,
+   "live_url": "/sources/jab-up",
+   "timeline_url": "/chronology?focus=jab-up",
+   "parts": [
+    {
+     "slug": "jab-up",
+     "title": "Jābāla Upaniṣad",
+     "size": 3,
+     "sa_chars": 374,
+     "sa_segs": 1,
+     "live_url": "/sources/jab-up"
+    }
+   ]
+  },
+  {
+   "slug": "chag-up",
+   "title": "Chāgaleya Upaniṣad",
+   "ru_title": "chag-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 2,
+   "sa_chars": 90,
+   "sa_segs": 5,
+   "n_parts": 1,
+   "live_url": "/sources/chag-up",
+   "timeline_url": "/chronology?focus=chag-up",
+   "parts": [
+    {
+     "slug": "chag-up",
+     "title": "Chāgaleya Upaniṣad",
+     "size": 2,
+     "sa_chars": 90,
+     "sa_segs": 5,
+     "live_url": "/sources/chag-up"
+    }
+   ]
+  },
+  {
+   "slug": "kan-up",
+   "title": "Kaṇṭhaśruti Upaniṣad",
+   "ru_title": "kan-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -330,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 1,
+   "sa_chars": 18,
+   "sa_segs": 1,
+   "n_parts": 1,
+   "live_url": "/sources/kan-up",
+   "timeline_url": "/chronology?focus=kan-up",
+   "parts": [
+    {
+     "slug": "kan-up",
+     "title": "Kaṇṭhaśruti Upaniṣad",
+     "size": 1,
+     "sa_chars": 18,
+     "sa_segs": 1,
+     "live_url": "/sources/kan-up"
+    }
+   ]
+  },
+  {
+   "slug": "kat-up",
+   "title": "Kaṭha Upaniṣad",
+   "ru_title": "kat-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -150,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Kaṭhopaniṣad",
+   "size": 6,
+   "sa_chars": 13461,
+   "sa_segs": 119,
+   "n_parts": 1,
+   "live_url": "/sources/kat-up",
+   "timeline_url": "/chronology?focus=kat-up",
+   "parts": [
+    {
+     "slug": "kat-up",
+     "title": "Kaṭha Upaniṣad",
+     "size": 6,
+     "sa_chars": 13461,
+     "sa_segs": 119,
+     "live_url": "/sources/kat-up"
+    }
+   ]
+  },
+  {
+   "slug": "shv-up",
+   "title": "Śvetāśvatara Upaniṣad",
+   "ru_title": "shv-up.html",
+   "period": "Upaniṣad",
+   "date_ce": -150,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Śvetāśvataropaniṣad",
+   "size": 6,
+   "sa_chars": 14871,
+   "sa_segs": 113,
+   "n_parts": 1,
+   "live_url": "/sources/shv-up",
+   "timeline_url": "/chronology?focus=shv-up",
+   "parts": [
+    {
+     "slug": "shv-up",
+     "title": "Śvetāśvatara Upaniṣad",
+     "size": 6,
+     "sa_chars": 14871,
+     "sa_segs": 113,
+     "live_url": "/sources/shv-up"
+    }
+   ]
+  },
+  {
+   "slug": "manavadharmashastra",
+   "title": "Mānavadharmaśāstra (Manusmṛti)",
+   "ru_title": "manavadharmashastra.html",
+   "period": "Sūtra/Dharma",
+   "date_ce": 200,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Manusmṛti",
+   "size": 8,
+   "sa_chars": 275506,
+   "sa_segs": 2686,
+   "n_parts": 1,
+   "live_url": "/sources/manavadharmashastra",
+   "timeline_url": "/chronology?focus=manavadharmashastra",
+   "parts": [
+    {
+     "slug": "manavadharmashastra",
+     "title": "Mānavadharmaśāstra (Manusmṛti)",
+     "size": 8,
+     "sa_chars": 275506,
+     "sa_segs": 2686,
+     "live_url": "/sources/manavadharmashastra"
+    }
+   ]
+  },
+  {
+   "slug": "kama-sutra",
+   "title": "Kāmasūtra",
+   "ru_title": "kama-sutra.html",
+   "period": "Arthaśāstra",
+   "date_ce": 350,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Kāmasūtra",
+   "size": 8,
+   "sa_chars": 285215,
+   "sa_segs": 1502,
+   "n_parts": 1,
+   "live_url": "/sources/kama-sutra",
+   "timeline_url": "/chronology?focus=kama-sutra",
+   "parts": [
+    {
+     "slug": "kama-sutra",
+     "title": "Kāmasūtra",
+     "size": 8,
+     "sa_chars": 285215,
+     "sa_segs": 1502,
+     "live_url": "/sources/kama-sutra"
+    }
+   ]
+  },
+  {
+   "slug": "mahabharata",
+   "title": "Mahābhārata",
+   "ru_title": "01_mahabharata-adiparva.html",
+   "period": "Epic",
+   "date_ce": 0,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Mahābhārata",
+   "size": 10,
+   "sa_chars": 7432078,
+   "sa_segs": 29142,
+   "n_parts": 18,
+   "live_url": "/sources/01_mahabharata-adiparva",
+   "timeline_url": "/chronology?focus=mahabharata",
+   "parts": [
+    {
+     "slug": "01_mahabharata-adiparva",
+     "title": "Mahābhārata — Adiparva",
+     "size": 8,
+     "sa_chars": 732651,
+     "sa_segs": 1387,
+     "live_url": "/sources/01_mahabharata-adiparva"
+    },
+    {
+     "slug": "02_mahabharata-sabhaparva",
+     "title": "Mahābhārata — Sabhaparva",
+     "size": 8,
+     "sa_chars": 236776,
+     "sa_segs": 438,
+     "live_url": "/sources/02_mahabharata-sabhaparva"
+    },
+    {
+     "slug": "03_mahabharata-aranyakaparva",
+     "title": "Mahābhārata — Aranyakaparva",
+     "size": 9,
+     "sa_chars": 1038767,
+     "sa_segs": 2033,
+     "live_url": "/sources/03_mahabharata-aranyakaparva"
+    },
+    {
+     "slug": "04_mahabharata-virataparva",
+     "title": "Mahābhārata — Virataparva",
+     "size": 7,
+     "sa_chars": 184805,
+     "sa_segs": 360,
+     "live_url": "/sources/04_mahabharata-virataparva"
+    },
+    {
+     "slug": "05_mahabharata-udyogaparva",
+     "title": "Mahābhārata — Udyogaparva",
+     "size": 8,
+     "sa_chars": 618868,
+     "sa_segs": 1006,
+     "live_url": "/sources/05_mahabharata-udyogaparva"
+    },
+    {
+     "slug": "06_mahabharata-bhishmaparva",
+     "title": "Mahābhārata — Bhishmaparva",
+     "size": 8,
+     "sa_chars": 555067,
+     "sa_segs": 1337,
+     "live_url": "/sources/06_mahabharata-bhishmaparva"
+    },
+    {
+     "slug": "07_mahabharata-dronaparva",
+     "title": "Mahābhārata — Dronaparva",
+     "size": 8,
+     "sa_chars": 809056,
+     "sa_segs": 1219,
+     "live_url": "/sources/07_mahabharata-dronaparva"
+    },
+    {
+     "slug": "08_mahabharata-karnaparva",
+     "title": "Mahābhārata — Karnaparva",
+     "size": 8,
+     "sa_chars": 409058,
+     "sa_segs": 618,
+     "live_url": "/sources/08_mahabharata-karnaparva"
+    },
+    {
+     "slug": "09_mahabharata-shalyaparva",
+     "title": "Mahābhārata — Shalyaparva",
+     "size": 8,
+     "sa_chars": 333920,
+     "sa_segs": 533,
+     "live_url": "/sources/09_mahabharata-shalyaparva"
+    },
+    {
+     "slug": "10_mahabharata-sauptikaparva",
+     "title": "Mahābhārata — Sauptikaparva",
+     "size": 7,
+     "sa_chars": 76453,
+     "sa_segs": 85,
+     "live_url": "/sources/10_mahabharata-sauptikaparva"
+    },
+    {
+     "slug": "11_mahabharata-striparva",
+     "title": "Mahābhārata — Striparva",
+     "size": 7,
+     "sa_chars": 70974,
+     "sa_segs": 122,
+     "live_url": "/sources/11_mahabharata-striparva"
+    },
+    {
+     "slug": "12_mahabharata-shantiparva",
+     "title": "Mahābhārata — Shantiparva",
+     "size": 9,
+     "sa_chars": 1284677,
+     "sa_segs": 12692,
+     "live_url": "/sources/12_mahabharata-shantiparva"
+    },
+    {
+     "slug": "13_mahabharata-anushasanaparva",
+     "title": "Mahābhārata — Anushasanaparva",
+     "size": 8,
+     "sa_chars": 646231,
+     "sa_segs": 6537,
+     "live_url": "/sources/13_mahabharata-anushasanaparva"
+    },
+    {
+     "slug": "14_mahabharata-ashvamedhikaparva",
+     "title": "Mahābhārata — Ashvamedhikaparva",
+     "size": 8,
+     "sa_chars": 273733,
+     "sa_segs": 517,
+     "live_url": "/sources/14_mahabharata-ashvamedhikaparva"
+    },
+    {
+     "slug": "15_mahabharata-ashramavasikaparva",
+     "title": "Mahābhārata — Ashramavasikaparva",
+     "size": 7,
+     "sa_chars": 103995,
+     "sa_segs": 162,
+     "live_url": "/sources/15_mahabharata-ashramavasikaparva"
+    },
+    {
+     "slug": "16_mahabharata-mausalaparva",
+     "title": "Mahābhārata — Mausalaparva",
+     "size": 6,
+     "sa_chars": 27330,
+     "sa_segs": 42,
+     "live_url": "/sources/16_mahabharata-mausalaparva"
+    },
+    {
+     "slug": "17_mahabharata-mahaprasthanikaparva",
+     "title": "Mahābhārata — Mahaprasthanikaparva",
+     "size": 5,
+     "sa_chars": 10542,
+     "sa_segs": 26,
+     "live_url": "/sources/17_mahabharata-mahaprasthanikaparva"
+    },
+    {
+     "slug": "18_mahabharata-svargarohanikaparva",
+     "title": "Mahābhārata — Svargarohanikaparva",
+     "size": 6,
+     "sa_chars": 19175,
+     "sa_segs": 28,
+     "live_url": "/sources/18_mahabharata-svargarohanikaparva"
+    }
+   ]
+  },
+  {
+   "slug": "bhagavadgita",
+   "title": "Bhagavadgītā",
+   "ru_title": "bhagavadgita-erman.html",
+   "period": "Epic",
+   "date_ce": 0,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 9,
+   "sa_chars": 891452,
+   "sa_segs": 7570,
+   "n_parts": 11,
+   "live_url": "/sources/bhagavadgita-erman",
+   "timeline_url": "/chronology?focus=bhagavadgita",
+   "parts": [
+    {
+     "slug": "bhagavadgita-erman",
+     "title": "Bhagavadgītā — Erman",
+     "size": 7,
+     "sa_chars": 81094,
+     "sa_segs": 700,
+     "live_url": "/sources/bhagavadgita-erman"
+    },
+    {
+     "slug": "bhagavadgita-sementsov",
+     "title": "Bhagavadgītā — Sementsov",
+     "size": 7,
+     "sa_chars": 81151,
+     "sa_segs": 696,
+     "live_url": "/sources/bhagavadgita-sementsov"
+    },
+    {
+     "slug": "bhagavadgita-smirnov",
+     "title": "Bhagavadgītā — Smirnov",
+     "size": 7,
+     "sa_chars": 81100,
+     "sa_segs": 701,
+     "live_url": "/sources/bhagavadgita-smirnov"
+    },
+    {
+     "slug": "bhagavadgita-burba",
+     "title": "Bhagavadgītā — Burba",
+     "size": 7,
+     "sa_chars": 77351,
+     "sa_segs": 719,
+     "live_url": "/sources/bhagavadgita-burba"
+    },
+    {
+     "slug": "bhagavadgita-1788",
+     "title": "Bhagavadgītā — 1788",
+     "size": 7,
+     "sa_chars": 70404,
+     "sa_segs": 697,
+     "live_url": "/sources/bhagavadgita-1788"
+    },
+    {
+     "slug": "bhagavadgita-1909",
+     "title": "Bhagavadgītā — 1909",
+     "size": 7,
+     "sa_chars": 70410,
+     "sa_segs": 691,
+     "live_url": "/sources/bhagavadgita-1909"
+    },
+    {
+     "slug": "bhagavadgita-1914",
+     "title": "Bhagavadgītā — 1914",
+     "size": 7,
+     "sa_chars": 70400,
+     "sa_segs": 701,
+     "live_url": "/sources/bhagavadgita-1914"
+    },
+    {
+     "slug": "bhagavadgita-prabhupada",
+     "title": "Bhagavadgītā — Prabhupada",
+     "size": 7,
+     "sa_chars": 72111,
+     "sa_segs": 657,
+     "live_url": "/sources/bhagavadgita-prabhupada"
+    },
+    {
+     "slug": "bhagavadgita-radha",
+     "title": "Bhagavadgītā — Radha",
+     "size": 7,
+     "sa_chars": 77298,
+     "sa_segs": 647,
+     "live_url": "/sources/bhagavadgita-radha"
+    },
+    {
+     "slug": "bhagavadgita-sharma",
+     "title": "Bhagavadgītā — Sharma",
+     "size": 7,
+     "sa_chars": 74284,
+     "sa_segs": 660,
+     "live_url": "/sources/bhagavadgita-sharma"
+    },
+    {
+     "slug": "bhagavadgity",
+     "title": "Bhagavadgītā — Bhagavadgity",
+     "size": 7,
+     "sa_chars": 135849,
+     "sa_segs": 701,
+     "live_url": "/sources/bhagavadgity"
+    }
+   ]
+  },
+  {
+   "slug": "ramayana",
+   "title": "Rāmāyaṇa",
+   "ru_title": "01_ramayana-balakanda.html",
+   "period": "Epic",
+   "date_ce": 150,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Rāmāyaṇa",
+   "size": 9,
+   "sa_chars": 1182364,
+   "sa_segs": 11881,
+   "n_parts": 4,
+   "live_url": "/sources/01_ramayana-balakanda",
+   "timeline_url": "/chronology?focus=ramayana",
+   "parts": [
+    {
+     "slug": "01_ramayana-balakanda",
+     "title": "Rāmāyaṇa — Balakanda",
+     "size": 8,
+     "sa_chars": 216378,
+     "sa_segs": 2268,
+     "live_url": "/sources/01_ramayana-balakanda"
+    },
+    {
+     "slug": "02_ramayana-ayodhyakanda",
+     "title": "Rāmāyaṇa — Ayodhyakanda",
+     "size": 8,
+     "sa_chars": 430761,
+     "sa_segs": 4307,
+     "live_url": "/sources/02_ramayana-ayodhyakanda"
+    },
+    {
+     "slug": "03_ramayana-aranyakanda",
+     "title": "Rāmāyaṇa — Aranyakanda",
+     "size": 8,
+     "sa_chars": 249031,
+     "sa_segs": 2447,
+     "live_url": "/sources/03_ramayana-aranyakanda"
+    },
+    {
+     "slug": "05_ramayana-sundarakanda",
+     "title": "Rāmāyaṇa — Sundarakanda",
+     "size": 8,
+     "sa_chars": 286194,
+     "sa_segs": 2859,
+     "live_url": "/sources/05_ramayana-sundarakanda"
+    }
+   ]
+  },
+  {
+   "slug": "buddhacarita",
+   "title": "Buddhacarita",
+   "ru_title": "buddhacharita.html",
+   "period": "Kāvya",
+   "date_ce": 150,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Buddhacarita",
+   "size": 7,
+   "sa_chars": 133185,
+   "sa_segs": 1033,
+   "n_parts": 2,
+   "live_url": "/sources/buddhacharita",
+   "timeline_url": "/chronology?focus=buddhacarita",
+   "parts": [
+    {
+     "slug": "buddhacharita",
+     "title": "Buddhacarita — Buddhacharita",
+     "size": 7,
+     "sa_chars": 133185,
+     "sa_segs": 1033,
+     "live_url": "/sources/buddhacharita"
+    },
+    {
+     "slug": "buddhacharita-balmont",
+     "title": "Buddhacarita — Buddhacharita balmont",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/buddhacharita-balmont"
+    }
+   ]
+  },
+  {
+   "slug": "kumarasambhava",
+   "title": "Kumārasaṃbhava",
+   "ru_title": "kumarasambhava.html",
+   "period": "Kāvya",
+   "date_ce": 400,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Kumārasaṃbhava",
+   "size": 7,
+   "sa_chars": 75502,
+   "sa_segs": 614,
+   "n_parts": 1,
+   "live_url": "/sources/kumarasambhava",
+   "timeline_url": "/chronology?focus=kumarasambhava",
+   "parts": [
+    {
+     "slug": "kumarasambhava",
+     "title": "Kumārasaṃbhava",
+     "size": 7,
+     "sa_chars": 75502,
+     "sa_segs": 614,
+     "live_url": "/sources/kumarasambhava"
+    }
+   ]
+  },
+  {
+   "slug": "shatakatraya",
+   "title": "Śatakatraya (Bhartṛhari)",
+   "ru_title": "shatakatrayam.html",
+   "period": "Kāvya",
+   "date_ce": 400,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Śatakatraya",
+   "size": 7,
+   "sa_chars": 114050,
+   "sa_segs": 611,
+   "n_parts": 2,
+   "live_url": "/sources/shatakatrayam",
+   "timeline_url": "/chronology?focus=shatakatraya",
+   "parts": [
+    {
+     "slug": "shatakatrayam",
+     "title": "Śatakatraya (Bhartṛhari) — M",
+     "size": 7,
+     "sa_chars": 58267,
+     "sa_segs": 310,
+     "live_url": "/sources/shatakatrayam"
+    },
+    {
+     "slug": "shatakatrayam-serebryakov",
+     "title": "Śatakatraya (Bhartṛhari) — M serebryakov",
+     "size": 7,
+     "sa_chars": 55783,
+     "sa_segs": 301,
+     "live_url": "/sources/shatakatrayam-serebryakov"
+    }
+   ]
+  },
+  {
+   "slug": "megha-duta",
+   "title": "Meghadūta",
+   "ru_title": "megha-duta.html",
+   "period": "Kāvya",
+   "date_ce": 400,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Meghadūta",
+   "size": 6,
+   "sa_chars": 23828,
+   "sa_segs": 115,
+   "n_parts": 1,
+   "live_url": "/sources/megha-duta",
+   "timeline_url": "/chronology?focus=megha-duta",
+   "parts": [
+    {
+     "slug": "megha-duta",
+     "title": "Meghadūta",
+     "size": 6,
+     "sa_chars": 23828,
+     "sa_segs": 115,
+     "live_url": "/sources/megha-duta"
+    }
+   ]
+  },
+  {
+   "slug": "raghuvamsha",
+   "title": "Raghuvaṃśa",
+   "ru_title": "raghuvamsha.html",
+   "period": "Kāvya",
+   "date_ce": 582,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 7,
+   "sa_chars": 190008,
+   "sa_segs": 399,
+   "n_parts": 1,
+   "live_url": "/sources/raghuvamsha",
+   "timeline_url": "/chronology?focus=raghuvamsha",
+   "parts": [
+    {
+     "slug": "raghuvamsha",
+     "title": "Raghuvaṃśa",
+     "size": 7,
+     "sa_chars": 190008,
+     "sa_segs": 399,
+     "live_url": "/sources/raghuvamsha"
+    }
+   ]
+  },
+  {
+   "slug": "chaurapanchashika",
+   "title": "Caurapañcāśikā",
+   "ru_title": "chaurapanchashika.html",
+   "period": "Kāvya",
+   "date_ce": 582,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 7887,
+   "sa_segs": 50,
+   "n_parts": 1,
+   "live_url": "/sources/chaurapanchashika",
+   "timeline_url": "/chronology?focus=chaurapanchashika",
+   "parts": [
+    {
+     "slug": "chaurapanchashika",
+     "title": "Caurapañcāśikā",
+     "size": 5,
+     "sa_chars": 7887,
+     "sa_segs": 50,
+     "live_url": "/sources/chaurapanchashika"
+    }
+   ]
+  },
+  {
+   "slug": "amaru-shataka",
+   "title": "Amaruśataka",
+   "ru_title": "amaru-shataka.html",
+   "period": "Kāvya",
+   "date_ce": 625,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Amaruśataka",
+   "size": 6,
+   "sa_chars": 35679,
+   "sa_segs": 193,
+   "n_parts": 1,
+   "live_url": "/sources/amaru-shataka",
+   "timeline_url": "/chronology?focus=amaru-shataka",
+   "parts": [
+    {
+     "slug": "amaru-shataka",
+     "title": "Amaruśataka",
+     "size": 6,
+     "sa_chars": 35679,
+     "sa_segs": 193,
+     "live_url": "/sources/amaru-shataka"
+    }
+   ]
+  },
+  {
+   "slug": "gitagovinda",
+   "title": "Gītagovinda",
+   "ru_title": "gitagovinda.html",
+   "period": "Kāvya",
+   "date_ce": 1200,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Gītagovinda",
+   "size": 6,
+   "sa_chars": 41487,
+   "sa_segs": 289,
+   "n_parts": 1,
+   "live_url": "/sources/gitagovinda",
+   "timeline_url": "/chronology?focus=gitagovinda",
+   "parts": [
+    {
+     "slug": "gitagovinda",
+     "title": "Gītagovinda",
+     "size": 6,
+     "sa_chars": 41487,
+     "sa_segs": 289,
+     "live_url": "/sources/gitagovinda"
+    }
+   ]
+  },
+  {
+   "slug": "yogasutra",
+   "title": "Yogasūtra (with bhāṣya)",
+   "ru_title": "yoga-sutry.html",
+   "period": "Philosophy",
+   "date_ce": 400,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Yogasūtrabhāṣya",
+   "size": 7,
+   "sa_chars": 178777,
+   "sa_segs": 788,
+   "n_parts": 4,
+   "live_url": "/sources/yoga-sutry",
+   "timeline_url": "/chronology?focus=yogasutra",
+   "parts": [
+    {
+     "slug": "yoga-sutry",
+     "title": "Yogasūtra (with bhāṣya) — Yoga sutry",
+     "size": 6,
+     "sa_chars": 18440,
+     "sa_segs": 195,
+     "live_url": "/sources/yoga-sutry"
+    },
+    {
+     "slug": "yoga-sutry_vyasa-bhashya",
+     "title": "Yogasūtra (with bhāṣya) — Yoga sutry vyasa bhashya",
+     "size": 7,
+     "sa_chars": 123457,
+     "sa_segs": 203,
+     "live_url": "/sources/yoga-sutry_vyasa-bhashya"
+    },
+    {
+     "slug": "yoga-sutry_zagumennov",
+     "title": "Yogasūtra (with bhāṣya) — Yoga sutry zagumennov",
+     "size": 6,
+     "sa_chars": 18440,
+     "sa_segs": 195,
+     "live_url": "/sources/yoga-sutry_zagumennov"
+    },
+    {
+     "slug": "yoga-sutry_sharma",
+     "title": "Yogasūtra (with bhāṣya) — Yoga sutry sharma",
+     "size": 6,
+     "sa_chars": 18440,
+     "sa_segs": 195,
+     "live_url": "/sources/yoga-sutry_sharma"
+    }
+   ]
+  },
+  {
+   "slug": "sankhya-karika",
+   "title": "Sāṃkhyakārikā",
+   "ru_title": "sankhya-karika.html",
+   "period": "Philosophy",
+   "date_ce": 550,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Sāṃkhyakārikābhāṣya",
+   "size": 7,
+   "sa_chars": 83170,
+   "sa_segs": 215,
+   "n_parts": 1,
+   "live_url": "/sources/sankhya-karika",
+   "timeline_url": "/chronology?focus=sankhya-karika",
+   "parts": [
+    {
+     "slug": "sankhya-karika",
+     "title": "Sāṃkhyakārikā",
+     "size": 7,
+     "sa_chars": 83170,
+     "sa_segs": 215,
+     "live_url": "/sources/sankhya-karika"
+    }
+   ]
+  },
+  {
+   "slug": "nyaya-bhashya",
+   "title": "Nyāyabhāṣya",
+   "ru_title": "nyaya-bhashya.html",
+   "period": "Philosophy",
+   "date_ce": 600,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 8,
+   "sa_chars": 325082,
+   "sa_segs": 531,
+   "n_parts": 1,
+   "live_url": "/sources/nyaya-bhashya",
+   "timeline_url": "/chronology?focus=nyaya-bhashya",
+   "parts": [
+    {
+     "slug": "nyaya-bhashya",
+     "title": "Nyāyabhāṣya",
+     "size": 8,
+     "sa_chars": 325082,
+     "sa_segs": 531,
+     "live_url": "/sources/nyaya-bhashya"
+    }
+   ]
+  },
+  {
+   "slug": "shivasutra",
+   "title": "Śivasūtra (Kashmir Śaivism)",
+   "ru_title": "shiva-sutry_sharma.html",
+   "period": "Philosophy",
+   "date_ce": 850,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 4,
+   "sa_chars": 2466,
+   "sa_segs": 77,
+   "n_parts": 1,
+   "live_url": "/sources/shiva-sutry_sharma",
+   "timeline_url": "/chronology?focus=shivasutra",
+   "parts": [
+    {
+     "slug": "shiva-sutry_sharma",
+     "title": "Śivasūtra (Kashmir Śaivism) — Shiva sutry sharma",
+     "size": 4,
+     "sa_chars": 2466,
+     "sa_segs": 77,
+     "live_url": "/sources/shiva-sutry_sharma"
+    }
+   ]
+  },
+  {
+   "slug": "gitarthasamgraha-abhinavagupta",
+   "title": "Gītārthasaṃgraha (Abhinavagupta)",
+   "ru_title": "gitarthasamgraha-abhinavagupta.html",
+   "period": "Philosophy",
+   "date_ce": 1000,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "commentary",
+   "dcs_match": null,
+   "size": 7,
+   "sa_chars": 179881,
+   "sa_segs": 748,
+   "n_parts": 1,
+   "live_url": "/sources/gitarthasamgraha-abhinavagupta",
+   "timeline_url": "/chronology?focus=gitarthasamgraha-abhinavagupta",
+   "parts": [
+    {
+     "slug": "gitarthasamgraha-abhinavagupta",
+     "title": "Gītārthasaṃgraha (Abhinavagupta)",
+     "size": 7,
+     "sa_chars": 179881,
+     "sa_segs": 748,
+     "live_url": "/sources/gitarthasamgraha-abhinavagupta"
+    }
+   ]
+  },
+  {
+   "slug": "paramarthasara-abhinavagupta",
+   "title": "Paramārthasāra (Abhinavagupta)",
+   "ru_title": "paramarthasara-abhinavagupta.html",
+   "period": "Philosophy",
+   "date_ce": 1000,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "commentary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 11333,
+   "sa_segs": 105,
+   "n_parts": 1,
+   "live_url": "/sources/paramarthasara-abhinavagupta",
+   "timeline_url": "/chronology?focus=paramarthasara-abhinavagupta",
+   "parts": [
+    {
+     "slug": "paramarthasara-abhinavagupta",
+     "title": "Paramārthasāra (Abhinavagupta)",
+     "size": 5,
+     "sa_chars": 11333,
+     "sa_segs": 105,
+     "live_url": "/sources/paramarthasara-abhinavagupta"
+    }
+   ]
+  },
+  {
+   "slug": "pratyabhijna-hridaya_kshemaraja",
+   "title": "Pratyabhijñāhṛdaya (Kṣemarāja)",
+   "ru_title": "pratyabhijna-hridaya_kshemaraja.html",
+   "period": "Philosophy",
+   "date_ce": 1050,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "commentary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 31931,
+   "sa_segs": 21,
+   "n_parts": 1,
+   "live_url": "/sources/pratyabhijna-hridaya_kshemaraja",
+   "timeline_url": "/chronology?focus=pratyabhijna-hridaya_kshemaraja",
+   "parts": [
+    {
+     "slug": "pratyabhijna-hridaya_kshemaraja",
+     "title": "Pratyabhijñāhṛdaya (Kṣemarāja)",
+     "size": 6,
+     "sa_chars": 31931,
+     "sa_segs": 21,
+     "live_url": "/sources/pratyabhijna-hridaya_kshemaraja"
+    }
+   ]
+  },
+  {
+   "slug": "gitartha-samgraha_yamunacharya",
+   "title": "Gītārthasaṃgraha (Yāmunācārya)",
+   "ru_title": "gitartha-samgraha_yamunacharya.html",
+   "period": "Philosophy",
+   "date_ce": 1050,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "commentary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 3377,
+   "sa_segs": 32,
+   "n_parts": 1,
+   "live_url": "/sources/gitartha-samgraha_yamunacharya",
+   "timeline_url": "/chronology?focus=gitartha-samgraha_yamunacharya",
+   "parts": [
+    {
+     "slug": "gitartha-samgraha_yamunacharya",
+     "title": "Gītārthasaṃgraha (Yāmunācārya)",
+     "size": 5,
+     "sa_chars": 3377,
+     "sa_segs": 32,
+     "live_url": "/sources/gitartha-samgraha_yamunacharya"
+    }
+   ]
+  },
+  {
+   "slug": "ramanuja_gitabhashya",
+   "title": "Gītābhāṣya (Rāmānuja)",
+   "ru_title": "ramanuja_gitabhashya.html",
+   "period": "Philosophy",
+   "date_ce": 1100,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "commentary",
+   "dcs_match": null,
+   "size": 8,
+   "sa_chars": 392165,
+   "sa_segs": 702,
+   "n_parts": 1,
+   "live_url": "/sources/ramanuja_gitabhashya",
+   "timeline_url": "/chronology?focus=ramanuja_gitabhashya",
+   "parts": [
+    {
+     "slug": "ramanuja_gitabhashya",
+     "title": "Gītābhāṣya (Rāmānuja)",
+     "size": 8,
+     "sa_chars": 392165,
+     "sa_segs": 702,
+     "live_url": "/sources/ramanuja_gitabhashya"
+    }
+   ]
+  },
+  {
+   "slug": "vedartha-samgraha_ramanuja",
+   "title": "Vedārthasaṃgraha (Rāmānuja)",
+   "ru_title": "vedartha-samgraha_ramanuja.html",
+   "period": "Philosophy",
+   "date_ce": 1100,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "commentary",
+   "dcs_match": null,
+   "size": 8,
+   "sa_chars": 251784,
+   "sa_segs": 143,
+   "n_parts": 1,
+   "live_url": "/sources/vedartha-samgraha_ramanuja",
+   "timeline_url": "/chronology?focus=vedartha-samgraha_ramanuja",
+   "parts": [
+    {
+     "slug": "vedartha-samgraha_ramanuja",
+     "title": "Vedārthasaṃgraha (Rāmānuja)",
+     "size": 8,
+     "sa_chars": 251784,
+     "sa_segs": 143,
+     "live_url": "/sources/vedartha-samgraha_ramanuja"
+    }
+   ]
+  },
+  {
+   "slug": "vishnu-purana",
+   "title": "Viṣṇupurāṇa",
+   "ru_title": "Вишну-Пурана.htm",
+   "period": "Purāṇa",
+   "date_ce": 400,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Viṣṇupurāṇa",
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/vishnu-purana",
+   "timeline_url": "/chronology?focus=vishnu-purana",
+   "parts": [
+    {
+     "slug": "vishnu-purana",
+     "title": "Viṣṇupurāṇa",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/vishnu-purana"
+    }
+   ]
+  },
+  {
+   "slug": "devi-gita",
+   "title": "Devīgītā",
+   "ru_title": "devi-gita.html",
+   "period": "Purāṇa",
+   "date_ce": 770,
+   "confidence": "low",
+   "method": "dcs-bucket",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 7,
+   "sa_chars": 59181,
+   "sa_segs": 492,
+   "n_parts": 1,
+   "live_url": "/sources/devi-gita",
+   "timeline_url": "/chronology?focus=devi-gita",
+   "parts": [
+    {
+     "slug": "devi-gita",
+     "title": "Devīgītā",
+     "size": 7,
+     "sa_chars": 59181,
+     "sa_segs": 492,
+     "live_url": "/sources/devi-gita"
+    }
+   ]
+  },
+  {
+   "slug": "shukasaptati",
+   "title": "Śukasaptati",
+   "ru_title": "shukasaptati.html",
+   "period": "Narrative Prose",
+   "date_ce": 1150,
+   "confidence": "high",
+   "method": "dcs-exact",
+   "kind": "primary",
+   "dcs_match": "Śukasaptati",
+   "size": 7,
+   "sa_chars": 103889,
+   "sa_segs": 339,
+   "n_parts": 1,
+   "live_url": "/sources/shukasaptati",
+   "timeline_url": "/chronology?focus=shukasaptati",
+   "parts": [
+    {
+     "slug": "shukasaptati",
+     "title": "Śukasaptati",
+     "size": 7,
+     "sa_chars": 103889,
+     "sa_segs": 339,
+     "live_url": "/sources/shukasaptati"
+    }
+   ]
+  },
+  {
+   "slug": "biruni",
+   "title": "al-Bīrūnī, India (Taḥqīq mā li-l-Hind)",
+   "ru_title": "Biruni.htm",
+   "period": "Other",
+   "date_ce": 1030,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "historical-source",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/biruni",
+   "timeline_url": "/chronology?focus=biruni",
+   "parts": [
+    {
+     "slug": "biruni",
+     "title": "al-Bīrūnī, India (Taḥqīq mā li-l-Hind)",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/biruni"
+    }
+   ]
+  },
+  {
+   "slug": "hatha-yoga-pradipika",
+   "title": "Haṭhayogapradīpikā",
+   "ru_title": "hatha-yoga-pradipika.html",
+   "period": "Tantra/Āgama",
+   "date_ce": 1400,
+   "confidence": "med",
+   "method": "manual",
+   "kind": "primary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 41186,
+   "sa_segs": 384,
+   "n_parts": 1,
+   "live_url": "/sources/hatha-yoga-pradipika",
+   "timeline_url": "/chronology?focus=hatha-yoga-pradipika",
+   "parts": [
+    {
+     "slug": "hatha-yoga-pradipika",
+     "title": "Haṭhayogapradīpikā",
+     "size": 6,
+     "sa_chars": 41186,
+     "sa_segs": 384,
+     "live_url": "/sources/hatha-yoga-pradipika"
+    }
+   ]
+  },
+  {
+   "slug": "dic_apte",
+   "title": "Dic_Apte.txt",
+   "ru_title": "Dic_Apte.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 10,
+   "sa_chars": 8188234,
+   "sa_segs": 31647,
+   "n_parts": 1,
+   "live_url": "/sources/dic_apte",
+   "timeline_url": "/chronology?focus=dic_apte",
+   "parts": [
+    {
+     "slug": "dic_apte",
+     "title": "Dic_Apte.txt — Dic apte",
+     "size": 10,
+     "sa_chars": 8188234,
+     "sa_segs": 31647,
+     "live_url": "/sources/dic_apte"
+    }
+   ]
+  },
+  {
+   "slug": "dic_mw",
+   "title": "Dic_MW.txt",
+   "ru_title": "Dic_MW.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 10,
+   "sa_chars": 26835635,
+   "sa_segs": 222390,
+   "n_parts": 1,
+   "live_url": "/sources/dic_mw",
+   "timeline_url": "/chronology?focus=dic_mw",
+   "parts": [
+    {
+     "slug": "dic_mw",
+     "title": "Dic_MW.txt — Dic mw",
+     "size": 10,
+     "sa_chars": 26835635,
+     "sa_segs": 222390,
+     "live_url": "/sources/dic_mw"
+    }
+   ]
+  },
+  {
+   "slug": "dsg",
+   "title": "dsg.txt",
+   "ru_title": "dsg.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 9,
+   "sa_chars": 2801436,
+   "sa_segs": 4383,
+   "n_parts": 1,
+   "live_url": "/sources/dsg",
+   "timeline_url": "/chronology?focus=dsg",
+   "parts": [
+    {
+     "slug": "dsg",
+     "title": "dsg.txt — Dsg",
+     "size": 9,
+     "sa_chars": 2801436,
+     "sa_segs": 4383,
+     "live_url": "/sources/dsg"
+    }
+   ]
+  },
+  {
+   "slug": "fasmer-dr-ind",
+   "title": "fasmer-dr-ind.htm",
+   "ru_title": "fasmer-dr-ind.htm",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 9,
+   "sa_chars": 1303915,
+   "sa_segs": 1412,
+   "n_parts": 1,
+   "live_url": "/sources/fasmer-dr-ind",
+   "timeline_url": "/chronology?focus=fasmer-dr-ind",
+   "parts": [
+    {
+     "slug": "fasmer-dr-ind",
+     "title": "fasmer-dr-ind.htm — Fasmer dr ind",
+     "size": 9,
+     "sa_chars": 1303915,
+     "sa_segs": 1412,
+     "live_url": "/sources/fasmer-dr-ind"
+    }
+   ]
+  },
+  {
+   "slug": "kossovich",
+   "title": "Коссович.txt",
+   "ru_title": "Коссович.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 9,
+   "sa_chars": 1967423,
+   "sa_segs": 13488,
+   "n_parts": 1,
+   "live_url": "/sources/kossovich",
+   "timeline_url": "/chronology?focus=kossovich",
+   "parts": [
+    {
+     "slug": "kossovich",
+     "title": "Коссович.txt — Kossovich",
+     "size": 9,
+     "sa_chars": 1967423,
+     "sa_segs": 13488,
+     "live_url": "/sources/kossovich"
+    }
+   ]
+  },
+  {
+   "slug": "kochergina",
+   "title": "Кочергина.txt",
+   "ru_title": "Кочергина.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 9,
+   "sa_chars": 1845601,
+   "sa_segs": 29180,
+   "n_parts": 1,
+   "live_url": "/sources/kochergina",
+   "timeline_url": "/chronology?focus=kochergina",
+   "parts": [
+    {
+     "slug": "kochergina",
+     "title": "Кочергина.txt — Kochergina",
+     "size": 9,
+     "sa_chars": 1845601,
+     "sa_segs": 29180,
+     "live_url": "/sources/kochergina"
+    }
+   ]
+  },
+  {
+   "slug": "slovar-smirnova",
+   "title": "Словарь Смирнова.txt",
+   "ru_title": "Словарь Смирнова.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 9,
+   "sa_chars": 919360,
+   "sa_segs": 3641,
+   "n_parts": 1,
+   "live_url": "/sources/slovar-smirnova",
+   "timeline_url": "/chronology?focus=slovar-smirnova",
+   "parts": [
+    {
+     "slug": "slovar-smirnova",
+     "title": "Словарь Смирнова.txt — Slovar smirnova",
+     "size": 9,
+     "sa_chars": 919360,
+     "sa_segs": 3641,
+     "live_url": "/sources/slovar-smirnova"
+    }
+   ]
+  },
+  {
+   "slug": "kewa",
+   "title": "KEWA.txt",
+   "ru_title": "KEWA.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 8,
+   "sa_chars": 534436,
+   "sa_segs": 9587,
+   "n_parts": 1,
+   "live_url": "/sources/kewa",
+   "timeline_url": "/chronology?focus=kewa",
+   "parts": [
+    {
+     "slug": "kewa",
+     "title": "KEWA.txt — Kewa",
+     "size": 8,
+     "sa_chars": 534436,
+     "sa_segs": 9587,
+     "live_url": "/sources/kewa"
+    }
+   ]
+  },
+  {
+   "slug": "warnemyr",
+   "title": "warnemyr.txt",
+   "ru_title": "warnemyr.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 8,
+   "sa_chars": 703397,
+   "sa_segs": 937,
+   "n_parts": 1,
+   "live_url": "/sources/warnemyr",
+   "timeline_url": "/chronology?focus=warnemyr",
+   "parts": [
+    {
+     "slug": "warnemyr",
+     "title": "warnemyr.txt — Warnemyr",
+     "size": 8,
+     "sa_chars": 703397,
+     "sa_segs": 937,
+     "live_url": "/sources/warnemyr"
+    }
+   ]
+  },
+  {
+   "slug": "knauer",
+   "title": "Кнауэр.txt",
+   "ru_title": "Кнауэр.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 8,
+   "sa_chars": 338557,
+   "sa_segs": 3271,
+   "n_parts": 1,
+   "live_url": "/sources/knauer",
+   "timeline_url": "/chronology?focus=knauer",
+   "parts": [
+    {
+     "slug": "knauer",
+     "title": "Кнауэр.txt — Knauer",
+     "size": 8,
+     "sa_chars": 338557,
+     "sa_segs": 3271,
+     "live_url": "/sources/knauer"
+    }
+   ]
+  },
+  {
+   "slug": "slovar-grintsera-iz-ramayany-1-2",
+   "title": "Словарь Гринцера из Рамаяны 1-2.txt",
+   "ru_title": "Словарь Гринцера из Рамаяны 1-2.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 7,
+   "sa_chars": 49720,
+   "sa_segs": 462,
+   "n_parts": 1,
+   "live_url": "/sources/slovar-grintsera-iz-ramayany-1-2",
+   "timeline_url": "/chronology?focus=slovar-grintsera-iz-ramayany-1-2",
+   "parts": [
+    {
+     "slug": "slovar-grintsera-iz-ramayany-1-2",
+     "title": "Словарь Гринцера из Рамаяны 1-2.txt — Slovar grintsera iz ramayany 1 2",
+     "size": 7,
+     "sa_chars": 49720,
+     "sa_segs": 462,
+     "live_url": "/sources/slovar-grintsera-iz-ramayany-1-2"
+    }
+   ]
+  },
+  {
+   "slug": "ramayana-3-slovar",
+   "title": "Рамаяна 3. Словарь.txt",
+   "ru_title": "Рамаяна 3. Словарь.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 24029,
+   "sa_segs": 208,
+   "n_parts": 1,
+   "live_url": "/sources/ramayana-3-slovar",
+   "timeline_url": "/chronology?focus=ramayana-3-slovar",
+   "parts": [
+    {
+     "slug": "ramayana-3-slovar",
+     "title": "Рамаяна 3. Словарь.txt — Ramayana 3 slovar",
+     "size": 6,
+     "sa_chars": 24029,
+     "sa_segs": 208,
+     "live_url": "/sources/ramayana-3-slovar"
+    }
+   ]
+  },
+  {
+   "slug": "slovar-grintsera-iz-bada-kadambari",
+   "title": "Словарь Гринцера из Бада Кадамбари.txt",
+   "ru_title": "Словарь Гринцера из Бада Кадамбари.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 34690,
+   "sa_segs": 464,
+   "n_parts": 1,
+   "live_url": "/sources/slovar-grintsera-iz-bada-kadambari",
+   "timeline_url": "/chronology?focus=slovar-grintsera-iz-bada-kadambari",
+   "parts": [
+    {
+     "slug": "slovar-grintsera-iz-bada-kadambari",
+     "title": "Словарь Гринцера из Бада Кадамбари.txt — Slovar grintsera iz bada kadambari",
+     "size": 6,
+     "sa_chars": 34690,
+     "sa_segs": 464,
+     "live_url": "/sources/slovar-grintsera-iz-bada-kadambari"
+    }
+   ]
+  },
+  {
+   "slug": "slovar-potapovoy",
+   "title": "Словарь Потаповой.txt",
+   "ru_title": "Словарь Потаповой.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 6,
+   "sa_chars": 37875,
+   "sa_segs": 339,
+   "n_parts": 1,
+   "live_url": "/sources/slovar-potapovoy",
+   "timeline_url": "/chronology?focus=slovar-potapovoy",
+   "parts": [
+    {
+     "slug": "slovar-potapovoy",
+     "title": "Словарь Потаповой.txt — Slovar potapovoy",
+     "size": 6,
+     "sa_chars": 37875,
+     "sa_segs": 339,
+     "live_url": "/sources/slovar-potapovoy"
+    }
+   ]
+  },
+  {
+   "slug": "toporov",
+   "title": "Топоров.txt",
+   "ru_title": "Топоров.txt",
+   "period": "Reference",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "dictionary",
+   "dcs_match": null,
+   "size": 5,
+   "sa_chars": 2881,
+   "sa_segs": 263,
+   "n_parts": 1,
+   "live_url": "/sources/toporov",
+   "timeline_url": "/chronology?focus=toporov",
+   "parts": [
+    {
+     "slug": "toporov",
+     "title": "Топоров.txt — Toporov",
+     "size": 5,
+     "sa_chars": 2881,
+     "sa_segs": 263,
+     "live_url": "/sources/toporov"
+    }
+   ]
+  },
+  {
+   "slug": "mify_759_ind",
+   "title": "Mify_759_ind.html",
+   "ru_title": "Mify_759_ind.html",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/mify_759_ind",
+   "timeline_url": "/chronology?focus=mify_759_ind",
+   "parts": [
+    {
+     "slug": "mify_759_ind",
+     "title": "Mify_759_ind.html — Mify 759 ind",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/mify_759_ind"
+    }
+   ]
+  },
+  {
+   "slug": "mify-drind",
+   "title": "mify-drind.html",
+   "ru_title": "mify-drind.html",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/mify-drind",
+   "timeline_url": "/chronology?focus=mify-drind",
+   "parts": [
+    {
+     "slug": "mify-drind",
+     "title": "mify-drind.html — Mify drind",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/mify-drind"
+    }
+   ]
+  },
+  {
+   "slug": "pandey",
+   "title": "pandey.html",
+   "ru_title": "pandey.html",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/pandey",
+   "timeline_url": "/chronology?focus=pandey",
+   "parts": [
+    {
+     "slug": "pandey",
+     "title": "pandey.html — Pandey",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/pandey"
+    }
+   ]
+  },
+  {
+   "slug": "iliada_gnedich",
+   "title": "Илиада_Гнедич.txt",
+   "ru_title": "Илиада_Гнедич.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/iliada_gnedich",
+   "timeline_url": "/chronology?focus=iliada_gnedich",
+   "parts": [
+    {
+     "slug": "iliada_gnedich",
+     "title": "Илиада_Гнедич.txt — Iliada gnedich",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/iliada_gnedich"
+    }
+   ]
+  },
+  {
+   "slug": "induizm-dzhaynizm-sikkhizm",
+   "title": "Индуизм. Джайнизм. Сикхизм.txt",
+   "ru_title": "Индуизм. Джайнизм. Сикхизм.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/induizm-dzhaynizm-sikkhizm",
+   "timeline_url": "/chronology?focus=induizm-dzhaynizm-sikkhizm",
+   "parts": [
+    {
+     "slug": "induizm-dzhaynizm-sikkhizm",
+     "title": "Индуизм. Джайнизм. Сикхизм.txt — Induizm dzhaynizm sikkhizm",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/induizm-dzhaynizm-sikkhizm"
+    }
+   ]
+  },
+  {
+   "slug": "yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova",
+   "title": "Йога- Бессмертие и cвобода (Мирча Элиаде, пер. Пахомова).txt",
+   "ru_title": "Йога- Бессмертие и cвобода (Мирча Элиаде, пер. Пахомова).txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova",
+   "timeline_url": "/chronology?focus=yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova",
+   "parts": [
+    {
+     "slug": "yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova",
+     "title": "Йога- Бессмертие и cвобода (Мирча Элиаде, пер. Пахомова).txt — Yoga bessmertie i cvoboda mircha eliade per pakhomova",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova"
+    }
+   ]
+  },
+  {
+   "slug": "kommentarii-k-makhabkharate",
+   "title": "Комментарии к Махабхарате.txt",
+   "ru_title": "Комментарии к Махабхарате.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/kommentarii-k-makhabkharate",
+   "timeline_url": "/chronology?focus=kommentarii-k-makhabkharate",
+   "parts": [
+    {
+     "slug": "kommentarii-k-makhabkharate",
+     "title": "Комментарии к Махабхарате.txt — Kommentarii k makhabkharate",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/kommentarii-k-makhabkharate"
+    }
+   ]
+  },
+  {
+   "slug": "stati-makhabkharaty",
+   "title": "Статьи Махабхараты.txt",
+   "ru_title": "Статьи Махабхараты.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/stati-makhabkharaty",
+   "timeline_url": "/chronology?focus=stati-makhabkharaty",
+   "parts": [
+    {
+     "slug": "stati-makhabkharaty",
+     "title": "Статьи Махабхараты.txt — Stati makhabkharaty",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/stati-makhabkharaty"
+    }
+   ]
+  },
+  {
+   "slug": "stepanyants",
+   "title": "Степанянц.txt",
+   "ru_title": "Степанянц.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/stepanyants",
+   "timeline_url": "/chronology?focus=stepanyants",
+   "parts": [
+    {
+     "slug": "stepanyants",
+     "title": "Степанянц.txt — Stepanyants",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/stepanyants"
+    }
+   ]
+  },
+  {
+   "slug": "syrkin_tom_1_utf",
+   "title": "Сыркин_Том_1_UTF.htm",
+   "ru_title": "Сыркин_Том_1_UTF.htm",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/syrkin_tom_1_utf",
+   "timeline_url": "/chronology?focus=syrkin_tom_1_utf",
+   "parts": [
+    {
+     "slug": "syrkin_tom_1_utf",
+     "title": "Сыркин_Том_1_UTF.htm — Syrkin tom 1 utf",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/syrkin_tom_1_utf"
+    }
+   ]
+  },
+  {
+   "slug": "ukazateli-makhabkharaty",
+   "title": "Указатели Махабхараты.txt",
+   "ru_title": "Указатели Махабхараты.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/ukazateli-makhabkharaty",
+   "timeline_url": "/chronology?focus=ukazateli-makhabkharaty",
+   "parts": [
+    {
+     "slug": "ukazateli-makhabkharaty",
+     "title": "Указатели Махабхараты.txt — Ukazateli makhabkharaty",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/ukazateli-makhabkharaty"
+    }
+   ]
+  },
+  {
+   "slug": "frish",
+   "title": "Фриш.txt",
+   "ru_title": "Фриш.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/frish",
+   "timeline_url": "/chronology?focus=frish",
+   "parts": [
+    {
+     "slug": "frish",
+     "title": "Фриш.txt — Frish",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/frish"
+    }
+   ]
+  },
+  {
+   "slug": "erman-temkin",
+   "title": "Эрман-Темкин.txt",
+   "ru_title": "Эрман-Темкин.txt",
+   "period": "Modern scholarship",
+   "date_ce": null,
+   "confidence": "n/a",
+   "method": "n/a",
+   "kind": "modern-study",
+   "dcs_match": null,
+   "size": null,
+   "sa_chars": 0,
+   "sa_segs": 0,
+   "n_parts": 1,
+   "live_url": "/sources/erman-temkin",
+   "timeline_url": "/chronology?focus=erman-temkin",
+   "parts": [
+    {
+     "slug": "erman-temkin",
+     "title": "Эрман-Темкин.txt — Erman temkin",
+     "size": null,
+     "sa_chars": 0,
+     "sa_segs": 0,
+     "live_url": "/sources/erman-temkin"
+    }
+   ]
+  }
+ ]
+}

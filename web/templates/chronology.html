@@ -38,6 +38,8 @@
   .chrono .conf-low { color: #b06a2a; } .chrono .conf-high { color: #3c7a3c; }
   .chrono #chrono-count { font-size: 0.85rem; color: #8a8276; }
   .chrono #chrono-error { color: #b04d54; padding: 1rem 0; }
+  .chrono tr.focus td { background: #fbf0d8; animation: chrono-flash 1.6s ease-out 1; }
+  @keyframes chrono-flash { from { background: #f4c77a; } to { background: #fbf0d8; } }
 </style>
 {% endblock %}
 
@@ -143,7 +145,7 @@
       const col = COLOR[r.period] || '#999';
       const alias = (r.dcs_match && r.dcs_match !== r.title)
         ? ` <span class="muted">→ ${r.dcs_match}</span>` : '';
-      return `<tr>
+      return `<tr data-slug="${r.slug || ''}">
         <td class="n">${fmtDate(r.date_ce)}</td>
         <td><span class="pill" style="background:${col}22;color:${col}">${r.period}</span></td>
         <td>${r.title}${alias}</td>
@@ -177,6 +179,19 @@
     window.addEventListener('resize', draw);
   }
 
+  // Arriving from /works via a size badge: ?focus=<slug> scrolls the matching
+  // table row into view and flashes it. No-op when the param is absent or the
+  // slug isn't in the (filtered) table.
+  function applyFocus() {
+    const slug = new URLSearchParams(location.search).get('focus');
+    if (!slug) return;
+    const tr = document.querySelector(`#tbl tbody tr[data-slug="${CSS.escape(slug)}"]`);
+    if (!tr) return;
+    tr.classList.add('focus');
+    tr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => tr.classList.remove('focus'), 2000);
+  }
+
   fetch('/api/chronology')
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(db => {
@@ -187,6 +202,7 @@
       dated = DB.texts.filter(t => t.date_ce !== null);
       wire();
       draw();
+      applyFocus();
     })
     .catch(err => {
       $('#chrono-error').textContent =

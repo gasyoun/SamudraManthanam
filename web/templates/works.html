@@ -1,0 +1,200 @@
+{% extends "_base.html" %}
+
+{% block title %}{{ og_title }}{% endblock %}
+
+{% block extra_head %}
+<style>
+  .wx { max-width: 1280px; margin: 0 auto; padding: 0 1rem 3rem; }
+  .wx h1 { margin: 1.2rem 0 0.2rem; font-size: 1.5rem; }
+  .wx-intro { margin: 0.2rem 0 0.6rem; color: #4a4a4a; font-size: 0.95rem;
+              max-width: 880px; line-height: 1.55; }
+  .wx-intro a { color: var(--accent, #9a5b2a); }
+  .wx-controls { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; align-items: center;
+                 padding: 0.7rem 0; border-bottom: 1px solid var(--line-border, #e4ded2); }
+  .wx-controls input[type=search] { font: 0.9rem inherit; padding: 0.35rem 0.6rem;
+                 border: 1px solid #d8d1c2; border-radius: 6px; min-width: 220px; }
+  .wx-controls label { font-size: 0.85rem; color: #534c40; cursor: pointer; user-select: none; }
+  .wx-count { font-size: 0.85rem; color: #8a8276; }
+
+  .wx-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+  @media (max-width: 760px) { .wx-cols { grid-template-columns: 1fr; } }
+  .wx-col h2 { font-size: 1.05rem; margin: 0 0 0.2rem; }
+  .wx-col .sub { font-size: 0.8rem; color: #8a8276; margin-bottom: 0.5rem; }
+
+  .wx-period { font-size: 0.78rem; font-weight: 600; color: #6f685c; text-transform: none;
+               margin: 0.9rem 0 0.25rem; padding-bottom: 0.15rem;
+               border-bottom: 1px dashed #e0d9cb; display: flex; gap: 0.5rem; align-items: baseline; }
+  .wx-period .pd { color: #a39a8a; font-weight: 400; font-size: 0.72rem; }
+
+  .wx-item { display: flex; align-items: center; gap: 0.55rem; padding: 0.28rem 0;
+             border-bottom: 1px solid #f0ebe1; font-size: 0.9rem; }
+  .wx-item .ttl { flex: 1; min-width: 0; }
+  .wx-item .ttl a { color: #2b2620; text-decoration: none; }
+  .wx-item .ttl a:hover { color: var(--accent, #9a5b2a); text-decoration: underline; }
+  .wx-item .meta { color: #a39a8a; font-size: 0.74rem; white-space: nowrap; }
+  .wx-item .nparts { color: #b07a3a; font-size: 0.72rem; }
+
+  .szbar { display: inline-flex; gap: 1px; vertical-align: middle; }
+  .szbar i { width: 5px; height: 13px; background: #ece6da; border-radius: 1px; }
+  .szbar i.on { background: var(--c, #9a5b2a); }
+  .sz-wrap { display: inline-flex; align-items: center; gap: 0.4rem; width: 92px; }
+  .sz-num { font-variant-numeric: tabular-nums; font-size: 0.78rem; color: #8a8276; width: 1.4em; text-align: right; }
+  .sz-na { color: #c3bcae; font-size: 0.78rem; }
+
+  .tl { text-decoration: none; color: #b8b0a2; font-size: 0.85rem; padding: 0 2px; }
+  .tl:hover { color: var(--accent, #9a5b2a); }
+
+  .wx-error { color: #b04d54; padding: 1rem 0; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="wx">
+  <h1>Указатель текстов корпуса</h1>
+  <div class="wx-intro">
+    Все произведения
+    <a href="https://samskrtam.ru/parallel-corpus/">санскрито-русского параллельного корпуса</a>,
+    сгруппированные по периодам по той же
+    <a href="https://dharmamitra.github.io/sanskrit-dating/sanskrit_chronology_interactive.html">хронологии DharmaMitra</a>,
+    что и <a href="/chronology">временная шкала</a>. Размер каждого произведения —
+    от <b>1</b> (малое) до <b>10</b> (с «Махабхарату») — это логарифм объёма
+    санскритского текста. Слева крупные книги показаны как единое целое
+    («Махабхарата» — одна строка), справа — по отдельным частям (каждая парва
+    отдельно). Размер ведёт <a href="/chronology">на шкалу времени</a>, заголовок —
+    к чтению текста. Данные: <a href="/api/works">/api/works</a>.
+  </div>
+
+  <div class="wx-controls">
+    <input type="search" id="wx-q" placeholder="Фильтр по названию…" autocomplete="off">
+    <label><input type="checkbox" id="wx-ref" checked> словари и исследования</label>
+    <span style="flex:1"></span>
+    <span class="wx-count" id="wx-count"></span>
+  </div>
+
+  <div class="wx-cols">
+    <div class="wx-col">
+      <h2>Произведения</h2>
+      <div class="sub">крупные книги — как единое целое</div>
+      <div id="wx-works"></div>
+    </div>
+    <div class="wx-col">
+      <h2>Части</h2>
+      <div class="sub">каждая парва / мандала / перевод — отдельно</div>
+      <div id="wx-parts"></div>
+    </div>
+  </div>
+  <div class="wx-error" id="wx-error"></div>
+</div>
+{% endblock %}
+
+{% block extra_body %}
+{% raw %}
+<script>
+(function () {
+  const PAL = ['#5b8db8','#6aa0c0','#7d9b6a','#b5a23e','#c98a3e','#c2693e','#b04d54',
+               '#9a5b8a','#7a6aa0','#4f8a86','#a08a5a','#8a8276','#b07a3a','#6a8a5a',
+               '#9a9aa0','#a06a4a','#8a5a7a','#7a5a4a'];
+  const REF_KINDS = new Set(['dictionary', 'modern-study']);
+  const $ = s => document.querySelector(s);
+  const esc = s => (s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmtDate = d => d == null ? '' : (d < 0 ? (-d) + ' до н.э.' : (d === 0 ? 'ок. 0' : d + ' н.э.'));
+
+  let DB = null, COLOR = {}, showRef = true, query = '';
+
+  function sizeBar(size, color) {
+    if (size == null) return '<span class="sz-wrap"><span class="sz-na">—</span></span>';
+    let cells = '';
+    for (let i = 1; i <= 10; i++)
+      cells += `<i class="${i <= size ? 'on' : ''}"></i>`;
+    return `<span class="sz-wrap"><span class="szbar" style="--c:${color}">${cells}</span>`
+         + `<span class="sz-num">${size}</span></span>`;
+  }
+
+  // One row. `focusSlug` is the work slug the timeline badge jumps to (a part
+  // inherits its parent work's timeline position).
+  function row(it, color, focusSlug, opts) {
+    const seg = it.sa_segs ? `${it.sa_segs} санскр. сегм.` : 'нет санскрита';
+    const tip = it.size == null ? `размер — · ${seg}` : `размер ${it.size}/10 · ${seg}`;
+    const np = (opts && opts.nparts > 1) ? ` <span class="nparts">${opts.nparts} ч.</span>` : '';
+    const dateMeta = (opts && opts.date != null) ? `<span class="meta">${fmtDate(opts.date)}</span>` : '';
+    return `<div class="wx-item" title="${esc(tip)}">`
+         + sizeBar(it.size, color)
+         + `<a class="tl" href="/chronology?focus=${encodeURIComponent(focusSlug)}" title="На шкале времени">◷</a>`
+         + `<span class="ttl"><a href="${esc(it.live_url)}">${esc(it.title)}</a>${np}</span>`
+         + dateMeta + `</div>`;
+  }
+
+  // Group an ordered list of {period, date, html} entries into period sections.
+  function renderGroups(entries, mount) {
+    let html = '', curPeriod = null;
+    entries.forEach(e => {
+      if (e.period !== curPeriod) {
+        curPeriod = e.period;
+        const c = COLOR[curPeriod] || '#999';
+        const pd = e.bucket != null ? `<span class="pd">${fmtDate(e.bucket)}</span>` : '';
+        html += `<div class="wx-period" style="color:${c}">${esc(curPeriod || 'Без периода')}${pd}</div>`;
+      }
+      html += e.html;
+    });
+    mount.innerHTML = html || '<div class="sub">ничего не найдено</div>';
+  }
+
+  function visible(w) {
+    if (!showRef && REF_KINDS.has(w.kind)) return false;
+    if (query && !w.title.toLowerCase().includes(query)) return false;
+    return true;
+  }
+
+  function draw() {
+    const works = DB.works.filter(visible);
+    const bucketOf = Object.fromEntries(DB.periods.map(p => [p.period, p.bucket_date]));
+
+    // Left: merged works.
+    const left = works.map(w => ({
+      period: w.period, date: w.date_ce, bucket: bucketOf[w.period],
+      html: row(w, COLOR[w.period] || '#999', w.slug, { nparts: w.n_parts, date: w.date_ce }),
+    }));
+    renderGroups(left, $('#wx-works'));
+
+    // Right: every part, inheriting its work's period/date/timeline anchor.
+    // For the per-title filter, a part matches if its own title (which embeds
+    // the work title) contains the query — works.title is a prefix of it.
+    const right = [];
+    works.forEach(w => {
+      const c = COLOR[w.period] || '#999';
+      w.parts.forEach(p => {
+        if (query && !p.title.toLowerCase().includes(query)) return;
+        right.push({
+          period: w.period, date: w.date_ce, bucket: bucketOf[w.period],
+          html: row(p, c, w.slug, { nparts: 1, date: w.date_ce }),
+        });
+      });
+    });
+    renderGroups(right, $('#wx-parts'));
+
+    $('#wx-count').textContent =
+      `${left.length} произведений · ${right.length} частей`;
+  }
+
+  fetch('/api/works')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(db => {
+      DB = db;
+      const periods = DB.periods.map(p => p.period);
+      // Periods present on works but absent from the declared list (e.g.
+      // Reference / Modern scholarship) still get a stable colour.
+      const extra = [...new Set(DB.works.map(w => w.period))].filter(p => !periods.includes(p));
+      [...periods, ...extra].forEach((p, i) => COLOR[p] = PAL[i % PAL.length]);
+      $('#wx-q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); draw(); });
+      $('#wx-ref').addEventListener('change', e => { showRef = e.target.checked; draw(); });
+      draw();
+    })
+    .catch(err => {
+      $('#wx-error').textContent =
+        'Не удалось загрузить указатель (' + err.message + '). '
+        + 'Возможно, не выполнен build_works_index.py.';
+    });
+})();
+</script>
+{% endraw %}
+{% endblock %}

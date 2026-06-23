@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- **`/works` — clickable text index** (size + chronology). A two-column page:
+  the corpus as **merged works** (the Mahābhārata as one book) beside every
+  **separate part** (each parvan/maṇḍala/translation), grouped by period. Each
+  entry shows a **size 1–10** (log10 of Sanskrit text volume; Mahābhārata = 10,
+  the tiniest Upaniṣad = 1) and links out — title → the live reading page
+  (`/sources/{slug}`), size badge → that work on `/chronology` (`?focus=`
+  scroll-and-flash). Data layer: `corpus_builder/works_index/build_works_index.py`
+  → `works_index.json` (86 works, 148 parts) + an audit report, served by
+  `app/routers/works.py` at `GET /works` and `GET /api/works`. Russian-only
+  studies are correctly unsized (`—`); reference dictionaries (MW/Apte) clamp at
+  10 so they don't push the literature down the scale. Nav link **Тексты**;
+  `/works` added to `sitemap-core`. 18 tests in `tests/test_works_index.py`.
+- **`/chronology` — corpus timeline** (DharmaMitra-style). Every datable text on
+  a BCE→CE period-lane scatter + sortable table; dates crosswalked onto VisualDCS
+  (`corpus_builder/chronology/build_chronology.py` → `texts_chronology.json`),
+  not re-derived. Served by `app/routers/chronology.py`; nav link **Хронология**.
 - **wisdomlib `README.md`** — usage, pipeline table, selection filters,
   politeness/rate-limiting, the Cloudflare situation, and the watcher.
 
