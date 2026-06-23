@@ -93,7 +93,7 @@ jobs:
       # Restore previously downloaded chapters so each run resumes. The unique
       # run-id key always writes a fresh cache; restore-keys pulls the latest.
       - name: Restore content cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: web/corpus_builder/wisdomlib/content
           key: wisdomlib-content-${{ github.run_id }}
