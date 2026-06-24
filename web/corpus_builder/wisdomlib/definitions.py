@@ -53,9 +53,9 @@ TRADITIONS = [
     ("sanskrit_dict", re.compile(r"languages of india|sanskrit dictionary|sanskrit-english|\bkosha\b", re.I)),
 ]
 H2 = re.compile(r"<h2\b[^>]*>(.*?)</h2>", re.S)
-# wisdomlib renders each gloss attribution as a source line; count them loosely as a
-# proxy for "how many English glosses". Refined once validated on a real page.
-GLOSS = re.compile(r'class="[^"]*gloss', re.I)
+# each gloss carries a `class="suffix source"` attribution span — counting these is
+# a faithful "how many English glosses" proxy (validated on a real page, 2026-06-24).
+GLOSS = re.compile(r'class="suffix source"')
 
 
 def _text(fragment):
@@ -102,8 +102,9 @@ async def run_fetch(words, delay):
     print(f"fetch: {len(todo)} words ({len(done)} cached), delay={delay}s", file=sys.stderr)
     out = OUT.open("a", encoding="utf-8")
     blocked = 0
-    # workers=1 deliberately — wisdomlib is per-IP rate-limited; be gentle.
-    async with httpx.AsyncClient(headers=crawl.HEADERS, http2=crawl.HTTP2) as client:
+    # http2=False: wisdomlib drops HTTP/2 from non-residential egress (timeouts);
+    # HTTP/1.1 gets through. workers=1 deliberately — wisdomlib is per-IP rate-limited; be gentle.
+    async with httpx.AsyncClient(headers=crawl.HEADERS, http2=False) as client:
         for w in todo:
             rec = await _fetch_one(client, w)
             out.write(json.dumps(rec, ensure_ascii=False) + "\n")
@@ -121,9 +122,9 @@ async def run_fetch(words, delay):
 
 SAMPLE = (
     '<h1>Akshobhya</h1>'
-    '<h2>Buddhism (Mahayana concepts)</h2><div class="gloss">a Dhyani-Buddha</div>'
-    '<h2>In Jainism</h2><div class="gloss">a deity</div>'
-    '<h2>Languages of India and abroad: Sanskrit dictionary</h2><div class="gloss">immovable</div>'
+    '<h2>Buddhism (Mahayana concepts)</h2><div class="suffix source">a Dhyani-Buddha</div>'
+    '<h2>In Jainism</h2><div class="suffix source">a deity</div>'
+    '<h2>Languages of India and abroad: Sanskrit dictionary</h2><div class="suffix source">immovable</div>'
 )
 
 

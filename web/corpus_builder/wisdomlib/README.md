@@ -133,7 +133,12 @@ Separate from the book crawler: fetches the `/definition/<word>` pages (allowed 
 robots) and extracts which **traditions** a word appears under (Buddhism / Jainism /
 Ayurveda / Vyakarana / Vedic / Vedanta / Hinduism / Sanskrit-dictionary) plus a gloss
 count. It **reuses `crawl.py`'s** `fetch` / browser headers / `is_block_page`, runs
-`workers=1` and stops after 3 consecutive Cloudflare blocks.
+`workers=1` (HTTP/1.1 — wisdomlib drops HTTP/2 from non-residential egress) and stops
+after 3 consecutive Cloudflare blocks.
+
+> **Validated 2026-06-24** on real pages (`akshobhya`, `bodhisattva`): tradition
+> extraction correct (`In Buddhism`/`In Jainism`/… → tags), gloss count = `suffix
+> source` spans. End-to-end fetch succeeds over HTTP/1.1 from a residential connection.
 
 ```sh
 python definitions.py selftest                 # parser unit check (no network)
