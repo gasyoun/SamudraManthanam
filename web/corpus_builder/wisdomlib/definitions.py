@@ -75,17 +75,43 @@ def parse_definition(html):
             "glosses": len(GLOSS.findall(html or ""))}
 
 
+async def _get(client, url, tries=3):
+    """(status, text). 200=ok · 404/410=not found · 0=network failure after retries.
+    Reuses crawl's DELAY + Retry-After handling; the browser headers live on the
+    client. Distinguishing 404 from a timeout is what lets resume skip dead slugs
+    while still retrying transient (Cloudflare) failures."""
+    for k in range(tries):
+        try:
+            r = await client.get(url, timeout=30.0, follow_redirects=True)
+            if r.status_code == 200:
+                if crawl.DELAY:
+                    await asyncio.sleep(crawl.DELAY)
+                return 200, r.text
+            if r.status_code in (404, 410):
+                return r.status_code, None
+            if r.status_code in (429, 503):
+                ra = r.headers.get("retry-after", "")
+                await asyncio.sleep(float(ra) if ra.isdigit() else 5.0 * (k + 1))
+                continue
+        except Exception:
+            pass
+        await asyncio.sleep(1.0 * (k + 1))
+    return 0, None
+
+
 async def _fetch_one(client, word):
-    url = f"{crawl.BASE}/definition/{word}"
-    html = await crawl.fetch(client, url)
-    if html is None:
-        return {"word": word, "error": "fetch_failed"}
-    if crawl.is_block_page(html):
-        return {"word": word, "error": "blocked"}
-    (CACHE / f"{word}.html").write_text(html, encoding="utf-8", newline="")
-    rec = {"word": word}
-    rec.update(parse_definition(html))
-    return rec
+    """-> (record, outcome). outcome ∈ {'ok','not_found','transient'}. Only 'ok' and
+    'not_found' are persisted (resume-skippable); 'transient' (timeout / soft-block)
+    is left for a later resume and counts toward the circuit breaker."""
+    status, html = await _get(client, f"{crawl.BASE}/definition/{word}")
+    if status == 200 and html and not crawl.is_block_page(html):
+        (CACHE / f"{word}.html").write_text(html, encoding="utf-8", newline="")
+        rec = {"word": word}
+        rec.update(parse_definition(html))
+        return rec, "ok"
+    if status in (404, 410):
+        return {"word": word, "error": "not_found"}, "not_found"
+    return None, "transient"
 
 
 async def run_fetch(words, delay):
@@ -99,24 +125,27 @@ async def run_fetch(words, delay):
             except Exception:
                 pass
     todo = [w for w in words if w not in done]
-    print(f"fetch: {len(todo)} words ({len(done)} cached), delay={delay}s", file=sys.stderr)
+    print(f"fetch: {len(todo)} words ({len(done)} done), delay={delay}s", file=sys.stderr)
     out = OUT.open("a", encoding="utf-8")
-    blocked = 0
+    fails = ok = 0
     # http2=False: wisdomlib drops HTTP/2 from non-residential egress (timeouts);
-    # HTTP/1.1 gets through. workers=1 deliberately — wisdomlib is per-IP rate-limited; be gentle.
+    # HTTP/1.1 gets through. Single connection + gentle — wisdomlib is per-IP rate-limited.
     async with httpx.AsyncClient(headers=crawl.HEADERS, http2=False) as client:
         for w in todo:
-            rec = await _fetch_one(client, w)
+            rec, outcome = await _fetch_one(client, w)
+            if outcome == "transient":          # NOT persisted -> a later resume retries it
+                fails += 1
+                if fails >= 5:
+                    print(f"  {fails} consecutive failures — stopping (Cloudflare/IP block); "
+                          f"{ok} fetched this run. Resume later from a clear residential "
+                          f"connection.", file=sys.stderr)
+                    break
+                continue
+            fails = 0
             out.write(json.dumps(rec, ensure_ascii=False) + "\n")
             out.flush()
-            if rec.get("error") == "blocked":
-                blocked += 1
-                if blocked >= 3:
-                    print("  3 consecutive blocks — stopping (Cloudflare). Resume later "
-                          "from a residential connection.", file=sys.stderr)
-                    break
-            else:
-                blocked = 0
+            if outcome == "ok":
+                ok += 1
     out.close()
 
 
