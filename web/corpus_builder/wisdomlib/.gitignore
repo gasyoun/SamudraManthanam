@@ -1,5 +1,8 @@
 # Stage C downloads raw chapter HTML here — bulky, regenerable, not committed.
 content/
 
+# definitions.py raw /definition/<word>.html cache — provisional, not redistributed.
+definitions/
+
 # Throwaway operational driver (gentle re-block-aware retry); not part of the API.
 _gentle_retry.py

@@ -127,9 +127,30 @@ python watch.py --once     # print current status once
 python watch.py --supervise
 ```
 
+## Per-word definitions (`definitions.py`)
+
+Separate from the book crawler: fetches the `/definition/<word>` pages (allowed by
+robots) and extracts which **traditions** a word appears under (Buddhism / Jainism /
+Ayurveda / Vyakarana / Vedic / Vedanta / Hinduism / Sanskrit-dictionary) plus a gloss
+count. It **reuses `crawl.py`'s** `fetch` / browser headers / `is_block_page`, runs
+`workers=1` and stops after 3 consecutive Cloudflare blocks.
+
+```sh
+python definitions.py selftest                 # parser unit check (no network)
+python definitions.py parse cached.html        # validate the parser on a saved page
+python definitions.py batch words.txt --delay 5  # one word per line, gentle
+```
+
+Output `word_traditions.jsonl` (word → traditions/glosses) is consumed by
+`SanskritLexicography/RussianTranslation/src/enrich_renou_wisdomlib.py` as a tertiary,
+lower-confidence Renou **V** (Buddhist/Jaina) hint. Raw HTML caches in `definitions/`
+(gitignored). Same Cloudflare reality as Stage C — run gently from a residential
+connection; **validate the parser with `parse` on the first real page** before bulk.
+
 ## Files
 
 - `crawl.py` — the crawler (stages A/B/C + report)
+- `definitions.py` — per-word `/definition/` fetcher → `word_traditions.jsonl`
 - `watch.py` — Stage C progress watcher
 - `enumerate_books.py` — original sync Stage-A enumerator (superseded by `crawl.py stageA`)
 - `entries_index.jsonl`, `books_index.jsonl` — Stage A output
