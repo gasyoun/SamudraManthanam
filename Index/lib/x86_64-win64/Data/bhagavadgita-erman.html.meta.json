@@ -3,7 +3,7 @@
   "filename": "bhagavadgita-erman.html",
   "slug": "bhagavadgita-erman",
   "title_ru": "Бхагавад-Гита (2009); В. Г. Эрман",
-  "title_en": "",
+  "title_en": "Bhagavad Gita Erman",
   "subtitle": "из книги",
   "credit": "В.Г.Эрман",
   "credit_role": "Издание подготовил",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

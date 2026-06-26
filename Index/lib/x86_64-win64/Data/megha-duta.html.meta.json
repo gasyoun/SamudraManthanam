@@ -3,7 +3,7 @@
   "filename": "megha-duta.html",
   "slug": "megha-duta",
   "title_ru": "Калидаса. Облако-вестник (1914); П. Риттер",
-  "title_en": "",
+  "title_en": "Megha Duta",
   "subtitle": "(Meghadūta)",
   "credit": "П. Риттера,",
   "credit_role": "Перевод",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

@@ -3,7 +3,7 @@
   "filename": "yajnavalkyasmriti.html",
   "slug": "yajnavalkyasmriti",
   "title_ru": "Яджнавалкья-смрити (1994); А.М. Самозванцев",
-  "title_en": "",
+  "title_en": "Yajnavalkya Smriti",
   "subtitle": "",
   "credit": "А.М. Самозванцева,",
   "credit_role": "Перевод",
@@ -14,7 +14,7 @@
     "iast",
     "cyrillic"
   ],
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

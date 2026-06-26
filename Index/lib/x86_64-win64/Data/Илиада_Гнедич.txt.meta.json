@@ -3,7 +3,7 @@
   "filename": "Илиада_Гнедич.txt",
   "slug": "iliada_gnedich",
   "title_ru": "Илиада Гомера; Н.И. Гнедич (1829)",
-  "title_en": "",
+  "title_en": "Iliada Gnedich",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -14,7 +14,7 @@
     "cyrillic"
   ],
   "structure": "prose",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

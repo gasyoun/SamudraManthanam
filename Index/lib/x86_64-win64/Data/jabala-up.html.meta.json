@@ -3,7 +3,7 @@
   "filename": "jabala-up.html",
   "slug": "jabala-up",
   "title_ru": "Джабала упанишада (2025); И.Е. Толчельников, М.В. Ишимбаев, В.Н. Кочергин, А.П. Широбоков",
-  "title_en": "",
+  "title_en": "Jabala Up",
   "subtitle": "",
   "credit": "И.Е. Толчельников, М.В. Ишимбаев, В.Н. Кочергин, А.П. Широбоков",
   "credit_role": "Пер. с санскрита",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

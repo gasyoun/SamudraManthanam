@@ -3,7 +3,7 @@
   "filename": "Словарь Гринцера из Рамаяны 1-2.txt",
   "slug": "slovar-grintsera-iz-ramayany-1-2",
   "title_ru": "Cловарь к «Рамаяне» I-II (2006); П.А. Гринцер",
-  "title_en": "",
+  "title_en": "Slovar Grintsera Iz Ramayany 1 2",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

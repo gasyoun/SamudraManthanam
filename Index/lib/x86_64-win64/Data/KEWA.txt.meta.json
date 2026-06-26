@@ -3,7 +3,7 @@
   "filename": "KEWA.txt",
   "slug": "kewa",
   "title_ru": "KEWA, A Concise Etymological Sanskrit Dictionary (1953-1980); M. Mayrhofer",
-  "title_en": "",
+  "title_en": "Kewa",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -15,7 +15,7 @@
     "iast"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

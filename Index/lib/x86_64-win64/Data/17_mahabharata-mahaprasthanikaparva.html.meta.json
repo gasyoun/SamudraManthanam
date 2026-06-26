@@ -3,7 +3,7 @@
   "filename": "17_mahabharata-mahaprasthanikaparva.html",
   "slug": "17_mahabharata-mahaprasthanikaparva",
   "title_ru": "Махабхарата XVII (2005); Я.В. Васильков, С.Л. Невелева",
-  "title_en": "",
+  "title_en": "17 Mahabharata Mahaprasthanikaparva",
   "subtitle": "Книга семнадцатая",
   "credit": "Я. В. Васильков и С. Л. Невелева",
   "credit_role": "Издание подготовили",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

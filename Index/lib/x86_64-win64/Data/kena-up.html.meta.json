@@ -3,7 +3,7 @@
   "filename": "kena-up.html",
   "slug": "kena-up",
   "title_ru": "Кена упанишада (1992); А.Я. Сыркин",
-  "title_en": "",
+  "title_en": "Kena Up",
   "subtitle": "",
   "credit": "А. Я. Сыркина",
   "credit_role": "Пер. с санскрита, предисловие и комментарии",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

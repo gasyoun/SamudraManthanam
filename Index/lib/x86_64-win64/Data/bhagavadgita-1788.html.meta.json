@@ -3,7 +3,7 @@
   "filename": "bhagavadgita-1788.html",
   "slug": "bhagavadgita-1788",
   "title_ru": "БАГУАТ-ГЕТА (1788); А.А. Петров",
-  "title_en": "",
+  "title_en": "Bhagavad Gita 1788",
   "subtitle": "",
   "credit": "Переводчик: А.А. Петров.",
   "credit_role": "",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

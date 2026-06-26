@@ -3,7 +3,7 @@
   "filename": "Mify_759_ind.html",
   "slug": "mify_759_ind",
   "title_ru": "Мифы народов мира. Энциклопедия. В 2-х томах (1987-1988); С.А. Токарев",
-  "title_en": "",
+  "title_en": "Mify 759 Ind",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -14,7 +14,7 @@
     "cyrillic"
   ],
   "structure": "prose",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

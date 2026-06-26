@@ -3,7 +3,7 @@
   "filename": "Сыркин_Том_1_UTF.htm",
   "slug": "syrkin_tom_1_utf",
   "title_ru": "Избранные труды. Т.1; А.Я. Сыркин",
-  "title_en": "",
+  "title_en": "Syrkin Tom 1 Utf",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "prose",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

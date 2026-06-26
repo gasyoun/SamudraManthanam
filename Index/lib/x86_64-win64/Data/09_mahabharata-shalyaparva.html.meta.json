@@ -3,7 +3,7 @@
   "filename": "09_mahabharata-shalyaparva.html",
   "slug": "09_mahabharata-shalyaparva",
   "title_ru": "Махабхарата IX (1996); В.И. Кальянов",
-  "title_en": "",
+  "title_en": "9 Mahabharata Shalya Parva",
   "subtitle": "Книга девятая",
   "credit": "В.И.Кальянова",
   "credit_role": "Перевод с санскрита и комментарии",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

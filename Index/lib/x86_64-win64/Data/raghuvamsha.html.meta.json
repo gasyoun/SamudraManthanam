@@ -3,7 +3,7 @@
   "filename": "raghuvamsha.html",
   "slug": "raghuvamsha",
   "title_ru": "Рагхуванша. Род Рагху. Калидаса (1996); В.Г. Эрман",
-  "title_en": "",
+  "title_en": "Raghuvamsha",
   "subtitle": "Род Рагху",
   "credit": "В.Г.Эрман",
   "credit_role": "Введение, перевод с санскрита и примечания",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

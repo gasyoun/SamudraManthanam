@@ -3,7 +3,7 @@
   "filename": "11_atharvaveda.html",
   "slug": "11_atharvaveda",
   "title_ru": "Атхарваведа. Книга 11 (2007); Т.Я. Елизаренкова",
-  "title_en": "",
+  "title_en": "11 Atharvaveda",
   "subtitle": "ВОТ ОДИННАДЦАТАЯ КНИГА",
   "credit": "Т.Я. Елизаренковой",
   "credit_role": "Перевод с ведийского языка, вступительная",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

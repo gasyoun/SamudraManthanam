@@ -3,7 +3,7 @@
   "filename": "bhagavadgita-radha.html",
   "slug": "bhagavadgita-radha",
   "title_ru": "Бхагавадгита (2016); Р.Т. Блиндерман",
-  "title_en": "",
+  "title_en": "Bhagavad Gita Radha",
   "subtitle": "«Сарартха-­варшини-­тика»",
   "credit": "Р.Т.Блиндерман",
   "credit_role": "в традиции бенгальского вайшнавизма в 3 т.",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

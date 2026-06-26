@@ -3,7 +3,7 @@
   "filename": "shatakatrayam-serebryakov.html",
   "slug": "shatakatrayam-serebryakov",
   "title_ru": "Шатакатраям. Бхартрихари (1979); И.Д. Серебряков",
-  "title_en": "",
+  "title_en": "Shatakatrayam Serebryakov",
   "subtitle": "",
   "credit": "И.Д. Серебрякова",
   "credit_role": "Перевод с санскрита, исследование и комментарий",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

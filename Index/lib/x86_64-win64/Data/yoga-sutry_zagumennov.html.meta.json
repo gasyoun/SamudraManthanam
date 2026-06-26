@@ -3,7 +3,7 @@
   "filename": "yoga-sutry_zagumennov.html",
   "slug": "yoga-sutry_zagumennov",
   "title_ru": "Патанджали. Йога-сутра (1991); Б.И. Загуменнов",
-  "title_en": "",
+  "title_en": "Yoga Sutry Zagumennov",
   "subtitle": "",
   "credit": "Б.И. Загуменнов",
   "credit_role": "Вводные статьи, перевод с санскрита, послесловие, примечания, глоссарии",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

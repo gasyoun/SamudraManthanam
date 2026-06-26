@@ -3,7 +3,7 @@
   "filename": "bhagavadgita-1914.html",
   "slug": "bhagavadgita-1914",
   "title_ru": "Бхагавадгита (1914); А.А. Каменская и И.В. де Манциарли",
-  "title_en": "",
+  "title_en": "Bhagavad Gita 1914",
   "subtitle": "ПРЕДИСЛОВИЕ ПЕРЕВОДЧИКА",
   "credit": "А.А. Каменской и И.В. де Манциарли",
   "credit_role": "переведенная с английского и санскритского",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }

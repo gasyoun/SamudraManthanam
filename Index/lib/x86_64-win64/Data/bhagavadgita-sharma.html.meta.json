@@ -3,7 +3,7 @@
   "filename": "bhagavadgita-sharma.html",
   "slug": "bhagavadgita-sharma",
   "title_ru": "Шримад Бхагавад Гита (2015); Ш. Ш. Шарма",
-  "title_en": "",
+  "title_en": "Bhagavad Gita Sharma",
   "subtitle": "",
   "credit": "Шайлендра Шарма",
   "credit_role": "Йогический комментарий",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "Mechanically extracted from the legacy Samudra Manthanam HTML corpus header; reviewed as a Phase 0 sidecar default.",
+  "rights": "In-copyright / rights not cleared for open redistribution. Use within the Samudra Manthanam search and reader interface; do not publish as an open corpus dump without separate rights review.",
   "needs_review": true
 }
