@@ -33,6 +33,7 @@ def _args(**kwargs):
         pali=None,
         min_words=0,
         limit=0,
+        shard=None,
         out="content",
         dry_run=False,
     )
@@ -110,6 +111,43 @@ def test_workflow_launcher_refuses_unfiltered_full_corpus():
     # An explicit non-lang filter is still allowed even with lang cleared.
     assert "--section" in workflow_stagec.build_argv({"WL_LANG": "", "WL_SECTION": "purana"})
     assert "--limit" in workflow_stagec.build_argv({"WL_LANG": "", "WL_LIMIT": "5"})
+
+
+def test_workflow_launcher_accepts_shard():
+    argv = workflow_stagec.build_argv({"WL_LANG": "sanskrit", "WL_SHARD": "2/3"})
+    assert argv[argv.index("--shard") + 1] == "2/3"
+    assert argv.index("--lang") < argv.index("--shard")
+
+
+def test_workflow_launcher_rejects_bad_shard():
+    with pytest.raises(ValueError, match="WL_SHARD"):
+        workflow_stagec.build_argv({"WL_LANG": "sanskrit", "WL_SHARD": "3/2"})
+    with pytest.raises(ValueError, match="WL_SHARD"):
+        workflow_stagec.build_argv({"WL_LANG": "sanskrit", "WL_SHARD": "abc"})
+
+
+def test_workflow_launcher_shard_alone_still_refuses_full_corpus():
+    with pytest.raises(ValueError, match="unfiltered full-corpus"):
+        workflow_stagec.build_argv({"WL_LANG": "", "WL_SHARD": "1/3"})
+
+
+def test_select_shards_are_disjoint_and_covering():
+    recs = [{"slug": f"book-{i}", "source_lang": "sanskrit"} for i in range(200)]
+    n = 4
+    shards = [
+        {r["slug"] for r in crawl.select(recs, _args(lang=["sanskrit"], shard=f"{k}/{n}"))}
+        for k in range(1, n + 1)
+    ]
+    assert set().union(*shards) == {r["slug"] for r in recs}
+    for i in range(n):
+        for j in range(i + 1, n):
+            assert not (shards[i] & shards[j])
+    assert all(shards)
+
+
+def test_select_rejects_bad_shard():
+    with pytest.raises(ValueError, match="1<=k<=n"):
+        crawl.select([], _args(shard="5/3"))
 
 
 def test_validate_cached_docs_keeps_good_files_absent_from_short_expected(tmp_path):

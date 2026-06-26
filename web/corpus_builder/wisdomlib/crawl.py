@@ -35,6 +35,9 @@ Selection filters (apply to stageB's universe and stageC; combine with AND):
     --pali / --no-pali   keep / drop Pali entries              (books_full only)
     --min-words N  only entries of >= N words
     --limit N      cap the selection at N entries
+    --shard k/n    fetch only shard k of n machines (disjoint, stable by slug) so
+                   several home/residential connections each take a non-overlapping
+                   slice. e.g. run --shard 1/3, 2/3, 3/3 and merge content/ dirs.
     --out DIR      stageC output dir (default: content)
     --dry-run      stageC: list what would be fetched, fetch nothing
 
@@ -44,7 +47,7 @@ Outputs (in this dir):
     CATALOG.md            human-readable summary built by `report`
     content/<slug>/*.html raw chapter pages from Stage C (gitignored)
 """
-import re, sys, json, html as ihtml, asyncio, argparse, time, random
+import re, sys, json, html as ihtml, asyncio, argparse, time, random, hashlib
 from collections import Counter
 from pathlib import Path
 
@@ -412,6 +415,28 @@ def _csv(vals):
     return set(out)
 
 
+def _parse_shard(spec):
+    """Parse a "k/n" shard spec into (k, n), or None when unset."""
+    if not spec:
+        return None
+    m = re.match(r"^\s*(\d+)\s*/\s*(\d+)\s*$", spec)
+    if not m:
+        raise ValueError(f"--shard must be k/n (got {spec!r})")
+    k, n = int(m.group(1)), int(m.group(2))
+    if n < 1 or not (1 <= k <= n):
+        raise ValueError(f"--shard k/n must satisfy 1<=k<=n (got {spec!r})")
+    return k, n
+
+
+def _shard_of(slug, n):
+    """Stable 0-based shard index for a slug.
+
+    Python's hash() is salted per process, so use md5 for identical partitioning
+    across machines and workflow runs.
+    """
+    return int(hashlib.md5((slug or "").encode("utf-8")).hexdigest(), 16) % n
+
+
 def select(records, a):
     """Apply the shared CLI filters (AND-combined) to a list of records.
     Missing fields fail the corresponding filter, so lang/english/pali only
@@ -429,6 +454,10 @@ def select(records, a):
         if a.pali is False and r.get("is_pali"): continue
         if a.min_words and (r.get("words") or 0) < a.min_words: continue
         out.append(r)
+    shard = _parse_shard(getattr(a, "shard", None))
+    if shard:
+        k, n = shard
+        out = [r for r in out if _shard_of(r.get("slug"), n) == k - 1]
     if a.limit:
         out = out[:a.limit]
     return out
@@ -555,9 +584,11 @@ def main():
     ap.add_argument("--no-pali", dest="pali", action="store_false", help="drop Pali")
     ap.add_argument("--min-words", type=int, default=0)
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--shard", help="k/n: fetch only shard k of n machines (stable by slug)")
     ap.add_argument("--out", default="content", help="stageC output dir")
     ap.add_argument("--dry-run", action="store_true", help="stageC: list, don't fetch")
     a = ap.parse_args()
+    _parse_shard(a.shard)                  # validate early, fail fast on a bad spec
     DELAY = a.delay
     t0 = time.time()
     if a.stage in ("stageA", "all"):
