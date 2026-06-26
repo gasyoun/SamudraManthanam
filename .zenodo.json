@@ -1,0 +1,15 @@
+{
+  "creators": [
+    {
+      "name": "Gasūns, Mārcis",
+      "orcid": "0000-0003-4513-884X",
+      "affiliation": "independent scholar",
+      "email": "gasyoun@ya.ru"
+    }
+  ],
+  "title": "Samudra Manthanam — parallel Sanskrit–Russian corpus search",
+  "description": "Search platform for a parallel Sanskrit–Russian text corpus: full-text, regex, and stem/root search with a scholarly reader",
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "keywords": ["Sanskrit", "Russian", "parallel corpus", "digital humanities", "full-text search"]
+}

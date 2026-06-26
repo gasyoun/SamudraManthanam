@@ -11,8 +11,10 @@ abstract: >-
   full-text, regex, and stem/root search with a scholarly reader,
   developed by the Society of Sanskrit Enthusiasts (samskrtam.ru).
 authors:
-  - name: "Society of Sanskrit Enthusiasts"
-    website: "https://samskrtam.ru"
+  - name: "Mārcis Gasūns"
+    orcid: "https://orcid.org/0000-0003-4513-884X"
+    affiliation: "independent scholar"
+    email: "gasyoun@ya.ru"
 repository-code: "https://github.com/gasyoun/SamudraManthanam"
 url: "https://samskrtam.ru"
 license: Apache-2.0
@@ -24,3 +26,4 @@ keywords:
   - parallel corpus
   - digital humanities
   - full-text search
+
