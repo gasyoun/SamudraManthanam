@@ -85,6 +85,14 @@ block**. Confirmed findings:
   cloud-runner route does **not** work.
 - This is **not** a JS/Turnstile challenge (httpx runs no JS — a browser engine
   wouldn't help) and **not** a header heuristic; it's a per-IP/ASN budget.
+- **Path-scoped, and not TLS-fingerprint-based (measured 2026-06-26).** On a
+  blocked IP the block is selective: the book **landing** page returns HTTP 200
+  while its `/d/docN.html` **chapter** pages return HTTP 403 — same IP, same
+  session, same instant. Swapping httpx for a real-browser TLS/JA3 fingerprint
+  via `curl_cffi --impersonate` (tested `chrome`, `chrome124`, `safari`) did
+  **not** change it: landing 200 / chapter 403 on all three. So `--impersonate`
+  cannot rescue a blocked IP here — the gate is IP reputation on the `/d/` path,
+  not the handshake. (Left in for IPs that *are* fingerprint-gated; it's free.)
 - **The only egress that gets through is a residential connection.** Run from a
   home network, gently (`--workers 1 --delay 5`), in small resumable sessions.
 
