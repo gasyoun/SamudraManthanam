@@ -98,6 +98,18 @@ def build_argv(env=os.environ):
             "no selection filter set — refusing an unfiltered full-corpus crawl; "
             "set at least one of lang/section/ctype/slug/english/pali/min_words/limit")
 
+    # Shard is a partition of the already-selected set, not a selector — validate it
+    # AFTER the unfiltered-crawl guard so a bare shard can never widen the selection.
+    shard = _env(env, "WL_SHARD")
+    if shard:
+        m = re.match(r"^(\d+)/(\d+)$", shard)
+        if not m:
+            raise ValueError("WL_SHARD must be k/n (e.g. 1/3)")
+        k, n = int(m.group(1)), int(m.group(2))
+        if n < 1 or not (1 <= k <= n):
+            raise ValueError("WL_SHARD k/n must satisfy 1<=k<=n")
+        argv += ["--shard", shard]
+
     argv += ["--workers", str(_int_env(env, "WL_WORKERS", 1, 1, 8))]
     delay = _float_env(env, "WL_DELAY", 5, 0, 3600)
     argv += ["--delay", f"{delay:g}"]

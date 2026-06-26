@@ -49,6 +49,7 @@ AND-combined; repeatable or comma-lists where noted.
 --ctype T      book|essay|article|...       --english     has an English translation
 --lang L       source_lang (Stage C only)  --pali/--no-pali
 --min-words N  size floor                   --limit N     cap the selection
+--shard k/n    disjoint slice for machine k  --impersonate PROFILE  curl_cffi TLS
 ```
 
 `--lang`/`--english`/`--pali` only select on Stage C (those fields are produced
@@ -91,6 +92,38 @@ block**. Confirmed findings:
 cooldown → book-by-book at `--workers 1 --delay 5` with a circuit breaker that
 backs off for hours if it detects a re-block.
 
+### Spreading the per-IP budget across machines (`--shard`)
+
+Because the block is a **per-IP/ASN volume budget**, the way to go faster is more
+residential IPs, each carrying its own budget — not a faster parser or a browser
+engine. `--shard k/n` partitions the selection into `n` disjoint slices by a
+**stable md5 hash of slug**, so `n` home connections (separate houses, a friend's
+network, a 4G/5G hotspot — a different ASN) each fetch a non-overlapping subset
+with zero coordination:
+
+```sh
+# machine 1 (home):      python crawl.py stageC --lang sanskrit --shard 1/3 --workers 1 --delay 5
+# machine 2 (hotspot):   python crawl.py stageC --lang sanskrit --shard 2/3 --workers 1 --delay 5
+# machine 3 (friend):    python crawl.py stageC --lang sanskrit --shard 3/3 --workers 1 --delay 5
+```
+
+The partition is identical on every machine and every run (md5, not Python's
+salted `hash()`), so a machine always owns the same books and resumes cleanly.
+Merging is a plain **union** of the `content/<slug>/` directories — shards never
+overlap, so there are no conflicts. For an unattended daily cadence, point each
+machine's **Task Scheduler / cron** at its own `--shard k/n` line (add `--limit N`
+to cap each day's work).
+
+### TLS fingerprint (`--impersonate`)
+
+Stackable with sharding and independent of it. `--impersonate chrome` swaps httpx
+for [`curl_cffi`](https://github.com/lexiforest/curl_cffi) (`pip install curl_cffi`),
+replaying a real Chrome **TLS/JA3 + HTTP-2 fingerprint**. That's distinct from the
+request headers already sent (which were ruled out as the gate); Cloudflare's
+per-IP bot score weighs the handshake, so a genuine-browser fingerprint can lift
+the volume budget before a 403. It does **not** defeat a JS/Turnstile challenge.
+Cheapest single-IP improvement to test; falls back to httpx if curl_cffi is absent.
+
 ## Autonomous runs — GitHub Actions (self-hosted runner)
 
 [`.github/workflows/wisdomlib-crawl.yml`](../../../.github/workflows/wisdomlib-crawl.yml)
@@ -107,9 +140,16 @@ and `workflow_dispatch` only (no cron). To use it:
    ```
 2. **Prepare that machine:** Python 3.11 + `pip install "httpx[http2]"`.
 3. **Trigger:** repo **Actions → "wisdomlib gentle crawl" → Run workflow**
-   (inputs: `filters` default `--lang sanskrit`, `workers` `1`, `delay` `5`).
+   (inputs: `lang` default `sanskrit`, `workers` `1`, `delay` `5`, optional
+   `shard` `k/n`).
 4. **Re-run as needed** — each pass resumes via the `content` cache; output is
    uploaded as the `wisdomlib-content` artifact and **never committed**.
+
+For **several runners on different home connections**, register one self-hosted
+runner per machine and dispatch the workflow on each with a distinct `shard`
+(`1/3`, `2/3`, `3/3`). The cache and artifact are keyed per shard
+(`wisdomlib-content-1-3`, …), so each runner resumes and uploads only its own
+disjoint slice; download all artifacts and union the `content/` dirs.
 
 The workflow checks out this repo's default branch for the crawler code.
 

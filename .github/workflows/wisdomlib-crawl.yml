@@ -65,6 +65,10 @@ on:
         description: "per-request delay seconds (jittered)"
         default: "5"
         type: string
+      shard:
+        description: "k/n — fetch only shard k of n machines (disjoint by slug; leave blank for all)"
+        default: ""
+        type: string
 
 permissions:
   contents: read
@@ -90,14 +94,27 @@ jobs:
       - name: Install deps
         run: pip install "httpx[http2]"
 
-      # Restore previously downloaded chapters so each run resumes. The unique
-      # run-id key always writes a fresh cache; restore-keys pulls the latest.
+      # A shard like "1/3" can't appear verbatim in an artifact/cache name (the
+      # slash is illegal), so derive a filesystem-safe suffix once and reuse it.
+      - name: Compute shard suffix
+        id: shard
+        working-directory: .
+        run: |
+          s='${{ inputs.shard }}'
+          if [ -n "$s" ]; then
+            echo "suffix=-$(echo "$s" | tr '/' '-')" >> "$GITHUB_OUTPUT"
+          else
+            echo "suffix=" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Restore previously downloaded chapters so each run resumes. Cache is keyed
+      # PER SHARD so machine k only restores its own (disjoint) slice, not others'.
       - name: Restore content cache
         uses: actions/cache@v4
         with:
           path: web/corpus_builder/wisdomlib/content
-          key: wisdomlib-content-${{ github.run_id }}
-          restore-keys: wisdomlib-content-
+          key: wisdomlib-content${{ steps.shard.outputs.suffix }}-${{ github.run_id }}
+          restore-keys: wisdomlib-content${{ steps.shard.outputs.suffix }}-
 
       - name: Gentle Stage C pass
         env:
@@ -111,6 +128,7 @@ jobs:
           WL_LIMIT: ${{ inputs.limit }}
           WL_WORKERS: ${{ inputs.workers }}
           WL_DELAY: ${{ inputs.delay }}
+          WL_SHARD: ${{ inputs.shard }}
         run: |
           python workflow_stagec.py
           python crawl.py report || true
@@ -125,7 +143,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: wisdomlib-content
+          name: wisdomlib-content${{ steps.shard.outputs.suffix }}
           path: web/corpus_builder/wisdomlib/content
           retention-days: 30
           if-no-files-found: ignore

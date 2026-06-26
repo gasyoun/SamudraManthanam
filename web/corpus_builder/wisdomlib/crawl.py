@@ -35,6 +35,12 @@ Selection filters (apply to stageB's universe and stageC; combine with AND):
     --pali / --no-pali   keep / drop Pali entries              (books_full only)
     --min-words N  only entries of >= N words
     --limit N      cap the selection at N entries
+    --shard k/n    fetch only shard k of n machines (disjoint, stable by slug) so
+                   several home/residential connections each take a non-overlapping
+                   slice — spreading the per-IP Cloudflare volume budget. e.g. run
+                   --shard 1/3, 2/3, 3/3 on three machines; merge the content/ dirs.
+    --impersonate PROFILE   use a curl_cffi browser TLS fingerprint (e.g. chrome)
+                   instead of httpx; can raise the per-IP budget (needs curl_cffi)
     --out DIR      stageC output dir (default: content)
     --dry-run      stageC: list what would be fetched, fetch nothing
 
@@ -44,7 +50,7 @@ Outputs (in this dir):
     CATALOG.md            human-readable summary built by `report`
     content/<slug>/*.html raw chapter pages from Stage C (gitignored)
 """
-import re, sys, json, html as ihtml, asyncio, argparse, time, random
+import re, sys, json, html as ihtml, asyncio, argparse, time, random, hashlib
 from collections import Counter
 from pathlib import Path
 
@@ -75,8 +81,32 @@ HEADERS = {
     "Upgrade-Insecure-Requests": "1",
 }
 DELAY = 0.0   # seconds between requests per worker (set from --delay); jittered +0-30%
+IMPERSONATE = None  # set from --impersonate: a curl_cffi browser profile, e.g. "chrome"
 DOCS_MANIFEST = "_docs_manifest.json"
 LAST_RUN = "_last_run.json"
+
+
+def new_client():
+    """Construct the async HTTP client used by every stage.
+
+    Default: httpx with HTTP/2 + browser-like headers (follow_redirects at the
+    client level so the per-request call is identical across backends).
+
+    With --impersonate (and curl_cffi installed): a curl_cffi AsyncSession that
+    replays a real browser's TLS/JA3 + HTTP/2 fingerprint. That fingerprint is
+    distinct from the request headers we already send, and Cloudflare's per-IP
+    bot score weighs it — a genuine-Chrome handshake can lift the per-IP request
+    budget before a 403. It does NOT defeat an interactive JS/Turnstile challenge.
+    Falls back to httpx (with a warning) if curl_cffi is absent."""
+    if IMPERSONATE:
+        try:
+            from curl_cffi.requests import AsyncSession
+            return AsyncSession(headers=HEADERS, impersonate=IMPERSONATE)
+        except ImportError:
+            print(f"  --impersonate {IMPERSONATE!r} requested but curl_cffi is not "
+                  "installed; falling back to httpx (pip install curl_cffi)",
+                  file=sys.stderr)
+    return httpx.AsyncClient(headers=HEADERS, http2=HTTP2, follow_redirects=True)
 
 SKIP_SECTIONS = {"marathi", "books", "gallery", "shop", "glossary"}
 SECTIONS = [
@@ -203,7 +233,7 @@ def parse_section(page):
 async def fetch(client, url, tries=4):
     for k in range(tries):
         try:
-            r = await client.get(url, timeout=30.0, follow_redirects=True)
+            r = await client.get(url, timeout=30.0)   # redirects handled per-client
             if r.status_code == 200:
                 if DELAY:                              # throttle held inside caller's
                     await asyncio.sleep(DELAY * (1 + 0.3 * random.random()))  # semaphore
@@ -225,7 +255,7 @@ async def fetch(client, url, tries=4):
 async def stage_a(workers):
     sem = asyncio.Semaphore(workers)
     books = {}
-    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
+    async with new_client() as client:
         async def one(sec):
             async with sem:
                 page = await fetch(client, f"{BASE}/{sec}")
@@ -310,7 +340,7 @@ async def stage_b(workers, a):
     lock = asyncio.Lock()
     n = [0]
     out = out_p.open("a", encoding="utf-8")
-    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
+    async with new_client() as client:
         async def one(e):
             async with sem:
                 html = await fetch(client, e["url"])
@@ -412,6 +442,28 @@ def _csv(vals):
     return set(out)
 
 
+def _parse_shard(spec):
+    """Parse a "k/n" shard spec into (k, n). Splits the selection across machines
+    by a stable hash of slug so N home connections each fetch a disjoint subset
+    (no coordination, no overlap — the per-IP Cloudflare budget is what we spread).
+    Returns None when unset."""
+    if not spec:
+        return None
+    m = re.match(r"^\s*(\d+)\s*/\s*(\d+)\s*$", spec)
+    if not m:
+        raise ValueError(f"--shard must be k/n (got {spec!r})")
+    k, n = int(m.group(1)), int(m.group(2))
+    if n < 1 or not (1 <= k <= n):
+        raise ValueError(f"--shard k/n must satisfy 1<=k<=n (got {spec!r})")
+    return k, n
+
+
+def _shard_of(slug, n):
+    """Stable 0-based shard index for a slug. Uses md5 (not Python's salted
+    hash()) so the partition is identical across machines and runs."""
+    return int(hashlib.md5((slug or "").encode("utf-8")).hexdigest(), 16) % n
+
+
 def select(records, a):
     """Apply the shared CLI filters (AND-combined) to a list of records.
     Missing fields fail the corresponding filter, so lang/english/pali only
@@ -429,6 +481,10 @@ def select(records, a):
         if a.pali is False and r.get("is_pali"): continue
         if a.min_words and (r.get("words") or 0) < a.min_words: continue
         out.append(r)
+    shard = _parse_shard(getattr(a, "shard", None))
+    if shard:
+        k, n = shard
+        out = [r for r in out if _shard_of(r.get("slug"), n) == k - 1]
     if a.limit:
         out = out[:a.limit]
     return out
@@ -483,7 +539,7 @@ async def stage_c(workers, a):
         pending = [(slug, url) for url in urls if _doc_name(url) not in valid]
         return {"slug": slug, "blocked": False, "docs": pending, "invalid": invalid}
 
-    async with httpx.AsyncClient(headers=HEADERS, http2=HTTP2) as client:
+    async with new_client() as client:
         results = await asyncio.gather(*(docs_for(client, r) for r in chosen))
         out_dir.mkdir(parents=True, exist_ok=True)
         _save_json(docs_manifest_path, docs_manifest)
@@ -555,9 +611,15 @@ def main():
     ap.add_argument("--no-pali", dest="pali", action="store_false", help="drop Pali")
     ap.add_argument("--min-words", type=int, default=0)
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--shard", help="k/n: fetch only shard k of n machines (stable by slug)")
+    ap.add_argument("--impersonate", metavar="PROFILE",
+                    help="curl_cffi browser TLS profile (e.g. chrome) — needs `pip install curl_cffi`")
     ap.add_argument("--out", default="content", help="stageC output dir")
     ap.add_argument("--dry-run", action="store_true", help="stageC: list, don't fetch")
     a = ap.parse_args()
+    _parse_shard(a.shard)                  # validate early, fail fast on a bad spec
+    global IMPERSONATE
+    IMPERSONATE = a.impersonate or None
     DELAY = a.delay
     t0 = time.time()
     if a.stage in ("stageA", "all"):
