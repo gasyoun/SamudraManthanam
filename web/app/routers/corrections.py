@@ -53,7 +53,7 @@ async def propose_correction(proposal: CorrectionProposal):
         await db.close()
 
 @router.get("/pending")
-async def get_pending_corrections(key: str = Query(...)):
+async def get_pending_corrections(key: str = Query("")):
     if not settings.ADMIN_SECRET_KEY or key != settings.ADMIN_SECRET_KEY:
         if settings.APP_ENV != "development" or key != "dev":
             raise HTTPException(status_code=403, detail="Forbidden")

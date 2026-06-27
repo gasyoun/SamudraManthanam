@@ -115,3 +115,19 @@ async def test_correction_proposal():
         assert data[0]["status"] == "pending"
     finally:
         settings.APP_ENV = old_env
+
+@pytest.mark.asyncio
+async def test_pending_corrections_rejects_missing_or_wrong_key():
+    old_env = settings.APP_ENV
+    old_admin_key = settings.ADMIN_SECRET_KEY
+    settings.APP_ENV = "development"
+    settings.ADMIN_SECRET_KEY = ""
+    try:
+        response = client.get("/api/corrections/pending")
+        assert response.status_code == 403
+
+        response = client.get("/api/corrections/pending?key=wrong")
+        assert response.status_code == 403
+    finally:
+        settings.APP_ENV = old_env
+        settings.ADMIN_SECRET_KEY = old_admin_key
