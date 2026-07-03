@@ -1,0 +1,61 @@
+name: Deploy corpus-faq site
+
+# Builds docs_site/wiki/ → static site and FTPs it to samskrtam.ru/corpus-faq/
+# (the same shared-hosting pattern as ORS-FAQ's deploy.yml). Without the FTP_*
+# secrets the build still runs as validation and the upload step skips green.
+#
+# One-time setup (repo owner): add secrets FTP_HOST / FTP_USER / FTP_PASS
+# (same credentials as gasyoun/ORS-FAQ) — the path is fixed below.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs_site/**"
+      - ".github/workflows/deploy-corpus-faq.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-corpus-faq
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install the site generator
+        run: pip install "zettelkastenwiki @ git+https://github.com/gasyoun/ZettelkastenWiki@6b3eb831ce252ac8585ba507940b8c8271a4983f"
+
+      - name: Build the site
+        run: python docs_site/build_site.py corpus-faq-out
+
+      - name: Check for FTP secrets
+        id: ftp
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+        run: |
+          if [ -n "$FTP_HOST" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::FTP secrets not set — built the site as validation, skipped the upload."
+          fi
+
+      - name: Upload via FTP
+        if: steps.ftp.outputs.present == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: corpus-faq-out/
+          server-dir: www/samskrtam.ru/corpus-faq/
