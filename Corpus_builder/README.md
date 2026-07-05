@@ -142,6 +142,7 @@ PSRCBuilder/
 ## См. также
 
 - [`ROADMAP.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) — план развития (перенос на Lazarus/FPC, поэтапно).
+- [`ARCHITECTURE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ARCHITECTURE.md) — текущая и целевая архитектура (ядро/фронтенды, модель данных).
 - [`CLAUDE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/CLAUDE.md) — внутренние соглашения для разработчиков/агентов.
 - [Основное приложение «Пахтанье океана»](https://github.com/gasyoun/SamudraManthanam/blob/main/README.md) — поиск по собранному корпусу.
 
