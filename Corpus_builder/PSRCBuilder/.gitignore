@@ -1,0 +1,22 @@
+# Delphi 7 build artifacts and IDE-generated files — regenerated on every build,
+# never belong in git. (cb.exe is intentionally kept tracked so the corpus can be
+# built without the Delphi 7 IDE — see ../README.md.)
+
+# Compiled units
+*.dcu
+dcu/*.dcu
+
+# Project/IDE metadata and options
+*.dof
+*.ddp
+*.local
+*.identcache
+*.cfg.local
+__history/
+
+# IDE editor backups
+*.~pas
+*.~dfm
+*.~ddp
+*.~dpr
+*.~dof

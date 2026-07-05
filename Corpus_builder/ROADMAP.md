@@ -34,21 +34,25 @@ Delphi 7.
 Цель: закрепить текущее состояние и убрать очевидный технический долг **до**
 любого переноса, чтобы было с чем сравнивать поведение.
 
-- [ ] **Golden-file тесты.** Зафиксировать 1–2 эталонных набора входных `.txt` +
-      ожидаемый выходной HTML. Это «сеть безопасности» для переноса: после миграции
-      выход должен побайтово совпадать.
-- [ ] **Убрать мусор из репозитория.** `.dof`, `.~pas`/`.~dfm`/`.~ddp`
-      (бэкапы IDE), `Unit1.*` (пустой шаблон, не входит в `cb.dpr`) — удалить или
-      внести в `.gitignore`. `.dcu` (бинарные артефакты компиляции) не должны лежать
-      в git.
+- [~] **Golden-file тесты.** Каркас и процедура фиксации готовы
+      ([`tests/golden/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Corpus_builder/tests/golden)
+      + README с точной инструкцией захвата). **Осталось:** прогнать `cb.exe` на
+      реальном мини-наборе и положить побайтовый эталон в `expected/` (нужна
+      Windows-машина с `cb.exe`; GUI, headless-режима нет — это Фаза 4).
+- [x] **Убрать мусор из репозитория.** Удалены из git: `Unit1.*`, `*.dof`,
+      все `*.~pas`/`*.~dfm`/`*.~ddp`, `*.ddp` и все `*.dcu` (в т.ч. в `dcu/`);
+      исходники `dcu/*.pas` и формы `*.dfm` сохранены. Добавлен
+      [`PSRCBuilder/.gitignore`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/.gitignore).
+      `cb.exe` намеренно оставлен в git (сборка корпуса без IDE).
 - [ ] **Почистить `cb.cfg`.** Псевдонимы BDE (`DbiTypes=BDE` и т.п.) и ссылки на
       `WinTypes`/`WinProcs` — наследие, к делу не относятся; проверить и убрать
-      неиспользуемое.
-- [ ] **Переписать `Readme.txt`** (сейчас — обрывок в CP-1251) → указатель на этот
-      README/ROADMAP.
-- [ ] **Машиночитаемый отчёт проверки.** Дополнить integrity-checker выводом ошибок
-      не только в `<input>_err.txt`, но и в структурированный формат (JSON/TSV),
-      чтобы конвейер мог падать при ошибках автоматически.
+      неиспользуемое. _(Отложено: правит сборку, а Delphi 7 для проверки нет.)_
+- [x] **Переписать `Readme.txt`** — теперь UTF-8 указатель на README/ARCHITECTURE/ROADMAP.
+- [x] **Машиночитаемый отчёт проверки.** `TOKBottomDlg.CheckAll`
+      ([`fCheckDialog.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/fCheckDialog.pas))
+      пишет `<input>_check.json` и `<input>_check.tsv` (UTF-8) параллельно с
+      `<input>_err.txt`: статус по каждой проверке + `ok` + `messageCount` — хук,
+      на котором CI сможет падать. _(Ждёт компиляции на Delphi 7 для верификации.)_
 
 ## Фаза 1 — Развязать Delphi-специфику (подготовка к переносу)
 
