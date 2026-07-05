@@ -26,6 +26,7 @@ type
   function CheckShlokas:boolean;
   function CheckComments:boolean;
   function CheckPages:boolean;
+  procedure SaveReport(AFileName:string; rChap,rShl,rComm,rPage:integer);
 
     { Private declarations }
   public
@@ -44,15 +45,22 @@ implementation
 { TOKBottomDlg }
 
 procedure TOKBottomDlg.CheckAll(AFileName:string);
+var
+ rChap,rShl,rComm,rPage:integer;
 begin
  MhList:=TStringList.Create;
  MhList.LoadFromFile(AFileName);
  ErrList.Clear;
- if not CheckChapters then exit;
- if not CheckShlokas then exit;
- if not CheckComments then exit;
- if not CheckPages then exit;
- MhList.Free;
+ rChap:=-1; rShl:=-1; rComm:=-1; rPage:=-1;
+ try
+  if CheckChapters then rChap:=1 else begin rChap:=0; exit; end;
+  if CheckShlokas  then rShl:=1  else begin rShl:=0;  exit; end;
+  if CheckComments then rComm:=1 else begin rComm:=0; exit; end;
+  if CheckPages    then rPage:=1 else begin rPage:=0; exit; end;
+ finally
+  SaveReport(AFileName,rChap,rShl,rComm,rPage);
+  MhList.Free;
+ end;
 end;
 
 function TOKBottomDlg.CheckChapters:boolean;
@@ -218,6 +226,69 @@ end;
 procedure TOKBottomDlg.FormDestroy(Sender: TObject);
 begin
  ErrList.Free;
+end;
+
+
+procedure TOKBottomDlg.SaveReport(AFileName:string; rChap,rShl,rComm,rPage:integer);
+var
+ J,T:TStringList;
+ i:integer;
+ okAll:boolean;
+
+ function TriStr(v:integer):string;
+ begin
+  if v<0 then Result:='null'
+  else if v>0 then Result:='true'
+  else Result:='false';
+ end;
+
+ function JEsc(const s:string):string;
+ var r:string;
+ begin
+  r:=StringReplace(s,'\','\',[rfReplaceAll]);
+  r:=StringReplace(r,'"','\"',[rfReplaceAll]);
+  r:=StringReplace(r,#9,' ',[rfReplaceAll]);
+  Result:=AnsiToUtf8(r);
+ end;
+
+begin
+ okAll:=(rChap>0)and(rShl>0)and(rComm>0)and(rPage>0);
+ J:=TStringList.Create;
+ T:=TStringList.Create;
+ try
+  J.Add('{');
+  J.Add('  "input": "'+JEsc(AFileName)+'",');
+  if okAll then J.Add('  "ok": true,') else J.Add('  "ok": false,');
+  J.Add('  "checks": {');
+  J.Add('    "chapters": '+TriStr(rChap)+',');
+  J.Add('    "shlokas": '+TriStr(rShl)+',');
+  J.Add('    "comments": '+TriStr(rComm)+',');
+  J.Add('    "pages": '+TriStr(rPage));
+  J.Add('  },');
+  J.Add('  "messageCount": '+IntToStr(ErrList.Count)+',');
+  J.Add('  "messages": [');
+  for i:=0 to ErrList.Count-1 do
+   if i<ErrList.Count-1
+    then J.Add('    "'+JEsc(ErrList[i])+'",')
+    else J.Add('    "'+JEsc(ErrList[i])+'"');
+  J.Add('  ]');
+  J.Add('}');
+  J.SaveToFile(ChangeFileExt(AFileName,'_check.json'));
+
+  T.Add('field'#9'value');
+  if okAll then T.Add('ok'#9'true') else T.Add('ok'#9'false');
+  T.Add('chapters'#9+TriStr(rChap));
+  T.Add('shlokas'#9+TriStr(rShl));
+  T.Add('comments'#9+TriStr(rComm));
+  T.Add('pages'#9+TriStr(rPage));
+  T.Add('messageCount'#9+IntToStr(ErrList.Count));
+  for i:=0 to ErrList.Count-1 do
+   T.Add('message'#9+AnsiToUtf8(StringReplace(ErrList[i],#9,' ',[rfReplaceAll])));
+  T.SaveToFile(ChangeFileExt(AFileName,'_check.tsv'));
+ finally
+  T.Free;
+  J.Free;
+ end;
 end;
 
 end.

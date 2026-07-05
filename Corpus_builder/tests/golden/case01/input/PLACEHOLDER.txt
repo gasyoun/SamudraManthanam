@@ -1,0 +1,1 @@
+Place a case config.ini + 01_Sanskrit.txt + 02_Transl.txt + 03_Comments.txt here (CP-1251). See ../../README.md.
