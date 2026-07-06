@@ -123,6 +123,10 @@ kama-sutra.html
 kumarasambhava.html
 megha-duta.html
 manavadharmashastra.html
+naradasmriti.html
+vishnu-smriti.html
+yajnavalkyasmriti.html
+yajnavalkyasmriti_add.html
 nyaya-bhashya.html
 paramarthasara-abhinavagupta.html
 pratyabhijna-hridaya_kshemaraja.html

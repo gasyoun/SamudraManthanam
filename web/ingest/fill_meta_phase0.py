@@ -1,7 +1,8 @@
-"""Phase 0 hygiene pass (H231): fill title_en / provenance / rights on the 148
-active corpus meta.json files. Does not touch the 4 un-ingested dharmasastra
-texts (naradasmriti, vishnu-smriti, yajnavalkyasmriti, yajnavalkyasmriti_add —
-see .ai_state.md "DECISION NEEDED").
+"""Phase 0 hygiene pass (H231): fill title_en / provenance / rights on all
+active corpus meta.json files (152, since the 4 dharmasastra texts —
+naradasmriti, vishnu-smriti, yajnavalkyasmriti, yajnavalkyasmriti_add — were
+re-added to Programdata/data.txt and re-ingested per MG ruling 07-07-2026: no
+reason found for the original exclusion).
 
 Re-runnable: edits are driven entirely by the tables below, keyed by slug.
 Existing title_en/provenance/rights values are overwritten each run so the
@@ -19,12 +20,7 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
-OUT_OF_SCOPE = {
-    "naradasmriti",
-    "vishnu-smriti",
-    "yajnavalkyasmriti",
-    "yajnavalkyasmriti_add",
-}
+OUT_OF_SCOPE = set()
 
 # English/IAST titles, hand-reviewed per slug. Sanskrit work names use the
 # common English form for the ~10 well-known epics/vedas (Rigveda,
@@ -230,6 +226,10 @@ TITLE_EN.update({
     "syrkin_tom_1_utf": "Selected Works, Vol. 1 (Syrkin)",
     "frish": "Frish, Sanskrit Chrestomathy, Vol. II: Dictionary (1956)",
     "erman-temkin": "Dictionary of Indian Names and Terms (Temkin & Erman, 1996)",
+    "naradasmriti": "Nāradasmṛti (transl. Vigasin & Samozvantsev, 1998)",
+    "vishnu-smriti": "Viṣṇusmṛti (transl. Korneeva, 2007)",
+    "yajnavalkyasmriti": "Yājñavalkyasmṛti (transl. Samozvantsev, 1994)",
+    "yajnavalkyasmriti_add": "Yājñavalkyasmṛti — Materials (transl. Samozvantsev, 1994)",
 })
 
 
