@@ -3,7 +3,7 @@
   "filename": "nyaya-bhashya.html",
   "slug": "nyaya-bhashya",
   "title_ru": "Ньяя-сутры. Ньяя-бхашья; В.К. Шохин",
-  "title_en": "",
+  "title_en": "Nyāyasūtra & Nyāyabhāṣya (transl. Shokhin, 2001)",
   "subtitle": "",
   "credit": "В.К. Шохина",
   "credit_role": "Историко-философское исследование, перевод с санскрита и комментарий",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Москва, 2001 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

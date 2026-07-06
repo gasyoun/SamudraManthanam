@@ -3,7 +3,7 @@
   "filename": "isha-up.html",
   "slug": "isha-up",
   "title_ru": "Иша упанишада (1992); А.Я. Сыркин",
-  "title_en": "",
+  "title_en": "Īśa Upaniṣad (transl. Syrkin, 1992)",
   "subtitle": "",
   "credit": "А. Я. Сыркина",
   "credit_role": "Пер. с санскрита, предисловие и комментарии",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Москва: «Наука», 1992 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

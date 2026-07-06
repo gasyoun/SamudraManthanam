@@ -3,7 +3,7 @@
   "filename": "yoga-sutry.html",
   "slug": "yoga-sutry",
   "title_ru": "Йога-сутры. 11 переводов; Разные переводчики",
-  "title_en": "",
+  "title_en": "Yogasūtra — 11 Translations (various translators)",
   "subtitle": "",
   "credit": "",
   "credit_role": "Источник: www.oum.ru",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

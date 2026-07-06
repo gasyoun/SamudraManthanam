@@ -3,7 +3,7 @@
   "filename": "Коссович.txt",
   "slug": "kossovich",
   "title_ru": "Санскрито-русский словарь (1854); К.А. Коссович",
-  "title_en": "",
+  "title_en": "Sanskrit-Russian Dictionary (Kossovich, 1854)",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "public domain (pre-1929 edition; translator/author long deceased)",
   "needs_review": true
 }

@@ -3,7 +3,7 @@
   "filename": "03_mahabharata-aranyakaparva.html",
   "slug": "03_mahabharata-aranyakaparva",
   "title_ru": "Махабхарата III (1987); Я.В. Васильков",
-  "title_en": "",
+  "title_en": "Mahabharata, Book III (Āraṇyakaparva) (Vasilkov & Neveleva, 1987)",
   "subtitle": "Книга третья",
   "credit": "Я. В. Василькова И С. Л. Невелевой",
   "credit_role": "Перевод с санскрита, предисловие и комментарий",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Москва ♦ 1987 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

@@ -3,7 +3,7 @@
   "filename": "KEWA.txt",
   "slug": "kewa",
   "title_ru": "KEWA, A Concise Etymological Sanskrit Dictionary (1953-1980); M. Mayrhofer",
-  "title_en": "",
+  "title_en": "KEWA: A Concise Etymological Sanskrit Dictionary (Mayrhofer, 1953–1980)",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -15,7 +15,7 @@
     "iast"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

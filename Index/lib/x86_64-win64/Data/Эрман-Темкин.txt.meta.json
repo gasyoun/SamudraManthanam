@@ -3,7 +3,7 @@
   "filename": "Эрман-Темкин.txt",
   "slug": "erman-temkin",
   "title_ru": "Словарь индийских имен и названий (1996); Э.Н. Темкин, В.Г. Эрман",
-  "title_en": "",
+  "title_en": "Dictionary of Indian Names and Terms (Temkin & Erman, 1996)",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -14,7 +14,7 @@
     "cyrillic"
   ],
   "structure": "prose",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

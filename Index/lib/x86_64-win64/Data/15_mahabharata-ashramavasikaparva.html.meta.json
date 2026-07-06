@@ -3,7 +3,7 @@
   "filename": "15_mahabharata-ashramavasikaparva.html",
   "slug": "15_mahabharata-ashramavasikaparva",
   "title_ru": "Махабхарата XV (2005); Я.В. Васильков, С.Л. Невелева",
-  "title_en": "",
+  "title_en": "Mahabharata, Book XV (Āśramavāsikaparva) (Vasilkov & Neveleva, 2005)",
   "subtitle": "Книга пятнадцатая",
   "credit": "Я. В. Васильков и С. Л. Невелева",
   "credit_role": "Издание подготовили",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Санкт-Петербург: «Наука», 2005 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

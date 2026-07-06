@@ -3,7 +3,7 @@
   "filename": "sankhya-karika.html",
   "slug": "sankhya-karika",
   "title_ru": "Санкхья-карика Ишваракришны (1995); В.К. Шохин",
-  "title_en": "",
+  "title_en": "Īśvarakṛṣṇa, Sāṃkhyakārikā (transl. Shokhin, 1995)",
   "subtitle": "Ишваракришна",
   "credit": "В.К. Шохин",
   "credit_role": "Издание подготовил",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: \"Ладомир\", Москва, 1995 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

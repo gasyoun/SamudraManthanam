@@ -3,7 +3,7 @@
   "filename": "Словарь Смирнова.txt",
   "slug": "slovar-smirnova",
   "title_ru": "Симфонический словарь (1955-1989); Б.Л. Смирнов",
-  "title_en": "",
+  "title_en": "Concordance Dictionary to the Mahabharata (Smirnov, 1955–1989)",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

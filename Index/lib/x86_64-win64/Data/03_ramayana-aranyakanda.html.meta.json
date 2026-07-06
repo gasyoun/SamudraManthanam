@@ -3,7 +3,7 @@
   "filename": "03_ramayana-aranyakanda.html",
   "slug": "03_ramayana-aranyakanda",
   "title_ru": "Рамаяна III (2014); П.А. Гринцер",
-  "title_en": "",
+  "title_en": "Ramayana, Book III (Araṇyakāṇḍa) (Grintser, 2014)",
   "subtitle": "Книга третья",
   "credit": "П.А.Гринцер",
   "credit_role": "Перевод подготовил",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.:Ладомир ♦ 2014 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

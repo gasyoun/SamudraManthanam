@@ -3,7 +3,7 @@
   "filename": "Словарь Потаповой.txt",
   "slug": "slovar-potapovoy",
   "title_ru": "Словарь к «Рамаяне» (1986); Б.А. Захарьин , В.А. Потапова",
-  "title_en": "",
+  "title_en": "Index to the Ramayana (Zakharyin & Potapova, 1986)",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -14,7 +14,7 @@
     "cyrillic"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

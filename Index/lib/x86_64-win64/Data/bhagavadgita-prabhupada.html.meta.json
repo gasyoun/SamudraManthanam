@@ -3,7 +3,7 @@
   "filename": "bhagavadgita-prabhupada.html",
   "slug": "bhagavadgita-prabhupada",
   "title_ru": "Бхагавад-Гита (1984); Свами Прабхупада",
-  "title_en": "",
+  "title_en": "Bhagavad Gita As It Is (A.C. Bhaktivedanta Swami Prabhupada, 1984)",
   "subtitle": "",
   "credit": "Шри Шримад А.Ч. Бхактиведанта Свами Прабхупада",
   "credit_role": "Перевод с санскрита на английский",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Издательство \"Бхактиведанта Бук Траст\", 1984 г. — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

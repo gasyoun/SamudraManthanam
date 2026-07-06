@@ -3,7 +3,7 @@
   "filename": "amaru-shataka.html",
   "slug": "amaru-shataka",
   "title_ru": "Амарушатака (2022); М. В. Леонов",
-  "title_en": "",
+  "title_en": "Amaruśataka (Leonov, 2022)",
   "subtitle": "Сто строф о любви",
   "credit": "М. В. Леонова",
   "credit_role": "Перевод с санскрита, предисловие и примечания",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: СПб.: Алетейя, 2022 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }
