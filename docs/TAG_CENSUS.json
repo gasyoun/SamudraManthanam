@@ -4560,6 +4560,147 @@
       "structure_confidence": "high"
     },
     {
+      "n_lines": 898,
+      "bytes": 1594069,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 874,
+        "range_div": 874,
+        "chapter_content": 874,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 3683,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 799,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 2569
+      },
+      "id_distinct": 1652,
+      "id_formats": {
+        "N": 22,
+        "N.N": 874,
+        "other": 874,
+        "comment_*": 799
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "naradasmriti.html",
+      "slug": "naradasmriti",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 2945,
+      "bytes": 2244610,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 2843,
+        "range_div": 2843,
+        "chapter_content": 2843,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 6249,
+        "small": 781,
+        "note_like": 0,
+        "comment_anchor": 778,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 6564
+      },
+      "id_distinct": 3866,
+      "id_formats": {
+        "N": 100,
+        "N.N": 2843,
+        "other": 2843,
+        "comment_*": 778
+      },
+      "vedic_accents": [
+        "r",
+        "á",
+        "́"
+      ],
+      "filename": "vishnu-smriti.html",
+      "slug": "vishnu-smriti",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 1048,
+      "bytes": 2102206,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 1002,
+        "range_div": 1002,
+        "chapter_content": 1002,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 5046,
+        "small": 0,
+        "note_like": 0,
+        "comment_anchor": 886,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 2934
+      },
+      "id_distinct": 2037,
+      "id_formats": {
+        "N": 3,
+        "other": 1043,
+        "comment_*": 886,
+        "N.N": 1002
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "yajnavalkyasmriti.html",
+      "slug": "yajnavalkyasmriti",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
+      "n_lines": 906,
+      "bytes": 675020,
+      "ext": ".html",
+      "title_comment": true,
+      "tags": {
+        "citation_block": 890,
+        "range_div": 890,
+        "chapter_content": 890,
+        "h1": 0,
+        "endchapter": 0,
+        "br": 49,
+        "small": 5,
+        "note_like": 0,
+        "comment_anchor": 5,
+        "chapter_C_anchor": 0,
+        "chapter_anchor": 0,
+        "id_total": 1799
+      },
+      "id_distinct": 1033,
+      "id_formats": {
+        "N": 8,
+        "N.N": 890,
+        "other": 896,
+        "comment_*": 5
+      },
+      "vedic_accents": [
+        "r",
+        "́"
+      ],
+      "filename": "yajnavalkyasmriti_add.html",
+      "slug": "yajnavalkyasmriti_add",
+      "structure_guess": "verse",
+      "structure_confidence": "high"
+    },
+    {
       "n_lines": 632,
       "bytes": 2143940,
       "ext": ".html",
@@ -5353,31 +5494,31 @@
     }
   ],
   "aggregate_tags": {
-    "citation_block": 88365,
-    "range_div": 88365,
-    "chapter_content": 88365,
+    "citation_block": 93974,
+    "range_div": 93974,
+    "chapter_content": 93974,
     "h1": 140,
     "endchapter": 1859,
-    "br": 543077,
-    "small": 23551,
+    "br": 558104,
+    "small": 24337,
     "note_like": 0,
-    "comment_anchor": 43739,
+    "comment_anchor": 46207,
     "chapter_C_anchor": 148,
     "chapter_anchor": 3956,
-    "id_total": 173182
+    "id_total": 187048
   },
   "aggregate_id_formats": {
-    "N": 5684,
-    "comment_*": 43739,
+    "N": 5817,
+    "comment_*": 46207,
     "chapter_N": 3956,
-    "other": 88630,
+    "other": 94286,
     "chapter_NC": 148,
-    "N.N": 27519,
+    "N.N": 33128,
     "N.N.N": 3506
   },
   "class_counts": {
     "dictionary": 15,
     "prose": 67,
-    "verse": 66
+    "verse": 70
   }
 }

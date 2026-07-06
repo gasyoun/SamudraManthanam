@@ -3,7 +3,7 @@
   "filename": "vishnu-smriti.html",
   "slug": "vishnu-smriti",
   "title_ru": "Вишну-смрити (2007); Н.А.Корнеева",
-  "title_en": "",
+  "title_en": "Viṣṇusmṛti (transl. Korneeva, 2007)",
   "subtitle": "",
   "credit": "Н.А.Корнеевой",
   "credit_role": "Перевод с санскрита, предисловие, комментарий и приложения",
@@ -14,7 +14,8 @@
     "iast",
     "cyrillic"
   ],
-  "provenance": "",
-  "rights": "",
+  "structure": "verse",
+  "provenance": "print edition: Москва, 2007 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

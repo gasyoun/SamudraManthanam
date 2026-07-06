@@ -3,7 +3,7 @@
   "filename": "naradasmriti.html",
   "slug": "naradasmriti",
   "title_ru": "Нарада-смрити (1998); А.А. Вигасин, А.М. Самозванцева",
-  "title_en": "",
+  "title_en": "Nāradasmṛti (transl. Vigasin & Samozvantsev, 1998)",
   "subtitle": "",
   "credit": "перевод А.А. Вигасина и А.М. Самозванцева,",
   "credit_role": "Перевод",
@@ -14,7 +14,8 @@
     "iast",
     "cyrillic"
   ],
-  "provenance": "",
-  "rights": "",
+  "structure": "verse",
+  "provenance": "print edition: 1998 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }
