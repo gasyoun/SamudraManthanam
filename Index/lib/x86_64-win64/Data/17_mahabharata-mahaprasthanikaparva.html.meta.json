@@ -3,7 +3,7 @@
   "filename": "17_mahabharata-mahaprasthanikaparva.html",
   "slug": "17_mahabharata-mahaprasthanikaparva",
   "title_ru": "Махабхарата XVII (2005); Я.В. Васильков, С.Л. Невелева",
-  "title_en": "",
+  "title_en": "Mahabharata, Book XVII (Mahāprasthānikaparva) (Vasilkov & Neveleva, 2005)",
   "subtitle": "Книга семнадцатая",
   "credit": "Я. В. Васильков и С. Л. Невелева",
   "credit_role": "Издание подготовили",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Санкт-Петербург: «Наука», 2005 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

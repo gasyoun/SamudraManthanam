@@ -3,7 +3,7 @@
   "filename": "05_ramayana-sundarakanda.html",
   "slug": "05_ramayana-sundarakanda",
   "title_ru": "Рамаяна V (2022) подстрочник; М.В. Леонов",
-  "title_en": "",
+  "title_en": "Ramayana, Book V (Sundarakāṇḍa), interlinear draft (Leonov, 2022)",
   "subtitle": "Книга пятая",
   "credit": "М.В. Леонов",
   "credit_role": "Подстрочник подготовил",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.:«НАУКА», 2024 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

@@ -3,7 +3,7 @@
   "filename": "06_mahabharata-bhishmaparva.html",
   "slug": "06_mahabharata-bhishmaparva",
   "title_ru": "Махабхарата VI (2009); В.Г. Эрман",
-  "title_en": "",
+  "title_en": "Mahabharata, Book VI (Bhīṣmaparva) (Erman, 2009)",
   "subtitle": "Книга шестая",
   "credit": "В.Г.Эрман",
   "credit_role": "Издание подготовил",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.:Ладомир ♦ 2009 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

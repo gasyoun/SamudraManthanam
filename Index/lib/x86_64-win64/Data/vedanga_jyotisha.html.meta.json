@@ -3,7 +3,7 @@
   "filename": "vedanga_jyotisha.html",
   "slug": "vedanga_jyotisha",
   "title_ru": "Веданга Джйотиша (2025); А.П. Широбоков",
-  "title_en": "",
+  "title_en": "Vedāṅgajyotiṣa (transl. Shirobokov, 2025)",
   "subtitle": "",
   "credit": "А.П. Широбоков",
   "credit_role": "Пер. с санскрита, анализ и примечания",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: 2025 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

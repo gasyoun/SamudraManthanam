@@ -3,7 +3,7 @@
   "filename": "10_mahabharata-sauptikaparva.html",
   "slug": "10_mahabharata-sauptikaparva",
   "title_ru": "Махабхарата X (1998); Я.В. Васильков, С.Л. Невелева",
-  "title_en": "",
+  "title_en": "Mahabharata, Book X (Sauptikaparva) (Vasilkov & Neveleva, 1998)",
   "subtitle": "Книга десятая",
   "credit": "Я. В. Васильков и С. Л. Невелева",
   "credit_role": "Издание подготовили",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Москва ♦ 1998 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

@@ -3,7 +3,7 @@
   "filename": "Кнауэр.txt",
   "slug": "knauer",
   "title_ru": "Учебник санскритского языка (1908); Ф.И. Кнауэр",
-  "title_en": "",
+  "title_en": "Textbook of the Sanskrit Language (Knauer, 1908)",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "public domain (pre-1929 edition; translator/author long deceased)",
   "needs_review": true
 }

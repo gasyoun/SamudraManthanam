@@ -3,7 +3,7 @@
   "filename": "dsg.txt",
   "slug": "dsg",
   "title_ru": "A DICTIONARY OF SANSKRIT GRAMMAR (1961); KASHINATH VASUDEV ABHYANKAR",
-  "title_en": "",
+  "title_en": "A Dictionary of Sanskrit Grammar (Abhyankar, Kashinath Vasudev, 1961)",
   "subtitle": "",
   "credit": "",
   "credit_role": "",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "dictionary",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

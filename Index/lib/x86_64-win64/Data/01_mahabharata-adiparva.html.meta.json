@@ -3,7 +3,7 @@
   "filename": "01_mahabharata-adiparva.html",
   "slug": "01_mahabharata-adiparva",
   "title_ru": "Махабхарата I (1950); В.И. Кальянов",
-  "title_en": "",
+  "title_en": "Mahabharata, Book I (Ādiparva) (Kalyanov, 1950)",
   "subtitle": "Книга первая",
   "credit": "В.И.Кальянова",
   "credit_role": "Перевод с санскрита и комментарии",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.: ♦ 1950, 1992 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

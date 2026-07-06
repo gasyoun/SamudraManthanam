@@ -3,7 +3,7 @@
   "filename": "05_atharvaveda.html",
   "slug": "05_atharvaveda",
   "title_ru": "Атхарваведа. Книга 5 (2005); Т.Я. Елизаренкова",
-  "title_en": "",
+  "title_en": "Atharvaveda, Book 5 (Elizarenkova, 2005)",
   "subtitle": "ВОТ ПЯТАЯ КНИГА",
   "credit": "Т.Я. Елизаренковой",
   "credit_role": "Перевод с ведийского языка, вступительная",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.: \"Восточная литература\" ♦ 2005 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

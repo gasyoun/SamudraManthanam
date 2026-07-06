@@ -3,7 +3,7 @@
   "filename": "bhagavadgita-1914.html",
   "slug": "bhagavadgita-1914",
   "title_ru": "Бхагавадгита (1914); А.А. Каменская и И.В. де Манциарли",
-  "title_en": "",
+  "title_en": "Bhagavad Gita (Kamenskaya & de Manziarly, 1914)",
   "subtitle": "ПРЕДИСЛОВИЕ ПЕРЕВОДЧИКА",
   "credit": "А.А. Каменской и И.В. де Манциарли",
   "credit_role": "переведенная с английского и санскритского",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: 1914 — digital source TBD",
+  "rights": "public domain (pre-1929 edition; translator/author long deceased)",
   "needs_review": true
 }

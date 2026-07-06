@@ -3,7 +3,7 @@
   "filename": "devi-gita.html",
   "slug": "devi-gita",
   "title_ru": "Деви-гита (2005); А. Игнатьев",
-  "title_en": "",
+  "title_en": "Devī Gītā (Ignatiev, 2005)",
   "subtitle": "ПРЕДИСЛОВИЕ К ПЕРЕВОДУ ДЕВИ-ГИТЫ",
   "credit": "А. Игнатьева",
   "credit_role": "Перевод с санскрита, предисловие и комментарий",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition unknown — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

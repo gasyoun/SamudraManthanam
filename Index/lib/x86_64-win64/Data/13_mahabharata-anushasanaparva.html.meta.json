@@ -3,7 +3,7 @@
   "filename": "13_mahabharata-anushasanaparva.html",
   "slug": "13_mahabharata-anushasanaparva",
   "title_ru": "Махабхарата XIII",
-  "title_en": "",
+  "title_en": "Mahabharata, Book XIII (Anuśāsanaparva) — translator not stated",
   "subtitle": "Книга тринадцатая",
   "credit": "[автор перевода]",
   "credit_role": "Перевод",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: [место публикации] — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

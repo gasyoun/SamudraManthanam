@@ -3,7 +3,7 @@
   "filename": "19_atharvaveda.html",
   "slug": "19_atharvaveda",
   "title_ru": "Атхарваведа. Книга 19 (2010); Т.Я. Елизаренкова",
-  "title_en": "",
+  "title_en": "Atharvaveda, Book 19 (Elizarenkova, 2010)",
   "subtitle": "ВОТ ДЕВЯТНАДЦАТАЯ КНИГА",
   "credit": "Т.Я. Елизаренковой",
   "credit_role": "Перевод с ведийского языка, вступительная",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.: \"Восточная литература\" ♦ 2010 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

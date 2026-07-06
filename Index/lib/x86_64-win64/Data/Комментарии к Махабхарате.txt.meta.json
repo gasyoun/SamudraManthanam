@@ -3,7 +3,7 @@
   "filename": "Комментарии к Махабхарате.txt",
   "slug": "kommentarii-k-makhabkharate",
   "title_ru": "Махабхарата I. Комментарии",
-  "title_en": "",
+  "title_en": "Mahabharata, Book I — Commentary (Kalyanov, 1950)",
   "subtitle": "",
   "credit": "В.И. Кальянов",
   "credit_role": "Комментарии",
@@ -15,7 +15,7 @@
     "cyrillic"
   ],
   "structure": "prose",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.: АН СССР, 1950 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

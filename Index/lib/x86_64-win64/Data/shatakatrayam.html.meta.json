@@ -3,7 +3,7 @@
   "filename": "shatakatrayam.html",
   "slug": "shatakatrayam",
   "title_ru": "Бхартрихари. Шатакатраям (2020); М. В. Леонов",
-  "title_en": "",
+  "title_en": "Bhartṛhari, Śatakatraya (transl. Leonov, 2020)",
   "subtitle": "Триста строф",
   "credit": "М.В. Леонова",
   "credit_role": "Перевод с санскрита, предисловие и примечания",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: Санкт-Петербург, Нестор-История, 2020 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

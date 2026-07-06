@@ -3,7 +3,7 @@
   "filename": "10_atharvaveda.html",
   "slug": "10_atharvaveda",
   "title_ru": "Атхарваведа. Книга 10 (2007); Т.Я. Елизаренкова",
-  "title_en": "",
+  "title_en": "Atharvaveda, Book 10 (Elizarenkova, 2007)",
   "subtitle": "ВОТ ДЕСЯТАЯ КНИГА",
   "credit": "Т.Я. Елизаренковой",
   "credit_role": "Перевод с ведийского языка, вступительная",
@@ -16,7 +16,7 @@
     "cyrillic"
   ],
   "structure": "verse",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: М.: \"Восточная литература\" ♦ 2007 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }

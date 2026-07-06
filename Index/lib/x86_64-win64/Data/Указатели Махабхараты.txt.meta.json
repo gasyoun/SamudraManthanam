@@ -3,7 +3,7 @@
   "filename": "Указатели Махабхараты.txt",
   "slug": "ukazateli-makhabkharaty",
   "title_ru": "Указатели Махабхараты (1950–2009)",
-  "title_en": "",
+  "title_en": "Index to the Mahabharata (Kalyanov, Vasilkov, Neveleva & Erman, 1950–2009)",
   "subtitle": "",
   "credit": "Кальянов В.И., Васильков Я.В., Невелева С.Л., Эрман В.Г.",
   "credit_role": "Составители",
@@ -14,7 +14,7 @@
     "cyrillic"
   ],
   "structure": "prose",
-  "provenance": "",
-  "rights": "",
+  "provenance": "print edition: 1950–2009 — digital source TBD",
+  "rights": "in-copyright academic edition (named translator/editor, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution",
   "needs_review": true
 }
