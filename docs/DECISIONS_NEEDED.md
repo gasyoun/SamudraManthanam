@@ -143,6 +143,45 @@ IAST query work, and the file 404s. Remaining vendored wasm assets
 
 ---
 
+## D5. GRETIL-TEI ingestion — which titles get a Russian-source search budget?
+
+**Found:** H308, 2026-07-07. Corpus-lexicon alignment (Track A,
+`Uprava/GTD_NEXT_ACTIONS.md`) needs verse-aligned Sanskrit+Russian JSONL for
+~12 target titles; none exist yet. `web/corpus_builder/gretil_tei_to_canonical.py`
+(new, this session) now converts a GRETIL-TEI source's **Sanskrit side** into
+canonical JSONL — verified on the pilot title, Hitopadeśa (1,467 records: 709
+verse + 757 prose, round-trip ID stable, one genuine source gap flagged
+`needs_review` rather than guessed). `web/corpus_builder/jsonl/hitopadesha.jsonl`
+is committed as the Sanskrit-only half; no Russian side exists yet, so it is
+**not** run through `RussianTranslation/src/add_corpus_text.py` — that step
+needs a real Russian translation, not an untranslated placeholder (the
+`13_mahabharata-anushasanaparva` trap this org already excludes).
+
+**What's genuinely blocked on a human call, per title** (not agent-resolvable —
+searching/rights-clearing a translation is a scoping judgment, not a lookup):
+
+| Title | Sanskrit side | Russian side | Open question |
+|---|---|---|---|
+| Hitopadeśa | ✅ converted (`hitopadesha.jsonl`) | not found | Several old RU translations exist in the literature (verse-numbered fable, should anchor cleanly on `{ch}.{v}` once found) — digitization status unknown. Best pilot candidate once a source is found. |
+| Kādambarī | 2 TEI files present (Bāṇa's prose + Abhinanda's verse summary) — **not yet converted**, div-based prose structure needs its own anchoring decision (see below) | only a glossary found (`slovar-grintsera-iz-bada-kadambari.jsonl`) — wrong genre | Does a running RU prose translation of Kādambarī exist at all? If not, is this title simply not alignable, or is machine/assisted translation in scope? |
+| Viṣṇu Purāṇa | **no GRETIL TEI found locally at all** | prose JSONL exists (`vishnu-purana.jsonl`, no `id=` anchors) | Sanskrit source needs sourcing before anything else; separately, Erman/Vasilkov print editions may or may not be digitally available. |
+
+**For prose titles with no verse numbers** (Kādambarī, Vishnu Purāṇa prose
+portions), this converter's chapter-scoped `c{N}.p{n}` paragraph anchor
+(borrowed from `CONVERTER_SPEC.md`'s Path C-prose) is a reasonable default,
+but is not proven against TEI `<div>` structures — those files have no inline
+verse markers like Hitopadeśa's `// Hit_ch.v //`, so before converting them the
+anchoring unit (paragraph vs. printed page vs. TEI `<div>` id) needs a
+per-genre call.
+
+**Recommendation:** a human should decide which of the ~12 titles get a
+Russian-source search budget (and whether OCR + rights clearance of a
+print-only translation is in scope for any of them), starting with Hitopadeśa
+since its Sanskrit side is already staged and it has the best odds of an
+existing digitized RU translation.
+
+---
+
 ## D4. App JS goes stale after deploy  ✅ RESOLVED (2026-06-13)
 
 **Resolution** — the staleness had THREE layers, all now fixed, plus a
