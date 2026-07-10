@@ -1,0 +1,90 @@
+{
+  "ru_verses": 1181,
+  "sa_verses": 0,
+  "matched": 0,
+  "ru_only": 1181,
+  "sa_orphan": 0,
+  "by_chapter": {
+    "1.1": {
+      "matched": 0,
+      "ru_only": 25
+    },
+    "1.2": {
+      "matched": 0,
+      "ru_only": 40
+    },
+    "1.3": {
+      "matched": 0,
+      "ru_only": 43
+    },
+    "1.4": {
+      "matched": 0,
+      "ru_only": 65
+    },
+    "1.5": {
+      "matched": 0,
+      "ru_only": 112
+    },
+    "1.6": {
+      "matched": 0,
+      "ru_only": 44
+    },
+    "1.7": {
+      "matched": 0,
+      "ru_only": 50
+    },
+    "1.8": {
+      "matched": 0,
+      "ru_only": 51
+    },
+    "1.9": {
+      "matched": 0,
+      "ru_only": 87
+    },
+    "1.10": {
+      "matched": 0,
+      "ru_only": 34
+    },
+    "1.11": {
+      "matched": 0,
+      "ru_only": 86
+    },
+    "1.12": {
+      "matched": 0,
+      "ru_only": 53
+    },
+    "1.13": {
+      "matched": 0,
+      "ru_only": 34
+    },
+    "1.14": {
+      "matched": 0,
+      "ru_only": 70
+    },
+    "1.15": {
+      "matched": 0,
+      "ru_only": 67
+    },
+    "1.16": {
+      "matched": 0,
+      "ru_only": 61
+    },
+    "1.17": {
+      "matched": 0,
+      "ru_only": 66
+    },
+    "1.18": {
+      "matched": 0,
+      "ru_only": 61
+    },
+    "1.19": {
+      "matched": 0,
+      "ru_only": 59
+    },
+    "1.20": {
+      "matched": 0,
+      "ru_only": 73
+    }
+  },
+  "sa_orphans": []
+}

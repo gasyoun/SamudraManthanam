@@ -319,7 +319,7 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
     report = {
         "work": WORK_SLUG, "volume": vol_num, "skandhas": {},
         "verse_count": 0, "comment_count": 0, "chapters": 0,
-        "verse_gaps": [], "orphan_notes": [],
+        "verse_gaps": [], "orphan_notes": [], "chapter_titles": [],
     }
 
     # Endnotes per skandha (filled as we cross each note block, in order).
@@ -421,6 +421,8 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
                       or (fn == 1 and ch["chapter"] == 1)}
         used_fn: set[int] = set()
         report["chapters"] += 1
+        report["chapter_titles"].append(
+            {"skandha": sk, "chapter": ch["chapter"], "title": ch["title"]})
         sk_rep = report["skandhas"].setdefault(str(sk), {"chapters": 0, "verses": 0, "comments": 0})
         sk_rep["chapters"] += 1
 
@@ -460,24 +462,27 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
             except ValueError:
                 pass
 
-        # comment records for this chapter: endnotes whose target chapter == ch
+        # comment records for this chapter: endnotes whose target chapter == ch.
+        # A verse-less note (the "оМ" invocation fn 1, or a "Глава N" chapter
+        # note) is attached to verse 1 of the chapter so it renders inside a
+        # real citation_block rather than an orphan chapter-level block.
         comm_by_verse: dict[str, list[dict]] = {}
         for fn, note in sorted(fn_map.items()):
-            tgt_ch = note["chapter"]
-            if fn == 1:
-                tgt_ch = 1  # invocation belongs to chapter 1
+            tgt_ch = 1 if fn == 1 else note["chapter"]
             if tgt_ch != ch["chapter"]:
                 continue
-            tgt_v = note["verse"]
-            annot = (zero_pad_passage(sk, ch["chapter"], str(tgt_v))
-                     if tgt_v else f"{sk}.{ch['chapter']:03d}.c")
+            tgt_v = note["verse"] or 1
+            annot = zero_pad_passage(sk, ch["chapter"], str(tgt_v))
             comm_by_verse.setdefault(annot, []).append((fn, note))
 
         for annot, items in comm_by_verse.items():
             for k, (fn, note) in enumerate(items, 1):
                 seq += 1
                 cid = f"{WORK_SLUG}:{annot}.comm{k}"
-                text = note["text"]
+                # Strip the leading footnote number from the note text; the
+                # number is shown separately in the comment_number span, and
+                # the verse ref ("1.1(а).") stays as the text lead-in.
+                text = re.sub(r"^\d+\s+", "", note["text"])
                 html_c = (f'<span class="comment_number" '
                           f'title="Девибхагавата-пурана (А. Игнатьев, 2018): {fn}">'
                           f'{fn}. </span><span class="comment_text">'
@@ -534,6 +539,12 @@ def main() -> None:
     with open(jsonl_path, "w", encoding="utf-8") as f:
         for rec in records:
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    # Conversion report (chapter titles + counts) — consumed by the emitter for
+    # chapter headings and used as the run audit trail (CONVERTER_SPEC §8).
+    report_path = out_dir / f"{WORK_SLUG}{suffix}.report.json"
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
 
     print(f"vol {vol_num}: {report['chapters']} chapters, "
           f"{report['verse_count']} verses, {report['comment_count']} comments "
