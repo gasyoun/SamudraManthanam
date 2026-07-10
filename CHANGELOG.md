@@ -12,10 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `web/corpus_builder/` (the free-toolchain successor to the Delphi `cb.exe` for
   new ingestion): `ignatjev_pdf_to_canonical.py`, `align_sanskrit.py`,
   `build_corpus_html.py` — documented in `web/corpus_builder/PDF_INGESTION_PIPELINE.md` (H534).
-- **Devībhāgavata-purāṇa Skandha 1** (A. Ignatjev, Касталия 2018) ingested
-  Russian-only as `Data/devibhagavata-purana-1.html` (20 chapters, 1181 verses,
-  429 comments); 152 → 153 active sources. Sanskrit alignment deferred (full DBhP
-  absent from GRETIL — pending a source decision).
+- **Devībhāgavata-purāṇa Skandha 1** (A. Ignatjev, Касталия 2018) ingested as
+  `Data/devibhagavata-purana-1.html` (20 chapters, 1181 verses, 429 comments);
+  152 → 153 active sources.
+- **Sanskrit verse alignment for DBhP Skandha 1** — `sanskritdocuments_dbhp_to_canonical.py`
+  transcodes the sanskritdocuments.org ITRANS source (`devIbhAgavatam01.itx`) to
+  the canonical `#sa` schema; the source-agnostic aligner joins it onto the
+  Russian at **1180/1181 verses (99.9%)**. Sanskrit source chosen by MG
+  (`@DECIDE` 10-07-2026) because the full DBhP is absent from GRETIL. Aligned
+  IAST now renders alongside the Russian in `Data/devibhagavata-purana-1.html`.
 
 ### Changed
 
