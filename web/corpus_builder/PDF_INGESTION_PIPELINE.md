@@ -70,6 +70,17 @@ their `SKANDHA.CHAPTER.VERSE` keys match; otherwise the verse stays
 in the alignment report — never dropped or fabricated. With no Sanskrit input
 the whole work is Russian-only and the report records 100% `ru_only`.
 
+The Sanskrit `#sa` JSONL is produced by
+[`sanskritdocuments_dbhp_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritdocuments_dbhp_to_canonical.py)
+(MG `@DECIDE` 10-07-2026, option (a) — the full DBhP is **not on GRETIL**, so the
+Sanskrit comes from **sanskritdocuments.org**'s 12 per-skandha ITRANS files
+`devIbhAgavatamNN.itx`, Vishwas Bhide / satsangdhara.net). It parses the
+`\section{S\.C ...}` chapter markers + `|| N||` verse numbering, carries the
+`X uvAcha` speaker rubrics into an `author` field, skips the
+`iti shrImaddevIbhAgavate ...` colophons, and transcodes ITRANS → IAST (display)
++ SLP1 via `indic_transliteration.sanscript`, emitting the same `#sa` schema
+keyed `SKANDHA.CHAPTER.VERSE`.
+
 ### 3. `build_corpus_html.py` — canonical JSONL → app HTML
 
 [`build_corpus_html.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/build_corpus_html.py)
@@ -88,12 +99,16 @@ Output granularity is a parameter and **both** forms are house conventions:
 
 ```sh
 cd web/corpus_builder
-# 1. parse one volume (pilot: a single skandha)
+# 1. parse one volume (pilot: a single skandha) -> Russian side
 python ignatjev_pdf_to_canonical.py \
   --pdf "../../AdnrejIgnatjev/devibhagavata-purana/Девибхагавата-пурана. Том 1.pdf" \
   --output-dir jsonl --skandha-only 1
+# 1b. Sanskrit side from sanskritdocuments.org (devIbhAgavatamNN.itx)
+python sanskritdocuments_dbhp_to_canonical.py \
+  --itx sanskrit_src/devIbhAgavatam01.itx --skandha 1 --output-dir jsonl
 # 2. align (omit --sa for Russian-only)
 python align_sanskrit.py --ru jsonl/devibhagavata-purana_s1.raw.jsonl \
+  --sa jsonl/devibhagavata-purana_s1.sanskrit.jsonl \
   --out jsonl/devibhagavata-purana-1.jsonl \
   --report jsonl/devibhagavata-purana-1.alignment.json
 # 3. emit app HTML + sidecars + register in data.txt
@@ -122,15 +137,19 @@ python build_corpus_html.py --jsonl jsonl/devibhagavata-purana-1.jsonl \
 
 ## Pilot status & what's next
 
-- ✅ **Skandha 1 (Vol 1) ingested** — Russian-only: 20 chapters, 1181 verses,
-  429 comments; live in `Data/devibhagavata-purana-1.html`.
-- ⏭ **Skandhas 2–12** — the parser extracts verses cleanly across all 6 volumes,
-  but the endnote sequential-join desyncs on Vols 2/4/5 (comment counts 18/2/71
-  vs hundreds expected); harden `parse_endnotes` per-volume before batch ingest.
-- ⏭ **Sanskrit alignment** — blocked on a source decision: the full DBhP is
-  **not on GRETIL** (only the Devigita fragment, skandha 7). Candidate:
-  sanskritdocuments.org (12 per-skandha files, Devanagari+IAST, `ch.verse`
-  numbering — no `DbhP_` markers). A human decides the source; the aligner is
-  already source-agnostic and ready.
+- ✅ **Skandha 1 (Vol 1) ingested + Sanskrit-aligned** — 20 chapters, 1181 RU
+  verses, 429 comments, and **1180/1181 verses (99.9%) carry the aligned
+  Sanskrit IAST**; live in `Data/devibhagavata-purana-1.html`. The Sanskrit is
+  from sanskritdocuments.org (`devIbhAgavatam01.itx`, 1186 verses in 20 chapters
+  — the numbering tracks Ignatjev's almost exactly, far tighter than the feared
+  devi-gita offset). Residue (in the alignment report): 1 RU-only verse (ch 5),
+  5 SA-orphan verses (`1.10.23-24`, `1.18.62`, `1.19.60`, `1.20.68`) that
+  Ignatjev merged into range-passages or omitted — itemised, not fabricated.
+- ⏭ **Skandhas 2–12** — the RU parser extracts verses cleanly across all 6
+  volumes, but the endnote sequential-join desyncs on Vols 2/4/5 (comment counts
+  18/2/71 vs hundreds expected); harden `parse_endnotes` per-volume before batch
+  ingest. The Sanskrit side is **already ready for all 12** — point
+  `sanskritdocuments_dbhp_to_canonical.py` at `devIbhAgavatamNN.itx` per skandha
+  and the aligner joins on the shared key.
 
 _Dr. Mārcis Gasūns_
