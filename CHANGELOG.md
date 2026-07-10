@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Reusable **PDF → canonical-JSONL → app-HTML** corpus-ingestion pipeline in
+  `web/corpus_builder/` (the free-toolchain successor to the Delphi `cb.exe` for
+  new ingestion): `ignatjev_pdf_to_canonical.py`, `align_sanskrit.py`,
+  `build_corpus_html.py` — documented in `web/corpus_builder/PDF_INGESTION_PIPELINE.md` (H534).
+- **Devībhāgavata-purāṇa Skandha 1** (A. Ignatjev, Касталия 2018) ingested
+  Russian-only as `Data/devibhagavata-purana-1.html` (20 chapters, 1181 verses,
+  429 comments); 152 → 153 active sources. Sanskrit alignment deferred (full DBhP
+  absent from GRETIL — pending a source decision).
 
 ### Changed
 
