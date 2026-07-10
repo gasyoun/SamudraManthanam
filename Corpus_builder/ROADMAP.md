@@ -1,6 +1,19 @@
 # Corpus Builder — план развития (Roadmap)
 
-_Создано: 05-07-2026 · Обновлено: 05-07-2026_
+_Создано: 05-07-2026 · Обновлено: 10-07-2026_
+
+> **Обновление 10-07-2026 (H534).** Появился **альтернативный, агент-исполнимый
+> путь ингеста на Python** — не порт `cb.exe` на Lazarus, а замена его для
+> **новых** текстов: PDF → канонический JSONL → готовый HTML корпуса.
+> Пайплайн и его запуск описаны в
+> [`web/corpus_builder/PDF_INGESTION_PIPELINE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md)
+> ([`ignatjev_pdf_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/ignatjev_pdf_to_canonical.py)
+> + [`align_sanskrit.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/align_sanskrit.py)
+> + [`build_corpus_html.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/build_corpus_html.py)).
+> Он частично закрывает цели «единый открытый тулчейн», «headless-сборка в CI» и
+> «отказ от Delphi» — для ингеста новых текстов Delphi больше не нужен. Порт
+> самого `cb.exe` на Lazarus (ниже) остаётся актуальным для воспроизведения
+> исторической GUI-логики и пересборки уже загруженных источников.
 
 Стратегическое направление: **перенос `cb.exe` с Delphi 7 на бесплатный
 Lazarus / Free Pascal**, на котором уже собирается основное приложение
