@@ -22,13 +22,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`@DECIDE` 10-07-2026) because the full DBhP is absent from GRETIL. Aligned
   IAST now renders alongside the Russian in `Data/devibhagavata-purana-1.html`.
 
+- **Devībhāgavata-purāṇa skandhas 2–12** (A. Ignatjev, Касталия 2018) ingested
+  and Sanskrit-aligned (H558): 11 per-skandha `Data/devibhagavata-purana-<N>.html`
+  files plus a combined `devibhagavata-purana.html` (all registered in
+  `data.txt`), completing the 12-skandha work. ~17,300 RU verses / ~3,600
+  comments; per-skandha RU→Sanskrit match ~99% (from `devIbhAgavatam02–12.itx`,
+  sanskritdocuments.org). 153 → 165 active sources.
+- Batch drivers `web/corpus_builder/build_dbhp_skandhas.py` (RU parse → Sanskrit
+  convert → align) and `emit_dbhp_corpus.py` (per-skandha + combined HTML).
+
 ### Changed
+- Hardened `ignatjev_pdf_to_canonical.py` for all six Ignatjev volumes (H558):
+  gap-tolerant endnote re-join (fixes the Vol 2/4/5 18/2/71 comment desync),
+  plural/all-caps note headings, varied/wrapped chapter colophons, note-block
+  skandha rollover, Devī-gītā chapter offset, and a duplicate passage-id
+  integrity guard. Skandha 1 output unchanged (20 ch / 1181 v / 429 c).
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- `html_to_canonical.py` now unescapes HTML entities in searchable text, so
+  Ignatjev's OCR-mangled editorial brackets (`>…@`) round-trip exactly (16180/
+  16180 RU verses reproduce); `build_corpus_html.py`'s sort key tolerates the
+  integrity guard's disambiguation suffix.
 
 ### Security
 
