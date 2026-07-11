@@ -1,24 +1,24 @@
 ---
 paper_id: A41
 title: "Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources"
-status: draft (skeleton, 3/5) — scaffolded 2026-06-26, advanced 2026-07-08 (H351)
-readiness: 3/5
+status: draft (advanced, 4/5 proposed) — scaffolded 2026-06-26, advanced 2026-07-08 (H351), completed prose + §5 metrics 2026-07-11 (H676)
+readiness: 3/5 → 4/5 proposed
 venue: "LREC-COLING (parallel-corpus) / eLex / JOHD (Journal of Open Humanities Data)"
 author: "**Mārcis Gasūns**, independent scholar ([ORCID 0000-0003-4513-884X](https://orcid.org/0000-0003-4513-884X)), gasyoun@ya.ru"
-data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 153 files — 5 post-report additions excluded from all counts); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk)"
+data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 155 .jsonl files — 7 post-report additions excluded from all counts); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk); papers/data/A41_corpus_stats.json + papers/data/A41_gita_editions.tsv (recomputation record, papers/scripts/a41_stats.py)"
 ---
 
 # Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources
 
-_Created: 26-06-2026 · Last updated: 08-07-2026_
+_Created: 26-06-2026 · Last updated: 11-07-2026_
 
-> **Draft status (2026-07-08, H351; scaffolded 2026-06-26).** Manuscript skeleton built
-> directly on the converted corpus and its design specs. Every numerical claim below is
-> transcribed from the canonical
+> **Draft status (2026-07-11, H676; advanced 2026-07-08, H351; scaffolded 2026-06-26).**
+> Manuscript built directly on the converted corpus and its design specs. Every numerical
+> claim below is transcribed from the canonical
 > [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json)
 > and re-verified against the committed JSONL layer (restricted to the 148 report
-> sources — the `jsonl/` directory currently holds **153** files; the 5 post-report
-> additions are excluded from every count, see §3.1 note and §10 row 1) and
+> sources — the `jsonl/` directory currently holds **155** `.jsonl` files; the 7
+> post-report additions are excluded from every count, see §3.1 note and §10 row 1) and
 > [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md).
 > **Home repo for the manuscript: SamudraManthanam `papers/`** — the corpus and all its
 > specs live here.
@@ -29,13 +29,24 @@ _Created: 26-06-2026 · Last updated: 08-07-2026_
 > demonstration renumbered to a proper §5 (was a dangling "§5.4"); claim→artifact
 > inventory (§10) and companion-paper scope block (§11) added; References added; links
 > upgraded to full blob URLs.
+> **Completed 11-07-2026 (readiness 3/5 → 4/5 proposed, H676, Fable 5 `claude-fable-5`):**
+> every statistic re-derived live by the committed
+> [papers/scripts/a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py)
+> (recomputation record: [papers/data/A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json))
+> — the 148-source layer is byte-stable (574,939 records / 574,939 unique IDs; verse-group
+> recount identical to 08-07: 78,139 / 10,009 / 80); §5 written in full — the per-edition
+> translator/year/rights table
+> ([papers/data/A41_gita_editions.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_gita_editions.tsv))
+> and the register metrics (TTR, Guiraud R, Sanskrit-loan retention) are now computed, with
+> Figure 1 ([papers/figures/A41_gita_register.svg](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg))
+> committed; the post-report extras census updated (5 → 7 files, 11,056 records); the
+> runtime `web/corpus.db` view layer (152 sources / 580,552 display lines, `v2026.07.06`)
+> reconciled against the canonical JSONL layer in §3.1.
 > **Open before submission:** (1) settle the RU-translation copyright triage that decides
 > what ships as text vs index-only (a [@DO] human gate, §8 / Limitations); (2) mint a
-> Zenodo DOI and complete the data-availability statement; (3) assemble the per-edition
-> translator/year/rights table for §5 and compute the register metrics — the slug-derived
-> 1788 / 1909 / 1914 dates are real, the table is not yet built; (4) freeze ONE headline
+> Zenodo DOI and complete the data-availability statement; (3) freeze ONE headline
 > number at submission (78,219 spec figure vs 78,139 live re-count, reconciled in §4.2);
-> (5) venue + byline (a human decides).
+> (4) venue + byline (a human decides).
 
 ## Abstract
 
@@ -168,6 +179,17 @@ the **final** converter/backfill classification recorded in the conversion repor
 is the heuristic-vs-final reclassification (and the 152→148 source-set trim) and must be
 stated, not hidden.)*
 
+*(Layer reconciliation, 11-07-2026: three counts coexist and none contradicts the
+others. The **canonical corpus** is the 148 report sources / 574,939 JSONL records above.
+The **`jsonl/` directory** additionally holds 7 post-report files (11,056 records:
+`hitopadesha`, `naradasmriti`, `vishnu-smriti`, `yajnavalkyasmriti`,
+`yajnavalkyasmriti_add`, and the two H534 Devībhāgavata files), excluded from every
+count until a re-frozen conversion report folds them in. The **runtime search view**
+`web/corpus.db` (`v2026.07.06`: 152 sources, 580,552 display lines) is built from the
+reading HTML, includes navigation headings and a different source cut, and is never a
+source of corpus statistics. Recomputation record:
+[papers/data/A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json).)*
+
 The verse sources span the Ṛgveda and Atharvaveda, the full Mahābhārata (18 parvans)
 and three Rāmāyaṇa kāṇḍas, ~30 Upaniṣads, the classical kāvya (Meghadūta,
 Kumārasambhava, Gītagovinda, Amaruśataka, …), the dharma- and yoga-śāstra
@@ -239,7 +261,9 @@ texts (a separate English corpus, out of scope here but sharing the date spine).
 
 *All numbers below are verified against [`conversion_report.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json)
 and a live re-count of the JSONL layer restricted to the 148 report sources
-(2026-06-26, re-verified 2026-07-08).*
+(2026-06-26, re-verified 2026-07-08 and 2026-07-11 — the 11-07 recount by the committed
+[papers/scripts/a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py)
+reproduced every figure identically, confirming the 148-source layer is frozen).*
 
 ### 4.1 Corpus scale and composition
 - **148 sources**, **574,939 segment records**.
@@ -259,8 +283,11 @@ the headline corresponds to the Sanskrit-only blocks the spec folded differently
 to JSONL evolution since the 2026-06-12 corpus.db snapshot; **this paper reports
 78,219 as the spec's canonical Tier-1 figure and 78,139 / 88.56% as the corroborating
 current measurement, and states the reconciliation explicitly rather than presenting a
-single tidy number.** (TODO before submission: recompute once more at freeze time and
-footnote the non-headline figure.)
+single tidy number.** (Recomputed 2026-07-11 by
+[a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py):
+78,139 / 10,009 / 80 over 88,228 verse groups — identical to the 08-07 recount, so the
+live figure is stable; the remaining freeze-time act is choosing which of the two
+reconciled numbers leads and footnoting the other, a one-line edit at submission.)
 
 **Headline discipline.** The number this corpus is cited by is the clean 1:1 verse-pair
 count (**78,219**), *never* the 574,939 total segment records: the total mixes verse
@@ -291,21 +318,74 @@ apparatus layer.
 passage. Commentary is rendered as annotation, never as a translation pane, and is
 excluded from sa/ru cardinality.
 
-## 5. Diachronic register demonstration — the Bhagavadgītā  *(partial; see TODO)*
-The corpus contains **11 Russian Bhagavadgītā translations** plus three Gītā
-commentaries, all keyed on the same `{chapter}.{verse}` passage IDs, so a single verse
-lines up across all editions via the shared compare key (ALIGNMENT_SPEC §5). The
-editions span from the **1788** Russian Gītā (the first, rendered from a European
-intermediary) through **1909** and **1914** to the twentieth- and twenty-first-century
-scholarly translations (Smirnov, Sementsov, Erman, Burba, and the devotional
-Prabhupāda/Radha/Sharma renderings). Because every edition is verse-pair-aligned to the
-*same* Sanskrit, the corpus supports a controlled diachronic study of Russian
-translation register over ~230 years on a fixed source text. *(TODO: the 1788/1909/1914
-dates are read from the source slugs and are reliable; the full per-edition
-translator + exact-year + rights table is not yet assembled, and the register metrics
-(lexical drift, calque rate, Sanskrit-term retention) are described here as a planned
-demonstration, not yet computed. Build the table from the source metadata and run the
-metric before this section's claims are finalised.)*
+## 5. Diachronic register demonstration — the Bhagavadgītā
+
+The corpus contains **11 Russian Bhagavadgītā translation sources** (10 single
+editions plus one multi-rendering anthology) and **three Gītā commentaries**, all keyed
+on the same `{chapter}.{verse}` passage IDs, so a single verse lines up across all
+editions via the shared compare key (ALIGNMENT_SPEC §5). Because every edition is
+verse-pair-aligned to the *same* Sanskrit, the corpus supports a controlled diachronic
+study of Russian translation register over ~230 years on a fixed source text. All
+figures in this section are computed by the committed
+[papers/scripts/a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py)
+over the editions' Russian verse segments (aggregates only; full table with per-edition
+metrics: [papers/data/A41_gita_editions.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_gita_editions.tsv)).
+
+### 5.1 The per-edition table
+
+| source | translator | orig. year | rights class | clean pairs | TTR | Guiraud R | loan retention |
+|---|---|--:|---|--:|--:|--:|--:|
+| `bhagavadgita-1788` | А.А. Петров (via Wilkins' English) | 1788 | public domain (1914 reprint) | 697 | 0.242 | 33.1 | 13.9% |
+| `bhagavadgita-1909` | А.П. Казначеева (verse) | 1909 | public domain | 691 | 0.263 | 33.2 | 11.1% |
+| `bhagavadgita-1914` | А.А. Каменская, И.В. де Манциарли | 1914 | public domain | 701 | 0.309 | 36.4 | 22.0% |
+| `bhagavadgita-smirnov` | Б.Л. Смирнов | 1977 | in-copyright (grey) | 700 | 0.203 | 32.2 | 32.4% |
+| `bhagavadgita-prabhupada` | А.Ч. Бхактиведанта Свами Прабхупада | 1984 | in-copyright (grey) | 657 | 0.199 | 36.4 | 30.3% |
+| `bhagavadgita-sementsov` | В.С. Семенцов | 1999 | in-copyright (grey) | 696 | 0.310 | 35.3 | 35.3% |
+| `bhagavadgita-erman` | В.Г. Эрман | 2009 | in-copyright (grey) | 700 | 0.317 | 37.0 | 11.3% |
+| `bhagavadgita-burba` | Д. Бурба | 2009 | in-copyright (grey) | 719 | 0.121 | 27.5 | 38.9% |
+| `bhagavadgita-sharma` | Шайлендра Шарма | 2015 | in-copyright (grey) | 660 | 0.176 | 37.1 | 62.6% |
+| `bhagavadgita-radha` | Р.Т. Блиндерман | 2016 | in-copyright (grey) | 647 | 0.101 | 42.6 | 76.0% |
+| `bhagavadgity` (anthology, 1788–2016) | сборник переводов | — | in-copyright (grey) | 701 | 0.114 | 50.3 | 59.6% |
+| `ramanuja_gitabhashya` (comm.) | В.С. Семенцов (пер.) | 2021 | in-copyright (grey) | 702 | 0.147 | 41.7 | 59.8% |
+| `gitartha-samgraha_yamunacharya` (comm.) | Р.В. Псху | 2021 | in-copyright (grey) | 32 | 0.552 | 14.7 | 84.4% |
+| `gitarthasamgraha-abhinavagupta` (comm.) | О.Н. Ерченков | 2008 | in-copyright (grey) | 748 | 0.239 | 42.0 | 47.5% |
+
+*Reading the table.* "Orig. year" is the slug-encoded original edition year where
+present (Petrov's 1788 translation circulates in the corpus as its 1914 reprint — the
+per-source `meta.json` carries the imprint, the slug the original); "clean pairs" is
+the per-edition count of passage groups with both a non-empty Sanskrit and Russian
+side — it may exceed the canonical 700 verses where an edition sub-divides passages
+(Burba 719; Abhinavagupta's commentary 748) or fall short where verses are ranged
+together or absent (Radha 647). Yāmuna's Gītārthasaṅgraha is genuinely a 32-verse
+epitome, not a truncation. **TTR** (type–token ratio) and **Guiraud R** (types/√tokens)
+are computed over each edition's Russian verse segments; TTR is length-sensitive, so R
+is the cross-edition comparator. **Loan retention** is the share of an edition's
+Russian segments containing at least one of 18 fixed transliterated Sanskrit loan stems
+(йога, карма, дхарма, брахман, атман, гуна, пракрити, пуруша, …; the exact list is in
+the recomputation record) — a deliberately transparent surface proxy for
+"Sanskrit-term retention vs. translation into native vocabulary."
+
+### 5.2 What the metrics show
+
+![Register metrics per edition, 1788–2016](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg?raw=true)
+
+The signal is **register, not merely time**. Loan retention does rise across the
+corpus's ~230 years — from 11–22% in the three pre-revolutionary editions (1788, 1909,
+1914) to 30–76% in the post-war ones — but the moderns split cleanly into two lines.
+The **scholarly-literary line** keeps loans low or moderate: Erman's academic 2009
+translation retains Sanskrit terms in only 11.3% of segments — *below* the 1914
+theosophical rendering — while Smirnov (32.4%) and Sementsov (35.3%) sit mid-range.
+The **terminological line** — the devotional and esoteric renderings (Prabhupāda
+30.3%, Burba 38.9%, Sharma 62.6%, Radha 76.0%) — treats the Sanskrit lexicon as
+technical vocabulary to be retained, not translated. The three commentaries behave
+like the terminological line (47–84%), as expected for exegetical prose that must
+quote its lemmata. Lexical richness (Guiraud R) separates the same groups more weakly
+(27.5–42.6 across translations), with the interlinear-style Radha rendering scoring
+highest — long glossing segments accumulate types. These are surface lexical measures
+computed on ~700 segments per edition; they demonstrate that the corpus supports
+controlled cross-edition register comparison on a fixed source text, and deeper
+measures (calque detection, syntactic archaism) are downstream work, not claims of
+this paper.
 
 ## 6. Discussion
 
@@ -334,8 +414,11 @@ lexicon induction, diachronic translation study) needs.
   the Sanskrit freely while withholding in-copyright Russian text until cleared.
 - **Dates are crosswalked, not re-derived** (VisualDCS), with `manual` flags on
   author-datable medieval works; the crosswalk inherits DCS's own dating uncertainty.
-- **The diachronic Gītā demonstration (§5) is partially scaffolded** — edition table
-  and register metrics are TODO.
+- **The §5 register metrics are surface lexical measures.** TTR/Guiraud R and the
+  18-stem loan-retention proxy are computed on ~700 Russian segments per edition; they
+  support the register-comparison demonstration but are not a full stylometric study
+  (calque detection, syntactic archaism, and translator-attribution measures are
+  downstream work). TTR is length-sensitive and is reported only alongside Guiraud R.
 - **`structure`-class reclassification.** The heuristic census and the final
   classification differ (§3.1); the final converter classification governs.
 
@@ -366,10 +449,11 @@ already lives in their markup.
 
 The corpus layer is the JSONL directory
 [`web/corpus_builder/jsonl/`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/jsonl) — **148 report sources** define the corpus of record (the
-directory currently holds 153 files; the 5 post-report additions — `hitopadesha`,
-`naradasmriti`, `vishnu-smriti`, `yajnavalkyasmriti`, `yajnavalkyasmriti_add`, 7,080
-records — are excluded from every count until a re-frozen conversion report folds them
-in; freeze-time TODO); canonical counts in
+directory currently holds 155 `.jsonl` files; the 7 post-report additions —
+`hitopadesha`, `naradasmriti`, `vishnu-smriti`, `yajnavalkyasmriti`,
+`yajnavalkyasmriti_add`, `devibhagavata-purana-1`, `devibhagavata-purana_s1.sanskrit`,
+11,056 records — are excluded from every count until a re-frozen conversion report
+folds them in; freeze-time TODO); canonical counts in
 [`web/corpus_builder/conversion_report.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json);
 the converter is
 [`web/corpus_builder/html_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/html_to_canonical.py);
@@ -381,7 +465,13 @@ the alignment model and gold/CI gates are in
 *(TODO before submission: a Zenodo DOI; a one-line license/redistribution statement per
 the §8 copyright triage; confirmation of which sources ship as full text vs. index-only.)*
 The extraction is deterministic and re-runs from the committed HTML sources; it never
-infers a pairing the source did not already encode.
+infers a pairing the source did not already encode. Every statistic in this paper is
+recomputed in one pass by
+[`papers/scripts/a41_stats.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py),
+whose dated output ([`papers/data/A41_corpus_stats.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json),
+[`papers/data/A41_gita_editions.tsv`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_gita_editions.tsv))
+and figure ([`papers/figures/A41_gita_register.svg`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg))
+are committed beside the manuscript.
 
 ## 10. Claim → artifact inventory
 
@@ -391,14 +481,14 @@ flagged as such):
 
 | # | Claim | Figure(s) | Artifact | Status |
 |--:|---|---|---|---|
-| 1 | Corpus scale | 148 report sources, 574,939 segment records (the `jsonl/` dir holds 153 files; 5 post-report additions, 7,080 records, excluded from all counts) | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) | ✅ committed; ⬜ fold or formally exclude the 5 extras at freeze |
+| 1 | Corpus scale | 148 report sources, 574,939 segment records (the `jsonl/` dir holds 155 `.jsonl` files as of 11-07-2026; 7 post-report additions, 11,056 records, excluded from all counts and itemised in §3.1) | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ⬜ fold or formally exclude the extras at freeze (re-frozen conversion report) |
 | 2 | Final structure split | 119 verse / 15 dictionary / 14 prose; 208,230 / 321,672 / 45,037 records | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) + final backfill in [.ai_state.md](https://github.com/gasyoun/SamudraManthanam/blob/main/.ai_state.md); the heuristic 70/15/67-of-152 census in [TAG_CENSUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) is superseded and said so in §3.1 | ✅ committed |
-| 3 | Headline: clean 1:1 verse pairs | **78,219** (Tier-1) vs 78,139 / 88.56% live re-count (26-06-2026) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §0 + re-countable from the [jsonl/](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/jsonl) layer | ✅ committed; ⬜ freeze-time recount picks the footnoted figure |
+| 3 | Headline: clean 1:1 verse pairs | **78,219** (Tier-1) vs 78,139 / 88.56% live re-count (26-06, re-verified identically 08-07 and 11-07-2026) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §0 + [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) recount ([A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json)) | ✅ committed; ⬜ freeze-time choice of which reconciled figure leads (one-line edit) |
 | 4 | Monolingual inventory | 10,145 RU-only, dominated by `buddhacharita-balmont` 8,852 + `mify-drind` 1,172 (≈10,024 of 10,145); 1 Sa-only (spec) / 80 (live) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §2 + JSONL re-count | ✅ committed |
 | 5 | Whole-corpus `seg` roles | `head` 321,672 · `ru` 88,148 · `sa` 78,220 · `body` 45,037 · `comm*` ≈41,862 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) / JSONL | ✅ committed |
 | 6 | Extraction fidelity | `needs_review: 0`; 574,939 unique IDs; 25 letter-suffixed duplicate-passage records; gold set + CI gates green | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) + [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §§6–7 gate log (2026-06-13) | ✅ committed |
 | 7 | Chronology crosswalk | 86 `parallel-ru` texts: `dcs-exact` 20 / `dcs-bucket` 27 / `manual` 11 / `n/a` 28 (cross-corpus `dcs-exact` = 92, of which 72 are `wisdomlib-en`) | [texts_chronology.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/texts_chronology.json) | ✅ committed |
-| 8 | Gītā demonstration | 11 RU translations + 3 commentaries on shared `{chapter}.{verse}` keys; 1788 / 1909 / 1914 slug dates | JSONL slugs + [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §5 compare key | ✅ committed; ⬜ per-edition translator/year/rights table + register metrics NOT built (§5) |
+| 8 | Gītā demonstration | 11 RU translation sources + 3 commentaries on shared `{chapter}.{verse}` keys; per-edition table + TTR/Guiraud R/loan-retention metrics (§5.1–5.2, Figure 1) | [A41_gita_editions.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_gita_editions.tsv) + [A41_gita_register.svg](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg), computed by [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) from per-source `meta.json` + JSONL | ✅ committed (11-07-2026) |
 | 9 | Lexical layer | 321,672 head entries; Kochergina 29,180, Kossovich 13,488 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) per-source counts | ✅ committed |
 
 ## 11. Scope versus companion papers (anti-salami)
