@@ -2,3 +2,8 @@
 /build
 /.docusaurus
 ~$*
+
+# H754 НКРЯ export artifacts: bulk XML/TMX/TSV are in-copyright, gitignored.
+# Only PILOT_VALIDATION.md is committed.
+/export/*
+!/export/PILOT_VALIDATION.md

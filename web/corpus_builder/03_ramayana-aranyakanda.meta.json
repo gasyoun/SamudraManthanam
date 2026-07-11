@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "slug": "03_ramayana-aranyakanda",
+  "title_ru": "Вальмики. Рамаяна. Книга III. Араньяканда (Книга о лесе)",
+  "title_display": "Рамаяна III (Араньяканда)",
+  "title_en": "Rāmāyaṇa III (Āraṇyakāṇḍa)",
+  "author_orig": "Vālmīki (attrib.)",
+  "credit": "П. А. Гринцер (атрибуция требует проверки)",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "М.: Ладомир; Наука",
+  "publisher": "Ладомир; Наука",
+  "year": null,
+  "series": "Литературные памятники",
+  "work_group": "ramayana",
+  "composition_date_ce": 150,
+  "period": "Epic",
+  "source_lang": "san",
+  "target_lang": "rus",
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "verse",
+  "provenance": "Вальмики. Рамаяна. Кн. 3 (Араньяканда). Translator/year NOT confirmed from repo data; credit+year are placeholders flagged for review. HTML -> canonical JSONL via html_to_canonical.py.",
+  "rights": "in-copyright modern Russian academic translation (named translator, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution, export bulk gitignored",
+  "bibliography_status": "provisional — verify translator/publisher/year against the physical edition before NКRЯ submission (Wave 4/5)",
+  "needs_review": true,
+  "needs_review_note": "Год издания и переводчик кн. III не подтверждены данными репозитория."
+}
