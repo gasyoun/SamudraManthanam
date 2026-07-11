@@ -164,6 +164,16 @@ The living roadmap is [`ROADMAP_2026_H2_DH_MOBILE.md`](https://github.com/gasyou
 
 ---
 
+## Related site: НКРЯ / ruscorpora.ru export (`nkrya-parallel/`)
+
+[`nkrya-parallel/`](https://github.com/gasyoun/SamudraManthanam/tree/main/nkrya-parallel) hosts a small Docusaurus site over E. A. Rubanova's 2020 HSE ВКР («Полуавтоматическая морфологическая разметка русско-санскритского параллельного корпуса») — the pilot this repo's corpus is being scaled from for a future Russian National Corpus ([ruscorpora.ru](https://ruscorpora.ru)) submission. Live at **[gasyoun.github.io/SamudraManthanam](https://gasyoun.github.io/SamudraManthanam/)**.
+
+**Site placement caveat:** this site occupies the repo's GitHub Pages **root** (`/SamudraManthanam/`), not a `/nkrya-parallel/` subpath — a Docusaurus scaffold quirk carried over from the original deploy ([PR #38](https://github.com/gasyoun/SamudraManthanam/pull/38)). Any future SamudraManthanam Pages content (e.g. a project landing page) would collide with this root and need the thesis site moved to a subpath first. Keep root as-is unless that becomes a real need.
+
+Rubanova's underlying working files (санскритизм stemmer lists, name indexes, deeppavlov morphology dumps) live in `nkrya-parallel/diplom-rubanova/` — only the small, reusable artifacts are tracked in git (curated lists, manual adjudications, epithet/synonym lists); the ~600 MB of raw corpus dumps and dictionary sources stay local-only, inventoried in [`diplom-rubanova/MANIFEST_LOCAL_ONLY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/MANIFEST_LOCAL_ONLY.md). Roadmap: [`docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md).
+
+---
+
 ## Contributing
 
 The desktop codebase is Free Pascal / Lazarus in Delphi-compatibility mode (`{$MODE Delphi}`). A few things to keep in mind:
