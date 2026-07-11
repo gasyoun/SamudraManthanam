@@ -1,0 +1,71 @@
+# Deny-by-default: this directory holds Rubanova's ~600 MB of loose 2020
+# ВКР working files (deeppavlov morphology dumps, dict.opcorpora.txt 283 MB,
+# archive/rus_words.txt 128 MB, raw corpus text dumps, the .pptx). Only the
+# reusable small artifacts below (santricism indexes, name lists, stemmer
+# rules, manual adjudications) are tracked — they feed Wave 2/3 of
+# docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md. Everything else stays
+# local-only; see MANIFEST_LOCAL_ONLY.md for the full inventory.
+#
+# This pattern is intentionally deny-by-default (not an enumerated bulk
+# list) so a future `git add` here can never re-swallow the bulk — only
+# files explicitly un-ignored below can ever be tracked.
+*
+!.gitignore
+!MANIFEST_LOCAL_ONLY.md
+
+# санскритизм / index lists
+!3_INDEX.txt
+!3_INDEX_oneword.txt
+!3_INDEX_options.txt
+!3_INDEX_phrases.txt
+!INDEX3_extra.txt
+!INDEX3_intersection.txt
+!INDEX3_lack.txt
+!automated_index_01.txt
+!automated_index_01_part.txt
+!automated_index_02.txt
+!automated_index_forms_01.txt
+!automated_index_forms_01_part.txt
+!automated_index_forms_02.txt
+!automated_index_Рам_01_02.txt
+!automated_index_Рам_03.txt
+!automated_index_Рамаяна_3.txt
+!automated_index_forms_Рам_01_02.txt
+!automated_index_forms_Рам_03.txt
+!automated_index_forms_Рамаяна_3.txt
+!Ram3_automated_index_forms.txt
+
+# name lists
+!Ramayana_names.txt
+!Ramayana_names_clean.txt
+!Ramayana_names_clean_united.txt
+
+# stemmer / declension rules + lexicons
+!decl_rules.txt
+!rusforms.txt
+!9460-osnov-sanskritskikh-slov.txt
+!foreign_words.txt
+!rus_index.txt
+!rus_index_declined.txt
+!correct_trans.txt
+!translation.txt
+!pluralis_племена.txt
+!append if found.txt
+
+# archive/ — manual adjudications + epithet/synonym lists only (≤120 KB each)
+!archive/
+!archive/03_1_manually.txt
+!archive/03_2_manually.txt
+!archive/03_3_manually.txt
+!archive/03_4_manually.txt
+!archive/03_5_manually.txt
+!archive/03_manual.txt
+!archive/3_morph_manual.txt
+!archive/manual_words.txt
+!archive/epith_3.txt
+!archive/new_epith_3.txt
+!archive/syns_3.txt
+!archive/new_syns_3.txt
+
+# defensive — a loose .doc precursor to ВКР.docx should never get re-tracked
+ВКР.doc
