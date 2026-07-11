@@ -16,6 +16,7 @@ import sys
 import os
 import re
 import json
+import html as _htmllib
 import argparse
 from pathlib import Path
 from typing import Iterator, Optional
@@ -361,7 +362,10 @@ def _strip_for_text(html: str) -> str:
     """Convert inner HTML to plain searchable text."""
     # Remove comment-sub reference anchors
     html = _COMMENT_SUB_RE.sub("", html)
-    return remove_html_tags(html)
+    # Unescape HTML entities AFTER tag removal so the searchable text carries the
+    # real characters the emitter escaped (e.g. Ignatjev's OCR-mangled editorial
+    # brackets ">…@" round-trip as ">", not "&gt;"). No-op for entity-free text.
+    return _htmllib.unescape(remove_html_tags(html))
 
 
 def _extract_author(html: str) -> Optional[str]:

@@ -1,6 +1,6 @@
 # PDF_INGESTION_PIPELINE.md — metadoc
 
-_Created: 10-07-2026 · Last updated: 10-07-2026_
+_Created: 10-07-2026 · Last updated: 11-07-2026_
 
 Companion record for
 [`PDF_INGESTION_PIPELINE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md).
@@ -14,20 +14,28 @@ Companion record for
 
 ## Ranked improvement backlog
 
-1. **Harden `parse_endnotes` for Vols 2/4/5** — the sequential-join desyncs
-   (comment counts 18/2/71 vs hundreds expected). Likely an extra endnote-start
-   shape (roman-numeral chapter ref, multi-target ref, or a per-chapter footnote
-   restart in some skandhas). Status: OPEN — blocks full-corpus comment ingest.
-2. **Batch-ingest skandhas 2–12** once (1) lands. Status: OPEN.
-3. **Sanskrit source decision + alignment** — full DBhP absent from GRETIL;
-   candidate sanskritdocuments.org. Status: OPEN (@DECIDE in GTD).
+1. ~~**Harden `parse_endnotes` for Vols 2/4/5**~~ — DONE (H558). Root cause was a
+   strict `fn==next` gate stalling on any unrecognised ref shape (chapter-range
+   `46 3-6.`, spaced dot `1. 4(1)`, numeric pada). Now gap-tolerant/monotonic.
+2. ~~**Batch-ingest skandhas 2–12**~~ — DONE (H558): all 12 skandhas live,
+   Sanskrit-aligned ~99%, round-trip clean. Batch driver `build_dbhp_skandhas.py`.
+3. ~~**Sanskrit source decision + alignment**~~ — DONE: sanskritdocuments.org
+   (`devIbhAgavatamNN.itx`, Vishwas Bhide) for all 12 skandhas.
 4. **Web-converter comment anchors** — emit `comment_{ch}_{v}` (or teach
    `html_to_canonical._parse_comment_anchor` the `comment_{fn}` form) so DBhP
    comments round-trip to their verse on the web-ingest path, not a `c.N.pM`
    fallback. Status: OPEN — cosmetic for the desktop app, matters for web.
-5. **Combined multi-skandha file** — `--combined` is implemented but only
-   exercised on the single-skandha pilot; verify the desktop app's
-   `iRecordLimit`/load tolerates a full 6-volume single HTML. Status: OPEN.
+5. **Combined-file record limit** — `--combined` now emits the real 12-skandha
+   `devibhagavata-purana.html` = **37,984 records**, and per-skandha skandhas
+   9/7 are 7,056/5,301 — all above `iRecordLimit = 5000` (`program.ini`). Status:
+   OPEN — a human should decide whether to raise `iRecordLimit`, split the large
+   skandhas, or drop the combined file. Per-skandha files are the primary access.
+6. **Skandha-6 coverage gap** — Ignatjev Vol 3 translates only Sanskrit chapters
+   1–15 of skandha 6's 31 (960 SA-orphans). Confirm whether a later Ignatjev
+   volume completes it, or the edition abridges. Status: OPEN (data question).
+7. **Skandha-9 OCR merges** — chapters 16 and 36 lost both their colophon and
+   opening heading to OCR and merge into their neighbours. A manual scan-check
+   could recover their boundaries. Status: OPEN (low priority; verses preserved).
 
 ## Known limitations / caveats
 
@@ -52,5 +60,6 @@ Companion record for
 | Date | Change | Model |
 |---|---|---|
 | 10-07-2026 | Created with the pipeline (H534): parser + aligner + emitter, Skandha-1 pilot ingested | Opus 4.8 (`claude-opus-4-8`) |
+| 11-07-2026 | H558: hardened the parser for all six volumes (endnote gap-tolerance, note-heading/colophon variants, note-block skandha rollover, Devī-gītā offset, id-integrity guard); ingested + Sanskrit-aligned skandhas 2–12; unescape fix in `html_to_canonical`; backlog items 1–3 closed, 5–7 added | Opus 4.8 (`claude-opus-4-8`) |
 
 _Dr. Mārcis Gasūns_
