@@ -64,26 +64,73 @@ WORK_SLUG = "devibhagavata-purana"
 # Chapter colophon (closes a chapter). The wording between «заканчивается» and
 # «глава» varies (an optional «в <genitive-ordinal> книге махапураны
 # Девибхагавата» clause may sit on either side), so we anchor on the CHAPTER
-# ordinal immediately preceding «глава» — the only *nominative* feminine
-# ordinal in the sentence — and derive the skandha separately. The genitive
-# «первой» in the book clause is deliberately NOT in ORDINAL_WORD_PATTERN, so
-# it cannot be mistaken for the chapter number.
+# ordinal adjacent to «глава» — the only *nominative* feminine ordinal in the
+# sentence — and derive the skandha separately. The genitive «первой» in the
+# book clause is deliberately NOT in ORDINAL_WORD_PATTERN, so it cannot be
+# mistaken for the chapter number.
+#
+# Two variations across the six volumes are load-bearing:
+#   * The «называющаяся «title»» clause is OFTEN ABSENT — skandha 9 (Vol 5, 50
+#     chapters) and skandha 8 (Vol 4) use bare «...заканчивается первая глава.».
+#     Requiring the title silently dropped every title-less chapter (a whole
+#     50-chapter skandha), so the title is OPTIONAL and captured when present.
+#   * The ordinal occasionally FOLLOWS «глава» («...заканчивается глава
+#     девятнадцатая», Vol 4), so both orders are accepted.
+#   * "глава" is occasionally dropped by OCR ("...заканчивается двадцать
+#     четвертая, называющаяся «…»", Vol 4) — accepted when the «называющаяся»
+#     title clause is present to keep the anchor specific.
+_ORD_PAT = ORDINAL_WORD_PATTERN + r"(?:\s+" + ORDINAL_WORD_PATTERN + r")?"
 _COLOPHON_RE = re.compile(
     r"заканчивается\b[^»]{0,90}?"
-    r"(?P<ord>" + ORDINAL_WORD_PATTERN + r"(?:\s+" + ORDINAL_WORD_PATTERN + r")?)"
-    r"\s+глава\b[^»]{0,150}?называющаяся\s+[«\"]([^»\"]+)[»\"]",
+    r"(?:"
+    r"(?P<ord>" + _ORD_PAT + r")\s+глава"                      # <ord> глава
+    r"|глава\s+(?P<ord2>" + _ORD_PAT + r")"                    # глава <ord>
+    r"|(?P<ord3>" + _ORD_PAT + r")\s*,?\s*(?=называющаяся)"    # <ord>, называющаяся
+    r")"
+    r"(?:[^»]{0,150}?называющаяся\s+[«\"](?P<title>[^»\"]+)[»\"])?",
     re.IGNORECASE,
 )
 
-# All-caps skandha-end marker: "ТАК ЗАКАНЧИВАЕТСЯ ПЕРВАЯ КНИГА МАХАПУРАНЫ ..."
-_SKANDHA_END_RE = re.compile(
-    r"ТАК\s+ЗАКАНЧИВАЕТСЯ\s+(?P<ord>[А-ЯЁ]+(?:\s+[А-ЯЁ]+)?)\s+КНИГА\s+МАХАПУРАН",
+# Skandha-end colophon. The wording is NOT uniform across the six volumes —
+# pdftotext yields all of:
+#   "ТАК ЗАКАНЧИВАЕТСЯ ПЕРВАЯ КНИГА МАХАПУРАНЫ ..."      (Vol 1)
+#   "ТАК В МАХАПУРАНЕ ДЕВИБХАГАВАТА ЗАКАНЧИВАЕТСЯ ЧЕТВЕРТАЯ КНИГА."  (Vol 2 s4)
+#   "Так в махапуране Девибхагавата заканчивается десятая книга."   (Vol 5 s10, lc)
+# The one invariant across all of them is the *nominative* feminine skandha
+# ordinal placed immediately before "книга" and preceded (somewhere on the
+# line) by "заканчивается". Chapter colophons instead say "в <ord>ой книгЕ ...
+# глава" — "книге" (prepositional, -е), never "книга" (-а) — so anchoring on
+# "<nominative-ord> книга" cleanly discriminates a skandha end from a chapter
+# end. Case-insensitive to fold the ALL-CAPS variant.
+_SKANDHA_ORD_STEM = (
+    "перва|втора|треть|четв[её]рта|пята|шеста|седьма|восьма|девята|"
+    "десята|одиннадцата|двенадцата"
 )
-_SKANDHA_ORD_CAPS = {
-    "ПЕРВАЯ": 1, "ВТОРАЯ": 2, "ТРЕТЬЯ": 3, "ЧЕТВЕРТАЯ": 4, "ЧЕТВЁРТАЯ": 4,
-    "ПЯТАЯ": 5, "ШЕСТАЯ": 6, "СЕДЬМАЯ": 7, "ВОСЬМАЯ": 8, "ДЕВЯТАЯ": 9,
-    "ДЕСЯТАЯ": 10, "ОДИННАДЦАТАЯ": 11, "ДВЕНАДЦАТАЯ": 12,
+_SKANDHA_COLO_RE = re.compile(
+    r"заканчивается[^.]{0,70}?\b(?P<ord>" + _SKANDHA_ORD_STEM + r")я\s+книга\b",
+    re.IGNORECASE,
+)
+_SKANDHA_ORD_NOM = {
+    "перва": 1, "втора": 2, "треть": 3, "четверта": 4, "четвёрта": 4,
+    "пята": 5, "шеста": 6, "седьма": 7, "восьма": 8, "девята": 9,
+    "десята": 10, "одиннадцата": 11, "двенадцата": 12,
 }
+
+# The Devī-gītā (DBhP 7.31–40) is embedded in skandha 7 but its chapter
+# colophons renumber from 1 ("Так в Деви-гите заканчивается первая глава"),
+# which would (a) collide chapter IDs with the skandha's own chapters 1–10 and
+# (b) look like a skandha rollover. We detect it by the "Деви-гит" marker and
+# offset its chapters by +30 so they become 31–40 (the canonical DBhP numbering).
+_DEVI_GITA_RE = re.compile(r"деви[-\s]?гит", re.IGNORECASE)
+_DEVI_GITA_OFFSET = 30
+
+
+def skandha_colophon_num(line: str):
+    """Return the skandha number closed by this line, or None."""
+    m = _SKANDHA_COLO_RE.search(line)
+    if not m:
+        return None
+    return _SKANDHA_ORD_NOM.get(m.group("ord").lower())
 
 # Chapter-opening heading: a line that is exactly "Глава <ordinal>".
 _CHAPTER_OPEN_RE = re.compile(
@@ -92,8 +139,12 @@ _CHAPTER_OPEN_RE = re.compile(
     re.IGNORECASE,
 )
 
-# Endnote-block heading.
-_NOTES_HEAD_RE = re.compile(r"^\s*(Комментарий|Примечания)\s*$", re.IGNORECASE)
+# Endnote-block heading. The wording varies across the six volumes: title-case
+# singular "Комментарий" and plural "Комментарии" (Vols 1–2), ALL-CAPS
+# "КОММЕНТАРИЙ"/"КОММЕНТАРИИ" (Vols 3–6). IGNORECASE folds the caps; the [йи]
+# class folds singular vs plural. Missing the plural form silently dropped
+# Vol 2 skandha 4's ~230 notes ("Комментарии" at its head).
+_NOTES_HEAD_RE = re.compile(r"^\s*(Комментари[йи]|Примечани[яе])\s*$", re.IGNORECASE)
 
 # A bare page-number line (pdftotext emits running page numbers alone).
 _PAGENUM_RE = re.compile(r"^\s*\d{1,4}\s*$")
@@ -110,11 +161,19 @@ _SPEAKER_RE = re.compile(
 
 # Endnote entry start (verse note): the leading number is the footnote id,
 # followed by the target ``chapter.verse``. The ref tail varies freely — a
-# pada ``(а)``, a range ``2.6(б) — 7``, a bare ``1.14`` — so we anchor only on
-# ``<fn> <ch>.<verse>`` and let the strictly-increasing ``fn == next`` gate in
-# parse_endnotes reject false positives.
+# pada ``(а)`` or numeric ``(1)``/``(2)``, a range ``2.6(б) — 7``, a bare
+# ``1.14`` — and pdftotext sometimes inserts a space after the chapter dot
+# (``1. 4(1)`` in Vol 4). We anchor only on ``<fn> <ch>.<verse>`` (tolerating
+# that space) and let the monotonic ``fn`` gate in parse_endnotes reject false
+# positives. Missing the spaced-dot form stalled the gate at fn 2 on Vol 4.
 _ENDNOTE_VERSE_RE = re.compile(
-    r"^(?P<fn>\d+)\s+(?P<ch>\d+)\.(?P<v>\d+)(?:\s*\((?P<pada>[абвгдежзиАБВГ]{1,2})\))?",
+    r"^(?P<fn>\d+)\s+(?P<ch>\d+)\.\s?(?P<v>\d+)",
+)
+# Endnote entry start (chapter-range note): "46 3-6. миф о ..." — a note whose
+# ref is a span of chapters, not a single verse. Target = the first chapter,
+# no verse. Missing this form stalled the gate at fn 45 on Vol 2.
+_ENDNOTE_CHRANGE_RE = re.compile(
+    r"^(?P<fn>\d+)\s+(?P<ch>\d+)\s*[-–]\s*(?P<ch2>\d+)\b",
 )
 # Endnote entry start (chapter note): "218 Глава 11. ..."
 _ENDNOTE_CHAPTER_RE = re.compile(r"^(?P<fn>\d+)\s+Глава\s+(?P<ch>\d+)\.")
@@ -152,12 +211,24 @@ def extract_pdf_text(pdf_path: Path) -> str:
 
 # --- endnote parsing --------------------------------------------------------
 
+# A single note whose start-shape slips through recognition would, under a
+# strict fn==next gate, glue every following note onto itself. We instead accept
+# any classified start whose fn advances monotonically within a small window,
+# so one unrecognised note (or a genuine gap in the source's own numbering)
+# costs at most that one note instead of the whole tail. The window caps the
+# jump so a stray "<big-number> <ch>.<v>"-shaped line inside prose can't hijack
+# the sequence.
+_FN_GAP_TOL = 8
+
+
 def parse_endnotes(note_lines: list[str]) -> dict[int, dict]:
     """Parse a skandha's collected endnotes into {fn_number: {...}}.
 
-    Re-joins wrapped continuation lines using the strictly-increasing footnote
-    numbering: a line whose leading integer equals the next expected footnote
-    number starts a new endnote; every other line continues the current one.
+    Re-joins wrapped continuation lines using the footnote numbering: a line
+    whose leading integer is the next expected footnote number — or, to survive
+    an unrecognised note or a source numbering gap, any monotonic advance within
+    ``_FN_GAP_TOL`` — starts a new endnote; every other line continues the
+    current one.
     """
     notes: dict[int, dict] = {}
     order: list[int] = []
@@ -170,13 +241,17 @@ def parse_endnotes(note_lines: list[str]) -> dict[int, dict]:
         m = _ENDNOTE_VERSE_RE.match(line)
         if m:
             return (int(m.group("fn")), int(m.group("ch")),
-                    int(m.group("v")), m.group("pada"))
+                    int(m.group("v")), None)
+        m = _ENDNOTE_CHRANGE_RE.match(line)
+        if m:
+            # chapter-range note ("46 3-6. …") — target the first chapter.
+            return int(m.group("fn")), int(m.group("ch")), None, None
         m = _ENDNOTE_CHAPTER_RE.match(line)
         if m:
             return int(m.group("fn")), int(m.group("ch")), None, None
         return None
 
-    next_fn = 1
+    last_fn = 0
     for raw in note_lines:
         line = raw.rstrip()
         if not line.strip():
@@ -185,13 +260,14 @@ def parse_endnotes(note_lines: list[str]) -> dict[int, dict]:
             # A bare page number interrupting an endnote — skip, keep flow.
             continue
         info = _classify(line)
-        if info and info[0] == next_fn:
+        is_start = info is not None and last_fn < info[0] <= last_fn + _FN_GAP_TOL
+        if is_start:
             fn, ch, v, pada = info
             current = {"fn": fn, "chapter": ch, "verse": v, "pada": pada,
                        "text": line}
             notes[fn] = current
             order.append(fn)
-            next_fn = fn + 1
+            last_fn = fn
         elif current is not None:
             current["text"] += " " + line.strip()
         # else: preamble noise before the first endnote — ignore.
@@ -341,68 +417,175 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
                 return idx
         return None
 
-    # Map skandha -> its endnotes. The k-th note block closes the k-th skandha
-    # encountered in this volume; but we need the ABSOLUTE skandha number. We
-    # derive the volume's first skandha number from the first caps marker.
-    first_skandha_num = None
-    for ln in lines:
-        m = _SKANDHA_END_RE.search(ln)
-        if m:
-            first_skandha_num = _SKANDHA_ORD_CAPS.get(m.group("ord").strip())
-            break
+    # The six volumes partition the 12 skandhas two-per-volume, in order:
+    # Vol N holds skandhas (2N-1, 2N). This regular split is the robust base —
+    # far more reliable than scraping the first colophon, whose wording is not
+    # uniform (and whose skandha-7 colophon pdftotext drops entirely). We derive
+    # base = 2N-1 and *validate* it against whatever colophons we can read,
+    # flagging (not trusting) any volume that disagrees.
+    base = 2 * vol_num - 1 if vol_num else 1
+    detected = sorted({skandha_colophon_num(ln) for ln in lines
+                       if skandha_colophon_num(ln) is not None})
+    report["skandha_base"] = base
+    report["skandha_colophons_detected"] = detected
+    if detected and not set(detected) <= {base, base + 1}:
+        report.setdefault("warnings", []).append(
+            f"vol {vol_num}: detected skandha colophons {detected} not within "
+            f"expected {{{base}, {base + 1}}} — check volume→skandha map")
 
-    # chapters as (skandha, chapter, title, body_lines)
+    # chapters as (skandha, chapter, title, body_lines). Skandha rollover is
+    # driven by the END OF A NOTE BLOCK: in this edition every skandha ends with
+    # its Комментарий, so the text after a note block is the next skandha. This
+    # is more robust than either a chapter-number reset (the embedded Devī-gītā
+    # resets chapters without being a new skandha) or the skandha "книга"
+    # colophon (Vol 4 skandha 7's colophon is dropped by pdftotext entirely).
+    # The only skandha with no trailing note block, Vol 4 skandha 8, is the last
+    # in its volume, so no rollover is owed after it.
     chapters: list[dict] = []
-    cur_skandha = first_skandha_num or 1
-    prev_chapter = 0
+    cur_skandha = base
+    devi_gita_active = False
     skip_title = False
-    for idx in range(n):
+    in_note_block = False
+    pending_open: int | None = None   # chapter opened by a heading, not yet closed
+    last_ch: dict[int, int] = {}       # skandha -> last emitted chapter number
+    idx = 0
+
+    def _emit(sk, chn, ttl, body_lines):
+        # Chapter numbers strictly increase within a skandha. A colophon that
+        # repeats (or undershoots) the previous number is a source misprint —
+        # skandha 10 prints two "пятая глава" — so bump it to keep numbering (and
+        # thus passage ids) monotonic and gapless-of-duplicates.
+        prev = last_ch.get(sk, 0)
+        if chn <= prev:
+            report.setdefault("renumbered_chapters", []).append(
+                f"skandha {sk}: colophon says {chn}, renumbered to {prev + 1}")
+            chn = prev + 1
+        last_ch[sk] = chn
+        chapters.append({"skandha": sk, "chapter": chn, "title": ttl,
+                         "body": list(body_lines)})
+
+    while idx < n:
         if in_notes[idx]:
+            in_note_block = True
+            idx += 1
             continue
+        if in_note_block:
+            # first body line after a note block -> next skandha
+            in_note_block = False
+            cur_skandha += 1
+            devi_gita_active = False
+            pending_open = None
+            buf = []
         line = lines[idx]
-        # A chapter-opening heading ("Глава <ordinal>") marks the true start of
-        # a chapter's verse text. Everything buffered before it is front matter
-        # (title page, preface, annotation) or inter-chapter noise — discard it,
-        # then skip the following ALL-CAPS chapter title line.
-        if _CHAPTER_OPEN_RE.match(line):
+        # A chapter-opening heading ("Глава <ordinal>" / "ГЛАВА <ORD>") marks the
+        # true start of a chapter's verse text. It is also the recovery anchor
+        # for a chapter whose CLOSING colophon pdftotext dropped (skandha 5 ch17,
+        # skandha 9 ch16/36): if a chapter was opened but never closed by a
+        # colophon, the next opening flushes it under that opening's own number.
+        om = _CHAPTER_OPEN_RE.match(line)
+        if om:
+            if pending_open is not None and any(_VERSE_NUM_RE.search(b) for b in buf):
+                _emit(cur_skandha, pending_open, "", buf)
+            onum = ordinal_f_to_int(om.group("ord"))
+            if onum is not None and devi_gita_active:
+                onum += _DEVI_GITA_OFFSET
+            pending_open = onum
             buf = []
             skip_title = True
+            idx += 1
             continue
         if skip_title:
             if line.strip():
                 skip_title = False
+            idx += 1
             continue
+        # A chapter colophon may be broken across two printed lines by pdftotext
+        # ("…заканчивается пятнадцатая" / "глава, называющаяся «…»"). Try the
+        # line alone, then joined with the next non-blank line(s), so a wrapped
+        # colophon still cuts the chapter.
         m = _COLOPHON_RE.search(line)
+        consumed_to = idx
+        if not m and "заканчивается" in line:
+            joined = line
+            j = idx
+            while j + 1 < n and j - idx < 3:
+                j += 1
+                if not lines[j].strip():
+                    continue
+                joined = joined + " " + lines[j]
+                m = _COLOPHON_RE.search(joined)
+                if m:
+                    consumed_to = j
+                    break
+                if not lines[j].startswith(" ") and lines[j].strip():
+                    # only bridge a couple of continuation lines
+                    pass
         if m:
-            ch_ord = m.group("ord")
-            ch_num = ordinal_f_to_int(ch_ord)
-            title = m.group(2).strip() if m.lastindex and m.group(2) else ""
+            ch_ord = m.group("ord") or m.group("ord2") or m.group("ord3")
+            ch_num = ordinal_f_to_int(ch_ord) if ch_ord else None
+            title = (m.group("title") or "").strip()
             if ch_num is None:
                 buf.append(line)
+            else:
+                # Devī-gītā chapters renumber from 1 inside skandha 7; offset
+                # them by +30 so they become 31–40 (canonical DBhP) and don't
+                # collide with the skandha's own chapters 1–10.
+                if _DEVI_GITA_RE.search(line) or _DEVI_GITA_RE.search(
+                        " ".join(lines[idx:consumed_to + 1])):
+                    devi_gita_active = True
+                eff_ch = ch_num + _DEVI_GITA_OFFSET if devi_gita_active else ch_num
+                # keep the pre-colophon verse text on the first line as body; the
+                # colophon starts at "заканчивается" (possibly wrapped onward).
+                cut = line.find("заканчивается")
+                buf.append(line[:cut] if cut >= 0 else line)
+                _emit(cur_skandha, eff_ch, title, buf)
+                pending_open = None   # this chapter is now authoritatively closed
+                buf = []
+                idx = consumed_to + 1
                 continue
-            # Detect skandha rollover: chapter number reset to 1 (< prev).
-            if ch_num <= prev_chapter and prev_chapter != 0:
-                cur_skandha += 1
-            # colophon line: strip the colophon text itself from the verse body
-            colo_start = m.start()
-            buf.append(line[:colo_start])
-            chapters.append({
-                "skandha": cur_skandha, "chapter": ch_num, "title": title,
-                "body": list(buf),
-            })
-            buf = []
-            prev_chapter = ch_num
-        else:
+        if not m:
             buf.append(line)
+        idx += 1
 
-    # Associate note blocks to skandhas by appearance order.
-    # note block k -> skandha (first_skandha_num + k)
+    # Associate note blocks to skandhas by appearance order: the k-th note block
+    # closes the k-th skandha that has notes in this volume, i.e. skandha base+k.
+    # A skandha without a Комментарий block (e.g. Vol 4 skandha 8, cosmology,
+    # has none) simply gets no notes and the mapping stays aligned.
     skandha_notes: dict[int, dict[int, dict]] = {}
-    base = first_skandha_num or 1
     for k, nb in enumerate(parsed_note_blocks):
         skandha_notes[base + k] = nb
 
+    # Skandha 7's notes cover the main chapters (1–30) then the Devī-gītā, whose
+    # note refs renumber from chapter 1. Mirror the verse-side +30 offset on the
+    # note side so a Devī-gītā note ("10.43") attaches to the Devī-gītā verse
+    # (7.040.043) and not to main chapter 10. Detect the reset in the fn-ordered
+    # note stream (a chapter that drops back to ≤12 after the mula reached ≥25).
+    if 7 in skandha_notes:
+        fn_map7 = skandha_notes[7]
+        running_max = 0
+        reset_at = None
+        for fn in sorted(fn_map7):
+            c = fn_map7[fn]["chapter"]
+            if c is None:
+                continue
+            if reset_at is None and running_max >= 25 and c <= 12:
+                reset_at = fn
+            running_max = max(running_max, c)
+        if reset_at is not None:
+            for fn in sorted(fn_map7):
+                if fn >= reset_at and fn_map7[fn]["chapter"] is not None:
+                    fn_map7[fn]["chapter"] += _DEVI_GITA_OFFSET
+            report.setdefault("notes", {})["devi_gita_offset_from_fn"] = reset_at
+
     # Build records per chapter.
+    # Passage-ID integrity guard: a handful of chapters can't be split cleanly
+    # from OCR (skandha 9 ch16/ch36 have BOTH their colophon and next opening
+    # dropped, so their verses merge into the neighbour; skandha 10 prints two
+    # "пятая глава" colophons — a genuine edition misnumbering). Either can mint
+    # a duplicate SKANDHA.CHAPTER.VERSE id. We keep every verse (never drop) but
+    # suffix any colliding passage id so the corpus has no duplicate ids, and
+    # itemise the collisions in the report as a data finding.
+    seen_passages: set[str] = set()
     for ch in chapters:
         sk = ch["skandha"]
         if skandha_only is not None and sk != skandha_only:
@@ -430,6 +613,13 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
         for v in verses:
             seq += 1
             passage = zero_pad_passage(sk, ch["chapter"], v["verse"])
+            if passage in seen_passages:
+                report.setdefault("id_collisions", []).append(passage)
+                suffix = "b"
+                while f"{passage}{suffix}" in seen_passages:
+                    suffix = chr(ord(suffix) + 1)
+                passage = f"{passage}{suffix}"
+            seen_passages.add(passage)
             group = f"{WORK_SLUG}:{passage}"
             clean, html_text, refs = link_footnotes(v["text"], fn_numbers, used_fn)
             rec = {

@@ -1,0 +1,182 @@
+{
+  "ru_verses": 2243,
+  "sa_verses": 2243,
+  "matched": 2232,
+  "ru_only": 11,
+  "sa_orphan": 11,
+  "by_chapter": {
+    "7.1": {
+      "matched": 38,
+      "ru_only": 0
+    },
+    "7.2": {
+      "matched": 65,
+      "ru_only": 0
+    },
+    "7.3": {
+      "matched": 64,
+      "ru_only": 0
+    },
+    "7.4": {
+      "matched": 55,
+      "ru_only": 0
+    },
+    "7.5": {
+      "matched": 57,
+      "ru_only": 1
+    },
+    "7.6": {
+      "matched": 61,
+      "ru_only": 0
+    },
+    "7.7": {
+      "matched": 52,
+      "ru_only": 0
+    },
+    "7.8": {
+      "matched": 55,
+      "ru_only": 3
+    },
+    "7.9": {
+      "matched": 63,
+      "ru_only": 0
+    },
+    "7.10": {
+      "matched": 57,
+      "ru_only": 1
+    },
+    "7.11": {
+      "matched": 52,
+      "ru_only": 1
+    },
+    "7.12": {
+      "matched": 64,
+      "ru_only": 0
+    },
+    "7.13": {
+      "matched": 62,
+      "ru_only": 0
+    },
+    "7.14": {
+      "matched": 55,
+      "ru_only": 0
+    },
+    "7.15": {
+      "matched": 66,
+      "ru_only": 0
+    },
+    "7.16": {
+      "matched": 59,
+      "ru_only": 0
+    },
+    "7.17": {
+      "matched": 58,
+      "ru_only": 0
+    },
+    "7.18": {
+      "matched": 55,
+      "ru_only": 1
+    },
+    "7.19": {
+      "matched": 61,
+      "ru_only": 0
+    },
+    "7.20": {
+      "matched": 45,
+      "ru_only": 0
+    },
+    "7.21": {
+      "matched": 27,
+      "ru_only": 0
+    },
+    "7.22": {
+      "matched": 52,
+      "ru_only": 2
+    },
+    "7.23": {
+      "matched": 38,
+      "ru_only": 0
+    },
+    "7.24": {
+      "matched": 33,
+      "ru_only": 0
+    },
+    "7.25": {
+      "matched": 89,
+      "ru_only": 0
+    },
+    "7.26": {
+      "matched": 71,
+      "ru_only": 2
+    },
+    "7.27": {
+      "matched": 41,
+      "ru_only": 0
+    },
+    "7.28": {
+      "matched": 83,
+      "ru_only": 0
+    },
+    "7.29": {
+      "matched": 45,
+      "ru_only": 0
+    },
+    "7.30": {
+      "matched": 102,
+      "ru_only": 0
+    },
+    "7.31": {
+      "matched": 74,
+      "ru_only": 0
+    },
+    "7.32": {
+      "matched": 50,
+      "ru_only": 0
+    },
+    "7.33": {
+      "matched": 56,
+      "ru_only": 0
+    },
+    "7.34": {
+      "matched": 50,
+      "ru_only": 0
+    },
+    "7.35": {
+      "matched": 62,
+      "ru_only": 0
+    },
+    "7.36": {
+      "matched": 30,
+      "ru_only": 0
+    },
+    "7.37": {
+      "matched": 45,
+      "ru_only": 0
+    },
+    "7.38": {
+      "matched": 49,
+      "ru_only": 0
+    },
+    "7.39": {
+      "matched": 47,
+      "ru_only": 0
+    },
+    "7.40": {
+      "matched": 44,
+      "ru_only": 0
+    }
+  },
+  "sa_orphans": [
+    "7.4.15",
+    "7.5.59",
+    "7.17.1",
+    "7.18.29",
+    "7.18.47",
+    "7.19.19",
+    "7.19.61",
+    "7.20.46",
+    "7.26.52",
+    "7.27.27",
+    "7.35.63"
+  ]
+}

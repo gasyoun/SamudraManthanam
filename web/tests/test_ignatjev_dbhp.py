@@ -79,3 +79,62 @@ def test_no_glued_footnote_digits_in_verse_text(skandha1):
     glued = [r["passage"] for r in records
              if r["seg"] == "ru" and re.search(r"[А-Яа-яё]\d", r["text"])]
     assert not glued, f"verses still carry glued footnote digits: {glued[:5]}"
+
+
+# --- H558: whole-volume gates (skandhas 2-12) -------------------------------
+
+# Volume -> the skandhas it holds and the chapter count parsed for each (the
+# edition's OWN numbering, established in H558 — NOT an external canonical table;
+# skandha 6 really has 15 chapters here, skandha 9 loses 2 and skandha 10 loses 1
+# to OCR/source colophon damage, itemised in the parse report).
+_VOL_SKANDHAS = {
+    1: {1: 20, 2: 12}, 2: {3: 30, 4: 25}, 3: {5: 35, 6: 15},
+    4: {7: 40, 8: 24}, 5: {9: 48, 10: 13}, 6: {11: 24, 12: 14},
+}
+# skandhas that carry endnotes (skandha 2 and skandha 8 have none in this edition)
+_SKANDHAS_WITH_NOTES = {1, 3, 4, 5, 6, 7, 9, 10, 11, 12}
+
+
+def _parse_vol(vol):
+    pdf = _REPO / "AdnrejIgnatjev" / "devibhagavata-purana" / f"Девибхагавата-пурана. Том {vol}.pdf"
+    if not pdf.exists():
+        pytest.skip(f"DBhP Vol {vol} PDF not present")
+    if shutil.which("pdftotext") is None:
+        pytest.skip("pdftotext (poppler) not on PATH")
+    import ignatjev_pdf_to_canonical as ig
+    return ig.parse_volume(ig.extract_pdf_text(pdf), vol)
+
+
+@pytest.mark.parametrize("vol", [2, 3, 4, 5, 6])
+def test_comment_counts_are_hundreds_not_desynced(vol):
+    """The core H558 gate: every note-bearing skandha yields comments in the
+    HUNDREDS, not the 18/2/71 the strict endnote gate produced on Vols 2/4/5."""
+    _, report = _parse_vol(vol)
+    for sk, r in report["skandhas"].items():
+        if int(sk) in _SKANDHAS_WITH_NOTES:
+            assert r["comments"] >= 100, f"skandha {sk}: only {r['comments']} comments"
+
+
+@pytest.mark.parametrize("vol", [2, 3, 4, 5, 6])
+def test_expected_skandhas_and_chapter_counts(vol):
+    _, report = _parse_vol(vol)
+    got = {int(s): r["chapters"] for s, r in report["skandhas"].items()}
+    assert got == _VOL_SKANDHAS[vol], got
+
+
+@pytest.mark.parametrize("vol", [1, 2, 3, 4, 5, 6])
+def test_no_duplicate_passage_ids(vol):
+    """The integrity guard must leave zero duplicate SKANDHA.CHAPTER.VERSE ids
+    even where OCR merges chapters or the edition misnumbers one."""
+    records, _ = _parse_vol(vol)
+    ids = [r["passage"] for r in records if r["seg"] == "ru"]
+    assert len(ids) == len(set(ids)), "duplicate passage ids emitted"
+
+
+def test_devi_gita_offset_in_skandha7():
+    """Skandha 7's embedded Devī-gītā must be renumbered to chapters 31-40 so it
+    neither collides with the mula's chapters 1-10 nor looks like a new skandha."""
+    _, report = _parse_vol(4)
+    s7_chapters = {ct["chapter"] for ct in report["chapter_titles"] if ct["skandha"] == 7}
+    assert s7_chapters >= set(range(31, 41)), sorted(s7_chapters)
+    assert 8 in report["skandhas"] or "8" in report["skandhas"]

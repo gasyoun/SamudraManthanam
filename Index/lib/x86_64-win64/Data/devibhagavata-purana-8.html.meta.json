@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "slug": "devibhagavata-purana",
+  "title_ru": "Девибхагавата-пурана (2018); А. Игнатьев",
+  "title_display": "Девибхагавата-пурана",
+  "title_en": "Devībhāgavata-purāṇa (Ignatiev, 2018)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "М.: Клуб Касталия",
+  "publisher": "Касталия",
+  "year": 2018,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "verse",
+  "provenance": "А. Игнатьев (перев., сост.). Девибхагавата-пурана. Тома 1-6. М.: Клуб Касталия, 2018. PDF -> canonical JSONL via ignatjev_pdf_to_canonical.py (H534).",
+  "rights": "in-copyright academic edition (named translator/editor, 21st c.) — corpus rights stay grey per project ruling; no redistribution",
+  "needs_review": true,
+  "filename": "devibhagavata-purana-8.html",
+  "skandha": 8
+}

@@ -182,7 +182,11 @@ def render_document(records: list[dict], meta: dict, titles: dict,
         r0 = min(g, key=lambda x: x.get("seq", 0))
         p = r0["passage"].split(".")
         def _n(x):
-            return int(re.split(r"[-–]", x)[0]) if x[:1].isdigit() else 0
+            # leading digits only: tolerates a range ("013-015") and the
+            # disambiguation suffix the parser adds to a colliding verse id
+            # ("013b", from an OCR-merged chapter).
+            m = re.match(r"\d+", x)
+            return int(m.group()) if m else 0
         return (_n(p[0]), _n(p[1]) if len(p) > 1 else 0,
                 _n(p[2]) if len(p) > 2 else 0, r0.get("seq", 0))
     ordered = sorted(groups.values(), key=_key)
