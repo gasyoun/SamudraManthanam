@@ -47,6 +47,52 @@ Companion record for
   the translator merged verse ranges (e.g. `(69)` spanning 68–69) — this is
   faithful, not a miss; gaps are logged in `report["verse_gaps"]`.
 
+## Intended use / known misuse
+
+- **Intended use:** ingesting a print-derived PDF translation (regular,
+  colophon-marked source conventions — Ignatjev-style `Так … заканчивается
+  <N> глава` chapter markers, trailing `(N)` verse numbering, numbered
+  `Комментарий` endnote blocks) into the Samudra Manthanam desktop-app corpus
+  (`Data/*.html`) and, on a best-effort basis, the web ingest path; optionally
+  aligning a source-agnostic Sanskrit `#sa` JSONL onto the Russian `#ru` groups
+  by `SKANDHA.CHAPTER.VERSE` key.
+- **Known misuse / out of scope:**
+  - Feeding a PDF whose structure does **not** follow the source's own regular
+    colophon/verse-marker conventions — the parser recovers structure from
+    those literal patterns, not layout heuristics, and will silently under- or
+    mis-segment on an irregularly-formatted source (see the Vols 2/4/5
+    endnote desync in the ranked backlog).
+  - Treating `align_sanskrit.py` as a statistical/fuzzy aligner — it is a
+    strict key join per
+    [`ALIGNMENT_SPEC.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md)
+    §0; passing mismatched-numbering Sanskrit sources will produce a large
+    `ru_only` fallback rate, not a forced alignment.
+  - Running the batch (`--combined`, multi-skandha) path unverified beyond the
+    single-skandha pilot it was exercised on — the desktop app's
+    `iRecordLimit`/load behaviour on a full 6-volume single HTML is unproven.
+  - Relying on the web-ingest comment anchors for a work ingested through this
+    pipeline before the `comment_{ch}_{v}`/`comment_{fn}` gap (backlog item 4)
+    is closed — comment **text** round-trips, but verse linkage does not on
+    that path.
+
+## Maintenance & sunset plan
+
+- **Maintainer:** whichever session/agent picks up the next Ignatjev-corpus
+  handoff (no dedicated human owner beyond the standing project maintainer);
+  treat as agent-maintained house tooling, not a pinned-owner service.
+- **Trigger to revisit:** any of the five open backlog items above landing
+  (especially #1, the endnote-desync fix that gates batch ingest of skandhas
+  2–12), or a new translator's PDF needing a different parser module under the
+  same three-stage shape.
+- **Sunset condition:** none planned while Ignatjev-style PDF ingestion remains
+  the active corpus-growth path; would retire only if the project moves off
+  PDF-sourced translations entirely or a successor tool subsumes all three
+  stages (parse → align → emit).
+
+## Deprecation status
+
+`active`
+
 ## Related documents
 
 - [`docs/CONVERTER_SPEC.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONVERTER_SPEC.md),
@@ -61,5 +107,6 @@ Companion record for
 |---|---|---|
 | 10-07-2026 | Created with the pipeline (H534): parser + aligner + emitter, Skandha-1 pilot ingested | Opus 4.8 (`claude-opus-4-8`) |
 | 11-07-2026 | H558: hardened the parser for all six volumes (endnote gap-tolerance, note-heading/colophon variants, note-block skandha rollover, Devī-gītā offset, id-integrity guard); ingested + Sanskrit-aligned skandhas 2–12; unescape fix in `html_to_canonical`; backlog items 1–3 closed, 5–7 added | Opus 4.8 (`claude-opus-4-8`) |
+| 11-07-2026 | template v2 backfill (H663) | Sonnet 5 (`claude-sonnet-5`) |
 
 _Dr. Mārcis Gasūns_
