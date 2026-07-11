@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "slug": "03_mahabharata-aranyakaparva",
+  "title_ru": "Махабхарата. Книга III. Лесная (Араньякапарва)",
+  "title_display": "Махабхарата III (Араньякапарва)",
+  "title_en": "Mahābhārata III (Āraṇyakaparvan)",
+  "author_orig": "anonymous (epic redaction)",
+  "credit": "Я. В. Васильков, С. Л. Невелева",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "М.: Наука (ГРВЛ)",
+  "publisher": "Наука",
+  "year": 1987,
+  "series": "Памятники письменности Востока",
+  "work_group": "mahabharata",
+  "composition_date_ce": 0,
+  "period": "Epic",
+  "source_lang": "san",
+  "target_lang": "rus",
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "verse",
+  "provenance": "Махабхарата. Кн. 3. Лесная (Араньякапарва) / пер. Я.В.Василькова, С.Л.Невелевой. М.: Наука, 1987. Year confirmed by in-text comment citation 'Махабхарата 1987 (III)'. HTML -> canonical JSONL via html_to_canonical.py.",
+  "rights": "in-copyright modern Russian academic translation (named translator, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution, export bulk gitignored",
+  "bibliography_status": "provisional — verify translator/publisher/year against the physical edition before NКRЯ submission (Wave 4/5)",
+  "needs_review": true
+}

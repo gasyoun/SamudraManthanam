@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "slug": "02_ramayana-ayodhyakanda",
+  "title_ru": "Вальмики. Рамаяна. Книга II. Айодхьяканда (Книга об Айодхье)",
+  "title_display": "Рамаяна II (Айодхьяканда)",
+  "title_en": "Rāmāyaṇa II (Ayodhyākāṇḍa)",
+  "author_orig": "Vālmīki (attrib.)",
+  "credit": "П. А. Гринцер",
+  "credit_role": "Перевод с санскрита, комментарий",
+  "imprint": "М.: Ладомир; Наука",
+  "publisher": "Ладомир; Наука",
+  "year": 2006,
+  "series": "Литературные памятники",
+  "work_group": "ramayana",
+  "composition_date_ce": 150,
+  "period": "Epic",
+  "source_lang": "san",
+  "target_lang": "rus",
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "verse",
+  "provenance": "Вальмики. Рамаяна. Кн. 1-2 / пер. П.А.Гринцера. М.: Ладомир; Наука, 2006. HTML -> canonical JSONL via html_to_canonical.py.",
+  "rights": "in-copyright modern Russian academic translation (named translator, 20th-21st c.) — corpus rights stay grey per project ruling; no redistribution, export bulk gitignored",
+  "bibliography_status": "provisional — verify translator/publisher/year against the physical edition before NКRЯ submission (Wave 4/5)",
+  "needs_review": true
+}
