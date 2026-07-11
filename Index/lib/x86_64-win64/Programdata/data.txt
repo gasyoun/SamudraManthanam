@@ -151,3 +151,15 @@ Biruni.htm
 Указатели Махабхараты.txt
 Сыркин_Том_1_UTF.htm
 devibhagavata-purana-1.html
+devibhagavata-purana-2.html
+devibhagavata-purana-3.html
+devibhagavata-purana-4.html
+devibhagavata-purana-5.html
+devibhagavata-purana-6.html
+devibhagavata-purana-7.html
+devibhagavata-purana-8.html
+devibhagavata-purana-9.html
+devibhagavata-purana-10.html
+devibhagavata-purana-11.html
+devibhagavata-purana-12.html
+devibhagavata-purana.html
