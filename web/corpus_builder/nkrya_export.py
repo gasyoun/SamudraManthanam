@@ -304,9 +304,32 @@ def _write(path, text):
         f.write(text)
 
 
-def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True):
+def _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx):
+    """H760 Wave 3 wiring: the per-source proper-name index, added into the
+    same export bundle as the para-XML/TMX/TSV triple. Import is local so
+    nkrya_export has no hard dependency on the sanskritisms package unless
+    --with-sanskritisms is actually requested."""
+    if HERE not in sys.path:
+        sys.path.insert(0, HERE)
+    from sanskritisms.extract import ExtractionContext, build_name_index, extract_source
+
+    ctx = sanskritisms_ctx or ExtractionContext()
+    extraction = extract_source(jsonl_path, ctx=ctx)
+    index = build_name_index(extraction, ctx)
+    return ctx, json.dumps(index, ensure_ascii=False, indent=2) + '\n'
+
+
+def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
+                   with_sanskritisms=False, sanskritisms_ctx=None):
     """Export one source into out_dir/<slug>/. Returns a stats dict (also
-    written as export_report.json when write=True)."""
+    written as export_report.json when write=True).
+
+    with_sanskritisms=True additionally writes <slug>.sanskritisms_index.json
+    into the same directory (H760 Wave 3 deliverable 3: wire the указатели
+    into the export frame). sanskritisms_ctx lets a caller reuse one
+    ExtractionContext (lemma pool + reverse index) across many sources
+    instead of rebuilding it per call.
+    """
     jsonl_path = os.path.join(jsonl_dir, slug + '.jsonl')
     if not os.path.exists(jsonl_path):
         raise FileNotFoundError(jsonl_path)
@@ -317,6 +340,9 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True)
         slug + '.tmx': tmx(slug, pairs, meta),
         slug + '.tsv': tsv(pairs),
     }
+    if with_sanskritisms:
+        sanskritisms_ctx, index_json = _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx)
+        artifacts[slug + '.sanskritisms_index.json'] = index_json
     report = {
         'slug': slug,
         'exporter_version': VERSION,
@@ -345,13 +371,22 @@ def main(argv=None):
     g.add_argument('--all-pilot', action='store_true',
                    help='export all %d pilot sources' % len(PILOT_SOURCES))
     ap.add_argument('--out', required=True, help='output directory')
+    ap.add_argument('--with-sanskritisms', action='store_true',
+                     help='also write <slug>.sanskritisms_index.json (H760 Wave 3)')
     ap.add_argument('--quiet', action='store_true')
     a = ap.parse_args(argv)
 
     slugs = PILOT_SOURCES if a.all_pilot else [a.source]
+    sanskritisms_ctx = None
+    if a.with_sanskritisms:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from sanskritisms.extract import ExtractionContext
+        sanskritisms_ctx = ExtractionContext()  # built once, reused across slugs
     reports = []
     for slug in slugs:
-        r = export_source(slug, a.out)
+        r = export_source(slug, a.out, with_sanskritisms=a.with_sanskritisms,
+                           sanskritisms_ctx=sanskritisms_ctx)
         reports.append(r)
         if not a.quiet:
             print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d'
