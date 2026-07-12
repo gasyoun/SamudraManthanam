@@ -7,7 +7,7 @@ Head-to-head comparison of three Sanskrit-side annotation variants on the four
 [PILOT_VALIDATION.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/PILOT_VALIDATION.md)),
 per ruling 3 of the
 [НКРЯ roadmap](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md)
-and [H759](https://github.com/gasyoun/Uprava/blob/main/handoffs/H759-Fable_SamudraManthanam_nkrya-wave2-sanskrit-3path-annotation-a41-section_12.07.26.md).
+and [H759](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H759-Fable_SamudraManthanam_nkrya-wave2-sanskrit-3path-annotation-a41-section_12.07.26.md).
 
 - **Generator:** [`web/corpus_builder/nkrya_annotate.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_annotate.py) v0.1.0
 - **Tests:** [`web/tests/test_nkrya_annotate.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_nkrya_annotate.py) (5 hermetic + 1 corpus, all green 12-07-2026)

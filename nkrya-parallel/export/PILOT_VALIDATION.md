@@ -4,7 +4,7 @@ _Created: 12-07-2026 · Last updated: 12-07-2026_
 
 Pilot export of the four НКРЯ Wave-1 sources (MBh 3 + Rāmāyaṇa 1–3) from the
 canonical verse-aligned JSONL into three formats — best-guess НКРЯ parallel
-para-XML, TMX 1.4b, and TSV — per [H754](https://github.com/gasyoun/Uprava/blob/main/handoffs/H754-Opus_SamudraManthanam_nkrya-wave1-pilot-triple-export_11.07.26.md)
+para-XML, TMX 1.4b, and TSV — per [H754](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H754-Opus_SamudraManthanam_nkrya-wave1-pilot-triple-export_11.07.26.md)
 and rulings 1 & 7 of [ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md).
 
 - **Generator:** [`web/corpus_builder/nkrya_export.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_export.py) v0.1.0
