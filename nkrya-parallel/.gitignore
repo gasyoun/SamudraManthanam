@@ -14,3 +14,10 @@
 !/export/ANNOTATION_3PATH_COMPARISON.md
 !/export/annotation_3path_metrics.json
 !/export/annotation_adjudication_sample.json
+
+# H760 sanskritism extraction: per-source lexicon/epithets/index JSON quote
+# in-copyright running text (surface forms + verse group ids), gitignored
+# like the export artifacts above. Only the corpus-wide counts report is
+# committed.
+/sanskritisms/*
+!/sanskritisms/COUNTS_REPORT.md
