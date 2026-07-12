@@ -1,5 +1,7 @@
 # Samudra Manthanam Architecture Review and 6-Month Roadmap
 
+_Created: 15-05-2026 · Last updated: 15-05-2026_
+
 Review date: 2026-05-15
 
 Audience: project owner, Gemini Flash, future implementation agents.
@@ -1046,3 +1048,5 @@ By the end of 6 months, Samudra Manthanam should feel like a serious Sanskrit/Ru
 - open enough for public discovery,
 - structured enough to capture serious readers,
 - and ready for AI assistance without letting AI replace the corpus itself.
+
+_Dr. Mārcis Gasūns_
