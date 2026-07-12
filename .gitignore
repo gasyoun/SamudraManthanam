@@ -17,3 +17,6 @@ reingest.log
 web/offline-packs/*.db
 web/offline-packs/*.db.sha256
 web/offline-packs/*.db.gz
+
+# /review-sheet HTML voting sheets -- personal working artifacts, never repo deliverables
+/review/
