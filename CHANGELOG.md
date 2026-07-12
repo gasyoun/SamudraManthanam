@@ -17,6 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   metrics/report/adjudication-sample under `nkrya-parallel/export/`
   (`ANNOTATION_3PATH_COMPARISON.md`); new A41 §6 records the resulting
   annotation policy (A always; B where DCS covers, CC BY 4.0; C not shipped).
+- **НКРЯ / ruscorpora parallel-export programme** — `nkrya-parallel/`: the
+  Sanskrit↔Russian corpus export track toward the Russian National Corpus.
+  Wave 0 landed the export roadmap and its eight MG rulings ([PR #39](https://github.com/gasyoun/SamudraManthanam/pull/39),
+  H753) plus the curated diplom-rubanova reference artifacts and hardened bulk
+  `.gitignore` ([PR #40](https://github.com/gasyoun/SamudraManthanam/pull/40)).
+- **НКРЯ Wave-1 pilot triple export** (H754) — Mahābhārata 3 + Rāmāyaṇa 1–3
+  exported in the parallel `#sa`/`#ru`/annotation triple schema
+  ([PR #41](https://github.com/gasyoun/SamudraManthanam/pull/41)), the first
+  end-to-end pilot of the export pipeline over real books.
+- **Docusaurus review-packet site** for the ВКР/VKR review of the НКРЯ export,
+  with a GitHub Pages deploy workflow ([PR #38](https://github.com/gasyoun/SamudraManthanam/pull/38)).
 - Reusable **PDF → canonical-JSONL → app-HTML** corpus-ingestion pipeline in
   `web/corpus_builder/` (the free-toolchain successor to the Delphi `cb.exe` for
   new ingestion): `ignatjev_pdf_to_canonical.py`, `align_sanskrit.py`,
