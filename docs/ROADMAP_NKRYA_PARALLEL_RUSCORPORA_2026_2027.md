@@ -1,6 +1,6 @@
 # НКРЯ / ruscorpora.ru export roadmap — nkrya-parallel (2026–2027)
 
-_Created: 11-07-2026 · Last updated: 11-07-2026_
+_Created: 11-07-2026 · Last updated: 12-07-2026_
 
 Scale the [nkrya-parallel](https://github.com/gasyoun/SamudraManthanam/tree/main/nkrya-parallel) subsystem from E. A. Rubanova's 2020 HSE ВКР pilot to an export pipeline covering every running-text source of the Samudra Manthanam corpus (published at [samskrtam.ru/parallel-corpus](https://samskrtam.ru/parallel-corpus/), 123 texts), and deliver a package ready to enter the Russian National Corpus ([ruscorpora.ru](https://ruscorpora.ru)) as the Sanskrit member of the parallel-corpus module. Authored from a `/roadmap-interview` session (audit + 2 interview rounds, 8 rulings), Fable 5 (`claude-fable-5`), 11-07-2026.
 
@@ -71,6 +71,8 @@ Opus 4.8 (`claude-opus-4-8`), cd `C:\Users\user\Documents\GitHub\SamudraManthana
 ### Wave 2 — Sanskrit-side 3-path comparison → A41 section (mint at W1 close)
 
 On the pilot texts, produce and compare three Sanskrit-side annotation variants: **A** plain IAST/SLP1 (baseline, exists); **B** DCS lemma+morph crosswalk via the VisualDCS SQLite layer (MBh, Rām, RV are in DCS — verify DCS licensing for redistribution inside НКРЯ before shipping); **C** fresh auto-tagging (Dharmamitra or vidyut). Metrics: token coverage per path, B↔C lemma agreement, and a human adjudication sample via `/review-sheet` (interactive HTML, no markdown checkboxes). Write-up lands as a new A41 section per ruling 8; bump A41 readiness. Executor: Fable 5 (`claude-fable-5`) for the comparison design + write-up. Unblocked by: W1 (needs the export frame to annotate into).
+
+**W2 done (12-07-2026, [H759](https://github.com/gasyoun/Uprava/blob/main/handoffs/H759-Fable_SamudraManthanam_nkrya-wave2-sanskrit-3path-annotation-a41-section_12.07.26.md), Fable 5 `claude-fable-5`):** [`web/corpus_builder/nkrya_annotate.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_annotate.py) + tests shipped; DCS licensing verified **CC BY 4.0** (redistribution inside НКРЯ OK with attribution). Findings: the crosswalk must be text-keyed (our Rām kāṇḍas are vulgate-numbered vs DCS critical) and three-tier (DCS Rām `text_sandhied` is largely de-sandhied pada text — a consonant-skeleton tier recovers it); coverage MBh 3 **99.8%**, Rām 1–3 **54–76%** (residue = genuine critical-edition excisions, 795/801 probed lines absent from all of DCS Rām), 81.1% overall; vidyut 0.4 over-segments 1.44× with B↔C Jaccard ~0.30 → **policy: A always, B where DCS covers (partial by construction outside MBh), C not shipped**. Report: [ANNOTATION_3PATH_COMPARISON.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/ANNOTATION_3PATH_COMPARISON.md); A41 gained §6 (former §§6–11 → §§7–12). Open residue: the 51-group adjudication sheet awaits an MG vote (registered in [REVIEW_SHEETS_INDEX.md](https://github.com/gasyoun/Uprava/blob/main/REVIEW_SHEETS_INDEX.md)); verdict folds into A41 §6.4 at freeze. W4 unblocks at W3 close (W2 side done).
 
 ### Wave 3 — Санскритизм layer corpus-wide (mint at W1 close; parallelizable with W2)
 

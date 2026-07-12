@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Sanskrit-side 3-path annotation comparison** (НКРЯ Wave 2, H759):
+  `web/corpus_builder/nkrya_annotate.py` (+ `web/tests/test_nkrya_annotate.py`)
+  compares plain SLP1 (A) vs a text-keyed DCS lemma/morph crosswalk (B) vs
+  vidyut-cheda fresh tagging (C) on the 11,055-pair pilot; committed
+  metrics/report/adjudication-sample under `nkrya-parallel/export/`
+  (`ANNOTATION_3PATH_COMPARISON.md`); new A41 §6 records the resulting
+  annotation policy (A always; B where DCS covers, CC BY 4.0; C not shipped).
 - Reusable **PDF → canonical-JSONL → app-HTML** corpus-ingestion pipeline in
   `web/corpus_builder/` (the free-toolchain successor to the Delphi `cb.exe` for
   new ingestion): `ignatjev_pdf_to_canonical.py`, `align_sanskrit.py`,

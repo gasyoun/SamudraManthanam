@@ -1,16 +1,16 @@
 ---
 paper_id: A41
 title: "Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources"
-status: draft (advanced, 4/5 proposed) — scaffolded 2026-06-26, advanced 2026-07-08 (H351), completed prose + §5 metrics 2026-07-11 (H676)
+status: draft (advanced, 4/5 proposed) — scaffolded 2026-06-26, advanced 2026-07-08 (H351), completed prose + §5 metrics 2026-07-11 (H676), §6 annotation comparison 2026-07-12 (H759)
 readiness: 3/5 → 4/5 proposed
 venue: "LREC-COLING (parallel-corpus) / eLex / JOHD (Journal of Open Humanities Data)"
 author: "**Mārcis Gasūns**, independent scholar ([ORCID 0000-0003-4513-884X](https://orcid.org/0000-0003-4513-884X)), gasyoun@ya.ru"
-data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 155 .jsonl files — 7 post-report additions excluded from all counts); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk); papers/data/A41_corpus_stats.json + papers/data/A41_gita_editions.tsv (recomputation record, papers/scripts/a41_stats.py)"
+data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 155 .jsonl files — 7 post-report additions excluded from all counts); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk); papers/data/A41_corpus_stats.json + papers/data/A41_gita_editions.tsv (recomputation record, papers/scripts/a41_stats.py); nkrya-parallel/export/annotation_3path_metrics.json (§6 annotation comparison, web/corpus_builder/nkrya_annotate.py)"
 ---
 
 # Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources
 
-_Created: 26-06-2026 · Last updated: 11-07-2026_
+_Created: 26-06-2026 · Last updated: 12-07-2026_
 
 > **Draft status (2026-07-11, H676; advanced 2026-07-08, H351; scaffolded 2026-06-26).**
 > Manuscript built directly on the converted corpus and its design specs. Every numerical
@@ -18,7 +18,7 @@ _Created: 26-06-2026 · Last updated: 11-07-2026_
 > [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json)
 > and re-verified against the committed JSONL layer (restricted to the 148 report
 > sources — the `jsonl/` directory currently holds **155** `.jsonl` files; the 7
-> post-report additions are excluded from every count, see §3.1 note and §10 row 1) and
+> post-report additions are excluded from every count, see §3.1 note and §11 row 1) and
 > [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md).
 > **Home repo for the manuscript: SamudraManthanam `papers/`** — the corpus and all its
 > specs live here.
@@ -27,8 +27,8 @@ _Created: 26-06-2026 · Last updated: 11-07-2026_
 > Sa–**Ru** at 148-source scale with no aligner); headline discipline made explicit (§4.2 —
 > **78,219 clean 1:1 pairs is the headline, never 574,939 total segments**); the Gītā
 > demonstration renumbered to a proper §5 (was a dangling "§5.4"); claim→artifact
-> inventory (§10) and companion-paper scope block (§11) added; References added; links
-> upgraded to full blob URLs.
+> inventory (now §11) and companion-paper scope block (now §12) added; References
+> added; links upgraded to full blob URLs.
 > **Completed 11-07-2026 (readiness 3/5 → 4/5 proposed, H676, Fable 5 `claude-fable-5`):**
 > every statistic re-derived live by the committed
 > [papers/scripts/a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py)
@@ -42,11 +42,20 @@ _Created: 26-06-2026 · Last updated: 11-07-2026_
 > committed; the post-report extras census updated (5 → 7 files, 11,056 records); the
 > runtime `web/corpus.db` view layer (152 sources / 580,552 display lines, `v2026.07.06`)
 > reconciled against the canonical JSONL layer in §3.1.
+> **Added 12-07-2026 (H759, Fable 5 `claude-fable-5`):** §6 Sanskrit-side annotation —
+> the three-path comparison (plain SLP1 baseline vs DCS crosswalk vs vidyut fresh
+> tagging) run on the 11,055-pair НКРЯ pilot per roadmap rulings 3+8, with the
+> committed metrics record
+> ([annotation_3path_metrics.json](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/annotation_3path_metrics.json))
+> and the full report
+> ([ANNOTATION_3PATH_COMPARISON.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/ANNOTATION_3PATH_COMPARISON.md));
+> former §§6–11 renumbered to §§7–12.
 > **Open before submission:** (1) settle the RU-translation copyright triage that decides
-> what ships as text vs index-only (a [@DO] human gate, §8 / Limitations); (2) mint a
+> what ships as text vs index-only (a [@DO] human gate, §9 / Limitations); (2) mint a
 > Zenodo DOI and complete the data-availability statement; (3) freeze ONE headline
 > number at submission (78,219 spec figure vs 78,139 live re-count, reconciled in §4.2);
-> (4) venue + byline (a human decides).
+> (4) venue + byline (a human decides); (5) the §6.4 human adjudication verdict
+> (51-group review sheet) folded in once voted.
 
 ## Abstract
 
@@ -147,12 +156,12 @@ per-source reading HTML, §1); the source base is **148 works across genres** (V
 epic, Upaniṣads, kāvya, śāstra) rather than the two epics; and the alignment is
 **markup-recovered with explicit monolingual flagging** rather than extracted with
 per-pair heuristics. The 15-dictionary lexical layer (321,672 head entries) additionally
-connects the corpus to the lexicographic strand (A42, §11).
+connects the corpus to the lexicographic strand (A42, §12).
 
 **Data-descriptor norms.** The paper is framed for FAIR-style data-descriptor venues
 (JOHD, the LREC-COLING resource track; Wilkinson et al. 2016): the artefact, its schema,
 its honest edge-case accounting (§4.2's two-number reconciliation, §3.4's monolingual
-inventory), its rights triage (§8), and its reproducibility story (§3.5) are the
+inventory), its rights triage (§9), and its reproducibility story (§3.5) are the
 contribution, and the paper's structure follows that contract.
 
 ## 3. Data and method
@@ -387,7 +396,73 @@ controlled cross-edition register comparison on a fixed source text, and deeper
 measures (calque detection, syntactic archaism) are downstream work, not claims of
 this paper.
 
-## 6. Discussion
+## 6. Sanskrit-side annotation: a three-path comparison
+
+A parallel corpus entering a national-corpus infrastructure (the НКРЯ track,
+[roadmap](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md))
+needs a position on Sanskrit-side linguistic annotation. Rather than assume one,
+we compared three candidate paths head-to-head on the four pilot sources — MBh 3
+and Rāmāyaṇa 1–3, 11,055 verse pairs / 40,269 half-verse lines / 203,623 surface
+tokens: **(A)** the plain IAST/SLP1 surface already carried by the corpus (the
+guaranteed floor), **(B)** a crosswalk onto the Digital Corpus of Sanskrit's
+human-curated lemma + UD morphology (Hellwig; CC BY 4.0, so redistributable
+inside НКРЯ with attribution), and **(C)** fresh automatic tagging with
+vidyut-cheda 0.4. All figures recompute from the committed
+[annotation_3path_metrics.json](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/annotation_3path_metrics.json)
+by [web/corpus_builder/nkrya_annotate.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_annotate.py);
+the full method and per-tier tables are in
+[ANNOTATION_3PATH_COMPARISON.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/ANNOTATION_3PATH_COMPARISON.md).
+
+### 6.1 The crosswalk is text-keyed, and coverage measures editions
+
+Verse loci cannot join the two corpora: our MBh 3 carries critical-edition
+numbering (299 adhyāyas, same as DCS) but our Rāmāyaṇa kāṇḍas are
+vulgate-numbered (77/119/75 sargas vs DCS's critical 76/111/71). The crosswalk
+therefore matches **normalized half-verse text** in three tiers — exact,
+consonant-skeleton (neutralizing sandhi differences: DCS's Rāmāyaṇa
+`text_sandhied` is largely de-sandhied pada text), and bounded fuzzy:
+
+| Source | Half-verses | Matched | **Coverage** |
+|---|--:|--:|--:|
+| MBh 3 (Āraṇyakaparvan) | 21,396 | 21,356 | **99.8%** |
+| Rām 1 (Bālakāṇḍa) | 4,633 | 3,536 | **76.3%** |
+| Rām 2 (Ayodhyākāṇḍa) | 9,093 | 4,936 | **54.3%** |
+| Rām 3 (Araṇyakāṇḍa) | 5,147 | 2,827 | **54.9%** |
+| **Total** | **40,269** | **32,655** | **81.1%** |
+
+The unmatched residue is an **edition measurement, not annotation noise**: of
+801 probed unmatched Ayodhyā lines, 795 are absent from the *entire* DCS
+Rāmāyaṇa — vulgate text the critical edition excised. Matched lines carry
+225,972 DCS tokens with lemma and UD features.
+
+### 6.2 Fresh tagging is not yet competitive on epic verse
+
+vidyut-cheda processed all 40,269 lines locally (zero engine failures) but
+produced 293,775 tokens — **1.44× the surface count** — by shattering long
+compounds and vṛddhi derivatives into short spurious roots
+(*dhārtarāṣṭraiḥ* → five fragments); 5.4% of its tokens carry no lemma.
+
+### 6.3 Agreement between the two annotated paths
+
+On the 6,355 groups fully covered by DCS, per-group lemma-set agreement
+(Jaccard, SLP1-normalized both sides) averages only **0.28–0.35** per source.
+The disagreement decomposes into a lemma-granularity *convention* (vidyut
+lemmatizes derivatives to the dhātu root, *rāmaḥ* → *ram*, where DCS uses the
+nominal stem *rāma* — mitigated but not eliminated by extracting vidyut's
+prātipadika stems) and *real* segmentation divergence (§6.2). A fixed-seed
+stratified sample of 51 groups
+([annotation_adjudication_sample.json](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/annotation_adjudication_sample.json))
+is under human adjudication to apportion blame between the two causes.
+
+### 6.4 The resulting annotation policy
+
+**A always; B as the lemma/morph layer wherever a verse crosswalks to DCS, with
+per-text coverage declared (partial by construction outside MBh); C not shipped
+at current quality.** This mirrors the corpus's general stance (§3.2): consume
+existing human-curated ground truth where it exists; never replace it with a
+model's estimate of it.
+
+## 7. Discussion
 
 The corpus's value is twofold. As an **artefact**, it is, to our knowledge, the largest
 uniform Sanskrit–Russian parallel resource, with ~78k verse pairs spanning the Vedic to
@@ -400,7 +475,7 @@ honest about what it is — clean where the source is clean, explicitly monoling
 it is not — which is exactly what a downstream consumer (retrieval, bilingual
 lexicon induction, diachronic translation study) needs.
 
-## 7. Limitations
+## 8. Limitations
 
 - **The "1:1" headline depends on the measurement snapshot** (78,219 spec figure vs.
   78,139 live re-count); §4.2 reconciles the ~80-pair gap, but a single frozen number
@@ -410,7 +485,7 @@ lexicon induction, diachronic translation study) needs.
   they are valuable Russian witnesses but contribute no Sanskrit pair.
 - **Provenance and rights are heterogeneous.** The Russian translations span 1788 to
   living authors; **redistribution of the Russian text is gated per translator**
-  (copyright triage — a human gate, §8). The corpus can ship indices, passage IDs, and
+  (copyright triage — a human gate, §9). The corpus can ship indices, passage IDs, and
   the Sanskrit freely while withholding in-copyright Russian text until cleared.
 - **Dates are crosswalked, not re-derived** (VisualDCS), with `manual` flags on
   author-datable medieval works; the crosswalk inherits DCS's own dating uncertainty.
@@ -422,7 +497,7 @@ lexicon induction, diachronic translation study) needs.
 - **`structure`-class reclassification.** The heuristic census and the final
   classification differ (§3.1); the final converter classification governs.
 
-## 8. Human gates (copyright triage and DOI)
+## 9. Human gates (copyright triage and DOI)
 
 Two decisions sit outside the data work:
 
@@ -435,7 +510,7 @@ Two decisions sit outside the data work:
 2. **Mint a Zenodo DOI [@DO]** for the citable release once (1) is settled, and complete
    the data-availability statement accordingly.
 
-## 9. Conclusion
+## 10. Conclusion
 
 Samudra Manthanam is a 148-source, 574,939-segment Sanskrit–Russian corpus whose
 ~78,219 clean verse pairs were recovered by **markup-faithful extraction rather than
@@ -463,7 +538,7 @@ the alignment model and gold/CI gates are in
 [`docs/TAG_CENSUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md); the date crosswalk is
 [`web/corpus_builder/chronology/texts_chronology.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/texts_chronology.json).
 *(TODO before submission: a Zenodo DOI; a one-line license/redistribution statement per
-the §8 copyright triage; confirmation of which sources ship as full text vs. index-only.)*
+the §9 copyright triage; confirmation of which sources ship as full text vs. index-only.)*
 The extraction is deterministic and re-runs from the committed HTML sources; it never
 infers a pairing the source did not already encode. Every statistic in this paper is
 recomputed in one pass by
@@ -473,7 +548,7 @@ whose dated output ([`papers/data/A41_corpus_stats.json`](https://github.com/gas
 and figure ([`papers/figures/A41_gita_register.svg`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg))
 are committed beside the manuscript.
 
-## 10. Claim → artifact inventory
+## 11. Claim → artifact inventory
 
 Every headline claim, its figure, and the committed artifact it recomputes from (per
 the `/paper-scaffold` discipline — a claim without a committed artifact is a gap,
@@ -490,8 +565,9 @@ flagged as such):
 | 7 | Chronology crosswalk | 86 `parallel-ru` texts: `dcs-exact` 20 / `dcs-bucket` 27 / `manual` 11 / `n/a` 28 (cross-corpus `dcs-exact` = 92, of which 72 are `wisdomlib-en`) | [texts_chronology.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/texts_chronology.json) | ✅ committed |
 | 8 | Gītā demonstration | 11 RU translation sources + 3 commentaries on shared `{chapter}.{verse}` keys; per-edition table + TTR/Guiraud R/loan-retention metrics (§5.1–5.2, Figure 1) | [A41_gita_editions.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_gita_editions.tsv) + [A41_gita_register.svg](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg), computed by [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) from per-source `meta.json` + JSONL | ✅ committed (11-07-2026) |
 | 9 | Lexical layer | 321,672 head entries; Kochergina 29,180, Kossovich 13,488 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) per-source counts | ✅ committed |
+| 10 | Annotation comparison (§6) | DCS crosswalk coverage 81.1% overall (MBh 3 99.8%, Rām 1–3 54–76%); vidyut 1.44× over-segmentation; B↔C Jaccard 0.28–0.35 on 6,355 fully-covered groups | [annotation_3path_metrics.json](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/annotation_3path_metrics.json) + [ANNOTATION_3PATH_COMPARISON.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/ANNOTATION_3PATH_COMPARISON.md), computed by [nkrya_annotate.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_annotate.py) | ✅ committed (12-07-2026); ⬜ 51-group human adjudication verdict pending |
 
-## 11. Scope versus companion papers (anti-salami)
+## 12. Scope versus companion papers (anti-salami)
 
 - **A42 (the 1.09M-pair word-aligned Sa→Ru lexicon)** owns the *word-level* alignment
   story — an LLM-induced lexicon built in a different pipeline
@@ -506,6 +582,10 @@ flagged as such):
   DCS period dates (§3.6) and never re-derives them.
 - **A40 (the CDSL headword census)** owns the dictionary-inventory growth story; no
   overlap beyond both being resource papers.
+- **The §6 annotation comparison is deliberately a *section*, not a companion paper**
+  (roadmap ruling 8, 11-07-2026): it exists to justify the corpus's annotation policy,
+  not to benchmark Sanskrit taggers; a tagger-benchmark paper would need gold
+  annotation, multiple systems, and tuning — none of which A41 claims.
 - A41 leads with exactly two things nothing else owns: the **markup-aligned Sa–Ru
   parallel corpus** and the **extraction-not-inference method case**.
 
