@@ -36,6 +36,7 @@ IAST equivalent inside MIXED tokens of each 'sa' record only.
 Exit status: 0 if no homoglyph remains in 'sa' segments after the run,
 1 if homoglyphs remain (report mode) or --fix left unmapped homoglyphs.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -153,7 +154,7 @@ def scan_value(val, field, homoglyphs, russian_runs):
                         "char_index": idx,
                         "byte_offset": len(val[:idx].encode("utf-8")),
                         "mapped": HOMOGLYPHS.get(ch),
-                        "context": val[max(0, idx - 20): idx + 21],
+                        "context": val[max(0, idx - 20) : idx + 21],
                     }
                 )
         else:
@@ -214,8 +215,8 @@ def process_file(path, fix):
     with open(path, encoding="utf-8") as f:
         lines = f.readlines()
 
-    file_offenders = []   # (lineno, rec, homoglyph_offenders)
-    russian_lines = 0     # count of 'sa' records carrying a legit Russian run
+    file_offenders = []  # (lineno, rec, homoglyph_offenders)
+    russian_lines = 0  # count of 'sa' records carrying a legit Russian run
     fixed_records = 0
     total_changed = 0
     all_unmapped = []
@@ -253,12 +254,16 @@ def process_file(path, fix):
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     ap.add_argument("paths", nargs="*", help="JSONL files (default: all jsonl/*.jsonl)")
     ap.add_argument("--fix", action="store_true", help="rewrite homoglyphs in place")
-    ap.add_argument("--show-russian", action="store_true",
-                    help="also report the count of legit Russian runs left untouched")
+    ap.add_argument(
+        "--show-russian",
+        action="store_true",
+        help="also report the count of legit Russian runs left untouched",
+    )
     args = ap.parse_args()
 
     if args.paths:
@@ -274,8 +279,9 @@ def main():
     grand_unmapped = []
 
     for path in paths:
-        offenders, russian_lines, fixed_records, changed, unmapped = \
-            process_file(path, args.fix)
+        offenders, russian_lines, fixed_records, changed, unmapped = process_file(
+            path, args.fix
+        )
         grand_russian += russian_lines
         if not offenders:
             continue
@@ -285,32 +291,44 @@ def main():
         grand_chars += n_chars
         grand_fixed += changed
         grand_unmapped.extend(unmapped)
-        print(f"\n=== {rel} — {len(offenders)} verse(s), {n_chars} homoglyph char(s) ===")
+        print(
+            f"\n=== {rel} — {len(offenders)} verse(s), {n_chars} homoglyph char(s) ==="
+        )
         for lineno, rec, offs in offenders:
             print(f"  line {lineno}  id={rec.get('id')}  passage={rec.get('passage')}")
             for o in offs:
                 m = o["mapped"] or "??? (UNMAPPED — needs human)"
-                print(f"      {o['field']:6s} {o['cp']} '{o['char']}' -> {m}  "
-                      f"byte={o['byte_offset']} idx={o['char_index']}  "
-                      f"…{o['context']}…")
+                print(
+                    f"      {o['field']:6s} {o['cp']} '{o['char']}' -> {m}  "
+                    f"byte={o['byte_offset']} idx={o['char_index']}  "
+                    f"…{o['context']}…"
+                )
 
     print("\n" + "=" * 60)
     if args.show_russian or grand_russian:
-        print(f"INFO: {grand_russian} 'sa' record(s) carry a legitimate Russian "
-              f"run (pure-Cyrillic token) — left untouched by design.")
+        print(
+            f"INFO: {grand_russian} 'sa' record(s) carry a legitimate Russian "
+            f"run (pure-Cyrillic token) — left untouched by design."
+        )
     if args.fix:
-        print(f"FIX: {grand_fixed} homoglyph char(s) replaced across "
-              f"{grand_verses} verse(s).")
+        print(
+            f"FIX: {grand_fixed} homoglyph char(s) replaced across "
+            f"{grand_verses} verse(s)."
+        )
         if grand_unmapped:
-            print(f"WARNING: {len(grand_unmapped)} UNMAPPED homoglyph(s) in mixed "
-                  f"tokens left in place:")
+            print(
+                f"WARNING: {len(grand_unmapped)} UNMAPPED homoglyph(s) in mixed "
+                f"tokens left in place:"
+            )
             for lineno, rid, field, ch, cp in grand_unmapped:
                 print(f"    line {lineno} id={rid} {field} {cp} '{ch}'")
             return 1
         return 0
     else:
-        print(f"SCAN: {grand_verses} homoglyph 'sa' verse(s), "
-              f"{grand_chars} homoglyph char(s) total.")
+        print(
+            f"SCAN: {grand_verses} homoglyph 'sa' verse(s), "
+            f"{grand_chars} homoglyph char(s) total."
+        )
         return 1 if grand_verses else 0
 
 
