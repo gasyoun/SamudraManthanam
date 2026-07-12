@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-07-12
+
 ### Fixed
 - **Cyrillic homoglyph contamination in Sanskrit-IAST (`sa`) segments** — 7 verses
   across 4 corpus files carried a Cyrillic letter mis-encoded where a Latin IAST
