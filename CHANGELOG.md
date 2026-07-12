@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Cyrillic homoglyph contamination in Sanskrit-IAST (`sa`) segments** — 7 verses
+  across 4 corpus files carried a Cyrillic letter mis-encoded where a Latin IAST
+  letter belongs (`с` U+0441 → `c`, `а` U+0430 → `a`): Sundarakāṇḍa 1.35 / 22.25 /
+  31.4 / 37.12 and yoga-sūtra 4.8 (Vyāsa, Sharma, Zagumennov editions), in the
+  `text` / `html` / `slp1` fields. Surfaced by the CommentaryStrategies
+  helayo-alignment apparatus run (those verses were quarantined out of
+  `apparatus_sundara_variants.json`). Fixed in place; re-scan confirms zero remain
+  ([#45](https://github.com/gasyoun/SamudraManthanam/issues/45)).
+
+### Added
+- **`web/corpus_builder/scan_cyrillic_homoglyphs.py`** — stdlib-only corpus-integrity
+  scanner/fixer for Cyrillic homoglyphs inside `sa` segments. Token-aware: only a
+  Cyrillic letter inside a mixed Latin+Cyrillic letter-run (the homoglyph signature)
+  is substituted; pure-Cyrillic runs — legitimate Russian editorial notes such as
+  `{Проверить!}` or `[на GRETIL не шлока]`, 2802 of them corpus-wide — are left
+  verbatim. `--fix` rewrites in place; report mode is read-only.
+
 ## [0.3.0] - 2026-07-12
 
 ### Added
