@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-07-13
+
 ### Added
 - **НКРЯ Wave 4: full-corpus export freeze (H821).** `nkrya_export.py` gains an
   `--all-ru` mode that exports **every seg=ru source** (131, via `discover_ru_sources()`)
