@@ -370,13 +370,23 @@ def main(argv=None):
     g.add_argument('--source', help='one pilot slug')
     g.add_argument('--all-pilot', action='store_true',
                    help='export all %d pilot sources' % len(PILOT_SOURCES))
+    g.add_argument('--all-ru', action='store_true',
+                   help='export EVERY seg=ru source (discover_ru_sources; ~131) — Wave 4 full-corpus freeze (H821)')
     ap.add_argument('--out', required=True, help='output directory')
     ap.add_argument('--with-sanskritisms', action='store_true',
                      help='also write <slug>.sanskritisms_index.json (H760 Wave 3)')
     ap.add_argument('--quiet', action='store_true')
     a = ap.parse_args(argv)
 
-    slugs = PILOT_SOURCES if a.all_pilot else [a.source]
+    if a.all_ru:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from sanskritisms.extract import discover_ru_sources
+        slugs = discover_ru_sources()
+    elif a.all_pilot:
+        slugs = PILOT_SOURCES
+    else:
+        slugs = [a.source]
     sanskritisms_ctx = None
     if a.with_sanskritisms:
         if HERE not in sys.path:

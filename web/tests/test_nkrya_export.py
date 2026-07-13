@@ -175,6 +175,22 @@ def test_fixture_deterministic(fixture_jsonl, tmp_path):
         assert not (tmp_path / "a" / "w" / name).read_bytes().startswith(b"\xef\xbb\xbf")
 
 
+def test_sanskritisms_canonical_order_independent():
+    """H821 Wave-4 determinism gate: the singular/plural canonical merge must
+    NOT depend on input lemma order (upstream candidate sets iterate in hash
+    order, which flipped the sanskritisms index lemma/display across runs).
+    Data-free unit test of the fix in sanskritisms/disambiguate.py."""
+    import random
+    from sanskritisms.disambiguate import merge_plural_singular_duplicates
+    lemmas = ["апсара", "апсары", "васу", "рудра", "рудры", "марут", "маруты", "дэва"]
+    ref = merge_plural_singular_duplicates(lemmas)
+    for _ in range(8):
+        shuffled = lemmas[:]
+        random.shuffle(shuffled)
+        assert merge_plural_singular_duplicates(shuffled) == ref, \
+            "canonical merge is order-dependent — sanskritisms index would be non-deterministic"
+
+
 # --------------------------------------------------------------------------- #
 # corpus gates: the real four pilots                                          #
 # --------------------------------------------------------------------------- #

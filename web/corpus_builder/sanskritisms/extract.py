@@ -160,7 +160,7 @@ def extract_source(jsonl_path, ctx=None, diplom_dir=None):
 
             narrowed = narrow_candidates(lower, candidates)
             ambiguous = len(narrowed) > 1
-            for lemma in narrowed:
+            for lemma in sorted(narrowed):   # deterministic lexicon order (H821 determinism gate)
                 entry = lexicon.setdefault(lemma, _new_entry())
                 entry['count'] += 1
                 entry['forms'].add(lower)
