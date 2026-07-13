@@ -104,8 +104,11 @@ def merge_plural_singular_duplicates(lemmas):
         if len(group) == 1:
             canonical[group[0]] = group[0]
             continue
-        plural_forms = [l for l in group if _is_plural_lemma(l)]
-        winner = plural_forms[0] if plural_forms else group[0]
+        # sorted() so the canonical winner is deterministic regardless of the
+        # input lemma order (upstream candidate sets iterate in hash order) —
+        # H821 Wave-4 export determinism gate.
+        plural_forms = sorted(l for l in group if _is_plural_lemma(l))
+        winner = plural_forms[0] if plural_forms else sorted(group)[0]
         for lemma in group:
             canonical[lemma] = winner
     return canonical

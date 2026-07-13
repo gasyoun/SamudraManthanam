@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **НКРЯ Wave 4: full-corpus export freeze (H821).** `nkrya_export.py` gains an
+  `--all-ru` mode that exports **every seg=ru source** (131, via `discover_ru_sources()`)
+  with `--with-sanskritisms`, not just the 4-source pilot: **95,260 pairs across 131 sources**.
+  Two committed sidecars — `nkrya-parallel/export/RIGHTS_TABLE.md` (per-source rights; 4 of 131
+  documented from the H231 pilot meta, 127 flagged `needs_review` with no sidecar yet — a noted
+  metadata-population follow-up) and `FULL_CORPUS_VALIDATION.md` (per-source classify() stats).
+  The bulk per-source export bundle stays gitignored and ships as a **release artifact**.
+### Fixed
+- **Sanskritisms index was non-deterministic** — the singular/plural canonical merge
+  (`sanskritisms/disambiguate.py`) and the candidate-set iteration (`extract.py`) depended on
+  hash order, flipping the index `lemma`/`display` across runs. Now sorted → byte-identical
+  output even across `PYTHONHASHSEED`, guarded by a new order-independence unit test. This was
+  the blocker on Wave 4's determinism gate.
+
 ## [0.3.1] - 2026-07-12
 
 ### Fixed
