@@ -29,7 +29,7 @@ jobs:
         with: { node-version: '20' }
       - run: npm ci
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with: { path: nkrya-parallel/build }
   deploy:
     needs: build
