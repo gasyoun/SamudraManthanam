@@ -1,0 +1,1304 @@
+[
+ {
+  "ru_idx": 1,
+  "taranga": 0,
+  "sloka_start": 1,
+  "sloka_end": 1,
+  "confidence": 0.98
+ },
+ {
+  "ru_idx": 2,
+  "taranga": 1,
+  "sloka_start": 1,
+  "sloka_end": 1,
+  "confidence": 0.95
+ },
+ {
+  "ru_idx": 3,
+  "taranga": 1,
+  "sloka_start": 2,
+  "sloka_end": 2,
+  "confidence": 0.95
+ },
+ {
+  "ru_idx": 4,
+  "taranga": 1,
+  "sloka_start": 3,
+  "sloka_end": 8,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 5,
+  "taranga": 1,
+  "sloka_start": 9,
+  "sloka_end": 16,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 6,
+  "taranga": 1,
+  "sloka_start": 17,
+  "sloka_end": 19,
+  "confidence": 0.95
+ },
+ {
+  "ru_idx": 7,
+  "taranga": 1,
+  "sloka_start": 20,
+  "sloka_end": 23,
+  "confidence": 0.95
+ },
+ {
+  "ru_idx": 8,
+  "taranga": 1,
+  "sloka_start": 24,
+  "sloka_end": 28,
+  "confidence": 0.93
+ },
+ {
+  "ru_idx": 9,
+  "taranga": 1,
+  "sloka_start": 29,
+  "sloka_end": 35,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 10,
+  "taranga": 1,
+  "sloka_start": 36,
+  "sloka_end": 41,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 11,
+  "taranga": 1,
+  "sloka_start": 42,
+  "sloka_end": 52,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 12,
+  "taranga": 1,
+  "sloka_start": 53,
+  "sloka_end": 57,
+  "confidence": 0.93
+ },
+ {
+  "ru_idx": 13,
+  "taranga": 1,
+  "sloka_start": 58,
+  "sloka_end": 63,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 14,
+  "taranga": 1,
+  "sloka_start": 64,
+  "sloka_end": 68,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 15,
+  "taranga": 1,
+  "sloka_start": 69,
+  "sloka_end": 71,
+  "confidence": 0.95
+ },
+ {
+  "ru_idx": 16,
+  "taranga": 1,
+  "sloka_start": 72,
+  "sloka_end": 76,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 17,
+  "taranga": 1,
+  "sloka_start": 77,
+  "sloka_end": 81,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 18,
+  "taranga": 1,
+  "sloka_start": 82,
+  "sloka_end": 82,
+  "confidence": 0.95
+ },
+ {
+  "ru_idx": 19,
+  "taranga": 1,
+  "sloka_start": 83,
+  "sloka_end": 85,
+  "confidence": 0.93
+ },
+ {
+  "ru_idx": 20,
+  "taranga": 1,
+  "sloka_start": 86,
+  "sloka_end": 90,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 21,
+  "taranga": 1,
+  "sloka_start": 91,
+  "sloka_end": 96,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 22,
+  "taranga": 1,
+  "sloka_start": 97,
+  "sloka_end": 102,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 23,
+  "taranga": 1,
+  "sloka_start": 103,
+  "sloka_end": 107,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 24,
+  "taranga": 1,
+  "sloka_start": 108,
+  "sloka_end": 109,
+  "confidence": 0.93
+ },
+ {
+  "ru_idx": 25,
+  "taranga": 1,
+  "sloka_start": 110,
+  "sloka_end": 117,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 26,
+  "taranga": 1,
+  "sloka_start": 118,
+  "sloka_end": 125,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 27,
+  "taranga": 1,
+  "sloka_start": 126,
+  "sloka_end": 127,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 28,
+  "taranga": 1,
+  "sloka_start": 128,
+  "sloka_end": 134,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 29,
+  "taranga": 1,
+  "sloka_start": 135,
+  "sloka_end": 139,
+  "confidence": 0.93
+ },
+ {
+  "ru_idx": 30,
+  "taranga": 1,
+  "sloka_start": 140,
+  "sloka_end": 144,
+  "confidence": 0.93
+ },
+ {
+  "ru_idx": 31,
+  "taranga": 2,
+  "sloka_start": 1,
+  "sloka_end": 2,
+  "confidence": 0.8
+ },
+ {
+  "ru_idx": 32,
+  "taranga": 2,
+  "sloka_start": 3,
+  "sloka_end": 10,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 33,
+  "taranga": 2,
+  "sloka_start": 11,
+  "sloka_end": 13,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 34,
+  "taranga": 2,
+  "sloka_start": 14,
+  "sloka_end": 16,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 35,
+  "taranga": 2,
+  "sloka_start": 17,
+  "sloka_end": 17,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 36,
+  "taranga": 2,
+  "sloka_start": 18,
+  "sloka_end": 22,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 37,
+  "taranga": 2,
+  "sloka_start": 23,
+  "sloka_end": 28,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 38,
+  "taranga": 2,
+  "sloka_start": 29,
+  "sloka_end": 35,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 39,
+  "taranga": 2,
+  "sloka_start": 36,
+  "sloka_end": 43,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 40,
+  "taranga": 2,
+  "sloka_start": 44,
+  "sloka_end": 46,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 41,
+  "taranga": 2,
+  "sloka_start": 47,
+  "sloka_end": 55,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 42,
+  "taranga": 2,
+  "sloka_start": 56,
+  "sloka_end": 59,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 43,
+  "taranga": 2,
+  "sloka_start": 60,
+  "sloka_end": 68,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 44,
+  "taranga": 2,
+  "sloka_start": 69,
+  "sloka_end": 73,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 45,
+  "taranga": 2,
+  "sloka_start": 74,
+  "sloka_end": 79,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 46,
+  "taranga": 2,
+  "sloka_start": 80,
+  "sloka_end": 97,
+  "confidence": 0.82
+ },
+ {
+  "ru_idx": 47,
+  "taranga": 2,
+  "sloka_start": 98,
+  "sloka_end": 100,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 48,
+  "taranga": 2,
+  "sloka_start": 101,
+  "sloka_end": 106,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 49,
+  "taranga": 2,
+  "sloka_start": 107,
+  "sloka_end": 112,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 50,
+  "taranga": 2,
+  "sloka_start": 113,
+  "sloka_end": 116,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 51,
+  "taranga": 2,
+  "sloka_start": 117,
+  "sloka_end": 121,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 52,
+  "taranga": 2,
+  "sloka_start": 122,
+  "sloka_end": 128,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 53,
+  "taranga": 2,
+  "sloka_start": 129,
+  "sloka_end": 132,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 54,
+  "taranga": 2,
+  "sloka_start": 133,
+  "sloka_end": 135,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 55,
+  "taranga": 2,
+  "sloka_start": 136,
+  "sloka_end": 139,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 56,
+  "taranga": 2,
+  "sloka_start": 140,
+  "sloka_end": 144,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 57,
+  "taranga": 2,
+  "sloka_start": 145,
+  "sloka_end": 147,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 58,
+  "taranga": 2,
+  "sloka_start": 148,
+  "sloka_end": 154,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 59,
+  "taranga": 2,
+  "sloka_start": 155,
+  "sloka_end": 156,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 60,
+  "taranga": 3,
+  "sloka_start": 1,
+  "sloka_end": 4,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 61,
+  "taranga": 3,
+  "sloka_start": 5,
+  "sloka_end": 8,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 62,
+  "taranga": 3,
+  "sloka_start": 9,
+  "sloka_end": 14,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 63,
+  "taranga": 3,
+  "sloka_start": 15,
+  "sloka_end": 17,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 64,
+  "taranga": 3,
+  "sloka_start": 18,
+  "sloka_end": 30,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 65,
+  "taranga": 3,
+  "sloka_start": 31,
+  "sloka_end": 37,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 66,
+  "taranga": 3,
+  "sloka_start": 38,
+  "sloka_end": 40,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 67,
+  "taranga": 3,
+  "sloka_start": 41,
+  "sloka_end": 47,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 68,
+  "taranga": 3,
+  "sloka_start": 48,
+  "sloka_end": 51,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 69,
+  "taranga": 3,
+  "sloka_start": 52,
+  "sloka_end": 57,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 70,
+  "taranga": 3,
+  "sloka_start": 58,
+  "sloka_end": 63,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 71,
+  "taranga": 3,
+  "sloka_start": 64,
+  "sloka_end": 65,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 72,
+  "taranga": 3,
+  "sloka_start": 66,
+  "sloka_end": 78,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 73,
+  "taranga": 3,
+  "sloka_start": 79,
+  "sloka_end": 84,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 74,
+  "taranga": 3,
+  "sloka_start": 85,
+  "sloka_end": 95,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 75,
+  "taranga": 4,
+  "sloka_start": 1,
+  "sloka_end": 5,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 76,
+  "taranga": 4,
+  "sloka_start": 6,
+  "sloka_end": 12,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 77,
+  "taranga": 4,
+  "sloka_start": 13,
+  "sloka_end": 23,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 78,
+  "taranga": 4,
+  "sloka_start": 24,
+  "sloka_end": 29,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 79,
+  "taranga": 4,
+  "sloka_start": 30,
+  "sloka_end": 35,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 80,
+  "taranga": 4,
+  "sloka_start": 36,
+  "sloka_end": 38,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 81,
+  "taranga": 4,
+  "sloka_start": 39,
+  "sloka_end": 42,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 82,
+  "taranga": 4,
+  "sloka_start": 43,
+  "sloka_end": 48,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 83,
+  "taranga": 4,
+  "sloka_start": 49,
+  "sloka_end": 55,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 84,
+  "taranga": 4,
+  "sloka_start": 56,
+  "sloka_end": 56,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 85,
+  "taranga": 4,
+  "sloka_start": 57,
+  "sloka_end": 58,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 86,
+  "taranga": 4,
+  "sloka_start": 59,
+  "sloka_end": 68,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 87,
+  "taranga": 4,
+  "sloka_start": 69,
+  "sloka_end": 72,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 88,
+  "taranga": 4,
+  "sloka_start": 73,
+  "sloka_end": 77,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 89,
+  "taranga": 4,
+  "sloka_start": 78,
+  "sloka_end": 78,
+  "confidence": 0.8
+ },
+ {
+  "ru_idx": 90,
+  "taranga": 4,
+  "sloka_start": 79,
+  "sloka_end": 83,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 91,
+  "taranga": 4,
+  "sloka_start": 84,
+  "sloka_end": 90,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 92,
+  "taranga": 4,
+  "sloka_start": 91,
+  "sloka_end": 98,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 93,
+  "taranga": 4,
+  "sloka_start": 99,
+  "sloka_end": 103,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 94,
+  "taranga": 4,
+  "sloka_start": 104,
+  "sloka_end": 109,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 95,
+  "taranga": 4,
+  "sloka_start": 110,
+  "sloka_end": 119,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 96,
+  "taranga": 4,
+  "sloka_start": 120,
+  "sloka_end": 124,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 97,
+  "taranga": 4,
+  "sloka_start": 125,
+  "sloka_end": 129,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 98,
+  "taranga": 4,
+  "sloka_start": 130,
+  "sloka_end": 133,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 99,
+  "taranga": 4,
+  "sloka_start": 134,
+  "sloka_end": 143,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 100,
+  "taranga": 4,
+  "sloka_start": 144,
+  "sloka_end": 144,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 101,
+  "taranga": 4,
+  "sloka_start": 145,
+  "sloka_end": 151,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 102,
+  "taranga": 4,
+  "sloka_start": 152,
+  "sloka_end": 156,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 103,
+  "taranga": 4,
+  "sloka_start": 157,
+  "sloka_end": 157,
+  "confidence": 0.75
+ },
+ {
+  "ru_idx": 104,
+  "taranga": 4,
+  "sloka_start": 158,
+  "sloka_end": 159,
+  "confidence": 0.75
+ },
+ {
+  "ru_idx": 105,
+  "taranga": 4,
+  "sloka_start": 160,
+  "sloka_end": 169,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 106,
+  "taranga": 4,
+  "sloka_start": 170,
+  "sloka_end": 174,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 107,
+  "taranga": 4,
+  "sloka_start": 175,
+  "sloka_end": 182,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 108,
+  "taranga": 5,
+  "sloka_start": 1,
+  "sloka_end": 7,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 109,
+  "taranga": 5,
+  "sloka_start": 8,
+  "sloka_end": 16,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 110,
+  "taranga": 5,
+  "sloka_start": 17,
+  "sloka_end": 19,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 111,
+  "taranga": 5,
+  "sloka_start": 20,
+  "sloka_end": 26,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 112,
+  "taranga": 5,
+  "sloka_start": 27,
+  "sloka_end": 35,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 113,
+  "taranga": 5,
+  "sloka_start": 36,
+  "sloka_end": 41,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 114,
+  "taranga": 5,
+  "sloka_start": 42,
+  "sloka_end": 48,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 115,
+  "taranga": 5,
+  "sloka_start": 49,
+  "sloka_end": 54,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 116,
+  "taranga": 5,
+  "sloka_start": 55,
+  "sloka_end": 59,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 117,
+  "taranga": 5,
+  "sloka_start": 60,
+  "sloka_end": 65,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 118,
+  "taranga": 5,
+  "sloka_start": 66,
+  "sloka_end": 70,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 119,
+  "taranga": 5,
+  "sloka_start": 71,
+  "sloka_end": 74,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 120,
+  "taranga": 5,
+  "sloka_start": 75,
+  "sloka_end": 79,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 121,
+  "taranga": 5,
+  "sloka_start": 80,
+  "sloka_end": 84,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 122,
+  "taranga": 5,
+  "sloka_start": 85,
+  "sloka_end": 90,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 123,
+  "taranga": 5,
+  "sloka_start": 91,
+  "sloka_end": 97,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 124,
+  "taranga": 5,
+  "sloka_start": 98,
+  "sloka_end": 101,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 125,
+  "taranga": 5,
+  "sloka_start": 102,
+  "sloka_end": 107,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 126,
+  "taranga": 5,
+  "sloka_start": 108,
+  "sloka_end": 109,
+  "confidence": 0.92
+ },
+ {
+  "ru_idx": 127,
+  "taranga": 5,
+  "sloka_start": 110,
+  "sloka_end": 112,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 128,
+  "taranga": 5,
+  "sloka_start": 113,
+  "sloka_end": 118,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 129,
+  "taranga": 5,
+  "sloka_start": 119,
+  "sloka_end": 129,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 130,
+  "taranga": 5,
+  "sloka_start": 130,
+  "sloka_end": 133,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 131,
+  "taranga": 5,
+  "sloka_start": 134,
+  "sloka_end": 139,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 132,
+  "taranga": 5,
+  "sloka_start": 140,
+  "sloka_end": 144,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 133,
+  "taranga": 5,
+  "sloka_start": 145,
+  "sloka_end": 149,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 134,
+  "taranga": 5,
+  "sloka_start": 150,
+  "sloka_end": 154,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 135,
+  "taranga": 5,
+  "sloka_start": 155,
+  "sloka_end": 159,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 136,
+  "taranga": 5,
+  "sloka_start": 160,
+  "sloka_end": 167,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 137,
+  "taranga": 5,
+  "sloka_start": 168,
+  "sloka_end": 172,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 138,
+  "taranga": 5,
+  "sloka_start": 173,
+  "sloka_end": 177,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 139,
+  "taranga": 5,
+  "sloka_start": 178,
+  "sloka_end": 184,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 140,
+  "taranga": 5,
+  "sloka_start": 185,
+  "sloka_end": 197,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 141,
+  "taranga": 6,
+  "sloka_start": 1,
+  "sloka_end": 6,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 142,
+  "taranga": 6,
+  "sloka_start": 7,
+  "sloka_end": 11,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 143,
+  "taranga": 6,
+  "sloka_start": 12,
+  "sloka_end": 14,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 144,
+  "taranga": 6,
+  "sloka_start": 15,
+  "sloka_end": 21,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 145,
+  "taranga": 6,
+  "sloka_start": 22,
+  "sloka_end": 27,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 146,
+  "taranga": 6,
+  "sloka_start": 28,
+  "sloka_end": 32,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 147,
+  "taranga": 6,
+  "sloka_start": 33,
+  "sloka_end": 46,
+  "confidence": 0.82
+ },
+ {
+  "ru_idx": 148,
+  "taranga": 6,
+  "sloka_start": 47,
+  "sloka_end": 50,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 149,
+  "taranga": 6,
+  "sloka_start": 51,
+  "sloka_end": 57,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 150,
+  "taranga": 6,
+  "sloka_start": 58,
+  "sloka_end": 60,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 151,
+  "taranga": 6,
+  "sloka_start": 61,
+  "sloka_end": 68,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 152,
+  "taranga": 6,
+  "sloka_start": 69,
+  "sloka_end": 70,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 153,
+  "taranga": 6,
+  "sloka_start": 71,
+  "sloka_end": 75,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 154,
+  "taranga": 6,
+  "sloka_start": 76,
+  "sloka_end": 81,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 155,
+  "taranga": 6,
+  "sloka_start": 82,
+  "sloka_end": 86,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 156,
+  "taranga": 6,
+  "sloka_start": 87,
+  "sloka_end": 97,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 157,
+  "taranga": 6,
+  "sloka_start": 98,
+  "sloka_end": 101,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 158,
+  "taranga": 6,
+  "sloka_start": 102,
+  "sloka_end": 108,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 159,
+  "taranga": 6,
+  "sloka_start": 109,
+  "sloka_end": 115,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 160,
+  "taranga": 6,
+  "sloka_start": 116,
+  "sloka_end": 121,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 161,
+  "taranga": 6,
+  "sloka_start": 122,
+  "sloka_end": 134,
+  "confidence": 0.82
+ },
+ {
+  "ru_idx": 162,
+  "taranga": 6,
+  "sloka_start": 135,
+  "sloka_end": 138,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 163,
+  "taranga": 6,
+  "sloka_start": 139,
+  "sloka_end": 142,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 164,
+  "taranga": 6,
+  "sloka_start": 143,
+  "sloka_end": 150,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 165,
+  "taranga": 6,
+  "sloka_start": 151,
+  "sloka_end": 151,
+  "confidence": 0.85
+ },
+ {
+  "ru_idx": 166,
+  "taranga": 6,
+  "sloka_start": 152,
+  "sloka_end": 154,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 167,
+  "taranga": 6,
+  "sloka_start": 155,
+  "sloka_end": 156,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 168,
+  "taranga": 6,
+  "sloka_start": 157,
+  "sloka_end": 160,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 169,
+  "taranga": 6,
+  "sloka_start": 161,
+  "sloka_end": 163,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 170,
+  "taranga": 6,
+  "sloka_start": 164,
+  "sloka_end": 167,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 171,
+  "taranga": 6,
+  "sloka_start": 168,
+  "sloka_end": 170,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 172,
+  "taranga": 6,
+  "sloka_start": 171,
+  "sloka_end": 174,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 173,
+  "taranga": 6,
+  "sloka_start": 175,
+  "sloka_end": 180,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 174,
+  "taranga": 6,
+  "sloka_start": 181,
+  "sloka_end": 185,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 175,
+  "taranga": 6,
+  "sloka_start": 186,
+  "sloka_end": 189,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 176,
+  "taranga": 6,
+  "sloka_start": 190,
+  "sloka_end": 193,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 177,
+  "taranga": 6,
+  "sloka_start": 194,
+  "sloka_end": 195,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 178,
+  "taranga": 6,
+  "sloka_start": 196,
+  "sloka_end": 196,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 179,
+  "taranga": 6,
+  "sloka_start": 197,
+  "sloka_end": 208,
+  "confidence": 0.82
+ },
+ {
+  "ru_idx": 180,
+  "taranga": 6,
+  "sloka_start": 209,
+  "sloka_end": 211,
+  "confidence": 0.9
+ },
+ {
+  "ru_idx": 181,
+  "taranga": 6,
+  "sloka_start": 212,
+  "sloka_end": 212,
+  "confidence": 0.88
+ },
+ {
+  "ru_idx": 182,
+  "taranga": 6,
+  "sloka_start": 213,
+  "sloka_end": 215,
+  "confidence": 0.6
+ },
+ {
+  "ru_idx": 183,
+  "taranga": 6,
+  "sloka_start": 216,
+  "sloka_end": 216,
+  "confidence": 0.5
+ },
+ {
+  "ru_idx": 184,
+  "taranga": 6,
+  "sloka_start": 217,
+  "sloka_end": 217,
+  "confidence": 0.5
+ },
+ {
+  "ru_idx": 185,
+  "taranga": 6,
+  "sloka_start": 218,
+  "sloka_end": 218,
+  "confidence": 0.5
+ },
+ {
+  "ru_idx": 186,
+  "taranga": 6,
+  "sloka_start": 219,
+  "sloka_end": 219,
+  "confidence": 0.55
+ }
+]

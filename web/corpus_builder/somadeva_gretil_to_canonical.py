@@ -25,7 +25,9 @@ sys.stdout.reconfigure(encoding="utf-8")
 from indic_transliteration import sanscript
 from indic_transliteration.sanscript import transliterate
 
-SOKSS = re.compile(r"//\s*sokss_(\d+),(\d+)\.(\d+)\s*//")
+# The śloka ref may carry a dual annotation before the closing "//", e.g.
+# "// sokss_12,10.1 (vet_3.1) //" for the Vetālapañcaviṃśati tales in book 12.
+SOKSS = re.compile(r"//\s*sokss_(\d+),(\d+)\.(\d+)(?:\s*\([^)]*\))?\s*//")
 RU_BOOK = re.compile(r"^КНИГА\s+", re.IGNORECASE)
 RU_WAVE = re.compile(r"^##\s*(\d+)\.(\d+)\.")  # "## 11.1. ВОЛНА ПЕРВАЯ"
 
@@ -181,10 +183,15 @@ if __name__ == "__main__":
     ap.add_argument("--align", help="alignment mapping JSON → emit canonical JSONL")
     ap.add_argument("--out", help="output JSONL path (with --align)")
     ap.add_argument("--slug", default="kathasaritsagara")
+    ap.add_argument("--ru-book", type=int, default=None,
+                    help="Russian source chapter file, if it differs from --book "
+                         "(the upstream repo swaps the SA/RU files for lambakas "
+                         "14↔15). Passage keys always come from the SA --book.")
     args = ap.parse_args()
     src = Path(args.src)
+    ru_book = args.ru_book if args.ru_book is not None else args.book
     sa_path = src / "chapters_san" / f"kathasaritsagara_san_cleant_chap_{args.book:02d}.txt"
-    ru_path = src / "chapters_rus" / f"kathasaritsagara_rus_cleant_chap_{args.book:02d}.txt"
+    ru_path = src / "chapters_rus" / f"kathasaritsagara_rus_cleant_chap_{ru_book:02d}.txt"
     sa = list(parse_sanskrit(sa_path))
     ru = list(parse_russian(ru_path))
     print(f"book {args.book}: {len(sa)} ślokas, {len(ru)} Russian sentences")
