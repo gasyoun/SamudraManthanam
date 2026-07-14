@@ -1,6 +1,16 @@
 # MANIFEST — local-only files in `diplom-rubanova/`
 
-_Created: 11-07-2026 · Last updated: 11-07-2026_
+_Created: 11-07-2026 · Last updated: 14-07-2026_
+
+> **Upstream source (14-07-2026).** Most of the local-only bulk below is now
+> also published at [**github.com/evgeniarubanova/sanskrit_stemmer**](https://github.com/evgeniarubanova/sanskrit_stemmer)
+> — Rubanova's own ВКР repo (the three notebooks, `384000.txt`, corpus dumps
+> `aranyakaparva_corpus2.txt`/`volume_3.txt`/`Рамаяна_3.txt`, and the DeepPavlov
+> outputs `deeppavlov_mbh_3.txt`/`deeppavlov_ram_3.txt`). Re-fetch with a single
+> `git clone`. **Exception:** `dict.opcorpora.txt` (271 MB) is **not** in the
+> upstream repo — it is third-party [OpenCorpora](http://opencorpora.org/) data,
+> fetched separately. The three notebooks are now tracked here; see
+> [`docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md).
 
 Inventory of every file in this directory that is **untracked and gitignored**
 (kept only on this disk). The curated reusable artifacts — санскритизм

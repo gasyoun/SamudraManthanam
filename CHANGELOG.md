@@ -19,6 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (H905) and SA-morphology (H906) builds. The Sanskrit side used **DCS** as its
   markup source (no home-grown analyzer) — documented as a reproduction target for
   H906, not a port.
+- **Third notebook + upstream source (H904 follow-up).** Took
+  `corpus_marker.ipynb` from Rubanova's upstream repo
+  ([evgeniarubanova/sanskrit_stemmer](https://github.com/evgeniarubanova/sanskrit_stemmer))
+  — the **RU↔SA word aligner** that transliterates IAST→Cyrillic (via
+  `translation.txt`/`correct_trans.txt`) and prefix-matches Russian sanskritisms
+  to their Sanskrit source words over a verse-block-aligned corpus, then
+  colour-highlights both sides. Now tracked as Stage C; the manual's §6 corrected
+  accordingly — the SA side uses **transliteration+alignment, not DCS** (DCS
+  morphology stays an H906 reproduction target). MANIFEST now points at the
+  upstream repo for the bulk data; noted that `dict.opcorpora.txt` is absent even
+  upstream (third-party OpenCorpora).
 
 ## [0.4.0] - 2026-07-13
 
