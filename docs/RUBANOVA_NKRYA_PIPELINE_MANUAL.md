@@ -297,6 +297,7 @@ drops:
 | Declension of Russian rubrics | **pymorphy2** (`decline`) + curated multiword table | reverse index from `decl_rules.txt` only | pymorphy2 rubric declension not reproduced |
 | Sanskritism form generation | backward stemming (six ending rules) | forward generation from `decl_rules.txt` (avoids pymorphy2 mis-tagging) | port's approach is arguably *better*; keep, but verify against original output |
 | Per-token RU morphology (lemma/POS/case/number) | not in the index tools | ✅ **new (H905)** — `ru_morph.py` (pymorphy3), `--ru-morph` sidecar | inline `<w><ana/>` fold deferred to the H906-coordinated scheme |
+| Per-token SA morphology (lemma/upos/case/gender/number) | DCS was the gold source (external) | ✅ **new (H906)** — `dcs_align.py` aligns each verse to DCS gold, `--sa-morph` sidecar (MBh ~99%, Rāma partial) | see [`SA_MORPHOLOGY_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/SA_MORPHOLOGY_H906_REPORT.md); vidyut diff deferred |
 | Residual case disambiguation | **DeepPavlov** UD `case=` (`depppavlov_proc`) | ⚠️ still not ported — pymorphy3 top-parse is context-free | **quality upgrade:** wire DeepPavlov's UD parse for the ~20% residual, validate vs local `deeppavlov_*.txt` gold |
 | Sentence tokenization | nltk punkt | own regex tokenizer | minor; verify parity |
 | Epithet / options / append rubrics | `3_INDEX_options/phrases`, `append if found` | `annotations.py` reproduces | reproduced |

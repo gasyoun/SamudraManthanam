@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **SA-side morphology anchored on DCS gold (H906).** New
+  [`web/corpus_builder/dcs_align.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/dcs_align.py)
+  aligns each `seg=sa` verse to the matching DCS chapter (`passage B.C.V` →
+  `MBh, B, C` / `Rām, <kāṇḍa>, C`; DCS `sent_counter` = verse) and emits the DCS
+  **gold** per-token analysis (lemma · UPOS · case · gender · number) behind
+  `nkrya_export.py --sa-morph` as an additive `<slug>.sa_morph.tsv` (deterministic).
+  Coverage: **MBh ~99%** (most parvas 98–100%; 152k gold tokens on Āraṇyakaparva),
+  Rāmāyaṇa partial (62–80%, verse-map divergence). The Bhagavadgītā gap surfaces
+  as bhishmaparva 47.6% (Gītā absent from DCS, H848). DCS sqlite is local-only
+  (`$DCS_SQLITE`); the layer degrades to empty if absent. +3 tests (12 pass).
+  Report: [`SA_MORPHOLOGY_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/SA_MORPHOLOGY_H906_REPORT.md).
+  The vidyut second-opinion diff is a scoped follow-up (needs the vidyut data download).
+
 ## [0.5.0] - 2026-07-14
 
 ### Added

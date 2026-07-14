@@ -262,6 +262,59 @@ def test_export_ru_morph_sidecar(fixture_jsonl, tmp_path):
 
 
 # --------------------------------------------------------------------------- #
+# H906: DCS-anchored SA morphology                                            #
+# --------------------------------------------------------------------------- #
+def test_dcs_target_mapping():
+    """Data-free: slug+passage → DCS text/chapter/verse-range mapping."""
+    import dcs_align
+    assert dcs_align.dcs_target("03_mahabharata-aranyakaparva", "3.1.1-7") == \
+        ("Mahābhārata", "MBh, 3, 1", 1, 7)
+    assert dcs_align.dcs_target("05_mahabharata-udyogaparva", "5.12.3") == \
+        ("Mahābhārata", "MBh, 5, 12", 3, 3)
+    assert dcs_align.dcs_target("03_ramayana-aranyakanda", "1.1") == \
+        ("Rāmāyaṇa", "Rām, Ār, 1", 1, 1)
+    assert dcs_align.dcs_target("01_atharvaveda", "1.1.1") is None  # not epic-mapped
+
+
+def _dcs_or_skip():
+    import os
+    import dcs_align
+    if not os.path.exists(dcs_align.DCS_SQLITE):
+        pytest.skip("DCS sqlite not present (local-only, see dcs_align.py)")
+    g = dcs_align.DcsGold()
+    if not g.available:
+        pytest.skip("DCS sqlite not available")
+    return g
+
+
+def test_dcs_gold_tokens_and_determinism():
+    g = _dcs_or_skip()
+    toks = g.gold_tokens("03_mahabharata-aranyakaparva", "3.1.1-7")
+    assert toks, "expected DCS gold tokens for a covered MBh verse"
+    jana = next(t for t in toks if t["form"] == "janamejaya")
+    assert jana["lemma"] == "janamejaya" and jana["upos"] == "NOUN" \
+        and jana["case"] == "Nom" and jana["number"] == "Sing"
+    # deterministic
+    import dcs_align
+    g2 = dcs_align.DcsGold()
+    assert g2.gold_tokens("03_mahabharata-aranyakaparva", "3.1.1-7") == toks
+
+
+def test_export_sa_morph_sidecar(fixture_jsonl, tmp_path):
+    _dcs_or_skip()
+    # the hermetic fixture slug "w" is not DCS-mappable → header-only, but the
+    # sidecar must still be well-formed and byte-identical across runs.
+    for d in ("a", "b"):
+        nx.export_source("w", str(tmp_path / d), jsonl_dir=str(fixture_jsonl.parent),
+                         meta_dir=str(tmp_path), write=True, with_sa_morph=True)
+    side = tmp_path / "a" / "w" / "w.sa_morph.tsv"
+    assert side.read_text(encoding="utf-8").splitlines()[0].split("\t") == \
+        ["group_id", "verse", "tok_index", "form", "lemma", "upos", "case",
+         "gender", "number"]
+    assert side.read_bytes() == (tmp_path / "b" / "w" / "w.sa_morph.tsv").read_bytes()
+
+
+# --------------------------------------------------------------------------- #
 # corpus gates: the real four pilots                                          #
 # --------------------------------------------------------------------------- #
 @pytest.mark.corpus
