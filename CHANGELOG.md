@@ -24,6 +24,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   word *кал*) no longer captured as the Sanskritism *кала*; capitalized proper names stay exempt.
   Measured 41→37 lemmas on `01_atharvaveda` (4 false positives removed). +3 regression tests.
   Report: [`web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md).
+### Changed
+- **Somadeva KSS scale-up P0 resolved + made execution-ready (H910).** Confirmed
+  the complete Serebryakov Russian and śloka-keyed Sanskrit (`sokss_L,T.S` refs)
+  for **all 18 books** already exist as `.txt` in the upstream repo (~21 538
+  ślokas; books 11–18 = ~8 730). Books 11–18 need alignment only — no sourcing,
+  no external fetch, no human gate. Rewrote
+  `docs/ROADMAP_SOMADEVA_KSS_ALIGNMENT_SCALEUP_2026_2027.md` execution-ready and
+  added `docs/SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md` (what a proven copyright /
+  redistribution licence unlocks: НКРЯ export, kosha datasets.json, Zenodo DOI,
+  bulk download).
 
 ## [0.4.1] - 2026-07-14
 
