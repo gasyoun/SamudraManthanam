@@ -67,7 +67,12 @@ def main():
         sa = list(parse_sanskrit(sa_path))
         ru = list(parse_russian(ru_path))
         problems = validate_mapping(sa, mapping)
-        out_path = outdir / f"kathasaritsagara-{book:02d}.jsonl"
+        # non-padded to match the HTML filename's slug (kathasaritsagara-1.html
+        # -> slug "kathasaritsagara-1" -> ingest.py looks for exactly this name);
+        # a zero-padded name here would silently miss books 1-9 and leave
+        # ingest.py reading the old sentence-keyed jsonl instead (H928 bug, caught
+        # by re-checking passage-key ranges after the first ingest run).
+        out_path = outdir / f"kathasaritsagara-{book}.jsonl"
         recs = emit_jsonl(sa, ru, mapping, slug="kathasaritsagara")
         out_path.write_text(
             "\n".join(json.dumps(r, ensure_ascii=False) for r in recs) + "\n",

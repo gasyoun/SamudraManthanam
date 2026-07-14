@@ -8,17 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Somadeva KSS books 1–10 sloka re-key -- fan-out prep tooling (H928, in progress).**
-  `web/corpus_builder/h928_prep_taranga_slices.py` derives per-taranga SA/RU slices for
-  books 1-10 directly from `parse_sanskrit`/`parse_russian`'s own record grouping
-  (ground-truth, assertion-checked against whole-book totals), superseding an inherited
-  `h928_plan.json` that was found to drift from real per-book counts. Also fixed the RU
-  wave-header regex in `somadeva_gretil_to_canonical.py` (optional trailing dot -- books
-  1-10's first `## L.T` header per chapter lacks it, previously misattributing taranga-1
-  Russian text to taranga 0). `h928_aggregate_and_emit.py` converts the per-taranga
-  Workflow fan-out's local Russian indices to global per-book indices and runs the
-  existing `validate_mapping`/`emit_jsonl` pipeline. Alignment fan-out itself (76 tasks)
-  in progress; corpus re-key + ingest to follow in a subsequent entry.
+- **Somadeva KSS books 1–10 sloka re-key (H928) — all 18 KSS books now uniformly
+  śloka-keyed.** Re-ingested books 1-10 from lingtrain sentence-ordinal keys to true
+  śloka keys (`lambaka.taraṅga.śloka(-range)`, `structure="verse"`), matching books
+  11-18's H910 keying. Per-taraṅga Workflow fan-out (76 tasks: 66 taraṅgas + 10 maṅgala
+  verses), ground-truth sliced directly from `parse_sanskrit`/`parse_russian`'s own
+  record grouping (`web/corpus_builder/h928_prep_taranga_slices.py`, assertion-checked
+  exact match against whole-book totals: 12,806 ślokas / 1,658 RU sentences) — supersedes
+  an inherited `h928_plan.json` found to drift from real per-book counts. Fixed the RU
+  wave-header regex in `somadeva_gretil_to_canonical.py` (optional trailing dot — books
+  1-10's first `## L.T` header per chapter lacks it, previously misattributing taraṅga-1
+  Russian text to taraṅga 0). Two genuine alignment defects caught by `validate_mapping`
+  and fixed via targeted re-alignment: book 10 taraṅga 3 (8 Russian sentences degenerately
+  collapsed onto one śloka) and book 8 taraṅga 6 (off-by-one at a real source-numbering
+  gap, śloka 244 skipped). Final: 1,658 groups, mean confidence 0.82 (0.68–0.87 per book),
+  searchable in FTS5. `web/corpus_builder/h928_aggregate_and_emit.py` converts per-taraṅga
+  local Russian indices to global per-book indices and runs the existing
+  `validate_mapping`/`emit_jsonl` pipeline.
 
 - **Somadeva KSS books 13–18 aligned + ingested (H910 fan-out).** Six more
   lambakas śloka-keyed and searchable (13 Madirāvatī, 14 *pañca*, 15 Mahābhiṣeka,
