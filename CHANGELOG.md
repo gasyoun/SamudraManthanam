@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-07-14
+
 ### Added
 - **НКРЯ morphology Wave 0: Rubanova pipeline documented (H904).** E. A.
   Rubanova's two source notebooks (`sans_stemmer.ipynb` +
