@@ -34,8 +34,8 @@ RU_WAVE = re.compile(r"^##\s*(\d+)\.(\d+)\.?")  # "## 11.1. ВОЛНА ПЕРВ�
 # every chapter (".1 ВОЛНА ПЕРВАЯ") is missing it while all later ones have it
 # ("## 2.1 ВОЛНА ПЕРВАЯ" vs "## 2.2. ВОЛНА ВТОРАЯ") — a strict trailing-dot
 # match silently misattributed taraṅga-1's Russian prose to taraṅga 0 (H928
-# discovery). Optional dot fixes it without affecting books 11-18, whose
-# headers all carry the dot.
+# discovery, independently rediscovered for chap_14/15 by H927). Optional dot
+# fixes it without affecting books 11-18, whose headers all carry the dot.
 
 
 def iast_to_slp1(s: str) -> str:
