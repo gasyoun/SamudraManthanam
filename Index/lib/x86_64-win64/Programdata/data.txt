@@ -163,3 +163,13 @@ devibhagavata-purana-10.html
 devibhagavata-purana-11.html
 devibhagavata-purana-12.html
 devibhagavata-purana.html
+kathasaritsagara-1.html
+kathasaritsagara-2.html
+kathasaritsagara-3.html
+kathasaritsagara-4.html
+kathasaritsagara-5.html
+kathasaritsagara-6.html
+kathasaritsagara-7.html
+kathasaritsagara-8.html
+kathasaritsagara-9.html
+kathasaritsagara-10.html

@@ -8,6 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Somadeva Kathāsaritsāgara SA↔RU corpus — 10 lambakas ingested (H907).**
+  Absorbed the [Marc-Winner/somadeva](https://github.com/Marc-Winner/somadeva)
+  lingtrain alignment into the corpus: new
+  `web/corpus_builder/somadeva_lingtrain_to_canonical.py` converts the Lingtrain
+  XML (8 chapters) + `.lt` `doc_index` (ch4, ch10) into canonical JSONL —
+  **9 998 aligned sentence-pairs across lambakas 1–10**, keyed
+  `lambaka.taraṅga.sentence-ordinal`, Devanagari→IAST/SLP1. Emitted
+  `kathasaritsagara.meta.json`, combined + per-lambaka `jsonl/kathasaritsagara*.jsonl`,
+  10 `Data/kathasaritsagara-{N}.html`+`.no_tags`+meta, `data.txt` registration.
+  Verified searchable via real `ingest.py` → FTS5 (10 sources / 19 994 rows;
+  `somaprabhā` 33, `океан` 58 hits) + schema contract tests green. Russian inherits
+  the corpus "grey per project ruling" rights status (`corpus.db` gitignored).
+  Scale-up plan (full 18 lambakas, LLM-assisted, GRETIL spine) +
+  lingtrain-vs-LLM method comparison in
+  `docs/ROADMAP_SOMADEVA_KSS_ALIGNMENT_SCALEUP_2026_2027.md`.
 - **НКРЯ morphology Wave 0: Rubanova pipeline documented (H904).** E. A.
   Rubanova's two source notebooks (`sans_stemmer.ipynb` +
   `deeppavlov_parsing.ipynb`, as updated by Marsel) are now tracked in

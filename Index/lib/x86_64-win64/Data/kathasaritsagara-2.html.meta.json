@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "slug": "kathasaritsagara",
+  "title_ru": "Сомадева. Океан сказаний (Катхасаритсагара)",
+  "title_display": "Океан сказаний (Катхасаритсагара)",
+  "title_en": "Somadeva. Kathāsaritsāgara (Ocean of the Streams of Stories)",
+  "author_orig": "Somadeva Bhaṭṭa (Kashmir, c. 1063–1081 CE)",
+  "credit": "И. Д. Серебряков и др.",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "М.: Наука (ГРВЛ)",
+  "publisher": "Наука",
+  "year": 1967,
+  "series": "Памятники литературы народов Востока",
+  "work_group": "kathasaritsagara",
+  "composition_date_ce": 1070,
+  "period": "Classical (Kashmiri)",
+  "source_lang": "san",
+  "target_lang": "rus",
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "prose",
+  "sanskrit_source": "GRETIL sa_somadeva-kathAsaritsAgara (after Durgāprasād & K. P. Parab, Nirṇaya-sāgara ed.), IAST plain text",
+  "alignment_method": "Lingtrain Alignment Studio v8.4-labse — LaBSE sentence alignment, hand-corrected; sentence-level (not śloka-keyed). Passage key = lambaka.taraṅga.sentence-ordinal.",
+  "upstream": "Marc-Winner/somadeva @ 99a72bdfbe0e7d967f6d7e4d829bbfb66de6564e",
+  "coverage": "lambakas 1–10 of 18 (~66 taraṅgas, 9998 aligned sentence pairs); books 11–18 not yet aligned",
+  "provenance": "Sanskrit from GRETIL (sa_somadeva-kathAsaritsAgara); Russian from the multi-volume Serebryakov et al. Nauka translation. Aligned sentence-by-sentence in Lingtrain Studio (upstream Marc-Winner/somadeva); converted to canonical JSONL via web/corpus_builder/somadeva_lingtrain_to_canonical.py (H907, Opus 4.8 claude-opus-4-8). Devanagari transliterated to IAST/SLP1 via indic_transliteration.",
+  "rights": "in-copyright modern Russian academic translation (И. Д. Серебряков et al., 20th c., Nauka) — corpus rights stay grey per project ruling; no redistribution, export bulk gitignored. Same status as the Grintser Rāmāyaṇa already in the corpus.",
+  "bibliography_status": "provisional — the Russian spans several Serebryakov Nauka volumes (Повесть о царе Удаяне 1967 = kk. 1–5; Дальнейшие похождения царевича Нараваханадатты 1976; etc.); verify the exact volume/translator/year per lambaka against the physical editions before НКРЯ submission.",
+  "needs_review": true,
+  "filename": "kathasaritsagara-2.html",
+  "skandha": 2
+}
