@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **НКРЯ morphology Wave 0: Rubanova pipeline documented (H904).** E. A.
+  Rubanova's two source notebooks (`sans_stemmer.ipynb` +
+  `deeppavlov_parsing.ipynb`, as updated by Marsel) are now tracked in
+  `nkrya-parallel/diplom-rubanova/`, and `docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md`
+  (+ `.meta.md`) documents the whole pipeline line-by-line: the 10 data inputs,
+  Stage A (DeepPavlov UD morphosyntax) → Stage B (sanskritism proper-name index),
+  the **Кали→кал root cause** (the dropped 271 MB opcorpora corpus filter), and an
+  original-vs-current-port delta table that is the work-list for the RU-morphology
+  (H905) and SA-morphology (H906) builds. The Sanskrit side used **DCS** as its
+  markup source (no home-grown analyzer) — documented as a reproduction target for
+  H906, not a port.
+
 ## [0.4.0] - 2026-07-13
 
 ### Added
