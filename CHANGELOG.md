@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-07-14
+
 ### Added
+- **Somadeva KSS book 12 complete (all 37 taraṅgas) + book 14 QA re-run (H927).**
+  Book 12 (Śaśāṅkavatī, 4 931 ślokas incl. the 25 Vetālapañcaviṃśati tales) fully
+  aligned via a 34-agent per-taraṅga Workflow fan-out — 900 groups, 1 800 records,
+  confidence min 0.15 mean 0.81. Book 14's old positional alignment (mean 0.53,
+  a token-limit fallback from H910) replaced with a content-anchored per-taraṅga
+  re-run — mean confidence 0.53 → 0.80, low-confidence groups 122 → 8. **18 of 18
+  lambakas now in the corpus.** Caught + fixed a real fan-out defect: one taraṅga's
+  first pass produced inverted śloka ranges, re-run with an explicit self-check.
+  70 low-confidence groups routed to a review sheet. Reproducible artifacts:
+  `somadeva_alignments/book12.alignment.json` / `book14.alignment.json`,
+  `h927_prep_taranga_slices.py`. Report:
+  `web/corpus_builder/SOMADEVA_KSS_BOOK12_BOOK14QA_FANOUT_REPORT.md`.
 - **Somadeva KSS books 13–18 aligned + ingested (H910 fan-out).** Six more
   lambakas śloka-keyed and searchable (13 Madirāvatī, 14 *pañca*, 15 Mahābhiṣeka,
   16 Suratamañjarī, 17 Padmāvatī, 18 Viṣamaśīla) — **17 of 18 books now in the
