@@ -70,10 +70,38 @@ When rights are demonstrated, flip the following **in one pass** (a
   reuse stays blocked even after the unlock — read the licence terms before
   step 5.
 
+## Plain-language example — what opens up
+
+Picture two people using the corpus.
+
+**A student on samskrtam.ru** searches «океан» and reads the matching verse with
+its Russian translation side by side. **This works today, and does not change** —
+it works exactly the same before and after any rights clearance.
+
+**A researcher** wants the whole thing as data. Here is the before/after:
+
+| The researcher wants to… | Now (grey) | After copyright shown |
+|---|---|---|
+| Search + read verse-by-verse in the app | ✅ yes | ✅ yes (unchanged) |
+| Download the **full aligned Russian text** (TMX / one file) | ❌ no | ✅ yes |
+| **Cite it as a dataset** with a permanent DOI (`10.5281/zenodo.…`) | ❌ no | ✅ yes |
+| Find the KSS in the **НКРЯ / ruscorpora** parallel corpus | ❌ held back | ✅ submitted |
+| Get a **"Download the parallel text" button** on the site | ❌ no | ✅ yes |
+| Reuse it in a **paid** product | ❌ no | ⚠️ only if the licence is not NC |
+| Know who translated it | ✅ named | ✅ named (always required) |
+
+In one sentence: **clearing the copyright turns a read-only-in-the-app corpus
+into a downloadable, citable, publishable dataset — while the student's reading
+experience, and the duty to credit Serebryakov, stay exactly the same.**
+
 ## The one-line trigger, when ready
 
-> Rights cleared for the KSS Russian → run `/publish-safety-check`, then flip
-> steps 1–6 above in one pass and record the licence in
-> `kathasaritsagara.meta.json`.
+> Rights cleared for the KSS Russian → run **`/corpus-rights-unlock kathasaritsagara`**
+> (which starts with `/publish-safety-check`, then flips steps 1–6 above in one
+> pass and records the licence in `kathasaritsagara.meta.json`).
+
+The reusable playbook is the [`/corpus-rights-unlock`](https://github.com/gasyoun/claude-config/blob/main/commands/corpus-rights-unlock.md)
+skill — it generalises this document to any "grey per project ruling" corpus
+(the Grintser Rāmāyaṇa, the НКРЯ export bundle, …), not only the KSS.
 
 _Dr. Mārcis Gasūns_

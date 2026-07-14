@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Somadeva KSS book-11 pilot — LLM-assisted śloka alignment (H910).** New
+  `web/corpus_builder/somadeva_gretil_to_canonical.py` parses the in-repo
+  `sokss`-keyed Sanskrit + Serebryakov Russian prose for books 11–18; an LLM
+  aligner produces a monotonic śloka-range mapping. **Book 11 (Velā) aligned +
+  ingested end-to-end**: 116 ślokas ↔ 27 Russian sentences → 27 śloka-range groups
+  (`structure="verse"`, keys like `11.1.4-10`), searchable in FTS5. Reproducible
+  artifacts: converter, `somadeva_alignments/book11.alignment.json`,
+  `jsonl/kathasaritsagara-11.jsonl`, `Data/kathasaritsagara-11.html`. **Measured
+  Human vs. Agent:** 8.8 min (agent) vs ~15.7 days (human pace) for book 11 —
+  `web/corpus_builder/SOMADEVA_KSS_ALIGNMENT_PILOT_REPORT.md`.
+- **`/corpus-rights-unlock` skill** referenced in
+  `docs/SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md` (+ a plain-language "what opens up
+  when copyright clears" example): the reusable playbook for publishing any
+  grey-rights corpus once rights are cleared.
+
 ## [0.6.0] - 2026-07-14
 
 ### Added

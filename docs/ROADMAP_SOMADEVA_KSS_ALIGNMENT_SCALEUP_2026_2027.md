@@ -95,8 +95,15 @@ already-present, śloka-keyed text collapses that to **days–weeks of runs plus
 bounded QA** (≈50–100× calendar speed-up) *and* yields true śloka keys.
 
 > Caveat: the manual calendar is part-time volunteer effort (overstates raw
-> labour hours); the LLM figure is a forecast from mw_ru/pwg_ru throughput, not a
-> measured KSS run — P2 (§5) replaces it with a real number.
+> labour hours); the LLM figure below is now **measured** (book-11 pilot), not a
+> forecast.
+
+**Measured (book-11 pilot, 14-07-2026).** The agent aligned book 11 (116 ślokas)
+in **8.8 minutes** (~13.1 ślokas/min, mean confidence 0.86) vs the human's recent
+pace of **~7.4 ślokas/day** — book 11 would have taken ~15.7 days manually.
+Projected books 11–18 (~8 730 ślokas): **~11 hours** of aligner compute + QA vs
+**~3.2 years** manual. Full numbers + the Human-vs-Agent table:
+[web/corpus_builder/SOMADEVA_KSS_ALIGNMENT_PILOT_REPORT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/SOMADEVA_KSS_ALIGNMENT_PILOT_REPORT.md).
 
 ---
 
