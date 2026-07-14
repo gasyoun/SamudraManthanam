@@ -29,7 +29,7 @@ from indic_transliteration.sanscript import transliterate
 # "// sokss_12,10.1 (vet_3.1) //" for the Vetālapañcaviṃśati tales in book 12.
 SOKSS = re.compile(r"//\s*sokss_(\d+),(\d+)\.(\d+)(?:\s*\([^)]*\))?\s*//")
 RU_BOOK = re.compile(r"^КНИГА\s+", re.IGNORECASE)
-RU_WAVE = re.compile(r"^##\s*(\d+)\.(\d+)\.")  # "## 11.1. ВОЛНА ПЕРВАЯ"
+RU_WAVE = re.compile(r"^##\s*(\d+)\.(\d+)\.?")  # "## 11.1. ВОЛНА ПЕРВАЯ" (trailing "." missing on chap_02/10/14/15's first wave)
 
 
 def iast_to_slp1(s: str) -> str:
