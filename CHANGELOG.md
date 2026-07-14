@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Somadeva KSS books 1–10 sloka re-key -- fan-out prep tooling (H928, in progress).**
+  `web/corpus_builder/h928_prep_taranga_slices.py` derives per-taranga SA/RU slices for
+  books 1-10 directly from `parse_sanskrit`/`parse_russian`'s own record grouping
+  (ground-truth, assertion-checked against whole-book totals), superseding an inherited
+  `h928_plan.json` that was found to drift from real per-book counts. Also fixed the RU
+  wave-header regex in `somadeva_gretil_to_canonical.py` (optional trailing dot -- books
+  1-10's first `## L.T` header per chapter lacks it, previously misattributing taranga-1
+  Russian text to taranga 0). `h928_aggregate_and_emit.py` converts the per-taranga
+  Workflow fan-out's local Russian indices to global per-book indices and runs the
+  existing `validate_mapping`/`emit_jsonl` pipeline. Alignment fan-out itself (76 tasks)
+  in progress; corpus re-key + ingest to follow in a subsequent entry.
+
 - **Somadeva KSS books 13–18 aligned + ingested (H910 fan-out).** Six more
   lambakas śloka-keyed and searchable (13 Madirāvatī, 14 *pañca*, 15 Mahābhiṣeka,
   16 Suratamañjarī, 17 Padmāvatī, 18 Viṣamaśīla) — **17 of 18 books now in the

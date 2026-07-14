@@ -29,7 +29,13 @@ from indic_transliteration.sanscript import transliterate
 # "// sokss_12,10.1 (vet_3.1) //" for the Vetālapañcaviṃśati tales in book 12.
 SOKSS = re.compile(r"//\s*sokss_(\d+),(\d+)\.(\d+)(?:\s*\([^)]*\))?\s*//")
 RU_BOOK = re.compile(r"^КНИГА\s+", re.IGNORECASE)
-RU_WAVE = re.compile(r"^##\s*(\d+)\.(\d+)\.")  # "## 11.1. ВОЛНА ПЕРВАЯ"
+RU_WAVE = re.compile(r"^##\s*(\d+)\.(\d+)\.?")  # "## 11.1. ВОЛНА ПЕРВАЯ" — trailing
+# dot is inconsistently present upstream: books 1-10's *first* wave header of
+# every chapter (".1 ВОЛНА ПЕРВАЯ") is missing it while all later ones have it
+# ("## 2.1 ВОЛНА ПЕРВАЯ" vs "## 2.2. ВОЛНА ВТОРАЯ") — a strict trailing-dot
+# match silently misattributed taraṅga-1's Russian prose to taraṅga 0 (H928
+# discovery). Optional dot fixes it without affecting books 11-18, whose
+# headers all carry the dot.
 
 
 def iast_to_slp1(s: str) -> str:
