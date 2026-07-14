@@ -295,6 +295,24 @@ def tsv(pairs):
     return ''.join(out)
 
 
+def sa_morph_tsv(pairs, slug, dcs):
+    """Per-token Sanskrit morphology layer, anchored on DCS gold (H906): one row
+    per DCS-aligned SA token — group_id, verse, tok_index, form, lemma, upos,
+    case, gender, number. Verses DCS does not cover produce no rows (reported as
+    a coverage gap). Additive companion; the inline НКРЯ `<w><ana/>` fold is the
+    shared H905/H906 per-token scheme, deferred until agreed."""
+    out = ['group_id\tverse\ttok_index\tform\tlemma\tupos\tcase\tgender\tnumber\n']
+    for p in pairs:
+        passage = p['group'].split(':', 1)[1] if ':' in p['group'] else ''
+        for t in dcs.gold_tokens(slug, passage):
+            out.append('\t'.join([
+                _tsv_cell(p['group']), str(t['verse']), str(t['idx']),
+                _tsv_cell(t['form']), _tsv_cell(t['lemma']), t['upos'],
+                t['case'], t['gender'], t['number'],
+            ]) + '\n')
+    return ''.join(out)
+
+
 def ru_morph_tsv(pairs):
     """Per-token Russian morphology layer (H905): one row per RU token, in
     (pair, text) order — group_id, tok_index, surface, lemma, pos, case,
@@ -339,7 +357,7 @@ def _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx):
 
 def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
                    with_sanskritisms=False, sanskritisms_ctx=None,
-                   with_ru_morph=False):
+                   with_ru_morph=False, with_sa_morph=False, dcs_gold=None):
     """Export one source into out_dir/<slug>/. Returns a stats dict (also
     written as export_report.json when write=True).
 
@@ -366,6 +384,21 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         if HERE not in sys.path:
             sys.path.insert(0, HERE)
         artifacts[slug + '.ru_morph.tsv'] = ru_morph_tsv(pairs)
+    sa_morph_stats = {}
+    if with_sa_morph:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        if dcs_gold is None:
+            from dcs_align import DcsGold
+            dcs_gold = DcsGold()
+        artifacts[slug + '.sa_morph.tsv'] = sa_morph_tsv(pairs, slug, dcs_gold)
+        covered = sum(1 for p in pairs
+                      if dcs_gold.gold_tokens(
+                          slug, p['group'].split(':', 1)[1] if ':' in p['group'] else ''))
+        sa_morph_stats = {
+            'sa_morph_dcs_available': dcs_gold.available,
+            'sa_morph_pairs_covered': covered,
+        }
     report = {
         'slug': slug,
         'exporter_version': VERSION,
@@ -374,6 +407,7 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         'rights': meta.get('rights'),
         'needs_review': meta.get('needs_review', True),
         **stats,
+        **sa_morph_stats,
         'files': sorted(artifacts),
     }
     if write:
@@ -401,6 +435,10 @@ def main(argv=None):
     ap.add_argument('--ru-morph', action='store_true',
                      help='also write <slug>.ru_morph.tsv — per-token RU morphology '
                           'layer, lemma/POS/case/number via pymorphy3 (H905)')
+    ap.add_argument('--sa-morph', action='store_true',
+                     help='also write <slug>.sa_morph.tsv — per-token SA morphology '
+                          'anchored on DCS gold (lemma/upos/case/gender/number); needs '
+                          'the local DCS sqlite (set $DCS_SQLITE) (H906)')
     ap.add_argument('--quiet', action='store_true')
     a = ap.parse_args(argv)
 
@@ -419,11 +457,21 @@ def main(argv=None):
             sys.path.insert(0, HERE)
         from sanskritisms.extract import ExtractionContext
         sanskritisms_ctx = ExtractionContext()  # built once, reused across slugs
+    dcs_gold = None
+    if a.sa_morph:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from dcs_align import DcsGold
+        dcs_gold = DcsGold()  # one read-only DCS connection, reused across slugs
+        if not dcs_gold.available and not a.quiet:
+            print('--sa-morph: DCS sqlite not found (set $DCS_SQLITE); '
+                  'sa_morph.tsv will be empty.')
     reports = []
     for slug in slugs:
         r = export_source(slug, a.out, with_sanskritisms=a.with_sanskritisms,
                            sanskritisms_ctx=sanskritisms_ctx,
-                           with_ru_morph=a.ru_morph)
+                           with_ru_morph=a.ru_morph,
+                           with_sa_morph=a.sa_morph, dcs_gold=dcs_gold)
         reports.append(r)
         if not a.quiet:
             print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d'
