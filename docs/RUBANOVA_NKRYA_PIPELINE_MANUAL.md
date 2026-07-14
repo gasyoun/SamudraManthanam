@@ -293,10 +293,11 @@ drops:
 | Component | Original (notebooks) | Current port | Gap for H905 |
 |---|---|---|---|
 | Proper-name lemma pool | Sørensen 9,460 **+ `384000.txt` (352k)** + one-word rubrics | Sørensen + one-word only | **Restore the 352k candidate pool** (local-only) or justify dropping it |
-| Russian-word filter | **opcorpora 2.9M (`rus_words`)** | ✂️ dropped (271 MB) — approximated by foreign+rusforms+capitalization | **Root cause of Кали→кал** — restore/replace the corpus filter |
+| Russian-word filter | **opcorpora 2.9M (`rus_words`)** | ✅ **reproduced (H905)** via pymorphy3 `word_is_known` (same OpenCorpora dict, no 271 MB dump) | **Кали→кал fixed** — see [`RU_MORPHOLOGY_H905_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md) |
 | Declension of Russian rubrics | **pymorphy2** (`decline`) + curated multiword table | reverse index from `decl_rules.txt` only | pymorphy2 rubric declension not reproduced |
 | Sanskritism form generation | backward stemming (six ending rules) | forward generation from `decl_rules.txt` (avoids pymorphy2 mis-tagging) | port's approach is arguably *better*; keep, but verify against original output |
-| Residual case disambiguation | **DeepPavlov** UD `case=` (`depppavlov_proc`) | ✂️ dropped — keeps `ambiguous=True` | **Wire a RU tagger** (deeppavlov or lighter), validate vs local `deeppavlov_*.txt` gold |
+| Per-token RU morphology (lemma/POS/case/number) | not in the index tools | ✅ **new (H905)** — `ru_morph.py` (pymorphy3), `--ru-morph` sidecar | inline `<w><ana/>` fold deferred to the H906-coordinated scheme |
+| Residual case disambiguation | **DeepPavlov** UD `case=` (`depppavlov_proc`) | ⚠️ still not ported — pymorphy3 top-parse is context-free | **quality upgrade:** wire DeepPavlov's UD parse for the ~20% residual, validate vs local `deeppavlov_*.txt` gold |
 | Sentence tokenization | nltk punkt | own regex tokenizer | minor; verify parity |
 | Epithet / options / append rubrics | `3_INDEX_options/phrases`, `append if found` | `annotations.py` reproduces | reproduced |
 | Sing/plural merge | `unite2` + `index_unite` | `disambiguate.py` (order-independent, H821 fix) | reproduced + hardened |

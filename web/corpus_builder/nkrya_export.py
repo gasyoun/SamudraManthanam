@@ -295,6 +295,24 @@ def tsv(pairs):
     return ''.join(out)
 
 
+def ru_morph_tsv(pairs):
+    """Per-token Russian morphology layer (H905): one row per RU token, in
+    (pair, text) order — group_id, tok_index, surface, lemma, pos, case,
+    number. Deterministic (see ru_morph.analyze). Additive companion to the
+    para-XML/TMX/TSV; the inline НКРЯ `<w><ana/>` fold is the H906-coordinated
+    step."""
+    import ru_morph
+    out = ['group_id\ttok_index\tsurface\tlemma\tpos\tcase\tnumber\n']
+    for p in pairs:
+        for i, t in enumerate(ru_morph.analyze(p['ru'])):
+            out.append('\t'.join([
+                _tsv_cell(p['group']), str(i),
+                _tsv_cell(t['surface']), _tsv_cell(t['lemma']),
+                t['pos'], t['case'], t['number'],
+            ]) + '\n')
+    return ''.join(out)
+
+
 # ---------------------------------------------------------------------------
 # driver
 # ---------------------------------------------------------------------------
@@ -320,7 +338,8 @@ def _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx):
 
 
 def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
-                   with_sanskritisms=False, sanskritisms_ctx=None):
+                   with_sanskritisms=False, sanskritisms_ctx=None,
+                   with_ru_morph=False):
     """Export one source into out_dir/<slug>/. Returns a stats dict (also
     written as export_report.json when write=True).
 
@@ -343,6 +362,10 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
     if with_sanskritisms:
         sanskritisms_ctx, index_json = _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx)
         artifacts[slug + '.sanskritisms_index.json'] = index_json
+    if with_ru_morph:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        artifacts[slug + '.ru_morph.tsv'] = ru_morph_tsv(pairs)
     report = {
         'slug': slug,
         'exporter_version': VERSION,
@@ -375,6 +398,9 @@ def main(argv=None):
     ap.add_argument('--out', required=True, help='output directory')
     ap.add_argument('--with-sanskritisms', action='store_true',
                      help='also write <slug>.sanskritisms_index.json (H760 Wave 3)')
+    ap.add_argument('--ru-morph', action='store_true',
+                     help='also write <slug>.ru_morph.tsv — per-token RU morphology '
+                          'layer, lemma/POS/case/number via pymorphy3 (H905)')
     ap.add_argument('--quiet', action='store_true')
     a = ap.parse_args(argv)
 
@@ -396,7 +422,8 @@ def main(argv=None):
     reports = []
     for slug in slugs:
         r = export_source(slug, a.out, with_sanskritisms=a.with_sanskritisms,
-                           sanskritisms_ctx=sanskritisms_ctx)
+                           sanskritisms_ctx=sanskritisms_ctx,
+                           with_ru_morph=a.ru_morph)
         reports.append(r)
         if not a.quiet:
             print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d'
