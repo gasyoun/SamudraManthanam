@@ -8,122 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Somadeva KSS book-11 pilot — LLM-assisted śloka alignment (H910).** New
-  `web/corpus_builder/somadeva_gretil_to_canonical.py` parses the in-repo
-  `sokss`-keyed Sanskrit + Serebryakov Russian prose for books 11–18; an LLM
-  aligner produces a monotonic śloka-range mapping. **Book 11 (Velā) aligned +
-  ingested end-to-end**: 116 ślokas ↔ 27 Russian sentences → 27 śloka-range groups
-  (`structure="verse"`, keys like `11.1.4-10`), searchable in FTS5. Reproducible
-  artifacts: converter, `somadeva_alignments/book11.alignment.json`,
-  `jsonl/kathasaritsagara-11.jsonl`, `Data/kathasaritsagara-11.html`. **Measured
-  Human vs. Agent:** 8.8 min (agent) vs ~15.7 days (human pace) for book 11 —
-  `web/corpus_builder/SOMADEVA_KSS_ALIGNMENT_PILOT_REPORT.md`.
-- **`/corpus-rights-unlock` skill** referenced in
-  `docs/SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md` (+ a plain-language "what opens up
-  when copyright clears" example): the reusable playbook for publishing any
-  grey-rights corpus once rights are cleared.
-
-## [0.6.0] - 2026-07-14
-
-### Added
-- **SA-side morphology anchored on DCS gold (H906).** New
-  [`web/corpus_builder/dcs_align.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/dcs_align.py)
-  aligns each `seg=sa` verse to the matching DCS chapter (`passage B.C.V` →
-  `MBh, B, C` / `Rām, <kāṇḍa>, C`; DCS `sent_counter` = verse) and emits the DCS
-  **gold** per-token analysis (lemma · UPOS · case · gender · number) behind
-  `nkrya_export.py --sa-morph` as an additive `<slug>.sa_morph.tsv` (deterministic).
-  Coverage: **MBh ~99%** (most parvas 98–100%; 152k gold tokens on Āraṇyakaparva),
-  Rāmāyaṇa partial (62–80%, verse-map divergence). The Bhagavadgītā gap surfaces
-  as bhishmaparva 47.6% (Gītā absent from DCS, H848). DCS sqlite is local-only
-  (`$DCS_SQLITE`); the layer degrades to empty if absent. +3 tests (12 pass).
-  Report: [`SA_MORPHOLOGY_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/SA_MORPHOLOGY_H906_REPORT.md).
-  The vidyut second-opinion diff is a scoped follow-up (needs the vidyut data download).
-
-## [0.5.0] - 2026-07-14
-
-### Added
-- **RU-side morphology + Кали→кал filter (H905).** New [`web/corpus_builder/ru_morph.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/ru_morph.py)
-  tags every Cyrillic token of a `seg=ru` segment with **lemma · POS · case · number** via
-  **pymorphy3** (which ships the OpenCorpora dictionary — the same КРС data Rubanova's 271 MB
-  `dict.opcorpora.txt` held), emitted behind `nkrya_export.py --ru-morph` as an additive
-  `<slug>.ru_morph.tsv` (deterministic, byte-identical across `PYTHONHASHSEED`). The inline НКРЯ
-  `<w><ana/>` fold is deferred to the H906-coordinated per-token scheme.
-### Fixed
-- **Кали→кал false positives (H905).** `sanskritisms/filters.py` gains `is_russian_word()`
-  (pymorphy3 `word_is_known`, minus Rubanova's curated collision exceptions); `extract.py` now
-  drops any non-capitalized candidate that is a known Russian wordform — reproducing Rubanova's
-  `rus_words` opcorpora filter without the 271 MB dump. Lowercase «кала» (genitive of the common
-  word *кал*) no longer captured as the Sanskritism *кала*; capitalized proper names stay exempt.
-  Measured 41→37 lemmas on `01_atharvaveda` (4 false positives removed). +3 regression tests.
-  Report: [`web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md).
-### Changed
-- **Somadeva KSS scale-up P0 resolved + made execution-ready (H910).** Confirmed
-  the complete Serebryakov Russian and śloka-keyed Sanskrit (`sokss_L,T.S` refs)
-  for **all 18 books** already exist as `.txt` in the upstream repo (~21 538
-  ślokas; books 11–18 = ~8 730). Books 11–18 need alignment only — no sourcing,
-  no external fetch, no human gate. Rewrote
-  `docs/ROADMAP_SOMADEVA_KSS_ALIGNMENT_SCALEUP_2026_2027.md` execution-ready and
-  added `docs/SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md` (what a proven copyright /
-  redistribution licence unlocks: НКРЯ export, kosha datasets.json, Zenodo DOI,
-  bulk download).
-
-## [0.4.1] - 2026-07-14
-
-### Added
-- **Somadeva Kathāsaritsāgara SA↔RU corpus — 10 lambakas ingested (H907).**
-  Absorbed the [Marc-Winner/somadeva](https://github.com/Marc-Winner/somadeva)
-  lingtrain alignment into the corpus: new
-  `web/corpus_builder/somadeva_lingtrain_to_canonical.py` converts the Lingtrain
-  XML (8 chapters) + `.lt` `doc_index` (ch4, ch10) into canonical JSONL —
-  **9 998 aligned sentence-pairs across lambakas 1–10**, keyed
-  `lambaka.taraṅga.sentence-ordinal`, Devanagari→IAST/SLP1. Emitted
-  `kathasaritsagara.meta.json`, combined + per-lambaka `jsonl/kathasaritsagara*.jsonl`,
-  10 `Data/kathasaritsagara-{N}.html`+`.no_tags`+meta, `data.txt` registration.
-  Verified searchable via real `ingest.py` → FTS5 (10 sources / 19 994 rows;
-  `somaprabhā` 33, `океан` 58 hits) + schema contract tests green. Russian inherits
-  the corpus "grey per project ruling" rights status (`corpus.db` gitignored).
-  Scale-up plan (full 18 lambakas, LLM-assisted, GRETIL spine) +
-  lingtrain-vs-LLM method comparison in
-  `docs/ROADMAP_SOMADEVA_KSS_ALIGNMENT_SCALEUP_2026_2027.md`.
-- **НКРЯ morphology Wave 0: Rubanova pipeline documented (H904).** E. A.
-  Rubanova's two source notebooks (`sans_stemmer.ipynb` +
-  `deeppavlov_parsing.ipynb`, as updated by Marsel) are now tracked in
-  `nkrya-parallel/diplom-rubanova/`, and `docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md`
-  (+ `.meta.md`) documents the whole pipeline line-by-line: the 10 data inputs,
-  Stage A (DeepPavlov UD morphosyntax) → Stage B (sanskritism proper-name index),
-  the **Кали→кал root cause** (the dropped 271 MB opcorpora corpus filter), and an
-  original-vs-current-port delta table that is the work-list for the RU-morphology
-  (H905) and SA-morphology (H906) builds. The Sanskrit side used **DCS** as its
-  markup source (no home-grown analyzer) — documented as a reproduction target for
-  H906, not a port.
-- **Third notebook + upstream source (H904 follow-up).** Took
-  `corpus_marker.ipynb` from Rubanova's upstream repo
-  ([evgeniarubanova/sanskrit_stemmer](https://github.com/evgeniarubanova/sanskrit_stemmer))
-  — the **RU↔SA word aligner** that transliterates IAST→Cyrillic (via
-  `translation.txt`/`correct_trans.txt`) and prefix-matches Russian sanskritisms
-  to their Sanskrit source words over a verse-block-aligned corpus, then
-  colour-highlights both sides. Now tracked as Stage C; the manual's §6 corrected
-  accordingly — the SA side uses **transliteration+alignment, not DCS** (DCS
-  morphology stays an H906 reproduction target). MANIFEST now points at the
-  upstream repo for the bulk data; noted that `dict.opcorpora.txt` is absent even
-  upstream (third-party OpenCorpora).
-
-## [0.4.0] - 2026-07-13
-
-### Added
-- **НКРЯ Wave 4: full-corpus export freeze (H821).** `nkrya_export.py` gains an
-  `--all-ru` mode that exports **every seg=ru source** (131, via `discover_ru_sources()`)
-  with `--with-sanskritisms`, not just the 4-source pilot: **95,260 pairs across 131 sources**.
-  Two committed sidecars — `nkrya-parallel/export/RIGHTS_TABLE.md` (per-source rights; 4 of 131
-  documented from the H231 pilot meta, 127 flagged `needs_review` with no sidecar yet — a noted
-  metadata-population follow-up) and `FULL_CORPUS_VALIDATION.md` (per-source classify() stats).
-  The bulk per-source export bundle stays gitignored and ships as a **release artifact**.
-### Fixed
-- **Sanskritisms index was non-deterministic** — the singular/plural canonical merge
-  (`sanskritisms/disambiguate.py`) and the candidate-set iteration (`extract.py`) depended on
-  hash order, flipping the index `lemma`/`display` across runs. Now sorted → byte-identical
-  output even across `PYTHONHASHSEED`, guarded by a new order-independence unit test. This was
-  the blocker on Wave 4's determinism gate.
+- **`web/corpus_builder/sanskritisms/`** — санскритизм (Sanskrit loanword/proper-name)
+  detection layer for the Russian corpus side, ported from M. Rubanova's 2020 ВКР
+  stemmer (НКРЯ roadmap Wave 3, [H919](https://github.com/gasyoun/Uprava/blob/main/handoffs/H919-Sonnet_SamudraManthanam_nkrya-wave3-sanskritisms-layer_14.07.26.md)).
+  6-condition stem matcher + 9-rule lemma disambiguator + capitalization rescue;
+  `pymorphy3` substitutes for the thesis's missing 271 MB OpenCorpora dictionary.
+  18 tests (`pytest -m corpus` gold-precision/recall floors against Rubanova's own
+  finished MBh-3/Rāmāyaṇa-3 indexes). Run across all 123 discoverable verse
+  sources: 34,134 lemma entries under `nkrya-parallel/export/sanskritisms/`.
+  Design + honest scope boundaries (deeppavlov-tier disambiguation and the
+  1.09M-pair `corpus_lexicon.jsonl` are deferred, not silently dropped):
+  [`SPEC.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/SPEC.md).
 
 ## [0.3.1] - 2026-07-12
 

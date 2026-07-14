@@ -1,0 +1,585 @@
+{"source": "01_ramayana-balakanda", "lemma": "рама", "surface_forms": ["Рам", "Рама", "Раме", "Рамой", "Раму", "Рамы"], "count": 390, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вишвамитра", "surface_forms": ["Вишвамитра", "Вишвамитре", "Вишвамитрой", "Вишвамитру", "Вишвамитры"], "count": 271, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дашаратха", "surface_forms": ["Дашаратха", "Дашаратхе", "Дашаратхи", "Дашаратхой", "Дашаратху"], "count": 172, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "васиштха", "surface_forms": ["Васиштха", "Васиштхе", "Васиштхи", "Васиштхой", "Васиштху"], "count": 137, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "индра", "surface_forms": ["Индра", "Индре", "Индрой", "Индру", "Индры"], "count": 132, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брахма", "surface_forms": ["Брахма", "Брахме", "Брахмой", "Брахму", "Брахмы"], "count": 115, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вишну", "surface_forms": ["Вишну"], "count": 112, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рамаяна", "surface_forms": ["Рамаяна", "Рамаянах", "Рамаяне", "Рамаяной", "Рамаяну", "Рамаяны"], "count": 94, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рагху", "surface_forms": ["Рагху"], "count": 85, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ганга", "surface_forms": ["Ганга", "Ганги", "Гангой", "Гангу"], "count": 81, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джанака", "surface_forms": ["Джанака", "Джанаке", "Джанаки", "Джанакой", "Джанаку"], "count": 78, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шива", "surface_forms": ["Шива", "Шиве", "Шивой", "Шиву", "Шивы"], "count": 72, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сита", "surface_forms": ["Сита", "Сите", "Ситой", "Ситу", "Ситы"], "count": 69, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рагхава", "surface_forms": ["Рагхава", "Рагхаве", "Рагхаву", "Рагхавы"], "count": 66, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "лакшмана", "surface_forms": ["Лакшмана", "Лакшмане", "Лакшманой", "Лакшману", "Лакшманы"], "count": 65, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаси", "surface_forms": ["Ракшаси", "Ракшасов", "ракшасам", "ракшасами", "ракшаси", "ракшасов"], "count": 57, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "айодхья", "surface_forms": ["Айодхье", "Айодхьи", "Айодхью", "Айодхья"], "count": 54, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "равана", "surface_forms": ["Равана", "Раване", "Раваной", "Равану", "Раваны"], "count": 51, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ришьяшринга", "surface_forms": ["Ришьяшринга", "Ришьяшринге", "Ришьяшринги", "Ришьяшрингой", "Ришьяшрингу"], "count": 46, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ашвамедха", "surface_forms": ["Ашвамедха", "ашвамедх", "ашвамедха", "ашвамедхе", "ашвамедхи", "ашвамедху"], "count": 44, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сагара", "surface_forms": ["Сагара", "Сагаре", "Сагарой", "Сагару", "Сагары"], "count": 44, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "митхила", "surface_forms": ["Митхила", "Митхиле", "Митхилу", "Митхилы"], "count": 43, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "какутстха", "surface_forms": ["Какутстха", "Какутстхи", "Какутстху"], "count": 42, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхарата", "surface_forms": ["Бхарата", "Бхарате", "Бхаратой", "Бхарату", "Бхараты"], "count": 38, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "агни", "surface_forms": ["Агни"], "count": 37, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "каушика", "surface_forms": ["Каушика", "Каушике", "Каушики", "Каушикой"], "count": 37, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "икшваку", "surface_forms": ["Икшваку"], "count": 31, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "марича", "surface_forms": ["Марича", "Мариче", "Маричей", "Маричи", "Маричу"], "count": 30, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "махабхарата", "surface_forms": ["Махабхарата", "Махабхарате", "Махабхараты"], "count": 30, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сумитра", "surface_forms": ["Сумитра", "Сумитре", "Сумитры"], "count": 30, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тарака", "surface_forms": ["Тарака", "Тараке", "Тараки", "Таракой", "Тараку"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шакра", "surface_forms": ["Шакра", "Шакре", "Шакрой", "Шакру", "Шакры"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джамадагнья", "surface_forms": ["Джамадагнье", "Джамадагньей", "Джамадагньи", "Джамадагнью", "Джамадагнья"], "count": 28, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дити", "surface_forms": ["Дити"], "count": 28, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "асури", "surface_forms": ["АСУРАМИ", "асурам", "асурами", "асурах", "асуров"], "count": 27, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхагиратха", "surface_forms": ["Бхагиратха", "Бхагиратхе", "Бхагиратхи", "Бхагиратхой", "Бхагиратху"], "count": 27, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гандхарви", "surface_forms": ["Гандхарвами", "Гандхарвов", "гандхарвам", "гандхарвами", "гандхарви", "гандхарвов"], "count": 27, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кашьяпа", "surface_forms": ["Кашьяпа", "Кашьяпу", "Кашьяпы"], "count": 27, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кушика", "surface_forms": ["Кушика", "Кушики"], "count": 25, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тришанку", "surface_forms": ["Тришанку"], "count": 24, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кама", "surface_forms": ["Кама", "Камой", "Камы"], "count": 23, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "каусалья", "surface_forms": ["Каусалье", "Каусальи", "Каусалья"], "count": 23, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "адити", "surface_forms": ["Адити"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гандхарва", "surface_forms": ["Гандхарвы", "гандхарвы"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гаутама", "surface_forms": ["Гаутама", "Гаутамой", "Гаутаму", "Гаутамы"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кайкейи", "surface_forms": ["Кайкейи"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сома", "surface_forms": ["Сома", "Соме", "Сомой", "Сому", "Сомы", "сома"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "химават", "surface_forms": ["Химават", "Химавата"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сугрива", "surface_forms": ["Сугрива", "Сугриве", "Сугривой", "Сугриву", "Сугривы"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ума", "surface_forms": ["Ума", "Уме", "Умой", "Уму", "Умы"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхригу", "surface_forms": ["Бхригу"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "варуна", "surface_forms": ["Варуна", "Варуне", "Варуну", "Варуны"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ману", "surface_forms": ["Ману"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "асура", "surface_forms": ["Асура", "Асуры", "асура", "асуру", "асуры"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ваю", "surface_forms": ["Ваю"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гадхи", "surface_forms": ["Гадхи"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пурана", "surface_forms": ["пуран", "пуранам", "пуранах"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рудра", "surface_forms": ["Рудра", "Рудре", "Рудры", "рудрами", "рудры"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "чандала", "surface_forms": ["Чандала", "Чандалы", "чандалами", "чандалой", "чандалу", "чандалы"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шабала", "surface_forms": ["Шабала", "Шабалу", "Шабалы"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шатругхна", "surface_forms": ["Шатругхна", "Шатругхне", "Шатругхной", "Шатругхну", "Шатругхны"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "видеха", "surface_forms": ["Видехи", "Видеху"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вишала", "surface_forms": ["Вишала", "Вишале", "Вишалой", "Вишалу", "Вишалы"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "якша", "surface_forms": ["Якши", "якша", "якшей", "якши"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ахалья", "surface_forms": ["Ахалье", "Ахальей", "Ахальи", "Ахалью", "Ахалья"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "праджапати", "surface_forms": ["Праджапати"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шанта", "surface_forms": ["Шанта", "Шанте", "Шантой", "Шанту", "Шанты"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сараю", "surface_forms": ["Сараю"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "амбариша", "surface_forms": ["Амбариша", "Амбарише", "Амбариши"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джамадагни", "surface_forms": ["Джамадагни"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кубера", "surface_forms": ["Кубера", "Кубере", "Куберой", "Куберы"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ригведа", "surface_forms": ["Ригведа", "Ригведе", "Ригведу", "Ригведы"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "агастья", "surface_forms": ["Агастье", "Агастьей", "Агастьи", "Агастью", "Агастья"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхарадваджа", "surface_forms": ["Бхарадваджа", "Бхарадвадже", "Бхарадваджей", "Бхарадваджи"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вибхандака", "surface_forms": ["Вибхандака", "Вибхандаки"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "махадева", "surface_forms": ["Махадева", "Махадеве", "Махадеву", "Махадевы"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нарада", "surface_forms": ["Нарада", "Нарадой", "Нараду", "Нарады"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шатананда", "surface_forms": ["Шатананда", "Шатананде", "Шатанандой", "Шатананду", "Шатананды"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "валин", "surface_forms": ["Валин", "Валина", "Валином"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "капила", "surface_forms": ["Капила", "Капилой", "Капилу", "Капилы"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кришашва", "surface_forms": ["Кришашва", "Кришашвой", "Кришашвы"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сунда", "surface_forms": ["Сунда", "Сунде", "Сунду", "Сунды"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "чарана", "surface_forms": ["Чараны", "чаранам", "чаранами", "чаранов", "чараны"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "якшини", "surface_forms": ["Якшини", "якшини"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гаруда", "surface_forms": ["Гаруда", "Гаруде", "Гарудой", "Гаруду", "Гаруды"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дайтья", "surface_forms": ["Дайтьи", "Дайтью", "Дайтья", "дайтьев", "дайтьи", "дайтьям", "дайтьями"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кала", "surface_forms": ["Калы"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "лава", "surface_forms": ["Лава", "Лаву"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ланка", "surface_forms": ["Ланке", "Ланки", "Ланку"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "манава", "surface_forms": ["Манава", "Манаве", "Манавой", "Манаву"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пхалгуни", "surface_forms": ["Пхалгуни"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сиддха", "surface_forms": ["Сиддхи", "Сиддхом", "сиддха", "сиддхи"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сканда", "surface_forms": ["Сканда", "Скандой", "Сканды"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "яма", "surface_forms": ["Яма", "Ямы"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брахмадатта", "surface_forms": ["Брахмадатта", "Брахмадаттой", "Брахмадатту"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ваджра", "surface_forms": ["Ваджра", "Ваджру", "ваджра", "ваджру", "ваджры"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вамана", "surface_forms": ["Вамана", "Ваманы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "васава", "surface_forms": ["Васава", "Васавой"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кандарпа", "surface_forms": ["Кандарпа", "Кандарпой", "Кандарпы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "картикея", "surface_forms": ["Картикеей", "Картикеи", "Картикею", "Картикея"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "марути", "surface_forms": ["марутами", "марутов"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нея", "surface_forms": ["Нес", "Нет"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рамбха", "surface_forms": ["Рамбха", "Рамбхе", "Рамбхи", "Рамбху"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сиддхи", "surface_forms": ["Сиддхам", "Сиддхами", "сиддхами", "сиддхов"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "арджуна", "surface_forms": ["Арджуна", "Арджуне", "Арджуной", "Арджуны"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бали", "surface_forms": ["Бали"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "веданга", "surface_forms": ["Веданги", "веданг", "веданги"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дилипа", "surface_forms": ["Дилипа", "Дилипе", "Дилипой", "Дилипу", "Дилипы"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кекая", "surface_forms": ["Кекаи", "Кекаю", "кекаев"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кумара", "surface_forms": ["Кумара", "Кумары"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "менака", "surface_forms": ["Менака", "Менакой", "Менаку"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "наги", "surface_forms": ["нагам", "нагами", "нагов"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нараяна", "surface_forms": ["Нараяна", "Нараяной", "Нараяны"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пишача", "surface_forms": ["Пишачей", "Пишачи", "пишачей"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пушпака", "surface_forms": ["Пушпака", "Пушпаке", "Пушпаки", "Пушпаку"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ричика", "surface_forms": ["Ричика", "Ричике", "Ричики", "Ричикой", "Ричику"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "субаху", "surface_forms": ["Субаху"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сумати", "surface_forms": ["Сумати"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шая", "surface_forms": ["Шат"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пуластья", "surface_forms": ["Пуластьи", "Пуластью", "Пуластья"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "синдху", "surface_forms": ["Синдху"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "явана", "surface_forms": ["Яванов", "Яваны", "яванами", "яванов"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "анги", "surface_forms": ["Ангов", "ангов"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "веда", "surface_forms": ["Веды", "веды"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "виндхья", "surface_forms": ["Виндхьи", "Виндхья"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вирочана", "surface_forms": ["Вирочаны"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "данава", "surface_forms": ["Данавы", "данавы"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "каруша", "surface_forms": ["Каруша", "Карушу"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "криттика", "surface_forms": ["Криттик", "Криттики"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кришна", "surface_forms": ["Кришна", "Кришны"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мадхусудана", "surface_forms": ["Мадхусудана", "Мадхусудану"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "малада", "surface_forms": ["Малада", "Маладу"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пурушоттама", "surface_forms": ["Пурушоттама", "Пурушоттаме", "Пурушоттаму", "Пурушоттамы"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пушкара", "surface_forms": ["Пушкарах", "Пушкаре", "Пушкары"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сваямбху", "surface_forms": ["Сваямбху"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сукету", "surface_forms": ["Сукету"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "супарна", "surface_forms": ["Супарна", "Супарну", "Супарны"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "упанишад", "surface_forms": ["упанишадами", "упанишадах", "упанишады"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "урмила", "surface_forms": ["Урмилой", "Урмилу", "Урмилы"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "хари", "surface_forms": ["Хари"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "хариванша", "surface_forms": ["Хариванша", "Хариванше"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "адитья", "surface_forms": ["адитьев", "адитьями", "адитьях"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "анга", "surface_forms": ["Анга"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "атибала", "surface_forms": ["Атибала"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "атхарваведа", "surface_forms": ["Атхарваведа", "Атхарваведе", "Атхарваведы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бала", "surface_forms": ["Бала", "Балы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брахмачарин", "surface_forms": ["Брахмачарин", "брахмачарина"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхага", "surface_forms": ["Бхага", "Бхаги", "Бхагу"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вамадева", "surface_forms": ["Вамадева", "Вамадеве", "Вамадеву"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вара", "surface_forms": ["варн"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вибхишана", "surface_forms": ["Вибхишаной", "Вибхишану", "Вибхишаны"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "видьядхари", "surface_forms": ["Видьядхари", "видьядхари", "видьядхаров"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дала", "surface_forms": ["Дал", "Дали"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джахну", "surface_forms": ["Джахну"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "киннара", "surface_forms": ["Киннары", "киннары"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "киннари", "surface_forms": ["киннарам", "киннарами", "киннари", "киннаров"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кшатрия", "surface_forms": ["Кшатриев", "Кшатрии", "кшатрии"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мадху", "surface_forms": ["Мадху"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "манаса", "surface_forms": ["Манаса"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мару", "surface_forms": ["Марс", "Мару"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "махендра", "surface_forms": ["Махендру"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "маходая", "surface_forms": ["Маходаю", "Маходая"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мохана", "surface_forms": ["Мохана", "Мохану"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "накшатра", "surface_forms": ["накшатра"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нандана", "surface_forms": ["Нандана", "Нандане"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нандиграма", "surface_forms": ["Нандиграме", "Нандиграму"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нишада", "surface_forms": ["Нишады", "нишада", "нишадой"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пахлава", "surface_forms": ["Пахлавов", "пахлавов"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пашупати", "surface_forms": ["Пашупати"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рака", "surface_forms": ["Рака"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "раса", "surface_forms": ["РАСЫ", "Раса", "раса"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "расатала", "surface_forms": ["расатала", "расатале", "расаталой", "расаталы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ренука", "surface_forms": ["Ренука", "Ренукой", "Ренуку"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "санкашья", "surface_forms": ["Санкашье", "Санкашьи", "Санкашью"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сура", "surface_forms": ["СУРАМИ", "Сура", "Сурой", "Суру", "Суры"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шакунтала", "surface_forms": ["Шакунтала", "Шакунталу"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шанкара", "surface_forms": ["Шанкара", "Шанкару", "Шанкары"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "агнея", "surface_forms": ["Агнею", "Агнея"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "айравата", "surface_forms": ["Айравата", "Айраваты"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "асита", "surface_forms": ["Асита", "Аситы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ашвини", "surface_forms": ["Ашвинам", "ашвинами"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брахмани", "surface_forms": ["Брахманами", "Брахманов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхима", "surface_forms": ["Бхима", "Бхиме"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "васу", "surface_forms": ["Васу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "васудева", "surface_forms": ["Васудеве", "Васудеву", "Васудевы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вината", "surface_forms": ["Винате", "Винаты"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вирупакша", "surface_forms": ["Вирупакша", "Вирупакши", "Вирупакшу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вритра", "surface_forms": ["Вритра", "Вритру"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дакша", "surface_forms": ["Дакша", "Дакши"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дандака", "surface_forms": ["Дандаке", "Дандаки", "Дандаку"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дари", "surface_forms": ["Дар", "Дарю"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джабали", "surface_forms": ["Джабали"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джамбават", "surface_forms": ["Джамбават"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дхарма", "surface_forms": ["Дхарме", "Дхармы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кавья", "surface_forms": ["Кавьи", "кавья"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кайласа", "surface_forms": ["Кайласа", "Кайласе"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мантхара", "surface_forms": ["Мантхара", "Мантхару"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мати", "surface_forms": ["Мать"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "махападма", "surface_forms": ["Махападма", "Махападму", "Махападмы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нала", "surface_forms": ["Нала", "Налой", "Налу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нахуша", "surface_forms": ["Нахуша", "Нахуши"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пака", "surface_forms": ["Паки", "Паку"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "парвати", "surface_forms": ["Парвати"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пинака", "surface_forms": ["Пинака", "Пинаке", "Пинаку"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "санаткумара", "surface_forms": ["Санаткумара", "Санаткумарой"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сурья", "surface_forms": ["Сурье", "Сурьи"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сута", "surface_forms": ["Сута", "сута", "суты"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тваштар", "surface_forms": ["Тваштара", "Тваштаром"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "трета", "surface_forms": ["Третий", "трета"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "упасунда", "surface_forms": ["Упасунда", "Упасунды"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "хайхая", "surface_forms": ["Хайхаи", "хайхаи", "хайхаями"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "хотар", "surface_forms": ["Хотар", "хотар", "хотару"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шудра", "surface_forms": ["Шудры", "шудры"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "яяти", "surface_forms": ["Яяти"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "айшика", "surface_forms": ["Айшика", "Айшику"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "арьяман", "surface_forms": ["Арьяман", "Арьямана"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "атри", "surface_forms": ["Атри"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "аю", "surface_forms": ["АШ"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бана", "surface_forms": ["Бана", "Баны"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брахмалока", "surface_forms": ["Брахмалока", "брахмалока", "брахмалоку"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхава", "surface_forms": ["Бхава", "Бхавы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхадра", "surface_forms": ["Бхадра", "Бхадру"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ваша", "surface_forms": ["Ваш", "Ваша", "Ваши"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вивасват", "surface_forms": ["Вивасват", "Вивасвата"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "видьядхара", "surface_forms": ["Видьядхары", "видьядхары"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вишваджит", "surface_forms": ["вишваджит"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дарбхи", "surface_forms": ["Дарбха", "дарбхе", "дарбху"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "деварата", "surface_forms": ["Деварата", "Девараты"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джахнави", "surface_forms": ["Джахнави"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джая", "surface_forms": ["Джая"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кабандха", "surface_forms": ["Кабандха", "Кабандхой"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "калмашапада", "surface_forms": ["Калмашапада", "Калмашападе"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "камбоджа", "surface_forms": ["Камбоджей", "Камбоджи", "камбоджами"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "канкана", "surface_forms": ["Канкану", "Канканы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "капали", "surface_forms": ["Капалу"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "картавирья", "surface_forms": ["Картавирьи", "Картавирья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кешава", "surface_forms": ["Кешава"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кешини", "surface_forms": ["Кешини"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "критаюга", "surface_forms": ["Критаюгу"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "магадха", "surface_forms": ["Магадхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "магха", "surface_forms": ["Магха"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "меру", "surface_forms": ["Меру"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "митра", "surface_forms": ["Митра", "Митру", "Митры"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мукхья", "surface_forms": ["Мукхьи", "мукхьев"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "павака", "surface_forms": ["Павака"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пампа", "surface_forms": ["Пампе", "Пампы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "проштхапада", "surface_forms": ["Проштхапада", "Проштхапады"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пунарвасу", "surface_forms": ["Пунарвасу"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пушья", "surface_forms": ["Пушья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рикша", "surface_forms": ["Рикше", "рикша"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рохини", "surface_forms": ["Рохини"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "самаведа", "surface_forms": ["Самаведа", "Самаведе", "Самаведу"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "супрабха", "surface_forms": ["Супрабха", "Супрабхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "суяджня", "surface_forms": ["Суяджню", "Суяджня"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "таладжангха", "surface_forms": ["Таладжангхи", "таладжангхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тара", "surface_forms": ["Тара", "Тарой", "Тары"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "таркшья", "surface_forms": ["Таркшьи", "таркшьев"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "трипура", "surface_forms": ["Трипуру", "Трипуры"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "уттара", "surface_forms": ["Уттара"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "хара", "surface_forms": ["Хара"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "хаяширас", "surface_forms": ["Хаяширас"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "хришикеша", "surface_forms": ["Хришикеша"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "читракута", "surface_forms": ["Читракуте", "Читракуту", "Читракуты"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шабара", "surface_forms": ["Шабари"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шаданана", "surface_forms": ["Шаданана", "Шадананой"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шона", "surface_forms": ["Шоны"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шурпанакха", "surface_forms": ["Шурпанакха", "Шурпанакхи", "Шурпанакхой"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "яджурведа", "surface_forms": ["Яджурведа", "Яджурведе", "Яджурведы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "аджа", "surface_forms": ["Аджа", "Аджи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "амаравати", "surface_forms": ["Амаравати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ананга", "surface_forms": ["Ананга"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "анаранья", "surface_forms": ["Анараньи", "Анаранья"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "апсарас", "surface_forms": ["АПСАРАС", "апсарас"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "артха", "surface_forms": ["артха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "артхашастра", "surface_forms": ["Артхашастра", "артхашастру"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бадари", "surface_forms": ["Бадари", "бадари"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брахмаширас", "surface_forms": ["Брахмаширас"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брихадратха", "surface_forms": ["Брихадратха", "Брихадратхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхагавадгита", "surface_forms": ["Бхагавадгите", "Бхагавадгиты"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вайшравана", "surface_forms": ["Вайшраване", "Вайшраваны"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ванара", "surface_forms": ["Ванары", "ванара"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "варуни", "surface_forms": ["Варуни"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "васуки", "surface_forms": ["Васуки"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ваявья", "surface_forms": ["Ваявью"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вибудха", "surface_forms": ["Вибудха", "Вибудхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "видарбха", "surface_forms": ["Видарбхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "виджая", "surface_forms": ["Виджая"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вимала", "surface_forms": ["Вимала", "Вималу"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вина", "surface_forms": ["Вина", "вина"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вишвакарман", "surface_forms": ["Вишвакармана", "Вишвакарманом"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гуха", "surface_forms": ["Гухой", "Гуху"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дадхичи", "surface_forms": ["Дадхичи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дакшина", "surface_forms": ["дакшина"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "данави", "surface_forms": ["данавам", "данавов"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "даруна", "surface_forms": ["Даруна", "Даруну"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дашагрива", "surface_forms": ["Дашагрива", "Дашагривы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "девамидха", "surface_forms": ["Девамидха", "Девамидхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джамбха", "surface_forms": ["Джамбха", "Джамбхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джанастхана", "surface_forms": ["Джанастхане", "Джанастхану"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джаянта", "surface_forms": ["Джаянта"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джримбхака", "surface_forms": ["Джримбхака", "Джримбхаку"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дханвантари", "surface_forms": ["Дханвантари"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дхриштакету", "surface_forms": ["Дхриштакету"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дхундхумара", "surface_forms": ["Дхундхумара", "Дхундхумары"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ида", "surface_forms": ["Иди"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ила", "surface_forms": ["Ил"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ка", "surface_forms": ["КМ", "КС"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кайкея", "surface_forms": ["Кайкеий"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "какубха", "surface_forms": ["Какубха", "какубха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "калакута", "surface_forms": ["калакута"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "калинди", "surface_forms": ["Калинди"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "катьяяни", "surface_forms": ["Катьяяна"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "каустубха", "surface_forms": ["Каустубха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кимпуруша", "surface_forms": ["Кимпуруши", "кимпуруши"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "крату", "surface_forms": ["Крату"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кукши", "surface_forms": ["Кукши"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кушамба", "surface_forms": ["Кушамба", "Кушамбу"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кхара", "surface_forms": ["Кхара", "Кхары"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ломапада", "surface_forms": ["Ломапада", "Ломападой"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мада", "surface_forms": ["мада", "мадой"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мадхьядеша", "surface_forms": ["Мадхьядешей"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "майтхили", "surface_forms": ["Майтхили"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мандара", "surface_forms": ["Мандару"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мандхатар", "surface_forms": ["Мандхатар", "Мандхатара"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "маркандея", "surface_forms": ["Маркандея"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "маусала", "surface_forms": ["Маусала", "Маусалу"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "махабаху", "surface_forms": ["Махабаху"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "махавира", "surface_forms": ["Махавира", "Махавиры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мая", "surface_forms": ["Ма", "ма"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "млеччха", "surface_forms": ["Млеччхи", "млеччхами"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "моха", "surface_forms": ["Моха", "Моху"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "набхага", "surface_forms": ["Набхага", "Набхаги"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нандивардхана", "surface_forms": ["Нандивардхана", "Нандивардханы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нишади", "surface_forms": ["нишадов"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пада", "surface_forms": ["Падай", "пад"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "падманабха", "surface_forms": ["Падманабха", "Падманабху"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "парджанья", "surface_forms": ["Парджаньи", "Парджанья"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "патала", "surface_forms": ["Патала", "патала"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "питрья", "surface_forms": ["Питрью", "Питрья"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "плакша", "surface_forms": ["плакши"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "праматха", "surface_forms": ["праматхам", "праматхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "притху", "surface_forms": ["Притху"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пулаха", "surface_forms": ["Пулаха", "Пулаху"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рахасья", "surface_forms": ["рахасья"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сама", "surface_forms": ["Сама", "Самый"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сампати", "surface_forms": ["Сампати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сатья", "surface_forms": ["Сатью", "Сатья"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сатьявати", "surface_forms": ["Сатьявати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "саувира", "surface_forms": ["Саувира", "Саувиры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сахадева", "surface_forms": ["Сахадева", "Сахадевы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "смрити", "surface_forms": ["Смрити", "смрити"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сомадатта", "surface_forms": ["Сомадатта", "Сомадатты"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "судаман", "surface_forms": ["Судамана", "Судамане"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сударшана", "surface_forms": ["Сударшана", "Сударшаны"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "судханван", "surface_forms": ["Судханван", "Судханвана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сураштра", "surface_forms": ["Сураштра"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сучандра", "surface_forms": ["Сучандра", "Сучандры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тиртха", "surface_forms": ["тиртх", "тиртхам"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "трипатхага", "surface_forms": ["Трипатхага"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "триширас", "surface_forms": ["Триширас", "Тришираса"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "удумбара", "surface_forms": ["Удумбара", "удумбары"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "харихая", "surface_forms": ["харихая"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "харьяшва", "surface_forms": ["Харьяшва", "Харьяшвы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "чайтра", "surface_forms": ["Чайтра"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "чайтраратха", "surface_forms": ["Чайтраратха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "чьявана", "surface_forms": ["Чьявана", "Чьявану"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шакуна", "surface_forms": ["Шакуна", "Шакуну"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шарабханга", "surface_forms": ["Шарабхангой"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шатодара", "surface_forms": ["Шатодара", "Шатодару"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шигхрага", "surface_forms": ["Шигхрага", "Шигхраги"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шита", "surface_forms": ["Шита", "Шиту"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шишира", "surface_forms": ["Шишира", "Шиширу"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шри", "surface_forms": ["Шри"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "юванашва", "surface_forms": ["Юванашва", "Юванашвы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "якши", "surface_forms": ["якшами"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "аванти", "surface_forms": ["аванти"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "авьякта", "surface_forms": ["авьякта"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "акша", "surface_forms": ["Акшу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "акшаухини", "surface_forms": ["акшаухини"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "аламбуша", "surface_forms": ["Аламбуши"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "амрита", "surface_forms": ["Амрита"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ангирас", "surface_forms": ["Ангирас"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "01_ramayana-balakanda", "lemma": "аншу", "surface_forms": ["Аншу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "араньяка", "surface_forms": ["араньяки"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ариштанеми", "surface_forms": ["Ариштанеми"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "атман", "surface_forms": ["атмане"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "01_ramayana-balakanda", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "01_ramayana-balakanda", "lemma": "ашока", "surface_forms": ["Ашоки"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бинду", "surface_forms": ["Бинду"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахмаракшасы", "surface_forms": ["брахмаракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахмаракшас", "брахмаракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахмаракшасы", "surface_forms": ["Брахмаракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахмаракшас", "брахмаракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "брахмаракшасы", "surface_forms": ["брахмаракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахмаракшас", "брахмаракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "брихаспати", "surface_forms": ["Брихаспати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бходжа", "surface_forms": ["бходжи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхригутунга", "surface_forms": ["Бхригутунга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "бхушана", "surface_forms": ["Бхушана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вайшья", "surface_forms": ["Вайшьи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ванаю", "surface_forms": ["Ванаю"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вандин", "surface_forms": ["вандинам"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "васумати", "surface_forms": ["Васумати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вашати", "surface_forms": ["вашат"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "витихотра", "surface_forms": ["витихотры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вишакха", "surface_forms": ["Вишакха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "вишравас", "surface_forms": ["Вишраваса"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гадхин", "surface_forms": ["Гадхин"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "01_ramayana-balakanda", "lemma": "гандхамадана", "surface_forms": ["Гандхамадана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гандхара", "surface_forms": ["Гандхары"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гандхари", "surface_forms": ["Гандхари"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гиривраджа", "surface_forms": ["Гиривраджу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "гокарна", "surface_forms": ["Гокарне"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "голангула", "surface_forms": ["голангулы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "готама", "surface_forms": ["Готама"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дадхимукха", "surface_forms": ["Дадхимукха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дану", "surface_forms": ["Дану"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "двивида", "surface_forms": ["Двивиду"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джамбудвипа", "surface_forms": ["Джамбудвипу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "джатаю", "surface_forms": ["джата"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "диргхаюс", "surface_forms": ["Диргхаюс"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дундубхи", "surface_forms": ["Дундубхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "душана", "surface_forms": ["Душана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дханурведа", "surface_forms": ["дханурведа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дхармаранья", "surface_forms": ["Дхармаранья"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "дхритараштра", "surface_forms": ["Дхритараштры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "икшумати", "surface_forms": ["Икшумати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "инду", "surface_forms": ["Инд"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кадру", "surface_forms": ["Кадру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "калагни", "surface_forms": ["Калагни"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "калачакра", "surface_forms": ["Калачакру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "каматха", "surface_forms": ["каматха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кампилья", "surface_forms": ["Кампилье"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "каши", "surface_forms": ["Каши"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "01_ramayana-balakanda", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "01_ramayana-balakanda", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "01_ramayana-balakanda", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "01_ramayana-balakanda", "lemma": "кету", "surface_forms": ["Кету"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кирата", "surface_forms": ["кираты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кишкиндха", "surface_forms": ["Кишкиндху"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "косала", "surface_forms": ["Косалы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "кумбхакарна", "surface_forms": ["Кумбхакарны"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "курма", "surface_forms": ["курма"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "лакшми", "surface_forms": ["Лакшми"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "локапала", "surface_forms": ["локапалой"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "магадхи", "surface_forms": ["магадхам"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мадхава", "surface_forms": ["Мадхава"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "майнака", "surface_forms": ["Майнаки"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "майнда", "surface_forms": ["Майнду"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "макара", "surface_forms": ["Макару"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мандала", "surface_forms": ["мандалы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "марга", "surface_forms": ["Марга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "01_ramayana-balakanda", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "01_ramayana-balakanda", "lemma": "маруты", "surface_forms": ["маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "01_ramayana-balakanda", "lemma": "маруты", "surface_forms": ["маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "01_ramayana-balakanda", "lemma": "маруты", "surface_forms": ["маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "01_ramayana-balakanda", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "01_ramayana-balakanda", "lemma": "маруты", "surface_forms": ["маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "01_ramayana-balakanda", "lemma": "махаратха", "surface_forms": ["Махаратха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "махорага", "surface_forms": ["махораги"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мегханада", "surface_forms": ["Мегханады"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "мена", "surface_forms": ["Мена"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "налини", "surface_forms": ["Налини"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нандин", "surface_forms": ["Нандин"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нарака", "surface_forms": ["нарака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "никумбха", "surface_forms": ["Никумбха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нила", "surface_forms": ["Нилу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "нила", "surface_forms": ["Нила"], "count": 1, "needs_review": true, "lemma_candidates": ["нила", "нилая"]}
+{"source": "01_ramayana-balakanda", "lemma": "нияма", "surface_forms": ["нияма"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "павана", "surface_forms": ["Павани"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "паннаги", "surface_forms": ["паннаги"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "парашурама", "surface_forms": ["Парашурама"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пауластья", "surface_forms": ["Пауластья"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "паша", "surface_forms": ["паша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пишачи", "surface_forms": ["Пишачами"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "прана", "surface_forms": ["прана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "прасенаджит", "surface_forms": ["Прасенаджит"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "прачетаса", "surface_forms": ["Прачетаса"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "притхиви", "surface_forms": ["Притхиви"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пулома", "surface_forms": ["Пулому"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пуруша", "surface_forms": ["Пуруша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "пушана", "surface_forms": ["Пушана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаса", "surface_forms": ["Ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасе", "surface_forms": ["Ракшасе"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасой", "surface_forms": ["Ракшасой"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасой", "surface_forms": ["ракшасой"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасой", "surface_forms": ["ракшасой"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасу", "surface_forms": ["ракшасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасу", "surface_forms": ["ракшасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасу", "surface_forms": ["ракшасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасу", "surface_forms": ["ракшасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "рати", "surface_forms": ["Рати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "раху", "surface_forms": ["Раху"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "рикшават", "surface_forms": ["Рикшавата"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ришьямука", "surface_forms": ["Ришьямуке"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "савитар", "surface_forms": ["Савитара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "савитри", "surface_forms": ["Савитри"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "самудра", "surface_forms": ["Самудры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "санкхья", "surface_forms": ["санкхьи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сараса", "surface_forms": ["сарас"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сарпа", "surface_forms": ["Сарпа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "синхика", "surface_forms": ["Синхики"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "стри", "surface_forms": ["Страх"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сурабхи", "surface_forms": ["Сурабхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сути", "surface_forms": ["сутам"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сушена", "surface_forms": ["Сушена"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "сушрута", "surface_forms": ["Сушруты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тамаса", "surface_forms": ["Тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "тамасе", "surface_forms": ["Тамасе"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "тамасу", "surface_forms": ["Тамасу"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "тамасы", "surface_forms": ["Тамасы"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "01_ramayana-balakanda", "lemma": "теджас", "surface_forms": ["теджас"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тилоттама", "surface_forms": ["Тилоттама"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "триджата", "surface_forms": ["Триджатой"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "тундикера", "surface_forms": ["тундикеры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "упендра", "surface_forms": ["Упендра"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "урага", "surface_forms": ["ураги"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "харита", "surface_forms": ["хариты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "харишчандра", "surface_forms": ["Харишчандра"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "чандра", "surface_forms": ["Чандры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "читраратха", "surface_forms": ["Читраратхой"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шанкха", "surface_forms": ["шанкха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шарабха", "surface_forms": ["Шарабха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шатакрату", "surface_forms": ["Шатакрату"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шашабинду", "surface_forms": ["Шашабинду"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шашанка", "surface_forms": ["шашанка"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шраддха", "surface_forms": ["шраддха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шрингавера", "surface_forms": ["Шрингаверы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шрутакирти", "surface_forms": ["Шрутакирти"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шрути", "surface_forms": ["шрути"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шукра", "surface_forms": ["Шукры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "шунака", "surface_forms": ["Шунака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "01_ramayana-balakanda", "lemma": "ядави", "surface_forms": ["ядавов"], "count": 1, "needs_review": false, "lemma_candidates": null}

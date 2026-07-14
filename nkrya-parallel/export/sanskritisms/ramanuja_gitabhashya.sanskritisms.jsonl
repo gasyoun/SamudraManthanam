@@ -1,0 +1,553 @@
+{"source": "ramanuja_gitabhashya", "lemma": "атман", "surface_forms": ["АТМАН", "АТМАНА", "АТМАНЕ", "АТМАНОМ", "АТМАНУ", "Атман", "Атмана", "Атмане", "Атманом", "Атману", "атман", "атмана", "атманам", "атманами", "атманах", "атмане", "атманов", "атманы"], "count": 851, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "пуруша", "surface_forms": ["ПУРУША", "ПУРУШЕ", "ПУРУШЕЙ", "ПУРУШИ", "ПУРУШУ", "Пуруша", "Пуруше", "Пурушей", "Пуруши", "Пурушу"], "count": 163, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "саттва", "surface_forms": ["САТТВА", "САТТВЕ", "САТТВЫ", "Саттва", "саттва", "саттве", "саттвой", "саттву", "саттвы"], "count": 126, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шрути", "surface_forms": ["ШРУТИ", "Шрути", "шрути"], "count": 88, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "йогин", "surface_forms": ["ЙОГИН", "ЙОГИНА", "ЙОГИНАМИ", "ЙОГИНОВ", "ЙОГИНОМ", "ЙОГИНУ", "ЙОГИНЫ", "Йогин", "йогин", "йогина", "йогинами", "йогинов", "йогином", "йогину", "йогины"], "count": 78, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "пракрити", "surface_forms": ["ПРАКРИТИ", "Пракрита", "пракрити"], "count": 76, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "арджуна", "surface_forms": ["АРДЖУНА", "Арджуна", "Арджуне", "Арджуной", "Арджуну", "Арджуны"], "count": 73, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "веда", "surface_forms": ["ВЕД", "ВЕДА", "ВЕДУ", "ВЕДЫ", "Вед", "Веда", "Веде", "Веду", "Веды", "веды"], "count": 72, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "раджас", "surface_forms": ["РАДЖАС", "РАДЖАСА", "РАДЖАСОМ", "Раджас", "раджас", "раджаса", "раджасе", "раджасом", "раджасу"], "count": 66, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "йога", "surface_forms": ["ЙОГ", "ЙОГА", "ЙОГЕ", "ЙОГИ", "ЙОГОЙ", "ЙОГУ", "Йоги", "йог"], "count": 53, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "партха", "surface_forms": ["ПАРТХА", "Партха", "Партхе", "Партхи", "Партху"], "count": 47, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "брахма", "surface_forms": ["БРАХМА", "БРАХМЫ", "Брахма", "Брахме", "Брахмой", "Брахму", "Брахмы", "брахма"], "count": 40, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кшетраджня", "surface_forms": ["КШЕТРАДЖНИ", "КШЕТРАДЖНЯ", "кшетраджней", "кшетраджни", "кшетраджню", "кшетраджня"], "count": 37, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кришна", "surface_forms": ["КРИШНА", "Кришна", "Кришне", "Кришной", "Кришну", "Кришны"], "count": 36, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "индра", "surface_forms": ["ИНДРА", "Индра", "Индре", "Индрой", "Индры"], "count": 35, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "васудева", "surface_forms": ["ВАСУДЕВЫ", "Васудевы"], "count": 33, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "тапас", "surface_forms": ["ТАПАС", "ТАПАСА", "ТАПАСЕ", "ТАПАСОМ", "тапаса", "тапасе", "тапасом"], "count": 25, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "акшара", "surface_forms": ["АКШАРА", "АКШАРУ", "Акшара", "Акшаре", "Акшарой", "Акшару", "Акшары", "акшара"], "count": 24, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кунти", "surface_forms": ["КУНТИ", "Кунти"], "count": 22, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "панду", "surface_forms": ["ПАНДУ", "Панду"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дхритараштра", "surface_forms": ["ДХРИТАРАШТРЫ", "Дхритараштра", "Дхритараштре", "Дхритараштру", "Дхритараштры"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "джива", "surface_forms": ["ДЖИВ", "ДЖИВОЙ", "джива", "дживой", "дживу", "дживы"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "нея", "surface_forms": ["НЕМ", "НЕТ", "Нет"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "прана", "surface_forms": ["ПРАН", "ПРАНАХ", "ПРАНЕ", "ПРАНУ", "ПРАНЫ", "пран", "прана", "пранах", "пране", "прану", "праны"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "бхарата", "surface_forms": ["Бхаратой", "Бхараты"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вишну", "surface_forms": ["ВИШНУ", "Вишну"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "нараяна", "surface_forms": ["Нараяна", "Нараяне", "Нараяну", "Нараяны"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "пурушоттама", "surface_forms": ["ПУРУШОТТАМА", "Пурушоттама", "Пурушоттаме", "Пурушоттамы"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "бхишма", "surface_forms": ["БХИШМА", "БХИШМОЙ", "БХИШМУ", "БХИШМЫ", "Бхишма", "Бхишме", "Бхишмой", "Бхишму"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "веди", "surface_forms": ["ВЕДАМИ", "ВЕДАХ", "Ведами", "Ведах"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дхарма", "surface_forms": ["ДХАРМА", "ДХАРМЕ", "ДХАРМОЙ", "ДХАРМУ", "ДХАРМЫ"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "праджапати", "surface_forms": ["ПРАДЖАПАТИ", "Праджапати", "праджапати"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "смрити", "surface_forms": ["смрити"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "пут", "surface_forms": ["ПУТ", "ПУТИ", "ПУТЬ"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "санкхья", "surface_forms": ["САНКХЬИ", "санкхье", "санкхьи", "санкхья"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дари", "surface_forms": ["ДАР", "ДАРАМИ", "ДАРАХ", "ДАРОВ", "ДАРЫ"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ману", "surface_forms": ["МАНУ", "Ману"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "тата", "surface_forms": ["ТАТ"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ума", "surface_forms": ["УМ", "УМА", "УМОМ"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вара", "surface_forms": ["Варн", "варн"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сома", "surface_forms": ["СОМОЙ", "СОМУ", "Сома", "Сомой", "Сому", "Сомы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "упанишад", "surface_forms": ["упанишад", "упанишадами", "упанишадах", "упанишаде", "упанишады"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "адитья", "surface_forms": ["АДИТЬЕВ", "адитьев", "адитьи", "адитья"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "апана", "surface_forms": ["АПАНЕ", "АПАНУ", "АПАНЫ", "апана", "апане", "апану"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дурьодхана", "surface_forms": ["Дурьодхана", "Дурьодхане", "Дурьодханой", "Дурьодханы"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "мадху", "surface_forms": ["Мадху"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ваю", "surface_forms": ["Ваю"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дрона", "surface_forms": ["ДРОНА", "ДРОНУ", "ДРОНЫ", "Дроной", "Дрону"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кешава", "surface_forms": ["КЕШАВЫ", "Кешава", "Кешавы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "махат", "surface_forms": ["махат", "махата"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "муни", "surface_forms": ["МУНИ", "муни"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "хришикеша", "surface_forms": ["ХРИШИКЕШЕ", "Хришикеша", "Хришикеше"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "агни", "surface_forms": ["Агни"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "адхарма", "surface_forms": ["АДХАРМЫ", "адхарма", "адхарме", "адхарму"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "веданта", "surface_forms": ["Веданта", "Веданте", "Веданты"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "гудакеша", "surface_forms": ["Гудакеша", "Гудакеши"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "куру", "surface_forms": ["КУРУ", "Куру"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сама", "surface_forms": ["САМОЙ", "САМОМ", "Сама"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сат", "surface_forms": ["САТ"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сиддхи", "surface_forms": ["СИДДХОВ", "сиддхов"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "хираньягарбха", "surface_forms": ["Хираньягарбха", "Хираньягарбхи"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "артха", "surface_forms": ["артха"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "буддхи", "surface_forms": ["БУДДХИ", "буддхи"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "бху", "surface_forms": ["БхГ"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вьяса", "surface_forms": ["ВЬЯСА", "Вьяса", "Вьясы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "гандхарви", "surface_forms": ["ГАНДХАРВОВ", "гандхарвов"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "карна", "surface_forms": ["КАРНУ", "Карна", "Карну", "Карны"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кшатрия", "surface_forms": ["КШАТРИИ", "КШАТРИЯ", "кшатрии"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "нирвана", "surface_forms": ["НИРВАНА", "НИРВАНЫ", "Нирване", "Нирваны"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "парашара", "surface_forms": ["Парашара", "Парашарой"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "рама", "surface_forms": ["РАМА", "Рама", "Рамы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "рудра", "surface_forms": ["РУДР", "РУДРОВ", "Рудры", "рудров", "рудры"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шри", "surface_forms": ["Шри"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "юдхиштхира", "surface_forms": ["ЮДХИШТХИРА", "Юдхиштхира", "Юдхиштхиры"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "асури", "surface_forms": ["асуров"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "атхарваведа", "surface_forms": ["Атхарваведы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "бхима", "surface_forms": ["БХИМОЙ", "Бхима", "Бхиме", "Бхимой"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "бхригу", "surface_forms": ["БХРИГУ", "Бхригу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вайшванара", "surface_forms": ["ВАЙШВАНАРОЙ", "Вайшванара", "Вайшванару", "Вайшванары"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "варуна", "surface_forms": ["Варуна", "Варуне"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "говинда", "surface_forms": ["Говинда", "Говинде", "Говинды"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "меру", "surface_forms": ["МЕРУ", "Меру"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "нарада", "surface_forms": ["НАРАДА", "Нарада"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "пандава", "surface_forms": ["Пандавами", "Пандавов", "пандавов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "пара", "surface_forms": ["ПАР", "ПАРАМ", "ПАРАМИ", "пара"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ригведа", "surface_forms": ["Ригведа", "Ригведы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "самаведа", "surface_forms": ["САМАВЕДА", "Самаведа", "Самаведы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сварупа", "surface_forms": ["сварупа"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "хари", "surface_forms": ["ХАРИ", "Хари", "Харив"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шудра", "surface_forms": ["ШУДРЫ", "шудры"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "яд", "surface_forms": ["ЯД", "ЯДУ", "Яду"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "яма", "surface_forms": ["Яма"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ашваттха", "surface_forms": ["Ашваттха", "ашваттхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмачарин", "surface_forms": ["брахмачарин", "брахмачаринов", "брахмачарины"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "бхагавадгита", "surface_forms": ["Бхагавадгита", "Бхагавадгиты"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "бхарати", "surface_forms": ["Бхаратов", "бхаратов"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "васуки", "surface_forms": ["ВАСУКИ", "Васуки"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вивасват", "surface_forms": ["Вивасват", "Вивасвата"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "девадатта", "surface_forms": ["ДЕВАДАТТУ", "Девадатту", "Девадатты"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "джанардана", "surface_forms": ["Джанардана"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "драупади", "surface_forms": ["Драупади"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "канса", "surface_forms": ["Кансу", "Кансы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "капила", "surface_forms": ["КАПИЛА", "Капила", "Капилы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "каунтея", "surface_forms": ["Каунтея"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "каурави", "surface_forms": ["Кауравами", "Кауравов"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "маричи", "surface_forms": ["МАРИЧИ", "Маричи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "марути", "surface_forms": ["МАРУТОВ", "марутов"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ракшаси", "surface_forms": ["РАКШАСАМ", "ракшасам", "ракшасов"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "теджас", "surface_forms": ["Теджас", "теджас"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "хара", "surface_forms": ["ХАРА", "Хара"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ади", "surface_forms": ["АДА", "Ади"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "айравата", "surface_forms": ["АЙРАВАТА", "Айравата"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "асат", "surface_forms": ["АСАТ"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "асита", "surface_forms": ["АСИТА", "Асита"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмани", "surface_forms": ["БРАХМАНАХ", "БРАХМАНОВ"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "брихаспати", "surface_forms": ["БРИХАСПАТИ", "Брихаспати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вайшья", "surface_forms": ["ВАЙШЬИ"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вибхути", "surface_forms": ["вибхути"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вирата", "surface_forms": ["Вирата"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "гандхарва", "surface_forms": ["гандхарвы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "гая", "surface_forms": ["ГАС"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "гаятри", "surface_forms": ["ГАЯТРИ", "гаятри"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "девала", "surface_forms": ["ДЕВАЛА", "Девала"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "джанака", "surface_forms": ["ДЖАНАКА", "Джанака"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "друпада", "surface_forms": ["Друпада"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "икшваку", "surface_forms": ["ИКШВАКУ", "Икшваку"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "каки", "surface_forms": ["КАКИМИ", "КАКИХ"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "каши", "surface_forms": ["Каши"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кубера", "surface_forms": ["Кубера"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кумбхака", "surface_forms": ["кумбхака"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "курукшетра", "surface_forms": ["Курукшетре"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "мадхусудана", "surface_forms": ["Мадхусудана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "прахлада", "surface_forms": ["Прахлада", "Прахладе"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "речака", "surface_forms": ["речака"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "свадха", "surface_forms": ["СВАДХА", "свадха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сиддха", "surface_forms": ["сиддхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сканда", "surface_forms": ["Сканда"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "субхадра", "surface_forms": ["Субхадры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сута", "surface_forms": ["СУТЬ", "Сутр"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сути", "surface_forms": ["СУТИ"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "уччайшравас", "surface_forms": ["УЧЧАЙШРАВАС", "Уччайшравас"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "хотар", "surface_forms": ["ХОТАРОВ", "хотаров"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "читраратха", "surface_forms": ["ЧИТРАРАТХА", "Читраратха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шанкара", "surface_forms": ["ШАНКАРА", "Шанкара"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шветакету", "surface_forms": ["Шветакету"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шива", "surface_forms": ["Шива", "Шиву"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "яджурведа", "surface_forms": ["Яджурведы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "агнея", "surface_forms": ["Агнея"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ад", "surface_forms": ["АД"], "count": 1, "needs_review": true, "lemma_candidates": ["ади", "аю"]}
+{"source": "ramanuja_gitabhashya", "lemma": "акрура", "surface_forms": ["Акруру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "амрита", "surface_forms": ["АМРИТЫ"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ананта", "surface_forms": ["Ананта"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "анантавиджая", "surface_forms": ["Анантавиджаю"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "аришта", "surface_forms": ["Аришту"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "арьяман", "surface_forms": ["Арьяман"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "асура", "surface_forms": ["асуры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ашвамедха", "surface_forms": ["ашвамедхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ашваттхаман", "surface_forms": ["Ашваттхаман"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ашвини", "surface_forms": ["АШВИНОВ"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ашвины", "surface_forms": ["ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "ramanuja_gitabhashya", "lemma": "ашвины", "surface_forms": ["ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["БРАХМАН"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["БРАХМАНА"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмана", "surface_forms": ["Брахмана"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["БРАХМАНЕ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["БРАХМАНЕ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмане", "surface_forms": ["Брахмане"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["БРАХМАНОМ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["БРАХМАНОМ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["БРАХМАНОМ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["БРАХМАНОМ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["БРАХМАНУ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["БРАХМАНУ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["БРАХМАНУ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["Брахману"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахману", "surface_forms": ["БРАХМАНУ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманы", "surface_forms": ["БРАХМАНЫ"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмасутр", "surface_forms": ["БРАХМАСУТР"], "count": 1, "needs_review": true, "lemma_candidates": ["брахмасута", "брахмасутра"]}
+{"source": "ramanuja_gitabhashya", "lemma": "брахмасутра", "surface_forms": ["Брахмасутрах"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ваджра", "surface_forms": ["ваджра"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вайшравана", "surface_forms": ["Вайшравана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "варшнея", "surface_forms": ["Варшнея"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "васту", "surface_forms": ["васту"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "васу", "surface_forms": ["ВАСУ"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "викарна", "surface_forms": ["Викарна"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вината", "surface_forms": ["Винаты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "вишварупа", "surface_forms": ["Вишварупу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ганга", "surface_forms": ["Ганга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "гандива", "surface_forms": ["Гандива"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "гарга", "surface_forms": ["Гарги"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дайтья", "surface_forms": ["дайтьев"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "двадаша", "surface_forms": ["Двадаши"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дварака", "surface_forms": ["Дварака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "деха", "surface_forms": ["деха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дхаман", "surface_forms": ["дхаман"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дхенука", "surface_forms": ["Дхенуку"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дхриштадьюмна", "surface_forms": ["Дхриштадьюмной"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "дхриштакету", "surface_forms": ["Дхриштакету"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "итихаса", "surface_forms": ["итихасами"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ишвара", "surface_forms": ["Ишвары"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "калия", "surface_forms": ["Калию"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кандарпа", "surface_forms": ["КАНДАРПА"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кешин", "surface_forms": ["Кешина"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "крипа", "surface_forms": ["Крипа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кунтибходжа", "surface_forms": ["Кунтибходжа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "кшема", "surface_forms": ["кшема"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ланка", "surface_forms": ["Ланки"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "лока", "surface_forms": ["лока"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "малая", "surface_forms": ["МАЛАЯ"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "манас", "surface_forms": ["МАНАС"], "count": 1, "needs_review": true, "lemma_candidates": ["манас", "манаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "манас", "surface_forms": ["МАНАС"], "count": 1, "needs_review": true, "lemma_candidates": ["манас", "манаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "манаса", "surface_forms": ["МАНАСА"], "count": 1, "needs_review": true, "lemma_candidates": ["манас", "манаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "манвантара", "surface_forms": ["манвантару"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "манипушпака", "surface_forms": ["Манипушпаку"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "маргаширша", "surface_forms": ["маргаширша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "маруты", "surface_forms": ["маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "ramanuja_gitabhashya", "lemma": "маруты", "surface_forms": ["маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "ramanuja_gitabhashya", "lemma": "матхура", "surface_forms": ["Матхуру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "махабхута", "surface_forms": ["махабхута"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "мокшадхарма", "surface_forms": ["Мокшадхарме"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "наги", "surface_forms": ["нагов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "накула", "surface_forms": ["Накула"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "нитья", "surface_forms": ["НИТЬ"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "параматман", "surface_forms": ["ПАРАМАТМАН"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "патала", "surface_forms": ["Паталы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "паундра", "surface_forms": ["Паундру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "прадхана", "surface_forms": ["прадхана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "праламба", "surface_forms": ["Праламбу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "притхи", "surface_forms": ["Притхи"], "count": 1, "needs_review": true, "lemma_candidates": ["притха", "притху"]}
+{"source": "ramanuja_gitabhashya", "lemma": "пурана", "surface_forms": ["пуранами"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "пуруджит", "surface_forms": ["Пуруджит"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "путана", "surface_forms": ["Путану"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "рамануджа", "surface_forms": ["Рамануджи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "савитар", "surface_forms": ["Савитар"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "садхья", "surface_forms": ["садхьи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "саман", "surface_forms": ["Саман"], "count": 1, "needs_review": true, "lemma_candidates": ["саман", "самана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "саманов", "surface_forms": ["САМАНОВ"], "count": 1, "needs_review": true, "lemma_candidates": ["саман", "самана"]}
+{"source": "ramanuja_gitabhashya", "lemma": "санстхана", "surface_forms": ["санстхана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "саттв", "surface_forms": ["саттв"], "count": 1, "needs_review": true, "lemma_candidates": ["сатта", "саттва"]}
+{"source": "ramanuja_gitabhashya", "lemma": "сатья", "surface_forms": ["сатьям"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сатьяки", "surface_forms": ["Сатьяки"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сахадева", "surface_forms": ["Сахадева"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сомадатта", "surface_forms": ["Сомадатты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "стри", "surface_forms": ["СТРАХ"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сугхоша", "surface_forms": ["Сугхошу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сударшана", "surface_forms": ["Сударшана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сурабхи", "surface_forms": ["Сурабхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "сурья", "surface_forms": ["Сурья"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "такшака", "surface_forms": ["Такшаку"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["ТАМАС"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамас", "surface_forms": ["тамас"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["ТАМАСА"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["ТАМАСА"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["ТАМАСА"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамаса", "surface_forms": ["тамаса"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасе", "surface_forms": ["тамасе"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасе", "surface_forms": ["тамасе"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасе", "surface_forms": ["тамасе"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["тамасом"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасом", "surface_forms": ["ТАМАСОМ"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тамасу", "surface_forms": ["тамасу"], "count": 1, "needs_review": true, "lemma_candidates": ["тамас", "тамаса"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "тар", "surface_forms": ["ТАр"], "count": 1, "needs_review": true, "lemma_candidates": ["тара", "тару"]}
+{"source": "ramanuja_gitabhashya", "lemma": "уттамауджас", "surface_forms": ["Уттамауджас"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ушанас", "surface_forms": ["Ушанас"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "хая", "surface_forms": ["хан"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "хималая", "surface_forms": ["Хималай"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "чанура", "surface_forms": ["Чануру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "чекитана", "surface_forms": ["Чекитана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шамбара", "surface_forms": ["Шамбары"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шикхандин", "surface_forms": ["Шикхандин"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "шишупала", "surface_forms": ["Шишупалой"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "юга", "surface_forms": ["ЮГУ"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "юдхаманью", "surface_forms": ["Юдхаманью"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ююдхана", "surface_forms": ["Ююдхана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ядава", "surface_forms": ["Ядава"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "яджус", "surface_forms": ["Яджус"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "ramanuja_gitabhashya", "lemma": "ямуна", "surface_forms": ["Ямуны"], "count": 1, "needs_review": false, "lemma_candidates": null}

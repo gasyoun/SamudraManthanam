@@ -1,0 +1,435 @@
+{"source": "04_mahabharata-virataparva", "lemma": "пандава", "surface_forms": ["Пандава", "Пандавой", "Пандавы", "пандава", "пандавам", "пандавами", "пандавах", "пандавов", "пандавой", "пандаву", "пандавы"], "count": 171, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вирата", "surface_forms": ["Вират", "Вирата", "Вирате", "Виратой", "Вирату", "Вираты"], "count": 169, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "партха", "surface_forms": ["Партха", "Партхе", "Партхи", "Партхой", "Партху", "партхами", "партхи", "партхов"], "count": 141, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "арджуна", "surface_forms": ["Арджуна", "Арджуне", "Арджуной", "Арджуну", "Арджуны"], "count": 136, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "матсья", "surface_forms": ["Матсьей", "Матсьи", "Матсья", "матсьев", "матсьи", "матсьям", "матсьями"], "count": 124, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "юдхиштхира", "surface_forms": ["Юдхиштхира", "Юдхиштхире", "Юдхиштхирой", "Юдхиштхиру", "Юдхиштхиры"], "count": 116, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "каурави", "surface_forms": ["кауравам", "кауравами", "кауравов"], "count": 92, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кичака", "surface_forms": ["Кичака", "Кичаке", "Кичаки", "Кичакой", "Кичаку", "кичаки", "кичаков"], "count": 88, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дрона", "surface_forms": ["Дрона", "Дроне", "Дроной", "Дрону", "Дроны"], "count": 83, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кришна", "surface_forms": ["Кришна", "Кришне", "Кришной", "Кришну", "Кришны"], "count": 79, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кунти", "surface_forms": ["Кунти"], "count": 72, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхишма", "surface_forms": ["Бхишма", "Бхишме", "Бхишмой", "Бхишму", "Бхишмы"], "count": 69, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "индра", "surface_forms": ["Индра", "Индре", "Индрой", "Индру", "Индры"], "count": 66, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхарата", "surface_forms": ["Бхарата", "Бхараты"], "count": 63, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "карна", "surface_forms": ["Карна", "Карне", "Карной", "Карну", "Карны"], "count": 62, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "уттара", "surface_forms": ["Уттар", "Уттара", "Уттаре", "Уттарой", "Уттару", "Уттары"], "count": 56, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхима", "surface_forms": ["Бхима", "Бхиме", "Бхимой", "Бхиму", "Бхимы"], "count": 52, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "панду", "surface_forms": ["Панду"], "count": 49, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "драупади", "surface_forms": ["Драупади"], "count": 45, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхимасена", "surface_forms": ["Бхимасена", "Бхимасене", "Бхимасеной", "Бхимасену", "Бхимасены"], "count": 44, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "махабхарата", "surface_forms": ["Махабхарата", "Махабхарате", "Махабхарату", "Махабхараты"], "count": 44, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "крипа", "surface_forms": ["Крипа", "Крипе", "Крипой", "Крипу", "Крипы"], "count": 43, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дхритараштра", "surface_forms": ["Дхритараштра", "Дхритараштре", "Дхритараштры"], "count": 41, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гандива", "surface_forms": ["Гандива", "гандива", "гандивой", "гандиву", "гандивы"], "count": 40, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "куру", "surface_forms": ["Куру"], "count": 38, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "тригарта", "surface_forms": ["Тригарту", "Тригарты", "тригартами", "тригартов", "тригартой", "тригарты"], "count": 38, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "каурава", "surface_forms": ["Каурава", "Кауравы", "каурава", "кауравы"], "count": 36, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гандхарви", "surface_forms": ["Гандхарви", "гандхарвам", "гандхарвами", "гандхарви", "гандхарвов"], "count": 33, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сахадева", "surface_forms": ["Сахадева", "Сахадеве", "Сахадевой", "Сахадеву", "Сахадевы"], "count": 30, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бибхатсу", "surface_forms": ["Бибхатсу"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "накула", "surface_forms": ["Накула", "Накуле", "Накулой", "Накулу", "Накулы"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "прия", "surface_forms": ["прим"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сайрандхри", "surface_forms": ["Сайрандхри", "сайрандхри"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сута", "surface_forms": ["Сута", "сута", "суте", "суты"], "count": 28, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "судешна", "surface_forms": ["Судешна", "Судешне", "Судешной", "Судешны"], "count": 25, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "агни", "surface_forms": ["Агни"], "count": 24, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гандхарва", "surface_forms": ["Гандхарва", "Гандхарвы", "гандхарва", "гандхарву", "гандхарвы"], "count": 23, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сушарман", "surface_forms": ["Сушарман", "Сушармана", "Сушарманом"], "count": 23, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ашваттхаман", "surface_forms": ["Ашваттхаман", "Ашваттхамана", "Ашваттхаманом", "Ашваттхаману"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "притха", "surface_forms": ["Притха", "Притхи"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дхарма", "surface_forms": ["Дхарма", "Дхармой", "Дхармы"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шантану", "surface_forms": ["Шантану"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "брахма", "surface_forms": ["Брахма", "Брахме", "Брахмой", "Брахмы"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "васудева", "surface_forms": ["Васудева", "Васудеве", "Васудеву", "Васудевы"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "друпада", "surface_forms": ["Друпада", "Друпады"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "мадри", "surface_forms": ["Мадри", "мадрам", "мадров"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "веда", "surface_forms": ["Веда", "Веды", "веды"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "асури", "surface_forms": ["Асури", "асурами", "асури", "асуров"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхарадваджа", "surface_forms": ["Бхарадваджа", "Бхарадваджи"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "варуна", "surface_forms": ["Варуна", "Варуне", "Варуны", "варуна"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ганга", "surface_forms": ["Ганга", "Ганги", "Гангой", "Гангу"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "савьясачин", "surface_forms": ["Савьясачин", "Савьясачина", "Савьясачином", "Савьясачину"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вина", "surface_forms": ["Вина", "вина"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "курукшетра", "surface_forms": ["Курукшетра", "Курукшетру", "Курукшетры"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шива", "surface_forms": ["Шива", "Шиве", "Шивой", "Шиву", "Шивы"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "васава", "surface_forms": ["Васава", "Васавой", "Васавы"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "канка", "surface_forms": ["Канка", "Канке", "Канкой", "Канку"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кхандава", "surface_forms": ["Кхандава", "Кхандаве", "Кхандаву"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шакра", "surface_forms": ["Шакра", "Шакрой", "Шакру", "Шакры"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шакуни", "surface_forms": ["Шакуни"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "викарна", "surface_forms": ["Викарна"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джишну", "surface_forms": ["Джишну"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "праджапати", "surface_forms": ["Праджапати"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "синдху", "surface_forms": ["Синдх", "Синдхом", "Синдху"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "абхиманью", "surface_forms": ["Абхиманью"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ашвини", "surface_forms": ["Ашвини", "Ашвинов"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вайкартана", "surface_forms": ["Вайкартана", "Вайкартану", "Вайкартаны"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "врикодара", "surface_forms": ["Врикодара"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гаутама", "surface_forms": ["Гаутама", "Гаутамы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "рудра", "surface_forms": ["Рудр", "Рудра", "Рудрой", "Рудры"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "хастинапура", "surface_forms": ["Хастинапур", "Хастинапура", "Хастинапуре"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шама", "surface_forms": ["Шами", "шами"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ядави", "surface_forms": ["ядавов"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "яма", "surface_forms": ["Яма", "Ямой", "Ямы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "асура", "surface_forms": ["Асура", "асура", "асуры"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "баллава", "surface_forms": ["Баллава", "Баллаве", "Баллавой"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вивиншати", "surface_forms": ["Вивиншати"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вишну", "surface_forms": ["Вишну"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вритра", "surface_forms": ["Вритра", "Вритре", "Вритрой", "Вритру", "Вритры"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гандхара", "surface_forms": ["Гандхара", "Гандхары", "гандхара"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дашарна", "surface_forms": ["Дашарна", "Дашарну", "Дашарны", "дашарнов", "дашарны"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшаси", "surface_forms": ["Ракшаси", "ракшасами", "ракшаси", "ракшасов"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "рама", "surface_forms": ["Рама", "Раме", "Рамой", "Раму", "Рамы"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "субхадра", "surface_forms": ["Субхадра", "Субхадрой", "Субхадру", "Субхадры"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "читрасена", "surface_forms": ["Читрасена", "Читрасеной", "Читрасену"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вайшампаяна", "surface_forms": ["Вайшампаяна", "Вайшампаяны"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "видура", "surface_forms": ["Видура", "Видуры"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вришни", "surface_forms": ["Вришни", "вришни"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "данава", "surface_forms": ["Данава", "Данавы", "данава", "данавой", "данавы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джаядратха", "surface_forms": ["Джаядратха", "Джаядратхи", "Джаядратхой", "Джаядратху"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кайкейи", "surface_forms": ["Кайкейи"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "каунтея", "surface_forms": ["Каунтея"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кубера", "surface_forms": ["Кубера", "Куберы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "нала", "surface_forms": ["Нала", "Нале", "Наль"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сома", "surface_forms": ["Сома", "Сомой", "Сомы", "сома"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "суйодхана", "surface_forms": ["Суйодхана", "Суйодхане", "Суйодханы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ямуна", "surface_forms": ["Ямуна", "Ямуны"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "артхашастра", "surface_forms": ["Артхашастра", "Артхашастре", "Артхашастры"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхарати", "surface_forms": ["Бхаратов", "бхаратов"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхригу", "surface_forms": ["Бхригу"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "виджая", "surface_forms": ["Виджаю", "Виджая"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "викартана", "surface_forms": ["Викартана", "Викартаны"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "данави", "surface_forms": ["данавами", "данавов"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дашарха", "surface_forms": ["Дашарха", "Дашархи", "Дашархой"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "девака", "surface_forms": ["Девака", "Деваки"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "индрапрастха", "surface_forms": ["Индрапрастха", "Индрапрастхе", "Индрапрастху"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кауравья", "surface_forms": ["Кауравья", "кауравьи", "кауравью"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сайндхава", "surface_forms": ["Сайндхава", "Сайндхавой"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "санграмаджит", "surface_forms": ["Санграмаджит", "Санграмаджиту"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "субала", "surface_forms": ["Субала", "Субалы"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шатаника", "surface_forms": ["Шатаника", "Шатанике", "Шатаники"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "яджнясени", "surface_forms": ["Яджнясени"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "якша", "surface_forms": ["Якши", "якша", "якшей", "якши"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "агастья", "surface_forms": ["Агастьей", "Агастья"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "адитья", "surface_forms": ["Адитьев", "Адитьи", "Адитья", "Адитьями"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "акшаухини", "surface_forms": ["Акшаухини", "акшаухини"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "брихаспати", "surface_forms": ["Брихаспати"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "васу", "surface_forms": ["Васу"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вьяса", "surface_forms": ["Вьяса", "Вьясой", "Вьясы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гандхари", "surface_forms": ["Гандхари"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дварака", "surface_forms": ["Дварака", "Двараке", "Двараки"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "индрасена", "surface_forms": ["Индрасена", "Индрасеной"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кхандавапрастха", "surface_forms": ["Кхандавапрастха", "Кхандавапрастхе", "Кхандавапрастхой"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "матхура", "surface_forms": ["Матхурой", "Матхуры"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "тваштри", "surface_forms": ["Тваштри"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "хираньяпура", "surface_forms": ["Хираньяпура", "Хираньяпуре", "Хираньяпурой", "Хираньяпуру"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "яджнясена", "surface_forms": ["Яджнясена", "Яджнясены"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "яяти", "surface_forms": ["Яяти"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "айндра", "surface_forms": ["Айндра", "айндра"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ваявья", "surface_forms": ["ваявья"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "видеха", "surface_forms": ["Видеха", "Видехи"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гаруда", "surface_forms": ["Гаруда"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "грантхика", "surface_forms": ["Грантхика"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дваравати", "surface_forms": ["Дваравати"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джамадагни", "surface_forms": ["Джамадагни"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джанака", "surface_forms": ["Джанака", "Джанаки"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джанамеджая", "surface_forms": ["Джанамеджая"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джая", "surface_forms": ["Джая"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дхаумья", "surface_forms": ["Дхаумья"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "каши", "surface_forms": ["Каши"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кашьяпа", "surface_forms": ["Кашьяпы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кшатрия", "surface_forms": ["кшатрии"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "малла", "surface_forms": ["Маллы", "малли", "маллы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "марути", "surface_forms": ["Марутами", "Марутов", "марутов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ниватакавача", "surface_forms": ["Ниватакавачи", "ниватакавачи"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "нишадха", "surface_forms": ["Нишадха", "нишадхов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "павака", "surface_forms": ["Павака", "Паваки", "Паваку"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пакашасана", "surface_forms": ["Пакашасана", "Пакашасаны"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "радха", "surface_forms": ["Радхи", "Радхой"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сатьяка", "surface_forms": ["Сатьяка", "Сатьяки"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сути", "surface_forms": ["сутов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "тантипала", "surface_forms": ["Тантипала"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "уграсена", "surface_forms": ["Уграсена", "Уграсены"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "упаплавья", "surface_forms": ["Упаплавье", "Упаплавьи", "Упаплавья"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ушанас", "surface_forms": ["Ушанас", "Ушанасом", "Ушанасу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "хидимба", "surface_forms": ["Хидимба", "Хидимбы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "чеди", "surface_forms": ["Чеди", "чеди"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "чьявана", "surface_forms": ["Чьявана", "Чьяваной", "Чьявану", "Чьяваны"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шатакрату", "surface_forms": ["Шатакрату"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шатрунтапа", "surface_forms": ["Шатрунтапа", "Шатрунтапой", "Шатрунтапу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шикхандин", "surface_forms": ["Шикхандин", "Шикхандина"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "аджамидха", "surface_forms": ["Аджамидха", "Аджамидхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "аджаташатру", "surface_forms": ["Аджаташатру"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "айодхья", "surface_forms": ["Айодхье", "Айодхьей", "Айодхьи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "акрура", "surface_forms": ["Акрура"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "анадхришти", "surface_forms": ["Анадхришти"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "андхака", "surface_forms": ["Андхака", "Андхаки", "андхаков"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ашваттха", "surface_forms": ["Ашваттха", "ашваттха"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бходжа", "surface_forms": ["Бходже", "Бходжи", "бходжей"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ваджра", "surface_forms": ["Ваджра", "ваджра"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вайягхрападья", "surface_forms": ["Вайягхрападья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ваю", "surface_forms": ["Ваю"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вичитравирья", "surface_forms": ["Вичитравирьи", "Вичитравирья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вишвакарман", "surface_forms": ["Вишвакарман", "Вишвакарманом"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дайтья", "surface_forms": ["Дайтьи", "дайтьев"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дамагрантхи", "surface_forms": ["Дамагрантхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "двайтавана", "surface_forms": ["Двайтавана", "Двайтаване", "Двайтаваны"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "двапара", "surface_forms": ["двапара", "двапару"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джанардана", "surface_forms": ["Джанардана", "Джанарданой", "Джанардану"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джаядбала", "surface_forms": ["Джаядбала"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джаянта", "surface_forms": ["Джаянта"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джаятсена", "surface_forms": ["Джаятсена"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дхриштадьюмна", "surface_forms": ["Дхриштадьюмна", "Дхриштадьюмны"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "калинди", "surface_forms": ["Калинди"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "киритин", "surface_forms": ["Киритин", "Киритином"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "лопамудра", "surface_forms": ["Лопамудра"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "мадирашва", "surface_forms": ["Мадирашва"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "малини", "surface_forms": ["Малини"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "махадева", "surface_forms": ["Махадева"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "навараштра", "surface_forms": ["Навараштра", "Навараштрой"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "нага", "surface_forms": ["Нага"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "нагапура", "surface_forms": ["Нагапура", "Нагапуру"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "нишатха", "surface_forms": ["Нишатха"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ньягродха", "surface_forms": ["Ньягродха", "ньягродха"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "парашурама", "surface_forms": ["Парашурама", "Парашурамы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "парджанья", "surface_forms": ["Парджанья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "патаччара", "surface_forms": ["Патаччары", "патаччары"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пурана", "surface_forms": ["пуранам", "пуранах"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "рагху", "surface_forms": ["Рагху"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "раху", "surface_forms": ["Раху"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ригведа", "surface_forms": ["Ригведа", "Ригведе"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сиддхи", "surface_forms": ["Сиддхи", "сиддхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сита", "surface_forms": ["Сита", "Ситы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сомадатта", "surface_forms": ["Сомадатта", "Сомадатты"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "суканья", "surface_forms": ["Суканьи", "Суканья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сумеру", "surface_forms": ["Сумеру"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сурьядатта", "surface_forms": ["Сурьядатта"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "хималая", "surface_forms": ["Хималай", "Хималая", "Хималаях"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шайбья", "surface_forms": ["Шайбьи", "Шайбья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шанкха", "surface_forms": ["Шанкха", "Шанкхой"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шарьяти", "surface_forms": ["Шарьяти"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шатрусаха", "surface_forms": ["Шатрусаха"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шиби", "surface_forms": ["Шиби"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шурасена", "surface_forms": ["Шурасены", "шурасены"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "югандхара", "surface_forms": ["Югандхары", "югандхары"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ююдхана", "surface_forms": ["Ююдхана"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ядава", "surface_forms": ["ядава", "ядавы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "яду", "surface_forms": ["Яду"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "якриллома", "surface_forms": ["Якрилломы", "якрилломов", "якрилломы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "якши", "surface_forms": ["якшам", "якшами"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "адхиратха", "surface_forms": ["Адхиратхи", "Адхиратхой"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "айравата", "surface_forms": ["Айравата"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "амбалика", "surface_forms": ["Амбалика", "Амбалики"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "анала", "surface_forms": ["Анала"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "анарта", "surface_forms": ["Анарта"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "анга", "surface_forms": ["Анга"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "апа", "surface_forms": ["Апа"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "атхарваведа", "surface_forms": ["Атхарваведа"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ачьюта", "surface_forms": ["Ачьюта"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "аштака", "surface_forms": ["Аштака"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "баларама", "surface_forms": ["Баларамы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "балахака", "surface_forms": ["Балахака", "Балахаку"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бали", "surface_forms": ["Бали"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вайшравана", "surface_forms": ["Вайшравана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "васуманас", "surface_forms": ["Васуманас"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "видиша", "surface_forms": ["Видиша", "Видишь"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вишалакша", "surface_forms": ["Вишалакша"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вишва", "surface_forms": ["Вишвов", "Вишвы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гандхамадана", "surface_forms": ["Гандхамадана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гомати", "surface_forms": ["Гомати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "готама", "surface_forms": ["Готамы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гудакеша", "surface_forms": ["Гудакеша"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дамаянти", "surface_forms": ["Дамаянти"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дарука", "surface_forms": ["Дарука"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "девадатта", "surface_forms": ["Девадатта", "девадатту"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джатаведас", "surface_forms": ["Джатаведас", "Джатаведаса"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джатасура", "surface_forms": ["Джатасура", "Джатасуры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дурмукха", "surface_forms": ["Дурмукха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "инду", "surface_forms": ["Инда", "Индом"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "иша", "surface_forms": ["Иша", "Иши"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "калака", "surface_forms": ["Калаки"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "камьяка", "surface_forms": ["Камьяка", "Камьяку"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "каубера", "surface_forms": ["Каубера", "каубера"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кешава", "surface_forms": ["Кешава", "Кешаве"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "критаварман", "surface_forms": ["Критаварман"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кродхаваша", "surface_forms": ["Кродхаваша"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "магхаван", "surface_forms": ["Магхаван"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ману", "surface_forms": ["Ману"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "матали", "surface_forms": ["Матали"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "мегхапушпа", "surface_forms": ["Мегхапушпа", "Мегхапушпе"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "митхила", "surface_forms": ["Митхила", "Митхилы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "мритью", "surface_forms": ["Мритью"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "мухурта", "surface_forms": ["Мухурта", "мухуртами"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "нахуша", "surface_forms": ["Нахуша", "Нахуши"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "нея", "surface_forms": ["Нет"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "парикшита", "surface_forms": ["Парикшита"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "праджапатья", "surface_forms": ["Праджапатья", "праджапатья"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пратипа", "surface_forms": ["Пратипы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пундарика", "surface_forms": ["Пундарика"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пуру", "surface_forms": ["Пуру"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "раудра", "surface_forms": ["Раудра", "раудра"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сагара", "surface_forms": ["Сагара"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "самаведа", "surface_forms": ["Самаведа"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "самба", "surface_forms": ["Самба"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "саммохана", "surface_forms": ["Саммохана", "саммохана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сатьявати", "surface_forms": ["Сатьявати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "саувири", "surface_forms": ["саувиров"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "свастика", "surface_forms": ["Свастика", "свастика"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сугрива", "surface_forms": ["Сугрива", "Сугриве"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "супратардана", "surface_forms": ["Супратардана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "тилоттама", "surface_forms": ["Тилоттама", "Тилоттаму"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "халаюдха", "surface_forms": ["Халаюдха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "хастин", "surface_forms": ["Хастина", "Хастином"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "хридика", "surface_forms": ["Хридики"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шакала", "surface_forms": ["шакал"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шудра", "surface_forms": ["шудры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шукра", "surface_forms": ["Шукра", "Шукры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шурасени", "surface_forms": ["шурасенов"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "юга", "surface_forms": ["Юг", "Юга"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "яджурведа", "surface_forms": ["Яджурведа"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ямья", "surface_forms": ["ямья"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "адити", "surface_forms": ["Адити"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "адрика", "surface_forms": ["Адрики"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "адхарма", "surface_forms": ["Адхармы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "алака", "surface_forms": ["Алака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "алакананда", "surface_forms": ["Алакананда"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "амбика", "surface_forms": ["Амбики"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "анила", "surface_forms": ["Анила"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ариштанеми", "surface_forms": ["Ариштанеми"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ахар", "surface_forms": ["Ахар"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ахиччхатра", "surface_forms": ["Ахиччхатра"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ашвина", "surface_forms": ["Ашвина"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "04_mahabharata-virataparva", "lemma": "бала", "surface_forms": ["Балы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "балакша", "surface_forms": ["Балакша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "баху", "surface_forms": ["Баху"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхагиратхи", "surface_forms": ["Бхагиратхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхану", "surface_forms": ["Бхану"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхаратаварша", "surface_forms": ["Бхаратаварша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхаргави", "surface_forms": ["бхаргавов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхута", "surface_forms": ["бхуты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "бхути", "surface_forms": ["бхутов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вайдарбхи", "surface_forms": ["Вайдарбхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "варуни", "surface_forms": ["Варуни"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "васаве", "surface_forms": ["Васаве"], "count": 1, "needs_review": true, "lemma_candidates": ["васава", "васавея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "васаве", "surface_forms": ["Васаве"], "count": 1, "needs_review": true, "lemma_candidates": ["васава", "васавея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "васиштхи", "surface_forms": ["Васиштхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вашаткара", "surface_forms": ["Вашаткара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "видарбха", "surface_forms": ["Видарбхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "виндхья", "surface_forms": ["Виндхья"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вирочана", "surface_forms": ["Вирочаны"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вишвамитра", "surface_forms": ["Вишвамитры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вишведева", "surface_forms": ["вишведевы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вриддхакшатра", "surface_forms": ["Вриддхакшатры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "вьягхрапада", "surface_forms": ["Вьягхрападу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "гая", "surface_forms": ["Гая"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гопала", "surface_forms": ["Гопала"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гхатоткача", "surface_forms": ["Гхатоткачей"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "гхритачи", "surface_forms": ["Гхритачи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дакша", "surface_forms": ["Дакши"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дану", "surface_forms": ["Дану"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дашаратхи", "surface_forms": ["Дашаратхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дашархи", "surface_forms": ["дашархов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "двайпаяна", "surface_forms": ["Двайпаяны"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "двапараюга", "surface_forms": ["Двапараюга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дварика", "surface_forms": ["Дварика"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "девадутака", "surface_forms": ["Девадутака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джамбавати", "surface_forms": ["Джамбавати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джанапади", "surface_forms": ["Джанапади"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джарасандхи", "surface_forms": ["Джарасандхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "джимута", "surface_forms": ["Джимута"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "диводаса", "surface_forms": ["Диводасы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дилипа", "surface_forms": ["Дилипы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "душьянта", "surface_forms": ["Душьянты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дхара", "surface_forms": ["Дхара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дхармараджа", "surface_forms": ["Дхармараджа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "дхрува", "surface_forms": ["Дхрува"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "индрани", "surface_forms": ["Индрани"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кайласа", "surface_forms": ["Кайласе"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "каким", "surface_forms": ["Каким"], "count": 1, "needs_review": true, "lemma_candidates": ["кака", "каки"]}
+{"source": "04_mahabharata-virataparva", "lemma": "калакея", "surface_forms": ["Калакеями"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "калинда", "surface_forms": ["Калинда"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "калиюга", "surface_forms": ["Калиюга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кампилья", "surface_forms": ["Кампилья"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "каураве", "surface_forms": ["каураве"], "count": 1, "needs_review": true, "lemma_candidates": ["каурава", "кауравея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "кирата", "surface_forms": ["Кирате"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "критаюга", "surface_forms": ["Критаюга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кришашва", "surface_forms": ["Кришашва"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кундали", "surface_forms": ["Кундали"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кунтибходжа", "surface_forms": ["Кунтибходжей"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "кшупа", "surface_forms": ["Кшупа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "магадхи", "surface_forms": ["Магадхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "мадхави", "surface_forms": ["Мадхави"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "макари", "surface_forms": ["Макаров"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "малава", "surface_forms": ["Малава"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "малави", "surface_forms": ["малавами"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "манвантара", "surface_forms": ["Манвантару"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "04_mahabharata-virataparva", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "04_mahabharata-virataparva", "lemma": "меру", "surface_forms": ["Меру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "мудгала", "surface_forms": ["Мудгалы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "наги", "surface_forms": ["нагов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ниррити", "surface_forms": ["Ниррити"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пака", "surface_forms": ["Паки"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пандаве", "surface_forms": ["пандаве"], "count": 1, "needs_review": true, "lemma_candidates": ["пандава", "пандавея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "пандаве", "surface_forms": ["пандаве"], "count": 1, "needs_review": true, "lemma_candidates": ["пандава", "пандавея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "пандаве", "surface_forms": ["пандаве"], "count": 1, "needs_review": true, "lemma_candidates": ["пандава", "пандавея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "пандаве", "surface_forms": ["пандаве"], "count": 1, "needs_review": true, "lemma_candidates": ["пандава", "пандавея"]}
+{"source": "04_mahabharata-virataparva", "lemma": "парвати", "surface_forms": ["Парвати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "патала", "surface_forms": ["Патале"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "паулома", "surface_forms": ["Пауломы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пауломи", "surface_forms": ["пауломов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "паурава", "surface_forms": ["пауравов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "прабхаса", "surface_forms": ["Прабхаса"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пратардана", "surface_forms": ["Пратардана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пратьюша", "surface_forms": ["Пратьюша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "прахлада", "surface_forms": ["Прахлады"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пришата", "surface_forms": ["Пришаты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "пулома", "surface_forms": ["Пуломы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "равана", "surface_forms": ["Раваной"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "рагхава", "surface_forms": ["Рагхава"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "райватака", "surface_forms": ["Райватака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшас", "surface_forms": ["Ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасом", "surface_forms": ["ракшасом"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасу", "surface_forms": ["ракшасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "04_mahabharata-virataparva", "lemma": "рамаяна", "surface_forms": ["Рамаяна"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "рамбха", "surface_forms": ["Рамбху"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ричика", "surface_forms": ["Ричики"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сатьябхама", "surface_forms": ["Сатьябхамой"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "саувира", "surface_forms": ["саувиры"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "суварна", "surface_forms": ["суварне"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "сурья", "surface_forms": ["Сурья"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "такшака", "surface_forms": ["Такшакой"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "тапати", "surface_forms": ["Тапати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "третаюга", "surface_forms": ["Третаюга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "тумбуру", "surface_forms": ["Тумбуру"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "упаричара", "surface_forms": ["Упаричары"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "ушинара", "surface_forms": ["Ушинары"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "харьяшва", "surface_forms": ["Харьяшвы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "хираньякашипу", "surface_forms": ["Хираньякашипу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "читрангада", "surface_forms": ["Читрангада"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шакунтала", "surface_forms": ["Шакунталы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шала", "surface_forms": ["Шала"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шалья", "surface_forms": ["Шальи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шишупала", "surface_forms": ["Шишупала"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шонашва", "surface_forms": ["Шонашва"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шуктимати", "surface_forms": ["Шуктимати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "04_mahabharata-virataparva", "lemma": "шура", "surface_forms": ["Шуры"], "count": 1, "needs_review": false, "lemma_candidates": null}

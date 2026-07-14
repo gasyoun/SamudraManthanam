@@ -1,0 +1,698 @@
+{"source": "mify-drind", "lemma": "индра", "surface_forms": ["Индра", "Индре", "Индрой", "Индру", "Индры"], "count": 508, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шива", "surface_forms": ["Шива", "Шиве", "Шивой", "Шиву", "Шивы"], "count": 373, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "брахма", "surface_forms": ["Брахма", "Брахме", "Брахми", "Брахмой", "Брахму", "Брахмы"], "count": 294, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "асури", "surface_forms": ["асурам", "асурами", "асуров"], "count": 250, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "равана", "surface_forms": ["Равана", "Раване", "Раваной", "Равану", "Раваны"], "count": 203, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вишну", "surface_forms": ["Вишну"], "count": 194, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "асура", "surface_forms": ["Асур", "Асуры", "асур", "асура", "асуром", "асуру", "асуры"], "count": 140, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "брихаспати", "surface_forms": ["Брихаспати"], "count": 107, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "арджуна", "surface_forms": ["Арджуна", "Арджуне", "Арджуной", "Арджуну", "Арджуны"], "count": 100, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "варуна", "surface_forms": ["Варуна", "Варуне", "Варуной", "Варуну", "Варуны"], "count": 98, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ракшаси", "surface_forms": ["Ракшасов", "ракшасам", "ракшасами", "ракшасов"], "count": 98, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "яма", "surface_forms": ["Яма", "Яме", "Ями", "Ямой", "Яму", "Ямы"], "count": 96, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ушанас", "surface_forms": ["Ушанас", "Ушанаса", "Ушанасом", "Ушанасу"], "count": 89, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кубера", "surface_forms": ["Кубера", "Кубере", "Куберой", "Куберу", "Куберы"], "count": 78, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "агни", "surface_forms": ["Агни"], "count": 76, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "трипура", "surface_forms": ["Трипура", "Трипуре", "Трипурой", "Трипуру", "Трипуры"], "count": 67, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "деваяни", "surface_forms": ["Деваяни"], "count": 62, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дакша", "surface_forms": ["Дакша", "Дакше", "Дакшей", "Дакши", "Дакшу"], "count": 60, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нарада", "surface_forms": ["Нарада", "Нараде", "Нарадой", "Нараду", "Нарады"], "count": 60, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сома", "surface_forms": ["Сома", "Соме", "Сомой", "Сому", "Сомы", "сома"], "count": 60, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "агастья", "surface_forms": ["Агастье", "Агастьей", "Агастьи", "Агастью", "Агастья"], "count": 57, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхригу", "surface_forms": ["Бхригу"], "count": 56, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "махабхарата", "surface_forms": ["Махабхарата", "Махабхарате", "Махабхараты"], "count": 56, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "васиштха", "surface_forms": ["Васиштха", "Васиштхе", "Васиштхи", "Васиштхой", "Васиштху"], "count": 55, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "парвати", "surface_forms": ["Парвати"], "count": 55, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нахуша", "surface_forms": ["Нахуша", "Нахуше", "Нахушей", "Нахуши", "Нахушу"], "count": 54, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сканда", "surface_forms": ["Сканда", "Сканде", "Скандой", "Сканду", "Сканды"], "count": 53, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "тарака", "surface_forms": ["Тарака", "Тараке", "Тараки", "Таракой", "Тараку"], "count": 52, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гаруда", "surface_forms": ["Гаруда", "Гаруде", "Гарудой", "Гаруду", "Гаруды"], "count": 50, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гандхарви", "surface_forms": ["гандхарвам", "гандхарвами", "гандхарвов"], "count": 49, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "урваши", "surface_forms": ["Урваши"], "count": 48, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "яяти", "surface_forms": ["Яяти"], "count": 48, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "марутта", "surface_forms": ["Марутта", "Марутте", "Марутту", "Марутты"], "count": 47, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вишвамитра", "surface_forms": ["Вишвамитра", "Вишвамитре", "Вишвамитрой", "Вишвамитру", "Вишвамитры"], "count": 46, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ланка", "surface_forms": ["Ланка", "Ланке", "Ланки", "Ланкой", "Ланку"], "count": 46, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шачи", "surface_forms": ["Шачи"], "count": 39, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сагара", "surface_forms": ["Сагара", "Сагаре", "Сагарой", "Сагары"], "count": 38, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ганга", "surface_forms": ["Ганга", "Ганги", "Гангу"], "count": 37, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рудра", "surface_forms": ["Рудра", "Рудре", "Рудру", "Рудры", "рудр"], "count": 37, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "тваштар", "surface_forms": ["Тваштар", "Тваштара", "Тваштаром", "Тваштару"], "count": 37, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шармиштха", "surface_forms": ["Шармиштха", "Шармиштхе", "Шармиштхи", "Шармиштхой", "Шармиштху"], "count": 37, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гандхарва", "surface_forms": ["Гандхарвы", "гандхарва", "гандхарвом", "гандхарву", "гандхарвы"], "count": 36, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ману", "surface_forms": ["Ману"], "count": 36, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "якша", "surface_forms": ["Якша", "Якшей", "Якши", "якшей", "якши"], "count": 36, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вивасват", "surface_forms": ["Вивасват", "Вивасвата", "Вивасвату"], "count": 35, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "панду", "surface_forms": ["Панду"], "count": 35, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сурья", "surface_forms": ["Сурье", "Сурьи", "Сурью", "Сурья"], "count": 35, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ума", "surface_forms": ["Ума", "Уме", "Умой", "Уму", "Умы"], "count": 34, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ришьяшринга", "surface_forms": ["Ришьяшринга", "Ришьяшринге", "Ришьяшринги", "Ришьяшрингой", "Ришьяшрингу"], "count": 33, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вритра", "surface_forms": ["Вритра", "Вритре", "Вритрой", "Вритру", "Вритры"], "count": 32, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ваджра", "surface_forms": ["Ваджра", "ваджра", "ваджрой", "ваджру", "ваджры"], "count": 31, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нандин", "surface_forms": ["Нандин", "Нандина", "Нандином", "Нандину"], "count": 31, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ваю", "surface_forms": ["Ваю"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кача", "surface_forms": ["Кача", "Каче", "Качей", "Качи", "Качу"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пуруравас", "surface_forms": ["Пуруравас", "Пурураваса", "Пуруравасом"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рама", "surface_forms": ["Рама", "Раме", "Рамой", "Раму", "Рамы"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "раху", "surface_forms": ["Раху"], "count": 29, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бали", "surface_forms": ["Бали"], "count": 28, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кашьяпа", "surface_forms": ["Кашьяпа", "Кашьяпу", "Кашьяпы"], "count": 28, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рамаяна", "surface_forms": ["Рамаяна", "Рамаяне", "Рамаяны"], "count": 28, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "айодхья", "surface_forms": ["Айодхье", "Айодхьи", "Айодхью", "Айодхья"], "count": 27, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кайласа", "surface_forms": ["Кайласа", "Кайласе", "Кайласу", "Кайласы"], "count": 27, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ригведа", "surface_forms": ["Ригведа", "Ригведе", "Ригведы"], "count": 27, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ганеша", "surface_forms": ["Ганеша", "Ганеше", "Ганешей", "Ганеши", "Ганешу"], "count": 26, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дити", "surface_forms": ["Дити"], "count": 26, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "меру", "surface_forms": ["Меру"], "count": 26, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хималая", "surface_forms": ["Хималая"], "count": 25, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джамадагни", "surface_forms": ["Джамадагни"], "count": 24, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пурана", "surface_forms": ["пуран", "пуранам", "пуранах"], "count": 24, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "веда", "surface_forms": ["Вед", "Веды"], "count": 23, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "савитри", "surface_forms": ["Савитри"], "count": 23, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "адити", "surface_forms": ["Адити"], "count": 22, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хайхая", "surface_forms": ["Хайхаи", "хайхаев", "хайхаи"], "count": 22, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "химават", "surface_forms": ["Химават", "Химавата", "Химавате", "Химавату"], "count": 22, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "чьявана", "surface_forms": ["Чьявана", "Чьяване", "Чьяваной", "Чьявану", "Чьяваны"], "count": 22, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "айравата", "surface_forms": ["Айравата", "Айравате", "Айравату", "Айраваты"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "диводаса", "surface_forms": ["Диводаса", "Диводасе", "Диводасу", "Диводасы"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ричика", "surface_forms": ["Ричика", "Ричике", "Ричики", "Ричику"], "count": 21, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вината", "surface_forms": ["Вината", "Винате", "Винату", "Винаты"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кадру", "surface_forms": ["Кадру"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мегханада", "surface_forms": ["Мегханада", "Мегханадой", "Мегханаду", "Мегханады"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "наги", "surface_forms": ["нагам", "нагами", "нагов"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пуластья", "surface_forms": ["Пуластье", "Пуластьей", "Пуластьи", "Пуластья"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хираньякашипу", "surface_forms": ["Хираньякашипу"], "count": 20, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "амаравати", "surface_forms": ["Амаравати"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "веди", "surface_forms": ["Ведам", "Ведами", "Ведах"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вена", "surface_forms": ["Вена", "Вене", "Вену", "Вены"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "виндхья", "surface_forms": ["Виндхьи", "Виндхья"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шакунтала", "surface_forms": ["Шакунтала", "Шакунталой", "Шакунталу", "Шакунталы"], "count": 19, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ашвини", "surface_forms": ["Ашвинам", "Ашвинами", "Ашвинов"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхангасвана", "surface_forms": ["Бхангасвана", "Бхангасваной", "Бхангасвану", "Бхангасваны"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "икшваку", "surface_forms": ["Икшваку"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мандара", "surface_forms": ["Мандара", "Мандару", "Мандары", "мандара"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прахаста", "surface_forms": ["Прахаста", "Прахасте", "Прахасту", "Прахасты"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "тришанку", "surface_forms": ["Тришанку"], "count": 18, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхагиратха", "surface_forms": ["Бхагиратха", "Бхагиратхе", "Бхагиратхи", "Бхагиратхой", "Бхагиратху"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вишварупа", "surface_forms": ["Вишварупа", "Вишварупе", "Вишварупу", "Вишварупы"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхарма", "surface_forms": ["Дхарма", "Дхарме", "Дхарму", "Дхармы"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кали", "surface_forms": ["Кали", "кали"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каши", "surface_forms": ["Каши"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "лопамудра", "surface_forms": ["Лопамудра", "Лопамудре", "Лопамудру", "Лопамудры"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "притху", "surface_forms": ["Притху"], "count": 17, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вишвакарман", "surface_forms": ["Вишвакарман", "Вишвакармана", "Вишвакарманом", "Вишвакарману"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "душьянта", "surface_forms": ["Душьянта", "Душьянты"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "илвала", "surface_forms": ["Илвала", "Илвале", "Илвалу", "Илвалы"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "калмашапада", "surface_forms": ["Калмашапада", "Калмашападу", "Калмашапады"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ломапада", "surface_forms": ["Ломапада", "Ломападе", "Ломапады"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "руру", "surface_forms": ["Руру"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сарасвати", "surface_forms": ["Сарасвати"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сунда", "surface_forms": ["Сунда", "Сунде", "Сунду", "Сунды"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "упасунда", "surface_forms": ["Упасунда", "Упасунде", "Упасунду", "Упасунды"], "count": 16, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "валин", "surface_forms": ["Валин", "Валина", "Валином", "Валину"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вишравас", "surface_forms": ["Вишравас", "Вишраваса"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дьяус", "surface_forms": ["Дьяус", "Дьяуса", "Дьяусу"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "маркандея", "surface_forms": ["Маркандеи", "Маркандею", "Маркандея"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прахлада", "surface_forms": ["Прахлада", "Прахладе", "Прахладу", "Прахлады"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пуру", "surface_forms": ["Пуру"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рохита", "surface_forms": ["Рохита", "Рохите", "Рохиты"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "савитар", "surface_forms": ["Савитар", "Савитара", "Савитаром", "Савитару"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ушинара", "surface_forms": ["Ушинара", "Ушинаре", "ушинаров"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "харишчандра", "surface_forms": ["Харишчандра", "Харишчандре", "Харишчандрой", "Харишчандру", "Харишчандры"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "явакри", "surface_forms": ["Явакри"], "count": 15, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхарадваджа", "surface_forms": ["Бхарадваджа", "Бхарадваджи"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вришапарван", "surface_forms": ["Вришапарван", "Вришапарвана", "Вришапарвану"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гаятри", "surface_forms": ["Гаятри"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дайтья", "surface_forms": ["дайтьев", "дайтьи", "дайтьям", "дайтьями"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "данави", "surface_forms": ["данавам", "данавами", "данавов"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джанту", "surface_forms": ["Джанту"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "лакшми", "surface_forms": ["Лакшми"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "махиша", "surface_forms": ["Махиша", "Махише", "Махиши", "Махишу"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сомака", "surface_forms": ["Сомака", "Сомаке", "Сомаки"], "count": 14, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дурварана", "surface_forms": ["Дурварана", "Дурваране", "Дурвараной", "Дурварану", "Дурвараны"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кама", "surface_forms": ["Кама", "Камой", "Каму", "Камы"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "линга", "surface_forms": ["Лингам", "лингам"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мандхатар", "surface_forms": ["Мандхатар", "Мандхатара"], "count": 13, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "анги", "surface_forms": ["ангов"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "критавирья", "surface_forms": ["Критавирьи", "Критавирья"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "менака", "surface_forms": ["Менака", "Менаки", "Менакой", "Менаку"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нандана", "surface_forms": ["Нандана", "Нанданы"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нармада", "surface_forms": ["Нармаде", "Нармаду", "Нармады"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пулома", "surface_forms": ["Пулома", "Пуломе", "Пуломой", "Пулому", "Пуломы"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сарама", "surface_forms": ["Сарама", "Сараму", "Сарамы"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "саубхара", "surface_forms": ["Саубхари"], "count": 12, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "адитья", "surface_forms": ["Адитьев", "Адитьи", "Адитья", "Адитьям", "Адитьями", "адитьев"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхарата", "surface_forms": ["Бхарата", "Бхарату", "Бхараты", "бхарата"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вибхишана", "surface_forms": ["Вибхишана", "Вибхишане", "Вибхишаной"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гадхи", "surface_forms": ["Гадхи"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джаянта", "surface_forms": ["Джаянта", "Джаянте", "Джаянту", "Джаянты"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "капила", "surface_forms": ["Капила", "Капилу", "Капилы"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кумбхакарна", "surface_forms": ["Кумбхакарна", "Кумбхакарне"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "марича", "surface_forms": ["Марича", "Маричи", "Маричу"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "матали", "surface_forms": ["Матали"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "праджапати", "surface_forms": ["Праджапати"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пуломан", "surface_forms": ["Пуломан", "Пуломана", "Пуломаном", "Пуломану"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "райбхья", "surface_forms": ["Райбхье", "Райбхьи", "Райбхью", "Райбхья"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шани", "surface_forms": ["Шани"], "count": 11, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "васу", "surface_forms": ["Васу"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "видарбха", "surface_forms": ["Видарбха", "Видарбхи", "видарбхов"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "випула", "surface_forms": ["Випула", "Випуле", "Випулу", "Випулы"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нея", "surface_forms": ["Нет"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прамадвара", "surface_forms": ["Прамадвара", "Прамадваре", "Прамадварой", "Прамадвару", "Прамадвары"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пушпака", "surface_forms": ["Пушпака"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ренука", "surface_forms": ["Ренука", "Ренуки", "Ренукой", "Ренуку"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "трита", "surface_forms": ["Трита", "Тритой", "Триту", "Триты"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "утатхья", "surface_forms": ["Утатхье", "Утатхьи", "Утатхью", "Утатхья"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "читрасена", "surface_forms": ["Читрасена", "Читрасене", "Читрасеной", "Читрасену"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "яду", "surface_forms": ["Яду"], "count": 10, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "атри", "surface_forms": ["Атри"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "варанги", "surface_forms": ["Варанги"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "васуки", "surface_forms": ["Васуки"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дану", "surface_forms": ["Дану"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "канва", "surface_forms": ["Канва", "Канве", "Канвы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кришна", "surface_forms": ["Кришна", "Кришны"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "митра", "surface_forms": ["Митра", "Митры"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "намучи", "surface_forms": ["Намучи"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "патала", "surface_forms": ["Патала", "Патале", "Паталу", "Паталы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ручи", "surface_forms": ["Ручи"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "тилоттама", "surface_forms": ["Тилоттама", "Тилоттамой", "Тилоттаму", "Тилоттамы"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шакти", "surface_forms": ["Шакти"], "count": 9, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "друхью", "surface_forms": ["Друхью", "друхью"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхритараштра", "surface_forms": ["Дхритараштра", "Дхритараштре", "Дхритараштрой", "Дхритараштры"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кишкиндха", "surface_forms": ["Кишкиндхе", "Кишкиндхи", "Кишкиндху"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "курукшетра", "surface_forms": ["Курукшетра", "Курукшетре", "Курукшетру"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кшатрия", "surface_forms": ["Кшатрии", "кшатрии"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мадху", "surface_forms": ["Мадху"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пала", "surface_forms": ["пал"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "парашурама", "surface_forms": ["Парашурама", "Парашураму", "Парашурамы"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рамбха", "surface_forms": ["Рамбха", "Рамбхе", "Рамбхи", "Рамбху"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сатьявати", "surface_forms": ["Сатьявати"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "суканья", "surface_forms": ["Суканьей", "Суканьи", "Суканью", "Суканья"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сумати", "surface_forms": ["Сумати"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "тара", "surface_forms": ["Тара", "Таре", "Тару", "Тары"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "чандала", "surface_forms": ["Чандала", "чандалами", "чандалу", "чандалы"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "чарана", "surface_forms": ["Чараны", "чаранов", "чараны"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шеша", "surface_forms": ["Шеша", "Шешей", "Шешу"], "count": 8, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "андхака", "surface_forms": ["Андхака", "Андхаки", "Андхакой", "Андхаку"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ану", "surface_forms": ["Ану"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "аурва", "surface_forms": ["Аурва", "Аурвы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "брахмани", "surface_forms": ["Брахманах"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гаутама", "surface_forms": ["Гаутама", "Гаутаму", "Гаутамы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "девашарман", "surface_forms": ["Девашарман", "Девашармана"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кавья", "surface_forms": ["Кавье", "Кавьи", "Кавья"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кешин", "surface_forms": ["Кешин", "Кешина"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "киннара", "surface_forms": ["Киннары", "киннары"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "магадха", "surface_forms": ["Магадха", "Магадхи", "Магадху"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "марути", "surface_forms": ["Марутами", "Марутов"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нишада", "surface_forms": ["Нишада", "Нишаде", "нишад", "нишады"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пандава", "surface_forms": ["Пандавам", "Пандавов", "Пандавы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "притхиви", "surface_forms": ["Притхиви", "притхиви"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сат", "surface_forms": ["Сати"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сиддха", "surface_forms": ["Сиддхи", "сиддхи"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сугрива", "surface_forms": ["Сугрива", "Сугривы"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "турвасу", "surface_forms": ["Турвасу", "турвасу"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шарьяти", "surface_forms": ["Шарьяти"], "count": 7, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "анаранья", "surface_forms": ["Анараньи", "Анаранья"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхрува", "surface_forms": ["Дхрува", "Дхрувы"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кешини", "surface_forms": ["Кешини"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кинкара", "surface_forms": ["кинкаров", "кинкары"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кумбхинаси", "surface_forms": ["Кумбхинаси"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "манибхадра", "surface_forms": ["Манибхадра", "Манибхадрой", "Манибхадру"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "парашара", "surface_forms": ["Парашара", "Парашаре", "Парашары"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прамлоча", "surface_forms": ["Прамлоча", "Прамлоче", "Прамлочи", "Прамлочу"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сута", "surface_forms": ["Сута", "Суту"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шакра", "surface_forms": ["Шакра", "Шакры"], "count": 6, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "арундхати", "surface_forms": ["Арундхати"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "будха", "surface_forms": ["Будха", "Будхи"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхарати", "surface_forms": ["Бхаратов", "бхаратов"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ватапи", "surface_forms": ["Ватапи"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вина", "surface_forms": ["Вина", "вина"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гаури", "surface_forms": ["Гаури"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дашаратхи", "surface_forms": ["Дашаратхи"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "девасена", "surface_forms": ["Девасена", "Девасеной", "Девасену"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джамбха", "surface_forms": ["Джамбха", "Джамбхе", "Джамбху"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джаянти", "surface_forms": ["Джаянти"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "крату", "surface_forms": ["Крату"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "манаса", "surface_forms": ["Манаса"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нандини", "surface_forms": ["Нандини"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пашупати", "surface_forms": ["Пашупати"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прамати", "surface_forms": ["Прамати"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пушпаданта", "surface_forms": ["Пушпаданта", "Пушпадантой", "Пушпаданту"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рати", "surface_forms": ["Рати"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рохини", "surface_forms": ["Рохини"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "саяна", "surface_forms": ["Саяны"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сита", "surface_forms": ["Ситу", "Ситы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "стена", "surface_forms": ["стен"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "стхулакеша", "surface_forms": ["Стхулакеша", "Стхулакеше", "Стхулакеши"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хираньякша", "surface_forms": ["Хираньякша", "Хираньякши"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шанта", "surface_forms": ["Шанта", "Шанте", "Шанты"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шудра", "surface_forms": ["шудры"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шукра", "surface_forms": ["Шукра"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "юванашва", "surface_forms": ["Юванашва", "Юванашвы"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "юга", "surface_forms": ["Юг", "Юга", "Югом"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "явана", "surface_forms": ["Яваны", "яванами", "яванов", "яваны"], "count": 5, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "адришьянти", "surface_forms": ["Адришьянти"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ангираси", "surface_forms": ["Ангирасам", "Ангирасами", "Ангирасов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхага", "surface_forms": ["Бхага", "Бхаге"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "валакхилья", "surface_forms": ["Валакхильи", "валакхильев", "валакхильи"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "видьядхара", "surface_forms": ["Видьядхары", "видьядхары"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вишвавасу", "surface_forms": ["Вишвавасу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гухьяка", "surface_forms": ["гухьяками", "гухьяки", "гухьяков"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дандин", "surface_forms": ["Дандин"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дрона", "surface_forms": ["Дрона", "Дрону"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дундубхи", "surface_forms": ["Дундубха", "дундубха", "дундубхов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дурга", "surface_forms": ["Дурга"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхундху", "surface_forms": ["Дхундху"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "индраджит", "surface_forms": ["Индраджит", "Индраджиту"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кокила", "surface_forms": ["Кокила", "кокилы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кулья", "surface_forms": ["Культ", "культ"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "куру", "surface_forms": ["Куру"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мада", "surface_forms": ["Мада", "Мадой", "Маду"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "манвантара", "surface_forms": ["манвантара", "манвантарам", "манвантаре", "манвантары"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "махадева", "surface_forms": ["Махадева", "Махадевы"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "муни", "surface_forms": ["Муни"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "налакубара", "surface_forms": ["Налакубара", "Налакубаре", "Налакубары"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нараяна", "surface_forms": ["Нараяна", "Нараяной"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "паравасу", "surface_forms": ["Паравасу"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "париджата", "surface_forms": ["Париджата"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "праматха", "surface_forms": ["Праматхи", "праматхи", "праматхов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пуруша", "surface_forms": ["Пуруша", "Пуруши"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пушья", "surface_forms": ["Пушья"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сваха", "surface_forms": ["Сваха", "Свахой"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сиддхи", "surface_forms": ["сиддхам", "сиддхами", "сиддхов"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сурабхи", "surface_forms": ["Сурабхи"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "тапати", "surface_forms": ["Тапати"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "третаюга", "surface_forms": ["Третаюга", "Третаюге"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хари", "surface_forms": ["Хари"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шравасти", "surface_forms": ["Шраваста", "Шравасти", "Шравасты"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "якши", "surface_forms": ["якшам", "якшами"], "count": 4, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ардра", "surface_forms": ["Ардра"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "атхарваведа", "surface_forms": ["Атхарваведа", "Атхарваведе", "Атхарваведы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ахалья", "surface_forms": ["Ахалье", "Ахальей", "Ахальи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхадра", "surface_forms": ["Бхадра", "Бхадру"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вайтарани", "surface_forms": ["Вайтарани"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "видьюнмалин", "surface_forms": ["Видьюнмалин", "Видьюнмалином"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "випрачитти", "surface_forms": ["Випрачитти"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вирочана", "surface_forms": ["Вирочана", "Вирочаны"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вьяса", "surface_forms": ["Вьясе", "Вьясы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гандхамадана", "surface_forms": ["Гандхамадана"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дасра", "surface_forms": ["Дасра"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джахну", "surface_forms": ["Джахну"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джая", "surface_forms": ["Джае", "Джаю", "Джая"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дилипа", "surface_forms": ["Дилипа", "Дилипу", "Дилипы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кала", "surface_forms": ["Кала", "Калы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "калиюга", "surface_forms": ["Калиюга"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каурава", "surface_forms": ["Кауравы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каушика", "surface_forms": ["Каушика"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кету", "surface_forms": ["Кету"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "критаюга", "surface_forms": ["Критаюга", "Критаюге"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "махишмати", "surface_forms": ["Махишмати"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "млеччха", "surface_forms": ["млеччхами", "млеччхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нарака", "surface_forms": ["Нарака", "нарака"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "насатья", "surface_forms": ["Насатья"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нишади", "surface_forms": ["Нишадами", "нишадами", "нишадов"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "паурава", "surface_forms": ["Пауравов", "Пауравы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прабхаса", "surface_forms": ["Прабхаса", "Прабхасы"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прасенаджит", "surface_forms": ["Прасенаджит", "Прасенаджита"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пулаха", "surface_forms": ["Пулаха"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сунитха", "surface_forms": ["Сунитха", "Сунитхи"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "читраратха", "surface_forms": ["Читраратхи", "Читраратху"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шанкара", "surface_forms": ["Шанкара"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шашада", "surface_forms": ["Шашада", "Шашады"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ямуна", "surface_forms": ["Ямуна", "Ямуны"], "count": 3, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "анала", "surface_forms": ["Анала"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "анга", "surface_forms": ["Анге", "Анги"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "анила", "surface_forms": ["Анила"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "арвавасу", "surface_forms": ["Арвавасу"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "аришта", "surface_forms": ["Аришта"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ариштанеми", "surface_forms": ["Ариштанеми"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "аруна", "surface_forms": ["Аруна", "Аруной"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "астика", "surface_forms": ["Астике"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ашвамедха", "surface_forms": ["ашвамедха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ашваттха", "surface_forms": ["Ашваттха", "ашваттха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бахуда", "surface_forms": ["Бахуда"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхаратаварша", "surface_forms": ["Бхаратаварша", "Бхаратаварше"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхаргави", "surface_forms": ["Бхаргавов"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бхогавати", "surface_forms": ["Бхогавати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "бходжа", "surface_forms": ["бходжи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вадавамукха", "surface_forms": ["Вадавамукха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вамана", "surface_forms": ["Вамана", "Ваманы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "васава", "surface_forms": ["Васава"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вач", "surface_forms": ["Вач"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "веданга", "surface_forms": ["Веданги", "веданги"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вигхнеша", "surface_forms": ["Вигхнеша"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "випаша", "surface_forms": ["Випаша"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вирабхадра", "surface_forms": ["Вирабхадра", "Вирабхадре"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вирата", "surface_forms": ["Вирата", "Вираты"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вирини", "surface_forms": ["Вирини"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дайтьясена", "surface_forms": ["Дайтьясена"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дари", "surface_forms": ["Дар"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дашагрива", "surface_forms": ["Дашагрива"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "деви", "surface_forms": ["Деви"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дридхашва", "surface_forms": ["Дридхашва", "Дридхашвы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дханвантари", "surface_forms": ["Дханвантари"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхундхумара", "surface_forms": ["Дхундхумара", "Дхундхумары"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ида", "surface_forms": ["Ида", "Иди"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ила", "surface_forms": ["Ила", "Иле"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "илина", "surface_forms": ["Илины"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "индрани", "surface_forms": ["Индрани"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "инду", "surface_forms": ["Инда"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ишана", "surface_forms": ["Ишана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "какутстха", "surface_forms": ["Какутстха", "Какутстхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "калакута", "surface_forms": ["Калакута", "калакута"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каланеми", "surface_forms": ["Каланеми"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каларатри", "surface_forms": ["Каларатри"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "калкин", "surface_forms": ["Калкин"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "камалакша", "surface_forms": ["Камалакша"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "канса", "surface_forms": ["Кансы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каурави", "surface_forms": ["Кауравов"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каустубха", "surface_forms": ["Каустубха"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кашираджа", "surface_forms": ["Кашираджей", "Кашираджи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "киннари", "surface_forms": ["киннаров"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "криттика", "surface_forms": ["Криттиками", "Криттики"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "локапала", "surface_forms": ["локапал", "локапалах"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "магадхи", "surface_forms": ["магадхами"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "малини", "surface_forms": ["Малини"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мандодари", "surface_forms": ["Мандодари"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "манимати", "surface_forms": ["Манимати"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "матаришван", "surface_forms": ["Матаришван", "Матаришвана"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "матсья", "surface_forms": ["матсьев"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "матхура", "surface_forms": ["Матхуру", "Матхуры"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "махападма", "surface_forms": ["Махападма", "Махападмы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "никумбха", "surface_forms": ["Никумбхи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ниррити", "surface_forms": ["Ниррити"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "падма", "surface_forms": ["Падма"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пара", "surface_forms": ["пара"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пашупата", "surface_forms": ["Пашупата"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "питрилока", "surface_forms": ["Питрилока", "Питрилоку"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пишача", "surface_forms": ["пишачей", "пишачи"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прахаса", "surface_forms": ["Прахаса"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прачинабархис", "surface_forms": ["Прачинабархис", "Прачинабархиса"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рака", "surface_forms": ["Рака", "Раку"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "раса", "surface_forms": ["Раса"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "расатала", "surface_forms": ["Расатала"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ратри", "surface_forms": ["Ратри"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сарвабхаума", "surface_forms": ["Сарвабхаума", "Сарвабхаумы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сварбхану", "surface_forms": ["Сварбхану"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сути", "surface_forms": ["сутами"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "таракакша", "surface_forms": ["Таракакша"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "упанишад", "surface_forms": ["Упанишады", "упанишады"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "уттанка", "surface_forms": ["Уттанка", "Уттанке"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хара", "surface_forms": ["Хара"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хариванша", "surface_forms": ["Хариванша", "Хариванше"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "харьяшва", "surface_forms": ["Харьяшвам", "Харьяшвы"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хастинапура", "surface_forms": ["Хастинапур"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шабала", "surface_forms": ["Шабала"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шама", "surface_forms": ["Шами", "шами"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шарва", "surface_forms": ["Шарва"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шатадру", "surface_forms": ["Шатадру"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шри", "surface_forms": ["Шри"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "юдхиштхира", "surface_forms": ["Юдхиштхира"], "count": 2, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ад", "surface_forms": ["Ад"], "count": 1, "needs_review": true, "lemma_candidates": ["ади", "аю"]}
+{"source": "mify-drind", "lemma": "айравана", "surface_forms": ["Айравана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "алака", "surface_forms": ["Алака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "амавасу", "surface_forms": ["Амавасу"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "амбариша", "surface_forms": ["Амбариша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "амбика", "surface_forms": ["Амбика"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "амрита", "surface_forms": ["Амрита"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ананга", "surface_forms": ["Ананга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ананта", "surface_forms": ["Ананта"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ангирас", "surface_forms": ["Ангирас"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирас", "surface_forms": ["Ангирас"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирас", "surface_forms": ["Ангирас"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангираса", "surface_forms": ["Ангираса"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасе", "surface_forms": ["Ангирасе"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасом", "surface_forms": ["Ангирасом"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасу", "surface_forms": ["Ангирасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасы", "surface_forms": ["Ангирасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасы", "surface_forms": ["Ангирасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасы", "surface_forms": ["Ангирасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасы", "surface_forms": ["Ангирасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "ангирасы", "surface_forms": ["Ангирасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ангирас", "ангираса"]}
+{"source": "mify-drind", "lemma": "апа", "surface_forms": ["Апа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "апсарас", "surface_forms": ["апсарасы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "артха", "surface_forms": ["Артха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "атхарван", "surface_forms": ["Атхарван"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ашвина", "surface_forms": ["Ашвина"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "ашвины", "surface_forms": ["Ашвины"], "count": 1, "needs_review": true, "lemma_candidates": ["ашвин", "ашвина"]}
+{"source": "mify-drind", "lemma": "аюрведа", "surface_forms": ["Аюрведы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "баладева", "surface_forms": ["Баладева"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахман", "surface_forms": ["Брахман"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахманом", "surface_forms": ["Брахманом"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "брахманы", "surface_forms": ["Брахманы"], "count": 1, "needs_review": true, "lemma_candidates": ["брахман", "брахмана"]}
+{"source": "mify-drind", "lemma": "вадхусара", "surface_forms": ["Вадхусара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вайшнава", "surface_forms": ["Вайшнави"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вайшравана", "surface_forms": ["Вайшравана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вара", "surface_forms": ["варн"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "варанаси", "surface_forms": ["Варанаси"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вараха", "surface_forms": ["Варахи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "варуни", "surface_forms": ["Варуни"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ваша", "surface_forms": ["Ваш"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "видиша", "surface_forms": ["Видишь"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "видуратха", "surface_forms": ["Видуратхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "вишакха", "surface_forms": ["Вишакха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ган", "surface_forms": ["ган"], "count": 1, "needs_review": true, "lemma_candidates": ["гана", "гая"]}
+{"source": "mify-drind", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "mify-drind", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "mify-drind", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "mify-drind", "lemma": "ганге", "surface_forms": ["Ганге"], "count": 1, "needs_review": true, "lemma_candidates": ["ганга", "гангея"]}
+{"source": "mify-drind", "lemma": "гандхарв", "surface_forms": ["гандхарв"], "count": 1, "needs_review": true, "lemma_candidates": ["гандхарви", "гандхари"]}
+{"source": "mify-drind", "lemma": "гандхарв", "surface_forms": ["гандхарв"], "count": 1, "needs_review": true, "lemma_candidates": ["гандхарви", "гандхари"]}
+{"source": "mify-drind", "lemma": "го", "surface_forms": ["Год"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гомати", "surface_forms": ["Гомати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гунакеши", "surface_forms": ["Гунакеши"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "гхатодара", "surface_forms": ["Гхатодара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дадхичи", "surface_forms": ["Дадхичи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дайтея", "surface_forms": ["Дайте"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "данава", "surface_forms": ["данавы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "данда", "surface_forms": ["данда"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дахана", "surface_forms": ["Дахана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "двапара", "surface_forms": ["Двапара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "двапараюга", "surface_forms": ["Двапараюга"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "девалока", "surface_forms": ["Девалока"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джамбудвипа", "surface_forms": ["Джамбудвипы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "джахнави", "surface_forms": ["Джахнави"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхара", "surface_forms": ["Дхара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхармараджа", "surface_forms": ["Дхармараджа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "дхуморна", "surface_forms": ["Дхуморной"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "камбоджа", "surface_forms": ["камбоджами"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "каньякубджа", "surface_forms": ["Каньякубджи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "капиле", "surface_forms": ["Капиле"], "count": 1, "needs_review": true, "lemma_candidates": ["капила", "капилея"]}
+{"source": "mify-drind", "lemma": "капиле", "surface_forms": ["Капиле"], "count": 1, "needs_review": true, "lemma_candidates": ["капила", "капилея"]}
+{"source": "mify-drind", "lemma": "каумара", "surface_forms": ["Каумари"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "mify-drind", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "mify-drind", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "mify-drind", "lemma": "кашьяпе", "surface_forms": ["Кашьяпе"], "count": 1, "needs_review": true, "lemma_candidates": ["кашьяпа", "кашьяпея"]}
+{"source": "mify-drind", "lemma": "кесара", "surface_forms": ["Кесари"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кешава", "surface_forms": ["Кешава"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "кродха", "surface_forms": ["Кродха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "лакшмана", "surface_forms": ["Лакшмана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "лока", "surface_forms": ["Локи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мадхава", "surface_forms": ["Мадхава"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "манга", "surface_forms": ["манго"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "маруты", "surface_forms": ["Маруты"], "count": 1, "needs_review": true, "lemma_candidates": ["марут", "марута"]}
+{"source": "mify-drind", "lemma": "махадеви", "surface_forms": ["Махадеви"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "махешвара", "surface_forms": ["Махешвар"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "махешвари", "surface_forms": ["Махешвари"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мая", "surface_forms": ["ма"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "митрасаха", "surface_forms": ["Митрасаха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "мритью", "surface_forms": ["Мритью"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "найррита", "surface_forms": ["найрриты"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "найррити", "surface_forms": ["найрритами"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "нара", "surface_forms": ["Наре"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "парада", "surface_forms": ["Параду"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "параматман", "surface_forms": ["Параматман"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пауломи", "surface_forms": ["пауломов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "питар", "surface_forms": ["питаров"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прабхавати", "surface_forms": ["Прабхавати"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пратьюша", "surface_forms": ["Пратьюша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "прачетасам", "surface_forms": ["Прачетасам"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасам", "surface_forms": ["Прачетасам"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасов", "surface_forms": ["Прачетасов"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасов", "surface_forms": ["Прачетасов"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасы", "surface_forms": ["Прачетасы"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасы", "surface_forms": ["Прачетасы"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасы", "surface_forms": ["Прачетасы"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасы", "surface_forms": ["Прачетасы"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасы", "surface_forms": ["Прачетасы"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "прачетасы", "surface_forms": ["Прачетасы"], "count": 1, "needs_review": true, "lemma_candidates": ["прачетас", "прачетаса"]}
+{"source": "mify-drind", "lemma": "пришни", "surface_forms": ["Пришни"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пут", "surface_forms": ["Путь"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "пушану", "surface_forms": ["Пушану"], "count": 1, "needs_review": true, "lemma_candidates": ["пушан", "пушана"]}
+{"source": "mify-drind", "lemma": "пушану", "surface_forms": ["Пушану"], "count": 1, "needs_review": true, "lemma_candidates": ["пушан", "пушана"]}
+{"source": "mify-drind", "lemma": "пушану", "surface_forms": ["Пушану"], "count": 1, "needs_review": true, "lemma_candidates": ["пушан", "пушана"]}
+{"source": "mify-drind", "lemma": "раджараджа", "surface_forms": ["Раджараджа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "раджи", "surface_forms": ["Раджи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["Ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшас", "surface_forms": ["ракшас"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшаса", "surface_forms": ["ракшаса"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасом", "surface_forms": ["ракшасом"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасом", "surface_forms": ["ракшасом"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасом", "surface_forms": ["ракшасом"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасом", "surface_forms": ["ракшасом"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасом", "surface_forms": ["ракшасом"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасу", "surface_forms": ["ракшасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасу", "surface_forms": ["ракшасу"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["Ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "ракшасы", "surface_forms": ["ракшасы"], "count": 1, "needs_review": true, "lemma_candidates": ["ракшас", "ракшаса"]}
+{"source": "mify-drind", "lemma": "риддхи", "surface_forms": ["Риддхи"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "рикша", "surface_forms": ["Рикша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "саварна", "surface_forms": ["Саварну"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "санкхья", "surface_forms": ["санкхья"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сараю", "surface_forms": ["Сараю"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сарвадамана", "surface_forms": ["Сарвадамана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сарвакарман", "surface_forms": ["Сарвакармана"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "саудаса", "surface_forms": ["Саудаса"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сахасракша", "surface_forms": ["Сахасракша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "свахе", "surface_forms": ["Свахе"], "count": 1, "needs_review": true, "lemma_candidates": ["сваха", "свахея"]}
+{"source": "mify-drind", "lemma": "сваямбху", "surface_forms": ["Сваямбху"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сунабха", "surface_forms": ["Сунабха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "супарни", "surface_forms": ["супарнов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сура", "surface_forms": ["Сура"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "сураса", "surface_forms": ["Сураса"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "такшака", "surface_forms": ["Такшака"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "триширас", "surface_forms": ["Триширас"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "уттара", "surface_forms": ["Уттары"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хема", "surface_forms": ["Хема"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хету", "surface_forms": ["Хети"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хришикеша", "surface_forms": ["Хришикеша"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "хутаваха", "surface_forms": ["Хутаваха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "чхая", "surface_forms": ["Чхая"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шабалашва", "surface_forms": ["Шабалашвы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шалмали", "surface_forms": ["шалмали"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шамбара", "surface_forms": ["Шамбару"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шанайшчара", "surface_forms": ["Шанайшчара"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шатакрату", "surface_forms": ["Шатакрату"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шатругхна", "surface_forms": ["Шатругхна"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шука", "surface_forms": ["Шука"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "шурпанакха", "surface_forms": ["Шурпанакха"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ядава", "surface_forms": ["Ядавы"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ядави", "surface_forms": ["Ядавов"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "яджурведа", "surface_forms": ["Яджурведа"], "count": 1, "needs_review": false, "lemma_candidates": null}
+{"source": "mify-drind", "lemma": "ятудхана", "surface_forms": ["ятудханы"], "count": 1, "needs_review": false, "lemma_candidates": null}
