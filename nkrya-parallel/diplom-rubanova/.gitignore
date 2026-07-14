@@ -46,6 +46,7 @@
 # these are code, not the bulk data the deny-by-default rule guards.
 !sans_stemmer.ipynb
 !deeppavlov_parsing.ipynb
+!corpus_marker.ipynb
 
 # stemmer / declension rules + lexicons
 !decl_rules.txt

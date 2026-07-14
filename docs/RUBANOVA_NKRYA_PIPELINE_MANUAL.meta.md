@@ -34,5 +34,6 @@ the sanskritism proper-name index or the Кали→кал regression.
 | Date | Model | Change |
 |---|---|---|
 | 14-07-2026 | Opus 4.8 (`claude-opus-4-8[1m]`) | Created from the line-by-line review of both notebooks (H904). |
+| 14-07-2026 | Opus 4.8 (`claude-opus-4-8[1m]`) | Added **Stage C** (`corpus_marker.ipynb`, taken from [upstream](https://github.com/evgeniarubanova/sanskrit_stemmer)): RU↔SA word alignment via a hand-built IAST→Cyrillic transliterator over a verse-block-aligned corpus. Corrected §6 — the SA side uses transliteration+alignment, **not** DCS; DCS morphology stays an H906 reproduction target. Noted opcorpora is absent even from upstream (third-party OpenCorpora). |
 
 _Dr. Mārcis Gasūns_

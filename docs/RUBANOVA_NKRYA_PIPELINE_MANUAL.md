@@ -30,17 +30,33 @@ Rubanova's actual code is **two Colab notebooks**, now tracked in
 |---|---|---|
 | [`deeppavlov_parsing.ipynb`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/deeppavlov_parsing.ipynb) | **Stage A** — morphosyntactic parse of the Russian translation | ~mins; DeepPavlov `ru_syntagrus_joint_parsing` |
 | [`sans_stemmer.ipynb`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/sans_stemmer.ipynb) | **Stage B** — build the sanskritism proper-name index from the Russian running text | ~4–5 min/file (pymorphy2 + nltk) |
+| [`corpus_marker.ipynb`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/corpus_marker.ipynb) | **Stage C** — align each Russian sanskritism to its Sanskrit source word in the parallel corpus + colour-highlight both sides | ~secs/verse-block (pymorphy2 + a hand-built IAST→Cyrillic transliterator) |
 
-Both were written for **Google Colab** (`google.colab.drive` mount, `path =
-/content/drive/My Drive/Colab Notebooks/диплом/`). They are RU-side only — see
-§6 for the Sanskrit side. Stage A **must run first**: Stage B's disambiguation
-consumes Stage A's output file `deeppavlov_<file>`.
+**Upstream source.** All of Rubanova's files — the three notebooks, the data
+lists, the corpus dumps, and the DeepPavlov outputs — are published at
+[**github.com/evgeniarubanova/sanskrit_stemmer**](https://github.com/evgeniarubanova/sanskrit_stemmer)
+(no licence stated; the repo description credits the ВКР). The three notebooks
+are now mirrored (tracked) in this repo; the bulk data stays upstream / local-only
+(§4, [`MANIFEST_LOCAL_ONLY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/MANIFEST_LOCAL_ONLY.md)).
+`corpus_marker.ipynb` came from upstream (the two notebooks MG supplied did not
+include it); the tracked `sans_stemmer.ipynb` is the fuller variant with the
+consolidated driver cell, not upstream's exploded-cell version. **Marsel's
+refactor is expected later** — this manual documents Evgeniya's version so the
+two can be diffed.
 
-**Both notebooks are RU→index tools, not the corpus aligner.** They produce a
+All three were written for **Google Colab** (`google.colab.drive` mount, `path =
+/content/drive/My Drive/Colab Notebooks/диплом/`). Stage A **must run first**:
+Stage B's disambiguation consumes Stage A's output file `deeppavlov_<file>`.
+Stages B and C share the same lemma-pool + filter setup but are independent runs.
+
+**A/B produce an index; C does the alignment.** Stages A+B build a
 printed-index-style автоматический указатель (automatic name index) for one
 Russian translation, reproducing (semi-automatically) the hand-built index of
-the printed MBh vol. 3. They do **not** emit the parallel corpus itself; that is
-this repo's own [`nkrya_export.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_export.py).
+the printed MBh vol. 3. Stage C (`corpus_marker`) is the piece closest to a
+*parallel corpus*: it word-aligns Russian sanskritisms to their Sanskrit
+originals via a hand-built IAST→Cyrillic transliterator (§6). None of the three
+emit this repo's НКРЯ export format; that is our own
+[`nkrya_export.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_export.py).
 
 ## 2. Pipeline at a glance
 
@@ -67,6 +83,14 @@ deeppavlov_<file>                            │              by stem+ending rul
                                               │                          write the index
                                              get_index_forms()  ── list every attested form
                                                                     per rubric
+
+corpus_marker.ipynb (Stage C — independent, §6)
+────────────────────────────────────────────────
+verse-block-aligned corpus  ──► translate() IAST→Cyrillic (translation.txt +
+  [N] <!--sanskrit--> … <!--rus--> …      correct_trans.txt)
+        │                                 search() ── find RU sanskritisms, prefix-match
+        ▼                                   each to its transliterated SA source word
+  word-level SA↔RU alignment  ──► highlight() ── paral_corp.html (both sides colour-coded)
 ```
 
 ## 3. Stage A — `deeppavlov_parsing.ipynb` (Russian morphosyntax)
@@ -179,22 +203,61 @@ consonant-final / non-`и/ы` representative, drop a small stop-list (`эха, �
 рук, матери, правая`), write `automated_index_<file>` (the rubric list) and
 `automated_index_forms_<file>` (every attested surface form per rubric).
 
-## 6. The Sanskrit side — DCS as the markup source
+## 6. Stage C — `corpus_marker.ipynb`, the RU↔SA aligner (and where DCS fits)
 
-The two provided notebooks are **RU-side only**. Rubanova's thesis pairs the
-Russian translation against the Sanskrit original, where the **Sanskrit
-morphology comes from the DCS** ([Digital Corpus of Sanskrit](http://www.sanskrit-linguistics.org/dcs/))
-— an existing lemma+morphology resource, *not* code Rubanova wrote. So on the SA
-side there is no notebook to review: "using DCS" means looking up each Sanskrit
-token's DCS lemma + morphological analysis, not running a home-grown analyzer.
+The third notebook is the one that actually touches the Sanskrit side, and it
+**does not use DCS** — it aligns by transliteration. Its steps:
+
+**Input — an already-aligned corpus.** `corpus_marker` reads
+`aranyakaparva_corpus2.txt`, a manually-aligned parallel file whose verse blocks
+carry the shape:
+
+```
+[1-4] <! -- sanskrit --> <IAST Sanskrit verse> <! -- rus --> <Russian translation>
+```
+
+A single regex splits it into `parts = [(number, sanskrit_part, russian_part)]`
+(2,033 blocks for Āraṇyakaparva part 1). This is Rubanova's alignment granularity:
+**verse-block**, not sentence or token — the token alignment is what Stage C then derives.
+
+**IAST → Cyrillic transliterator (`translate`).** Driven by two tracked tables:
+[`translation.txt`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/translation.txt)
+(`Replace "x","y"` rules, single-char + multi-char digraphs) and
+[`correct_trans.txt`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/correct_trans.txt)
+(post-corrections). It converts a Sanskrit surface word to its Russian
+spelling — e.g. `janamejaya→джанамеджая`, `vaiśampāyana→вайшампаяна`,
+`sūryasyaiva→сурясяйва`. This is a **home-grown romanization-to-Cyrillic map, not
+a morphological analyzer** — it produces spelling, not lemma/POS.
+
+**Word alignment (`search`).** For each verse block: (1) run the same
+sanskritism stemmer as Stage B over the Russian side to collect Russian
+proper-name forms (`found`); (2) for each Sanskrit word, transliterate it and
+prefix-match it against the found Russian forms; when they agree, record
+`(number, [sans_index, sans_fragment], [rus_index, rus_lemma])`. Helper
+functions `proc_short`/`proc_long` clip the matching Sanskrit substring
+(compounds can contain several names — e.g. `surapitṛgaṇayakṣasevitaṃ` yields
+both *ганы* and *якши*). Output: a **word-level SA↔RU alignment of sanskritisms**.
+
+**Highlight (`highlight`).** Writes `paral_corp.html` colouring each aligned
+sanskritism the same hue on both the Sanskrit and the Russian side — the visible
+proof of the alignment.
+
+### Where DCS comes in
+MG's note that "the Sanskrit side initially used DCS as the markup source" refers
+to a step **not present in any of these three notebooks** — Stage C's SA handling
+is transliteration+alignment, giving *which Sanskrit word* a Russian name maps to,
+**not** its lemma/case/number. So full Sanskrit morphological markup (lemma +
+morph per token, the actual НКРЯ requirement) was never authored here; DCS is the
+external resource that would supply it.
 
 Consequently [H906](https://github.com/gasyoun/Uprava/blob/main/handoffs/H906-Opus_SamudraManthanam_nkrya-sa-morphology-dcs-vidyut_14.07.26.md)
 is a *reproduction*, not a port: anchor per-token lemma+morph on DCS (gold),
 verify coverage per corpus text (the Bhagavadgītā is absent from DCS per H848),
-then add vidyut as a second opinion and diff. This manual has no more to say
-about SA code because none was authored — the honest gap is that the exact DCS
-extraction Rubanova used (which DCS export, which alignment) is not in the
-provided files and must be reconstructed in H906.
+then add vidyut as a second opinion and diff. Stage C's transliterator + the
+verse-block alignment are a **useful input** to H906 (they give the SA↔RU
+token correspondence a DCS lookup can hang morphology on), but the morphology
+itself must still be reconstructed — the honest gap is which DCS export Rubanova
+(or a later step) intended.
 
 ## 7. The Кали→кал failure — root cause and the original's defence
 
@@ -237,6 +300,7 @@ drops:
 | Sentence tokenization | nltk punkt | own regex tokenizer | minor; verify parity |
 | Epithet / options / append rubrics | `3_INDEX_options/phrases`, `append if found` | `annotations.py` reproduces | reproduced |
 | Sing/plural merge | `unite2` + `index_unite` | `disambiguate.py` (order-independent, H821 fix) | reproduced + hardened |
+| RU↔SA word alignment | **`corpus_marker`** — IAST→Cyrillic transliterator + prefix-match over a verse-block-aligned corpus | ✂️ **not ported at all** | new capability for H906: reuse the transliterator + alignment to hang DCS morphology on SA tokens |
 
 **Note on scope.** The notebooks build a *printed-style name index*, not
 per-token corpus morphology. H905's actual target — per-token POS/case/number/
@@ -247,15 +311,21 @@ uses only internally. The sanskritism index is a **second** RU-side deliverable
 
 ## 9. Limitations of this manual
 
-- **SA side undocumented in code** — no Sanskrit analyzer was authored (DCS is
-  the source); the exact DCS extraction/alignment Rubanova used is not in the
-  provided files (§6). H906 reconstructs it.
-- **Marsel's update scope** — these notebooks are "Evgeniya's code as updated by
-  Marsel"; the original pre-Marsel version was not provided, so this manual
-  documents the delivered state, not the diff between the two.
-- **Local-only inputs** — `384000.txt` and `dict.opcorpora.txt` are not in the
-  repo; the pipeline cannot be re-run end-to-end from a fresh clone without
-  them (inventoried in `MANIFEST_LOCAL_ONLY.md`).
+- **No Sanskrit *morphology* was authored** — Stage C aligns and transliterates
+  the SA side but produces no lemma/POS; DCS is the external morphology source
+  and which DCS export was intended is not in the provided files (§6). H906
+  reconstructs it.
+- **Marsel's update scope** — the two notebooks MG supplied are "Evgeniya's code
+  as updated by Marsel" and `corpus_marker` is from her upstream repo; the
+  original pre-Marsel version was not provided, so this manual documents the
+  delivered state, not the diff. Marsel's refactor is expected later for
+  comparison.
+- **Local-only / upstream-only inputs** — `384000.txt` (352k pool) and the corpus
+  dumps live at [the upstream repo](https://github.com/evgeniarubanova/sanskrit_stemmer)
+  and local-only; **`dict.opcorpora.txt` (271 MB) is not even in the upstream
+  repo** — it is third-party [OpenCorpora](http://opencorpora.org/) data and must
+  be fetched separately for H905. The pipeline cannot be re-run end-to-end from a
+  fresh clone without these (inventoried in `MANIFEST_LOCAL_ONLY.md`).
 - **Colab-bound** — paths and the Drive mount are Colab-specific; a local re-run
   needs the `path`/`input()` prompts rewired.
 
