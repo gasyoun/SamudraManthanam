@@ -8,6 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Somadeva KSS books 13–18 aligned + ingested (H910 fan-out).** Six more
+  lambakas śloka-keyed and searchable (13 Madirāvatī, 14 *pañca*, 15 Mahābhiṣeka,
+  16 Suratamañjarī, 17 Padmāvatī, 18 Viṣamaśīla) — **17 of 18 books now in the
+  corpus**. 3 683 ślokas → 681 groups; alignment maps committed under
+  `web/corpus_builder/somadeva_alignments/`. Two upstream data defects found +
+  handled reproducibly: the **SA/RU file swap at lambakas 14↔15** (added a
+  `--ru-book` converter option; passage keys always from the Sanskrit lambaka) and
+  the **book-12 Vetāla-ref annotation** that silently dropped 1 958 ślokas (regex
+  loosened). `build_corpus_html._ROMAN` extended XII→XX for 18 books. Book 12
+  (giant, 4 931 ślokas) deferred to a per-taraṅga run; book 14 is positional
+  (token-limit fallback), flagged for review. Report:
+  `web/corpus_builder/SOMADEVA_KSS_BOOKS_11_18_FANOUT_REPORT.md`.
 - **Somadeva KSS book-11 pilot — LLM-assisted śloka alignment (H910).** New
   `web/corpus_builder/somadeva_gretil_to_canonical.py` parses the in-repo
   `sokss`-keyed Sanskrit + Serebryakov Russian prose for books 11–18; an LLM

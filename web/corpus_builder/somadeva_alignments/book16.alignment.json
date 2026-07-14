@@ -1,0 +1,366 @@
+[
+  {
+    "ru_idx": 1,
+    "taranga": 0,
+    "sloka_start": 1,
+    "sloka_end": 1,
+    "confidence": 1.0
+  },
+  {
+    "ru_idx": 2,
+    "taranga": 1,
+    "sloka_start": 1,
+    "sloka_end": 1,
+    "confidence": 0.98
+  },
+  {
+    "ru_idx": 3,
+    "taranga": 1,
+    "sloka_start": 2,
+    "sloka_end": 7,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 4,
+    "taranga": 1,
+    "sloka_start": 8,
+    "sloka_end": 13,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 5,
+    "taranga": 1,
+    "sloka_start": 14,
+    "sloka_end": 22,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 6,
+    "taranga": 1,
+    "sloka_start": 23,
+    "sloka_end": 23,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 7,
+    "taranga": 1,
+    "sloka_start": 24,
+    "sloka_end": 33,
+    "confidence": 0.95
+  },
+  {
+    "ru_idx": 8,
+    "taranga": 1,
+    "sloka_start": 34,
+    "sloka_end": 40,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 9,
+    "taranga": 1,
+    "sloka_start": 41,
+    "sloka_end": 44,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 10,
+    "taranga": 1,
+    "sloka_start": 45,
+    "sloka_end": 59,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 11,
+    "taranga": 1,
+    "sloka_start": 60,
+    "sloka_end": 69,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 12,
+    "taranga": 1,
+    "sloka_start": 70,
+    "sloka_end": 84,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 13,
+    "taranga": 1,
+    "sloka_start": 85,
+    "sloka_end": 94,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 14,
+    "taranga": 1,
+    "sloka_start": 95,
+    "sloka_end": 102,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 15,
+    "taranga": 1,
+    "sloka_start": 103,
+    "sloka_end": 104,
+    "confidence": 0.6
+  },
+  {
+    "ru_idx": 16,
+    "taranga": 1,
+    "sloka_start": 105,
+    "sloka_end": 106,
+    "confidence": 0.6
+  },
+  {
+    "ru_idx": 17,
+    "taranga": 2,
+    "sloka_start": 1,
+    "sloka_end": 25,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 18,
+    "taranga": 2,
+    "sloka_start": 26,
+    "sloka_end": 37,
+    "confidence": 0.8
+  },
+  {
+    "ru_idx": 19,
+    "taranga": 2,
+    "sloka_start": 38,
+    "sloka_end": 46,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 20,
+    "taranga": 2,
+    "sloka_start": 47,
+    "sloka_end": 60,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 21,
+    "taranga": 2,
+    "sloka_start": 61,
+    "sloka_end": 69,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 22,
+    "taranga": 2,
+    "sloka_start": 70,
+    "sloka_end": 76,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 23,
+    "taranga": 2,
+    "sloka_start": 77,
+    "sloka_end": 84,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 24,
+    "taranga": 2,
+    "sloka_start": 85,
+    "sloka_end": 88,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 25,
+    "taranga": 2,
+    "sloka_start": 89,
+    "sloka_end": 94,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 26,
+    "taranga": 2,
+    "sloka_start": 95,
+    "sloka_end": 101,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 27,
+    "taranga": 2,
+    "sloka_start": 102,
+    "sloka_end": 110,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 28,
+    "taranga": 2,
+    "sloka_start": 111,
+    "sloka_end": 111,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 29,
+    "taranga": 2,
+    "sloka_start": 112,
+    "sloka_end": 114,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 30,
+    "taranga": 2,
+    "sloka_start": 115,
+    "sloka_end": 130,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 31,
+    "taranga": 2,
+    "sloka_start": 131,
+    "sloka_end": 138,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 32,
+    "taranga": 2,
+    "sloka_start": 139,
+    "sloka_end": 143,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 33,
+    "taranga": 2,
+    "sloka_start": 144,
+    "sloka_end": 146,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 34,
+    "taranga": 2,
+    "sloka_start": 147,
+    "sloka_end": 159,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 35,
+    "taranga": 2,
+    "sloka_start": 160,
+    "sloka_end": 169,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 36,
+    "taranga": 2,
+    "sloka_start": 170,
+    "sloka_end": 185,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 37,
+    "taranga": 2,
+    "sloka_start": 186,
+    "sloka_end": 198,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 38,
+    "taranga": 2,
+    "sloka_start": 199,
+    "sloka_end": 201,
+    "confidence": 0.8
+  },
+  {
+    "ru_idx": 39,
+    "taranga": 2,
+    "sloka_start": 202,
+    "sloka_end": 214,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 40,
+    "taranga": 3,
+    "sloka_start": 1,
+    "sloka_end": 10,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 41,
+    "taranga": 3,
+    "sloka_start": 11,
+    "sloka_end": 14,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 42,
+    "taranga": 3,
+    "sloka_start": 15,
+    "sloka_end": 16,
+    "confidence": 0.75
+  },
+  {
+    "ru_idx": 43,
+    "taranga": 3,
+    "sloka_start": 17,
+    "sloka_end": 26,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 44,
+    "taranga": 3,
+    "sloka_start": 27,
+    "sloka_end": 41,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 45,
+    "taranga": 3,
+    "sloka_start": 42,
+    "sloka_end": 46,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 46,
+    "taranga": 3,
+    "sloka_start": 47,
+    "sloka_end": 52,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 47,
+    "taranga": 3,
+    "sloka_start": 53,
+    "sloka_end": 59,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 48,
+    "taranga": 3,
+    "sloka_start": 60,
+    "sloka_end": 66,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 49,
+    "taranga": 3,
+    "sloka_start": 67,
+    "sloka_end": 72,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 50,
+    "taranga": 3,
+    "sloka_start": 73,
+    "sloka_end": 88,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 51,
+    "taranga": 3,
+    "sloka_start": 89,
+    "sloka_end": 99,
+    "confidence": 0.6
+  },
+  {
+    "ru_idx": 52,
+    "taranga": 3,
+    "sloka_start": 100,
+    "sloka_end": 100,
+    "confidence": 0.3
+  }
+]

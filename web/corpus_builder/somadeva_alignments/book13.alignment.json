@@ -1,0 +1,261 @@
+[
+  {
+    "ru_idx": 1,
+    "taranga": 0,
+    "sloka_start": 1,
+    "sloka_end": 1,
+    "confidence": 1.0
+  },
+  {
+    "ru_idx": 2,
+    "taranga": 1,
+    "sloka_start": 1,
+    "sloka_end": 2,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 3,
+    "taranga": 1,
+    "sloka_start": 3,
+    "sloka_end": 9,
+    "confidence": 0.95
+  },
+  {
+    "ru_idx": 4,
+    "taranga": 1,
+    "sloka_start": 10,
+    "sloka_end": 13,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 5,
+    "taranga": 1,
+    "sloka_start": 14,
+    "sloka_end": 16,
+    "confidence": 0.75
+  },
+  {
+    "ru_idx": 6,
+    "taranga": 1,
+    "sloka_start": 17,
+    "sloka_end": 23,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 7,
+    "taranga": 1,
+    "sloka_start": 24,
+    "sloka_end": 28,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 8,
+    "taranga": 1,
+    "sloka_start": 29,
+    "sloka_end": 40,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 9,
+    "taranga": 1,
+    "sloka_start": 41,
+    "sloka_end": 52,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 10,
+    "taranga": 1,
+    "sloka_start": 53,
+    "sloka_end": 62,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 11,
+    "taranga": 1,
+    "sloka_start": 63,
+    "sloka_end": 67,
+    "confidence": 0.92
+  },
+  {
+    "ru_idx": 12,
+    "taranga": 1,
+    "sloka_start": 68,
+    "sloka_end": 69,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 13,
+    "taranga": 1,
+    "sloka_start": 70,
+    "sloka_end": 78,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 14,
+    "taranga": 1,
+    "sloka_start": 79,
+    "sloka_end": 79,
+    "confidence": 0.7
+  },
+  {
+    "ru_idx": 15,
+    "taranga": 1,
+    "sloka_start": 80,
+    "sloka_end": 85,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 16,
+    "taranga": 1,
+    "sloka_start": 86,
+    "sloka_end": 95,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 17,
+    "taranga": 1,
+    "sloka_start": 96,
+    "sloka_end": 104,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 18,
+    "taranga": 1,
+    "sloka_start": 105,
+    "sloka_end": 113,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 19,
+    "taranga": 1,
+    "sloka_start": 114,
+    "sloka_end": 121,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 20,
+    "taranga": 1,
+    "sloka_start": 122,
+    "sloka_end": 126,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 21,
+    "taranga": 1,
+    "sloka_start": 127,
+    "sloka_end": 131,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 22,
+    "taranga": 1,
+    "sloka_start": 132,
+    "sloka_end": 139,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 23,
+    "taranga": 1,
+    "sloka_start": 140,
+    "sloka_end": 150,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 24,
+    "taranga": 1,
+    "sloka_start": 151,
+    "sloka_end": 154,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 25,
+    "taranga": 1,
+    "sloka_start": 155,
+    "sloka_end": 156,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 26,
+    "taranga": 1,
+    "sloka_start": 157,
+    "sloka_end": 157,
+    "confidence": 0.95
+  },
+  {
+    "ru_idx": 27,
+    "taranga": 1,
+    "sloka_start": 158,
+    "sloka_end": 163,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 28,
+    "taranga": 1,
+    "sloka_start": 164,
+    "sloka_end": 169,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 29,
+    "taranga": 1,
+    "sloka_start": 170,
+    "sloka_end": 182,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 30,
+    "taranga": 1,
+    "sloka_start": 183,
+    "sloka_end": 191,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 31,
+    "taranga": 1,
+    "sloka_start": 192,
+    "sloka_end": 198,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 32,
+    "taranga": 1,
+    "sloka_start": 199,
+    "sloka_end": 201,
+    "confidence": 0.8
+  },
+  {
+    "ru_idx": 33,
+    "taranga": 1,
+    "sloka_start": 202,
+    "sloka_end": 206,
+    "confidence": 0.85
+  },
+  {
+    "ru_idx": 34,
+    "taranga": 1,
+    "sloka_start": 207,
+    "sloka_end": 213,
+    "confidence": 0.9
+  },
+  {
+    "ru_idx": 35,
+    "taranga": 1,
+    "sloka_start": 214,
+    "sloka_end": 216,
+    "confidence": 0.88
+  },
+  {
+    "ru_idx": 36,
+    "taranga": 1,
+    "sloka_start": 217,
+    "sloka_end": 218,
+    "confidence": 0.7
+  },
+  {
+    "ru_idx": 37,
+    "taranga": 1,
+    "sloka_start": 219,
+    "sloka_end": 219,
+    "confidence": 0.35
+  }
+]

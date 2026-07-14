@@ -49,7 +49,7 @@ _BR = re.compile(r"<br\s*/?>", re.IGNORECASE)
 
 # Roman numerals for skandha display in the range-div title (I..XII).
 _ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X",
-          "XI", "XII"]
+          "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX"]
 
 # Head template. {title} = <title> + first-line comment text; {counter} =
 # Yandex-Metrika id (reuse the corpus-wide counter). CSS + favicon are shared
