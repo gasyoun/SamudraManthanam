@@ -7,13 +7,18 @@ r"""False-positive filters (ВКР §3.3.1 stages 2-3) + tokenizer.
     pronouns/adverbs/verb-forms that were discovered to collide with a
     generated Sanskritism surface form (§3.3.1 "список исключений").
 
-The thesis's third filter -- a full Russian word corpus (КРС, 3M forms
-from OpenCorpora) -- is NOT ported: `dict.opcorpora.txt` is untracked,
-271 MB, and not portable to a fresh clone (see README "Scope vs the
-thesis"). Its role is approximated by the two lists above plus the
-capitalization boost (stage 5): a capitalized, non-sentence-initial token
-is trusted as a candidate proper name and is exempted from both filters
-below, matching the thesis's own rationale for that stage.
+The thesis's third filter -- a full Russian word corpus (КРС, ~3M forms
+from OpenCorpora, `dict.opcorpora.txt`, 271 MB) -- is reproduced here via
+**pymorphy3** (`is_russian_word`): pymorphy3 ships the *same* OpenCorpora
+dictionary as `pymorphy-dicts-ru`, so `word_is_known(surface)` answers
+exactly the "is this a real Russian wordform?" question Rubanova's raw
+`rus_words` set answered -- without the 271 MB dump, and portable to a
+fresh clone. This is the primary defence against the Кали→кал class of
+false positives (a lowercased common word colliding with a Sanskritism's
+surface form). It is applied only to non-capitalized tokens; a capitalized,
+non-sentence-initial token is still trusted as a candidate proper name and
+exempted (stage 5). If pymorphy3 is not installed the filter degrades to
+the old two-list approximation (H905).
 """
 import re
 
@@ -21,6 +26,16 @@ from ._paths import diplom_path
 
 FOREIGN_WORDS_FILE = 'foreign_words.txt'
 EXCLUDE_FORMS_FILE = 'rusforms.txt'
+
+# Sanskritisms that ALSO happen to be known Russian wordforms. Rubanova
+# explicitly REMOVED these from her opcorpora `rus_words` set
+# (sans_stemmer.ipynb `open_files()`) so the corpus filter would not drop
+# them; kept verbatim so `is_russian_word` reproduces her behaviour, not a
+# stricter one. See docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md §4.
+RUS_WORD_FILTER_EXCEPTIONS = frozenset({
+    'даму', 'дама', 'кишку', 'пилу', 'руру', 'турья', 'турье',
+    'кшатрия', 'кшатрии',
+})
 
 _SENTENCE_END = re.compile(r'[.!?…»"]$')
 _TOKEN_RE = re.compile(r'[а-яА-ЯёЁ]+(?:-[а-яА-ЯёЁ]+)*')
@@ -66,3 +81,45 @@ def tokenize(text):
 
 def is_capitalized(token):
     return bool(token) and token[0].isupper()
+
+
+# --- Russian-word filter (opcorpora rus_words, via pymorphy3) ------------- #
+# Lazy singleton: importing/instantiating pymorphy3 is ~0.3 s and loads the
+# OpenCorpora dictionary once. `False` sentinel means "tried and unavailable"
+# so we only warn once and then behave as the pre-H905 approximation.
+_MORPH = None
+
+
+def _morph():
+    global _MORPH
+    if _MORPH is None:
+        try:
+            import pymorphy3
+            _MORPH = pymorphy3.MorphAnalyzer()
+        except Exception as exc:  # pragma: no cover - env-dependent
+            import sys
+            print('sanskritisms.filters: pymorphy3 unavailable (%s); '
+                  'is_russian_word filter disabled — Кали→кал class of false '
+                  'positives will not be caught (install pymorphy3).' % exc,
+                  file=sys.stderr)
+            _MORPH = False
+    return _MORPH
+
+
+def is_russian_word(surface_lower):
+    """True if `surface_lower` is a known Russian wordform in the OpenCorpora
+    dictionary (pymorphy3 — the same КРС/opcorpora data Rubanova's
+    `dict.opcorpora.txt` rus_words filter used). Reproduces the thesis's
+    primary false-positive filter WITHOUT the 271 MB dump.
+
+    Curated Sanskritism collisions (`RUS_WORD_FILTER_EXCEPTIONS`) are never
+    reported as Russian, matching Rubanova's own removals. Returns False when
+    pymorphy3 is unavailable, so callers fall back to the two-list
+    approximation rather than crashing.
+    """
+    if surface_lower in RUS_WORD_FILTER_EXCEPTIONS:
+        return False
+    m = _morph()
+    if not m:
+        return False
+    return m.word_is_known(surface_lower)

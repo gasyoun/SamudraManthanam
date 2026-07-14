@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **RU-side morphology + Кали→кал filter (H905).** New [`web/corpus_builder/ru_morph.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/ru_morph.py)
+  tags every Cyrillic token of a `seg=ru` segment with **lemma · POS · case · number** via
+  **pymorphy3** (which ships the OpenCorpora dictionary — the same КРС data Rubanova's 271 MB
+  `dict.opcorpora.txt` held), emitted behind `nkrya_export.py --ru-morph` as an additive
+  `<slug>.ru_morph.tsv` (deterministic, byte-identical across `PYTHONHASHSEED`). The inline НКРЯ
+  `<w><ana/>` fold is deferred to the H906-coordinated per-token scheme.
+### Fixed
+- **Кали→кал false positives (H905).** `sanskritisms/filters.py` gains `is_russian_word()`
+  (pymorphy3 `word_is_known`, minus Rubanova's curated collision exceptions); `extract.py` now
+  drops any non-capitalized candidate that is a known Russian wordform — reproducing Rubanova's
+  `rus_words` opcorpora filter without the 271 MB dump. Lowercase «кала» (genitive of the common
+  word *кал*) no longer captured as the Sanskritism *кала*; capitalized proper names stay exempt.
+  Measured 41→37 lemmas on `01_atharvaveda` (4 false positives removed). +3 regression tests.
+  Report: [`web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md).
+
 ## [0.4.1] - 2026-07-14
 
 ### Added

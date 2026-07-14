@@ -192,6 +192,76 @@ def test_sanskritisms_canonical_order_independent():
 
 
 # --------------------------------------------------------------------------- #
+# H905: RU per-token morphology + the Кали→кал rus_words filter               #
+# (need pymorphy3 — skipped where the OpenCorpora dict isn't installed)        #
+# --------------------------------------------------------------------------- #
+def test_ru_morph_shape_and_determinism():
+    pytest.importorskip("pymorphy3")
+    import ru_morph
+    toks = ru_morph.analyze("Богиня Кали собрала кала во тьме.")
+    assert [t["surface"] for t in toks] == \
+        ["Богиня", "Кали", "собрала", "кала", "во", "тьме"]
+    for t in toks:
+        assert set(t) == {"surface", "lemma", "pos", "case", "number"}
+    # "кала" (common word, genitive of кал) lemmatizes to кал — the very
+    # collision the sanskritism filter drops.
+    kala = next(t for t in toks if t["surface"] == "кала")
+    assert kala["lemma"] == "кал" and kala["pos"] == "NOUN"
+    # deterministic: identical output on a second pass
+    assert ru_morph.analyze("Рама шёл к рекам великих гандхарвов") == \
+        ru_morph.analyze("Рама шёл к рекам великих гандхарвов")
+
+
+def test_ru_word_filter_kali_kal():
+    """The named regression (H905): a lowercase common Russian word that
+    collides with a Sanskritism surface form is dropped, while the capitalized
+    proper name is kept — Rubanova's opcorpora rus_words filter, via pymorphy3."""
+    pytest.importorskip("pymorphy3")
+    import json as _json
+    import tempfile
+    from sanskritisms.extract import ExtractionContext, extract_source
+    ctx = ExtractionContext()
+
+    def _lemmas(text):
+        d = tempfile.mkdtemp()
+        p = Path(d) / "x.jsonl"
+        p.write_text(_json.dumps(
+            {"group": "g", "seg": "ru", "lang": "ru", "text": text,
+             "deleted": False}, ensure_ascii=False) + "\n", encoding="utf-8")
+        return set(extract_source(str(p), ctx=ctx)["lexicon"])
+
+    # capitalized proper name mid-sentence → kept
+    assert "кали" in _lemmas("Богиня Кали танцевала во тьме.")
+    # lowercase common word (кал family) → filtered, no Sanskritism captured
+    assert _lemmas("Он не нашёл кала в поле.") == set()
+    # a genuine Sanskritism whose form is NOT a known Russian word survives
+    assert filters_is_russian("ракшасов") is False
+
+
+def filters_is_russian(w):
+    from sanskritisms import filters
+    return filters.is_russian_word(w)
+
+
+def test_export_ru_morph_sidecar(fixture_jsonl, tmp_path):
+    pytest.importorskip("pymorphy3")
+    r1 = nx.export_source("w", str(tmp_path / "a"),
+                          jsonl_dir=str(fixture_jsonl.parent),
+                          meta_dir=str(tmp_path), write=True, with_ru_morph=True)
+    side = tmp_path / "a" / "w" / "w.ru_morph.tsv"
+    assert side.exists()
+    lines = side.read_text(encoding="utf-8").splitlines()
+    assert lines[0].split("\t") == \
+        ["group_id", "tok_index", "surface", "lemma", "pos", "case", "number"]
+    assert len(lines) > 1 and all(len(l.split("\t")) == 7 for l in lines[1:])
+    # byte-identical on a second run
+    nx.export_source("w", str(tmp_path / "b"), jsonl_dir=str(fixture_jsonl.parent),
+                     meta_dir=str(tmp_path), write=True, with_ru_morph=True)
+    assert (tmp_path / "a" / "w" / "w.ru_morph.tsv").read_bytes() == \
+           (tmp_path / "b" / "w" / "w.ru_morph.tsv").read_bytes()
+
+
+# --------------------------------------------------------------------------- #
 # corpus gates: the real four pilots                                          #
 # --------------------------------------------------------------------------- #
 @pytest.mark.corpus

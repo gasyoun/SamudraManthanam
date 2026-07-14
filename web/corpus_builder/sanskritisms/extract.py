@@ -156,6 +156,13 @@ def extract_source(jsonl_path, ctx=None, diplom_dir=None):
             if not capitalized_name:
                 if lower in ctx.foreign_words or lower in ctx.exclude_forms:
                     continue
+                # H905: Rubanova's opcorpora `rus_words` filter (via pymorphy3).
+                # A non-capitalized token that is a known Russian wordform is a
+                # false positive (e.g. lowercase "кала" = genitive of the common
+                # word "кал", colliding with the Sanskritism "кала"/Kāla) — the
+                # Кали→кал class. Capitalized proper names are exempt above.
+                if filters.is_russian_word(lower):
+                    continue
             n_matches += 1
 
             narrowed = narrow_candidates(lower, candidates)
