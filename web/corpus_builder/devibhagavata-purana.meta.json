@@ -12,6 +12,6 @@
   "scripts": ["cyrillic"],
   "structure": "verse",
   "provenance": "А. Игнатьев (перев., сост.). Девибхагавата-пурана. Тома 1-6. М.: Клуб Касталия, 2018. PDF -> canonical JSONL via ignatjev_pdf_to_canonical.py (H534).",
-  "rights": "in-copyright academic edition (named translator/editor, 21st c.) — corpus rights stay grey per project ruling; no redistribution",
-  "needs_review": true
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+  "needs_review": false
 }
