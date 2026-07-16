@@ -4,11 +4,10 @@ import re
 import json
 import aiosqlite
 import httpx
-from indic_transliteration import sanscript
-from indic_transliteration.sanscript import transliterate
 from typing import List, Dict, Set, Optional, Any
 
 from app.settings import settings
+from app.vendor import sanskrit_util as _su
 
 logger = logging.getLogger(__name__)
 
@@ -23,18 +22,17 @@ def detect_encoding(word: str) -> str:
     return "SLP1"
 
 def to_slp1(word: str, source_encoding: str) -> str:
-    scheme_map = {
-        "IAST": sanscript.IAST,
-        "Devanagari": sanscript.DEVANAGARI,
-        "SLP1": sanscript.SLP1
-    }
-    return transliterate(word, scheme_map[source_encoding], sanscript.SLP1)
+    if source_encoding == "IAST":
+        return _su.to_slp1(word)
+    if source_encoding == "Devanagari":
+        return _su.deva_to_slp1(word)
+    return word  # already SLP1
 
 def to_all_encodings(slp1_word: str) -> List[str]:
     return [
-        transliterate(slp1_word, sanscript.SLP1, sanscript.IAST),
+        _su.from_slp1(slp1_word),
         slp1_word,
-        transliterate(slp1_word, sanscript.SLP1, sanscript.DEVANAGARI)
+        _su.slp1_to_devanagari(slp1_word)
     ]
 
 async def _cache_read(slp1_word: str) -> Optional[List[str]]:

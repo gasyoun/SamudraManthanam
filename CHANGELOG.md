@@ -79,6 +79,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   when copyright clears" example): the reusable playbook for publishing any
   grey-rights corpus once rights are cleared.
 
+### Changed
+- **`morph_service.py` dropped `indic_transliteration` for the canonical
+  `sanskrit-util` package (H922 momentum-axis track).** The three transliterate
+  calls (IAST/Devanāgarī→SLP1, SLP1→IAST, SLP1→Devanāgarī) now use
+  `sanskrit_util.to_slp1`/`deva_to_slp1`/`from_slp1`/`slp1_to_devanagari`.
+  Vendored (not pip-installed) as `web/app/vendor/sanskrit_util.py` — a
+  byte-identical copy of `sanskrit-util/py/sanskrit_util/__init__.py` v0.4.0 —
+  because the Docker build (`COPY web/ .`) has no access to the sibling
+  `sanskrit-util` repo; same "re-copy on update, never hand-edit" pattern as the
+  org's JS vendor copies (csl-atlas, csl-apidev). 96 old-vs-new comparisons
+  across 4 directions on real Sanskrit words matched byte-for-byte; the one
+  intentional difference found is a **fix**, not a regression — the old library
+  silently passed `ṁ` (U+1E41) through unconverted, sanskrit-util correctly
+  folds it to SLP1 `M`. All 568 pre-existing tests (9 in `test_morph.py`) pass
+  unchanged before and after. `indic-transliteration` stays in
+  `web/requirements.txt` — `web/corpus_builder/html_to_canonical.py` (an offline
+  ingestion script, not part of the running app) still depends on it; that file
+  and `slug.py` (Cyrillic transliteration, out of scope) are unchanged. See
+  [SHARED_CODE.md](https://github.com/gasyoun/github-spine/blob/main/SHARED_CODE.md)
+  §1-2 row 4.
+
 ## [0.6.0] - 2026-07-14
 
 ### Added
