@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-07-17
+### Added
+- **Стиховая проверка: различают ли русские переводчики санскритские прошедшие времена
+  (H1052, Fable 5 `claude-fable-5`; директива адъюдикации A65 к HB-57).** Новый инструмент
+  [`nkrya-parallel/export/past_tense_translation_check.py`](nkrya-parallel/export/past_tense_translation_check.py)
+  (+ stats JSON + отчет [`PAST_TENSE_TRANSLATION_CHECK.md`](nkrya-parallel/export/PAST_TENSE_TRANSLATION_CHECK.md)):
+  41 023 эпические пары стих⇄перевод, DCS-выведенные лексиконы высокой точности (имперфект
+  342 форм по тегам · аорист 179 по formation-тегам · перфект 193 через тест редупликации —
+  редуплицированный перфект в DCS не тегирован). **Итог: перевод НЕЙТРАЛИЗУЕТ
+  противопоставление** — и перфектные, и имперфектные стихи уходят в русское прошедшее
+  совершенного вида (64,7 % против 67,7 %), профили почти совпадают; χ² = 38,7 значим, но
+  V Крамера = 0,084 — размер эффекта ничтожен. Прямое подтверждение доктрины «то же
+  значение» переводческой практикой. Остаток: перфектные стихи чуть чаще идут настоящим
+  историческим (10,3 % vs 5,5 %); клише «uvāca → говорит» его не объясняет (3,5 % из 2 652).
+
 ## [0.9.0] - 2026-07-16
 ### Added
 - **Chronology dashboard — Minimal design mockup (H563 fan-out, H1057).** [web/corpus_builder/chronology/mockups/minimal.html](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/mockups/minimal.html): CSS-only restyle of the live [chronology page](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/index.html) into the Minimal direction (paper-white, single indigo accent, hairline rules) — markup, 934-text data island and render JS byte-identical (sha1-verified); JSON parses, JS syntax-checked. The Flask compare pages (`web/templates/compare_*.html`) need a live backend and are out of mockup scope (H815 precedent). Live page untouched pending a human's promotion call. Fable 5 (`claude-fable-5`).
