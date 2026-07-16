@@ -20,3 +20,9 @@ web/offline-packs/*.db.gz
 
 # /review-sheet HTML voting sheets -- personal working artifacts, never repo deliverables
 /review/
+
+# H928 per-taranga fan-out intermediates -- regenerable from
+# h928_prep_taranga_slices.py + the somadeva source clone, not a deliverable
+web/corpus_builder/somadeva_alignments/_h928_taranga/
+web/corpus_builder/h928_tasks.json
+/h928_plan.json
