@@ -25,6 +25,7 @@ from sanskritisms import paradigms as pd  # noqa: E402
 from sanskritisms import filters as flt  # noqa: E402
 from sanskritisms import annotations as an  # noqa: E402
 from sanskritisms import disambiguate as dis  # noqa: E402
+from sanskritisms._aho import AhoCorasick  # noqa: E402
 from sanskritisms.extract import (  # noqa: E402
     ExtractionContext, build_name_index, discover_ru_sources, extract_source,
     iter_ru_segments,
@@ -167,6 +168,49 @@ def test_merge_plural_singular_duplicates():
     assert canonical["апсара"] == "апсары"
     assert canonical["апсары"] == "апсары"
     assert canonical["гаруда"] == "гаруда"
+
+
+# --------------------------------------------------------------------------- #
+# _aho.py -- Aho-Corasick epithet matcher (replaces the flat re-alternation)  #
+# --------------------------------------------------------------------------- #
+def _re_reference(forms, text):
+    """The exact behaviour the AhoCorasick matcher replaces: re.finditer over a
+    longest-first literal alternation. Used as the oracle."""
+    import re
+    ordered = sorted(set(forms), key=len, reverse=True)
+    pattern = re.compile('|'.join(re.escape(f) for f in ordered))
+    return [m.group(0) for m in pattern.finditer(text)]
+
+
+def test_aho_matches_single_and_multiword():
+    forms = ['великий владыка', 'владыка', 'индра']
+    ac = AhoCorasick(forms)
+    text = 'тут был индра, великий владыка мира'
+    got = [text[s:e] for s, e in ac.iter_nonoverlapping(text)]
+    assert got == _re_reference(forms, text)
+
+
+def test_aho_longest_at_position_wins():
+    # at the same start, the longer keyword must win (longest-first semantics)
+    forms = ['рама', 'рамаяна']
+    ac = AhoCorasick(forms)
+    text = 'рамаяна и рама'
+    got = [text[s:e] for s, e in ac.iter_nonoverlapping(text)]
+    assert got == ['рамаяна', 'рама'] == _re_reference(forms, text)
+
+
+def test_aho_nonoverlapping_resumes_after_match():
+    forms = ['абаб', 'баба']
+    ac = AhoCorasick(forms)
+    text = 'абабаба'
+    got = [text[s:e] for s, e in ac.iter_nonoverlapping(text)]
+    assert got == _re_reference(forms, text)
+
+
+def test_aho_no_match_and_empty():
+    ac = AhoCorasick(['агни', 'сома'])
+    assert list(ac.iter_nonoverlapping('ничего похожего здесь нет')) == []
+    assert list(AhoCorasick([]).iter_nonoverlapping('текст')) == []
 
 
 # --------------------------------------------------------------------------- #

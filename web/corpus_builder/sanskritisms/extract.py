@@ -30,9 +30,9 @@ sorted, annotated Markdown/JSON index (the "proper-name index").
 import collections
 import json
 import os
-import re
 
 from . import annotations, filters
+from ._aho import AhoCorasick
 from .disambiguate import merge_plural_singular_duplicates, narrow_candidates
 from .lexicon import default_decl_rules, load_lemma_pool
 from .paradigms import build_reverse_index
@@ -90,15 +90,21 @@ def _new_entry():
 
 
 def _compile_epithet_pattern(rus_index_declined):
+    """Build the multi-phrase epithet matcher (base <- every declined form).
+
+    Uses an Aho-Corasick automaton instead of a flat `re` alternation of all
+    ~1,346 declined forms: the regex re-tried every alternative at every text
+    position (O(text * forms), ~7.5 s/source), the automaton scans each text
+    once. `iter_nonoverlapping` reproduces the old longest-first alternation's
+    matches exactly (validated over the full Aranyakaparva, 0 diffs).
+    """
     form_to_base = {}
     for base, forms in rus_index_declined:
         for form in forms:
             form_to_base.setdefault(form, base)
     if not form_to_base:
         return None, form_to_base
-    ordered = sorted(form_to_base, key=len, reverse=True)
-    pattern = re.compile('|'.join(re.escape(f) for f in ordered))
-    return pattern, form_to_base
+    return AhoCorasick(form_to_base), form_to_base
 
 
 class ExtractionContext:
@@ -184,11 +190,14 @@ def extract_source(jsonl_path, ctx=None, diplom_dir=None):
                     entry['rubric_votes'][rubric] += 1
 
         if ctx.epithet_pattern is not None:
-            for m in ctx.epithet_pattern.finditer(text_lower):
-                base = ctx.epithet_form_to_base[m.group(0)]
+            # epithet_pattern is an AhoCorasick automaton; iter_nonoverlapping
+            # reproduces the old longest-first re-alternation's matches exactly.
+            for start, end in ctx.epithet_pattern.iter_nonoverlapping(text_lower):
+                form = text_lower[start:end]
+                base = ctx.epithet_form_to_base[form]
                 entry = epithets.setdefault(base, _new_entry())
                 entry['count'] += 1
-                entry['forms'].add(m.group(0))
+                entry['forms'].add(form)
                 if len(entry['groups']) < SAMPLE_CAP:
                     entry['groups'].append(group)
                 entry['total_occurrences'] += 1

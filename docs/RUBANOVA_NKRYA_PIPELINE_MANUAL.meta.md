@@ -1,6 +1,6 @@
 # Metadoc — RUBANOVA_NKRYA_PIPELINE_MANUAL.md
 
-_Created: 14-07-2026 · Last updated: 14-07-2026_
+_Created: 14-07-2026 · Last updated: 17-07-2026_
 
 Companion record for [`RUBANOVA_NKRYA_PIPELINE_MANUAL.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md).
 
@@ -37,5 +37,6 @@ the sanskritism proper-name index or the Кали→кал regression.
 | 14-07-2026 | Opus 4.8 (`claude-opus-4-8[1m]`) | Added **Stage C** (`corpus_marker.ipynb`, taken from [upstream](https://github.com/evgeniarubanova/sanskrit_stemmer)): RU↔SA word alignment via a hand-built IAST→Cyrillic transliterator over a verse-block-aligned corpus. Corrected §6 — the SA side uses transliteration+alignment, **not** DCS; DCS morphology stays an H906 reproduction target. Noted opcorpora is absent even from upstream (third-party OpenCorpora). |
 | 14-07-2026 | Opus 4.8 (`claude-opus-4-8[1m]`) | **H905 executed** — §8 delta table updated: the `rus_words`/Кали→кал row is now ✅ reproduced via pymorphy3, a per-token RU-morphology row added (`ru_morph.py`). See [`RU_MORPHOLOGY_H905_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RU_MORPHOLOGY_H905_REPORT.md). |
 | 14-07-2026 | Opus 4.8 (`claude-opus-4-8[1m]`) | **H906 (DCS-gold) executed** — §8 delta table gains a per-token SA-morphology row: `dcs_align.py` aligns verses to DCS gold (`--sa-morph`), MBh ~99% coverage. See [`SA_MORPHOLOGY_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/SA_MORPHOLOGY_H906_REPORT.md). vidyut diff = follow-up. |
+| 17-07-2026 | Opus 4.8 (`claude-opus-4-8`) | Added **§10 (runtime & the 2026-07 speedup)** — the port's epithet layer went flat-`re`-alternation → Aho-Corasick ([`_aho.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/_aho.py)), byte-identical, **3.1×** on MBh Āraṇyakaparva; plus output-preserving hot-path fixes in all three notebooks (`open_files`/`search`/`index_unite`/`get_wordforms`/`capital_search`, `translate` memoize). Before/after table + root-cause in §10. [H1204](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1204-Opus_SamudraManthanam_rubanova-nkrya-speedup_17.07.26.md). |
 
 _Dr. Mārcis Gasūns_
