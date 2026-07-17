@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-07-17
+### Added
+- **Документ-ответ: склонение рубрик указателя — учтено ли, есть ли функционал
+  (Opus 4.8 `claude-opus-4-8`).** [`docs/RUBANOVA_NKRYA_RUBRIC_DECLENSION_STATUS_2024_11.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/RUBANOVA_NKRYA_RUBRIC_DECLENSION_STATUS_2024_11.md):
+  по запросу — есть ли в репо функционал склонения рубрик указателя из заметки
+  2024-11 (`Index_items_declension`). Вывод: **результат** склонения есть и уже
+  используется в поиске (файл [`rus_index_declined.txt`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/rus_index_declined.txt) —
+  292 рубрики / 1346 форм, 1148 многословных синонимичных фраз; именно их ищет
+  ускоренный H1204 Ахо-Корасик слой), но **генератор** (`Index_items_declension.ipynb`,
+  `index_lone_declined_manual.json`, `pyphrasy`, разбивка на синонимичные фразы,
+  лог точности 89.6 % / 86.5 %) в репо **отсутствует** — из склонятелей есть только
+  упрощённый `decline()` Рубановой (pymorphy2 + ручная таблица ~50 многословных).
+  H1204-ускорение — ниже по потоку (поиск по уже склонённым формам), склонение не
+  трогает и не воспроизводит.
+
 ## [0.11.0] - 2026-07-17
 ### Changed
 - **Ускорение пайплайна Рубановой — код-ревью + оптимизация горячих путей
