@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-07-17
+### Changed
+- **Ускорение пайплайна Рубановой — код-ревью + оптимизация горячих путей
+  (H1204, Opus 4.8 `claude-opus-4-8`).** Stage B ([`sans_stemmer.ipynb`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/sans_stemmer.ipynb))
+  был тем самым «слишком медленно»: его собственная ячейка `%%time` показывает
+  **5 мин 8 с на 32 предложения**. Исправлены горячие пути во всех трех ноутбуках
+  **и** в Python-порте — **без изменения вывода** (каждое исправление проверено
+  побайтово либо доказано идентичным на репрезентативных данных; структура Colab —
+  Drive-mount, `input()`, `!pip` — сохранена). Таблица before/after и разбор причин:
+  [`docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md) §10.
+  - **Порт** [`web/corpus_builder/sanskritisms/extract.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/extract.py):
+    слой эпитетов сканировал плоскую `re`-альтернацию из 1346 склоненных форм по
+    каждому стиху (`O(текст × формы)`) → автомат Ахо-Корасик (новый
+    [`_aho.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/_aho.py),
+    без зависимостей). На МБх Араньякапарве (2033 стиха, 199 570 токенов) extract+index
+    **10.82 с → 3.45 с (3.1×)**; отпечатки lexicon/epithets/index не изменились (0
+    расхождений по всем 2033 стихам), 30 hermetic + 3 corpus теста зеленые.
+  - **`sans_stemmer.ipynb`**: `open_files` (`lem not in forn + sans` пересобирал
+    ~24 k-список на каждую из ~390 k парадигм OpenCorpora → `set(forn) | set(sans)`
+    один раз, ~1900× на этом шаге); `search` (`.lower()` пересчитывался на каждый
+    ключ-рубрику + list-comp на каждое слово → вынос `sent_low`/`text_low` +
+    префиксные множества, ~15× на ядре сопоставления); `index_unite` (пересборка
+    `list(set(clean))` во внутреннем цикле + `re.match` на элемент за проход → вынос
+    `uniq` + предвычисление слова, ~3–4×); `get_wordforms` (перечитывал+чистил весь
+    файл на каждый вызов → кэш очищенных токенов); `capital_search` (конкатенация
+    `sans + index3 + tr` на каждое слово → вынос).
+  - **`corpus_marker.ipynb`**: `translate()` (IAST→кириллица, вызывается на каждое
+    слово и на каждый символ в `proc_short`/`proc_long`) мемоизирован по входу —
+    чистая функция, вывод не изменился.
+
 ## [0.10.0] - 2026-07-17
 ### Added
 - **Стиховая проверка: различают ли русские переводчики санскритские прошедшие времена

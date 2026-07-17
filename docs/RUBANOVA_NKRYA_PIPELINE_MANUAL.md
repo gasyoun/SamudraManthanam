@@ -1,6 +1,6 @@
 # Rubanova НКРЯ pipeline manual — Russian sanskritism indexing + morphology, and the Sanskrit (DCS) side
 
-_Created: 14-07-2026 · Last updated: 14-07-2026_
+_Created: 14-07-2026 · Last updated: 17-07-2026_
 
 The source-of-truth manual for **how E. A. Rubanova's 2020 HSE ВКР pipeline
 actually works**, read line-by-line from her two notebooks (as updated by
@@ -330,5 +330,43 @@ uses only internally. The sanskritism index is a **second** RU-side deliverable
   fresh clone without these (inventoried in `MANIFEST_LOCAL_ONLY.md`).
 - **Colab-bound** — paths and the Drive mount are Colab-specific; a local re-run
   needs the `path`/`input()` prompts rewired.
+
+## 10. Runtime & the 2026-07 speedup pass (Opus 4.8, `claude-opus-4-8`)
+
+Rubanova's Stage B was the "too slow" complaint — its own `%%time` cell reports
+**5 min 8 s wall for `01_part.txt`, which is only 32 sentences** (~10 s/sentence,
+so a full book is hours). A code-review + speed pass on 17-07-2026 fixed the hot
+paths in all three notebooks **and** the Python port, **without changing any
+output** (each fix validated byte-for-byte or shown identical on representative
+data; Colab structure — Drive mount, `input()` prompts, `!pip` — left intact).
+
+The single biggest win is on the runnable port. The epithet layer compiled all
+1,346 declined rubric forms into one flat `re` alternation and re-scanned it over
+every verse's text (`O(text × forms)`); replaced by a dependency-free
+Aho-Corasick automaton ([`sanskritisms/_aho.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/_aho.py)),
+whose `iter_nonoverlapping` reproduces the old longest-first alternation's matches
+exactly (0 diffs over all 2,033 Āraṇyakaparva verses; lexicon/epithets/index
+MD5 fingerprints unchanged; 30 hermetic + 3 corpus tests green).
+
+| Target | Hot path fixed | Before | After | Speedup | Output |
+|---|---|---|---|---|---|
+| **Port** [`extract.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/extract.py) (MBh Āraṇyakaparva, 2 033 verses / 199 570 tokens) | epithet flat `re`-alternation → Aho-Corasick | 10.82 s | 3.45 s | **3.1×** | byte-identical (fingerprints match) |
+| — of which the epithet scan alone | ″ | ~7.5 s | ~1.6 s | **~5–7×** | 0 diffs / 2 033 verses |
+| **`sans_stemmer.ipynb`** `open_files()` | `lem.lower() not in forn + sans` (rebuilt a ~24 k list per OpenCorpora paradigm, ~390 k) → `set(forn) \| set(sans)` once | ~281 s* | 0.14 s | **~1 900×** | identical |
+| `sans_stemmer.ipynb` `search()` | `.lower()` recomputed per rubric key + list-comp membership per word → hoist `sent_low`/`text_low` once + prefix sets | — | — | **~15×** (matching core) | identical |
+| `sans_stemmer.ipynb` `index_unite()` | `list(set(clean))` rebuilt in the inner loop + `re.match` per element per pass → hoist `uniq` + precompute the regex word | — | — | **~3–4×** (grows with size) | byte-identical |
+| `sans_stemmer.ipynb` `get_wordforms()` | re-read + re-cleaned the whole file **every call** (called in loops) → cache the cleaned token list per file | — | — | eliminates N-1 full-file re-reads | identical tokens |
+| `sans_stemmer.ipynb` `capital_search()` | `sans + index3 + tr` (~10 k) concatenated per capitalized word → hoisted once | — | — | drops a per-word 10 k-list build | identical |
+| **`corpus_marker.ipynb`** `translate()` | IAST→Cyrillic map re-run for every word/char (incl. single chars in `proc_short`/`proc_long`) → memoized by input (pure function) | — | — | cache hit on every repeat | identical (`janamejaya→джанамеджая`, …) |
+
+_*`open_files` OLD extrapolated from a 3 000-paradigm slice; the real
+`forn + sans` scan short-circuits on hits so the wall figure is smaller, but this
+is the dominant one-time cost — minutes → sub-second either way._
+
+The two headline fixes are the same class of bug in two places: **an invariant
+(a set/lowercased string/concatenated list) rebuilt inside a hot loop, and O(n)
+list membership where a set gives O(1).** None of the fixes touch the matching
+*logic* — only when/how often work is done — so the generated index is unchanged.
+Provenance: [H1204](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1204-Opus_SamudraManthanam_rubanova-nkrya-speedup_17.07.26.md).
 
 _Dr. Mārcis Gasūns_
