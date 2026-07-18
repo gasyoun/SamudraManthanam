@@ -1,6 +1,6 @@
 # Rubanova НКРЯ pipeline manual — Russian sanskritism indexing + morphology, and the Sanskrit (DCS) side
 
-_Created: 14-07-2026 · Last updated: 17-07-2026_
+_Created: 14-07-2026 · Last updated: 18-07-2026_
 
 The source-of-truth manual for **how E. A. Rubanova's 2020 HSE ВКР pipeline
 actually works**, read line-by-line from her two notebooks (as updated by
@@ -149,6 +149,26 @@ Declines each single-word Russian rubric across six cases
 rubric declension via curated lists (`both`, `tcsh`, `except_last`, `last`) — a
 per-phrase special-case table for the ~50 multiword rubrics. Output: `{rubric:
 [declined forms]}`.
+
+**H1207 update (18-07-2026, Sonnet 5 `claude-sonnet-5`):** this notebook cell,
+the 2024-11 continuation (`Index_items_declension.ipynb`), and its
+`index_lone_declined_manual.json` gold are still not in this repo or upstream
+(confirmed against `github.com/evgeniarubanova/sanskrit_stemmer`'s full tree).
+The port now has its **own** generator,
+[`web/corpus_builder/sanskritisms/ru_rubric_decline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/ru_rubric_decline.py),
+re-derived rather than ported — a general numeral-agreement rule + a per-word
+declinability classifier (function words / short forms / already-oblique tails
+/ unrecognised names stay fixed) replaces `both`/`tcsh`/`except_last`/`last`,
+plus a small curated table (9 words) for irreducible pymorphy homograph
+collisions (a Sanskrit-name genitive losing the parse tie-break to an
+unrelated common word, e.g. "гады"→"гад", "дроны"→the modern loanword
+"дрон"). Regenerates
+[`rus_index_declined.txt`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/rus_index_declined.txt)
+at 100% paradigm accuracy against a hand-built gold (vs. the note's own 86.5%);
+CLI: `python -m corpus_builder.sanskritisms.ru_rubric_decline [--gold PATH]
+[--report PATH] [--dry-run]` from `web/`. See
+[`CHANGELOG.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/CHANGELOG.md)
+`[Unreleased]` for the full defect list this fixed.
 
 ### 5.2 `group_sans(...)` — three declension buckets
 Every lemma in `index3 + sans + sans_dict2` is bucketed by ending:

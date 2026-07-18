@@ -55,6 +55,7 @@
 !foreign_words.txt
 !rus_index.txt
 !rus_index_declined.txt
+!rus_index_declined_manual_gold.json
 !correct_trans.txt
 !translation.txt
 !pluralis_племена.txt

@@ -1,6 +1,6 @@
 # Rubric declension for index search — is it accounted for, does it exist?
 
-_Created: 17-07-2026 · Last updated: 17-07-2026_
+_Created: 17-07-2026 · Last updated: 18-07-2026_
 
 Answer to the question "**учтено ли, есть ли такой функционал?**" about the
 **declension of index rubrics** (склонение рубрик указателя) — the 2024-11 work
@@ -65,18 +65,38 @@ declension *generator*, so nothing there was missed.
 
 ## Recommendation (for the НКРЯ workstream, not urgent)
 
-The declined forms are already in use, so search works today. But because only the
-*static output* is in the repo, the declension is **not reproducible or
-improvable** here — and the file has visible quality holes (`три мира` above). If
-that layer needs to be regenerated (new rubrics, a better paradigm engine, or
-fixing the imperfect forms), Marsel's `Index_items_declension.ipynb` +
-`index_lone_declined_manual.json` should be mirrored in (like the other three
-notebooks were), or the generation re-implemented — ideally folded into the port's
-own paradigm machinery ([`paradigms.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/paradigms.py)/[`disambiguate.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/disambiguate.py))
-rather than kept as a pymorphy2/pyphrasy Colab side-notebook. This closes the
+**RESOLVED 18-07-2026 ([H1207](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1207-Sonnet_SamudraManthanam_nkrya-ru-rubric-declension-port_17.07.26.md), Sonnet 5 `claude-sonnet-5`).** Re-implemented rather
+than mirrored — `Index_items_declension.ipynb` / `index_lone_declined_manual.json`
+were also confirmed absent **upstream**
+(`github.com/evgeniarubanova/sanskrit_stemmer`'s full tree is the same 18 flat
+files already known here, no notebook, no manual gold), so the "mirror it in"
+option below was not available. Instead:
+[`web/corpus_builder/sanskritisms/ru_rubric_decline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/ru_rubric_decline.py)
+regenerates `rus_index_declined.txt` from `rus_index.txt` — reproducible,
+testable, no `pyphrasy` dependency, folded into the port's own
+[`sanskritisms/`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/sanskritisms)
+package as this doc originally recommended. Fixes the `три мира` defect quoted
+below (numeral-noun agreement), the `вездесущия` defect (an ADJF/NOUN parse
+tie-break), a `both`-class truncation bug that silently dropped a phrase's 3rd+
+word (15+ rubrics), and 11 rubrics the old file left with **empty** form lists
+(comma-list permutations and every "тот, …" relative clause). Paradigm accuracy
+against a hand-built gold: **100%** (was 86.5% in the 2024-11 note). Full
+before/after + test coverage: `CHANGELOG.md` `[Unreleased]` and
+[`web/tests/test_ru_rubric_decline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ru_rubric_decline.py).
+This closes the
 [pipeline-manual metadoc](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.meta.md)
 backlog item #1 ("diff Marsel's update vs Evgeniya's original") for the declension
 piece specifically.
+
+Original recommendation, kept for context: the declined forms were already in
+use, so search worked. But because only the *static output* was in the repo, the
+declension was **not reproducible or improvable** — and the file had visible
+quality holes (`три мира` above). Options considered were mirroring Marsel's
+notebook + manual gold in (like the other three notebooks were), or
+re-implementing the generation folded into the port's own paradigm machinery
+([`paradigms.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/paradigms.py)/[`disambiguate.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/disambiguate.py))
+rather than kept as a pymorphy2/pyphrasy Colab side-notebook — the second path is
+what shipped, since the first was never available.
 
 ## Source — the 2024-11 work note (verbatim, provenance)
 
