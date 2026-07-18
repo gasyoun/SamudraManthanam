@@ -19,6 +19,7 @@ data behind `-m corpus`):
     silent staleness) and against the manual gold JSON (the accuracy
     gate: >= the note's own 86.5% paradigm accuracy).
 """
+
 import json
 import sys
 from pathlib import Path
@@ -151,16 +152,19 @@ def test_tot_relative_clause_only_head_inflects(morph):
 # --------------------------------------------------------------------------- #
 # curated homograph-trap overrides (H1207 gold-testing discoveries)          #
 # --------------------------------------------------------------------------- #
-@pytest.mark.parametrize("phrase,frozen_tail", [
-    ("брат гады", "гады"),          # "Гада" (demon) gen.sg, not "гад" pl.nom
-    ("владетель лука", "лука"),     # "лук" (bow) gen.sg, not the name "Лука"
-    ("врата ганги", "ганги"),       # "Ганга" gen.sg, not "ганг" pl.nom
-    ("врата манасы", "манасы"),     # "Манаса" gen.sg, not "манас" pl.nom
-    ("губитель паки", "паки"),      # "Пака" (demon) gen.sg, not ADVB/pl.nom
-    ("сокрушитель балы", "балы"),   # "Бала" (demon) gen.sg, not "бал" pl.nom
-    ("несущий знак", "знак"),       # acc.-inanimate == nom. surface trap
-    ("сын дроны", "дроны"),         # "Дрона" gen.sg, not the loanword "дрон"
-])
+@pytest.mark.parametrize(
+    "phrase,frozen_tail",
+    [
+        ("брат гады", "гады"),  # "Гада" (demon) gen.sg, not "гад" pl.nom
+        ("владетель лука", "лука"),  # "лук" (bow) gen.sg, not the name "Лука"
+        ("врата ганги", "ганги"),  # "Ганга" gen.sg, not "ганг" pl.nom
+        ("врата манасы", "манасы"),  # "Манаса" gen.sg, not "манас" pl.nom
+        ("губитель паки", "паки"),  # "Пака" (demon) gen.sg, not ADVB/pl.nom
+        ("сокрушитель балы", "балы"),  # "Бала" (demon) gen.sg, not "бал" pl.nom
+        ("несущий знак", "знак"),  # acc.-inanimate == nom. surface trap
+        ("сын дроны", "дроны"),  # "Дрона" gen.sg, not the loanword "дрон"
+    ],
+)
 def test_homograph_trap_tail_stays_fixed(morph, phrase, frozen_tail):
     d = rd.decline_phrase(phrase, morph)
     for case in rd.CASES:
@@ -201,11 +205,13 @@ def test_compound_adjective_unknown_to_pymorphy_still_declines(morph):
 # generate/format/write round trip                                          #
 # --------------------------------------------------------------------------- #
 def test_format_line_matches_committed_file_shape():
-    line = rd.format_line("владыка", ["владыка", "владыки", "владыке",
-                                       "владыку", "владыкой", "владыке"])
+    line = rd.format_line(
+        "владыка", ["владыка", "владыки", "владыке", "владыку", "владыкой", "владыке"]
+    )
     assert line == (
         "владыка : ['владыка', 'владыки', 'владыке', 'владыку', "
-        "'владыкой', 'владыке']")
+        "'владыкой', 'владыке']"
+    )
 
 
 def test_generate_declined_index_hermetic(tmp_path, morph):
@@ -213,9 +219,21 @@ def test_generate_declined_index_hermetic(tmp_path, morph):
     rus_index.write_text("владыка\nсын дхармы\n", encoding="utf-8")
     entries = rd.generate_declined_index(str(rus_index), morph=morph)
     assert entries == [
-        ("владыка", ["владыка", "владыки", "владыке", "владыку", "владыкой", "владыке"]),
-        ("сын дхармы", ["сын дхармы", "сына дхармы", "сыну дхармы",
-                         "сына дхармы", "сыном дхармы", "сыне дхармы"]),
+        (
+            "владыка",
+            ["владыка", "владыки", "владыке", "владыку", "владыкой", "владыке"],
+        ),
+        (
+            "сын дхармы",
+            [
+                "сын дхармы",
+                "сына дхармы",
+                "сыну дхармы",
+                "сына дхармы",
+                "сыном дхармы",
+                "сыне дхармы",
+            ],
+        ),
     ]
     out = tmp_path / "out.txt"
     rd.write_declined_index(entries, str(out))
@@ -225,10 +243,14 @@ def test_generate_declined_index_hermetic(tmp_path, morph):
 
 
 def test_score_against_gold():
-    entries = [("а", ["а1", "а2", "а3", "а4", "а5", "а6"]),
-               ("б", ["б1", "б2", "б3", "б4", "б5", "wrong"])]
-    gold = {"а": ["а1", "а2", "а3", "а4", "а5", "а6"],
-            "б": ["б1", "б2", "б3", "б4", "б5", "б6"]}
+    entries = [
+        ("а", ["а1", "а2", "а3", "а4", "а5", "а6"]),
+        ("б", ["б1", "б2", "б3", "б4", "б5", "wrong"]),
+    ]
+    gold = {
+        "а": ["а1", "а2", "а3", "а4", "а5", "а6"],
+        "б": ["б1", "б2", "б3", "б4", "б5", "б6"],
+    }
     report = rd.score_against_gold(entries, gold)
     assert report["total_paradigms"] == 2
     assert report["correct_paradigms"] == 1

@@ -60,6 +60,7 @@ Method
 ё" -- see the @DECIDE note in H1207; this also removes the stress-mark
 inconsistency the old file had, e.g. "быкознамённого" -> "быкознаменного").
 """
+
 import argparse
 import json
 import re
@@ -67,38 +68,73 @@ import sys
 
 from ._paths import diplom_path
 
-CASES = ('nomn', 'gent', 'datv', 'accs', 'ablt', 'loct')
+CASES = ("nomn", "gent", "datv", "accs", "ablt", "loct")
 CASE_LABELS = {
-    'nomn': 'nom', 'gent': 'gen', 'datv': 'dat',
-    'accs': 'acc', 'ablt': 'ins', 'loct': 'loc',
+    "nomn": "nom",
+    "gent": "gen",
+    "datv": "dat",
+    "accs": "acc",
+    "ablt": "ins",
+    "loct": "loc",
 }
 
-RUS_INDEX_FILE = 'rus_index.txt'
-RUS_INDEX_DECLINED_FILE = 'rus_index_declined.txt'
+RUS_INDEX_FILE = "rus_index.txt"
+RUS_INDEX_DECLINED_FILE = "rus_index_declined.txt"
 
-_WORD_RE = re.compile(r'[а-яёА-ЯЁ]+')
+_WORD_RE = re.compile(r"[а-яёА-ЯЁ]+")
 
-_DECLINABLE_POS = frozenset({'NOUN', 'ADJF', 'PRTF', 'NUMR'})
-_FUNCTION_OR_INVARIANT_POS = frozenset({
-    'PREP', 'CONJY', 'CONJ', 'PRCL', 'INTJ', 'ADVB', 'COMP', 'PRED', 'VERB', 'INFN',
-})
-_SHORT_FORM_GRAMMEMES = frozenset({'ADJS', 'PRTS'})
+_DECLINABLE_POS = frozenset({"NOUN", "ADJF", "PRTF", "NUMR"})
+_FUNCTION_OR_INVARIANT_POS = frozenset(
+    {
+        "PREP",
+        "CONJY",
+        "CONJ",
+        "PRCL",
+        "INTJ",
+        "ADVB",
+        "COMP",
+        "PRED",
+        "VERB",
+        "INFN",
+    }
+)
+_SHORT_FORM_GRAMMEMES = frozenset({"ADJS", "PRTS"})
 
 # Numeral words the rubrics actually use. "тридесять" is archaic
 # Church-Slavonic for "thirty" (fairy-tale idiom) -- pymorphy3 does not
 # know it at all (misparses it as an infinitive verb), so its paradigm is
 # hand-supplied, mirroring "тридцать"'s regular -дцать/-десять pattern.
-_GOV_SINGULAR_NUMERALS = frozenset({'два', 'две', 'три', 'четыре'})
-_NUMERAL_WORDS = _GOV_SINGULAR_NUMERALS | frozenset({
-    'пять', 'шесть', 'семь', 'восемь', 'девять', 'десять',
-    'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать',
-    'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать',
-    'девятнадцать', 'двадцать', 'тридцать', 'тридесять',
-})
+_GOV_SINGULAR_NUMERALS = frozenset({"два", "две", "три", "четыре"})
+_NUMERAL_WORDS = _GOV_SINGULAR_NUMERALS | frozenset(
+    {
+        "пять",
+        "шесть",
+        "семь",
+        "восемь",
+        "девять",
+        "десять",
+        "одиннадцать",
+        "двенадцать",
+        "тринадцать",
+        "четырнадцать",
+        "пятнадцать",
+        "шестнадцать",
+        "семнадцать",
+        "восемнадцать",
+        "девятнадцать",
+        "двадцать",
+        "тридцать",
+        "тридесять",
+    }
+)
 _IRREGULAR_NUMERAL_FORMS = {
-    'тридесять': {
-        'nomn': 'тридесять', 'gent': 'тридесяти', 'datv': 'тридесяти',
-        'accs': 'тридесять', 'ablt': 'тридесятью', 'loct': 'тридесяти',
+    "тридесять": {
+        "nomn": "тридесять",
+        "gent": "тридесяти",
+        "datv": "тридесяти",
+        "accs": "тридесять",
+        "ablt": "тридесятью",
+        "loct": "тридесяти",
     },
 }
 
@@ -132,9 +168,18 @@ _IRREGULAR_NUMERAL_FORMS = {
 #             Drona"), NOT NOUN,masc,plur,nomn/accs "дрон" (the modern
 #             loanword "drone" -- a post-2020 OpenCorpora addition
 #             Rubanova's original pipeline never had to contend with).
-_TAIL_FORCE_FIXED = frozenset({
-    'паки', 'балы', 'ганги', 'манасы', 'знак', 'лука', 'гады', 'дроны',
-})
+_TAIL_FORCE_FIXED = frozenset(
+    {
+        "паки",
+        "балы",
+        "ганги",
+        "манасы",
+        "знак",
+        "лука",
+        "гады",
+        "дроны",
+    }
+)
 
 # "индра" (Indra): pymorphy doesn't know it and its fake-dictionary guess
 # tags it "Fixd" (indeclinable), all 6 cases tied at the same score --
@@ -143,29 +188,38 @@ _TAIL_FORCE_FIXED = frozenset({
 # it is the agreeing head noun of "великий индра" (not a genitive tail),
 # so it is force-declined via the regular masc.-a noun paradigm.
 _HEAD_FORCE_DECLINE = {
-    'индра': {
-        'nomn': 'индра', 'gent': 'индры', 'datv': 'индре',
-        'accs': 'индру', 'ablt': 'индрой', 'loct': 'индре',
+    "индра": {
+        "nomn": "индра",
+        "gent": "индры",
+        "datv": "индре",
+        "accs": "индру",
+        "ablt": "индрой",
+        "loct": "индре",
     },
     # "пасть" (mouth/jaw, the head of "пасть кобылицы") loses the parse
     # tie-break to the unrelated INFN homograph "пасть" ("to fall") at
     # 0.5 vs 0.25 -- decisively ahead by score, so the usual ADJF/PRTF-
     # preference heuristics don't fire, and the intended femn.-sing noun
     # paradigm is hand-supplied instead.
-    'пасть': {
-        'nomn': 'пасть', 'gent': 'пасти', 'datv': 'пасти',
-        'accs': 'пасть', 'ablt': 'пастью', 'loct': 'пасти',
+    "пасть": {
+        "nomn": "пасть",
+        "gent": "пасти",
+        "datv": "пасти",
+        "accs": "пасть",
+        "ablt": "пастью",
+        "loct": "пасти",
     },
 }
 
 
 def load_morph():
     import pymorphy3
+
     return pymorphy3.MorphAnalyzer()
 
 
 def _strip_yo(text):
-    return text.replace('ё', 'е').replace('Ё', 'Е')
+    return text.replace("ё", "е").replace("Ё", "Е")
 
 
 _COMPETITIVE_SCORE_RATIO = 0.99
@@ -195,23 +249,23 @@ def _best_parse(word, morph):
         # "самосущий", ...) IS in fact an adjective, so prefer an ADJF/
         # PRTF nomn guess unconditionally rather than by score.
         for p in parses:
-            if p.tag.POS in ('ADJF', 'PRTF') and p.tag.case == 'nomn':
+            if p.tag.POS in ("ADJF", "PRTF") and p.tag.case == "nomn":
                 return p
         return parses[0]
     top_score = parses[0].score
     threshold = top_score * _COMPETITIVE_SCORE_RATIO
     competitive = [p for p in parses if p.score >= threshold]
     for p in competitive:
-        if p.tag.POS in ('ADJF', 'PRTF') and p.tag.case == 'nomn':
+        if p.tag.POS in ("ADJF", "PRTF") and p.tag.case == "nomn":
             return p
     for p in competitive:
-        if p.tag.POS == 'NOUN' and p.tag.case == 'nomn':
+        if p.tag.POS == "NOUN" and p.tag.case == "nomn":
             return p
     return parses[0]
 
 
 def _word_number(parse):
-    return 'plur' if 'plur' in parse.tag else 'sing'
+    return "plur" if "plur" in parse.tag else "sing"
 
 
 def _is_fixed_pos(parse):
@@ -235,22 +289,22 @@ def _has_competitive_genitive(parses):
     if not parses:
         return False
     threshold = parses[0].score * _COMPETITIVE_SCORE_RATIO
-    return any(p.score >= threshold and p.tag.case == 'gent' for p in parses)
+    return any(p.score >= threshold and p.tag.case == "gent" for p in parses)
 
 
 def _classify(word, morph, position):
     """'decline' or 'fixed' for one lowercased word at `position` in its
     phrase (position 0 = the head)."""
     if word in _HEAD_FORCE_DECLINE:
-        return 'decline'
+        return "decline"
     if word in _TAIL_FORCE_FIXED:
-        return 'fixed'
+        return "fixed"
     parses = morph.parse(word)
     if not parses:
-        return 'fixed'
+        return "fixed"
     best = _best_parse(word, morph)
     if _is_fixed_pos(best):
-        return 'fixed'
+        return "fixed"
     if position == 0:
         # The head word: decline it even when pymorphy doesn't recognise
         # the lexeme (is_known=False), as long as it *guessed* a
@@ -261,14 +315,14 @@ def _classify(word, morph, position):
         # since an unrecognised TAIL is usually an unadapted Sanskrit
         # proper name ("бхагиратхи") that should stay fixed, not a
         # regular Russian compound.
-        return 'decline'
+        return "decline"
     if not best.is_known:
-        return 'fixed'
+        return "fixed"
     if _has_competitive_genitive(parses):
-        return 'fixed'
-    if best.tag.case not in (None, 'nomn'):
-        return 'fixed'  # already a governed complement (dat/ins/loc/...)
-    return 'decline'
+        return "fixed"
+    if best.tag.case not in (None, "nomn"):
+        return "fixed"  # already a governed complement (dat/ins/loc/...)
+    return "decline"
 
 
 def _inflect_generic(word, case, morph):
@@ -284,7 +338,7 @@ def _inflect_numeral(word, case, morph):
     if word in _IRREGULAR_NUMERAL_FORMS:
         return _IRREGULAR_NUMERAL_FORMS[word][case]
     for p in morph.parse(word):
-        if p.tag.POS == 'NUMR':
+        if p.tag.POS == "NUMR":
             infl = p.inflect({case})
             if infl:
                 return infl.word
@@ -320,7 +374,7 @@ def decline_phrase(phrase, morph):
         return {case: phrase for case in CASES}
 
     numeral_info = _numeral_prefix(words_lower)
-    tot_clause = len(spans) > 1 and words_lower[0] == 'тот'
+    tot_clause = len(spans) > 1 and words_lower[0] == "тот"
 
     result = {}
     for case in CASES:
@@ -335,31 +389,32 @@ def decline_phrase(phrase, morph):
                 if i < n_prefix:
                     form = _inflect_numeral(lower, case, morph)
                 else:
-                    tail_case = 'gent' if case in ('nomn', 'accs') else case
-                    if case in ('nomn', 'accs'):
-                        tail_number = 'sing' if gov_singular else 'plur'
+                    tail_case = "gent" if case in ("nomn", "accs") else case
+                    if case in ("nomn", "accs"):
+                        tail_number = "sing" if gov_singular else "plur"
                     else:
-                        tail_number = 'plur'
+                        tail_number = "plur"
                     best = _best_parse(lower, morph)
                     if best.is_known and not _is_fixed_pos(best):
-                        infl = (best.inflect({tail_case, tail_number}) or
-                                best.inflect({tail_case}))
+                        infl = best.inflect({tail_case, tail_number}) or best.inflect(
+                            {tail_case}
+                        )
                         form = infl.word if infl else None
             elif tot_clause and i > 0:
                 form = None
             else:
-                if _classify(lower, morph, i) == 'decline':
+                if _classify(lower, morph, i) == "decline":
                     form = _inflect_generic(lower, case, morph)
             pieces.append(_match_case(surface, form) if form else surface)
             cursor = end
         pieces.append(phrase[cursor:])
-        out = ''.join(pieces)
+        out = "".join(pieces)
         result[case] = _strip_yo(out)
     return result
 
 
 def _read_lines(path):
-    with open(path, encoding='utf-8') as f:
+    with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if line:
@@ -380,14 +435,14 @@ def generate_declined_index(rus_index_path=None, morph=None):
 
 
 def format_line(base, forms):
-    return '%s : %r' % (base, forms)
+    return "%s : %r" % (base, forms)
 
 
 def write_declined_index(entries, out_path=None):
     out_path = out_path or diplom_path(RUS_INDEX_DECLINED_FILE)
-    with open(out_path, 'w', encoding='utf-8', newline='\r\n') as f:
+    with open(out_path, "w", encoding="utf-8", newline="\r\n") as f:
         for base, forms in entries:
-            f.write(format_line(base, forms) + '\n')
+            f.write(format_line(base, forms) + "\n")
 
 
 def score_against_gold(entries, gold):
@@ -402,7 +457,7 @@ def score_against_gold(entries, gold):
     mismatches = []
     for base, gold_forms in gold.items():
         if base not in by_base:
-            mismatches.append({'base': base, 'reason': 'missing from generated output'})
+            mismatches.append({"base": base, "reason": "missing from generated output"})
             continue
         got_forms = by_base[base]
         total_paradigms += 1
@@ -413,29 +468,38 @@ def score_against_gold(entries, gold):
                 correct_forms += 1
             else:
                 paradigm_ok = False
-                mismatches.append({
-                    'base': base, 'case': case_label, 'got': got, 'want': want,
-                })
+                mismatches.append(
+                    {
+                        "base": base,
+                        "case": case_label,
+                        "got": got,
+                        "want": want,
+                    }
+                )
         if paradigm_ok:
             correct_paradigms += 1
     return {
-        'form_accuracy': correct_forms / total_forms if total_forms else None,
-        'paradigm_accuracy': correct_paradigms / total_paradigms if total_paradigms else None,
-        'total_forms': total_forms,
-        'correct_forms': correct_forms,
-        'total_paradigms': total_paradigms,
-        'correct_paradigms': correct_paradigms,
-        'mismatches': mismatches,
+        "form_accuracy": correct_forms / total_forms if total_forms else None,
+        "paradigm_accuracy": (
+            correct_paradigms / total_paradigms if total_paradigms else None
+        ),
+        "total_forms": total_forms,
+        "correct_forms": correct_forms,
+        "total_paradigms": total_paradigms,
+        "correct_paradigms": correct_paradigms,
+        "mismatches": mismatches,
     }
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--rus-index', default=None, help='input rus_index.txt path')
-    ap.add_argument('--out', default=None, help='output rus_index_declined.txt path')
-    ap.add_argument('--gold', default=None, help='manual gold JSON to score against')
-    ap.add_argument('--report', default=None, help='write the accuracy report JSON here')
-    ap.add_argument('--dry-run', action='store_true', help='do not write --out')
+    ap.add_argument("--rus-index", default=None, help="input rus_index.txt path")
+    ap.add_argument("--out", default=None, help="output rus_index_declined.txt path")
+    ap.add_argument("--gold", default=None, help="manual gold JSON to score against")
+    ap.add_argument(
+        "--report", default=None, help="write the accuracy report JSON here"
+    )
+    ap.add_argument("--dry-run", action="store_true", help="do not write --out")
     args = ap.parse_args(argv)
 
     morph = load_morph()
@@ -443,25 +507,36 @@ def main(argv=None):
 
     if not args.dry_run:
         write_declined_index(entries, args.out)
-        print('wrote %d rubrics to %s' % (len(entries), args.out or diplom_path(RUS_INDEX_DECLINED_FILE)),
-              file=sys.stderr)
+        print(
+            "wrote %d rubrics to %s"
+            % (len(entries), args.out or diplom_path(RUS_INDEX_DECLINED_FILE)),
+            file=sys.stderr,
+        )
 
     if args.gold:
-        with open(args.gold, encoding='utf-8') as f:
+        with open(args.gold, encoding="utf-8") as f:
             gold_raw = json.load(f)
         gold = {k.lower(): v for k, v in gold_raw.items()}
         report = score_against_gold(entries, gold)
-        print('paradigm accuracy: %.1f%% (%d/%d)  form accuracy: %.1f%% (%d/%d)' % (
-            (report['paradigm_accuracy'] or 0) * 100, report['correct_paradigms'], report['total_paradigms'],
-            (report['form_accuracy'] or 0) * 100, report['correct_forms'], report['total_forms'],
-        ), file=sys.stderr)
+        print(
+            "paradigm accuracy: %.1f%% (%d/%d)  form accuracy: %.1f%% (%d/%d)"
+            % (
+                (report["paradigm_accuracy"] or 0) * 100,
+                report["correct_paradigms"],
+                report["total_paradigms"],
+                (report["form_accuracy"] or 0) * 100,
+                report["correct_forms"],
+                report["total_forms"],
+            ),
+            file=sys.stderr,
+        )
         if args.report:
-            with open(args.report, 'w', encoding='utf-8') as f:
+            with open(args.report, "w", encoding="utf-8") as f:
                 json.dump(report, f, ensure_ascii=False, indent=2)
         return report
 
     return None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
