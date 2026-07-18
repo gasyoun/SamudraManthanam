@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- **Re-implementация склонения рубрик указателя в порту — генератор вместо
+  статического импорта (H1207, Sonnet 5 `claude-sonnet-5`).**
+  [`web/corpus_builder/sanskritisms/ru_rubric_decline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/ru_rubric_decline.py) —
+  reproduce+fix для [`rus_index_declined.txt`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/rus_index_declined.txt)
+  (292 рубрики), закрывает H1204-статус-документ. `Index_items_declension.ipynb`
+  + `index_lone_declined_manual.json` + `pyphrasy` не найдены ни в этом репо, ни
+  выше по потоку в `github.com/evgeniarubanova/sanskrit_stemmer` (полное дерево
+  из тех же 18 плоских файлов, без ноутбука и без манульного gold) — метод
+  переизобретён из `rus_index.txt` + наблюдаемых дефектов старого файла:
+  числительное согласование (два/три/четыре → gen.sg в им./вин., пять+ → gen.pl,
+  во всех остальных падежах — plural формы), общий per-word декленатор с
+  предпочтением ADJF/PRTF при завязанном скоре (чинит «вездесущия»→«вездесущий»),
+  фиксация уже-косвенных хвостов («сын дхармы», предложные дополнения), класс
+  «тот, …» для относительных придаточных (были пустыми в старом файле — 7 рубрик),
+  список из 9 хэндлd homograph-ловушек (гады/дроны/лука/ганги/манасы/паки/балы/
+  знак/индра/пасть — где pymorphy3 однозначно выбирает не ту лемму). Правит
+  «три мира»→«три мир» и «вездесущия», плюс truncation-баг старого `both`-класса
+  (терял 3-е+ слово фразы — «владыка рыжих» вместо «владыка рыжих коней», 15+
+  рубрик) и полностью пустые формы у 11 рубрик (comma-list-перестановки +
+  «тот, …»-класс). Ручной gold —
+  [`rus_index_declined_manual_gold.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/diplom-rubanova/rus_index_declined_manual_gold.json)
+  (104 рубрики, независимо выведенные по правилам грамматики): **paradigm
+  accuracy 100 % (было 86.5 % в заметке 2024-11)**. Тесты:
+  [`web/tests/test_ru_rubric_decline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ru_rubric_decline.py) —
+  26 hermetic + 2 `-m corpus` (parity: регенерация == закоммиченный файл;
+  accuracy-gate ≥86.5 %); существующие sanskritisms corpus-тесты (эпитет-слой
+  всё ещё находит известные имена) прогнаны заново, зелёные. ё вырезано из
+  вывода (дом. стиль); `тридесять` не в OpenCorpora — парадигма задана вручную.
 
 ## [0.11.1] - 2026-07-17
 ### Added
