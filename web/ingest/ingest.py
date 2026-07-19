@@ -231,7 +231,14 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
 
         await db.commit()
 
-    await _validate_jsonl_ingest(db)
+    try:
+        await _validate_jsonl_ingest(db)
+    except BaseException:
+        # Validation failures are expected in tests and can also occur on a
+        # damaged build input. Close the aiosqlite worker before propagating
+        # the failure so Python 3.10–3.12 processes terminate cleanly.
+        await db.close()
+        raise
     
     # Insert metadata. source_count comes from the actual rows in `sources`,
     # not len(filenames) — they diverge if any files were skipped due to a
