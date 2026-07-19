@@ -1,0 +1,16 @@
+# The image is a runtime artifact, so the build context is deny-by-default.
+# This excludes Git metadata and agent worktrees, caches/tests, corpus-builder
+# inputs and outputs, archives/GRETIL sources, local databases, offline-pack
+# binaries, papers, and review artifacts even when they exist only locally.
+**
+
+# Runtime allowlist. Keep this synchronized with the explicit COPY commands.
+!Dockerfile
+!web/
+!web/requirements.txt
+!web/app/
+!web/app/**
+!web/templates/
+!web/templates/**
+!web/static/
+!web/static/**

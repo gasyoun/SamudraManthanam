@@ -105,6 +105,14 @@ jobs:
           python -m pip install pip-audit
           python -m pip_audit -r web/requirements.txt
 
+  docker-build:
+    name: Docker runtime image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build hardened runtime image
+        run: docker build --tag samudra-manthanam:ci .
+
   yaml-lint:
     name: YAML lint
     runs-on: ubuntu-latest
