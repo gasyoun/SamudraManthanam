@@ -33,8 +33,10 @@ async def get_manifest():
 @router.get("/file/{filename}")
 async def get_corpus_file(filename: str):
     # Sanitize before anything else so traversal attempts always get 400
+    # on both Linux and Windows.  os.path.basename() only recognises the
+    # current platform's separator, so explicitly reject both URL/path forms.
     safe_filename = os.path.basename(filename)
-    if safe_filename != filename:
+    if safe_filename != filename or "/" in filename or "\\" in filename:
         raise HTTPException(status_code=400, detail="Invalid filename")
     if not settings.CORPUS_PATH:
         raise HTTPException(status_code=503, detail="CORPUS_PATH not configured")
