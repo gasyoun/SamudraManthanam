@@ -8,3 +8,50 @@ updates:
       time: "08:00"
       timezone: Europe/Moscow
     open-pull-requests-limit: 5
+    groups:
+      github-actions-minor-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: pip
+    directory: /web
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:15"
+      timezone: Europe/Moscow
+    open-pull-requests-limit: 10
+    groups:
+      python-minor-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: npm
+    directory: /nkrya-parallel
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:30"
+      timezone: Europe/Moscow
+    open-pull-requests-limit: 10
+    groups:
+      npm-minor-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "08:45"
+      timezone: Europe/Moscow
+    open-pull-requests-limit: 10
+    groups:
+      docker-minor-patch:
+        update-types:
+          - minor
+          - patch

@@ -1,10 +1,10 @@
 # Samudra Manthanam — Churning of the Ocean
 
-_Created: 12-05-2026 · Last updated: 11-07-2026_
+_Created: 12-05-2026 · Last updated: 19-07-2026_
 
 A parallel Sanskrit–Russian corpus search tool developed by the [Society of Sanskrit Enthusiasts](https://samskrtam.ru). The name refers to the mythological churning of the cosmic ocean (*Samudra Manthanam*), here used as a metaphor for extracting meaning from an ocean of words.
 
-**Desktop app version:** 1.5.1 (`PO.EXE`, per [`Units/UpdateChecker.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/UpdateChecker.pas) and the live [`po-ors.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/samskrtam.ru_software-updates/po-ors.json) update manifest) · **Repository release:** 0.2.0 (see [CHANGELOG.md](https://github.com/gasyoun/SamudraManthanam/blob/main/CHANGELOG.md)) · **Platform:** Web (FastAPI) / Legacy Windows (Lazarus) · **Language:** Russian UI
+**Desktop app version:** 1.5.1 (`PO.EXE`, per [`Units/UpdateChecker.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/UpdateChecker.pas) and the live [`po-ors.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/samskrtam.ru_software-updates/po-ors.json) update manifest) · **Repository release:** 0.11.1 (17-07-2026; see [CHANGELOG.md](https://github.com/gasyoun/SamudraManthanam/blob/main/CHANGELOG.md)) · **Platform:** Web (FastAPI) / Legacy Windows (Lazarus) · **Language:** Russian UI
 
 ---
 

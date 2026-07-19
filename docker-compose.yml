@@ -1,23 +1,22 @@
-version: '3.8'
-
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: samudra_manthanam_web
+    init: true
     ports:
       - "8000:8000"
     volumes:
-      # Mount the corpus data directory (containing Data/ and Programdata/)
-      - ./corpus:/corpus
-      # Mount a generated SQLite database built locally with:
-      #   .\build-web-db.ps1
-      # The host file must exist before `docker compose up`.
+      # Source corpus is an optional read-only runtime reference.
+      - ./corpus:/corpus:ro
+      # Writable DB: the host file must exist and be writable by UID/GID 10001.
       - ./web/corpus.db:/app/corpus.db
+      # Generated browser packs are served but never mutated by the container.
+      - ./web/offline-packs:/app/offline-packs:ro
     environment:
-      - CORPUS_PATH=/corpus
-      - DB_PATH=/app/corpus.db
+      APP_ENV: ${APP_ENV:-production}
+      CORPUS_PATH: /corpus
+      DB_PATH: /app/corpus.db
+      OFFLINE_PACKS_DIR: /app/offline-packs
     restart: unless-stopped
-
-  # Optional Nginx reverse proxy could be added here for SSL/Caching
