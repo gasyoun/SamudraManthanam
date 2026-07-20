@@ -101,3 +101,12 @@ The modern web-based search engine is built with **FastAPI** and **SQLite (FTS5)
 - `html_service.py`: Secure Jinja2-based result fragment rendering.
 - `settings.py`: Centralized configuration (DB_PATH).
 - `models.py`: Pydantic V2 models for API requests/responses.
+
+## Operational hazard notes
+
+Destructive-risk facts for this repo (do-not-rerun scripts, decoys, traps) are
+registered centrally in an org-private hub
+([Uprava DANGER_FACTS.md](https://github.com/gasyoun/Uprava/blob/main/DANGER_FACTS.md),
+org members only); the public-safe subset is mirrored in the generated block of
+[AGENTS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/AGENTS.md). Check them
+before running anything that writes.
