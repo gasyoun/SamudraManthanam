@@ -111,3 +111,75 @@ def test_unordinal_glava_line_is_not_a_chapter_boundary():
     assert report["chapters"] == 1
     ru = [r for r in records if r["seg"] == "ru"]
     assert {r["passage"] for r in ru} == {"1.1", "1.2"}
+
+
+# --- Wave-A-tail regressions (Нируттара/Гуптасадхана/Йони-тантра, H1438) ---
+
+
+def test_chapter_open_captures_body_glued_to_heading():
+    # Нируттара-тантра ch.5: no paragraph break at all after the heading --
+    # pdftotext runs the heading straight into the chapter's own first
+    # sentence. `rest` must carry that text forward as body, not drop it.
+    m = ig._CHAPTER_OPEN_RE.match(
+        "Глава пятая Благословенная Богиня сказала: тест. (1)")
+    assert m and m.group("ord") == "пятая"
+    assert m.group("rest") == "Благословенная Богиня сказала: тест. (1)"
+
+
+def test_chapter_open_captures_running_title_prefix():
+    # Йони-тантра ch.1: an ALL-CAPS running section title is glued onto the
+    # FRONT of the heading on one physical line. `prefix` must absorb it so
+    # the heading is still recognised (a missed ch.1 heading silently drops
+    # the whole chapter, not just mis-numbers it).
+    m = ig._CHAPTER_OPEN_RE.match("ЙОНИ-ТАНТРА. ПЕРЕВОД Глава первая")
+    assert m and m.group("ord") == "первая"
+    assert m.group("prefix") == "ЙОНИ-ТАНТРА. ПЕРЕВОД"
+
+
+def test_chapter_open_prefix_and_title_are_case_sensitive():
+    # Regression: under the pattern's overall re.IGNORECASE, an unscoped
+    # ALL-CAPS class also matches lowercase Cyrillic, so a mixed-case table-
+    # of-contents line ("SODERZHANIE Предисловие Глава первая Глава
+    # вторая ...") would otherwise satisfy the "prefix" class just as
+    # readily as a real running title -- exactly what corrupted
+    # niruttara-tantra's chapter numbering before the `(?-i:...)` scoping.
+    assert ig._CHAPTER_OPEN_RE.match(
+        "СОДЕРЖАНИЕ Предисловие Глава первая Глава вторая") is None
+
+
+def test_backmatter_matches_heading_glued_to_content():
+    # Йони-тантра ch.8's true end-colophon is followed immediately by
+    # "ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ Созерцание йони. Оригинал ..." on one
+    # physical line -- an appendix of hymns quoted from OTHER named tantras.
+    # No end-of-line anchor: the ALL-CAPS lead-in alone is the signal.
+    assert ig._BACKMATTER_RE.match(
+        "ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ Созерцание йони. Оригинал на санскрите")
+
+
+def test_backmatter_rejects_short_in_text_abbreviation():
+    # Chinachara-tantra's own endnotes cite "НТ (11.6)" (Niruttara-tantra)
+    # mid-note -- a short work-abbreviation must never masquerade as a
+    # section heading and truncate the endnote block early.
+    assert ig._BACKMATTER_RE.match("НТ (11.6). Что касается ...") is None
+
+
+def test_appendix_after_last_chapter_does_not_absorb_body():
+    # End-to-end reproduction of the Йони-тантра ch.8 bug: the last chapter's
+    # true colophon is followed by an appendix (its own ALL-CAPS heading
+    # glued to content) that itself contains a LATER, unrelated "Комментарий"
+    # section for the appendix's own citations. The appendix's notes heading
+    # must not be mistaken for this work's endnote block and drag body_end
+    # out past the real backmatter boundary.
+    text = "\n".join([
+        "Глава первая", "Единственный стих главы. (1)",
+        "ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ Некий гимн из другого текста, не часть этой",
+        "тантры вовсе.",
+        "Комментарий",
+        "9.1(1). заметка к чужому гимну, не к этой тантре.",
+    ])
+    records, report = ig.parse_book(text, "test-work")
+    assert report["chapters"] == 1
+    ru = [r for r in records if r["seg"] == "ru"]
+    assert {r["passage"] for r in ru} == {"1.1"}
+    # the appendix's own note must not be attached to this work's chapter 1.
+    assert not any(r["seg"].startswith("comm") for r in records)

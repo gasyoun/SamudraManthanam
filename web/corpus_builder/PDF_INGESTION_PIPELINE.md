@@ -220,18 +220,83 @@ Differences from the DBhP path (module docstring has the full rationale):
 - Text extraction branches on file extension: `pandoc -f docx -t plain` or
   `pdftotext -enc UTF-8` (same form-feed normalisation as the DBhP path).
 
-**Status: 2/~20 works ingested as the generalization proof (H1438).**
-Cīnācāra-tantra (docx path: 5 ch, 225 verses, 154/168 endnotes attached —
-the long tail is verse-range note targets like `5.49(2)–50(1)` the endnote
-regex doesn't yet parse, gracefully merged into the preceding note's text
-rather than lost) and Nirvāṇa-tantra (PDF path: 15 ch, 821 verses, 0
-endnotes — the source has none). Both registered in `Programdata/data.txt`,
-both browser-verified searchable via FTS5 in a scoped `ingest.py` run.
-Remaining ~18 works (wave order, per-work format/DCS notes, Sanskrit-source
-hunt) are scoped in
+**Status: 5/~20 works ingested (H1438).** Wave A tail (the 4 PDF tantras)
+landed this pass, on top of the H1438 pilot's 2 works:
+
+- **Cīnācāra-tantra** (docx, pilot): 5 ch, 225 verses, 154/168 endnotes
+  attached — the long tail is verse-range note targets like `5.49(2)–50(1)`
+  the endnote regex doesn't yet parse, gracefully merged into the preceding
+  note's text rather than lost.
+- **Nirvāṇa-tantra** (PDF, pilot): 15 ch, 821 verses, 0 endnotes (source has
+  none).
+- **Niruttara-tantra** (PDF): 15 ch, 674 verses, round-trip 674/674.
+- **Guptasādhana-tantra** (PDF): 12 ch, 319 verses, round-trip 319/319.
+- **Yoni-tantra** (PDF): 8 ch, 221 verses, round-trip 221/221 — ch.8's true
+  colophon closes the translated work; the source PDF appends supplementary
+  hymns quoted from OTHER named tantras after it (`meta.json` `provenance`
+  notes this) — excluded, not part of Yoni-tantra itself.
+
+All five registered in `Programdata/data.txt`; all five FTS5-searchable
+(verified against a scratch `ingest.py` DB build, real hit counts per work).
+`html_to_canonical.py` round-trip reproduces every emitted verse exactly
+(100%, clear of the ≥99% bar) for all three Wave-A-tail works.
+
+**Three parser hardening rounds this pass** (mirroring the DBhP path's own
+six-round history — this generalized parser is a proven base, not a
+zero-touch batch run):
+
+1. **Chapter heading glued to its own first body sentence, no paragraph
+   break** (Niruttara-tantra ch.5: `"Глава пятая Благословенная Богиня
+   сказала: ..."` on one physical line) — `_CHAPTER_OPEN_RE` gained a `rest`
+   group that keeps the trailing text as the new chapter's opening body line
+   instead of silently dropping it (which had merged ch.5 into ch.4).
+2. **An ALL-CAPS running section title glued onto the FRONT of a chapter
+   heading** (Yoni-tantra ch.1: `"ЙОНИ-ТАНТРА. ПЕРЕВОД Глава первая"`) —
+   `_CHAPTER_OPEN_RE` gained a `prefix` group. Both `prefix` and the
+   pre-existing `title` group had to be scoped case-sensitive
+   (`(?-i:...)`): under the pattern's overall `re.IGNORECASE`, an unscoped
+   `[А-ЯЁ]` class also matches lowercase Cyrillic, so a mixed-case
+   table-of-contents line satisfied the "ALL-CAPS" signal just as readily as
+   a real title/prefix — this over-matched Niruttara-tantra's own ToC line
+   and corrupted its chapter numbering before the scoping fix.
+3. **Back-matter/appendix heading glued to its own first line of content, and
+   an appendix's own later "Комментарий" section for ITS OWN citations**
+   (Yoni-tantra: ch.8's true colophon is followed by `"ТЕКСТЫ ПО ПОЧИТАНИЮ
+   ЙОНИ Созерцание йони. Оригинал ..."` — an appendix of hymns quoted from
+   other named tantras — which itself contains an unrelated, later
+   `"КОММЕНТАРИЙ"` heading for its own footnotes). `_BACKMATTER_RE` lost its
+   end-of-line anchor (min run length raised to 7+ chars so a short in-text
+   work-abbreviation like `"НТ (11.6)"` can never masquerade as a heading),
+   and the endnote-block search is now bounded ABOVE by the backmatter
+   boundary rather than running unbounded to EOF — otherwise the appendix's
+   own notes heading was mistaken for this work's endnotes and dragged the
+   body 140+ lines past the real chapter-8 boundary.
+
+6 new regression tests added (16 total) in
+[`test_ignatiev_book_units.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ignatiev_book_units.py),
+one per bug found; all previously-shipped works (Cīnācāra/Nirvāṇa-tantra)
+byte-identical before/after each fix (regression-diffed against their
+committed `.raw.jsonl`).
+
+**Māyā-tantra: a DIFFERENT, larger front-end gap, deliberately NOT attempted
+this pass.** Its PDF's footnotes are NOT collected once at the end (unlike
+every other Wave-A-tail work) — they recur on nearly every page throughout
+the ENTIRE book, in the OLD glued-digit-superscript convention this
+generalized parser deliberately dropped in favour of bracket-style `[N]`
+matching (see the module docstring). Because the current single-block
+`_NOTES_HEAD_RE` search only looks after the LAST chapter heading, every
+scattered per-page footnote block currently reads as ordinary running body
+text in every chapter — and a footnote's own embedded citation numbers
+(e.g. `1.1(2)`) get misread by `split_verses` as verse boundaries, producing
+wild verse-count oscillation (diagnosed: `verse_gaps`/`id_collisions` jumping
+`1↔2` repeatedly, and one bogus `4: 2->1772` jump). Fixing this properly
+means reintroducing something like the OLD DBhP-PDF glued-digit heuristic as
+an additional front-end mode, auto-detected per work — a real design task,
+not a regex tweak; scoped as the next Wave-A-tail item rather than rushed.
+
+**Remaining ~14 works** (Wave B docx tantras/upapurāṇas, Wave C in-DCS
+purāṇas needing real Sanskrit alignment, Wave D fragments) are scoped in
 [H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md) —
-open for a future session; the docx/PDF front ends and the endnote/chapter
-regexes above are the reusable base, expect per-work regex tuning the same
-way the DBhP path needed six rounds of hardening across its volumes.
+open for a future session.
 
 _Dr. Mārcis Gasūns_
