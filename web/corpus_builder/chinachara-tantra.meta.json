@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "slug": "chinachara-tantra",
+  "title_ru": "Чиначара-тантра; А. Игнатьев",
+  "title_display": "Чиначара-тантра",
+  "title_en": "Cīnācāra-tantra (Ignatiev)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": ["cyrillic"],
+  "structure": "verse",
+  "provenance": "А. Игнатьев (перев.). Чиначара-тантра (рукопись, архив переводчика). DOCX -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+  "needs_review": false
+}

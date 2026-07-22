@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- **Generalized single-book Ignatiev converter + 2-work proof (H1438, Sonnet 5
+  `claude-sonnet-5`).**
+  [`web/corpus_builder/ignatiev_book_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/ignatiev_book_to_canonical.py)
+  generalizes the DBhP-shaped `ignatjev_pdf_to_canonical.py` pipeline
+  (H534/H558) to А. Игнатьев's ~20 other tantra/upapurāṇa translations —
+  standalone single-book works (flat `chapter.verse` ids, heading-only
+  chapter splitting, bracket-style `[N]` Word-footnote endnotes) sourced as
+  a single `.docx` (pandoc) or `.pdf` (pdftotext), not DBhP's 6-volume set.
+  Rights cleared for "all my works ... whether published or unpublished" —
+  [RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md](https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md).
+  Proved on 2 works as the H1438 pilot: Cīnācāra-tantra (docx, 5 ch, 225
+  verses, 154 endnotes) and Nirvāṇa-tantra (PDF, 15 ch, 821 verses), both
+  registered in `Programdata/data.txt` and browser-verified searchable via
+  FTS5. 10 hermetic unit tests
+  ([`web/tests/test_ignatiev_book_units.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ignatiev_book_units.py)).
+  Remaining ~18 works scoped as a wave-ordered backlog in
+  [H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md)
+  and `PDF_INGESTION_PIPELINE.md` §Single-book generalization.
 - **Re-implementация склонения рубрик указателя в порту — генератор вместо
   статического импорта (H1207, Sonnet 5 `claude-sonnet-5`).**
   [`web/corpus_builder/sanskritisms/ru_rubric_decline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/sanskritisms/ru_rubric_decline.py) —
