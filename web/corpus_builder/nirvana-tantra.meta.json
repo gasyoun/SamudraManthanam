@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "slug": "nirvana-tantra",
+  "title_ru": "Нирвана-тантра; А. Игнатьев",
+  "title_display": "Нирвана-тантра",
+  "title_en": "Nirvāṇa-tantra (Ignatiev)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": ["cyrillic"],
+  "structure": "verse",
+  "provenance": "А. Игнатьев (перев.). Нирвана-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+  "needs_review": false
+}

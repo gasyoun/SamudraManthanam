@@ -1,6 +1,6 @@
 # PDF → Corpus Ingestion Pipeline (house standard)
 
-_Created: 10-07-2026 · Last updated: 11-07-2026_
+_Created: 10-07-2026 · Last updated: 22-07-2026_
 
 The reusable, agent-runnable pipeline that turns a print-derived **PDF**
 translation into the app-ready corpus HTML the desktop reader «Пахтанье
@@ -191,5 +191,47 @@ at the **end of each Комментарий note block** (notes close every skan
   records** and skandhas 9/7 are 7,056/5,301 — all above `iRecordLimit = 5000`
   (`program.ini`). The per-skandha files are the primary access; raising
   `iRecordLimit` or dropping the combined file is an open call for a human.
+
+## Single-book generalization (H1438)
+
+[`ignatiev_book_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/ignatiev_book_to_canonical.py)
+generalizes stage 1 for А. Игнатьев's ~20 other translations (tantras +
+upapurāṇas, `archive_ignatiev_2026/Переводы с санскрита/`) — each a
+standalone work with no skandha/volume level, sourced as a single `.docx` or
+`.pdf` file rather than DBhP's 6-volume PDF set. Rights: cleared for
+"all my works ... whether published or unpublished" — see
+[RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md](https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md).
+
+Differences from the DBhP path (module docstring has the full rationale):
+
+- **Passage ids are flat `CHAPTER.VERSE`** (no skandha level), matching the
+  house convention for standalone works (`gitagovinda.jsonl`).
+- **Chapter boundaries come from the OPENING heading alone** — a closing
+  colophon's wording is not uniform across Ignatjev's translations (some
+  texts, e.g. Cīnācāra-tantra, never say «заканчивается» at all) — so it is
+  never required to split a chapter. The heading itself has two forms: bare
+  (`Глава первая`, the docx convention) or ordinal+ALL-CAPS-title on one line
+  (`Глава третья ГАЯТРИ`, the PDF convention) — both recognised.
+- **Endnotes are real Word footnotes** in the docx sources: pandoc's plain
+  writer renders both the inline ref and the endnote text bracket-wrapped
+  (`...его[1].` / `[1] 1.1(1). <text>`) — an exact `[N]` match, not the DBhP
+  PDF's glued-digit superscript guess. PDF sources (e.g. Nirvāṇa-tantra) may
+  simply have no endnote section — handled as zero found, not an error.
+- Text extraction branches on file extension: `pandoc -f docx -t plain` or
+  `pdftotext -enc UTF-8` (same form-feed normalisation as the DBhP path).
+
+**Status: 2/~20 works ingested as the generalization proof (H1438).**
+Cīnācāra-tantra (docx path: 5 ch, 225 verses, 154/168 endnotes attached —
+the long tail is verse-range note targets like `5.49(2)–50(1)` the endnote
+regex doesn't yet parse, gracefully merged into the preceding note's text
+rather than lost) and Nirvāṇa-tantra (PDF path: 15 ch, 821 verses, 0
+endnotes — the source has none). Both registered in `Programdata/data.txt`,
+both browser-verified searchable via FTS5 in a scoped `ingest.py` run.
+Remaining ~18 works (wave order, per-work format/DCS notes, Sanskrit-source
+hunt) are scoped in
+[H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md) —
+open for a future session; the docx/PDF front ends and the endnote/chapter
+regexes above are the reusable base, expect per-work regex tuning the same
+way the DBhP path needed six rounds of hardening across its volumes.
 
 _Dr. Mārcis Gasūns_

@@ -1,0 +1,21 @@
+{
+  "work": "chinachara-tantra",
+  "chapters": 5,
+  "verse_count": 225,
+  "comment_count": 154,
+  "verse_gaps": [
+    "4: 9->11"
+  ],
+  "chapter_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "unrecognised_endnotes": 0,
+  "id_collisions": [
+    "1.22"
+  ],
+  "total_endnotes": 154
+}
