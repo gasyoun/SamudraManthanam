@@ -183,3 +183,6 @@ kathasaritsagara-14.html
 kathasaritsagara-12.html
 chinachara-tantra.html
 nirvana-tantra.html
+niruttara-tantra.html
+guptasadhana-tantra.html
+yoni-tantra.html

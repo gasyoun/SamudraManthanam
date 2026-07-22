@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- **Ignatiev Wave-A-tail ingest: 4/4 remaining PDF tantras (H1438, Sonnet 5
+  `claude-sonnet-5`).** Niruttara-tantra (15 ch, 674 verses), Guptasādhana-tantra
+  (12 ch, 319 verses) and Yoni-tantra (8 ch, 221 verses) ingested via the
+  generalized `ignatiev_book_to_canonical.py`, all registered in
+  `Programdata/data.txt`, all FTS5-searchable, all round-trip
+  `html_to_canonical.py`-verified at 100% verse reproduction. Three real parser
+  bugs found and fixed along the way (each with its own regression test, 6 new
+  tests, 16 total): a chapter heading glued to its own first body sentence with
+  no paragraph break (Niruttara ch.5); an ALL-CAPS running section title glued
+  onto the FRONT of a chapter heading, which also exposed a latent
+  case-sensitivity bug (`re.IGNORECASE` made the "ALL-CAPS" class match
+  lowercase too, letting a table-of-contents line masquerade as a heading and
+  corrupt Niruttara's own chapter numbering — fixed with scoped `(?-i:...)`
+  groups); and an appendix's own later "Комментарий" section (for its own
+  quoted-hymn citations) being mistaken for Yoni-tantra's real endnotes,
+  dragging its chapter-8 body 140+ lines past the true boundary. Full writeups:
+  `web/corpus_builder/PDF_INGESTION_PIPELINE.md` §Single-book generalization.
+  **Māyā-tantra deliberately deferred** — a different, larger front-end gap
+  (per-page glued-digit footnotes, not the bracket-style `[N]` convention) that
+  needs a real design extension, not a regex tweak; see the pipeline doc and
+  `.ai_state.md` for the diagnosis. Remaining ~14 works (Waves B–D) stay scoped
+  in [H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md).
 - **Generalized single-book Ignatiev converter + 2-work proof (H1438, Sonnet 5
   `claude-sonnet-5`).**
   [`web/corpus_builder/ignatiev_book_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/ignatiev_book_to_canonical.py)

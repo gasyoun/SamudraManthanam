@@ -57,10 +57,37 @@ from ru_ordinals import ordinal_f_to_int, ORDINAL_WORD_PATTERN  # noqa: E402
 # convention), or "Глава <ordinal> <ALL-CAPS TITLE>" on one line (the PDF
 # convention -- e.g. "Глава первая ОПИСАНИЕ ПАРАБРАХМАНА"). The optional
 # title is captured and discarded, never required to match.
+#
+# A third PDF variant (Нируттара-тантра ch.5 and similar) has NO paragraph
+# break after the heading at all -- pdftotext emits "Глава пятая
+# Благословенная Богиня сказала: ..." as one physical line, heading glued
+# straight onto the chapter's own first body sentence (mixed-case, not an
+# ALL-CAPS title). `rest` captures that trailing text so it is kept as the
+# new chapter's opening body line instead of being silently dropped by a
+# failed end-of-line anchor (which would merge chapter 5 into chapter 4's
+# body and produce duplicate verse-number id collisions).
+#
+# A fourth variant (Йони-тантра ch.1) glues an ALL-CAPS running section
+# title onto the FRONT of the heading instead: "ЙОНИ-ТАНТРА. ПЕРЕВОД Глава
+# первая" is one physical line. `prefix` absorbs that leading run so the
+# heading is still recognised from line start (an unrecognised chapter 1
+# heading silently drops the whole chapter into the discarded front matter,
+# not just mis-numbers it -- worse than the ch.5 case above).
+#
+# `prefix`/`title` MUST be scoped case-sensitive (`(?-i:...)`) despite the
+# pattern's overall IGNORECASE flag: under IGNORECASE, `[А-ЯЁ]` matches
+# lowercase Cyrillic too, so a mixed-case run (an unrelated table-of-contents
+# line, e.g. "СОДЕРЖАНИЕ Предисловие Глава первая Глава вторая ...") would
+# otherwise satisfy the "ALL-CAPS" class just as readily as a real ALL-CAPS
+# title/prefix, defeating the one signal that distinguishes them from
+# ordinary running prose (verified: this over-matched niruttara-tantra's own
+# ToC line before the scoped fix, corrupting chapter numbering).
 _CHAPTER_OPEN_RE = re.compile(
-    r"^\s*Глава\s+(?P<ord>" + ORDINAL_WORD_PATTERN +
+    r"^\s*(?:(?-i:(?P<prefix>[А-ЯЁ][А-ЯЁ0-9 ,.\-]{1,90}))\s+)?"
+    r"Глава\s+(?P<ord>" + ORDINAL_WORD_PATTERN +
     r"(?:\s+" + ORDINAL_WORD_PATTERN + r")?)"
-    r"(?:\s+(?P<title>[А-ЯЁ][А-ЯЁ0-9 ,.\-]{1,90}))?\s*$",
+    r"(?:\s+(?-i:(?P<title>[А-ЯЁ][А-ЯЁ0-9 ,.\-]{1,90})))?"
+    r"(?:\s+(?P<rest>\S.*))?\s*$",
     re.IGNORECASE,
 )
 
@@ -80,7 +107,24 @@ _NOTES_HEAD_RE = re.compile(
 # the same word lowercased mid-sentence ("...в сторону конечной
 # Реальности» (цит. по [Приложения энергетического усилия...") and must not
 # be mistaken for the heading.
-_BACKMATTER_RE = re.compile(r"^[А-ЯЁ][А-ЯЁ \-]{2,45}$")
+#
+# No end-of-line anchor: a back-matter heading can be glued to its own first
+# line of content, same pdftotext quirk as the chapter-heading variants
+# above (Йони-тантра ch.8's true end-colophon is followed immediately by
+# "ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ Созерцание йони. Оригинал на санскрите ..." on
+# one physical line -- unrelated appendix hymns from OTHER named tantras,
+# quoted for reference, that would otherwise bleed into chapter 8's body and
+# restart its verse numbering from 1 repeatedly). Requiring only the ALL-CAPS
+# lead-in (case-sensitive, so a lowercase continuation sentence never
+# qualifies) is enough signal without the whole-line anchor -- BUT the
+# minimum run length must stay long (7+ chars after the first) so a short
+# in-text title abbreviation (Chinachara-tantra's own endnotes cite "НТ
+# (11.6)" -- Niruttara-tantra -- mid-note) can never masquerade as a section
+# heading and truncate the endnote block early; every real heading in this
+# corpus (СЛОВАРЬ ИМЕН, ЛИТЕРАТУРА, ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ, ...) clears it
+# easily, but "НТ", "ГСТ", "ЧЧТ" and similar 2-3 letter work-abbreviations do
+# not.
+_BACKMATTER_RE = re.compile(r"^[А-ЯЁ][А-ЯЁ \-]{7,45}")
 
 # A bare page-number line (pdftotext emits running page numbers alone).
 _PAGENUM_RE = re.compile(r"^\s*\d{1,4}\s*$")
@@ -246,12 +290,33 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
         default=0,
     )
 
-    # Locate the endnote block: from the first "Комментарий"/"Примечания"
-    # heading after the last chapter, up to the first back-matter heading
-    # (or EOF).
+    # Back matter (СЛОВАРЬ ИМЕН / СЛОВАРЬ ТЕРМИНОВ / ЛИТЕРАТУРА / ... -- or an
+    # appendix of quoted hymns from OTHER named works, e.g. Йони-тантра's
+    # "ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ") closes the body even when there is NO
+    # endnote section to anchor on (Nirvāṇa-tantra has none) -- otherwise a
+    # glossary/bibliography/appendix entry's own parenthesised number can be
+    # mistaken for a trailing verse marker and glued onto the last chapter.
+    # Found FIRST (from the last chapter opening onward), independent of the
+    # notes-heading search below, so a work's true content boundary is
+    # whichever of the two actually comes first structurally.
+    backmatter_idx = None
+    for i in range(last_chapter_idx, n):
+        if _BACKMATTER_RE.match(lines[i]):
+            backmatter_idx = i
+            break
+
+    # Locate the endnote block: the first "Комментарий"/"Примечания" heading
+    # after the last chapter, up to the first back-matter heading (or EOF).
+    # Bounded ABOVE by backmatter_idx, not just EOF: an appendix of quoted
+    # material from other works can carry its own, LATER "Комментарий"
+    # section for ITS OWN citations (Йони-тантра ch.8's true colophon sits at
+    # backmatter_idx, but a stray "КОММЕНТАРИЙ" for the appended hymns turns
+    # up ~140 lines further on) -- an unbounded search would treat that as
+    # *this* work's endnotes and drag the body all the way out to it.
+    search_end = backmatter_idx if backmatter_idx is not None else n
     notes_start = notes_end = None
     fn1_glued = False
-    for i in range(last_chapter_idx, n):
+    for i in range(last_chapter_idx, search_end):
         hm = _NOTES_HEAD_RE.match(lines[i])
         if hm:
             notes_start = i + 1
@@ -265,18 +330,6 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     note_lines = lines[notes_start:notes_end] if notes_start is not None else []
     fn_map = parse_endnotes(note_lines, fn1_glued) if note_lines else {}
 
-    # Back matter (СЛОВАРЬ ИМЕН / СЛОВАРЬ ТЕРМИНОВ / ЛИТЕРАТУРА / ...) closes
-    # the body even when there is NO endnote section to anchor on (e.g.
-    # Nirvāṇa-tantra has none) -- otherwise a glossary/bibliography entry's
-    # own parenthesised number (a page ref, a homonym-disambiguation index)
-    # can be mistaken for a trailing verse marker and glued onto the last
-    # chapter. Scan for the first back-matter heading from the last chapter
-    # opening onward, independent of the notes-heading search above.
-    backmatter_idx = None
-    for i in range(last_chapter_idx, n):
-        if _BACKMATTER_RE.match(lines[i]):
-            backmatter_idx = i
-            break
     if notes_start is not None:
         body_end = notes_start - 1
     elif backmatter_idx is not None:
