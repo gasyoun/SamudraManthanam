@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.12.0] - 2026-07-22
 ### Added
 - **Ignatiev Wave-A-tail ingest: 4/4 remaining PDF tantras (H1438, Sonnet 5
   `claude-sonnet-5`).** Niruttara-tantra (15 ch, 674 verses), Guptasādhana-tantra
