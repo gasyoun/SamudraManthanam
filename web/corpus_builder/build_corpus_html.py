@@ -116,10 +116,10 @@ def _headers_block(meta: dict, skandha: int | None) -> str:
     return '<div class="headers">' + "".join(parts) + '</div>'
 
 
-def _range_div(meta: dict, skandha: int, chapter: int, verse: str,
+def _range_div(meta: dict, skandha: int | None, chapter: int, verse: str,
                fn_label: str) -> str:
-    title = (f'{meta.get("title_display", "")} {_ROMAN[skandha]}. '
-             f'{chapter}. {verse}')
+    sk_seg = f'{_ROMAN[skandha]}. ' if skandha else ''
+    title = f'{meta.get("title_display", "")} {sk_seg}{chapter}. {verse}'
     src = f'{meta.get("title_display","")} ' \
           f'({meta.get("credit","")}, {meta.get("year","")}): {fn_label}'
     return (f'<div class="range" title="{_htmllib.escape(title)}" '
@@ -130,8 +130,14 @@ def render_citation_block(group_recs: list[dict], meta: dict) -> str:
     """Render one verse group as a citation_block, mirroring devi-gita.html."""
     recs = sorted(group_recs, key=lambda r: r.get("seq", 0))
     passage = recs[0]["passage"]
-    sk = int(recs[0].get("skandha") or passage.split(".")[0])
-    ch = int(recs[0].get("chapter") or passage.split(".")[1])
+    # Flat single-book works (2-part "CHAPTER.VERSE" passage ids) carry no
+    # "skandha" field at all -- None here, not a value derived from the
+    # passage (whose first component is the CHAPTER for these works, and
+    # was previously misread as a skandha number, overflowing _ROMAN's
+    # I..XX table on any single-book work past chapter 20 -- H1438 Wave B).
+    sk_raw = recs[0].get("skandha")
+    sk = int(sk_raw) if sk_raw is not None else None
+    ch = int(recs[0].get("chapter") or passage.split(".")[-2])
     verse_disp = passage.split(".")[-1].lstrip("0") or "0"
 
     sa = next((r for r in recs if r["seg"] == "sa"), None)

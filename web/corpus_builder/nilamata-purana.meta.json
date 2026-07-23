@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "slug": "nilamata-purana",
+  "title_ru": "Ниламата-пурана; А. Игнатьев",
+  "title_display": "Ниламата-пурана",
+  "title_en": "Nīlamata-purāṇa (Ignatiev, śl. 1-411 excerpt)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": ["cyrillic"],
+  "structure": "verse",
+  "provenance": "А. Игнатьев (перев.). Ниламата-пурана, шлоки 1-411 (рукопись, архив переводчика) -- a partial excerpt, not the full purana (which runs to ~1500+ verses in the printed Kashmiri recensions). docx -> canonical JSONL via ignatiev_book_to_canonical.py (H1438). No chapter divisions in the source excerpt -- emitted as one implicit chapter. Verse 34 is genuinely absent from the translator's own numbering (not a parse loss -- source jumps 33 -> 35).",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+  "needs_review": true
+}

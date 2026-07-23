@@ -35,13 +35,24 @@ Usage:
         --input "archive_ignatiev_2026/.../Чиначара-тантра.docx" \
         --work-slug chinachara-tantra \
         --output-dir web/corpus_builder/jsonl
+
+Multi-part works (Ignatjev split some translations across several files,
+e.g. Kularnava-tantra "Часть первая"/"Часть вторая", each continuing the
+chapter numbering rather than restarting it) take several ``--input`` args,
+extracted and concatenated (with a blank-line separator so a chapter heading
+at a file boundary is never glued to the previous file's trailing line) into
+one text stream before parsing -- the chapter/verse parser needs no other
+change since chapter numbers already run continuously across the source
+press's own file split.
 """
 from __future__ import annotations
 
 import argparse
 import html as _htmllib
 import json
+import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -170,7 +181,32 @@ def extract_text(path: Path) -> str:
         )
         # pdftotext prepends a form-feed to the first line of every page.
         return out.stdout.replace("\x0c", "\n")
+    if suffix == ".doc":
+        # Legacy binary Word format; soffice/catdoc are absent, antiword IS
+        # on PATH. Its 2005-era build mis-renders Cyrillic unless told the
+        # mapping table explicitly (-m cp1251.txt, all these files are
+        # Russian) AND given ANTIWORDHOME so it can find that table --
+        # without both, antiword silently emits literal '?' for every
+        # non-Latin1 glyph instead of erroring. Output bytes are cp1251,
+        # not UTF-8.
+        antiword_bin = shutil.which("antiword")
+        mapping_dir = str(Path(antiword_bin).parent.parent / "share" / "antiword")
+        env = {**os.environ, "ANTIWORDHOME": mapping_dir}
+        out = subprocess.run(
+            ["antiword", "-m", "cp1251.txt", "-w", "0", str(path)],
+            capture_output=True, check=True, env=env,
+        )
+        return out.stdout.decode("cp1251", errors="replace")
     raise ValueError(f"unsupported source format: {suffix} ({path})")
+
+
+def extract_text_multi(paths: list[Path]) -> str:
+    """Extract + concatenate several source files (a multi-part work) in
+    argument order. A blank-line separator between parts guarantees a
+    chapter-opening heading at the start of part N+1 is never glued onto
+    part N's trailing body line (the same hazard the chapter-heading regex
+    already guards against within a single file)."""
+    return "\n\n".join(extract_text(p) for p in paths)
 
 
 def _reflow(lines: list[str]) -> str:
@@ -357,6 +393,20 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     if cur is not None:
         chapters.append(cur)
 
+    # Some excerpted works (e.g. Nīlamata-purāṇa's śloka 1-411 fragment) carry
+    # no "Глава <ordinal>" heading at all -- a single continuous run of
+    # verses with no chapter division. Fall back to one implicit chapter 1
+    # covering the whole body. A short liturgical preamble (title, "Ом
+    # свасти", invocations) before the first verse's trailing "(1)" marker
+    # has no marker of its own to anchor a clean cut on, so it is left to
+    # split_verses' normal reflow -- it becomes part of verse 1's text
+    # rather than a separately-dropped chunk. Harmless (an invocation glued
+    # onto verse 1 is not unusual for these texts) and, critically, lossless
+    # -- an earlier version that tried to strip it by cutting AT the first
+    # "(1)" line silently deleted verse 1 itself.
+    if not chapters:
+        chapters = [{"chapter": 1, "body": lines[:body_end]}]
+
     records: list[dict] = []
     report = {
         "work": work_slug, "chapters": 0, "verse_count": 0, "comment_count": 0,
@@ -450,14 +500,16 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input", required=True)
+    ap.add_argument("--input", required=True, nargs="+",
+                     help="one or more source files, in reading order "
+                          "(multi-part works are concatenated)")
     ap.add_argument("--work-slug", required=True)
     ap.add_argument("--output-dir", default="web/corpus_builder/jsonl")
     ap.add_argument("--stdout-report", action="store_true")
     args = ap.parse_args()
 
-    src_path = Path(args.input)
-    text = extract_text(src_path)
+    src_paths = [Path(p) for p in args.input]
+    text = extract_text_multi(src_paths)
     records, report = parse_book(text, args.work_slug)
 
     out_dir = Path(args.output_dir)
