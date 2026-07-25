@@ -295,14 +295,46 @@ def tsv(pairs):
     return ''.join(out)
 
 
-def sa_morph_tsv(pairs, slug, dcs):
+def sa_units(path):
+    """Every group carrying a non-empty Sanskrit side, translated or not —
+    {group, sa_iast, sa_slp1}, in natural group order.
+
+    Deliberately NOT derived from classify()'s `pairs`. A pair requires BOTH a
+    Sanskrit and a Russian side, because it models the *bilingual* unit; but the
+    Sanskrit morphology layer depends only on the Sanskrit side, so binding it to
+    `pairs` silently discarded every untranslated source. That is exactly what
+    happened to the GRETIL-ingested Rāmāyaṇa yuddha/uttarakāṇḍa (H906): both are
+    Sanskrit-only, so they produced zero pairs and were written up as "0% DCS
+    coverage — the ref mapper doesn't parse their passage convention", when in
+    fact their passages align to DCS at 100.0% / 99.9%. Keeping this list
+    separate is the fix and the guard against the same class of bug.
+    """
+    units = []
+    for group, d in iter_groups(path):
+        sa = d.get('sa')
+        sa_txt = _txt(sa)
+        if not sa_txt:
+            continue
+        units.append({
+            'group': group,
+            'sa_iast': sa_txt,
+            'sa_slp1': (sa.get('slp1') or '').strip(),
+        })
+    units.sort(key=lambda u: natural_key(u['group']))
+    return units
+
+
+def sa_morph_tsv(units, slug, dcs):
     """Per-token Sanskrit morphology layer, anchored on DCS gold (H906): one row
     per DCS-aligned SA token — group_id, verse, tok_index, form, lemma, upos,
     case, gender, number. Verses DCS does not cover produce no rows (reported as
     a coverage gap). Additive companion; the inline НКРЯ `<w><ana/>` fold is the
-    shared H905/H906 per-token scheme, deferred until agreed."""
+    shared H905/H906 per-token scheme, deferred until agreed.
+
+    Takes SA units (see sa_units), not bilingual pairs — an untranslated
+    Sanskrit source still gets its gold morphology."""
     out = ['group_id\tverse\ttok_index\tform\tlemma\tupos\tcase\tgender\tnumber\n']
-    for p in pairs:
+    for p in units:
         passage = p['group'].split(':', 1)[1] if ':' in p['group'] else ''
         for t in dcs.gold_tokens(slug, passage):
             out.append('\t'.join([
@@ -331,19 +363,22 @@ def ru_morph_tsv(pairs):
     return ''.join(out)
 
 
-def vidyut_diff_tsv(pairs, slug, dcs, analyzer):
+def vidyut_diff_tsv(units, slug, dcs, analyzer):
     """The vidyut second-opinion diff against DCS gold (H906): per DCS-aligned
     group, run vidyut on the same SLP1 passage and pair tokens on the sandhi-
     folded form. Returns (tsv_text, agg) — the per-token TSV plus the aggregate
     agreement summary (form-match rate + per-feature agreement) that feeds the
     committed report. DCS is gold, vidyut is the second opinion; disagreements
-    are reported, never used to override DCS."""
+    are reported, never used to override DCS.
+
+    Takes SA units (see sa_units), not bilingual pairs — same reason as
+    sa_morph_tsv."""
     import vidyut_diff
     out = ['group_id\tstatus\tform\tdcs_lemma\tvid_lemma\tdcs_upos\tvid_upos\t'
            'dcs_case\tvid_case\tdcs_gender\tvid_gender\tdcs_number\tvid_number\t'
            'lemma_agree\tpos_agree\tcase_agree\tgender_agree\tnumber_agree\n']
     all_counts = []
-    for p in pairs:
+    for p in units:
         passage = p['group'].split(':', 1)[1] if ':' in p['group'] else ''
         gold = dcs.gold_tokens(slug, passage)
         if not gold:
@@ -424,6 +459,9 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         if HERE not in sys.path:
             sys.path.insert(0, HERE)
         artifacts[slug + '.ru_morph.tsv'] = ru_morph_tsv(pairs)
+    # The SA-side layers key off every Sanskrit-bearing group, NOT the bilingual
+    # pairs — an untranslated source (GRETIL yuddha/uttarakāṇḍa) still has gold.
+    units = sa_units(jsonl_path) if (with_sa_morph or with_vidyut_diff) else []
     sa_morph_stats = {}
     if with_sa_morph:
         if HERE not in sys.path:
@@ -431,12 +469,16 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         if dcs_gold is None:
             from dcs_align import DcsGold
             dcs_gold = DcsGold()
-        artifacts[slug + '.sa_morph.tsv'] = sa_morph_tsv(pairs, slug, dcs_gold)
-        covered = sum(1 for p in pairs
+        artifacts[slug + '.sa_morph.tsv'] = sa_morph_tsv(units, slug, dcs_gold)
+        covered = sum(1 for p in units
                       if dcs_gold.gold_tokens(
                           slug, p['group'].split(':', 1)[1] if ':' in p['group'] else ''))
         sa_morph_stats = {
             'sa_morph_dcs_available': dcs_gold.available,
+            'sa_morph_units': len(units),
+            'sa_morph_units_covered': covered,
+            # kept under the old key so existing dashboards don't break; it now
+            # counts SA units, which is a superset of the bilingual pairs.
             'sa_morph_pairs_covered': covered,
         }
     vidyut_diff_stats = {}
@@ -449,7 +491,7 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         if vidyut_analyzer is None:
             from vidyut_diff import VidyutAnalyzer
             vidyut_analyzer = VidyutAnalyzer()
-        diff_text, diff_agg = vidyut_diff_tsv(pairs, slug, dcs_gold, vidyut_analyzer)
+        diff_text, diff_agg = vidyut_diff_tsv(units, slug, dcs_gold, vidyut_analyzer)
         artifacts[slug + '.vidyut_diff.tsv'] = diff_text
         vidyut_diff_stats = {
             'vidyut_available': vidyut_analyzer.available,

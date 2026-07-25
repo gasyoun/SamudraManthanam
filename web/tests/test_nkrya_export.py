@@ -273,6 +273,12 @@ def test_dcs_target_mapping():
         ("Mahābhārata", "MBh, 5, 12", 3, 3)
     assert dcs_align.dcs_target("03_ramayana-aranyakanda", "1.1") == \
         ("Rāmāyaṇa", "Rām, Ār, 1", 1, 1)
+    # the GRETIL-ingested kāṇḍas map too — their "0% coverage" was never a
+    # passage-convention/parser problem (H906 verse-map reconciliation)
+    assert dcs_align.dcs_target("06_ramayana-yuddhakanda", "1.1") == \
+        ("Rāmāyaṇa", "Rām, Yu, 1", 1, 1)
+    assert dcs_align.dcs_target("07_ramayana-uttarakanda", "100.26") == \
+        ("Rāmāyaṇa", "Rām, Utt, 100", 26, 26)
     assert dcs_align.dcs_target("01_atharvaveda", "1.1.1") is None  # not epic-mapped
 
 
@@ -300,6 +306,16 @@ def test_dcs_gold_tokens_and_determinism():
     assert g2.gold_tokens("03_mahabharata-aranyakaparva", "3.1.1-7") == toks
 
 
+def test_dcs_gold_covers_gretil_kandas():
+    """The two kāṇḍas previously reported at 0% DCS coverage do have gold —
+    the miss was the bilingual-pairs binding, not the ref mapper."""
+    g = _dcs_or_skip()
+    assert g.gold_tokens("06_ramayana-yuddhakanda", "1.1"), \
+        "DCS holds Rām, Yu, 1 — a 0% reading here means the join broke"
+    assert g.gold_tokens("07_ramayana-uttarakanda", "1.1"), \
+        "DCS holds Rām, Utt, 1"
+
+
 def test_export_sa_morph_sidecar(fixture_jsonl, tmp_path):
     _dcs_or_skip()
     # the hermetic fixture slug "w" is not DCS-mappable → header-only, but the
@@ -312,6 +328,47 @@ def test_export_sa_morph_sidecar(fixture_jsonl, tmp_path):
         ["group_id", "verse", "tok_index", "form", "lemma", "upos", "case",
          "gender", "number"]
     assert side.read_bytes() == (tmp_path / "b" / "w" / "w.sa_morph.tsv").read_bytes()
+
+
+# --------------------------------------------------------------------------- #
+# H906: SA units are NOT bilingual pairs (the yuddha/uttarakāṇḍa 0% bug)       #
+# --------------------------------------------------------------------------- #
+def test_sa_units_include_untranslated_sanskrit(fixture_jsonl):
+    """The regression that cost 7,123 verses of gold: the SA morphology layer
+    used to key off classify()'s bilingual `pairs`, so a Sanskrit-only source
+    produced zero rows. sa_units() must see every Sanskrit-bearing group —
+    including the untranslated one (g4) and the one whose RU side is empty
+    (g5) — while `pairs` still sees only the two real bilingual units."""
+    pairs, _stats = nx.classify(str(fixture_jsonl))
+    units = nx.sa_units(str(fixture_jsonl))
+    assert {p["group"] for p in pairs} == {"w:1.1-2", "w:1.3"}
+    assert {u["group"] for u in units} == {"w:1.1-2", "w:1.3", "w:1.5", "w:1.6"}
+    # units carry the SLP1 the DCS/vidyut layers join on
+    g5 = next(u for u in units if u["group"] == "w:1.5")
+    assert g5["sa_slp1"] == "anuvAko na anUditaH"
+    # deleted rows stay excluded, and natural order is preserved
+    assert [u["group"] for u in units] == \
+        ["w:1.1-2", "w:1.3", "w:1.5", "w:1.6"]
+
+
+def test_sa_units_sanskrit_only_source(tmp_path):
+    """A source with NO Russian side at all (the GRETIL yuddha/uttarakāṇḍa
+    shape) yields zero pairs but a full unit list — previously it silently
+    exported an empty morphology layer and was written up as a coverage gap."""
+    rows = [
+        _rec("y:1.1", "sa", "sa", "śrutvā hanumato vākyam",
+             slp1="SrutvA hanumato vAkyam", passage="1.1"),
+        _rec("y:1.2", "sa", "sa", "rāmaḥ prītisamāyuktaḥ",
+             slp1="rAmaH prItisamAyuktaH", passage="1.2"),
+    ]
+    p = tmp_path / "y.jsonl"
+    with open(p, "w", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    pairs, stats = nx.classify(str(p))
+    assert pairs == [] and stats["mono_sa"] == 2
+    units = nx.sa_units(str(p))
+    assert [u["group"] for u in units] == ["y:1.1", "y:1.2"]
 
 
 # --------------------------------------------------------------------------- #
