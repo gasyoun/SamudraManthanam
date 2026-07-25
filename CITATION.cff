@@ -18,6 +18,11 @@ authors:
 repository-code: "https://github.com/gasyoun/SamudraManthanam"
 url: "https://samskrtam.ru"
 license: Apache-2.0
+# The Zenodo CONCEPT DOI — stable across every version, so citing it always
+# resolves to the latest release. Each release also gets its own version DOI
+# (v0.14.0 = 10.5281/zenodo.21569201), minted automatically by the Zenodo–GitHub
+# webhook; version DOIs belong in the release notes, not here.
+doi: "10.5281/zenodo.21317315"
 version: 0.14.0
 date-released: 2026-07-25
 keywords:
