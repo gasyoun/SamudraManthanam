@@ -204,8 +204,15 @@ def _hdr_field(tag, val):
     return '    <%s>%s</%s>\n' % (tag, escape(str(val)), tag)
 
 
-def nkrya_xml(slug, pairs, meta):
-    """НКРЯ parallel-corpus para-XML (best guess -- see module docstring)."""
+def nkrya_xml(slug, pairs, meta, inline_ana=False, dcs=None):
+    """НКРЯ parallel-corpus para-XML (best guess -- see module docstring).
+
+    With `inline_ana`, each `<se>` carries per-token НКРЯ `<w><ana lex= gr=/>`
+    markup instead of plain text — the shared H905/H906 scheme (see
+    `inline_ana.py`). The Russian side is annotated whenever pymorphy3 is
+    available; the Sanskrit side only for verses whose DCS gold attaches to the
+    surface words end-to-end, and stays plain text otherwise — never guessed.
+    Returns the XML string; `ana_stats` is filled in place when passed."""
     out = ['<?xml version="1.0" encoding="UTF-8"?>\n']
     out.append('<document corpus="parallel" subcorpus="sanskrit-russian" '
                'slug=%s>\n' % quoteattr(slug))
@@ -228,16 +235,41 @@ def nkrya_xml(slug, pairs, meta):
     out.append(_hdr_field('bibliography_status', meta.get('bibliography_status')))
     out.append('  </header>\n')
     out.append('  <body>\n')
+    ia = ru_mod = None
+    stats = {'sa_paras': 0, 'sa_inline': 0, 'ru_paras': 0, 'ru_inline': 0}
+    if inline_ana:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        import inline_ana as ia
+        import ru_morph as ru_mod
     for p in pairs:
         flags = ' flags=%s' % quoteattr(','.join(p['flags'])) if p['flags'] else ''
         out.append('    <para id=%s align="1-1"%s>\n' % (quoteattr(p['group']), flags))
-        out.append('      <se lang="%s" script="iast" slp1=%s>%s</se>\n'
-                   % (LANG_SA_XML, quoteattr(p['sa_slp1']), escape(p['sa_iast'])))
-        out.append('      <se lang="%s">%s</se>\n'
-                   % (LANG_RU_XML, escape(p['ru'])))
+        sa_body, ru_body = escape(p['sa_iast']), escape(p['ru'])
+        sa_attr = ''
+        if inline_ana:
+            stats['sa_paras'] += 1
+            stats['ru_paras'] += 1
+            if dcs is not None and dcs.available:
+                passage = p['group'].split(':', 1)[1] if ':' in p['group'] else ''
+                gold = dcs.gold_tokens(slug, passage)
+                marked = ia.annotate_sa(p['sa_iast'], gold) if gold else None
+                if marked is not None:
+                    sa_body = marked
+                    sa_attr = ' ana="dcs-ud"'
+                    stats['sa_inline'] += 1
+            if ru_mod.available():
+                ru_body = ia.annotate_ru(p['ru'], ru_mod.analyze(p['ru']))
+                stats['ru_inline'] += 1
+        ru_attr = ' ana="opencorpora"' if inline_ana and ru_body != escape(p['ru']) else ''
+        out.append('      <se lang="%s" script="iast" slp1=%s%s>%s</se>\n'
+                   % (LANG_SA_XML, quoteattr(p['sa_slp1']), sa_attr, sa_body))
+        out.append('      <se lang="%s"%s>%s</se>\n'
+                   % (LANG_RU_XML, ru_attr, ru_body))
         out.append('    </para>\n')
     out.append('  </body>\n')
     out.append('</document>\n')
+    nkrya_xml.last_ana_stats = stats
     return ''.join(out)
 
 
@@ -432,7 +464,8 @@ def _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx):
 def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
                    with_sanskritisms=False, sanskritisms_ctx=None,
                    with_ru_morph=False, with_sa_morph=False, dcs_gold=None,
-                   with_vidyut_diff=False, vidyut_analyzer=None):
+                   with_vidyut_diff=False, vidyut_analyzer=None,
+                   with_inline_ana=False):
     """Export one source into out_dir/<slug>/. Returns a stats dict (also
     written as export_report.json when write=True).
 
@@ -447,11 +480,21 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         raise FileNotFoundError(jsonl_path)
     meta = load_meta(slug, meta_dir)
     pairs, stats = classify(jsonl_path)
+    if with_inline_ana and dcs_gold is None:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from dcs_align import DcsGold
+        dcs_gold = DcsGold()
     artifacts = {
-        slug + '.nkrya.xml': nkrya_xml(slug, pairs, meta),
+        slug + '.nkrya.xml': nkrya_xml(slug, pairs, meta,
+                                       inline_ana=with_inline_ana, dcs=dcs_gold),
         slug + '.tmx': tmx(slug, pairs, meta),
         slug + '.tsv': tsv(pairs),
     }
+    inline_ana_stats = {}
+    if with_inline_ana:
+        s = getattr(nkrya_xml, 'last_ana_stats', {}) or {}
+        inline_ana_stats = {'inline_ana': dict(s)}
     if with_sanskritisms:
         sanskritisms_ctx, index_json = _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx)
         artifacts[slug + '.sanskritisms_index.json'] = index_json
@@ -507,6 +550,7 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         **stats,
         **sa_morph_stats,
         **vidyut_diff_stats,
+        **inline_ana_stats,
         'files': sorted(artifacts),
     }
     if write:
@@ -543,6 +587,12 @@ def main(argv=None):
                           'diff against DCS gold (form-match + per-feature agreement); '
                           'needs the local DCS sqlite AND the vidyut data pack '
                           '(set $VIDYUT_DATA) (H906)')
+    ap.add_argument('--inline-ana', action='store_true',
+                     help='fold the morphology INTO the para-XML as НКРЯ '
+                          '<w><ana lex= gr=/> per token (shared H905/H906 '
+                          'scheme). RU via pymorphy3; SA only where the DCS '
+                          'gold attaches to the surface end-to-end, plain text '
+                          'otherwise — never guessed (H906)')
     ap.add_argument('--quiet', action='store_true')
     a = ap.parse_args(argv)
 
@@ -562,7 +612,7 @@ def main(argv=None):
         from sanskritisms.extract import ExtractionContext
         sanskritisms_ctx = ExtractionContext()  # built once, reused across slugs
     dcs_gold = None
-    if a.sa_morph or a.vidyut_diff:
+    if a.sa_morph or a.vidyut_diff or a.inline_ana:
         if HERE not in sys.path:
             sys.path.insert(0, HERE)
         from dcs_align import DcsGold
@@ -586,7 +636,8 @@ def main(argv=None):
                            with_ru_morph=a.ru_morph,
                            with_sa_morph=a.sa_morph, dcs_gold=dcs_gold,
                            with_vidyut_diff=a.vidyut_diff,
-                           vidyut_analyzer=vidyut_analyzer)
+                           vidyut_analyzer=vidyut_analyzer,
+                           with_inline_ana=a.inline_ana)
         reports.append(r)
         if not a.quiet:
             print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d'

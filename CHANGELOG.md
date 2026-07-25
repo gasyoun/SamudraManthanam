@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- **Shared inline `<w><ana/>` scheme for both corpus sides — the last H905/H906
+  item (Opus 5 `claude-opus-5[1m]`).** `nkrya_export.py --inline-ana` folds the
+  morphology *into* the para-XML as НКРЯ `<w><ana lex= gr= gramset=/>` per token,
+  instead of only alongside it as a TSV. Both handoffs had deferred this so
+  neither side would fix the attribute scheme unilaterally; the agreement is one
+  element shape with two honest tagsets (`opencorpora` for RU via pymorphy3,
+  `dcs-ud` for SA via DCS gold — they do not map 1-to-1, and merging them would
+  have silently corrupted the grammar). The annotated unit is the **surface
+  word**: `<se>` text is never rewritten or re-segmented, and concatenating the
+  `<w>` content reproduces the segment byte-for-byte (test-enforced). A word may
+  carry several `<ana>` children — the RNC ambiguity construct, reused for the
+  sandhi-split compound (`tapaḥsvādhyāyanirataṃ` = one word, three DCS tokens).
+  **RU coverage 100 %** of pairs. **SA coverage 15.5 %** of gold-bearing verses
+  (37.6 % / 34.9 % on the analytically-printed GRETIL kāṇḍas, ~1 % on the
+  bilingual editions that write long unresolved compounds) — H905 had called this
+  step "small, mechanical", but DCS is sandhi-*split*: it holds more tokens than
+  surface words in ~89 % of verses and its gold does not re-concatenate to the
+  surface, because sandhi is undone. So the SA side attaches gold only where a
+  sandhi-tolerant matcher accounts for the verse end-to-end, and emits plain text
+  otherwise — never a guessed analysis, following the rule `align_sanskrit.py`
+  already sets. Precision was not traded for coverage: on the 18,228 annotated
+  Yuddhakāṇḍa words an initial-consonant gate found **0 disagreements**. The
+  `sa_morph.tsv` sidecar still carries 100 % of the gold. +6 tests (23 pass);
+  two runs byte-identical. Full write-up:
+  [`web/corpus_builder/INLINE_ANA_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/INLINE_ANA_H906_REPORT.md).
 
 ## [0.13.0] - 2026-07-25
 ### Fixed

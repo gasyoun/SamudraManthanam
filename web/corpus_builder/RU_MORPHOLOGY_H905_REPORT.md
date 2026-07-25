@@ -1,6 +1,6 @@
 # RU-side morphology + Кали→кал filter — build report (H905)
 
-_Created: 14-07-2026 · Last updated: 14-07-2026_
+_Created: 14-07-2026 · Last updated: 25-07-2026_
 
 What the RU-morphology pass ([H905](https://github.com/gasyoun/Uprava/blob/main/handoffs/H905-Opus_SamudraManthanam_nkrya-ru-morphology_14.07.26.md))
 shipped, verified against the manual's documented behaviour. Model: Opus 4.8
@@ -79,7 +79,7 @@ mechanical H906-coordinated step.
 | Per-token RU lemma/POS/case/number | ✅ **new** (`ru_morph.py`, sidecar) |
 | pymorphy declension family (Rubanova used pymorphy2) | ✅ same family (pymorphy3) |
 | DeepPavlov *residual case disambiguation* (`depppavlov_proc`) | ⚠️ **not ported** — pymorphy3 top-parse is context-free; DeepPavlov's UD parse resolves the ~20% residual ambiguous variants. A quality upgrade, validated against the local `deeppavlov_*.txt` gold, is a follow-up. |
-| Inline `<w><ana/>` in the `<se>` | ⏭️ deferred to the H906-coordinated scheme |
+| Inline `<w><ana/>` in the `<se>` | ✅ shipped 25-07-2026 — the shared scheme landed, RU annotated at **100 %** of pairs ([`INLINE_ANA_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/INLINE_ANA_H906_REPORT.md)) |
 | Exception-list tuning (амрита class) | ⏭️ follow-up (corpus-evidence review sheet) |
 
 ## Tests

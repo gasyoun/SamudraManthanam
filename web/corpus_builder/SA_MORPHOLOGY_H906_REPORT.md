@@ -102,6 +102,6 @@ sample. The `sa_morph.tsv` schema is the join key it will consume.
 | Determinism + tests | ✅ (+3 tests, 12 pass) |
 | vidyut diff / agreement report | ✅ shipped 25-07-2026 ([`VIDYUT_DIFF_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/VIDYUT_DIFF_H906_REPORT.md)) |
 | Rāmāyaṇa verse-map + GRETIL-ref reconciliation | ✅ shipped 25-07-2026 ([`RAMAYANA_VERSE_MAP_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RAMAYANA_VERSE_MAP_H906_REPORT.md)) — both diagnoses above corrected; +7,123 verses |
-| Inline `<w><ana/>` in the `<se>` (shared RU+SA scheme) | ⏭️ follow-up (H905/H906 coordination) |
+| Inline `<w><ana/>` in the `<se>` (shared RU+SA scheme) | ✅ shipped 25-07-2026 ([`INLINE_ANA_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/INLINE_ANA_H906_REPORT.md)) — RU 100 %, SA 15.5 % of gold-bearing verses (sandhi-split alignment is the limit; sidecar keeps 100 %) |
 
 _Dr. Mārcis Gasūns_
