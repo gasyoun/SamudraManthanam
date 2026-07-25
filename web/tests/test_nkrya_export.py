@@ -480,6 +480,92 @@ def test_export_vidyut_diff_sidecar(fixture_jsonl, tmp_path):
 
 
 # --------------------------------------------------------------------------- #
+# H906: the shared inline <w><ana/> scheme (H905 RU + H906 SA)                 #
+# --------------------------------------------------------------------------- #
+def test_inline_ana_splitters_are_lossless():
+    """Both splitters cover the input exactly — the `<se>` text is never
+    rewritten, so re-joining the chunks reproduces the segment byte-for-byte."""
+    import inline_ana as ia
+    for text in ("Рама идёт в лес, и Сита — с ним.", "  двойные   пробелы  "):
+        assert "".join(c for _, c in ia.split_ru(text)) == text
+    for text in ("rāmaḥ vanam gacchati ॥1॥",
+                 "tapaḥsvādhyāyanirataṃ tapasvī । vāgvidāṃ varam ॥2॥"):
+        assert "".join(c for _, c in ia.split_sa(text)) == text
+
+
+def test_inline_ana_sandhi_fold():
+    """The fold collapses exactly the seam alternations, so a sandhi'd surface
+    word and its underlying DCS tokens share a skeleton."""
+    import inline_ana as ia
+    assert ia.fold("samāyukto") == ia.fold("samāyuktaḥ")   # -aḥ written -o
+    assert ia.fold("vāg") == ia.fold("vāc")                # stop neutralization
+    assert ia.fold("sumahad") == ia.fold("su") + ia.fold("mahat")
+    assert ia._seam(ia.fold("manasā") + ia.fold("api")) == \
+        ia._seam(ia.fold("manasāpi"))                      # vowel coalescence
+
+
+def test_inline_ana_sa_alignment_all_or_nothing():
+    """A verse aligns end-to-end or not at all — a partial cover would attach a
+    word's morphology to its neighbour."""
+    import inline_ana as ia
+    gold = [{"form": "prīti", "lemma": "prīti", "upos": "NOUN"},
+            {"form": "samāyuktaḥ", "lemma": "samāyuj", "upos": "NOUN"}]
+    assert ia.align_gold_to_words(["prītisamāyukto"], gold) == [[0, 1]]
+    # leftover gold (the DCS speaker-tag / verse-range case) fails the verse
+    assert ia.align_gold_to_words(["prīti"], gold) is None
+    # a word the gold cannot account for fails the verse
+    assert ia.align_gold_to_words(["prītisamāyukto", "extra"], gold) is None
+    # failure is signalled by None, so the caller falls back to plain text
+    assert ia.annotate_sa("prīti", gold) is None
+
+
+def test_inline_ana_sa_markup_shape():
+    """A sandhi-split compound carries one <ana> per DCS token inside one <w>
+    wrapping the untouched surface word."""
+    import inline_ana as ia
+    gold = [{"form": "prīti", "lemma": "prīti", "upos": "NOUN"},
+            {"form": "samāyuktaḥ", "lemma": "samāyuj", "upos": "NOUN",
+             "case": "Nom", "gender": "Masc", "number": "Sing"}]
+    xml = ia.annotate_sa("prītisamāyukto ॥1॥", gold)
+    assert xml.count("<w>") == 1 and xml.count("<ana ") == 2
+    assert 'lex="prīti"' in xml and 'lex="samāyuj"' in xml
+    assert 'gr="NOUN,Nom,Masc,Sing"' in xml and 'gramset="dcs-ud"' in xml
+    assert "prītisamāyukto" in xml and xml.endswith(" ॥1॥")
+
+
+def test_inline_ana_ru_markup_shape():
+    """RU is 1-to-1 by construction; every Cyrillic token gets exactly one
+    <ana> in the shared shape, punctuation stays outside the <w>."""
+    import inline_ana as ia
+    import ru_morph
+    if not ru_morph.available():
+        pytest.skip("pymorphy3 unavailable")
+    text = "Рама идёт в лес."
+    xml = ia.annotate_ru(text, ru_morph.analyze(text))
+    assert xml.count("<w>") == 4 and 'gramset="opencorpora"' in xml
+    assert xml.endswith(".")
+
+
+def test_export_inline_ana_wellformed_and_deterministic(fixture_jsonl, tmp_path):
+    """The annotated para-XML parses, keeps its text content, and two runs are
+    byte-identical."""
+    import xml.etree.ElementTree as ET
+    for d in ("a", "b"):
+        nx.export_source("w", str(tmp_path / d), jsonl_dir=str(fixture_jsonl.parent),
+                         meta_dir=str(tmp_path), write=True, with_inline_ana=True)
+    xml_path = tmp_path / "a" / "w" / "w.nkrya.xml"
+    root = ET.parse(str(xml_path)).getroot()
+    ses = root.findall(".//se")
+    assert ses, "expected <se> elements"
+    for ana in root.findall(".//ana"):
+        assert list(ana) == [] and not (ana.text or "").strip()
+        assert {"lex", "gr", "gramset"} <= set(ana.attrib)
+    ru = [s for s in ses if s.get("lang") == nx.LANG_RU_XML]
+    assert any("Рама идёт в лес" in "".join(s.itertext()) for s in ru)
+    assert xml_path.read_bytes() == (tmp_path / "b" / "w" / "w.nkrya.xml").read_bytes()
+
+
+# --------------------------------------------------------------------------- #
 # corpus gates: the real four pilots                                          #
 # --------------------------------------------------------------------------- #
 @pytest.mark.corpus
