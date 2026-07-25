@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.14.0] - 2026-07-25
 ### Added
 - **Shared inline `<w><ana/>` scheme for both corpus sides — the last H905/H906
   item (Opus 5 `claude-opus-5[1m]`).** `nkrya_export.py --inline-ana` folds the
