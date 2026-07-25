@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- **SA morphology no longer keyed off bilingual pairs — unlocks 7,123 Rāmāyaṇa
+  verses of DCS gold (H906, Opus 5 `claude-opus-5[1m]`).** The `--sa-morph` and
+  `--vidyut-diff` layers iterated `classify()`'s `pairs`, which by design require
+  **both** a Sanskrit and a Russian side. The GRETIL-ingested
+  `06_ramayana-yuddhakanda` and `07_ramayana-uttarakanda` are **Sanskrit-only**
+  (untranslated), so they produced zero pairs and wrote header-only morphology
+  files — recorded in the build report as "0 % DCS coverage; the ref mapper
+  doesn't parse their passage convention". That diagnosis was wrong: their
+  passages are plain `N.N`, `dcs_target()` mapped them correctly all along, and
+  at the passage level they align to DCS at **100.0 %** and **99.9 %** — the best
+  figures in the whole Rāmāyaṇa. A new `sa_units()` builder (every group with a
+  non-empty Sanskrit side, translated or not) now feeds the SA-side layers, while
+  `classify()`/`pairs` keep driving the genuinely bilingual para-XML/TMX/TSV/RU
+  outputs. Net **+7,123 covered verses and +98,753 gold tokens**; Rāmāyaṇa gold
+  coverage 8,193 → 15,316 verses (**+87 %**). Purely additive — every
+  previously-covered source re-measures byte-identical. +4 tests (17 pass).
+- **Rāmāyaṇa "verse-number offset" diagnosis corrected — there is no offset
+  (H906, Opus 5 `claude-opus-5[1m]`).** The build report attributed the 62–80 %
+  Rāmāyaṇa coverage to verse-numbering divergence ("the misses are alignment, not
+  missing DCS data"). Categorising every chapter/verse of the four bilingual
+  kāṇḍas shows the opposite: the dominant miss is **3,696 verses our edition
+  carries that DCS never annotated**, and of the 1,422 verses DCS holds that we
+  don't match, **98.7 % lie beyond our last verse in that chapter** (DCS's
+  chapter simply runs longer) with only **19 in total** a genuine in-range hole.
+  The verse map is already correct and at its ceiling; the 62–80 % is DCS's own
+  annotation density and recension, and is now reported as such. Full evidence:
+  [`web/corpus_builder/RAMAYANA_VERSE_MAP_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RAMAYANA_VERSE_MAP_H906_REPORT.md).
+
 ### Added
 - **vidyut second-opinion layer + agreement diff against the DCS gold (H906,
   Opus 4.8 `claude-opus-4-8[1m]`).**

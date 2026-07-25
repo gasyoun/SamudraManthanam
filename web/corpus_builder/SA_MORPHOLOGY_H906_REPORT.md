@@ -1,6 +1,6 @@
 # SA-side morphology — DCS-anchored gold, build report (H906)
 
-_Created: 14-07-2026 · Last updated: 14-07-2026_
+_Created: 14-07-2026 · Last updated: 25-07-2026_
 
 What the Sanskrit-side morphology pass ([H906](https://github.com/gasyoun/Uprava/blob/main/handoffs/H906-Opus_SamudraManthanam_nkrya-sa-morphology-dcs-vidyut_14.07.26.md))
 shipped. Model: Opus 4.8 (`claude-opus-4-8[1m]`). Sibling of the RU-side
@@ -58,11 +58,24 @@ empty layer if it's absent (`$DCS_SQLITE` overrides the path).
 **Findings, not silently swallowed:**
 - **Bhishmaparva (MBh 6) at 47.6% is the Bhagavadgītā gap** — the Gītā (MBh
   6.23–40) is absent from DCS ([H848](https://github.com/gasyoun/Uprava/blob/main/handoffs/H848-Opus_SanskritLexicography_dcs-reading-pack-data-path_13.07.26.md)); its verses simply have no gold. Expected, and now measured.
-- **Rāmāyaṇa is partial (62–80%)** — verse-numbering diverges more between our
+- ~~**Rāmāyaṇa is partial (62–80%)** — verse-numbering diverges more between our
   edition and DCS's; the misses are alignment (verse-number offset), not missing
-  DCS data. Reconciling the Rāmāyaṇa verse map is a bounded follow-up.
-- **06/07 Rāmāyaṇa (yuddha/uttara) at 0%** — these were GRETIL-ingested (H765)
-  with a different `passage` convention; the ref mapper doesn't yet parse it.
+  DCS data.~~ **⚠️ CORRECTED 25-07-2026 — this diagnosis was backwards.** The
+  misses are overwhelmingly *missing DCS data*, not misalignment: 3,696 verses
+  our edition carries were never annotated by DCS, while of the 1,422 verses DCS
+  holds that we do not match, 98.7 % simply lie beyond our last verse in that
+  chapter and only **19 in total** are genuine in-range holes. There is no
+  offset; the verse map is already correct and at its ceiling. Evidence:
+  [`RAMAYANA_VERSE_MAP_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RAMAYANA_VERSE_MAP_H906_REPORT.md).
+- ~~**06/07 Rāmāyaṇa (yuddha/uttara) at 0%** — these were GRETIL-ingested (H765)
+  with a different `passage` convention; the ref mapper doesn't yet parse it.~~
+  **⚠️ CORRECTED 25-07-2026 — never a parser problem.** Their passages are plain
+  `N.N` and mapped correctly all along; at the passage level they align to DCS at
+  **100.0 %** and **99.9 %**, the best figures in the Rāmāyaṇa. They read 0 %
+  because both are **Sanskrit-only** (untranslated), so `classify()` — which
+  requires both sides to form a *bilingual* pair — yielded zero pairs, and the SA
+  morphology layer iterated `pairs`. Fixed by keying the SA layers off
+  `sa_units()` instead: **+7,123 verses, +98,753 gold tokens**. Same report.
 - **MBh is essentially complete** (most parvas 98–100%): the epic core of the
   corpus now carries real gold Sanskrit morphology.
 
@@ -87,8 +100,8 @@ sample. The `sa_morph.tsv` schema is the join key it will consume.
 | DCS-gold per-token SA morphology (lemma/upos/case/gender/number) | ✅ shipped (`dcs_align.py`, `--sa-morph`) |
 | Alignment MBh + Rāmāyaṇa; coverage measured | ✅ (MBh ~99%, Rāma partial) |
 | Determinism + tests | ✅ (+3 tests, 12 pass) |
-| vidyut diff / agreement report | ⏭️ follow-up (needs vidyut data download) |
-| Rāmāyaṇa verse-map + GRETIL-ref reconciliation | ⏭️ follow-up |
+| vidyut diff / agreement report | ✅ shipped 25-07-2026 ([`VIDYUT_DIFF_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/VIDYUT_DIFF_H906_REPORT.md)) |
+| Rāmāyaṇa verse-map + GRETIL-ref reconciliation | ✅ shipped 25-07-2026 ([`RAMAYANA_VERSE_MAP_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/RAMAYANA_VERSE_MAP_H906_REPORT.md)) — both diagnoses above corrected; +7,123 verses |
 | Inline `<w><ana/>` in the `<se>` (shared RU+SA scheme) | ⏭️ follow-up (H905/H906 coordination) |
 
 _Dr. Mārcis Gasūns_
