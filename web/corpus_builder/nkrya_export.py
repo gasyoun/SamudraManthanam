@@ -331,6 +331,45 @@ def ru_morph_tsv(pairs):
     return ''.join(out)
 
 
+def vidyut_diff_tsv(pairs, slug, dcs, analyzer):
+    """The vidyut second-opinion diff against DCS gold (H906): per DCS-aligned
+    group, run vidyut on the same SLP1 passage and pair tokens on the sandhi-
+    folded form. Returns (tsv_text, agg) — the per-token TSV plus the aggregate
+    agreement summary (form-match rate + per-feature agreement) that feeds the
+    committed report. DCS is gold, vidyut is the second opinion; disagreements
+    are reported, never used to override DCS."""
+    import vidyut_diff
+    out = ['group_id\tstatus\tform\tdcs_lemma\tvid_lemma\tdcs_upos\tvid_upos\t'
+           'dcs_case\tvid_case\tdcs_gender\tvid_gender\tdcs_number\tvid_number\t'
+           'lemma_agree\tpos_agree\tcase_agree\tgender_agree\tnumber_agree\n']
+    all_counts = []
+    for p in pairs:
+        passage = p['group'].split(':', 1)[1] if ':' in p['group'] else ''
+        gold = dcs.gold_tokens(slug, passage)
+        if not gold:
+            continue
+        rows, counts = vidyut_diff.diff_group(gold, p['sa_slp1'], analyzer)
+        all_counts.append(counts)
+        for r in rows:
+            out.append('\t'.join([
+                _tsv_cell(p['group']), r['status'], _tsv_cell(r.get('form', '')),
+                _tsv_cell(r.get('dcs_lemma', '')), _tsv_cell(r.get('vid_lemma', '')),
+                r.get('dcs_upos', ''), r.get('vid_upos', ''),
+                r.get('dcs_case', ''), r.get('vid_case', ''),
+                r.get('dcs_gender', ''), r.get('vid_gender', ''),
+                r.get('dcs_number', ''), r.get('vid_number', ''),
+                _agree_cell(r.get('lemma_agree')), _agree_cell(r.get('pos_agree')),
+                _agree_cell(r.get('case_agree')), _agree_cell(r.get('gender_agree')),
+                _agree_cell(r.get('number_agree')),
+            ]) + '\n')
+    return ''.join(out), vidyut_diff.aggregate(all_counts)
+
+
+def _agree_cell(v):
+    """TSV cell for a tri-state agreement flag: 1 / 0 / '' (not comparable)."""
+    return '' if v is None else ('1' if v else '0')
+
+
 # ---------------------------------------------------------------------------
 # driver
 # ---------------------------------------------------------------------------
@@ -357,7 +396,8 @@ def _sanskritisms_artifact(slug, jsonl_path, sanskritisms_ctx):
 
 def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
                    with_sanskritisms=False, sanskritisms_ctx=None,
-                   with_ru_morph=False, with_sa_morph=False, dcs_gold=None):
+                   with_ru_morph=False, with_sa_morph=False, dcs_gold=None,
+                   with_vidyut_diff=False, vidyut_analyzer=None):
     """Export one source into out_dir/<slug>/. Returns a stats dict (also
     written as export_report.json when write=True).
 
@@ -399,6 +439,22 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
             'sa_morph_dcs_available': dcs_gold.available,
             'sa_morph_pairs_covered': covered,
         }
+    vidyut_diff_stats = {}
+    if with_vidyut_diff:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        if dcs_gold is None:
+            from dcs_align import DcsGold
+            dcs_gold = DcsGold()
+        if vidyut_analyzer is None:
+            from vidyut_diff import VidyutAnalyzer
+            vidyut_analyzer = VidyutAnalyzer()
+        diff_text, diff_agg = vidyut_diff_tsv(pairs, slug, dcs_gold, vidyut_analyzer)
+        artifacts[slug + '.vidyut_diff.tsv'] = diff_text
+        vidyut_diff_stats = {
+            'vidyut_available': vidyut_analyzer.available,
+            'vidyut_diff': diff_agg,
+        }
     report = {
         'slug': slug,
         'exporter_version': VERSION,
@@ -408,6 +464,7 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         'needs_review': meta.get('needs_review', True),
         **stats,
         **sa_morph_stats,
+        **vidyut_diff_stats,
         'files': sorted(artifacts),
     }
     if write:
@@ -439,6 +496,11 @@ def main(argv=None):
                      help='also write <slug>.sa_morph.tsv — per-token SA morphology '
                           'anchored on DCS gold (lemma/upos/case/gender/number); needs '
                           'the local DCS sqlite (set $DCS_SQLITE) (H906)')
+    ap.add_argument('--vidyut-diff', action='store_true',
+                     help='also write <slug>.vidyut_diff.tsv — the vidyut second-opinion '
+                          'diff against DCS gold (form-match + per-feature agreement); '
+                          'needs the local DCS sqlite AND the vidyut data pack '
+                          '(set $VIDYUT_DATA) (H906)')
     ap.add_argument('--quiet', action='store_true')
     a = ap.parse_args(argv)
 
@@ -458,20 +520,31 @@ def main(argv=None):
         from sanskritisms.extract import ExtractionContext
         sanskritisms_ctx = ExtractionContext()  # built once, reused across slugs
     dcs_gold = None
-    if a.sa_morph:
+    if a.sa_morph or a.vidyut_diff:
         if HERE not in sys.path:
             sys.path.insert(0, HERE)
         from dcs_align import DcsGold
         dcs_gold = DcsGold()  # one read-only DCS connection, reused across slugs
         if not dcs_gold.available and not a.quiet:
-            print('--sa-morph: DCS sqlite not found (set $DCS_SQLITE); '
-                  'sa_morph.tsv will be empty.')
+            print('DCS sqlite not found (set $DCS_SQLITE); DCS-anchored layers '
+                  'will be empty.')
+    vidyut_analyzer = None
+    if a.vidyut_diff:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from vidyut_diff import VidyutAnalyzer
+        vidyut_analyzer = VidyutAnalyzer()  # one Chedaka, reused across slugs
+        if not vidyut_analyzer.available and not a.quiet:
+            print('--vidyut-diff: vidyut data pack not found (set $VIDYUT_DATA); '
+                  'vidyut_diff.tsv will be empty.')
     reports = []
     for slug in slugs:
         r = export_source(slug, a.out, with_sanskritisms=a.with_sanskritisms,
                            sanskritisms_ctx=sanskritisms_ctx,
                            with_ru_morph=a.ru_morph,
-                           with_sa_morph=a.sa_morph, dcs_gold=dcs_gold)
+                           with_sa_morph=a.sa_morph, dcs_gold=dcs_gold,
+                           with_vidyut_diff=a.vidyut_diff,
+                           vidyut_analyzer=vidyut_analyzer)
         reports.append(r)
         if not a.quiet:
             print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d'

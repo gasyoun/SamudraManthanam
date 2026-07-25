@@ -315,6 +315,114 @@ def test_export_sa_morph_sidecar(fixture_jsonl, tmp_path):
 
 
 # --------------------------------------------------------------------------- #
+# H906: vidyut second-opinion diff against DCS gold                           #
+# --------------------------------------------------------------------------- #
+def test_vidyut_mapping_and_clean():
+    """Data-free: SLP1 cleaning, sandhi-fold join key, feature mapping."""
+    import vidyut_diff as vd
+    # dandas / verse markers / digits → spaces; SLP1 + avagraha kept
+    assert vd.clean_slp1("evaM dyUtajitAH । pArTAH ॥1॥") == "evaM dyUtajitAH pArTAH"
+    # anusvara/visarga folded so DCS surface pairs with vidyut's pada form
+    assert vd._join_key("evaM") == "evam"
+    assert vd._join_key("pArTAH") == "pArTAs"
+    # DCS vocabulary tables are complete
+    assert set(vd._VIBHAKTI_TO_CASE.values()) == \
+        {"Nom", "Acc", "Ins", "Dat", "Abl", "Gen", "Loc", "Voc"}
+    assert vd._LINGA_TO_GENDER == {"Pum": "Masc", "Stri": "Fem", "Napumsaka": "Neut"}
+    assert vd._coarse_pos("PROPN") == vd._coarse_pos("NOUN") == "nominal"
+    assert vd._coarse_pos("VERB") == "verbal"
+    assert vd._coarse_pos("ADV") == "indecl"
+
+
+class _FakeToken:
+    def __init__(self, text, lemma, data=None):
+        self.text, self.lemma, self.data = text, lemma, data
+
+
+class _FakeAnalyzer:
+    """Injects a fixed vidyut analysis so diff_group's join/scoring is tested
+    without the (local-only) vidyut data pack."""
+    available = True
+
+    def __init__(self, tokens):
+        self._tokens = tokens
+
+    def analyze_slp1(self, slp1_text):
+        return list(self._tokens)
+
+
+def test_diff_group_join_and_scoring():
+    """diff_group pairs on the folded form and scores per-feature agreement only
+    where both sides carry the value; unmatched tokens are reported, not scored."""
+    import vidyut_diff as vd
+    dcs = [
+        {"form": "pārthāḥ", "lemma": "pārtha", "upos": "NOUN",
+         "case": "Nom", "gender": "Masc", "number": "Plur"},   # matches, case differs
+        {"form": "gacchati", "lemma": "gam", "upos": "VERB",
+         "case": "", "gender": "", "number": "Sing"},          # matches, all agree
+        {"form": "vanam", "lemma": "vana", "upos": "NOUN",
+         "case": "Acc", "gender": "Neut", "number": "Sing"},   # dcs_only (no vidyut)
+    ]
+    vid = [
+        {"form": "pArTAs", "lemma": "pArTa", "upos": "NOUN",
+         "case": "Acc", "gender": "Masc", "number": "Plur"},   # case disagrees
+        {"form": "gacCati", "lemma": "gam", "upos": "VERB",
+         "case": "", "gender": "", "number": "Sing"},
+        {"form": "extra", "lemma": "x", "upos": "NOUN",
+         "case": "Nom", "gender": "Masc", "number": "Sing"},   # vidyut_only
+    ]
+    rows, c = vd.diff_group(dcs, "ignored (fake analyzer)", _FakeAnalyzer(vid))
+    assert c["dcs_tokens"] == 3 and c["vidyut_tokens"] == 3
+    assert c["matched"] == 2 and c["dcs_only"] == 1 and c["vidyut_only"] == 1
+    # gender/number agree on both matched nominal+verb; case compared once (the
+    # verb has no case on either side → not comparable) and disagrees there
+    assert c["case_cmp"] == 1 and c["case_ok"] == 0
+    assert c["gender_cmp"] == 1 and c["gender_ok"] == 1
+    assert c["number_cmp"] == 2 and c["number_ok"] == 2
+    agg = vd.aggregate([c])
+    assert agg["form_match_rate"] == 2 / 3
+    assert agg["case_agree_rate"] == 0.0 and agg["number_agree_rate"] == 1.0
+
+
+def _vidyut_or_skip():
+    import vidyut_diff
+    a = vidyut_diff.VidyutAnalyzer()
+    if not a.available:
+        pytest.skip("vidyut data pack not present (local-only, set $VIDYUT_DATA)")
+    # a smoke run also guards against a present-but-unloadable pack
+    try:
+        toks = a.analyze_slp1("rAmaH vanaM gacCati")
+    except Exception as exc:  # pragma: no cover
+        pytest.skip("vidyut pack unloadable: %s" % exc)
+    if not toks:
+        pytest.skip("vidyut produced no tokens")
+    return a
+
+
+def test_vidyut_analyzer_maps_real_tokens():
+    """With the real pack: a finite verb → VERB, a declined noun → NOUN with a
+    DCS-vocabulary case/gender/number."""
+    a = _vidyut_or_skip()
+    toks = a.analyze_slp1("nalaH")
+    nala = next((t for t in toks if t["form"].startswith("nal")), None)
+    assert nala and nala["upos"] == "NOUN"
+    assert nala["case"] == "Nom" and nala["gender"] == "Masc"
+
+
+def test_export_vidyut_diff_sidecar(fixture_jsonl, tmp_path):
+    """The vidyut_diff sidecar is well-formed and byte-identical across runs."""
+    _dcs_or_skip()
+    _vidyut_or_skip()
+    for d in ("a", "b"):
+        nx.export_source("w", str(tmp_path / d), jsonl_dir=str(fixture_jsonl.parent),
+                         meta_dir=str(tmp_path), write=True, with_vidyut_diff=True)
+    side = tmp_path / "a" / "w" / "w.vidyut_diff.tsv"
+    header = side.read_text(encoding="utf-8").splitlines()[0].split("\t")
+    assert header[:5] == ["group_id", "status", "form", "dcs_lemma", "vid_lemma"]
+    assert side.read_bytes() == (tmp_path / "b" / "w" / "w.vidyut_diff.tsv").read_bytes()
+
+
+# --------------------------------------------------------------------------- #
 # corpus gates: the real four pilots                                          #
 # --------------------------------------------------------------------------- #
 @pytest.mark.corpus

@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- **vidyut second-opinion layer + agreement diff against the DCS gold (H906,
+  Opus 4.8 `claude-opus-4-8[1m]`).**
+  [`web/corpus_builder/vidyut_diff.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/vidyut_diff.py)
+  runs vidyut 0.4.0's `cheda.Chedaka` over each `seg=sa` group's SLP1 surface and
+  pairs its tokens against the DCS gold tokens of the same group, emitting
+  `<slug>.vidyut_diff.tsv` behind `nkrya_export.py --vidyut-diff` (one row per
+  matched / dcs-only / vidyut-only token, tri-state agree flag per feature) plus a
+  `vidyut_diff` aggregate block in `export_report.json`. The join is a group-level
+  multiset match on the sandhi-folded SLP1 form (`M`→`m`, `H`→`s`), which buys a
+  measured **+14 pp** form-match (35 %→49 %) because DCS keeps the printed surface
+  (`evaM`, `pArTAH`) where vidyut returns the underlying pada form (`evam`,
+  `pArTAs`); both sides are mapped into the DCS feature vocabulary so the
+  comparison is like-for-like. **Headline result on Āraṇyakaparva** (2033 pairs,
+  152,196 gold tokens): form-match **49.2 %**, and over the matched tokens
+  lemma 69.3 % · coarse POS 69.3 % · case 70.5 % · gender 73.7 % · number 90.4 %.
+  The 49 % is a property of vidyut, not a bug in the diff — its unsupervised
+  segmenter picks different token boundaries from DCS on roughly half of this
+  compound-heavy epic text (`dyūtajitāḥ` → `dyU·ut·ajitAs`), and feeding it
+  danda-delimited hemistichs instead of whole groups moved this by <0.1 pp. This
+  **vindicates the DCS-is-gold ordering**: on epic register vidyut is not close
+  enough to arbitrate, but on the half it segments identically it is a useful
+  independent check. Categorised disagreement sample (Nom/Acc/Voc syncretism,
+  vidyut's masculine over-assignment, its subanta-fallback NOUN labelling, and
+  the pronoun-lemma split) in
+  [`web/corpus_builder/VIDYUT_DIFF_H906_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/VIDYUT_DIFF_H906_REPORT.md).
+  Deterministic; the vidyut data pack (`$VIDYUT_DATA`) is a large local-only
+  fetch and the layer degrades to empty when absent, never guessed — same
+  contract as the DCS sqlite. +5 tests (14 pass, 2 data-pack-gated skips).
 
 ## [0.12.0] - 2026-07-22
 ### Added
