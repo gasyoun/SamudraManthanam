@@ -1,6 +1,12 @@
 # Roadmap — Somadeva's Kathāsaritsāgara SA↔RU alignment: scale-up to all 18 lambakas
 
-_Created: 14-07-2026 · Last updated: 14-07-2026_
+_Created: 14-07-2026 · Last updated: 26-07-2026_
+
+> **Status (26-07-2026): SCALE-UP COMPLETE.** P1 (books 11–18, H910/H927) and
+> P3 (books 1–10 śloka re-key, H928) are **done** — all 18 lambakas uniform
+> śloka keys. This file is historical method + provenance; residual low-conf
+> human review sheets are not re-alignment work. Living residual:
+> [ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md).
 
 Handoffs: [H907](https://github.com/gasyoun/Uprava/blob/main/handoffs/H907-Opus_SamudraManthanam_somadeva_kss_ingest_scaleup_14.07.26.md) (10 books ingested) ·
 [H910](https://github.com/gasyoun/Uprava/blob/main/handoffs/H910-Opus_SamudraManthanam_somadeva_kss_books11_18_alignment_14.07.26.md) (books 11–18, execution-ready) ·

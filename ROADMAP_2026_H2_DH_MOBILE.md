@@ -1,8 +1,15 @@
 # Samudra Manthanam — Roadmap H2 2026: DH Standards + Cross-Platform Offline
 
-**Status: CURRENT / LIVING STATUS** (supersedes the mobile/data-model portions of `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`; that document remains current for web-platform hardening).
+> **Status (26-07-2026): SUPERSEDED FOR LIVE STATUS.** Phases 0–3e and most of
+> Phase 4 design work shipped in June–July 2026; the 2026-06-19 "Where things
+> stand" banner below is **stale**. Living residual queue:
+> [docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md)
+> · unattended PLAN:
+> [docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md).
+> Keep this file for design history and settled decisions; do **not** treat open
+> checkboxes here as current work.
 
-**Last updated:** 2026-06-19
+**Last updated:** 26-07-2026 (supersede banner; body history through 2026-06-19)
 **Window:** mid-June — mid-December 2026
 **Workforce:** maintainer + Claude Code sessions (same model as the v1.x web platform)
 **Audience:** Russian-speaking Sanskrit scholars and students. UI stays Russian; metadata gains an English layer for discoverability only.

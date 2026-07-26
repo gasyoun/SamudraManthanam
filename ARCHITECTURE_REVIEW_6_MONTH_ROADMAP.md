@@ -2,11 +2,18 @@
 
 Review date: 2026-05-15
 
+> **Status (26-07-2026): HISTORICAL BRIEF.** Web-platform hardening and DH/mobile
+> tracks described here largely shipped via H2 Phases 0–3e (June 2026). For live
+> residual work use
+> [docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md)
+> and
+> [docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md).
+
 Audience: project owner, Gemini Flash, future implementation agents.
 
 This document turns the current codebase review and product answers into a 6-month technical roadmap. It is intentionally written as an implementation brief: Gemini Flash should be able to pick up each task, make a small change, run checks, and leave a clear result.
 
-Status: roadmap proposal. Read `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` for challenged decisions and questions before starting large implementation work.
+Status: roadmap proposal (historical). Read `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` for challenged decisions and questions before starting large implementation work.
 
 ## Planning Inputs
 
