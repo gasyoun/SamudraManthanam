@@ -1,3 +1,9 @@
+"""Search API routes.
+
+Note: GET /api/search/stream (SSE progress events) is intentionally kept but
+not wired into the frontend (search.js) — see PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md
+R7. It is covered by hermetic tests in tests/test_api.py.
+"""
 from fastapi import APIRouter, HTTPException, Request, Query
 import time
 import os
