@@ -69,13 +69,11 @@ async def create_schema(db):
     );
     """)
 
-    await db.execute("""
-    CREATE TABLE IF NOT EXISTS morph_cache (
-        query  TEXT PRIMARY KEY,
-        stems  TEXT NOT NULL    -- JSON: ["stem1","stem2",...]
-    );
-    """)
-    
+    # morph_cache was migrated to state.db (v1.9.1); drop the dead leftover
+    # from corpus.db instances created before this migration.
+    await db.execute("DROP TABLE IF EXISTS morph_cache")
+
+
     # Enable WAL mode for better concurrency
     await db.execute("PRAGMA journal_mode=WAL")
     await db.execute("""

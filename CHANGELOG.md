@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- **Dead `morph_cache` table dropped from `corpus.db` schema (H1503, Sonnet 5
+  `claude-sonnet-5`).** `web/app/db.py::create_schema` no longer creates
+  `morph_cache` — it was migrated to `state.db` in Track B (v1.9.1) and had
+  been re-created empty on every fresh `corpus.db` since. `create_schema` now
+  runs an idempotent `DROP TABLE IF EXISTS morph_cache` so existing DB files
+  get the leftover table dropped on next startup. +2 hermetic tests
+  (`web/tests/test_db_schema.py`).
+
 ### Added
 - **Structured JSON/CSV export for search results (H1502, Sonnet 5 `claude-sonnet-5`).**
   `GET /api/search/export` now accepts `format=json` and `format=csv` alongside the
