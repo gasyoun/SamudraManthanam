@@ -153,6 +153,57 @@ async def test_invalid_regex():
         assert response.status_code == 400
 
 @pytest.mark.asyncio
+async def test_export_json_format():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/export?query=arjuna&mode=plain&format=json")
+    assert response.status_code == 200
+    assert "application/json" in response.headers["content-type"]
+    data = response.json()
+    assert set(["query", "mode", "corpus_version", "timestamp", "source_filter"]).issubset(data["metadata"].keys())
+    assert data["metadata"]["query"] == "arjuna"
+    assert "results" in data
+    assert isinstance(data["results"], list)
+    if data["results"]:
+        item = data["results"][0]
+        for key in ("source_id", "source_title", "chapter", "line_num", "link_id", "line_html", "line_text"):
+            assert key in item
+
+
+@pytest.mark.asyncio
+async def test_export_csv_format():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/export?query=arjuna&mode=plain&format=csv")
+    assert response.status_code == 200
+    assert "text/csv" in response.headers["content-type"]
+    body = response.text
+    assert "# query" in body
+    assert "arjuna" in body
+    assert "source_id" in body
+
+
+@pytest.mark.asyncio
+async def test_export_json_csv_same_result_set_as_html():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        html_resp = await ac.get("/api/search/export?query=arjuna&mode=plain")
+        json_resp = await ac.get("/api/search/export?query=arjuna&mode=plain&format=json")
+    assert html_resp.status_code == 200
+    assert json_resp.status_code == 200
+    json_data = json_resp.json()
+    assert json_data["metadata"]["result_count"] == len(json_data["results"])
+
+
+@pytest.mark.asyncio
+async def test_export_invalid_format():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/export?query=arjuna&mode=plain&format=xml")
+    assert response.status_code == 422
+
+
+@pytest.mark.asyncio
 async def test_multi_query_header_does_not_duplicate_ordinal():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:

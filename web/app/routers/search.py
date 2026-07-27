@@ -3,13 +3,15 @@ import time
 import os
 import json
 import re
+import csv
+import io
 from urllib.parse import quote, urlencode
 from sse_starlette.sse import EventSourceResponse
 from app.db import get_db
 from app.models import SearchRequest, SearchResult, SearchResultItem, SearchMode
 from app.services.html_service import render_fragment, render_full_page, render_standalone
 from app.services.dispatch_service import dispatch_search
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 
 from app.settings import settings
 
@@ -31,11 +33,11 @@ def parse_source_ids(source_ids_str: str | None) -> list[int] | None:
         raise HTTPException(status_code=422, detail="source_ids must be a comma-separated list of integers") from exc
 
 
-def export_filename(query: str) -> str:
+def export_filename(query: str, extension: str = "html") -> str:
     safe = re.sub(r"[^A-Za-z0-9._-]+", "_", query).strip("._")
     if not safe:
         safe = "search"
-    return f"{safe[:80]}.html"
+    return f"{safe[:80]}.{extension}"
 
 
 async def get_corpus_version(db) -> str | None:
@@ -189,13 +191,14 @@ async def get_context(
         await db.close()
 
 
-@router.get("/export", response_class=HTMLResponse)
+@router.get("/export")
 async def get_export(
     request: Request,
     query: str = Query(..., min_length=1, max_length=1000),
     mode: SearchMode = SearchMode.plain,
     case_sensitive: bool = False,
     whole_word: bool = False,
+    format: str = Query("html", pattern="^(html|json|csv)$"),
 ):
     # Handle source_ids from query params
     source_ids = parse_source_ids(request.query_params.get("source_ids"))
@@ -247,10 +250,52 @@ async def get_export(
             "source_filter": f"{len(source_ids)} selected" if source_ids else "all",
             "live_search_url": live_search_url,
         }
-        
+
+        if format == "json":
+            filename = export_filename(query, "json")
+            encoded_filename = quote(filename)
+            headers = {"Content-Disposition": f"attachment; filename=\"{filename}\"; filename*=UTF-8''{encoded_filename}"}
+            payload = {
+                "metadata": metadata,
+                "results": [
+                    {
+                        "source_id": r["source_id"],
+                        "source_title": r["source_title"],
+                        "chapter": r["chapter"],
+                        "line_num": r["line_num"],
+                        "link_id": r["link_id"],
+                        "line_html": r["line_html"],
+                        "line_text": r["line_text"],
+                    }
+                    for r in results
+                ],
+            }
+            return JSONResponse(content=payload, headers=headers)
+
+        if format == "csv":
+            filename = export_filename(query, "csv")
+            encoded_filename = quote(filename)
+            headers = {"Content-Disposition": f"attachment; filename=\"{filename}\"; filename*=UTF-8''{encoded_filename}"}
+            buffer = io.StringIO()
+            writer = csv.writer(buffer)
+            for key in ("query", "mode", "corpus_version", "timestamp", "source_filter", "result_count"):
+                writer.writerow([f"# {key}", metadata.get(key)])
+            writer.writerow([])
+            writer.writerow(["source_id", "source_title", "chapter", "line_num", "link_id", "line_text"])
+            for r in results:
+                writer.writerow([
+                    r["source_id"],
+                    r["source_title"],
+                    r["chapter"],
+                    r["line_num"],
+                    r["link_id"],
+                    r["line_text"],
+                ])
+            return PlainTextResponse(content=buffer.getvalue(), media_type="text/csv", headers=headers)
+
         html = render_standalone(query, fragment, metadata=metadata)
-        
-        filename = export_filename(query)
+
+        filename = export_filename(query, "html")
         encoded_filename = quote(filename)
         headers = {"Content-Disposition": f"attachment; filename=\"{filename}\"; filename*=UTF-8''{encoded_filename}"}
         return HTMLResponse(content=html, headers=headers)
