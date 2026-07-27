@@ -1,0 +1,709 @@
+{
+  "sheet_id": "samudramanthanam-kss_book12-14-lowconf",
+  "handoff": "H1687",
+  "generated_by": "Sonnet 5 (claude-sonnet-5)",
+  "generated": "28-07-2026",
+  "note": "Original review/samudramanthanam-kss_book12-14-lowconf_review.html (H927, gitignored local-only per /review/ in .gitignore) was lost when the SamudraManthanam-h927 worktree was removed before copy-out. The 70 low-confidence groups (min row confidence<0.6 across book 12 + book 14) were re-derived directly from web/corpus_builder/jsonl/kathasaritsagara-12.jsonl and -14.jsonl (62+8=70, matching the original sheet's counts from REVIEW_SHEETS_INDEX.md exactly), so the underlying SA/RU evidence is authoritative regardless of the missing HTML rendering.",
+  "items": [
+    {
+      "group": "kathasaritsagara:12.3.132",
+      "book": 12,
+      "passage": "12.3.132",
+      "confidence": 0.5,
+      "sa": "iti svasacivāt kṣaṇaṃ vimalabuddhitaḥ so 'dbhutaṃ niśamya paritoṣavān api mṛgāṅkadattaḥ punaḥ / vicārya saha tena tām aparamantryavāptyai kramād avantinagarīṃ prati vrajitavānsvakāryāya ca",
+      "ru": "Мриганкадатта, выслушав историю о чудесных видениях своего министра, был очень доволен и, посоветовавшись с Вималабуддхи, устремился к городу Аванти в надежде на встречу с другими своими министрами и на то, что достанется ему Шашанкавати.",
+      "verdict": "alignment-holds",
+      "evidence": "SA describes Mrigankadatta, pleased after hearing his minister's wonder-tale, deliberating and heading toward Avanti city for the sake of another minister; RU matches exactly: Mrigankadatta, pleased after the minister's story of visions, consults with Vimalabuddhi and rushes toward Avanti hoping to meet his other ministers and gain Shashankavati."
+    },
+    {
+      "group": "kathasaritsagara:12.4.70",
+      "book": 12,
+      "passage": "12.4.70",
+      "confidence": 0.55,
+      "sa": "padmāsādanasotsavanānāmukharadvijāliparigītam / kamalākaramaprāptā kva ratiṃ haṃsāvalīṃ labhatām",
+      "ru": "Какой страсти может достичь Хансавали,",
+      "verdict": "alignment-holds",
+      "evidence": "SA is a punning verse asking where the haṃsāvalī (flock of geese / the character Hansavali) can find delight without reaching the lotus-pond; RU's compressed fragment 'What passion can Hansavali achieve' preserves the same key term (haṃsāvalī/Hansavali) and rhetorical question, a typical thin-verse-to-fragment granularity mismatch rather than a break."
+    },
+    {
+      "group": "kathasaritsagara:12.4.99",
+      "book": 12,
+      "passage": "12.4.99",
+      "confidence": 0.55,
+      "sa": "padmāsādanasotsavanānāmukharadvijāliparigītam / kamalākaramaprāptā kva ratiṃ haṃsāvalī labhatām",
+      "ru": "Какой страсти может достичь Хансавали,",
+      "verdict": "alignment-holds",
+      "evidence": "Near-identical repeated verse to 12.4.70 (same haṃsāvalī pun) paired with the same short RU fragment 'What passion can Hansavali achieve' — consistent granularity-mismatch pattern, content corresponds."
+    },
+    {
+      "group": "kathasaritsagara:12.4.305",
+      "book": 12,
+      "passage": "12.4.305",
+      "confidence": 0.55,
+      "sa": "tatpūjitaḥ sa ca tato 'tra pulindapallyām āsīd dināni kila tāni mṛgāṅkadattaḥ / baddhodyamo 'py adhigamāya śaśāṅkavatyāḥ saṃprāptaśeṣasakhisaṃgamasavyapekṣaḥ",
+      "ru": "Провел еще несколько дней у бхилов Мриганкадатта, наслаждаясь гостеприимством Майабату, хотя в жажде встречи с Шашанкавати и со своими другими друзьями был готов немедля отправиться в путь.",
+      "verdict": "alignment-holds",
+      "evidence": "SA describes Mrigankadatta staying days among the Pulinda tribe, eager to reach Shashankavati and reunite with remaining friends; RU matches closely: he spent days with the Bhils enjoying hospitality, though yearning to leave immediately to meet Shashankavati and his other friends."
+    },
+    {
+      "group": "kathasaritsagara:12.11.86-87",
+      "book": 12,
+      "passage": "12.11.86-87",
+      "confidence": 0.55,
+      "sa": "tataś ca cintayāmāsa vīro vīravaro 'tra saḥ / niṣpannaṃ rājakāryaṃ me vāg divyā hy udgatā yathā bhuktasya cānnapiṇḍasya jāto 'ham anṛṇaḥ prabhoḥ / tad idānīṃ mamaikasya keyaṃ jīvitagṛdhnutā",
+      "ru": "Задумался тогда мужественный Виравара: «Выполнил я долг перед царем, и голос небесный это подтвердил. За все то, что я съел и чем пользовался, ничего я царю не должен.",
+      "verdict": "alignment-holds",
+      "evidence": "SA has the hero Viravara reflecting that his royal duty is fulfilled, confirmed by a divine voice, and that he owes the king nothing further for food/support received; RU matches: 'the courageous Viravara thought: I fulfilled my duty before the king, and the heavenly voice confirmed it; for all I ate and used, I owe the king nothing.'"
+    },
+    {
+      "group": "kathasaritsagara:12.11.88",
+      "book": 12,
+      "passage": "12.11.88",
+      "confidence": 0.5,
+      "sa": "bharaṇīyaṃ priyaṃ kṛtsnaṃ vyayīkṛtya kuṭumbakam / jīvayann ekam ātmānaṃ mādṛśaḥ ko hi śobhate",
+      "ru": "Что же мне теперь, одинокому, за жизнь держаться? Радостно поддерживать любимую семью, но нынче нет ее. Что такому, как я, одинокому осталось в жизни? Так почему бы не порадовать мне Амбику, принеся ей в жертву свое тело?» Так рассудив, вознес он Богине такую молитву:",
+      "verdict": "alignment-holds",
+      "evidence": "SA questions who among men like him 'shines' by keeping only himself alive after spending his whole beloved family; RU carries the same core theme (lonely, family gone, what is life for) though it expands/absorbs the following verse's self-sacrifice-to-Ambika idea — a compression/merge rather than unrelated content."
+    },
+    {
+      "group": "kathasaritsagara:12.11.89",
+      "book": 12,
+      "passage": "12.11.89",
+      "confidence": 0.3,
+      "sa": "tat kim ātmopahāreṇāpy etāṃ prīṇāmi nāmbikām / ity ālocya sa devīṃ tāṃ stutyā prāg upatasthivān",
+      "ru": "«Победа тебе, сразившей асура Махишу, носительнице трезубца, погубительнице данава Руру!",
+      "verdict": "confirmed-break",
+      "evidence": "SA89 is pure narrative setup (deciding to please Ambika by self-offering, then approaching the goddess with praise) with no hymn text; RU89 instead quotes actual invocation content ('Victory to you, slayer of the asura Mahisha, trident-bearer, destroyer of the danava Ruru') that textually belongs to the next verse's hymn (12.11.90's first line) — the paired RU content is displaced from a neighboring verse, not a compression of its own SA."
+    },
+    {
+      "group": "kathasaritsagara:12.11.90",
+      "book": 12,
+      "passage": "12.11.90",
+      "confidence": 0.5,
+      "sa": "jaya mahiṣāsuramāriṇi dāriṇi rurudānavasya śūlakare / jaya vibudhotsavakāriṇi dhāriṇi bhuvanatrayasya mātṛvare",
+      "ru": "Победа тебе, о лучшая из матерей, все три мира держащая, творящая праздник для мудрых!",
+      "verdict": "alignment-holds",
+      "evidence": "SA90 has two praise lines (slayer of Mahisha/Ruru; bearer of the three worlds and festival-maker for the gods); RU90 ('Victory to you, best of mothers, bearing the three worlds, creating festival for the wise') matches the second line faithfully — a partial/compressed rendering of the same verse, not unrelated content."
+    },
+    {
+      "group": "kathasaritsagara:12.11.91",
+      "book": 12,
+      "passage": "12.11.91",
+      "confidence": 0.55,
+      "sa": "jaya jagad arcitacaraṇe śaraṇe niḥśreyasasya bhaktānām / jaya dhṛtabhāskarakiraṇe haraṇe duritāndhakāravṛndānām",
+      "ru": "Победа тебе, чьи стопы почитает весь мир, прибежище тех верующих, кто надеется на конечное освобождение!",
+      "verdict": "alignment-holds",
+      "evidence": "SA91's first line ('victory, whose feet the world worships, refuge of the highest good for devotees') is rendered faithfully by RU91 ('Victory to you whose feet the whole world worships, refuge of those believers who hope for final liberation') — direct content correspondence."
+    },
+    {
+      "group": "kathasaritsagara:12.11.92",
+      "book": 12,
+      "passage": "12.11.92",
+      "confidence": 0.35,
+      "sa": "jaya kāli jaya kapālini jaya kaṅkālini śive namas te 'stu / śūdrakanṛpater adhunā prasīda manmastakopahāreṇa",
+      "ru": "Победа тебе, оберегающей лучи солнца, разгоняющей мрак сонмов несчастий! Победа тебе, черная! Победа тебе, черепами и скелетами украшенная!",
+      "verdict": "uncertain",
+      "evidence": "RU92 ('protector of sun's rays, dispeller of darkness' + 'black one' + 'adorned with skulls and skeletons') mixes SA91's second line (dhṛtabhāskarakiraṇe...) with SA92's own epithets (kāli/kapālini/kaṅkālini), so genuine content overlap with SA92 exists but is entangled with the neighboring verse, making a clean holds/break call unreliable."
+    },
+    {
+      "group": "kathasaritsagara:12.11.93",
+      "book": 12,
+      "passage": "12.11.93",
+      "confidence": 0.15,
+      "sa": "ity upasthāya devyāṃ sa tasyāṃ vīravaraḥ punaḥ / sadyaḥ karatalāghātenottamāṅgaṃ svamacchinat",
+      "ru": "Да будет тебе благо и слава!",
+      "verdict": "confirmed-break",
+      "evidence": "SA93 is narrative action — Viravara, having finished his approach to the goddess, instantly beheads himself with his own hand — while RU93 ('May there be to you good and glory!') is a generic hymn-closing blessing with no reference to the beheading; the content types (action vs. invocation) do not correspond."
+    },
+    {
+      "group": "kathasaritsagara:12.11.94",
+      "book": 12,
+      "passage": "12.11.94",
+      "confidence": 0.15,
+      "sa": "tad ālokyākhilaṃ tatra channasthaḥ śudrako nṛpaḥ / sākulaś ca saduḥkhaś ca sāścaryaś ca vyacintayat",
+      "ru": "Смилуйся над царем Шудракой — голову свою приношу тебе в жертву!»",
+      "verdict": "confirmed-break",
+      "evidence": "SA94 describes King Shudraka, hidden and watching, becoming agitated, sorrowful and astonished at the sight; RU94 ('Have mercy on King Shudraka — I offer my own head to you in sacrifice!') is instead a first-person prayer quote (belonging to the earlier hymn, e.g. 12.11.92's 'śūdrakanṛpater...manmastakopahāreṇa') — different speaker and content entirely."
+    },
+    {
+      "group": "kathasaritsagara:12.11.95",
+      "book": 12,
+      "passage": "12.11.95",
+      "confidence": 0.2,
+      "sa": "aho kim apy anenaitad anyatrādṛṣṭam aśrutam / sādhunā sakuṭumbena duḥkaraṃ matkṛte kṛtam",
+      "ru": "И, закончив молитву Богине, Виравара снова выхватил меч и мгновенно обезглавил себя.",
+      "verdict": "confirmed-break",
+      "evidence": "SA95 is Shudraka's internal reflection marveling that such an unseen, unheard deed was done by 'this good man with his family' for his sake; RU95 instead narrates the beheading action itself ('having finished the prayer to the Goddess, Viravara drew his sword and instantly beheaded himself'), which is the content of an earlier verse (12.11.93), not Shudraka's reflection."
+    },
+    {
+      "group": "kathasaritsagara:12.11.96-103",
+      "book": 12,
+      "passage": "12.11.96-103",
+      "confidence": 0.55,
+      "sa": "vicitre 'py atra saṃsāre dhīraḥ syādīdṛśaḥ kutaḥ / akhyāpayan prabho arthe parokṣaṃ yo dadāty asūn etasya copakārosya na kuryāṃ sadṛśaṃ yadi / tan me kā prabhutā kiṃ ca jīvitavyaṃ paśor iva iti saṃcintya nṛpatiḥ khaḍgam ākṛṣya kopataḥ / upetya śūdrako devīṃ tāṃ pravīro vyajijñapat satatānuprapannasya bhagavaty adhunāmunā / mama mūrdhopahāreṇa suprītā kurv anugraham ayaṃ vīravaro vipro nāmānuguṇaceṣṭitaḥ / madartham ujjhitaprāṇaḥ sakuṭumbo 'pi jīvatu ity udīryāsinā rājā śiraś chettuṃ sa śūdrakaḥ / yāvat pravartate tāvad udabhūd bhāratī divaḥ mā sāhasaṃ kṛthās tuṣṭā sattvenānena te hy aham / pratyujjīvatu sāpatyadāro vīravaro dvijaḥ ity uktvā vyaramad vāk sā sa cottasthau saputrakaḥ / sākaṃ duhitrā patnyā ca jīvan vīravaro 'kṣataḥ",
+      "ru": "Все это видел стоявший во мраке Шудрака. Потрясенный и умиленный, подумал он с удивлением: «То, что этот воин совершил, нигде и никем не слыхано и не видано — невероятный подвиг совершил он вместе со всей семьей ради меня. Удивительно, откуда берутся в этом мире такие герои, скромно отдающие жизнь свою ради господина! Если не совершу я равного тому поступка, то что мне власть? Зачем жить мне, подобно неблагодарному скоту?» С такими мыслями выхватывает Шудрака меч из ножен и, приблизясь к Богине, говорит мужественный: «Мне, всегда тебе преданному, окажи нынче, Благостная, милость! Прими в жертву мою голову, Возлюбленная, и сделай так, чтобы этот Виравара, по заслугам так названный, отдавший жизнь за меня, ожил вместе со всей семьей». Произнеся такие слова, хотел было Щудрака отсечь себе голову, но раздался в поднебесье божественный глас: «Не спеши! Довольна я тобой, добродетельный! Вернется к жизни Виравара с женой и детьми!» И только прозвучали эти слова, как поднялись невредимые Виравара, и сын его, и супруга с дочерью.",
+      "verdict": "alignment-holds",
+      "evidence": "This combined multi-verse range covers Shudraka's admiration, his own sword-drawing and offer of his head to the Goddess, the divine voice halting him, and Viravara's family being restored to life; RU covers the same full sequence of events in the same order, so the aggregate range absorbs and resolves the finer-grained shift seen in the preceding single verses."
+    },
+    {
+      "group": "kathasaritsagara:12.19.45",
+      "book": 12,
+      "passage": "12.19.45",
+      "confidence": 0.45,
+      "sa": "yat karmabījam uptaṃ yena purā niścitaṃ sa tad bhuṅkte / pūrvakṛtasya hi śakyo vidhināpi na kartum anyathābhāvaḥ",
+      "ru": "«Что своим посеял делом,",
+      "verdict": "alignment-holds",
+      "evidence": "SA opens the karma-seed maxim 'yat karmabījam uptaṃ ... sa tad bhuṅkte' (whatever karma-seed was sown, that one reaps), and RU '«Что своим посеял делом,' (what you sowed by your own deed) is the opening line of the same maxim rendered as a Russian quatrain."
+    },
+    {
+      "group": "kathasaritsagara:12.19.46",
+      "book": 12,
+      "passage": "12.19.46",
+      "confidence": 0.15,
+      "sa": "ity udgāya kṣaṇāt tasminn ambhodhau divyakanyakā / sakalpadrumaparyaṅkaśayyātraiva mamajja sā",
+      "ru": "нынче плод того ты снимешь, —",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes narrative action -- the divine maiden ('divyakanyakā') sinking into the ocean with her kalpa-tree couch ('mamajja sā') -- but RU 'нынче плод того ты снимешь' (now you'll reap the fruit of that) is a continuation of the unrelated karma/fate maxim from group 45, not a description of the maiden sinking; the correct paraphrase of this SA content actually appears later inside the group 49-51 paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.19.47",
+      "book": 12,
+      "passage": "12.19.47",
+      "confidence": 0.15,
+      "sa": "kimapy apūrvam adyedaṃ mayā dṛṣṭam ihādbhutam / kvābdhiḥ kva dṛṣṭanaṣṭo 'tra gāyaddivyāṅganas taruḥ",
+      "ru": "и судьба не переменит",
+      "verdict": "confirmed-break",
+      "evidence": "SA is the king's wonder-monologue 'kimapy apūrvam adyedaṃ mayā dṛṣṭam ihādbhutam' (something unprecedented and wondrous have I seen today), but RU 'и судьба не переменит' (and fate will not change) continues the karma-maxim refrain instead; the matching translation of this exact SA wonder-monologue is embedded verbatim in the group 49-51 RU paragraph ('Что это за диво дивное я сейчас видел?')."
+    },
+    {
+      "group": "kathasaritsagara:12.19.48",
+      "book": 12,
+      "passage": "12.19.48",
+      "confidence": 0.15,
+      "sa": "yadi vā vandya eṣo 'bdhir ākaraḥ śaśvad īdṛśām / lakṣmīndupārijātādyā nāsmāt te te kim udgatāḥ",
+      "ru": "предназначенного кармой!»",
+      "verdict": "confirmed-break",
+      "evidence": "SA praises the ocean as a treasury of wonders (Lakṣmī, moon, pārijāta tree: 'lakṣmīndupārijātādyā nāsmāt te te kim udgatāḥ'), but RU 'предназначенного кармой!»' (predestined by karma!) closes the unrelated fate-maxim refrain; the true rendering of this ocean-praise content is found instead inside the group 49-51 RU paragraph ('не из него некогда всплыли Лакшми, Месяц, дерево париджата...')."
+    },
+    {
+      "group": "kathasaritsagara:12.19.49-51",
+      "book": 12,
+      "passage": "12.19.49-51",
+      "confidence": 0.4,
+      "sa": "iti taṃ cintayantaṃ ca tatkṣaṇaṃ dīrghadarśinam / vilokya vismayāviṣṭaṃ karṇadhārādayo 'bruvan evam eṣā sadaiveha dṛśyate varakanyakā / nimajjati ca tatkālaṃ tavaitad darśanaṃ navam ity uktas taiḥ samaṃ tena nidhidattena sa kramāt / mantrī citrīyamāṇo 'bdhes tīraṃ potagato 'bhyagāt",
+      "ru": "И только спела она эту песенку, как снова и с деревом, и с сидением погрузилась в океан. «Что это за диво дивное я сейчас видел? Среди океана вдруг вырастает дерево с поющей красавицей на нем и, только лишь появившись, погружается в бездну! Ну, как не восхититься постоянством океана! Разве не из него некогда всплыли Лакшми, Месяц, дерево париджата и много других чудес?» Видя как он всему этому дивится, и слушая, как восторгается, сказали ему кормчий и прочие, кто был на корабле: «На этом месте всякий раз появляется эта красавица, а показавшись, снова погружается. Для тебя, конечно, это зрелище внове». Так ему объяснили случившееся, но он продолжал изумляться, пока не достиг вместе с Нидхидаттой на корабле берега.",
+      "verdict": "alignment-holds",
+      "evidence": "SA narrates the king pondering, the sailors ('karṇadhārādayaḥ') explaining that the maiden always appears and vanishes there, and the minister ('mantrī') reaching shore with Nidhidatta; RU closely paraphrases the same beats -- the maiden sinking again, the crew's explanation ('кормчий и прочие... сказали'), and reaching the shore 'вместе с Нидхидаттой' -- a genuine, if compressed, match."
+    },
+    {
+      "group": "kathasaritsagara:12.19.79",
+      "book": 12,
+      "passage": "12.19.79",
+      "confidence": 0.45,
+      "sa": "yat karmabījam uptaṃ yena purā niścitaṃ sa tad bhuṅkte / pūrvakṛtasya hi śakyo vidhināpi na kartum anyathābhāvaḥ",
+      "ru": "Что своим посеял делом,",
+      "verdict": "alignment-holds",
+      "evidence": "SA repeats the same karma-seed maxim as 12.19.45 ('yat karmabījam uptaṃ...'), and RU 'Что своим посеял делом,' again renders its opening clause -- consistent with the recurring refrain in the text."
+    },
+    {
+      "group": "kathasaritsagara:12.19.80",
+      "book": 12,
+      "passage": "12.19.80",
+      "confidence": 0.45,
+      "sa": "tasmād yatra yathā yad bhavitavyaṃ yasya daivayogena / tatra tathā tatprāptyai vivaśo 'sau nīyate 'tra na bhrāntiḥ",
+      "ru": "Нынче плод того ты снимешь, —",
+      "verdict": "uncertain",
+      "evidence": "SA 'tasmād yatra yathā yad bhavitavyaṃ... vivaśo 'sau nīyate 'tra na bhrāntiḥ' (one is led helplessly to what fate has destined) is fate-themed like RU 'Нынче плод того ты снимешь' (now you'll reap that fruit), but the RU line reads as the second half of verse 79's own quatrain (seed sown / fruit reaped) rather than a distinct rendering of 80's 'led without confusion' idea, so correspondence cannot be confirmed from the fragment alone."
+    },
+    {
+      "group": "kathasaritsagara:12.19.81",
+      "book": 12,
+      "passage": "12.19.81",
+      "confidence": 0.15,
+      "sa": "iti sūcitabhavyārthāṃ gāyantīṃ tāṃ vibhāvayan / niḥspandaḥ sa kṣaṇaṃ tasthau rājā smaraśarāhataḥ",
+      "ru": "И судьба не переменит,",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes the king standing motionless, struck by Kāma's arrow while watching her sing ('nihspandaḥ sa kṣaṇaṃ tasthau rājā smaraśarāhataḥ'), but RU 'И судьба не переменит,' continues the unrelated karma-refrain; the actual matching content ('Замер царь, пораженный стрелой Смары, слушая ее песню') appears instead in the group 87-89 paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.19.82",
+      "book": 12,
+      "passage": "12.19.82",
+      "confidence": 0.15,
+      "sa": "ratnākara namaḥ satyam agādhahṛdayāya te / yena tvayaitāṃ pracchādya vipralabdho hariḥ śriyā",
+      "ru": "Предназначенного кармой!",
+      "verdict": "confirmed-break",
+      "evidence": "SA is the king's address to the ocean, 'ratnākara namaḥ satyam agādhahṛdayāya te' (homage to you, Ratnākara, truly of unfathomable heart), but RU 'Предназначенного кармой!' merely closes the fate refrain; the real translation ('Слава тебе, Хранилище жемчужин!...') is embedded in the group 87-89 paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.19.83",
+      "book": 12,
+      "passage": "12.19.83",
+      "confidence": 0.15,
+      "sa": "tat surair apy alabhyāntaṃ sapakṣakṣmābhṛdāśrayam / śaraṇaṃ tvāṃ prapanno 'ham iṣṭasiddhiṃ vidhatsva me",
+      "ru": "Если что кому от века",
+      "verdict": "confirmed-break",
+      "evidence": "SA continues the king's prayer to the ocean as a refuge unattainable even by gods ('śaraṇaṃ tvāṃ prapanno 'ham iṣṭasiddhiṃ vidhatsva me'), but RU 'Если что кому от века' begins an unrelated fate-quatrain; the matching prayer content ('К твоей защите... прибегаю я!') appears in the group 87-89 paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.19.84",
+      "book": 12,
+      "passage": "12.19.84",
+      "confidence": 0.15,
+      "sa": "evaṃ yāvat samudraṃ taṃ sa nataḥ stauti bhūmipaḥ / tāvat sā kanyakā tatra nimamajja sapādapā",
+      "ru": "Уготовано судьбою,",
+      "verdict": "confirmed-break",
+      "evidence": "SA narrates the maiden sinking again with the tree while the king bows and praises the ocean ('sā kanyakā tatra nimamajja sapādapā'), but RU 'Уготовано судьбою,' is a fate-maxim line unrelated to this action; no mention of the maiden or sinking appears in the RU fragment."
+    },
+    {
+      "group": "kathasaritsagara:12.19.85",
+      "book": 12,
+      "passage": "12.19.85",
+      "confidence": 0.15,
+      "sa": "tad dṛṣṭvaivānumārge 'syāḥ sa rājātmānam akṣipat / vāridhāv atra kāmāgnisaṃtāpasyeva śāntaye",
+      "ru": "То не в силах человека",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes the king casting himself into the ocean, following her path to quench the fire of love ('vāridhāv atra kāmāgnisaṃtāpasyeva śāntaye'), but RU 'То не в силах человека' continues the abstract fate-maxim; the matching action ('кинулся он вслед за нею') is rendered in the group 87-89 paragraph instead."
+    },
+    {
+      "group": "kathasaritsagara:12.19.86",
+      "book": 12,
+      "passage": "12.19.86",
+      "confidence": 0.15,
+      "sa": "tad vīkṣyāśaṅkitaṃ matvā vinaṣṭaṃ taṃ sa sajjanaḥ / lakṣmīdatto vaṇig duḥkhād dehatyāgodyato 'bhavat",
+      "ru": "Отвратить ее решенье.",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes the merchant Lakṣmīdatta, believing the king perished, being ready from grief to give up his own life ('duḥkhād dehatyāgodyato 'bhavat'), but RU 'Отвратить ее решенье.' merely closes the fate-maxim quatrain with no mention of Lakṣmīdatta or grief; that content is found instead in the group 87-89 paragraph ('Лакшмидатта... от горя готов был покончить с собой')."
+    },
+    {
+      "group": "kathasaritsagara:12.19.87-89",
+      "book": 12,
+      "passage": "12.19.87-89",
+      "confidence": 0.35,
+      "sa": "mā kārṣīḥ sāhasaṃ nāsti magnasyāsyāmbhudhau bhayam / eṣo rājā yaśaḥketur nāmnā tāpasaveṣabhṛt etat kanyārtham āyātaḥ pūrvabhāryeyam asya ca / etāṃ prāpya punaś cāsāv aṅgarājyaṃ sameṣyati ity athāśvāsito vācā tatkālaṃ gaganotthayā / sārthavāho yathākāmaṃ sa jagāmeṣṭasiddhaye",
+      "ru": "Замер царь, пораженный стрелой Смары, слушая ее песню, полную глубокого смысла. «Слава тебе, Хранилище жемчужин! Недаром тебя так зовут, ибо скрыл ты в безмерных глубинах своего сердца эту деву, лишив Хари счастья. К твоей защите, Непокорный Богам, Убежище крылатых гор, царствовавших над землею, прибегаю я!» — так воззвал к океану царь, и, в то время как дерево с девушкой стало погружаться, кинулся он вслед за нею, словно стремясь угасить пламя страстной любви в глубине океанских вод. А добрый Лакшмидатта, видя, как этот смельчак кинулся в океан, и думая, что он погиб, от горя готов был покончить с собой. Но вдруг с небес раздался голос: «Не поступай поспешно! Ничто не грозит ему, поглощенному океаном. Этот человек, одетый подвижником, не кто иной, как царь Йашаскету, а девушка, ради которой он кинулся в океан, была в прежнем рождении его женой. Обретя ее, снова вернется он в царство Анга». Услышав все это, успокоился купец и поплыл дальше, куда хотел, к желанной цели.",
+      "verdict": "alignment-holds",
+      "evidence": "SA covers the sky-voice reassuring that the king (in ascetic disguise) is his former wife's husband and will regain the Aṅga kingdom, prefaced by the merchant's plea not to act rashly; RU matches closely, including the celestial voice ('Не поступай поспешно!... царь Йашаскету... вернется он в царство Анга') and the merchant sailing on relieved ('успокоился купец и поплыл дальше')."
+    },
+    {
+      "group": "kathasaritsagara:12.31.32",
+      "book": 12,
+      "passage": "12.31.32",
+      "confidence": 0.5,
+      "sa": "yatra ghanastanajaghanā nāste mārgāvalokinī kāntā / ajaḍaḥ kas tad anigaḍaṃ praviśati gṛhasaṃjñakaṃ durgam",
+      "ru": "Кто, коль не глуп, в тот дом войдет,",
+      "verdict": "alignment-holds",
+      "evidence": "SA's rhetorical question 'ajaḍaḥ kas tad anigaḍaṃ praviśati gṛhasaṃjñakaṃ durgam' ('what non-fool enters that fetterless fortress called a house') is rendered near-literally by RU 'Кто, коль не глуп, в тот дом войдет' ('Who, unless foolish, would enter that house') — direct correspondence."
+    },
+    {
+      "group": "kathasaritsagara:12.31.33",
+      "book": 12,
+      "passage": "12.31.33",
+      "confidence": 0.15,
+      "sa": "taj jīvitena me tāta śāpito 'si na tāṃ yadi / dvitīyāṃ madabhīṣṭāyāṃ bhāryārthe svīkarīṣyasi",
+      "ru": "Где статная жена его не ждет,",
+      "verdict": "confirmed-break",
+      "evidence": "SA is the son's oath to his father about taking a second wife ('taj jīvitena me tāta śāpito 'si...dvitīyāṃ...bhāryārthe svīkarīṣyasi'), but RU 'Где статная жена его не ждет' ('Where a stately wife does not await him') is instead the second line of a decorative rhymed quatrain about an empty house, continuing group 12.31.32's imagery rather than translating the curse/oath content of 33; the actual translation of this oath appears verbatim later inside group 12.31.36-46 ('Пусть будет проклята моя жизнь, батюшка, если ты не возьмешь другую себе в жены!»'), confirming 33's RU line was misassigned."
+    },
+    {
+      "group": "kathasaritsagara:12.31.34",
+      "book": 12,
+      "passage": "12.31.34",
+      "confidence": 0.15,
+      "sa": "etat putravacaḥ śrutvā pratipadya ca tatsakhaḥ / sa caṇḍasiṃho 'nusaran padapaṅktiṃ śanair yayau",
+      "ru": "Не смотрит на дорогу? Разве это дом?",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes Caṇḍasiṃha agreeing with his son and slowly following a trail of footprints ('sa caṇḍasiṃho 'nusaran padapaṅktiṃ śanair yayau'), but RU 'Не смотрит на дорогу? Разве это дом?' ('Doesn't look at the road? Is this indeed a house?') is the third line of the same house-themed rhymed quatrain begun in 32/33, unrelated to the footprint-following action in 34."
+    },
+    {
+      "group": "kathasaritsagara:12.31.35",
+      "book": 12,
+      "passage": "12.31.35",
+      "confidence": 0.15,
+      "sa": "prāpya tac ca saraḥsthānaṃ muktātāraughamaṇḍitām / śyāmāṃ candravatīṃ rājñīṃ tāṃ dadarśāvabhāsitām",
+      "ru": "Скорей тюрьмой, хоть без цепей, его мы назовем!",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes arriving at the lake and seeing the radiant, pearl-adorned queen Candravatī ('prāpya tac ca saraḥsthānaṃ...śyāmāṃ candravatīṃ rājñīṃ tāṃ dadarśāvabhāsitām'), but RU 'Скорей тюрьмой, хоть без цепей, его мы назовем!' ('Rather we shall call it a prison, though without chains!') is the closing line of the unrelated house/prison quatrain, with no reference to the lake, queen, or her description."
+    },
+    {
+      "group": "kathasaritsagara:12.31.36-46",
+      "book": 12,
+      "passage": "12.31.36-46",
+      "confidence": 0.45,
+      "sa": "lāvaṇyavatyā sutayā jyotsnayevāvadātayā / naiśīṃ dyām iva madhyāhne tarucchāyām upāśritām upāyayau ca putreṇa sākaṃ tāṃ sa sakautukaḥ / sāpi dṛṣṭvā tam uttasthau vitrastā cauraśaṅkinī alaṃ trāsena nāmbaitau caurau saumyākṛtī imau / suveṣau kaucid ākheṭakṛte nūnam ihāgatau ity uktā sutayā rājñī yāvad dolāyate 'tra sā / tāvad aśvāvatīrṇas te caṇḍasiṃho 'bravīd ubhe kiṃ saṃbhrameṇa vām āvāṃ praṇayād draṣṭum āgatau / tad visvasya nirātaṅke vadataṃ ke yuvām iti haranetrānalajvālādagdhamanmathaduḥsthite / ratiprītī ivāraṇyam idam evam upāgate praviṣṭe sthaḥ kathaṃ ceha bata nirmānuṣe vane / ratnaprāsādavāsārham idaṃ hi yuvayor vapuḥ kathaṃ varāṅganotsaṅgayogyau kaṇṭakinīm imām / bhuvaṃ vāṃ caraṇau bhrāntāv iti nau manasi vyathā eṣā ca citraṃ yuvayoḥ patantī dhūlir ānane / vātoddhūtā hatacchāyam āvayoḥ kurute mukham bhavatyor eṣa cāṅge 'smin nipatan puṣpapeśale / kiraṇoṣmā dahaty asmān uccaṇḍaś caṇḍadīdhiteḥ tad brūtam ātmavṛttāntaṃ dūyate hṛdayaṃ hi naḥ / draṣṭuṃ na śaknumo 'raṇye sthitiṃ vāṃ svāpadāvṛte",
+      "ru": "Пусть будет проклята моя жизнь, батюшка, если ты не возьмешь другую себе в жены!» Согласился Чандасинха с сыном. Поехали они по следу и доехали постепенно до того озерка, и увидели царицу Чандравати, прекрасную, как темная ночь, сверкающая звездами, и дочь ее Лаванйавати, подобную сиянию Луны, и обе они были словно ночь и день, укрывшиеся в полдень под тенью деревьев. Подошли к ним Чандасинха и его сын, и царица встала, испуганная при виде их, опасаясь, не воры ли они. «Не тревожься, матушка, — сказала ей дочь, — не похожи они на воров; и по облику благородны, и хорошо одеты — верно, приехали сюда на охоту». Но хоть и сказала ей так дочка, все же продолжала царица беспокоиться. А тем временем Чандасинха соскочил с коня и обратился к ним обеим: «Из любопытства пришли мы сюда — посмотреть на вас. Не тревожьтесь и расскажите, как это вы, подобные Рати и Прити, повергнутым в несчастье, когда пламя из третьего глаза Шивы обратило в пепел Манматху, оказались в этом безлюдном лесу? Как вы, достойные жить во дворцах, украшенных драгоценностями, попали в эту лесную глушь? И как могли вы, чьи ноги достойны самых благородных женщин, бродить по этому полному шипов и колючек лесу? Даже мысль об этом причиняет боль! Поднятая ветром и осевшая на ваших лицах пыль заставляет бледнеть наши лица, а жар лучей разъяренного солнца, палящего ваши нежные тела, беспощадно жжет и нас. Так поведайте же, что с вами случилось? Не можем мы видеть вас в этом лесу, полном хищных зверей».",
+      "verdict": "alignment-holds",
+      "evidence": "The extended SA passage (daughter Lāvaṇyavatī bright as moonlight, dark queen Candravatī, the pair mistaking father and son for thieves, the dialogue about their plight in the forest) is matched closely by the RU narrative naming 'царицу Чандравати' and 'дочь ее Лаванйавати', the fear of thieves, and the extended dialogue asking how such noble women came to be in the wilderness — strong content correspondence despite being a dense multi-verse block."
+    },
+    {
+      "group": "kathasaritsagara:12.36.212",
+      "book": 12,
+      "passage": "12.36.212",
+      "confidence": 0.55,
+      "sa": "gatā niśā saṃprati deva mucyatāṃ vilāsaśayyā surataklamacchidaḥ / amī hi cūrṇālakakampadāyino mṛgīdṛśāṃ vānti niśāntavāyavaḥ",
+      "ru": "Проснись, о юноша! Ведь миновала ночь,",
+      "verdict": "alignment-holds",
+      "evidence": "SA opens 'gatā niśā saṃprati deva mucyatāṃ vilāsaśayyā...' ('the night has passed, my lord; now leave the pleasure-bed') and RU 'Проснись, о юноша! Ведь миновала ночь,' ('Wake up, o youth! For the night has passed,') directly renders the same wake-up-at-dawn content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.213",
+      "book": 12,
+      "passage": "12.36.213",
+      "confidence": 0.3,
+      "sa": "candraṃ niśāyāḥ sahasānuyāntyā hāsracyutānīva ca mauktikāni / dūrvāvanāgreṣv avapiṇḍitāni sphuranti sacchāyamuṣojalāni",
+      "ru": "И дуновенье утреннего ветра колышет",
+      "verdict": "confirmed-break",
+      "evidence": "SA 213 describes dew drops on grass tips shining like pearls fallen from a necklace as the moon departs with the night ('candraṃ niśāyāḥ sahasānuyāntyā... mauktikāni... sphuranti sacchāyamuṣojalāni'), but RU 'И дуновенье утреннего ветра колышет' ('And the breath of the morning wind stirs') contains no dew/pearl/moon imagery at all — it instead completes SA 212's closing image of dawn breezes shaking women's curls ('vānti niśāntavāyavaḥ'), indicating the RU line was displaced from a different verse."
+    },
+    {
+      "group": "kathasaritsagara:12.36.214",
+      "book": 12,
+      "passage": "12.36.214",
+      "confidence": 0.25,
+      "sa": "koṣeṣu vyalasannipītamadhavo ye kair avāṇāṃ ciraṃ labdhābhyantarasusthitā vikasatāminduprabhāsaṃgame / te saṃkocam upāgateṣu vigalacchrīkeṣu teṣv anyato bhṛṅgāḥ paśya kumāra yānti malināḥ kasya sthirā hy āpadi",
+      "ru": "Возлюбленной твоей разметанные кудри.",
+      "verdict": "confirmed-break",
+      "evidence": "SA 214 is a moralizing image of bees trapped in closing flower-calyxes addressed to the prince ('koṣeṣu vyalasannipītamadhavo... bhṛṅgāḥ paśya kumāra'), but RU 'Возлюбленной твоей разметанные кудри' ('Your beloved's disheveled curls') has no bees/flowers content — it matches SA 212's 'cūrṇālakakampadāyino...vānti niśāntavāyavaḥ' (breezes shaking the curls of doe-eyed women) instead, showing the line belongs to a different verse."
+    },
+    {
+      "group": "kathasaritsagara:12.36.215",
+      "book": 12,
+      "passage": "12.36.215",
+      "confidence": 0.25,
+      "sa": "dinakṛtkaramaṇḍitādharām avalokyaiva niśāṃ manobhuvā / apaśaśitilakaṃ vapuḥ kṛtaṃ mathitālpālpatamoñjanaṃ tathā",
+      "ru": "Проснись, проснись и отряхни истому страсти!",
+      "verdict": "uncertain",
+      "evidence": "SA 215 poetically describes dawn 'removing' night's cosmetics (tilaka, kohl) as Love acts upon her, with no explicit wake-up command; RU 'Проснись, проснись и отряхни истому страсти!' ('Wake up, wake up, and shake off the languor of passion!') shares the general love/dawn theme and closely echoes phrasing nearer to SA 216's 'apagatasuratāntakhedanidraḥ...jahau śayanam' (left the fatigue-sleep of love-play), so correspondence to 215 specifically cannot be confirmed or ruled out."
+    },
+    {
+      "group": "kathasaritsagara:12.36.216",
+      "book": 12,
+      "passage": "12.36.216",
+      "confidence": 0.15,
+      "sa": "iti mṛdumadhuraiḥ sa bandivākyair uṣasi śaśāṅkavatīvimuktakaṇṭhaḥ / apagatasuratāntakhedanidraḥ sapadi jahau śayanaṃ mṛgāṅkadattaḥ",
+      "ru": "Взгляни, сверкают дивным блеском",
+      "verdict": "confirmed-break",
+      "evidence": "SA 216 narrates Mṛgāṅkadatta, roused by the bards' sweet words at dawn, abandoning his bed after the fatigue of love-play ('sapadi jahau śayanaṃ mṛgāṅkadattaḥ'), but RU 'Взгляни, сверкают дивным блеском' ('Look, they shine with wondrous brilliance') has no reference to the prince rising or leaving his bed, continuing instead an unrelated dew/jewel description."
+    },
+    {
+      "group": "kathasaritsagara:12.36.217",
+      "book": 12,
+      "passage": "12.36.217",
+      "confidence": 0.15,
+      "sa": "utthāya ca vyadhita vāsarakṛtyameṣa pitrā nijocitakṛtākhilasaṃvidhānaḥ / bhūyas tathaiva ca nināya tadā bahūni tānyutsavena dayitāsahito dināni",
+      "ru": "Рожденные Утренней росою жемчуга,",
+      "verdict": "confirmed-break",
+      "evidence": "SA 217 describes the prince rising, performing his day's duties with his father, and then spending many festive days with his beloved ('utthāya ca vyadhita vāsarakṛtyam...bahūni tāny utsavena dayitāsahito dināni'), but RU 'Рожденные Утренней росою жемчуга,' ('Pearls born of the morning dew,') is purely a continuing dew-imagery fragment with no daily-duties or festivity content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.218",
+      "book": 12,
+      "passage": "12.36.218",
+      "confidence": 0.15,
+      "sa": "atha rājāmaradattas tajjanakas tacchvaśuryasya / śirasi suṣeṇasyādau babandha paṭṭaṃ kṛtābhiṣekasya",
+      "ru": "Просыпанные из ожерелья Ночью,",
+      "verdict": "confirmed-break",
+      "evidence": "SA 218 describes king Amaradatta binding the coronation turban on the head of his son-in-law's father Suṣeṇa ('śirasi suṣeṇasyādau babandha paṭṭaṃ kṛtābhiṣekasya'), an entirely different scene (a coronation), while RU 'Просыпанные из ожерелья Ночью,' ('Spilled from the necklace of Night,') is still the unrelated poetic dew/necklace metaphor."
+    },
+    {
+      "group": "kathasaritsagara:12.36.219",
+      "book": 12,
+      "passage": "12.36.219",
+      "confidence": 0.15,
+      "sa": "viṣayaṃ tad ucitam ekaṃ hastyaśvahiraṇyabhāravastrāṇi / śatasaṃkhyāś ca varastrīr dadau sa tasmai kṛtādaro nṛpatiḥ",
+      "ru": "Когда она за Месяцем спешила",
+      "verdict": "confirmed-break",
+      "evidence": "SA 219 describes the king giving lavish gifts — elephants, horses, gold, cloth, and a hundred fine women ('hastyaśvahiraṇyabhāravastrāṇi...śatasaṃkhyāś ca varastrīr dadau'), while RU 'Когда она за Месяцем спешила' ('When she rushed after the Moon,') continues the personified-Night poetic conceit with no gift-giving content whatsoever — different scene/event entirely."
+    },
+    {
+      "group": "kathasaritsagara:12.36.220",
+      "book": 12,
+      "passage": "12.36.220",
+      "confidence": 0.15,
+      "sa": "śabarakirātādhipatī māyābaṭuśaktirakṣitau ca tataḥ / sahabāndhavau sadārau mātaṅgacamūpatiṃ ca taṃ sa nṛpam",
+      "ru": "И впопыхах рванула ожерелье.",
+      "verdict": "confirmed-break",
+      "evidence": "SA 220 names the Śabara and Kirāta chieftains guarded by Māyābaṭu and Śakti, being brought with kinsmen and wives to the army commander Mātaṅga ('śabarakirātādhipatī...mātaṅgacamūpatiṃ ca taṃ sa nṛpam'), a political/military scene with named characters, while RU 'И впопыхах рванула ожерелье.' ('And in haste tore off her necklace.') merely closes the unrelated Night/Moon necklace metaphor — clearly different content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.221",
+      "book": 12,
+      "passage": "12.36.221",
+      "confidence": 0.15,
+      "sa": "durgapiśācaṃ sacivān mṛgāṅkadattasya tāṃś ca saśrutadhīn / samam ānayat pradattair viṣayair govājihemavastraiś ca",
+      "ru": "Смотри! Иссиня-черная пчела,",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes Amaradatta honoring Durgapishaca and the ministers with gifts of cattle, horses, gold and garments, but RU 'Иссиня-черная пчела' ('A bluish-black bee') opens an unrelated nature/love lyric about a bee, with no ministers, gifts, or proper names in common."
+    },
+    {
+      "group": "kathasaritsagara:12.36.222",
+      "book": 12,
+      "passage": "12.36.222",
+      "confidence": 0.15,
+      "sa": "tataḥ kirātendramukhān visṛjya tān nṛpān svadeśeṣu suṣeṇasaṃyutān / śaśāsa rājyaṃ sutaśauryanirvṛtaḥ sa tatsukhenāmaradattabhūpatiḥ",
+      "ru": "Упившись белых лотосов медвяным соком,",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes sending the kirata kings home and Amaradatta ruling happily with his son's valor, but RU 'Упившись белых лотосов медвяным соком' ('Having drunk itself full on the honeyed sap of white lotuses') continues the unrelated bee/lotus poem with no kings, no ruling, no shared content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.223",
+      "book": 12,
+      "passage": "12.36.223",
+      "confidence": 0.15,
+      "sa": "mṛgāṅkadatto 'pi vijitya vairiṇaḥ śaśāṅkavatyā sucirādavāptayā / nijaiś ca tair bhīmaparākramādibhiḥ sahāvatasthe sacivaiściraṃ sukhī",
+      "ru": "Пока под лаской лунного сиянья",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes Mrgankadatta defeating enemies and living happily with Sasankavati and his ministers Bhimaparakrama etc., but RU 'Пока под лаской лунного сиянья' ('While under the caress of moonlight') is a moonlight-lyric fragment naming no characters and describing no victory or reunion."
+    },
+    {
+      "group": "kathasaritsagara:12.36.224",
+      "book": 12,
+      "passage": "12.36.224",
+      "confidence": 0.15,
+      "sa": "kāle 'tha yātyamaradattanṛpasya tasya svair aṃ jarā śravaṇamūlam upājagāma / bhuktāḥ śriyaḥ pariṇataṃ vayasā śamasya nanveṣa kāla iti vaktumivāṅgabhūtā",
+      "ru": "Они открыты были, — теперь спешит от них —",
+      "verdict": "confirmed-break",
+      "evidence": "SA is about old age creeping to King Amaradatta's ears as his enjoyed fortunes decline with age, but RU 'Они открыты были, — теперь спешит от них —' ('They were open — now [something] hastens from them—') is an impersonal eye/lotus-closing image from the same unrelated dawn poem, with no king or aging described directly."
+    },
+    {
+      "group": "kathasaritsagara:12.36.225",
+      "book": 12,
+      "passage": "12.36.225",
+      "confidence": 0.15,
+      "sa": "tataḥ sa bhogeṣu viraktamānaso mahīpatiḥ svānnijagāda mantriṇaḥ / niśamyatāṃ saṃprati varṇayāmi vo vidhitsitaṃ yanmama vartate hṛdi",
+      "ru": "Они уже закрылись, и их померкла красота! —",
+      "verdict": "confirmed-break",
+      "evidence": "SA has the king, mind turned from pleasures, telling his ministers to listen to what is in his heart, but RU 'Они уже закрылись, и их померкла красота!' ('They have already closed, and their beauty has faded!') continues the eye/lotus imagery of the unrelated dawn poem with no ministers or speech act; note this exact sentiment appears instead, almost verbatim, inside group 236-237's compressed paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.36.226",
+      "book": 12,
+      "passage": "12.36.226",
+      "confidence": 0.15,
+      "sa": "gataṃ vayo naḥ palitena sāṃprataṃ kṛtāntadūtena kacagrahaḥ kṛtaḥ / jarāgame jīrṇarasaṃ ca mādṛśāṃ kubhogatṛṣṇāvyasanaṃ viḍambanā",
+      "ru": "Так черная душа, ограбив дом,",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes youth gone and grey hair as death's messenger seizing the hair, but RU 'Так черная душа, ограбив дом,' ('Thus the black soul, having robbed the house,') is a thief/soul image from the unrelated poem with no grey hair or aging content; the matching translation for this verse instead appears in group 236-237's paragraph ('седина, вестник кончины, уже прокралась в мои волосы')."
+    },
+    {
+      "group": "kathasaritsagara:12.36.227",
+      "book": 12,
+      "passage": "12.36.227",
+      "confidence": 0.15,
+      "sa": "vivṛddhibhājā vayasā samaṃ ca yad vivardhate lobhamanobhavagrahaḥ / asaṃśayaṃ kāpuruṣavrataṃ hi tat svabhāvajaṃ satpuruṣair aśikṣitam",
+      "ru": "Спешит к другому поживиться.",
+      "verdict": "confirmed-break",
+      "evidence": "SA states that greed grows with age and this is the mark of base men unpracticed by the virtuous, but RU 'Спешит к другому поживиться.' ('[It] hastens to profit off another.') is a fragment of the same unrelated bee/soul poem, not a statement about greed and virtue; the true match for this verse is found instead in group 236-237's paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.36.228",
+      "book": 12,
+      "passage": "12.36.228",
+      "confidence": 0.15,
+      "sa": "tad asti me labdhayaśā mahītale sarājakāvantinarendranirjayāt / svato 'nuraktaprakṛtirguṇādhiko mṛgāṅkadattaḥ susahāyavānayam",
+      "ru": "Открой же очи — сам Бог любви,",
+      "verdict": "confirmed-break",
+      "evidence": "SA has the king citing his fame from defeating the king of Avanti and praising his virtuous son Mrgankadatta, but RU 'Открой же очи — сам Бог любви,' ('Open your eyes now — the God of Love himself,') addresses an eye-opening/love-god scene from the unrelated poem; the actual translation of this verse's content appears instead in group 236-237's paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.36.229",
+      "book": 12,
+      "passage": "12.36.229",
+      "confidence": 0.15,
+      "sa": "tad etad asmai nijarājyamūrjitaṃ samarpya tīrthaṃ tapase 'hamāśraye / parair anindyaṃ caritaṃ manasvināṃ vayonusārocitam eva śobhate",
+      "ru": "Заметив, что Светоч дня свой палец положил",
+      "verdict": "confirmed-break",
+      "evidence": "SA has the king resolving to hand over the kingdom and retire to a tirtha for asceticism, but RU 'Заметив, что Светоч дня свой палец положил' ('Noticing that the Lamp of day laid its finger') is a sunrise-personification fragment of the unrelated poem; the genuine match for this verse's abdication content is instead found in group 236-237's paragraph."
+    },
+    {
+      "group": "kathasaritsagara:12.36.230",
+      "book": 12,
+      "passage": "12.36.230",
+      "confidence": 0.15,
+      "sa": "iti kṣitīśasya vacaḥ suniścitaṃ niśamya dhīrāḥ kila tasya mantriṇaḥ / krameṇa devīpramukhāś ca paurās tatheti sarve pratipedire tadā",
+      "ru": "На губы Ночи, спешит с ее чела",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes the ministers, queen, and citizens all agreeing to the king's firm resolve, but RU 'На губы Ночи, спешит с ее чела' ('Onto Night's lips, hastens from her brow') continues the unrelated dawn/night personification poem with no mention of ministers or assent."
+    },
+    {
+      "group": "kathasaritsagara:12.36.231",
+      "book": 12,
+      "passage": "12.36.231",
+      "confidence": 0.15,
+      "sa": "tataḥ sa rājā gaṇakoktalagne dine vivikte sahito dvijāgryaiḥ / mṛgāṅkadattasya cakāra tasya rājyābhiṣekotsavamātmajasya",
+      "ru": "Сорвать серп Месяца … И тьма",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes the king performing the coronation ceremony of his son Mrgankadatta on an astrologer-chosen day, but RU 'Сорвать серп Месяца … И тьма' ('To tear off the Moon's sickle ... And darkness') is a celestial image from the unrelated poem with no coronation content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.232",
+      "book": 12,
+      "passage": "12.36.232",
+      "confidence": 0.15,
+      "sa": "itas tataḥ kṣattṛnideśadhāvajjanākulaṃ vyagraniyuktavargam / tadāsya nṛtyadvaracāraṇastri mudā jughūrṇeva gṛhaṃ nṛpasya",
+      "ru": "Растаяла бесследно …",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes a crowd bustling at the chamberlain's orders and the king's house reeling with joyous dancers, but RU 'Растаяла бесследно …' ('[It] melted away without a trace ...') is the closing line of the unrelated dawn-poem (darkness dissolving at daybreak), unconnected to the palace bustle scene."
+    },
+    {
+      "group": "kathasaritsagara:12.36.233-235",
+      "book": 12,
+      "passage": "12.36.233-235",
+      "confidence": 0.35,
+      "sa": "tīrthodakaṃ bhūri sabhāryakasya mṛgāṅkadattasya papāta mūrdhni / jalapravāhāḥ punar asya pitroḥ sānandayor netrayugānnirīyuḥ adhiṣṭhite tena navena rājñā siṃhāsane siṃhaparākrameṇa / tadvidviṣāṃ kopabhayānatānāṃ bhūmāv asiṃhāsanam eva mene tataḥ pitā tasya dināni sapta tatāna sajjīkṛtarājamārgam / yathārhasaṃmānitarājalokaṃ mahotsavaṃ so 'maradattabhūpaḥ",
+      "ru": "Такими сладостными песнями, распевающимися придворным певцом на заре, пробужденный, Мриганкадатта отпустил из объятий своих Шашанкавати и, стряхнув сон, которому он предался, усталый после всех любовных наслаждений, покинул ложе. Поднялся он и выполнил все дневные дела, для которых отец его сам сделал все приготовления. Так провел царевич» многие дни в радостных празднествах со своей возлюбленной. Затем царь Амарадатта, его родитель, повязал царевичу Сушене почетный тюрбан», и помазал его на царство в подаренном ему достойном его уделе, и, одарив слонами, конями, ношами золота и одеждами, дал ему еще вдобавок сто прекрасных женщин. Правителю же шабаров Майабату, царю киратов Шактиракшите с их родичами и женами, повелителю полчищ матангов — царю Дургапишаче и министрам Мриганкадатты, а также брахману Шрутадхи оказал честь и наделил и их уделами, коровами, конями, золотом и одеждами. А потом отпустил он всех царей во главе с царем киратов и Сушену в их страны и счастливо правил, довольный геройством сына, царством. Мриганкадатта же, одолев недругов и обретя долгожданную Шашанкавати, счастливо жил вместе со своими министрами — Бхимапаракрамой и прочими.",
+      "verdict": "alignment-holds",
+      "evidence": "The long compressed RU paragraph covers the coronation aftermath — Mrgankadatta rising to perform the day's rites his father prepared, 'many days of joyful festivities' (matching sapta dina...mahotsavam of v.235), and Amaradatta honoring/endowing the assembled rulers and ministers 'yathārhasaṃmānitarājalokaṃ' — so despite folding in earlier narrative beats (221-223) as well, its content genuinely corresponds to this passage's coronation-festival material, fitting the known granularity-compression pattern."
+    },
+    {
+      "group": "kathasaritsagara:12.36.236-237",
+      "book": 12,
+      "passage": "12.36.236-237",
+      "confidence": 0.35,
+      "sa": "dine 'ṣṭame dārayuto nagaryā nirgatya putraṃ sa mṛgāṅkadattam / nivartya taṃ bāṣpamukhaṃ sapauraṃ vārāṇasīṃ mantrisakho jagāma tasyāṃ sa gaṅgāmbupariplutāṅgo rājā trisaṃdhyaṃ tripurāntakasya / kurvan saparyāṃ phalamūlavṛttis tasthau tapasyan munivat sadāraḥ",
+      "ru": "Шло время, и однажды, подкравшись, припала к уху царя Амарадатты его Старость, словно обратившись во плоть, и прошептала: «Насладился ты счастьем, преклонны года твои, настало время уйти от дел». Тогда отвратил он дух свой от наслаждений и сказал министрам: «Соблаговолите выслушать то, что я сообщу вам и что должно быть выполнено, ибо лежит это у меня на сердце. Подходит век мой к концу, и седина, вестник кончины, уже прокралась в мои волосы. Когда старость приходит и притупляется вкус к радостям жизни, людям, мне подобным, недостойно предаваться наслаждениям. Если с преклонными годами увеличивается, растет и жадность и старость, это — признак низких людей! И не должны добродетельные этому подражать! Есть у меня сын, прославившийся по всей земле победой над царем Аванти и союзными ему царями, исполненный добродетелей, Мриганкадатта, любимый народом и наделенный добрыми друзьями. Ему передам я царство, а сам уйду на святые места и стану подвижником. Всегда достойно жить соответственно возрасту — даже враги не осудят за это».",
+      "verdict": "confirmed-break",
+      "evidence": "SA 236-237 describes the king and wife leaving the city on the eighth day, journeying to Varanasi, and living as ascetics bathing in the Ganges and worshipping Tripurantaka thrice daily, but the paired RU paragraph never mentions Varanasi, the Ganges, or Shiva-worship — instead it is an almost word-for-word translation of verses 224-229 (Old Age creeping to his ear, grey hair as death's herald, greed growing with age being base, fame from defeating the Avanti king, resolving to give the kingdom to his son and retire to a tirtha), i.e. the RU text belongs several verses earlier in the sequence."
+    },
+    {
+      "group": "kathasaritsagara:12.36.238-239",
+      "book": 12,
+      "passage": "12.36.238-239",
+      "confidence": 0.35,
+      "sa": "āsādya rājyamatha so 'pi mṛgāṅkadatto bhāsvānivāmbaratalaṃ vipulāmalaṃ tat / ākramya ca kṣitibhṛtaḥ karasaṃnipātaiḥ prāvartata pratapituṃ prasaratpratāpaḥ māyābaṭuprabhṛtibhiś ca sakarmasenaiḥ saṃbhūya saśrutadhibhiḥ sacivaiḥ sa taiḥ svaiḥ / sadvīpametadavajitya caturdigantam ekātapatram avanīvalayaṃ śaśāsa",
+      "ru": "Такую хорошо обдуманную речь повелителя земли внимательно слушали рассудительные министры, и со временем все с этим, начиная от царицы и кончая горожанами, согласились. Тогда царь вместе с мудрейшими из брахманов в благоприятный день, определенный звездочетами, совершил церемонию помазания на царство сына своего Мриганкадатты. И был в этот же день царский дворец полон людей, снующих туда и сюда по повелению устроителя церемоний, и были все чины во дворце заняты, и гудел сам дворец, словно в радости, от плясок лучших танцовщиц и песнопений странствующих поэтов. Когда пролилась на головы Мриганкадатты и его жены вода из святых мест, излились на них потоки радости из очей отца и матери, а когда вступил он, мощью подобный льву, на львиный трон, все недруги его, казалось, жалко пресмыкались перед ним, опасаясь возбудить его гнев.",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes Mrigankadatta's post-conquest sovereign glory (sun-simile, conquering kings, ruling four directions under one umbrella with Mayabatu/Kармasena/Shrutadhi), but RU instead describes an unrelated coronation-ceremony scene (astrologers' auspicious day, palace decorated with dancers/poets, holy water poured on heads, lion throne) with no overlapping content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.240",
+      "book": 12,
+      "passage": "12.36.240",
+      "confidence": 0.3,
+      "sa": "tasmiṃś ca rājani kathāsu niśamyamānadurbhikṣadasyuparacakrabhayādiduḥkhā / nityaprahṛṣṭasukhitā navarāmabhadrasaurājyasaukhyagasamaṃ vasudhā babhāra",
+      "ru": "Семь дней продолжался этот великий праздник, во время которого был нарядно украшен царский путь, а цари, собравшиеся на праздник, были вознаграждены в соответствии с достоинством каждого. На восьмой же день вместе с супругой покинул Амарадатта город и, заставив вернуться обливающихся слезами Мриганкадатту и горожан, провожавших его, в Айодхйу, отправился с министром в священный город Варанаси. Там он, омывающийся в водах Ганги трижды в день, вместе с супругой совершал приношение Погубителю Трипуры, питался плодами и кореньями и совершал тяжелые подвиги.",
+      "verdict": "confirmed-break",
+      "evidence": "SA is a golden-age description of the kingdom's happiness (no fear of famine/robbers, equal to Rama's benevolent reign), while RU describes an unrelated episode -- Amaradatta's seven-day departure festival and journey to Varanasi to worship Shiva -- with no shared content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.241-242",
+      "book": 12,
+      "passage": "12.36.241-242",
+      "confidence": 0.35,
+      "sa": "adhyāsya taiś ca sacivaiḥ saha tāmayodhyāṃ nānādigāgatanṛpārcitapādapadmaḥ / samrāṭ samaṃ dayitayā sa śaśāṅkavatyā bhogānakaṇṭakasukhān bubhuje cirāya iti sa vyākhyāya kathāṃ malayavanānte muniḥ piśaṅgajaṭaḥ / taṃ naravāhanadattaṃ rājasutaṃ virahiṇaṃ jagade",
+      "ru": "Мриганкадатта же взошел на трон, как блистательное Солнце восходит на бескрайнее и чистое небо, и, подобно тому как лучами своими оно охватывает все горы, он, обложив всех царей данью, стал сверкать нарастающей мощью. Вместе с Майабату, и с другими союзными с ним царями, и с царем Кармасеной, и со всеми своими министрами, и с брахманом Шрутадхи, пройдя по всей земле, собрал он под один зонт все четыре страны света и правил ими. И при нем там только в сказаниях о прежних временах существовали такие беды, как опасение вторжения, нападение разбойников или нищета, — наслаждалась земля счастьем и радовалась, словно вновь наступили благодетельные времена справедливого правления добродетельного Рамы. Долго верховный повелитель Мриганкадатта, утвердившийся со своими министрами в Айодхйе, куда со всех сторон стекались цари, жаждущие почтить прикосновением лотосы его стоп, наслаждался вместе со своей женой счастьем, не омраченным врагами».",
+      "verdict": "alignment-holds",
+      "evidence": "The RU's closing lines ('утвердившийся со своими министрами в Айодхйе, куда... стекались цари, жаждущие почтить прикосновением лотосы его стоп, наслаждался вместе со своей женой') directly translate SA's 'adhyāsya taiś ca sacivaiḥ saha tāmayodhyāṃ nānādigāgatanṛpārcitapādapadmaḥ / samrāṭ samaṃ dayitayā sa śaśāṅkavatyā bhogān... bubhuje cirāya', even though extra recap material precedes it."
+    },
+    {
+      "group": "kathasaritsagara:12.36.243",
+      "book": 12,
+      "passage": "12.36.243",
+      "confidence": 0.3,
+      "sa": "tasmātsoḍhakleśo mṛgāṅkadatto yathā śaśāṅkavatīm / prāpa purā putra tathā prāpsyasi tāṃ madanamañcukāṃ tvamapi",
+      "ru": "Такую повесть поведал мудрый Пишангаджата в лесу на горах Малайа царевичу Нараваханадатте, тоскующему в разлуке, и молвил: «Так же вот, как Мриганкадатта, претерпев множество злоключений, обрел Шашанкавати, так и ты, сынок, добудешь свою Маданаманчуку».",
+      "verdict": "alignment-holds",
+      "evidence": "RU's simile ('как Мриганкадатта... обрел Шашанкавати, так и ты, сынок, добудешь свою Маданаманчуку') is a direct rendering of SA's 'tasmāt soḍhakleśo mṛgāṅkadatto... prāpa... śaśāṅkavatīm... tathā prāpsyasi tāṃ madanamañcukāṃ tvamapi'."
+    },
+    {
+      "group": "kathasaritsagara:12.36.244",
+      "book": 12,
+      "passage": "12.36.244",
+      "confidence": 0.3,
+      "sa": "iti tasmātsa munīndrādākarṇya vacomṛtaṃ piśaṅgajaṭāt / hṛdi naravāhanadatto dhṛtimādhānmadanamañcukāprāptau",
+      "ru": "Когда выслушал царевич Нараваханадатта эту сладостную речь из уст величайшего из мудрецов Пишангаджаты, в сердце его вселилась уверенность, что обретет он Маданаманчуку. Всеми помыслами сосредоточившись на ней, попрощался он с лучшим из мудрецов и стал бродить по горам Малайа в надежде найти приведшую его в эти края и потерянную Лалиталочану.",
+      "verdict": "alignment-holds",
+      "evidence": "RU's opening ('Когда выслушал царевич Нараваханадатта эту сладостную речь из уст... Пишангаджаты, в сердце его вселилась уверенность, что обретет он Маданаманчуку') matches SA's 'ākarṇya vacomṛtaṃ piśaṅgajaṭāt / hṛdi naravāhanadatto dhṛtimādhān madanamañcukāprāptau' closely, before the RU continues into adjacent content."
+    },
+    {
+      "group": "kathasaritsagara:12.36.245",
+      "book": 12,
+      "passage": "12.36.245",
+      "confidence": 0.4,
+      "sa": "tadgatacitto 'tha sa taṃ munivaramāmantrya hāritāṃ pūrvam / tatrānetrīṃ cinvanmalayagirau lalitalocanāṃ vyacarat",
+      "ru": "Двенадцатая книга по названию «Книга о Шашанкавати» окончена.",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes Naravahanadatta wandering the Malaya mountain searching for the lost Lalitalocana, but RU is purely the book-12 colophon ('Двенадцатая книга по названию «Книга о Шашанкавати» окончена') with zero narrative correspondence to the verse."
+    },
+    {
+      "group": "kathasaritsagara:14.2.26",
+      "book": 14,
+      "passage": "14.2.26",
+      "confidence": 0.5,
+      "sa": "tato 'ta vīkṣyate yāvadbālastāvadavāpi saḥ / tena sarve 'pi te jagmurgandharvā api vismayam",
+      "ru": "Тут уже все гандхарвы пришли в крайнее изумление.",
+      "verdict": "alignment-holds",
+      "evidence": "RU 'Тут уже все гандхарвы пришли в крайнее изумление' is a compressed but accurate rendering of SA's closing clause 'tena sarve 'pi te jagmur gandharvā api vismayam' (all the gandharvas too went into astonishment)."
+    },
+    {
+      "group": "kathasaritsagara:14.3.88",
+      "book": 14,
+      "passage": "14.3.88",
+      "confidence": 0.4,
+      "sa": "iti divyāsu kanyāsu kṣubhyatīṣu vibhāvya tam / tatrākasmānmahotpātāḥ prādurāsaṃstapovane",
+      "ru": "Так вот поразил этих божественных красавиц величественный облик Нараваханадатты!",
+      "verdict": "alignment-holds",
+      "evidence": "RU 'поразил этих божественных красавиц величественный облик Нараваханадатты' corresponds to SA's 'divyāsu kanyāsu kṣubhyatīṣu' (the divine maidens becoming agitated because of him) -- same actors/event, compressed and omitting only the trailing portent clause."
+    },
+    {
+      "group": "kathasaritsagara:14.3.124-125",
+      "book": 14,
+      "passage": "14.3.124-125",
+      "confidence": 0.35,
+      "sa": "naravāhanadatto 'pi kailāsaṃ samavāpya saḥ / tapasā toṣayām āsa tatrāgrasthaṃ vināyakam tena dattābhyanujñaś ca prāviśya girijāpateḥ / āśramaṃ niyamakṣāmo dadarśa dvāri nindinam",
+      "ru": "Нараваханадатта же, оказавшись на Кайласе, (частично текст пропущен) …",
+      "verdict": "alignment-holds",
+      "evidence": "RU 'Нараваханадатта же, оказавшись на Кайласе, (частично текст пропущен)' matches the opening of SA 'naravāhanadatto 'pi kailāsaṃ samavāpya saḥ' (Naravahanadatta, having reached Kailasa), and is explicitly flagged as a truncated rather than mismatched translation."
+    },
+    {
+      "group": "kathasaritsagara:14.3.126",
+      "book": 14,
+      "passage": "14.3.126",
+      "confidence": 0.3,
+      "sa": "kṛtapradakṣiṇaṃ caitaṃ sa nandī sadayo 'bravīt / prāyaḥ siddho 'si vighnā hi praśāntāste tavādhunā",
+      "ru": "Так наставлял его Нандин.",
+      "verdict": "alignment-holds",
+      "evidence": "RU 'Так наставлял его Нандин' is a minimal-content compression of SA's scene in which kind Nandin speaks/instructs him ('sa nandī sadayo 'bravīt') -- same actor and action, just without the quoted speech."
+    },
+    {
+      "group": "kathasaritsagara:14.3.127-128",
+      "book": 14,
+      "passage": "14.3.127-128",
+      "confidence": 0.35,
+      "sa": "tadihasthastapasya tvaṃ bhagavattoṣaṇāvadhi / duritaghnatapaḥśuddhisavyapekṣā hi siddhayaḥ ity ukte nandinā dhyāyan devaṃ devīṃ ca pārvatīm / naravāhanadatto 'graṃ tapastepe 'nilāśanaḥ",
+      "ru": "Супруг дочери гор, и, увидев у входа Нандина, …(частично текст пропущен), Нараваханадатте ласково сказал: «Достиг ты успеха почти во всех делах, и ныне препятствия, сопровождаемые тебя, устранились. Оставайся здесь и порадуй подвижничеством Бога, ибо успех зависит от чистоты подвижничества, истребляющего грехи!» И остался там Нараваханадатта, размышляя о Шиве.",
+      "verdict": "alignment-holds",
+      "evidence": "RU (Shiva, 'супруг дочери гор', tells Naravahanadatta to stay and please the god through austerity; 'остался там Нараваханадатта, размышляя о Шиве') matches SA's content of Nandin's instruction to remain and practice tapas, and Naravahanadatta meditating on the god and Parvati ('dhyāyan devaṃ devīṃ ca pārvatīm... tapastepe')."
+    },
+    {
+      "group": "kathasaritsagara:14.3.129-139",
+      "book": 14,
+      "passage": "14.3.129-139",
+      "confidence": 0.55,
+      "sa": "tapastuṣṭaś ca bhagavān sa dattvā darśanaṃ śivaḥ / devyā girijayā sārdham eva prahvaṃ tamādiśat vidyādharāṇāṃ sarveṣāṃ cakravartī bhavādhunā / sarvāḥ sarvātiśāyinyo vidyāḥ prādurbhavantu te asmatprabhāvāc chatrūṇām avijeyo bhaviṣyasi / acchedyaścāpy abhedyaś ca haniṣyasyakhilānnripūn dṛṣṭe tvayi na vidyāś ca prabhaviṣyanti te dviṣām / tad gaccha gaurīvidyāpi tvadāyattā bhaviṣyati iti gauryā samaṃ dattvā varaṃ tasmai dadau haraḥ / cakravartimahāpadmavimānaṃ brahmanirmitam tatas tasyāvirāsaṃstā vidyāḥ sarvāḥ savigrahāḥ / kimādiśasi yatkurma ityājñāsādhanotsukāḥ iti naravāhanadattaḥ siddhavaraughaḥ praṇamya parameśau / adhiruhya tac ca divyaṃ padmavimānaṃ tadabhyanujñātaḥ prathamaṃ tāvadayāsīdamitagates tasya vakrapurasaṃjñam / puramāveditamārgo vidyābhiḥ siddhacāraṇodgītaḥ so 'pyārūḍhavimānaṃ vyomnā prāptaṃ vilokya taṃ dūrāt / amitagatiḥ sam upetya svagṛhaṃ prāveśayatkṛtapraṇatiḥ pradadau ca tatra varṇitanijasiddhiprāptaye mudā tasmai / naravāhanadattāya sa sulocanākhyām upāyanaṃ svasutāsm so 'tra tayā saha vidyādharalakṣmyevāptayā tadāparayā / nayati sma cakravartī tatotsavaṃ prītimāṃstadahaḥ",
+      "ru": "Итак, Нараваханадатта, получивший множество наград поклонился высшему Богу, с его позволения взошел на воздушный корабль «Падма» и сначала отправился в город Вакрапуру, где царствовал Амитагати, и знания показали ему дорогу, а сиддхи и чараны! — пели ему славу. Издалека еще заметив приближающийся воздушный корабль, Амитагати вышел навстречу Нараваханадатте и привел его к себе во дворец, и принял с почетом. Поведал ему Нараваханадатта, как достиг он своих знаний, а затем обрадованный Амитагати выдал дочь свою Сулочану за царевича. И тогда верховный повелитель видйадхаров провел с ней словно с новой Богиней счастья видйадхарского царства, полный радости день.",
+      "verdict": "alignment-holds",
+      "evidence": "RU closely mirrors the latter half of the long SA passage: bowing to the supreme god, boarding the Padma vimana, arriving at Vakrapura ruled by Amitagati (guided by the vidyas, hailed by siddhas/charanas), being welcomed into the palace, and receiving Amitagati's daughter Sulochana in marriage -- a strong content match, only compressing the earlier Shiva-boon section."
+    },
+    {
+      "group": "kathasaritsagara:14.4.51",
+      "book": 14,
+      "passage": "14.4.51",
+      "confidence": 0.55,
+      "sa": "kva ḍākinībhir bhītiḥ sā kva sukhaṃ tac ca tatkṣaṇam / acintyo bata daivenāpyāpātaḥ sukhaduḥkhayoḥ",
+      "ru": "Воистину, немыслимо знать, когда судьба обрушит на человека горе, когда — радость!",
+      "verdict": "alignment-holds",
+      "evidence": "RU 'немыслимо знать, когда судьба обрушит на человека горе, когда — радость' is a close rendering of SA's 'acintyo bata daivenāpy āpātaḥ sukhaduḥkhayoḥ' (fate's onset of happiness and sorrow is indeed unthinkable), omitting only the preceding dakini-fear clause."
+    },
+    {
+      "group": "kathasaritsagara:14.4.209",
+      "book": 14,
+      "passage": "14.4.209",
+      "confidence": 0.3,
+      "sa": "saṃmantrya taiḥ saha sa mandaradevadarpaṃ rājā vijetumatha divyavimānagāmī / śeṣānyacandanatarūditaratnasiddhyai govindakūṭagirim eva jagāma tāvat",
+      "ru": "Пятнадцатая книга по названию «Книга о пяти красавицах» окончена.",
+      "verdict": "confirmed-break",
+      "evidence": "SA describes the king traveling by divine vimana to Govindakuta mountain to conquer Mandaradeva's pride and obtain gems, but RU is purely the book-15 colophon ('Пятнадцатая книга по названию «Книга о пяти красавицах» окончена') with no narrative correspondence."
+    }
+  ]
+}
