@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Regression guard for Cyrillic homoglyphs in `#sa` corpus fields (H1694, issue #16, Sonnet 5
+  `claude-sonnet-5`).** The 5 words / 21 field-occurrences named in #16 were already fixed on `main`
+  (PR #46, 12-07-2026) via `web/corpus_builder/scan_cyrillic_homoglyphs.py`; this session re-verified the
+  corpus jsonl is clean (`saṃcukoca`, `calāgramukuṭaprāṃśuś`, `cekṣvākuvaṃśasya`, `chīlavān`,
+  `tad-vipāka-anuguṇānām` all round-trip to their Latin-IAST form, no Cyrillic remains in any `#sa`
+  segment) and added `web/tests/test_cyrillic_homoglyphs.py` — a hermetic pytest guard (imports the
+  existing scanner, no `corpus.db` needed) so a future re-ingest can't silently reintroduce the leak.
+  Russian-field mixed script (e.g. Vasmer `*Dunajь`) is untouched by design — the scanner is
+  script-tag-gated to `#sa` only.
 - **KSS book 12–14 low-confidence alignment groups re-verified with quoted evidence (H1687, Sonnet 5
   `claude-sonnet-5`).** The H927 review sheet's 70 low-confidence (<0.6) SA↔RU alignment groups were
   re-derived directly from `web/corpus_builder/jsonl/kathasaritsagara-12.jsonl`/`-14.jsonl` (the original
