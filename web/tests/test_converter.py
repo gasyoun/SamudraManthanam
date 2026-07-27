@@ -22,6 +22,7 @@ from corpus_builder.html_to_canonical import (  # noqa: E402
     _extract_passage_from_range_title,
     _to_slp1,
 )
+from app.services.slug import make_unique_slug  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Fixture: JSONL directory (auto-skip if not built)
@@ -36,10 +37,43 @@ def jsonl_dir():
 
 
 @pytest.fixture(scope="session")
-def all_records(jsonl_dir):
-    """Load every record from every JSONL file into a list."""
+def canonical_jsonl_files(jsonl_dir):
+    """The JSONL files `ingest.py` actually reads for the live corpus: one
+    `{slug}.jsonl` per active `Data/*.html` entry in `Programdata/data.txt`,
+    slug derived the same way `ingest.py` derives it (`make_unique_slug`).
+
+    `jsonl_dir` also holds build-time staging/intermediate artifacts (per-book
+    split files consumed only by a combine step, `.raw.jsonl` pre-alignment
+    dumps, etc.) that `ingest.py` never reads — globbing the whole directory
+    double-counts their records against the same canonical IDs and produces
+    false-positive "duplicates" that were never ingested twice.
+    """
+    data_txt = (
+        Path(__file__).parent.parent.parent
+        / "Index" / "lib" / "x86_64-win64" / "Programdata" / "data.txt"
+    )
+    if not data_txt.exists():
+        pytest.skip("Programdata/data.txt not found — cannot resolve canonical JSONL set")
+    filenames = [
+        line.strip() for line in data_txt.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    seen_slugs: set[str] = set()
+    files = []
+    for filename in filenames:
+        slug = make_unique_slug(filename, seen_slugs)
+        seen_slugs.add(slug)
+        jf = jsonl_dir / f"{slug}.jsonl"
+        if jf.exists():
+            files.append(jf)
+    return sorted(files)
+
+
+@pytest.fixture(scope="session")
+def all_records(canonical_jsonl_files):
+    """Load every record from every canonical (ingest-eligible) JSONL file."""
     records = []
-    for jf in sorted(jsonl_dir.glob("*.jsonl")):
+    for jf in canonical_jsonl_files:
         with open(jf, encoding="utf-8") as f:
             for line in f:
                 line = line.strip()
@@ -292,15 +326,37 @@ def test_gate3_zero_unparseable():
 # ---------------------------------------------------------------------------
 
 @pytest.mark.corpus
-def test_gate4_all_ids_unique(all_records):
-    """Gate 4: every record ID across all 148 JSONL files is unique."""
-    ids = [r["id"] for r in all_records]
+def test_gate4_all_ids_unique(canonical_jsonl_files):
+    """Gate 4: every record ID is unique within its own source file.
+
+    Uniqueness is scoped **per source** (LINE_ID_SCHEME.md §9: "unique per
+    source (enforced by index)"; `ingest.py`'s `_validate_jsonl_ingest` checks
+    the same `(source_id, canonical_id)` scope), not globally across the
+    whole corpus. Some works are intentionally ingested from more than one
+    source file at different granularities (e.g. `devibhagavata-purana`'s
+    12 per-skandha sources plus its combined source, kept side by side since
+    H941/H558) — those sources legitimately share `{work}:{passage}` IDs
+    across DB source_ids; that is not a duplicate-ID defect.
+    """
     from collections import Counter
-    counts = Counter(ids)
-    duplicates = {k: v for k, v in counts.items() if v > 1}
-    assert not duplicates, (
-        f"Duplicate IDs found ({len(duplicates)} groups): "
-        f"{dict(list(duplicates.items())[:5])}"
+    import json as _json
+
+    all_duplicates = {}
+    for jf in canonical_jsonl_files:
+        ids = []
+        with open(jf, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    ids.append(_json.loads(line)["id"])
+        counts = Counter(ids)
+        duplicates = {k: v for k, v in counts.items() if v > 1}
+        if duplicates:
+            all_duplicates[jf.name] = duplicates
+
+    assert not all_duplicates, (
+        f"Duplicate IDs found within a single source ({len(all_duplicates)} files): "
+        f"{dict(list(all_duplicates.items())[:5])}"
     )
 
 
