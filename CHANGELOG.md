@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Structured JSON/CSV export for search results (H1502, Sonnet 5 `claude-sonnet-5`).**
+  `GET /api/search/export` now accepts `format=json` and `format=csv` alongside the
+  existing HTML default, reusing the same `dispatch_search` result set and metadata
+  block (`query`, `mode`, `corpus_version`, `timestamp`, `source_filter`,
+  `live_search_url`) already rendered into the HTML export. JSON returns
+  `{metadata, results}` with the full result fields (`source_id`, `source_title`,
+  `chapter`, `line_num`, `link_id`, `line_html`, `line_text`); CSV writes the same
+  metadata as `# key,value` comment rows followed by a data table. +4 tests; existing
+  HTML export and its tests unaffected.
 - **Residual replan pack (stale-roadmap `/ask-batch`, Grok 4.5 `grok-4.5`, 26-07-2026):** living status [docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md) + unattended [docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md) with ARCHITECTURE / IMPLEMENTATION / VERIFICATION / `.meta.md`. Supersede banners on H2 mobile roadmap, Somadeva scale-up roadmap, and ARCHITECTURE_REVIEW_6_MONTH. Wave-1 spine: H1502/H1503 + integrity (DBhP IDs, #16) + SSE tests; H1438 parallel; H1485 wave-2.
 
 ## [0.14.0] - 2026-07-25
