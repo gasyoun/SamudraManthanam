@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **KSS book 12–14 low-confidence alignment groups re-verified with quoted evidence (H1687, Sonnet 5
+  `claude-sonnet-5`).** The H927 review sheet's 70 low-confidence (<0.6) SA↔RU alignment groups were
+  re-derived directly from `web/corpus_builder/jsonl/kathasaritsagara-12.jsonl`/`-14.jsonl` (the original
+  sheet HTML had been lost — gitignored `/review/`, its worktree removed before copy-out — but the
+  underlying jsonl counts matched exactly: 62+8=70) and each group now carries an agent verdict
+  (`alignment-holds`/`confirmed-break`/`uncertain`) with quoted SA/RU evidence, committed as
+  `web/corpus_builder/jsonl/kathasaritsagara-12-14_lowconf_agent-verdicts.json`. Result diverges sharply
+  from H927's prior note ("mostly granularity mismatches, not mis-alignment"): **27 alignment-holds · 40
+  confirmed-break · 3 uncertain** — several real off-by-one/displacement clusters found (a Russian
+  passage's true translation turns up verbatim in a *neighboring* group instead of its own paired
+  Sanskrit line). Human vote reduced to the 43 confirmed-break+uncertain rows only, in
+  `web/corpus_builder/jsonl/kathasaritsagara-12-14_lowconf_reduced-human-ask.json`. No alignment jsonl
+  file was changed by this pass — re-alignment fixes are applied only after the human vote (per H1687 DoD).
+
 ### Removed
 - **Dead `morph_cache` table dropped from `corpus.db` schema (H1503, Sonnet 5
   `claude-sonnet-5`).** `web/app/db.py::create_schema` no longer creates
