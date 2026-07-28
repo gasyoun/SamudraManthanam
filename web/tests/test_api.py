@@ -2,6 +2,8 @@ import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
 import os
+import json
+from urllib.parse import quote
 
 @pytest.mark.asyncio
 async def test_search_basic():
@@ -243,3 +245,63 @@ async def test_search_stream_morphological():
     assert "text/event-stream" in response.headers["content-type"]
     # Check for progress or done events
     assert "progress" in response.text or "done" in response.text
+
+
+def _parse_sse_events(text):
+    """Parse `data: {...}` SSE lines into a list of decoded JSON payloads."""
+    events = []
+    for line in text.splitlines():
+        if line.startswith("data:"):
+            events.append(json.loads(line[len("data:"):].strip()))
+    return events
+
+
+@pytest.mark.asyncio
+async def test_search_stream_happy_path_hit():
+    """A3.2: fixture hit query yields text/event-stream + >=1 data event
+    reporting a nonzero total via the 'done' event."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/stream?query=arjuna&mode=plain")
+    assert response.status_code == 200
+    assert "text/event-stream" in response.headers["content-type"]
+
+    events = _parse_sse_events(response.text)
+    assert len(events) >= 1
+
+    done_events = [e for e in events if e.get("type") == "done"]
+    assert len(done_events) == 1
+    assert done_events[0]["total"] >= 1
+
+    progress_events = [e for e in events if e.get("type") == "progress"]
+    assert any(e.get("found_so_far", 0) >= 1 for e in progress_events)
+
+
+@pytest.mark.asyncio
+async def test_search_stream_invalid_regex():
+    """Validation parity: an unparseable regex pattern returns 400,
+    matching POST /api/search's regex-mode behavior."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/stream?query=" + quote("(") + "&mode=regex")
+    assert response.status_code == 400
+
+
+@pytest.mark.asyncio
+async def test_search_stream_rejects_empty_query():
+    """Validation parity: empty query rejected, same as POST /api/search."""
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        response = await ac.get("/api/search/stream?query=&mode=plain")
+    assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_search_stream_does_not_appear_in_frontend():
+    """A3.3: search.js must not call the stream endpoint (unwired, PLAN R7)."""
+    static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
+    search_js_path = os.path.join(static_dir, "search.js")
+    with open(search_js_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    assert "/api/search/stream" not in content
+    assert "search/stream" not in content
