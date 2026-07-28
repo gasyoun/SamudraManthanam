@@ -4,10 +4,12 @@ Async indexer + content downloader for [wisdomlib.org](https://www.wisdomlib.org
 as a **candidate** corpus source for Samudra Manthanam. Versioned independently
 of the main platform (current tag: `wisdomlib-v0.0.1`).
 
-> **Rights.** wisdomlib has no stated bulk-reuse licence and rests on mixed
-> source material. Downloaded content (`content/`) is **gitignored and
-> provisional** — do not redistribute. The index (`*.jsonl`, `CATALOG.md`) is
-> bibliographic metadata only.
+> **Rights (org ruling 28-07-2026).** Bulk public is **allowed** for this
+> programme — see
+> [`D:\Tools\wisdomlib-scrape\RIGHTS_RULING_BULK_PUBLIC_28.07.2026.md`](file:///D:/Tools/wisdomlib-scrape/RIGHTS_RULING_BULK_PUBLIC_28.07.2026.md).
+> **Ignored** (still true of the source, not a go/no-go gate): site has no bulk-reuse
+> licence; mixed underlying sources. Prefer provenance (wisdomlib URL + scrape date).
+> `content/` may still be gitignored for *size* hygiene; that is not a rights block.
 
 ## Install
 
