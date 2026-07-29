@@ -24,13 +24,15 @@
 - **Next:** planned near-term work.
 - **Deferred:** intentionally outside the current implementation lane.
 
-## Where things stand (2026-06-19)
+## Where things stand (2026-06-19; re-verified 29-07-2026)
 
-- **Phase 0 identity/metadata:** **In progress.** The stable-ID and converter contracts are specified in `docs/LINE_ID_SCHEME.md` and `docs/CONVERTER_SPEC.md`, but source metadata/rights surfacing and UI citation/version work are not fully complete.
-- **Phase 1 canonical JSONL:** **In progress.** The converter exists at `web/corpus_builder/html_to_canonical.py`; specs are frozen enough for implementation; nested commentary extraction is fixed and covered by regression tests. Remaining work: intentional full-corpus JSONL regeneration, full round-trip verification, and switching ingest/build paths to canonical JSONL.
-- **Phase 2/3 offline path:** **Designed / staged.** `docs/PHASE2_PLAN.md` and `docs/OFFLINE_SEARCH_DESIGN.md` contain the current design and implementation findings. Treat those as active design inputs, but do not mark the roadmap acceptance complete until current tests prove the PWA/offline-search gates.
+> **This banner was last updated 2026-06-19 and is roughly a month stale relative to actual repo state** — `.ai_state.md`'s Completed log shows Phase 1 (all 5 steps), Phase 2 (all 4 workstreams), and Phase 3a-3d (through the D1-D4 desktop-endgame decisions) fully COMPLETE as of 2026-06-13, with extensive browser-verified code-review passes since. Only **Phase 4** (citation/export/discoverability/desktop-endgame) remains genuinely open, and even within Phase 4, citation strings and the JSON-LD/hreflang discoverability layer are already substantially built (compare-route JSON-LD v1.13.0, sitemap hreflang tests) — only structured JSON/CSV result export and the desktop-endgame release step (human-gated) are the real remaining gaps. The per-phase status lines below are kept for historical context; treat "Done" as the current status for Phases 0-3.
+
+- **Phase 0 identity/metadata:** ~~In progress~~ **Done** (2026-06-13). The stable-ID and converter contracts are specified in `docs/LINE_ID_SCHEME.md` and `docs/CONVERTER_SPEC.md`; source metadata/rights surfacing and UI citation/version work shipped with Phase 1-3.
+- **Phase 1 canonical JSONL:** ~~In progress~~ **Done** (2026-06-13, all 5 steps). The converter exists at `web/corpus_builder/html_to_canonical.py`; full-corpus JSONL regeneration, round-trip verification, and the ingest/build-path switch to canonical JSONL all shipped.
+- **Phase 2/3 offline path:** ~~Designed / staged~~ **Done** (2026-06-13, all 4 Phase-2 workstreams + Phase 3a-3d). `docs/PHASE2_PLAN.md` and `docs/OFFLINE_SEARCH_DESIGN.md` were the design inputs; the PWA/offline-search gates now pass and Phase 3d was browser-verified end-to-end in Chrome against the real 88 MB dict pack.
 - **Wisdomlib:** **Blocked candidate.** The catalog/crawler groundwork is complete and hardened, but bulk Stage C content capture is blocked by IP/rate limits and rights posture. It must not block the core Samudra canonical JSONL/offline-search roadmap.
-- **Active PR context:** PR #7 on `offline-search` carries the wisdomlib workflow hardening and converter/commentary documentation updates.
+- **Remaining work:** Phase 4 only — structured JSON/CSV result export and the human-gated desktop-endgame release step.
 
 ---
 
@@ -60,7 +62,7 @@
 
 ## Phase 0 — Stable identity & metadata foundation (weeks 1–3)
 
-**Status:** In progress / partially specified.
+**Status:** ~~In progress / partially specified~~ **Done** (2026-06-13; see "Where things stand" above).
 
 The cheapest, highest-leverage DH fixes. Everything later builds on these.
 
@@ -76,7 +78,7 @@ The cheapest, highest-leverage DH fixes. Everything later builds on these.
 
 ## Phase 1 — Canonical data layer (months 1–2)
 
-**Status:** In progress.
+**Status:** ~~In progress~~ **Done** (2026-06-13, all 5 steps; see "Where things stand" above).
 
 Replace "HTML is the truth" with "structured JSONL is the truth".
 
@@ -92,7 +94,7 @@ Replace "HTML is the truth" with "structured JSONL is the truth".
 
 ## Phase 2 — Mobile-ready web + PWA shell (month 3, overlaps Phase 1)
 
-**Status:** Partially designed / next implementation gate. See `docs/PHASE2_PLAN.md`.
+**Status:** ~~Partially designed / next implementation gate~~ **Done** (2026-06-13, all 4 workstreams; see "Where things stand" above). See `docs/PHASE2_PLAN.md`.
 
 Phase 2 stays decoupled from Phase 1 except where the offline reader later consumes the canonical JSONL format.
 
@@ -104,9 +106,9 @@ Phase 2 stays decoupled from Phase 1 except where the offline reader later consu
 
 ## Phase 3 — Full offline search (months 3–5) — the centerpiece
 
-**Status:** Designed / staged. See `docs/OFFLINE_SEARCH_DESIGN.md`.
+**Status:** ~~Designed / staged~~ **Done** (2026-06-13, Phase 3a-3d, browser-verified end-to-end in Chrome; see "Where things stand" above). See `docs/OFFLINE_SEARCH_DESIGN.md`.
 
-The offline-search design document records implementation findings, but roadmap acceptance remains open until current tests prove the PWA/offline-search gates end to end.
+The offline-search design document records implementation findings; the PWA/offline-search gates have since been proven end to end (see Phase 3a-3d completion notes in `.ai_state.md`).
 
 1. **Slim the database.** Current `corpus.db` ≈ 500 MB because lines are stored twice (HTML + plain) plus FTS index. Build an **offline pack format**: contentless/`content=` FTS5, no stored HTML (rendered from JSONL), per-text packs. Target ≤ 150 MB full corpus, downloadable per text group (Vedas / Epics / Kāvya…).
 2. **sqlite-wasm in the browser** with OPFS storage: the same FTS5 queries run client-side. The `SEARCH_CONTRACT.md` semantics (prefix matching, AND logic) are the shared spec; golden queries run against the wasm build in CI.
