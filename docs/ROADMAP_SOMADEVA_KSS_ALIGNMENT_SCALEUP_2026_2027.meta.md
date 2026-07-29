@@ -1,6 +1,6 @@
 # Metadoc — ROADMAP_SOMADEVA_KSS_ALIGNMENT_SCALEUP_2026_2027.md
 
-_Created: 14-07-2026 · Last updated: 14-07-2026_
+_Created: 14-07-2026 · Last updated: 29-07-2026_
 
 Companion record for [ROADMAP_SOMADEVA_KSS_ALIGNMENT_SCALEUP_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SOMADEVA_KSS_ALIGNMENT_SCALEUP_2026_2027.md).
 
@@ -20,15 +20,15 @@ alignment method or the Russian-coverage prerequisite.
 
 ## Ranked improvement backlog
 1. ~~**P0 Russian inventory**~~ ✅ **RESOLVED 14-07-2026 (H910):** the complete Serebryakov Russian + śloka-keyed Sanskrit for all 18 books already exist as `.txt` in the upstream repo; books 11–18 need alignment only, no sourcing.
-2. **Execute P1 (align books 11–18)** — the actionable core, tracked by [H910](https://github.com/gasyoun/Uprava/blob/main/handoffs/H910-Opus_SamudraManthanam_somadeva_kss_books11_18_alignment_14.07.26.md).
-3. **Replace the §3 LLM projection with a measured number** once the P1 pilot (book 11) runs.
-4. Decide śloka-rekey policy for books 1–10 (P3) to avoid mixed-keying search UX.
-5. Verify the provisional per-lambaka bibliography before НКРЯ submission.
+2. ~~**Execute P1 (align books 11–18)**~~ ✅ **RESOLVED — H910/H927:** all 18 lambakas now uniform śloka-keyed (see the roadmap's own status banner, updated 26-07-2026).
+3. ~~**Replace the §3 LLM projection with a measured number**~~ ✅ **RESOLVED** alongside P1 execution (H910/H927) — the projection in §3 is superseded by the measured book-11 pilot figures.
+4. ~~**Decide śloka-rekey policy for books 1–10 (P3)**~~ ✅ **RESOLVED — H928:** books 1–10 re-keyed to śloka; no mixed-keying wrinkle remains (see §Limitations below, now stale for the same reason — flagged 29-07-2026).
+5. Verify the provisional per-lambaka bibliography before НКРЯ submission — the one item still genuinely open.
 
 ## Limitations
-- The LLM throughput is projected, not measured (stated honestly in §3).
-- Books 1–10 are sentence-keyed (śloka anchoring lost upstream); books 11–18 will be śloka-keyed (§2) — a mixed-keying wrinkle until the optional P3 re-key.
-- Book 14 Russian shows no `## L.T.` wave header — a P1 parser edge case to confirm.
+- ~~The LLM throughput is projected, not measured (stated honestly in §3).~~ **Stale (29-07-2026):** superseded by the measured book-11 pilot figures once P1 executed.
+- ~~Books 1–10 are sentence-keyed (śloka anchoring lost upstream); books 11–18 will be śloka-keyed (§2) — a mixed-keying wrinkle until the optional P3 re-key.~~ **Stale (29-07-2026):** P3 (H928) re-keyed books 1–10 too; all 18 lambakas are now uniformly śloka-keyed, no mixed-keying wrinkle remains.
+- Book 14 Russian shows no `## L.T.` wave header — a P1 parser edge case to confirm (not yet re-verified this pass).
 
 ## Related
 - [ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md) — the НКРЯ export workstream that P5 feeds.
@@ -37,3 +37,4 @@ alignment method or the Russian-coverage prerequisite.
 ## Revision history
 - 14-07-2026 (Opus 4.8 `claude-opus-4-8[1m]`, H907): created alongside the roadmap; documents the 10-lambaka ingest + scale-up plan.
 - 14-07-2026 (Opus 4.8 `claude-opus-4-8[1m]`, H910): **P0 resolved** — complete Russian + śloka-keyed Sanskrit for all 18 books found in-repo; roadmap rewritten execution-ready (books 11–18 align now, no human gate); added sibling [SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md).
+- 29-07-2026 (Sonnet 5 `claude-sonnet-5`, H1878 roadmap-drift sweep): backlog items 2–4 and the Limitations section were stale — `.ai_state.md` and the roadmap's own 26-07-2026 status banner show P1 (H910/H927) and P3 (H928) both DONE, all 18 KSS lambakas uniformly śloka-keyed. Struck the stale rows; item 5 (НКРЯ bibliography verification) is the one genuinely open item.
