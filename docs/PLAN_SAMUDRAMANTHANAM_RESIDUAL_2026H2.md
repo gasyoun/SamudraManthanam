@@ -1,6 +1,11 @@
 # PLAN — SamudraManthanam residual replan (2026H2)
 
-_Created: 26-07-2026 · Last updated: 26-07-2026_
+_Created: 26-07-2026 · Last updated: 30-07-2026_
+
+> **Status (30-07-2026): SUPERSEDED.** All new Wave-1 residual items below
+> shipped. The canonical programme is now
+> [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
+> Retain this file as the July residual decision/execution record.
 
 **Index for unattended execution.** Full `/ask` pack after a stale-roadmap audit
 (`/ask-batch` stale-roadmap slice, Grok 4.5 `grok-4.5`, 26-07-2026).

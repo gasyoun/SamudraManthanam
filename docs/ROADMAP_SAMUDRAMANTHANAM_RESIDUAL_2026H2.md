@@ -1,9 +1,12 @@
 # ROADMAP — SamudraManthanam residual (post-H2 truth-pass)
 
-_Created: 26-07-2026 · Last updated: 26-07-2026_
+_Created: 26-07-2026 · Last updated: 30-07-2026_
 
-**Status: LIVING.** Sole status source for "what's left" after Phases 0–3e, NKРЯ
-W0–W4/H906, and Somadeva 18-book completion. PLAN index:
+> **Status (30-07-2026): SUPERSEDED.** The residual Wave-1 items shipped. Live
+> status moved to
+> [ROADMAP_SAMUDRAMANTHANAM_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_2026_2027.md).
+
+Historical PLAN index:
 [PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md).
 
 Historical design docs (CONVERTER_SPEC, ALIGNMENT_SPEC, OFFLINE_SEARCH_DESIGN,
