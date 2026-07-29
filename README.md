@@ -1,6 +1,6 @@
 # Samudra Manthanam — Churning of the Ocean
 
-_Created: 12-05-2026 · Last updated: 19-07-2026_
+_Created: 12-05-2026 · Last updated: 30-07-2026_
 
 A parallel Sanskrit–Russian corpus search tool developed by the [Society of Sanskrit Enthusiasts](https://samskrtam.ru). The name refers to the mythological churning of the cosmic ocean (*Samudra Manthanam*), here used as a metaphor for extracting meaning from an ocean of words.
 
@@ -156,11 +156,18 @@ The app uses [`web/app/settings.py`](https://github.com/gasyoun/SamudraManthanam
 
 ## Roadmap
 
-The living roadmap is [`ROADMAP_2026_H2_DH_MOBILE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/ROADMAP_2026_H2_DH_MOBILE.md) (DH-standards data layer — stable IDs, JSONL canonical form, metadata/rights — plus cross-platform offline search via PWA/sqlite-wasm). Near-term themes:
+The canonical planning index is
+[`PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md);
+live status is
+[`ROADMAP_SAMUDRAMANTHANAM_2026_2027.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_2026_2027.md).
+Near-term themes:
 
-1. **Advanced morphology** — transition from external API calls to a curated, offline-ready Sanskrit/Russian lexical database for deeper morphological search and variant analysis.
-2. **Collaborative annotation** — grow the scholarly reader into an annotation workspace where users can attach notes and commentary to corpus lines.
-3. **Corpus builder integration** — the Python PDF-ingestion pipeline (`web/corpus_builder/`) is the free-toolchain successor to the Delphi `cb.exe`; the remaining work is streamlining approved correction proposals back into canonical source files with automated regression testing.
+1. **Architecture integrity** — manifest-backed canonical JSONL, durable
+   references, bounded regex, migrations, and reproducible dual deployments.
+2. **Corpus growth** — complete Wisdomlib Stage C and recover/continue the
+   existing Ignatiev H1438 work without duplicating pipelines.
+3. **Collaborative research** — build verified/anonymous correction and
+   annotation workflows only on stable corpus identity.
 
 ---
 

@@ -1,15 +1,15 @@
 # Samudra Manthanam — Roadmap H2 2026: DH Standards + Cross-Platform Offline
 
-> **Status (26-07-2026): SUPERSEDED FOR LIVE STATUS.** Phases 0–3e and most of
+> **Status (30-07-2026): SUPERSEDED FOR LIVE STATUS.** Phases 0–3e and most of
 > Phase 4 design work shipped in June–July 2026; the 2026-06-19 "Where things
 > stand" banner below is **stale**. Living residual queue:
-> [docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md)
+> [docs/ROADMAP_SAMUDRAMANTHANAM_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_SAMUDRAMANTHANAM_2026_2027.md)
 > · unattended PLAN:
-> [docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_RESIDUAL_2026H2.md).
+> [docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
 > Keep this file for design history and settled decisions; do **not** treat open
 > checkboxes here as current work.
 
-**Last updated:** 26-07-2026 (supersede banner; body history through 2026-06-19)
+**Last updated:** 30-07-2026 (supersede/Wisdomlib truth pass; body history through 2026-06-19)
 **Window:** mid-June — mid-December 2026
 **Workforce:** maintainer + Claude Code sessions (same model as the v1.x web platform)
 **Audience:** Russian-speaking Sanskrit scholars and students. UI stays Russian; metadata gains an English layer for discoverability only.
@@ -26,13 +26,20 @@
 
 ## Where things stand (2026-06-19; re-verified 29-07-2026)
 
-> **This banner was last updated 2026-06-19 and is roughly a month stale relative to actual repo state** — `.ai_state.md`'s Completed log shows Phase 1 (all 5 steps), Phase 2 (all 4 workstreams), and Phase 3a-3d (through the D1-D4 desktop-endgame decisions) fully COMPLETE as of 2026-06-13, with extensive browser-verified code-review passes since. Only **Phase 4** (citation/export/discoverability/desktop-endgame) remains genuinely open, and even within Phase 4, citation strings and the JSON-LD/hreflang discoverability layer are already substantially built (compare-route JSON-LD v1.13.0, sitemap hreflang tests) — only structured JSON/CSV result export and the desktop-endgame release step (human-gated) are the real remaining gaps. The per-phase status lines below are kept for historical context; treat "Done" as the current status for Phases 0-3.
+> **This June status snapshot is historical.** Phases 1–3 and the structured
+> JSON/CSV export subsequently shipped. The 30-07-2026 `/ask` ruling also
+> superseded the proposed desktop freeze: web and Lazarus remain fully supported
+> products. Use the linked 2026–2027 PLAN/ROADMAP for current work; the
+> per-phase lines below remain design history.
 
 - **Phase 0 identity/metadata:** ~~In progress~~ **Done** (2026-06-13). The stable-ID and converter contracts are specified in `docs/LINE_ID_SCHEME.md` and `docs/CONVERTER_SPEC.md`; source metadata/rights surfacing and UI citation/version work shipped with Phase 1-3.
 - **Phase 1 canonical JSONL:** ~~In progress~~ **Done** (2026-06-13, all 5 steps). The converter exists at `web/corpus_builder/html_to_canonical.py`; full-corpus JSONL regeneration, round-trip verification, and the ingest/build-path switch to canonical JSONL all shipped.
 - **Phase 2/3 offline path:** ~~Designed / staged~~ **Done** (2026-06-13, all 4 Phase-2 workstreams + Phase 3a-3d). `docs/PHASE2_PLAN.md` and `docs/OFFLINE_SEARCH_DESIGN.md` were the design inputs; the PWA/offline-search gates now pass and Phase 3d was browser-verified end-to-end in Chrome against the real 88 MB dict pack.
-- **Wisdomlib:** **Blocked candidate.** The catalog/crawler groundwork is complete and hardened, but bulk Stage C content capture is blocked by IP/rate limits and rights posture. It must not block the core Samudra canonical JSONL/offline-search roadmap.
-- **Remaining work:** Phase 4 only — structured JSON/CSV result export and the human-gated desktop-endgame release step.
+- **Wisdomlib:** **Active candidate.** Stage C is partly scraped and expected to
+  finish within two weeks; it is a Wave-1 corpus lane in the 2026–2027 roadmap,
+  not an external blocker.
+- **Remaining historical H2 work:** the structured JSON/CSV export shipped in
+  PR #106. See the 2026–2027 roadmap for current architecture/corpus work.
 
 ---
 
@@ -137,14 +144,18 @@ Rights constraints remain unchanged: exporting search results is in scope; publi
 
 ## Candidate Corpus Source: Wisdomlib
 
-**Status:** Blocked candidate.
+**Status (30-07-2026): Active; partly scraped; expected to finish within two weeks.**
 
 - **Catalog Stage A/B:** Done. The crawler catalog contains 848 entries and the human-readable summary lives in `web/corpus_builder/wisdomlib/CATALOG.md`.
-- **Stage C crawler:** In progress / hardened. The code is proven on small clear-IP runs and now avoids committing content, validates cache state, and reports blocked runs clearly.
-- **Operational block:** GitHub/datacenter egress is Cloudflare-blocked, and the currently tested hosting-range IP is rate-limited/exhausted. The workflow is manual and self-hosted only.
-- **Required next step:** Install a self-hosted runner on a residential ISP connection, then trigger the `wisdomlib gentle crawl` workflow manually in small resumable passes.
-- **Rights posture:** Stage C output remains cache/artifact-only and is never committed. Wisdomlib has no bulk-reuse license, so downloaded content is provisional and non-redistributable.
-- **Roadmap implication:** Wisdomlib can inform future corpus expansion, but it is not a dependency for the core Samudra canonical JSONL, PWA, or offline-search work.
+- **Stage C crawler:** Active and hardened; continue from the partial scrape
+  without re-inventorying or restarting completed shards.
+- **Completion path:** finish the current staged work, verify deterministic
+  shard completeness and anomalies, sample-review the result, then register
+  accepted outputs through the canonical manifest described in the 2026–2027
+  architecture.
+- **Roadmap implication:** Wisdomlib is a bounded Wave-1 corpus deliverable,
+  parallel to architecture integrity and H1438 recovery. It is not externally
+  blocked.
 
 ---
 

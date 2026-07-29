@@ -1,17 +1,27 @@
 # Documentation Index
 
-Date: 2026-06-19
+_Created: 19-06-2026 · Last updated: 30-07-2026_
 
 Purpose: tell humans and implementation agents which Markdown files are current, supporting, or historical.
 
 ## Current Primary Docs
 
 - `README.md`: project overview and build/use notes.
-- `ROADMAP_2026_H2_DH_MOBILE.md`: **current living status roadmap** — DH-standards data layer (stable IDs, JSONL canonical, metadata/rights), cross-platform offline search via PWA/sqlite-wasm, and current candidate-source status such as Wisdomlib.
-- `TARGET_ARCHITECTURE.md`: current target architecture.
-- `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md`: architecture critique and open decisions (several now settled by `ROADMAP_2026_H2_DH_MOBILE.md`).
-- `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`: web-platform hardening roadmap (still current for that scope; mobile/data-model planning superseded by `ROADMAP_2026_H2_DH_MOBILE.md`).
-- `changelog.md`: notable changes.
+- `docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md`: **canonical
+  planning index** — locked decisions, autonomy contract, and links to every
+  current architecture/roadmap/implementation/verification layer.
+- `docs/ROADMAP_SAMUDRAMANTHANAM_2026_2027.md`: **sole living status roadmap**
+  — architecture integrity, corpus growth, and research workbench programme.
+- `ROADMAP_2026_H2_DH_MOBILE.md`: historical H2 design and decision record;
+  superseded for status.
+- `docs/ARCHITECTURE_SAMUDRAMANTHANAM_CANONICAL_PLATFORM.md`: current
+  canonical-bundle, stable-identity, dual-deployment, and dual-product
+  architecture.
+- `TARGET_ARCHITECTURE.md`: previous implementation baseline; consult the
+  current architecture above for new work.
+- `ARCHITECTURE_CRITIQUE_AND_OPEN_QUESTIONS.md` and
+  `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`: historical review inputs.
+- `CHANGELOG.md`: notable changes.
 - `.ai_state.md`: session journal — queue, WIP, hypotheses.
 
 ## Phase 1 Design Specs (frozen — DH data layer)
@@ -50,22 +60,28 @@ Context only — do not treat as current instructions:
 
 1. `DOCUMENTATION_INDEX.md`
 2. `CLAUDE.md`
-3. `ROADMAP_2026_H2_DH_MOBILE.md`
-4. `TARGET_ARCHITECTURE.md`
-5. `web/SEARCH_CONTRACT.md`
-6. `.ai_state.md`
+3. `docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md`
+4. `docs/ROADMAP_SAMUDRAMANTHANAM_2026_2027.md`
+5. `docs/ARCHITECTURE_SAMUDRAMANTHANAM_CANONICAL_PLATFORM.md`
+6. `web/SEARCH_CONTRACT.md`
+7. `.ai_state.md`
 
 ## Wisdomlib Status Rule
 
-The current Wisdomlib roadmap/workflow status belongs in `ROADMAP_2026_H2_DH_MOBILE.md` under "Candidate Corpus Source: Wisdomlib". Detailed crawler operation belongs in `web/corpus_builder/wisdomlib/README.md`; the generated bibliographic summary belongs in `web/corpus_builder/wisdomlib/CATALOG.md`.
+Current Wisdomlib programme status belongs in
+`docs/ROADMAP_SAMUDRAMANTHANAM_2026_2027.md`. Detailed crawler operation belongs
+in `web/corpus_builder/wisdomlib/README.md`; the generated bibliographic summary
+belongs in `web/corpus_builder/wisdomlib/CATALOG.md`.
 
 ## Conflict Rule
 
 When documents conflict:
 
 1. User messages and latest architecture decisions win.
-2. `ROADMAP_2026_H2_DH_MOBILE.md` wins over older roadmaps.
-3. `TARGET_ARCHITECTURE.md` wins over older plans.
+2. `docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md` and its linked
+   living roadmap win over older plans/roadmaps.
+3. `docs/ARCHITECTURE_SAMUDRAMANTHANAM_CANONICAL_PLATFORM.md` wins over older
+   architecture plans.
 4. Historical docs (`docs/archive/`) are context only.
 
 ## Maintenance Rule
@@ -75,3 +91,5 @@ When adding a new planning document:
 - add it to this index,
 - mark whether it is current, supporting, or historical,
 - update `changelog.md`.
+
+_Dr. Mārcis Gasūns_
