@@ -28,6 +28,25 @@ contracts.
 
 **Span:** August–September 2026.
 
+**Execution routing:** H1919–H1922 are superseded historical Codex packets.
+Run Lanes A–D from the Opus 5 1M (`claude-opus-5[1m]`) Claude Code handoffs:
+[H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md),
+[H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md),
+[H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md),
+and
+[H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md).
+Start H1924 and independent H1926 first; H1925 depends on H1924; H1927 may
+start independent substeps but its final smoke consumes H1924–H1926.
+
+- H1924:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md and execute it.`
+- H1926:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md and execute it.`
+- H1925:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md and execute it.`
+- H1927:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md and execute it.`
+
 ### A. Canonical corpus and artifact contract
 
 Deliver:

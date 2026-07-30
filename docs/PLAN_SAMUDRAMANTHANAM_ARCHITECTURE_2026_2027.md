@@ -91,13 +91,27 @@ acceptance checks. New handoff IDs are wired after the autonomy-readiness gate.
 
 | Lane | Deliverable | Owner |
 |---|---|---|
-| A | Canonical manifest, immutable bundle contract, and publish validation | [H1919](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1919-Codex_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
-| B | Durable identity propagation and reversible zero-orphan migration | [H1920](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1920-Codex_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
-| C | Hard-bounded regex, secure admin transport, and two-tier correction identity | [H1921](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1921-Codex_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md) |
-| D | Checksum migrations, bounded `main.py` extraction, and dual-deployment contract smoke tests | [H1922](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1922-Codex_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) |
+| A | Canonical manifest, immutable bundle contract, and publish validation | [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
+| B | Durable identity propagation and reversible zero-orphan migration | [H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
+| C | Hard-bounded regex, secure admin transport, and two-tier correction identity | [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md) |
+| D | Checksum migrations, bounded `main.py` extraction, and dual-deployment contract smoke tests | [H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) |
 | E | Wisdomlib Stage C completion and manifest integration | Existing [issue #17](https://github.com/gasyoun/SamudraManthanam/issues/17); no duplicate handoff |
 | F | H1438 Wave-B branch recovery, validation, and merge | Existing [H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md); no duplicate handoff |
 | Guarded | Corpus Builder engine/GUI work | Existing H1485 claim; excluded from new Wave-1 ownership |
+
+H1919–H1922 are superseded, archived Codex-routed records and must not be
+executed. The replacement executor for Lanes A–D is Opus 5 1M
+(`claude-opus-5[1m]`) in Claude Code, folder
+`C:\Users\user\Documents\GitHub\SamudraManthanam`:
+
+- H1924:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md and execute it.`
+- H1926, independent:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md and execute it.`
+- H1925, after H1924:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md and execute it.`
+- H1927, independent substeps with final smoke after H1924–H1926:
+  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md and execute it.`
 
 Dependencies:
 

@@ -25,16 +25,17 @@ It does not duplicate the plan.
   authorized after configured Claude Fable 5 (`claude-fable-5`) plan creation
   failed twice without returning a draft.
 - **Audit base:** `gasyoun/SamudraManthanam` `origin/main` at `24d30a9`.
-- **Next hardening owners:** H1919–H1922 and existing H1438/issue #17.
+- **Next hardening owners:** Opus 5 1M handoffs H1924–H1927 and existing
+  H1438/issue #17. H1919–H1922 are superseded historical records.
 
 ## Ranked improvement backlog
 
 | Rank | Improvement | Why | Status |
 |---|---|---|---|
-| 1 | Replace intended manifest architecture with measured implementation evidence and final paths. | The plan chooses contracts before code exists. | queued [H1919](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1919-Codex_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
-| 2 | Record zero-orphan migration counts and compatibility sunset conditions. | Stable identity is the most consequential data invariant. | queued [H1920](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1920-Codex_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
-| 3 | Replace regex/security assumptions with compatibility and adversarial measurements. | Engine choice remains evidence-sensitive inside the locked keep-regex ruling. | queued [H1921](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1921-Codex_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md) |
-| 4 | Add measured deployment/runtime/full-corpus reports. | Equal deployment support must be demonstrated, not asserted. | queued [H1922](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1922-Codex_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) |
+| 1 | Replace intended manifest architecture with measured implementation evidence and final paths. | The plan chooses contracts before code exists. | queued [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
+| 2 | Record zero-orphan migration counts and compatibility sunset conditions. | Stable identity is the most consequential data invariant. | queued [H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
+| 3 | Replace regex/security assumptions with compatibility and adversarial measurements. | Engine choice remains evidence-sensitive inside the locked keep-regex ruling. | queued [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md) |
+| 4 | Add measured deployment/runtime/full-corpus reports. | Equal deployment support must be demonstrated, not asserted. | queued [H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) |
 | 5 | Re-rank Waves 2–4 after Wave-1 measurements and corpus integrations. | Twelve-month ordering beyond Wave 1 has lower certainty. | parked until Wave-1 exit review |
 
 ## Known limitations
@@ -52,7 +53,7 @@ It does not duplicate the plan.
 Use the PLAN to select and constrain execution handoffs. Use the roadmap for
 status, architecture for contracts, implementation for ordered steps, and
 verification for gates. Do not treat historical H2/residual checkboxes as a
-second queue, start H1920 before H1919's identity fields merge, duplicate
+second queue, start H1925 before H1924's identity fields merge, duplicate
 H1438/H1485, or interpret the twelve-month waves as authority to bypass the
 Wave-1 acceptance gates.
 
@@ -79,6 +80,7 @@ linked successor; retain it as a historical decision record.
 
 | Date | Event | Author |
 |---|---|---|
+| 30-07-2026 | Replaced unclaimed Codex H1919–H1922 ownership with Claude Code Opus 5 1M H1924–H1927; missions and gates unchanged. | Codex Sol (`gpt-5.6-sol`) |
 | 30-07-2026 | Created with the `/ask` plan package and H1919–H1922 ownership. | Codex (GPT-5), best-effort root takeover |
 
 _Dr. Mārcis Gasūns_

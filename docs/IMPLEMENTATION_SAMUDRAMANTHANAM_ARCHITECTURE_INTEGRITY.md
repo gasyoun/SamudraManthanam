@@ -22,7 +22,7 @@ already present in `h1438-ignatjev-waveb`.
 
 ## Lane A — canonical manifest and immutable bundle
 
-**Owner:** [H1919](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1919-Codex_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md)
+**Owner:** [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md)
 
 **Dependencies:** none. This is the Wave-1 foundation.
 
@@ -89,7 +89,7 @@ contract and register currently available outputs.
 
 ## Lane B — durable identity and zero-orphan migration
 
-**Owner:** [H1920](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1920-Codex_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md)
+**Owner:** [H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md)
 
 **Dependencies:** Lane A schema/identity fields merged.
 
@@ -145,7 +145,7 @@ fingerprints and support rollback rehearsal.
 
 ## Lane C — bounded regex and trusted public boundaries
 
-**Owner:** [H1921](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1921-Codex_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md)
+**Owner:** [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md)
 
 **Dependencies:** none; keep public response shape compatible.
 
@@ -192,7 +192,7 @@ Modify identity/correction routes, state schema, and tests:
 
 ## Lane D — migrations, composition root, and deployment contracts
 
-**Owner:** [H1922](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1922-Codex_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md)
+**Owner:** [H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md)
 
 **Dependencies:** may begin independently; final smoke consumes Lane A bundle
 fixture and Lane B/C public contracts where merged.
