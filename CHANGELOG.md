@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-07-31
 ### Added
 - **Regression guard for Cyrillic homoglyphs in `#sa` corpus fields (H1694, issue #16, Sonnet 5
   `claude-sonnet-5`).** The 5 words / 21 field-occurrences named in #16 were already fixed on `main`
