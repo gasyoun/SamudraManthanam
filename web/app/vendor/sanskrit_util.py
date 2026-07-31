@@ -1,13 +1,4 @@
 # -*- coding: utf-8 -*-
-# VENDORED COPY — byte-identical to sanskrit-lexicon/sanskrit-util py/sanskrit_util/__init__.py
-# (v0.4.0, as of 14-07-2026). Vendored (not pip-installed) because SamudraManthanam's Docker
-# build (see ../../../Dockerfile) COPYs only web/, so a relative-path import of the sibling
-# sanskrit-util repo would ImportError inside the container. This is the same
-# "re-copy from source on every version bump, never hand-edit in place" pattern used for the
-# JS vendor copies elsewhere in the org (csl-atlas src/lib/sanskrit-util.js, csl-apidev
-# app/vendor/sanskrit-util.global.js) — see github-spine/SHARED_CODE.md §1-2. On a sanskrit-util
-# release, re-copy this file wholesale from ../../../../sanskrit-util/py/sanskrit_util/__init__.py
-# (or run /cologne-sanskrit-util-sync) rather than patching it here.
 """sanskrit_util — shared Sanskrit string helpers for the CDSL / Sanskrit-Lexicon repos.
 
 Single source of truth, consolidated from WhitneyRoots/scripts/sanskrit_util.py and the
@@ -22,7 +13,7 @@ from_slp1(slp1)          SLP1 -> IAST
 to_roman(nums)           [1,2,...] gaṇa numbers -> ['I','II',...]
 deva_to_iast(s)          Devanāgarī -> IAST
 deva_to_slp1(s)          Devanāgarī -> SLP1 (direct; ळ -> L, round-trip partner of from_slp1)
-iast_to_devanagari(s)    IAST -> Devanāgarī (approximate, display only)
+iast_to_devanagari(s)    IAST -> Devanāgarī (real transcode: to_slp1 -> slp1_to_devanagari)
 norm(s)                  EXACT diacritic-insensitive lookup key (Devanāgarī-aware)
 nfold(s)                 norm() + every nasal folded to 'n' (recall fallback)
 form_key(s)              length-PRESERVING comparison key (ā≠a) for verb/PPP form matching
@@ -46,7 +37,7 @@ Pick the right key:
 import re
 import unicodedata
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 
 __all__ = [
     "to_slp1", "from_slp1", "to_roman", "deva_to_iast", "deva_to_slp1", "iast_to_devanagari",
@@ -259,28 +250,18 @@ def slp1_to_devanagari(slp1):
     return ''.join(out)
 
 
-# ---- IAST -> Devanāgarī (approximate display transcode; port of linguistics.js) ----
-_IAST_TO_DEVA = {
-    'a': 'अ', 'ā': 'आ', 'i': 'इ', 'ī': 'ई', 'u': 'उ', 'ū': 'ऊ', 'ṛ': 'ऋ', 'ṝ': 'ॠ',
-    'ḷ': 'ऌ', 'ḹ': 'ॡ', 'e': 'ए', 'ai': 'ऐ', 'o': 'ओ', 'au': 'औ', 'ṃ': 'ं', 'ḥ': 'ः',
-    'k': 'क', 'kh': 'ख', 'g': 'ग', 'gh': 'घ', 'ṅ': 'ङ',
-    'c': 'च', 'ch': 'छ', 'j': 'ज', 'jh': 'झ', 'ñ': 'ञ',
-    'ṭ': 'ट', 'ṭh': 'ठ', 'ḍ': 'ड', 'ḍh': 'ढ', 'ṇ': 'ण',
-    't': 'त', 'th': 'थ', 'd': 'द', 'dh': 'ध', 'n': 'न',
-    'p': 'प', 'ph': 'फ', 'b': 'ब', 'bh': 'भ', 'm': 'म',
-    'y': 'य', 'r': 'र', 'l': 'ल', 'v': 'व',
-    'ś': 'श', 'ṣ': 'ष', 's': 'स', 'h': 'ह',
-}
-_IAST_TO_DEVA_KEYS = sorted(_IAST_TO_DEVA, key=len, reverse=True)
+# ---- IAST -> Devanāgarī (real transcode via to_slp1 -> slp1_to_devanagari composition;
+# virāma + mātrā aware. Previously a naive longest-key-first character substitution that
+# never applied virāma/mātrā and emitted an independent vowel sign after every consonant
+# (wrong on 9 of 9 basic words, e.g. 'ka' -> कअ instead of क). Fixed per H1394.) ----
 
 
 def iast_to_devanagari(text):
-    """Approximate IAST -> Devanāgarī for *display only* (no virāma/conjunct shaping).
-    Longest-key-first to keep digraphs (kh, ai) intact. Port of linguistics.js iastToDevanagari()."""
-    result = (text or '').lower()
-    for key in _IAST_TO_DEVA_KEYS:
-        result = result.replace(key, _IAST_TO_DEVA[key])
-    return result
+    """IAST -> Devanagari via the to_slp1 -> slp1_to_devanagari composition (a real transcode:
+    virama + matra aware). Previously a naive character-substitution that was wrong on 9 of 9
+    basic words (e.g. 'ka' -> koa instead of ka-in-devanagari); fixed per the D1 SLP1-round-trip
+    ruling."""
+    return slp1_to_devanagari(to_slp1((text or '').lower()))
 
 
 # ---- normalization keys ----------------------------------------------------
