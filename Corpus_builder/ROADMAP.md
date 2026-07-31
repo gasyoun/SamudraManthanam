@@ -57,9 +57,15 @@ Delphi 7.
       исходники `dcu/*.pas` и формы `*.dfm` сохранены. Добавлен
       [`PSRCBuilder/.gitignore`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/.gitignore).
       `cb.exe` намеренно оставлен в git (сборка корпуса без IDE).
-- [ ] **Почистить `cb.cfg`.** Псевдонимы BDE (`DbiTypes=BDE` и т.п.) и ссылки на
-      `WinTypes`/`WinProcs` — наследие, к делу не относятся; проверить и убрать
-      неиспользуемое. _(Отложено: правит сборку, а Delphi 7 для проверки нет.)_
+- [x] **Почистить `cb.cfg`.** Строка `-A...` с псевдонимами `WinTypes=Windows`,
+      `WinProcs=Windows`, `DbiTypes=BDE`, `DbiProcs=BDE`, `DbiErrs=BDE` удалена
+      целиком — grep по всем `.pas`/`.dpr` в
+      [`PSRCBuilder`](https://github.com/gasyoun/SamudraManthanam/tree/main/Corpus_builder/PSRCBuilder)
+      (включая `dcu/*.pas`) не нашёл ни одного `uses WinTypes`/`WinProcs`/`DbiTypes`/`DbiProcs`/`DbiErrs`,
+      так что псевдонимы были мёртвым наследием. **Остаток на человека:** grep не
+      заменяет компиляцию — финальная проверка `dcc32` на Delphi 7 не выполнялась
+      (машины с Delphi 7 в этой сессии нет).
+      [PR #123](https://github.com/gasyoun/SamudraManthanam/pull/123).
 - [x] **Переписать `Readme.txt`** — теперь UTF-8 указатель на README/ARCHITECTURE/ROADMAP.
 - [x] **Машиночитаемый отчет проверки.** `TOKBottomDlg.CheckAll`
       ([`fCheckDialog.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/fCheckDialog.pas))
