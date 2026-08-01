@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Corpus Builder Phase 1 dependency inventory (H2064, Grok 4.5 `grok-4.5`).** Full `uses` graph from `PSRCBuilder/cb.dpr`: every local unit is reachable (no dead modules); VCL/WinAPI vs RTL classification; concrete proof that `uMhHTML` / `TMhHTMLBuilder` is **not** GUI-free today (`Form1.StatusBar1`, `ShowMessage`, `MessageDlg`, `ShellExecute`, `Application.ProcessMessages`). Portable core named (`myutils`/`uTypes`/`ArtMath`/`CalcSimU`/`StatProcs`/`uSort`). Builder `TextU.pas` ~3× larger than main-app `Units/TextU.pas` — Phase 2 must re-diff, not assume subset. Artifact: [Corpus_builder/DEPENDENCY_INVENTORY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md). Tick: [Corpus_builder/ROADMAP.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) Phase 1 inventory. Feeds H1485 (engine↔GUI decouple).
+- **Ignatiev Wave B ingest: 5 docx/doc tantras + upapurāṇas (H1438, Grok 4.5
+  override dual-run).** Nīlamata-purāṇa (1 ch / 410 v, partial śl. 1–411),
+  Adbhuta-rāmāyaṇa (6 selected ch / 308 v), Kulārṇava-tantra (17 ch / 2049 v +
+  1113 endnotes), Yoginī-tantra (19 ch / 1285 v + 340 endnotes; ch.8–19 via
+  OLE WordDocument UTF-16 extract of legacy `.doc`), Mahābhāgavata-purāṇa
+  (78 ch / 4232 v; source lacks ch.36–37 and 56 headings). All registered in
+  `Programdata/data.txt`, all ru_only-aligned (no Sanskrit e-text for these),
+  all HTML round-trip ≥99% (measured 100%±0.1). Parser hardening this wave:
+  ToC leader-dot reject; per-part multi-file parse so part-1 endnotes cannot
+  leak; last-chapter ALL-CAPS title no longer mistaken for back-matter
+  (which had emptied Kulārṇava ch.8/17 and Mahābhāgavata ch.35/81). Three new
+  regression tests (19 total in `test_ignatiev_book_units.py`). Māyā-tantra
+  and Waves C–D remain open. Dual-run residual for intended Sonnet tier
+  minted at close.
 
 
 ## [0.15.0] - 2026-07-31

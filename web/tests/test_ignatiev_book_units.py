@@ -183,3 +183,70 @@ def test_appendix_after_last_chapter_does_not_absorb_body():
     assert {r["passage"] for r in ru} == {"1.1"}
     # the appendix's own note must not be attached to this work's chapter 1.
     assert not any(r["seg"].startswith("comm") for r in records)
+
+
+# --- Wave-B regressions (docx tantras/upapurāṇas, H1438) ---
+
+
+def test_toc_leader_dot_line_is_not_a_chapter_open():
+    # Yoginī / Kulārṇava ToC lines: "Глава восьмая ……… 48". Same ordinal
+    # form as a real heading, but the leader-dot / page-number tail is the
+    # negative signal. Without the reject, multi-part works invent empty
+    # chapters out of their own table of contents.
+    assert ig._is_chapter_open(
+        "Глава восьмая ………………………………………………………………48") is None
+    assert ig._is_chapter_open("Глава первая") is not None
+
+
+def test_last_chapter_allcaps_title_is_not_backmatter():
+    # Kulārṇava ch.8 / Mahābhāgavata last-of-part: the ALL-CAPS running
+    # title on the line after the heading matches _BACKMATTER_RE by
+    # construction. Scanning from last_chapter_idx must skip that title
+    # so the last chapter keeps its body (otherwise verse_count of the
+    # last chapter collapses to 0).
+    text = "\n".join([
+        "Глава первая",
+        "О ТРЕХ ТАТТВАХ, РАЗЛИЧНЫХ ВИДАХ ВИНА И ИНОМ",
+        "Благословенная Богиня сказала: первая. (1)",
+        "вторая. (2)",
+        "СЛОВАРЬ ИМЕН",
+        "какой-то термин.",
+    ])
+    records, report = ig.parse_book(text, "test-work")
+    assert report["chapters"] == 1
+    ru = [r for r in records if r["seg"] == "ru"]
+    assert {r["passage"] for r in ru} == {"1.1", "1.2"}
+
+
+def test_parse_parts_isolates_per_part_endnotes():
+    # Multi-part works (часть 1/2) must be parsed independently so part-1
+    # endnotes never leak into part-2's body as fake verse markers.
+    from pathlib import Path
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as td:
+        p1 = Path(td) / "p1.txt"
+        p2 = Path(td) / "p2.txt"
+        p1.write_text(
+            "\n".join([
+                "Глава первая",
+                "стих один. (1)",
+                "Комментарий",
+                "[1] 1.1(1). заметка части 1.",
+            ]),
+            encoding="utf-8",
+        )
+        p2.write_text(
+            "\n".join([
+                "Глава вторая",
+                "стих два. (1)",
+            ]),
+            encoding="utf-8",
+        )
+        records, report = ig.parse_parts([p1, p2], "test-multi")
+    ru = [r for r in records if r["seg"] == "ru"]
+    assert {r["passage"] for r in ru} == {"1.1", "2.1"}
+    assert report["chapters"] == 2
+    assert report["verse_count"] == 2
+    comm = [r for r in records if r["seg"].startswith("comm")]
+    assert len(comm) == 1

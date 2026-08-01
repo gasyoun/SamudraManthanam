@@ -102,6 +102,33 @@ _CHAPTER_OPEN_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Table-of-contents lines look like "Глава восьмая ……… 48" — same ordinal
+# form as a real chapter opening, but the leader-dot / page-number tail is a
+# reliable negative signal. Rejecting them here keeps multi-part works from
+# inventing empty chapters out of their own ToC (Yoginī 1-7 + 8-19, Kulārṇava).
+_TOC_LEADER_RE = re.compile(r"[.…·•]{3,}|\s{2,}\d{1,4}\s*$")
+
+
+def _is_chapter_open(line: str):
+    """Match a real chapter-opening heading, or None for ToC / non-matches.
+
+    Returns the regex match object on success. ToC leader-dot lines (and
+    lines whose 'rest' is only a bare page number) are rejected even though
+    they satisfy the raw ordinal form.
+    """
+    m = _CHAPTER_OPEN_RE.match(line)
+    if not m:
+        return None
+    rest = (m.group("rest") or "").strip()
+    if rest and _TOC_LEADER_RE.search(rest):
+        return None
+    # "Глава восьмая ………………………………………………………………48" puts the leaders in
+    # the title group when they start with a non-letter — also catch the
+    # whole-line form.
+    if _TOC_LEADER_RE.search(line):
+        return None
+    return m
+
 # Endnote-block heading: "Комментарий"/"Комментарии"/"Примечания" alone on a
 # line, optionally with pandoc's glued first footnote marker ("[1]
 # КОММЕНТАРИЙ" -- see module docstring).
@@ -165,9 +192,51 @@ _ENDNOTE_RE = re.compile(
 )
 
 
+def _extract_doc_ole_utf16(path: Path) -> str:
+    """Best-effort body extract from a Word 97-2003 .doc via the OLE
+    WordDocument stream (UTF-16LE). Used when antiword is absent and Word
+    COM cannot open the file (common on Office 2007 + nested ObjectPool
+    docs). Not a full piece-table parser — good enough for Ignatiev's
+    plain-prose scholarly translations where chapter headings and ``(N)``
+    verse markers survive as contiguous UTF-16 runs. Requires ``olefile``.
+    """
+    import olefile  # lazy: only needed for the .doc fallback path
+
+    ole = olefile.OleFileIO(str(path))
+    try:
+        if not ole.exists("WordDocument"):
+            raise ValueError(f"no WordDocument stream in {path}")
+        data = ole.openstream("WordDocument").read()
+    finally:
+        ole.close()
+    if len(data) % 2:
+        data = data[:-1]
+    raw = data.decode("utf-16le", errors="ignore")
+    out: list[str] = []
+    for ch in raw:
+        o = ord(ch)
+        if ch in "\n\r\t":
+            out.append("\n" if ch != "\t" else " ")
+        elif 0x20 <= o <= 0x7E or 0x0400 <= o <= 0x04FF:
+            out.append(ch)
+        elif ch in "«»—–…„“”‚‘’°§±×÷" or (0xA0 <= o < 0x250):
+            out.append(ch)
+        else:
+            out.append("\n")
+    text = "".join(out)
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r" *\n *", "\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip() + "\n"
+
+
 def extract_text(path: Path) -> str:
-    """Extract plain UTF-8 text from a .docx or .pdf source file."""
+    """Extract plain UTF-8 text from a .docx / .pdf / .doc / .txt source."""
     suffix = path.suffix.lower()
+    if suffix == ".txt":
+        # Pre-extracted plain text (e.g. a one-shot .doc salvage, or a
+        # pandoc dump parked next to the source). Read as UTF-8.
+        return path.read_text(encoding="utf-8", errors="replace")
     if suffix == ".docx":
         out = subprocess.run(
             ["pandoc", "-f", "docx", "-t", "plain", str(path)],
@@ -182,21 +251,20 @@ def extract_text(path: Path) -> str:
         # pdftotext prepends a form-feed to the first line of every page.
         return out.stdout.replace("\x0c", "\n")
     if suffix == ".doc":
-        # Legacy binary Word format; soffice/catdoc are absent, antiword IS
-        # on PATH. Its 2005-era build mis-renders Cyrillic unless told the
-        # mapping table explicitly (-m cp1251.txt, all these files are
-        # Russian) AND given ANTIWORDHOME so it can find that table --
-        # without both, antiword silently emits literal '?' for every
-        # non-Latin1 glyph instead of erroring. Output bytes are cp1251,
-        # not UTF-8.
+        # Legacy binary Word format. Prefer antiword (correct Cyrillic when
+        # ANTIWORDHOME + -m cp1251.txt are set); fall back to an OLE
+        # WordDocument UTF-16LE scan when antiword is missing or Word COM
+        # cannot open nested-ObjectPool files (Office 2007 rejects some).
         antiword_bin = shutil.which("antiword")
-        mapping_dir = str(Path(antiword_bin).parent.parent / "share" / "antiword")
-        env = {**os.environ, "ANTIWORDHOME": mapping_dir}
-        out = subprocess.run(
-            ["antiword", "-m", "cp1251.txt", "-w", "0", str(path)],
-            capture_output=True, check=True, env=env,
-        )
-        return out.stdout.decode("cp1251", errors="replace")
+        if antiword_bin:
+            mapping_dir = str(Path(antiword_bin).parent.parent / "share" / "antiword")
+            env = {**os.environ, "ANTIWORDHOME": mapping_dir}
+            out = subprocess.run(
+                ["antiword", "-m", "cp1251.txt", "-w", "0", str(path)],
+                capture_output=True, check=True, env=env,
+            )
+            return out.stdout.decode("cp1251", errors="replace")
+        return _extract_doc_ole_utf16(path)
     raise ValueError(f"unsupported source format: {suffix} ({path})")
 
 
@@ -322,7 +390,7 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     # heading only from the LAST chapter-opening heading onward, so the real
     # section (which always follows the last chapter) is the one found.
     last_chapter_idx = max(
-        (i for i, ln in enumerate(lines) if _CHAPTER_OPEN_RE.match(ln)),
+        (i for i, ln in enumerate(lines) if _is_chapter_open(ln)),
         default=0,
     )
 
@@ -335,8 +403,21 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     # Found FIRST (from the last chapter opening onward), independent of the
     # notes-heading search below, so a work's true content boundary is
     # whichever of the two actually comes first structurally.
+    # Start the back-matter scan AFTER the last chapter heading, skipping
+    # blank lines and one optional ALL-CAPS running title that sits on the
+    # next line (e.g. Kulārṇava ch.8 "О ТРЕХ ТАТТВАХ, РАЗЛИЧНЫХ ВИДАХ ВИНА
+    # И ИНОМ"). That title matches _BACKMATTER_RE by construction (7+
+    # uppercase Cyrillic chars) and, if accepted, would set body_end to the
+    # title line and empty the entire last chapter. Real back-matter
+    # (СЛОВАРЬ / ЛИТЕРАТУРА / ОБ АВТОРЕ / appendix of other works) always
+    # appears later, after verse body.
     backmatter_idx = None
-    for i in range(last_chapter_idx, n):
+    scan_from = last_chapter_idx + 1
+    while scan_from < n and not lines[scan_from].strip():
+        scan_from += 1
+    if scan_from < n and _BACKMATTER_RE.match(lines[scan_from]):
+        scan_from += 1  # skip the last chapter's own ALL-CAPS title
+    for i in range(scan_from, n):
         if _BACKMATTER_RE.match(lines[i]):
             backmatter_idx = i
             break
@@ -376,17 +457,23 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     # Walk the body: cut at chapter-opening headings. The FIRST chapter
     # opening marks the true start of the work (front matter -- title page,
     # table of contents, preface -- precedes it and is discarded).
+    # ToC leader-dot lines are rejected by _is_chapter_open (see below).
     chapters: list[dict] = []
     cur: dict | None = None
     idx = 0
     while idx < body_end:
         line = lines[idx]
-        om = _CHAPTER_OPEN_RE.match(line)
+        om = _is_chapter_open(line)
         if om:
             if cur is not None:
                 chapters.append(cur)
             onum = ordinal_f_to_int(om.group("ord"))
             cur = {"chapter": onum, "body": []}
+            # Keep trailing body text glued onto the heading line (the
+            # pre-existing rest-group behaviour of _CHAPTER_OPEN_RE).
+            rest = (om.group("rest") or "").strip()
+            if rest:
+                cur["body"].append(rest)
         elif cur is not None:
             cur["body"].append(line)
         idx += 1
@@ -498,19 +585,78 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     return records, report
 
 
+def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
+    """Parse one or more source files of a multi-part work.
+
+    Each file is parsed independently (so part-1 endnotes / back-matter are
+    bound to part-1's last chapter and never leak into part-2's body), then
+    records and report counters are merged. Chapter numbers are expected to
+    continue across parts (Ignatiev's "Часть первая/вторая" convention), not
+    restart.
+    """
+    if len(paths) == 1:
+        return parse_book(extract_text(paths[0]), work_slug)
+
+    all_records: list[dict] = []
+    merged = {
+        "work": work_slug,
+        "chapters": 0,
+        "verse_count": 0,
+        "comment_count": 0,
+        "verse_gaps": [],
+        "chapter_numbers": [],
+        "unrecognised_endnotes": 0,
+        "id_collisions": [],
+        "total_endnotes": 0,
+        "parts": [],
+    }
+    seen_passages: dict[str, int] = {}
+    for path in paths:
+        text = extract_text(path)
+        recs, rep = parse_book(text, work_slug)
+        # Re-seq across parts so build_corpus_html's order is stable.
+        base_seq = len(all_records)
+        for r in recs:
+            r["seq"] = base_seq + r.get("seq", 0)
+            # Surface cross-part passage collisions (should not happen if
+            # chapter numbers continue rather than restart).
+            if r.get("seg") == "ru":
+                psg = r.get("passage", "")
+                seen_passages[psg] = seen_passages.get(psg, 0) + 1
+        all_records.extend(recs)
+        merged["chapters"] += rep.get("chapters", 0)
+        merged["verse_count"] += rep.get("verse_count", 0)
+        merged["comment_count"] += rep.get("comment_count", 0)
+        merged["verse_gaps"].extend(rep.get("verse_gaps") or [])
+        merged["chapter_numbers"].extend(rep.get("chapter_numbers") or [])
+        merged["unrecognised_endnotes"] += rep.get("unrecognised_endnotes", 0)
+        merged["id_collisions"].extend(rep.get("id_collisions") or [])
+        merged["total_endnotes"] += rep.get("total_endnotes", 0)
+        merged["parts"].append({
+            "path": str(path),
+            "chapters": rep.get("chapters", 0),
+            "verse_count": rep.get("verse_count", 0),
+            "chapter_numbers": rep.get("chapter_numbers") or [],
+        })
+    cross = [p for p, n in seen_passages.items() if n > 1]
+    if cross:
+        merged["id_collisions"].extend(cross)
+        merged["cross_part_collisions"] = cross
+    return all_records, merged
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", required=True, nargs="+",
                      help="one or more source files, in reading order "
-                          "(multi-part works are concatenated)")
+                          "(multi-part works are parsed per-file then merged)")
     ap.add_argument("--work-slug", required=True)
     ap.add_argument("--output-dir", default="web/corpus_builder/jsonl")
     ap.add_argument("--stdout-report", action="store_true")
     args = ap.parse_args()
 
     src_paths = [Path(p) for p in args.input]
-    text = extract_text_multi(src_paths)
-    records, report = parse_book(text, args.work_slug)
+    records, report = parse_parts(src_paths, args.work_slug)
 
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)

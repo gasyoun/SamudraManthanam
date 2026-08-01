@@ -15,5 +15,6 @@
   "structure": "verse",
   "provenance": "А. Игнатьев (перев.). Адбхута-Рамаяна (архив переводчика). H1438 Wave B: selected chapters 17-20, 22-23 only; ch.20 v.8 near-duplicate kept as 8/8b; ch.23 order 50,52,51,53 preserved. Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
   "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
-  "needs_review": true
+  "needs_review": true,
+  "filename": "adbhuta-ramayana.html"
 }
