@@ -1,0 +1,550 @@
+[
+  {
+    "slug": "nilamata-purana",
+    "verses": 410,
+    "chapters": 1,
+    "comments": 0,
+    "alignment": {
+      "ru_verses": 410,
+      "sa_verses": 0,
+      "matched": 0,
+      "ru_only": 410,
+      "sa_orphan": 0,
+      "by_chapter": {
+        "?.1": {
+          "matched": 0,
+          "ru_only": 410
+        }
+      },
+      "sa_orphans": []
+    }
+  },
+  {
+    "slug": "adbhuta-ramayana",
+    "verses": 308,
+    "chapters": 6,
+    "comments": 0,
+    "alignment": {
+      "ru_verses": 308,
+      "sa_verses": 0,
+      "matched": 0,
+      "ru_only": 308,
+      "sa_orphan": 0,
+      "by_chapter": {
+        "?.17": {
+          "matched": 0,
+          "ru_only": 67
+        },
+        "?.18": {
+          "matched": 0,
+          "ru_only": 69
+        },
+        "?.19": {
+          "matched": 0,
+          "ru_only": 16
+        },
+        "?.20": {
+          "matched": 0,
+          "ru_only": 32
+        },
+        "?.22": {
+          "matched": 0,
+          "ru_only": 51
+        },
+        "?.23": {
+          "matched": 0,
+          "ru_only": 73
+        }
+      },
+      "sa_orphans": []
+    }
+  },
+  {
+    "slug": "kularnava-tantra",
+    "verses": 1832,
+    "chapters": 17,
+    "comments": 0,
+    "alignment": {
+      "ru_verses": 1832,
+      "sa_verses": 0,
+      "matched": 0,
+      "ru_only": 1832,
+      "sa_orphan": 0,
+      "by_chapter": {
+        "?.1": {
+          "matched": 0,
+          "ru_only": 121
+        },
+        "?.2": {
+          "matched": 0,
+          "ru_only": 142
+        },
+        "?.3": {
+          "matched": 0,
+          "ru_only": 117
+        },
+        "?.4": {
+          "matched": 0,
+          "ru_only": 129
+        },
+        "?.5": {
+          "matched": 0,
+          "ru_only": 114
+        },
+        "?.6": {
+          "matched": 0,
+          "ru_only": 102
+        },
+        "?.7": {
+          "matched": 0,
+          "ru_only": 103
+        },
+        "?.9": {
+          "matched": 0,
+          "ru_only": 134
+        },
+        "?.10": {
+          "matched": 0,
+          "ru_only": 143
+        },
+        "?.11": {
+          "matched": 0,
+          "ru_only": 110
+        },
+        "?.12": {
+          "matched": 0,
+          "ru_only": 128
+        },
+        "?.13": {
+          "matched": 0,
+          "ru_only": 133
+        },
+        "?.14": {
+          "matched": 0,
+          "ru_only": 108
+        },
+        "?.15": {
+          "matched": 0,
+          "ru_only": 115
+        },
+        "?.16": {
+          "matched": 0,
+          "ru_only": 133
+        }
+      },
+      "sa_orphans": []
+    }
+  },
+  {
+    "slug": "yogini-tantra",
+    "verses": 1285,
+    "chapters": 19,
+    "comments": 340,
+    "alignment": {
+      "ru_verses": 1285,
+      "sa_verses": 0,
+      "matched": 0,
+      "ru_only": 1285,
+      "sa_orphan": 0,
+      "by_chapter": {
+        "?.1": {
+          "matched": 0,
+          "ru_only": 55
+        },
+        "?.2": {
+          "matched": 0,
+          "ru_only": 74
+        },
+        "?.3": {
+          "matched": 0,
+          "ru_only": 66
+        },
+        "?.4": {
+          "matched": 0,
+          "ru_only": 74
+        },
+        "?.5": {
+          "matched": 0,
+          "ru_only": 77
+        },
+        "?.6": {
+          "matched": 0,
+          "ru_only": 73
+        },
+        "?.7": {
+          "matched": 0,
+          "ru_only": 60
+        },
+        "?.8": {
+          "matched": 0,
+          "ru_only": 72
+        },
+        "?.9": {
+          "matched": 0,
+          "ru_only": 74
+        },
+        "?.10": {
+          "matched": 0,
+          "ru_only": 63
+        },
+        "?.11": {
+          "matched": 0,
+          "ru_only": 69
+        },
+        "?.12": {
+          "matched": 0,
+          "ru_only": 73
+        },
+        "?.13": {
+          "matched": 0,
+          "ru_only": 61
+        },
+        "?.14": {
+          "matched": 0,
+          "ru_only": 78
+        },
+        "?.15": {
+          "matched": 0,
+          "ru_only": 67
+        },
+        "?.16": {
+          "matched": 0,
+          "ru_only": 58
+        },
+        "?.17": {
+          "matched": 0,
+          "ru_only": 55
+        },
+        "?.18": {
+          "matched": 0,
+          "ru_only": 55
+        },
+        "?.19": {
+          "matched": 0,
+          "ru_only": 81
+        }
+      },
+      "sa_orphans": []
+    }
+  },
+  {
+    "slug": "mahabhagavata-purana",
+    "verses": 4131,
+    "chapters": 78,
+    "comments": 0,
+    "alignment": {
+      "ru_verses": 4131,
+      "sa_verses": 0,
+      "matched": 0,
+      "ru_only": 4131,
+      "sa_orphan": 0,
+      "by_chapter": {
+        "?.1": {
+          "matched": 0,
+          "ru_only": 54
+        },
+        "?.2": {
+          "matched": 0,
+          "ru_only": 49
+        },
+        "?.3": {
+          "matched": 0,
+          "ru_only": 79
+        },
+        "?.4": {
+          "matched": 0,
+          "ru_only": 61
+        },
+        "?.5": {
+          "matched": 0,
+          "ru_only": 51
+        },
+        "?.6": {
+          "matched": 0,
+          "ru_only": 26
+        },
+        "?.7": {
+          "matched": 0,
+          "ru_only": 99
+        },
+        "?.8": {
+          "matched": 0,
+          "ru_only": 106
+        },
+        "?.9": {
+          "matched": 0,
+          "ru_only": 90
+        },
+        "?.10": {
+          "matched": 0,
+          "ru_only": 102
+        },
+        "?.11": {
+          "matched": 0,
+          "ru_only": 117
+        },
+        "?.12": {
+          "matched": 0,
+          "ru_only": 48
+        },
+        "?.13": {
+          "matched": 0,
+          "ru_only": 94
+        },
+        "?.14": {
+          "matched": 0,
+          "ru_only": 28
+        },
+        "?.15": {
+          "matched": 0,
+          "ru_only": 72
+        },
+        "?.16": {
+          "matched": 0,
+          "ru_only": 34
+        },
+        "?.17": {
+          "matched": 0,
+          "ru_only": 51
+        },
+        "?.18": {
+          "matched": 0,
+          "ru_only": 43
+        },
+        "?.19": {
+          "matched": 0,
+          "ru_only": 17
+        },
+        "?.20": {
+          "matched": 0,
+          "ru_only": 39
+        },
+        "?.21": {
+          "matched": 0,
+          "ru_only": 61
+        },
+        "?.22": {
+          "matched": 0,
+          "ru_only": 111
+        },
+        "?.23": {
+          "matched": 0,
+          "ru_only": 193
+        },
+        "?.24": {
+          "matched": 0,
+          "ru_only": 50
+        },
+        "?.25": {
+          "matched": 0,
+          "ru_only": 36
+        },
+        "?.26": {
+          "matched": 0,
+          "ru_only": 25
+        },
+        "?.27": {
+          "matched": 0,
+          "ru_only": 31
+        },
+        "?.28": {
+          "matched": 0,
+          "ru_only": 38
+        },
+        "?.29": {
+          "matched": 0,
+          "ru_only": 35
+        },
+        "?.30": {
+          "matched": 0,
+          "ru_only": 48
+        },
+        "?.31": {
+          "matched": 0,
+          "ru_only": 27
+        },
+        "?.32": {
+          "matched": 0,
+          "ru_only": 27
+        },
+        "?.33": {
+          "matched": 0,
+          "ru_only": 22
+        },
+        "?.34": {
+          "matched": 0,
+          "ru_only": 17
+        },
+        "?.38": {
+          "matched": 0,
+          "ru_only": 54
+        },
+        "?.39": {
+          "matched": 0,
+          "ru_only": 42
+        },
+        "?.40": {
+          "matched": 0,
+          "ru_only": 52
+        },
+        "?.41": {
+          "matched": 0,
+          "ru_only": 21
+        },
+        "?.42": {
+          "matched": 0,
+          "ru_only": 69
+        },
+        "?.43": {
+          "matched": 0,
+          "ru_only": 92
+        },
+        "?.44": {
+          "matched": 0,
+          "ru_only": 31
+        },
+        "?.45": {
+          "matched": 0,
+          "ru_only": 36
+        },
+        "?.46": {
+          "matched": 0,
+          "ru_only": 33
+        },
+        "?.47": {
+          "matched": 0,
+          "ru_only": 78
+        },
+        "?.48": {
+          "matched": 0,
+          "ru_only": 24
+        },
+        "?.49": {
+          "matched": 0,
+          "ru_only": 69
+        },
+        "?.50": {
+          "matched": 0,
+          "ru_only": 123
+        },
+        "?.51": {
+          "matched": 0,
+          "ru_only": 40
+        },
+        "?.52": {
+          "matched": 0,
+          "ru_only": 22
+        },
+        "?.53": {
+          "matched": 0,
+          "ru_only": 48
+        },
+        "?.54": {
+          "matched": 0,
+          "ru_only": 65
+        },
+        "?.55": {
+          "matched": 0,
+          "ru_only": 165
+        },
+        "?.57": {
+          "matched": 0,
+          "ru_only": 50
+        },
+        "?.58": {
+          "matched": 0,
+          "ru_only": 53
+        },
+        "?.59": {
+          "matched": 0,
+          "ru_only": 32
+        },
+        "?.60": {
+          "matched": 0,
+          "ru_only": 30
+        },
+        "?.61": {
+          "matched": 0,
+          "ru_only": 66
+        },
+        "?.62": {
+          "matched": 0,
+          "ru_only": 27
+        },
+        "?.63": {
+          "matched": 0,
+          "ru_only": 82
+        },
+        "?.64": {
+          "matched": 0,
+          "ru_only": 27
+        },
+        "?.65": {
+          "matched": 0,
+          "ru_only": 43
+        },
+        "?.66": {
+          "matched": 0,
+          "ru_only": 55
+        },
+        "?.67": {
+          "matched": 0,
+          "ru_only": 39
+        },
+        "?.68": {
+          "matched": 0,
+          "ru_only": 67
+        },
+        "?.69": {
+          "matched": 0,
+          "ru_only": 45
+        },
+        "?.70": {
+          "matched": 0,
+          "ru_only": 61
+        },
+        "?.71": {
+          "matched": 0,
+          "ru_only": 24
+        },
+        "?.72": {
+          "matched": 0,
+          "ru_only": 62
+        },
+        "?.73": {
+          "matched": 0,
+          "ru_only": 49
+        },
+        "?.74": {
+          "matched": 0,
+          "ru_only": 35
+        },
+        "?.75": {
+          "matched": 0,
+          "ru_only": 46
+        },
+        "?.76": {
+          "matched": 0,
+          "ru_only": 38
+        },
+        "?.77": {
+          "matched": 0,
+          "ru_only": 49
+        },
+        "?.78": {
+          "matched": 0,
+          "ru_only": 31
+        },
+        "?.79": {
+          "matched": 0,
+          "ru_only": 50
+        },
+        "?.80": {
+          "matched": 0,
+          "ru_only": 25
+        }
+      },
+      "sa_orphans": []
+    }
+  }
+]

@@ -1,6 +1,6 @@
 # PDF → Corpus Ingestion Pipeline (house standard)
 
-_Created: 10-07-2026 · Last updated: 22-07-2026_
+_Created: 10-07-2026 · Last updated: 01-08-2026_
 
 The reusable, agent-runnable pipeline that turns a print-derived **PDF**
 translation into the app-ready corpus HTML the desktop reader «Пахтанье
@@ -220,8 +220,8 @@ Differences from the DBhP path (module docstring has the full rationale):
 - Text extraction branches on file extension: `pandoc -f docx -t plain` or
   `pdftotext -enc UTF-8` (same form-feed normalisation as the DBhP path).
 
-**Status: 5/~20 works ingested (H1438).** Wave A tail (the 4 PDF tantras)
-landed this pass, on top of the H1438 pilot's 2 works:
+**Status: 10/~20 works ingested (H1438).** Wave A (5) + Wave B (5) landed.
+Wave A tail (the 4 PDF tantras) plus the pilot's 2 works:
 
 - **Cīnācāra-tantra** (docx, pilot): 5 ch, 225 verses, 154/168 endnotes
   attached — the long tail is verse-range note targets like `5.49(2)–50(1)`
@@ -294,9 +294,37 @@ means reintroducing something like the OLD DBhP-PDF glued-digit heuristic as
 an additional front-end mode, auto-detected per work — a real design task,
 not a regex tweak; scoped as the next Wave-A-tail item rather than rushed.
 
-**Remaining ~14 works** (Wave B docx tantras/upapurāṇas, Wave C in-DCS
-purāṇas needing real Sanskrit alignment, Wave D fragments) are scoped in
-[H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md) —
-open for a future session.
+### Wave B (docx tantras + upapurāṇas) — landed 01-08-2026
+
+Executed as Grok 4.5 override dual-run of Sonnet-locked H1438 (residual
+Sonnet compare handoff minted at close). Five works, all `ru_only`, all
+registered in `Programdata/data.txt`, all HTML block-count round-trip ≥99%:
+
+| Work | Source | Ch | Verses | Endnotes | Notes |
+|---|---|---:|---:|---:|---|
+| Nīlamata-purāṇa | docx | 1 | 410 | 0 | partial śl. 1–411; no chapter headings → implicit ch.1 |
+| Adbhuta-rāmāyaṇa | docx | 6 | 308 | 0 | selected ch.17–20, 22–23; source order quirks preserved |
+| Kulārṇava-tantra | 2× docx | 17 | 2049 | 1113 | multi-part continuous chapter numbers |
+| Yoginī-tantra | docx + `.doc` | 19 | 1285 | 340 | ch.8–19 via OLE UTF-16 extract (antiword/Word COM absent) |
+| Mahābhāgavata-purāṇa | 2× docx | 78 | 4232 | 265 | source lacks ch.36–37 and 56 headings; ch.55 renumbers mid-chapter |
+
+**Three Wave-B parser hardenings** (3 new unit tests; 19 total):
+
+1. **ToC leader-dot reject** — `Глава восьмая ……… 48` is not a chapter open.
+2. **Per-part multi-file parse** — each `--input` file is parsed alone, then
+   records merge; part-1 endnotes can no longer leak into part-2 as fake
+   `(N)` verse markers.
+3. **Last-chapter ALL-CAPS title ≠ back-matter** — scan for `_BACKMATTER_RE`
+   starts after the last chapter's own running title, otherwise Kulārṇava
+   ch.8/17 and Mahābhāgavata ch.35/81 emptied to 0 verses.
+
+Also: `.doc` OLE WordDocument UTF-16 fallback when antiword is missing;
+`.txt` pre-extract input accepted; `build_corpus_html` flat-work skandha
+fix (2-part `CHAPTER.VERSE` ids no longer misread as skandha).
+
+**Remaining ~9–10 works** (Wave C in-DCS purāṇas needing real Sanskrit
+alignment — Kālikā, Devīmāhātmya; Wave D fragments; Māyā-tantra deferred
+glued-digit front-end) stay scoped in
+[H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md).
 
 _Dr. Mārcis Gasūns_

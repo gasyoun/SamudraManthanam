@@ -1,0 +1,75 @@
+{
+  "work": "yogini-tantra",
+  "chapters": 19,
+  "verse_count": 1285,
+  "comment_count": 340,
+  "verse_gaps": [
+    "1: 54->56",
+    "7: 55->57",
+    "12: 57->59",
+    "14: 10->12",
+    "14: 40->42",
+    "16: 6->8"
+  ],
+  "chapter_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "unrecognised_endnotes": 0,
+  "id_collisions": [
+    "19.48"
+  ],
+  "total_endnotes": 340,
+  "parts": [
+    {
+      "path": "..\\..\\archive_ignatiev_2026\\Переводы с санскрита\\Йогини-тантра\\Йогини-тантра Главы 1-7.docx",
+      "chapters": 7,
+      "verse_count": 479,
+      "chapter_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "path": "_tmp_yogini_8_19.body.txt",
+      "chapters": 12,
+      "verse_count": 806,
+      "chapter_numbers": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  ]
+}
