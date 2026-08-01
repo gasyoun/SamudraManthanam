@@ -1,6 +1,6 @@
 # Corpus Builder (`cb.exe`)
 
-_Создано: 05-07-2026 · Обновлено: 05-07-2026_
+_Создано: 05-07-2026 · Обновлено: 01-08-2026_
 
 **Сборщик корпуса** — настольная утилита для Windows, которая готовит и собирает
 параллельный санскритско-русский корпус в формате HTML. Это **авторский/сборочный
@@ -15,7 +15,9 @@ _Создано: 05-07-2026 · Обновлено: 05-07-2026_
 > Для агентов и разработчиков подробные внутренние соглашения — в
 > [`CLAUDE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/CLAUDE.md).
 > Этот README — обзор для человека; стратегический план — в
-> [`ROADMAP.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md).
+> [`ROADMAP.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md);
+> карта uses/VCL для порта — в
+> [`DEPENDENCY_INVENTORY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md) (H2064).
 
 ---
 

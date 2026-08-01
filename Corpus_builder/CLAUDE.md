@@ -94,3 +94,4 @@ Errors are collected in `ErrList` (shown in `Memo1`) and saved to `<input>_err.t
 - **File helpers** (`myutils.pas`): `PutFile1ToFile2(F1, F2, MarkerBegin, MarkerEnd)` inserts the full content of `F1` into `F2` between the two marker strings (saves `.old` backup); `MergeFiles(Fn1, Fn2, Sum)` concatenates two files into a third.
 - **IAST / Daṇḍa constants**: the single daṇḍa (`।`) and double daṇḍa (`॥`) are referenced as `S_danda1` / `S_danda2` (defined in `TextU`); use these constants, not raw Unicode literals.
 - **Error reporting**: always append to `ErrList: TStringList`; do not `ShowMessage` inside builder logic (it blocks batch processing).
+- **Engine is not GUI-free yet**: live `ShowMessage`/`MessageDlg`/`Form1.StatusBar1`/`ShellExecute` remain in `uMhHTML.pas` — full map in `DEPENDENCY_INVENTORY.md` (H2064); decoupling is H1485.

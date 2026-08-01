@@ -1,6 +1,6 @@
 # Corpus Builder — план развития (Roadmap)
 
-_Создано: 05-07-2026 · Обновлено: 10-07-2026_
+_Создано: 05-07-2026 · Обновлено: 01-08-2026_
 
 > **Обновление 10-07-2026 (H534).** Появился **альтернативный, агент-исполнимый
 > путь ингеста на Python** — не порт `cb.exe` на Lazarus, а замена его для
@@ -50,8 +50,12 @@ Delphi 7.
 - [~] **Golden-file тесты.** Каркас и процедура фиксации готовы
       ([`tests/golden/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Corpus_builder/tests/golden)
       + README с точной инструкцией захвата). **Осталось:** прогнать `cb.exe` на
-      реальном мини-наборе и положить побайтовый эталон в `expected/` (нужна
-      Windows-машина с `cb.exe`; GUI, headless-режима нет — это Фаза 4).
+      реальном мини-наборе и положить побайтовый эталон в `expected/`.
+      **Blocked (01-08-2026, roadmap-item-exec skip recorded):** `cb.exe` is GUI-only
+      (no headless until Phase 4); real `01_Sanskrit`/`02_Transl`/`config.ini` source
+      mini-set is not in-repo; `_check.json` needs a Delphi-7 recompile of
+      `fCheckDialog.pas` that the committed binary does not yet include. Skipped so
+      Phase 1 inventory can proceed; do not treat `[~]` as done.
 - [x] **Убрать мусор из репозитория.** Удалены из git: `Unit1.*`, `*.dof`,
       все `*.~pas`/`*.~dfm`/`*.~ddp`, `*.ddp` и все `*.dcu` (в т.ч. в `dcu/`);
       исходники `dcu/*.pas` и формы `*.dfm` сохранены. Добавлен
@@ -78,10 +82,13 @@ Delphi 7.
 Цель: минимизировать различия между сборщиком и Lazarus-совместимым кодом,
 оставаясь еще на Delphi 7 (собирается и там, и там).
 
-- [ ] **Инвентаризация зависимостей.** Пройтись по `uses` всех модулей, отметить
-      VCL-only (`Forms`, `Dialogs`, `Windows`) и переносимые (`SysUtils`,
-      `Classes`). Ядро сборки ([`uMhHTML.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/uMhHTML.pas))
-      почти не зависит от GUI — его переносить проще всего.
+- [x] **Инвентаризация зависимостей.** Done 01-08-2026 (H2064, Grok 4.5 `grok-4.5`):
+      full `uses` graph from `cb.dpr`, VCL/WinAPI vs RTL vs project-local, reachable
+      unit table, VCL call-site audit.
+      Artifact: [`DEPENDENCY_INVENTORY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md).
+      **Correction:** `uMhHTML` is **not** GUI-free today (`MessageDlg`/`ShowMessage`/
+      `ShellExecute`/`Application.ProcessMessages`/`Form1.StatusBar1` + `uses
+      dialogs,fMainForm,Forms,…`) — Phase 1 «отделить движок» (H1485) is load-bearing.
 - [ ] **Отделить движок от формы.** Логику сборки в `TMhHTMLBuilder` держать
       свободной от `ShowMessage`/VCL-вызовов (в `CLAUDE.md` это уже правило) — так
       движок компилируется без LCL.
