@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Corpus Builder Phase 1 dependency inventory (H2064, Grok 4.5 `grok-4.5`).** Full `uses` graph from `PSRCBuilder/cb.dpr`: every local unit is reachable (no dead modules); VCL/WinAPI vs RTL classification; concrete proof that `uMhHTML` / `TMhHTMLBuilder` is **not** GUI-free today (`Form1.StatusBar1`, `ShowMessage`, `MessageDlg`, `ShellExecute`, `Application.ProcessMessages`). Portable core named (`myutils`/`uTypes`/`ArtMath`/`CalcSimU`/`StatProcs`/`uSort`). Builder `TextU.pas` ~3× larger than main-app `Units/TextU.pas` — Phase 2 must re-diff, not assume subset. Artifact: [Corpus_builder/DEPENDENCY_INVENTORY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md). Tick: [Corpus_builder/ROADMAP.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) Phase 1 inventory. Feeds H1485 (engine↔GUI decouple).
+
+
 ## [0.15.0] - 2026-07-31
 ### Added
 - **Regression guard for Cyrillic homoglyphs in `#sa` corpus fields (H1694, issue #16, Sonnet 5
