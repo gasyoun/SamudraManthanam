@@ -15,13 +15,39 @@ from urllib.parse import quote, urlencode
 from sse_starlette.sse import EventSourceResponse
 from app.db import get_db
 from app.models import SearchRequest, SearchResult, SearchResultItem, SearchMode
-from app.services.html_service import render_fragment, render_full_page, render_standalone
+from app.services.html_service import render_fragment, render_full_page, render_standalone, kwic_excerpt
 from app.services.dispatch_service import dispatch_search
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 
 from app.settings import settings
 
 router = APIRouter(prefix="/api/search", tags=["search"])
+
+# H1831 — bulk-download exposure cap for JSON/CSV export.
+# Mechanism: per-row snippet truncation to the same KWIC window the live
+# search UI uses (40 chars each side of the match ≈ 80+ chars total), NOT
+# full verse+translation text. HTML export is already snippet-based via
+# render_fragment and is left unchanged. This keeps export as a search-result
+# set, never a reconstruct-the-corpus bulk dump.
+_EXPORT_SNIPPET_WINDOW = 40
+
+
+def _export_snippet_text(line_text: str, query: str) -> str:
+    """Return a UI-equivalent KWIC snippet of plain text for export."""
+    parts = kwic_excerpt(line_text or "", query, window=_EXPORT_SNIPPET_WINDOW)
+    snippet = f"{parts.get('before', '')}{parts.get('match', '')}{parts.get('after', '')}"
+    return snippet
+
+
+def _export_snippet_html(line_text: str, query: str) -> str:
+    """Export HTML field is capped to a plain-text KWIC snippet (escaped).
+
+    Full line_html is intentionally NOT emitted in JSON export — that was the
+    bulk-download hole. Callers needing markup use the HTML export format,
+    which goes through render_fragment (already snippet-oriented).
+    """
+    import html as _html
+    return _html.escape(_export_snippet_text(line_text, query), quote=False)
 
 
 import logging
@@ -270,8 +296,9 @@ async def get_export(
                         "chapter": r["chapter"],
                         "line_num": r["line_num"],
                         "link_id": r["link_id"],
-                        "line_html": r["line_html"],
-                        "line_text": r["line_text"],
+                        # H1831: KWIC snippets only — never full untruncated text.
+                        "line_html": _export_snippet_html(r.get("line_text") or "", query),
+                        "line_text": _export_snippet_text(r.get("line_text") or "", query),
                     }
                     for r in results
                 ],
@@ -295,7 +322,8 @@ async def get_export(
                     r["chapter"],
                     r["line_num"],
                     r["link_id"],
-                    r["line_text"],
+                    # H1831: KWIC snippet, not full verse text.
+                    _export_snippet_text(r.get("line_text") or "", query),
                 ])
             return PlainTextResponse(content=buffer.getvalue(), media_type="text/csv", headers=headers)
 

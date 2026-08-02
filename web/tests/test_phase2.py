@@ -20,6 +20,29 @@ async def test_regex_safety_timeout(test_db):
     assert "timeout" in data["search_metadata"]
     assert "truncated" in data["search_metadata"]
 
+
+@pytest.mark.asyncio
+async def test_regex_catastrophic_backtracking_bounded(test_db):
+    """H1830: a single pathological pattern must not hang past a wall-clock bound.
+
+    stdlib re has no per-call timeout; search_regex previously only checked
+    MAX_TIME between rows, so one re.search on a ~30-char non-matching line
+    with (a+)+$ could block for tens of seconds. The fix uses the `regex`
+    package's per-match timeout (or equivalent). Assert completion <2s.
+    """
+    import time
+    t0 = time.time()
+    response = client.post("/api/search", json={
+        "query": "(a+)+$",
+        "mode": "regex",
+        "case_sensitive": True,
+    })
+    elapsed = time.time() - t0
+    assert response.status_code == 200, response.text
+    assert elapsed < 2.0, f"ReDoS path took {elapsed:.2f}s (expected <2s)"
+    data = response.json()
+    assert "results" in data
+
 @pytest.mark.asyncio
 async def test_reader_view(test_db):
     response = client.get("/sources/1")

@@ -285,7 +285,16 @@ def _reflow(lines: list[str]) -> str:
 
 def split_verses(body: str) -> list[dict]:
     """Split a chapter's running text into verse chunks. See
-    ignatjev_pdf_to_canonical.split_verses (identical algorithm)."""
+    ignatjev_pdf_to_canonical.split_verses (identical algorithm).
+
+    After the raw ``(N)`` split, non-monotonic restarts are collapsed
+    (H1829): footnote prose that embeds citation markers like ``1.1(2)``
+    or bare ``(1)`` was being minted as new verses that re-hit verse 1/2
+    and forced letter-suffix id collisions (nirvana-tantra: 284 of 361
+    corpus-wide dup-suffixes). A decrease in verse number within a
+    chapter is treated as footnote debris — its text is appended to the
+    previous verse rather than minted as a new passage.
+    """
     verses: list[dict] = []
     pos = 0
     carry_author: str | None = None
@@ -303,7 +312,61 @@ def split_verses(body: str) -> list[dict]:
         else:
             author = carry_author
         verses.append({"verse": label, "text": chunk, "author": author})
-    return verses
+    return _collapse_nonmonotonic_verses(verses)
+
+
+def _verse_num_start(label: str) -> int | None:
+    """Leading integer of a verse label (``3``, ``3-6``); None if unparseable."""
+    try:
+        return int(re.split(r"[-–]", label)[0])
+    except (ValueError, IndexError):
+        return None
+
+
+def _looks_like_footnote_debris(text: str) -> bool:
+    """Heuristic: chunk is footnote prose, not a real verse body (H1829)."""
+    t = (text or "").strip()
+    if not t:
+        return True
+    # Bare "5 1.1" / "10 1.4" footnote headers from glued-digit PDFs.
+    if re.match(r"^\d{1,3}\s+\d+\.\d+", t) and len(t) < 80:
+        return True
+    # Continuation after a footnote number was stripped: ". gloss …".
+    if t.startswith(". ") or t.startswith("– ") or t.startswith("- "):
+        return True
+    return False
+
+
+def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
+    """Merge false ``(N)`` splits from footnote prose (H1829).
+
+    Two classes of debris:
+      1. Non-monotonic restarts (e.g. 5→1, 3→1) — always merge into previous.
+      2. Same-N or early-N chunks whose text looks like a footnote header /
+         gloss continuation — merge; genuine same-N duplicates with real
+         verse-length prose still pass through and get letter suffixes.
+    """
+    if not verses:
+        return verses
+    out: list[dict] = []
+    prev_end = 0
+    for v in verses:
+        n = _verse_num_start(v["verse"])
+        text = v.get("text") or ""
+        if n is not None and out:
+            if n < prev_end:
+                out[-1]["text"] = (out[-1]["text"] + " " + text).strip()
+                continue
+            if n <= prev_end and _looks_like_footnote_debris(text):
+                out[-1]["text"] = (out[-1]["text"] + " " + text).strip()
+                continue
+        out.append(v)
+        if n is not None:
+            try:
+                prev_end = int(re.split(r"[-–]", v["verse"])[-1])
+            except (ValueError, IndexError):
+                prev_end = n
+    return out
 
 
 def parse_endnotes(note_lines: list[str], fn1_glued: bool) -> dict[int, dict]:
@@ -552,11 +615,17 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
             except ValueError:
                 pass
 
+        # H1828: resolve endnote targets to passages actually emitted this chapter.
+        chapter_passages = sorted(
+            p for p in seen_passages
+            if p.startswith(f"{chn}.") and ".comm" not in p
+        )
         comm_by_verse: dict[str, list[tuple[int, dict]]] = {}
         for fn, note in sorted(fn_map.items()):
             if note["chapter"] != chn:
                 continue
             annot = f"{chn}.{note['verse']}"
+            annot = _resolve_flat_annotates(annot, chapter_passages, chn)
             comm_by_verse.setdefault(annot, []).append((fn, note))
         for annot, items in comm_by_verse.items():
             for k, (fn, note) in enumerate(items, 1):
@@ -583,6 +652,22 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     }) if all_fn else 0
     report["total_endnotes"] = len(all_fn)
     return records, report
+
+
+def _resolve_flat_annotates(annot: str, chapter_passages: list[str], chn: int) -> str:
+    """Map flat CHAPTER.VERSE annotates onto an emitted passage (H1828)."""
+    if annot in chapter_passages:
+        return annot
+    if not chapter_passages:
+        return annot
+
+    def _vkey(p: str) -> int:
+        tail = p.split(".", 1)[-1]
+        m = re.match(r"(\d+)", tail)
+        return int(m.group(1)) if m else 0
+
+    target = _vkey(annot)
+    return min(chapter_passages, key=lambda p: (abs(_vkey(p) - target), _vkey(p)))
 
 
 def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
