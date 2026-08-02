@@ -206,6 +206,33 @@ async def test_export_invalid_format():
 
 
 @pytest.mark.asyncio
+async def test_export_json_csv_text_is_snippet_capped():
+    """H1831: JSON/CSV export must not return full untruncated line_text.
+
+    A broad single-letter/prefix query can hit many rows; each row's text must
+    be a KWIC-sized snippet (≤ ~window*2 + ellipsis + match), never the full
+    verse+translation dump that would let a client reconstruct the corpus.
+    """
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+        # Broad query; fixture corpus is small but still exercises the path.
+        json_resp = await ac.get("/api/search/export?query=a&mode=plain&format=json")
+        csv_resp = await ac.get("/api/search/export?query=a&mode=plain&format=csv")
+    assert json_resp.status_code == 200
+    assert csv_resp.status_code == 200
+    data = json_resp.json()
+    # Hard cap: a single KWIC window is 40 chars each side → well under 500
+    # even with match + ellipsis. Full corpus lines are often much longer.
+    max_snippet = 500
+    for item in data.get("results") or []:
+        assert len(item.get("line_text") or "") <= max_snippet
+        assert len(item.get("line_html") or "") <= max_snippet
+    # CSV body lines after the header should also be short in the text column.
+    # (Structural check: no multi-kilobyte CSV cells for line_text.)
+    assert len(csv_resp.text) < 200_000
+
+
+@pytest.mark.asyncio
 async def test_multi_query_header_does_not_duplicate_ordinal():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:

@@ -656,6 +656,18 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
         # A verse-less note (the "оМ" invocation fn 1, or a "Глава N" chapter
         # note) is attached to verse 1 of the chapter so it renders inside a
         # real citation_block rather than an orphan chapter-level block.
+        #
+        # H1828 / Gate 5: resolve each annotates target against verses actually
+        # emitted in this volume (seen_passages). Endnotes can name a verse the
+        # Russian side never minted (alignment gap, OCR-misread verse number
+        # like 5.559 for 5.59, or past-end clamp). Remap to the nearest emitted
+        # passage in the same skandha.chapter rather than leaving a dead anchor.
+        # Verse passages only (no .comm* ids) for this chapter.
+        chapter_passages = sorted(
+            p for p in seen_passages
+            if p.startswith(f"{sk}.{ch['chapter']:03d}.") and ".comm" not in p
+        )
+
         comm_by_verse: dict[str, list[dict]] = {}
         for fn, note in sorted(fn_map.items()):
             tgt_ch = 1 if fn == 1 else note["chapter"]
@@ -663,6 +675,7 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
                 continue
             tgt_v = note["verse"] or 1
             annot = zero_pad_passage(sk, ch["chapter"], str(tgt_v))
+            annot = _resolve_annotates_to_emitted(annot, chapter_passages, sk, ch["chapter"])
             comm_by_verse.setdefault(annot, []).append((fn, note))
 
         for annot, items in comm_by_verse.items():
@@ -689,6 +702,33 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
                 sk_rep["comments"] += 1
 
     return records, report
+
+
+def _resolve_annotates_to_emitted(
+    annot: str, chapter_passages: list[str], skandha: int, chapter: int,
+) -> str:
+    """Map an endnote target onto a passage that was actually emitted (H1828).
+
+    Resolution order:
+      1. Exact match in chapter_passages
+      2. Nearest numeric verse in the same skandha.chapter (by verse number)
+      3. First passage of the chapter if any exist
+      4. Original annot unchanged (no host verse at all — rare empty chapter)
+    """
+    if annot in chapter_passages:
+        return annot
+    if not chapter_passages:
+        return annot
+
+    def _verse_key(p: str) -> int:
+        # passage is SK.CH.VVV or SK.CH.VVV-WWW or with letter suffix
+        tail = p.split(".")[-1]
+        m = re.match(r"(\d+)", tail)
+        return int(m.group(1)) if m else 0
+
+    target_key = _verse_key(annot)
+    best = min(chapter_passages, key=lambda p: (abs(_verse_key(p) - target_key), _verse_key(p)))
+    return best
 
 
 _CAPS_TITLE_RE = re.compile(r"^[А-ЯЁ][А-ЯЁ0-9 ,.«»\-—:()]{2,}?(?=[А-ЯЁ][а-яё])")

@@ -44,6 +44,27 @@ def test_split_verses_handles_range_label():
     assert verses[0]["verse"] == "3-4"
 
 
+def test_split_verses_collapses_nonmonotonic_footnote_restarts():
+    """H1829: footnote prose embedding (1)/(2) must not mint restart verses.
+
+    Nirvāṇa-tantra PDF had footnotes mixed into body; each footnote's own
+    ``(1)`` citation re-split the chapter and forced 1.1b/1.1c letter suffixes.
+    """
+    body = (
+        "Настоящий первый стих. (1) "
+        "Настоящий второй стих. (2) "
+        "Настоящий третий стих. (3) "
+        "5 1.1 сноска к первому. (1) "
+        "продолжение сноски с (2) внутри. "
+        "Настоящий четвёртый стих. (4)"
+    )
+    verses = ig.split_verses(body)
+    labels = [v["verse"] for v in verses]
+    assert labels == ["1", "2", "3", "4"], labels
+    # Debris text from the false restart must land on verse 3, not be dropped.
+    assert "сноска" in verses[2]["text"]
+
+
 def test_parse_endnotes_bracket_style_with_continuation():
     lines = [
         "[1] 1.1(1). первая заметка,",
