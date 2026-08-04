@@ -1,6 +1,6 @@
 # Corpus Builder — dependency inventory (Phase 1)
 
-_Created: 01-08-2026 · Last updated: 01-08-2026_
+_Created: 01-08-2026 · Last updated: 04-08-2026_
 
 Source: [Corpus_builder/ROADMAP.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) Phase 1 item
 «Инвентаризация зависимостей». Closed by the `/roadmap-item-exec` pass that
@@ -93,12 +93,20 @@ cb
 
 ---
 
-## 3. Engine is **not** GUI-free today
+## 3. Engine was **not** GUI-free — closed by H1485 (04-08-2026)
+
+> **Status update, 04-08-2026 ([H1485](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1485-Opus_SamudraManthanam_corpus-builder-engine-gui-decouple_22.07.26.md),
+> Opus 5 `claude-opus-5[1m]`).** Every `uMhHTML.pas` row in the table below is
+> **gone**; the engine's implementation `uses` is now `SysUtils, textu, windows,
+> MyUtils` (§3a). The `fCheckDialog.pas` and `TextU.pas` rows are **untouched** —
+> they belong to the separate Phase 1 items 3–5 in §7. The table is kept as the
+> audit baseline the refactor was checked against, not as a description of the
+> current tree.
 
 The roadmap / CLAUDE.md claim that
 [`uMhHTML.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/uMhHTML.pas)
-«почти не зависит от GUI» is **aspirational, not current fact**. Concrete VCL
-call sites inside the builder engine:
+«почти не зависит от GUI» was **aspirational, not current fact**. Concrete VCL
+call sites inside the builder engine, measured at `12ac858`:
 
 | File | Line(s) | Call | Effect |
 |---|---|---|---|
@@ -122,6 +130,108 @@ Phase 1 «Отделить движок от формы» must therefore:
    for GUI builds only).
 5. Split `TextU` into pure string helpers (engine path) vs VCL list/clipboard helpers
    (GUI path) — the latter are unused by the load/build core.
+
+Items 1–4 are **done** (H1485); item 5 is not — see §3a and §7.
+
+---
+
+## 3a. Engine after H1485 — the seam that replaced those call sites
+
+`uMhHTML.pas` implementation `uses` went from
+
+```pascal
+uses SysUtils, dialogs, textu , fMainForm, Forms, controls, windows, ShellApi, MyUtils;
+```
+
+to
+
+```pascal
+uses SysUtils, textu, windows, MyUtils;
+```
+
+`windows` is retained solely for `GlobalMemoryStatus`/`TMemoryStatus` (WinAPI, not
+VCL). The reverse edge `uMhHTML → fMainForm` in the §1 graph is **cut**.
+
+Three nil-safe sink types are declared next to `TMhHTMLBuilder`; the host assigns
+them after `Create` and a headless caller simply leaves them `nil`:
+
+| Sink | Signature | Replaces | Nil behaviour |
+|---|---|---|---|
+| `TProgressSink` | `procedure (APanel:integer; const AText:string) of object` | `Form1.StatusBar1.Panels[n].Text` + `Refresh` + `Application.ProcessMessages` | no-op |
+| `TConfirmSink` | `function (const AText:string):boolean of object` | `MessageDlg(…,mbOKCancel,…) = mrOk` | returns `True` (batch proceeds with defaults) |
+| `TErrorSink` | `procedure (const AText:string) of object` | `ShowMessage(…)` ×3 | none needed — `ReportError` always writes `ErrList` first |
+
+Wrappers inside the engine: `Progress` / `Confirm` / `ReportError`. `ReportError`
+appends to `ErrList` **unconditionally**, so the `CLAUDE.md` rule «`ErrList` is the
+sole error channel; do not `ShowMessage` inside builder logic» now holds by
+construction rather than by convention — the sink is an optional mirror on top,
+not an alternative channel.
+
+The error file is no longer opened by the engine. `Execute` still writes
+`Err.txt`; the host asks `HasErrors` / `ErrFileFullPath` and does its own
+`ShellExecute`, at all three `TMhHTMLBuilder` construction sites in `fMainForm.pas`
+(single-book, book-list loop, many-books loop) — with the ordering relative to
+`RenameErrFile` preserved.
+
+**Two deliberate behaviour deltas**, both host-side:
+
+1. The engine previously called `StatusBar1.Refresh` at some sites and
+   `Application.ProcessMessages` at others. `TForm1.BuilderProgress` now does
+   **both** everywhere — a strict superset of the old responsiveness, at the cost
+   of a message pump in the comments/translation load loops that did not have one.
+2. `ShowMessage` on a load error was modal and blocked batch processing (the exact
+   thing `CLAUDE.md` forbids). `TForm1.BuilderError` appends to `Memo1` instead, so
+   a multi-book run no longer stops on the first malformed line. The error still
+   reaches `ErrList` → `Err.txt`, and `HasErrors` still surfaces it.
+
+   **Second-order effect, intended:** the old `ShowMessage` sites did *not* touch
+   `ErrList`, so a load error that produced no other complaint left `Err.txt`
+   empty and nothing opened afterwards. `ReportError` writes `ErrList`
+   unconditionally, so those same lines now land in `Err.txt` and can make
+   `HasErrors` true — i.e. the error file will auto-open in cases where it
+   previously stayed shut. That is the point of making `ErrList` the sole channel;
+   it is a visible change in what a run reports, not just where.
+
+Because progress now pumps messages inside the comments/translation load loops
+(delta 1), the build menu handlers become re-enterable mid-build and have no
+re-entrancy guard. Pre-existing in `OutPutText`/`LoadSanskrit`, which already
+pumped; newly reachable in the other three loops.
+
+### Verification (no compiler)
+
+There is no Delphi 7 machine in this session, so **`dcc32` was not run** — the
+same standing caveat as the `cb.cfg` cleanup (PR #123). What was checked
+source-level:
+
+- `grep` for `ShowMessage|MessageDlg|ShellExecute|Application\.|Form1\.|SW_SHOW|mrOk|mtConfirm`
+  over `uMhHTML.pas` returns only **comment** lines (2 pre-existing commented-out
+  `ShowMessage`s at 376/1809, one commented `Form1.OpenDialog1` at 1284, and the
+  new comment naming `fMainForm`).
+- Every identifier the engine still uses resolves through the reduced `uses`:
+  `TStringList`/`TIniFile` (interface `classes`, `INIFiles`), `GlobalMemoryStatus`
+  (`windows`), `AnsiToUTF8`/`UTF8ToAnsi` (`SysUtils`), `PutFile1ToFile2` (`MyUtils`).
+  Delphi does not re-export a used unit's own `uses`, so `TextU`'s VCL imports
+  never leaked identifiers into `uMhHTML` and their removal here changes nothing.
+- `MessageDlg`/`mtConfirmation`/`mbOKCancel`/`mrOk` are reachable in `fMainForm`
+  via its interface `uses Dialogs, Controls`; `ShellExecute`/`SW_SHOWNORMAL` via
+  the implementation `uses shellapi` already present for three other call sites.
+- CP-1251 encoding and LF line endings preserved (patch applied via an
+  encoding-explicit script, not an editor).
+- An independent adversarial audit (Opus 5 `claude-opus-5[1m]`) re-derived the
+  whole thing from `git show HEAD:` — 415-identifier token census over the reduced
+  `uses`, declaration↔implementation signature match, `except`-block control flow
+  (`break` present at both translation sites, absent at the comments site, as
+  before), panel indices (all 5, including the single `Panels[1]`), `Path` set
+  before the `Confirm` early exit, `ErrFileName` an *interface* const so the new
+  body at the top of the implementation still sees it. **CONFIRMED**, no
+  build-breaking defect. It found the two doc errors fixed above: the changelog
+  said ×6 status-bar sites (there are 5) and this section did not spell out the
+  auto-open second-order effect.
+- `ShellExecute`'s window handle changed from `Application.Handle` to the form's
+  `Handle` — both valid `HWND`s, no user-visible difference.
+
+**Human residual:** a `dcc32` build on Delphi 7, plus one interactive run of
+`cb.exe` to confirm the status bar still ticks and `Err.txt` still opens.
 
 ---
 
@@ -152,7 +262,11 @@ first candidates to compile under FPC without LCL:
 | `StatProcs` | `Math`, `uTypes`, `uSort` | numeric |
 | `uSort` | `Math`, `uTypes`, `ArtMath` (+ dead `Dialogs`) | drop dead import → portable |
 
-**Not yet portable:** `uMhHTML`, `TextU` (partial), `fMainForm`, `fCheckDialog`.
+**Not yet portable:** `TextU` (partial), `fMainForm`, `fCheckDialog`.
+
+`uMhHTML` moved out of that list on 04-08-2026 (H1485): it is now VCL-free and
+blocked on `TextU`'s VCL half (§7 item 3) and `windows`/`GlobalMemoryStatus`
+alone, not on LCL.
 
 ---
 
@@ -172,8 +286,8 @@ builder copy is a subset of the main app.
 
 ## 7. Recommended Phase 1 order (from this inventory)
 
-1. **Inventory** — this document (done).
-2. **Cut `uMhHTML` ↔ `fMainForm`** — progress sink + no `ShowMessage`/`ShellExecute`/`ProcessMessages` in engine.
+1. **Inventory** — this document (done, H2064).
+2. **Cut `uMhHTML` ↔ `fMainForm`** — progress sink + no `ShowMessage`/`ShellExecute`/`ProcessMessages` in engine. **Done 04-08-2026 (H1485)** — see §3a.
 3. **Split or `#ifdef` the VCL half of `TextU`** — keep string/IAST/UTF helpers on the engine path.
 4. **Drop dead `Dialogs` from `uSort`**; audit remaining soft imports.
 5. **Encoding layer** (roadmap item) and `{$MODE Delphi}` directives once the engine unit set is stable under Delphi 7 still.

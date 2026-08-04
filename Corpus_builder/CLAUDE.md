@@ -93,5 +93,12 @@ Errors are collected in `ErrList` (shown in `Memo1`) and saved to `<input>_err.t
 - **String utilities** (`TextU.pas`): use `CutNextUseDelimiter` (modifies `var Source`) to tokenize lines, `UTF8CutNextUseDelimiterNoTrim` for WideString. Do not use byte-level `Pos`/`Copy` on UTF-8 WideString data.
 - **File helpers** (`myutils.pas`): `PutFile1ToFile2(F1, F2, MarkerBegin, MarkerEnd)` inserts the full content of `F1` into `F2` between the two marker strings (saves `.old` backup); `MergeFiles(Fn1, Fn2, Sum)` concatenates two files into a third.
 - **IAST / Daṇḍa constants**: the single daṇḍa (`।`) and double daṇḍa (`॥`) are referenced as `S_danda1` / `S_danda2` (defined in `TextU`); use these constants, not raw Unicode literals.
-- **Error reporting**: always append to `ErrList: TStringList`; do not `ShowMessage` inside builder logic (it blocks batch processing).
-- **Engine is not GUI-free yet**: live `ShowMessage`/`MessageDlg`/`Form1.StatusBar1`/`ShellExecute` remain in `uMhHTML.pas` — full map in `DEPENDENCY_INVENTORY.md` (H2064); decoupling is H1485.
+- **Error reporting**: always append to `ErrList: TStringList` — inside the engine, call `ReportError`, which does exactly that. Never `ShowMessage` inside builder logic (it blocks batch processing).
+- **The engine is GUI-free — keep it that way** (H1485, 04-08-2026). `uMhHTML.pas` uses only `SysUtils, textu, windows, MyUtils` in its implementation, and `windows` is there for `GlobalMemoryStatus` alone. Anything the engine needs from the UI goes through a nil-safe sink the host assigns after `Create`:
+  - progress → `Progress(APanel, AText)` (`TProgressSink`), never `Form1.StatusBar1`;
+  - a yes/no question → `Confirm(AText)` (`TConfirmSink`), never `MessageDlg`; unassigned means "proceed", so a batch run cannot hang on a modal;
+  - an error → `ReportError(AText)` (`TErrorSink` is only a mirror on top of `ErrList`), never `ShowMessage`;
+  - opening `Err.txt` is the **caller's** job — the engine writes the file and exposes `HasErrors` / `ErrFileFullPath`; `fMainForm` does the `ShellExecute`.
+
+  Putting `Forms`, `Dialogs`, `Controls`, `ShellApi` or `fMainForm` back into `uMhHTML.pas` re-creates the reverse dependency edge this removed. Before/after map: `DEPENDENCY_INVENTORY.md` §3/§3a.
+- **`fCheckDialog.pas` and `TextU.pas` are still GUI-coupled** — that is the next Phase 1 item, not an oversight.

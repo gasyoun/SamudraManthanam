@@ -68,12 +68,24 @@ TKeyWords=record
 end;
 TIASTSlolakaInfo=(tisi_all,tisi_first,tisi_second);
 TChapterNames=array of string;
+// H1485 --- GUI decoupling sinks. The engine never touches VCL directly;
+// the host (fMainForm) assigns these after Create. All are nil-safe.
+TProgressSink = procedure (APanel:integer; const AText:string) of object;
+TConfirmSink  = function (const AText:string):boolean of object;
+TErrorSink    = procedure (const AText:string) of object;
 TMhHTMLBuilder = class(TObject)
   Constructor Create;
   destructor Destroy;override;
   procedure Execute (AFileName:string);
   public
   KeyWords:TKeyWords;
+  // H1485: host-supplied sinks; leave nil for headless/batch use.
+  OnProgress:TProgressSink;
+  OnConfirm:TConfirmSink;
+  OnError:TErrorSink;
+  // H1485: the host decides whether to show the error log; the engine only writes it.
+  function HasErrors:boolean;
+  function ErrFileFullPath:string;
   private
   INIFile:TIniFile;
   HTF:textFile; // HyperTextFile
@@ -97,6 +109,10 @@ TMhHTMLBuilder = class(TObject)
   NBook, CurChapter, CurSubChapter, ChaptersCount:integer;
   S_SancritFileName:string;
   CommentSymbols:string;
+  // H1485: nil-safe sink wrappers - the only reporting path out of the engine.
+  procedure Progress(APanel:integer; const AText:string);
+  function  Confirm(const AText:string):boolean;
+  procedure ReportError(const AText:string);
   Function LoadKeyWords:boolean;
   procedure LoadPerevod (TransFileIndex:integer);
   procedure LoadPerevod2;
@@ -168,7 +184,9 @@ var
   ManyBookSign:string;
 implementation
 
-uses SysUtils, dialogs, textu , fMainForm, Forms, controls, windows, ShellApi, MyUtils;
+// H1485: no dialogs/fMainForm/Forms/controls/ShellApi here - the engine is GUI-free.
+// `windows` remains only for GlobalMemoryStatus (WinAPI, not VCL).
+uses SysUtils, textu, windows, MyUtils;
 
 { TMhHTMLBuilde }
 
@@ -188,6 +206,35 @@ begin
  begin
   if n1>n2 then result:=1 else result:=-1;
  end;
+end;
+
+// H1485 --- sink wrappers -------------------------------------------------
+procedure TMhHTMLBuilder.Progress(APanel:integer; const AText:string);
+begin
+ if Assigned(OnProgress) then OnProgress(APanel,AText);
+end;
+
+function TMhHTMLBuilder.Confirm(const AText:string):boolean;
+begin
+ // Headless default: proceed. A GUI host asks the user via OnConfirm.
+ if Assigned(OnConfirm) then result:=OnConfirm(AText) else result:=True;
+end;
+
+procedure TMhHTMLBuilder.ReportError(const AText:string);
+begin
+ // ErrList is the sole error channel out of the engine (Corpus_builder/CLAUDE.md).
+ ErrList.Add(AText);
+ if Assigned(OnError) then OnError(AText);
+end;
+
+function TMhHTMLBuilder.HasErrors:boolean;
+begin
+ result:=ErrList.Count>0;
+end;
+
+function TMhHTMLBuilder.ErrFileFullPath:string;
+begin
+ result:=Path+ErrFileName;
 end;
 
 constructor TMhHTMLBuilder.Create;
@@ -222,7 +269,7 @@ begin
  Path:=ExtractFilePath(AFileName);
  if not LoadKeyWords then
  begin
-  if MessageDlg('Не найдел файл с ключевыми словами. Использовать ключевые слова по умолчанию?',mtConfirmation,mbOKCancel,0) <> mrOk
+  if not Confirm('Не найдел файл с ключевыми словами. Использовать ключевые слова по умолчанию?')
   then exit;
  end;
  if bDevFileName then S_SancritFileName:=CS_SancritFileName_Dev else S_SancritFileName:=CS_SancritFileName_IAST;
@@ -242,7 +289,8 @@ begin
    OutPutText;
   end;
   ErrList.SaveToFile(Path+ErrFileName);
-  if ErrList.Count>0 then ShellExecute(Application.Handle, 'open', PChar(Path+ErrFileName), nil, nil, SW_SHOWNORMAL);
+  // H1485: the engine no longer opens Err.txt. The caller checks HasErrors
+  // and decides (fMainForm does the ShellExecute).
   if bGoodSankrit then if KeyWords.OutputHTML<>'' then PutFile1ToFile2(Path+CS_ResHTMLFileName,KeyWords.OutputHTML,InsertBlockLab1,InsertBlockLab2);
 end;
 
@@ -553,8 +601,7 @@ begin
  repeat
   readln(F,S_w);
   inc (nLine);
-  Form1.StatusBar1.Panels[0].Text:='Load comments line - '+ IntToStr(nLine);
-  Form1.StatusBar1.Refresh;
+  Progress(0,'Load comments line - '+ IntToStr(nLine));
   S_Ansi:=UTF8ToAnsi(S_w);
   S_Ansi0:=S_Ansi;
   bFirstStringOfComment:=IsFirstStringComment(S_Ansi,p1,p2,p3);
@@ -669,7 +716,7 @@ begin
    bPrevStrIsPageNum:=False;
   end;
   except
-    ShowMessage('Error in the comments: '+S_Ansi0);
+    ReportError('Error in the comments: '+S_Ansi0);
   end;
  until EOF(F);
  CloseFile(F);
@@ -805,8 +852,7 @@ begin
   SanskritArrSlokaTexts[j-1]:=S_W0;
   S:=UTF8ToAnsi(UTF8CutNextUseDelimiterNoTrim(S_W,#9));
   GlobalMemoryStatus(Status);
-  Form1.StatusBar1.Panels[1].Text:='Load '+S +'; Total Ram: ' + IntToStr(Status.dwAvailVirtual div 1024417) + ' Mb';
-  Application.ProcessMessages;
+  Progress(1,'Load '+S +'; Total Ram: ' + IntToStr(Status.dwAvailVirtual div 1024417) + ' Mb');
   if PrevNum<>S then begin inc(i); PrevNum:=S end;
   SetLength(SanskritArr,i);
   SanskritArr[i-1].Info.S_Num:=S;
@@ -888,8 +934,7 @@ begin
   begin
      inc(i);
      inc(Paragraph_Num);
-     Form1.StatusBar1.Panels[0].Text:='Loading line '+IntToStr(i);
-     Form1.StatusBar1.Refresh;
+     Progress(0,'Loading line '+IntToStr(i));
      SetLength(SlokasArr,Length(SlokasArr)+1);
      SlokasArr[i-1].GlavaText:=GlavaText;
      GlavaText:='';
@@ -1000,7 +1045,7 @@ begin
   end;
   except
    Writeln (F2,'Error in the line -',i,#9,S_Ansi0);
-   ShowMessage('Error in the translation: '+S_Ansi0);
+   ReportError('Error in the translation: '+S_Ansi0);
    break;
   end;
  until EOF(F);
@@ -1038,8 +1083,7 @@ begin
   if IsShlokaNum (S_Ansi) then
   begin
      inc(i);
-     Form1.StatusBar1.Panels[0].Text:='Loading line '+IntToStr(i);
-     Form1.StatusBar1.Refresh;
+     Progress(0,'Loading line '+IntToStr(i));
      SetLength(SlokasArr2,Length(SlokasArr2)+1);
      SlokasArr2[i-1].GlavaText:=GlavaText;
      GlavaText:='';
@@ -1140,7 +1184,7 @@ begin
   end;
   except
    Writeln (F2,'Error in the line -',i,#9,S_Ansi0);
-   ShowMessage('Error in the translation: '+S_Ansi0);
+   ReportError('Error in the translation: '+S_Ansi0);
    break;
   end;
  until EOF(F);
@@ -1255,8 +1299,7 @@ begin
   CurChapter:=SlokasArr[i-1].info.NChapter;
   CommentsForOutput.Clear;
   FootNotesForOutPut.Clear;
-  Form1.StatusBar1.Panels[0].Text:='Output line '+IntToStr(i)+'/'+IntToStr(Length(SlokasArr)) ;
-  Application.ProcessMessages;
+  Progress(0,'Output line '+IntToStr(i)+'/'+IntToStr(Length(SlokasArr)));
 // Chapter;
 //  Writeln (F,'<! -- chapter -->');
   if SlokasArr[i-1].Prevtext<>'' then
