@@ -387,6 +387,6 @@ The two headline fixes are the same class of bug in two places: **an invariant
 (a set/lowercased string/concatenated list) rebuilt inside a hot loop, and O(n)
 list membership where a set gives O(1).** None of the fixes touch the matching
 *logic* — only when/how often work is done — so the generated index is unchanged.
-Provenance: [H1204](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1204-Opus_SamudraManthanam_rubanova-nkrya-speedup_17.07.26.md).
+Provenance: [H1204](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1204-Opus_SamudraManthanam_rubanova-nkrya-speedup_17.07.26.md).
 
 _Dr. Mārcis Gasūns_

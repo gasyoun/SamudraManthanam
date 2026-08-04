@@ -62,11 +62,11 @@ Supersedes the *status* claims in
 
 | Lane | Deliverable | Handoff | Tier |
 |---|---|---|---|
-| A — platform | JSON/CSV search-result export | 🟡 [H1502](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1502-Sonnet_SamudraManthanam_search-export-json-csv_22.07.26.md) | Sonnet |
-| A — hygiene | Drop dead `morph_cache` | 🟡 [H1503](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1503-Sonnet_SamudraManthanam_drop-dead-morph-cache-table_22.07.26.md) | Sonnet |
-| A — hygiene | SSE stream hermetic tests (keep endpoint) | 🟡 [H1692](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1692-Sonnet_SamudraManthanam_sse-stream-hermetic-tests-keep_26.07.26.md) | Sonnet |
-| B — integrity | DBhP canonical-ID uniqueness re-verify + fix | 🟡 [H1693](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1693-Sonnet_SamudraManthanam_dbhp-canonical-id-uniqueness-gate_26.07.26.md) | Sonnet |
-| B — integrity | Cyrillic homoglyphs in `#sa` (issue #16) | 🟡 [H1694](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1694-Sonnet_SamudraManthanam_cyrillic-homoglyph-sa-fields-16_26.07.26.md) | Sonnet |
+| A — platform | JSON/CSV search-result export | 🟡 [H1502](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1502-Sonnet_SamudraManthanam_search-export-json-csv_22.07.26.md) | Sonnet |
+| A — hygiene | Drop dead `morph_cache` | 🟡 [H1503](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1503-Sonnet_SamudraManthanam_drop-dead-morph-cache-table_22.07.26.md) | Sonnet |
+| A — hygiene | SSE stream hermetic tests (keep endpoint) | 🟡 [H1692](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1692-Sonnet_SamudraManthanam_sse-stream-hermetic-tests-keep_26.07.26.md) | Sonnet |
+| B — integrity | DBhP canonical-ID uniqueness re-verify + fix | 🟡 [H1693](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1693-Sonnet_SamudraManthanam_dbhp-canonical-id-uniqueness-gate_26.07.26.md) | Sonnet |
+| B — integrity | Cyrillic homoglyphs in `#sa` (issue #16) | 🟡 [H1694](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1694-Sonnet_SamudraManthanam_cyrillic-homoglyph-sa-fields-16_26.07.26.md) | Sonnet |
 | C — corpus | Ignatiev remaining (in flight) | 🔵 [H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md) | Sonnet |
 | Docs | This PLAN pack + residual ROADMAP + banners | lands with this PR | — |
 

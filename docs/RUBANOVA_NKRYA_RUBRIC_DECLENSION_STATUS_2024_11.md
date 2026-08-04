@@ -9,7 +9,7 @@ as a standalone record because the answer is "partly yes, partly no" and the
 distinction matters for the НКРЯ export workstream. Companion to
 [`RUBANOVA_NKRYA_PIPELINE_MANUAL.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/RUBANOVA_NKRYA_PIPELINE_MANUAL.md)
 (the pipeline of record) and follow-on to the 17-07-2026 speedup pass
-([H1204](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1204-Opus_SamudraManthanam_rubanova-nkrya-speedup_17.07.26.md)).
+([H1204](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1204-Opus_SamudraManthanam_rubanova-nkrya-speedup_17.07.26.md)).
 
 ## TL;DR
 
