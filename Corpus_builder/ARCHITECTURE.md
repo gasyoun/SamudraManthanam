@@ -1,6 +1,6 @@
 # Corpus Builder — архитектурный план
 
-_Создано: 05-07-2026 · Обновлено: 05-07-2026_
+_Создано: 05-07-2026 · Обновлено: 04-08-2026_
 
 Документ описывает **текущую** архитектуру сборщика (`cb.exe`, Delphi 7) и
 **целевую** архитектуру после переноса на Lazarus / Free Pascal. Дополняет
@@ -115,9 +115,14 @@ _Создано: 05-07-2026 · Обновлено: 05-07-2026_
 
 ### 2.1. Ключевые архитектурные решения
 
-1. **Ядро — самостоятельный модуль.** `TMhHTMLBuilder` очищается от VCL/`ShowMessage`
-   (правило уже есть в CLAUDE.md) и компилируется без LCL. Формы и CLI лишь вызывают
-   его публичный фасад `Build(config)`.
+1. **Ядро — самостоятельный модуль.** ✅ Сделано 04-08-2026 (H1485, Opus 5
+   `claude-opus-5[1m]`): `TMhHTMLBuilder` очищен от VCL/`ShowMessage`, реализационный
+   `uses` — `SysUtils, textu, windows, MyUtils`. Связь с UI идёт через nil-safe
+   sink-и (`TProgressSink`/`TConfirmSink`/`TErrorSink`), так что headless-вызов
+   просто оставляет их `nil`. Остаётся сделать публичный фасад `Build(config)`
+   поверх нынешнего `Execute(AFileName)` и проверить сборку на Delphi 7 —
+   компилятора в сессии не было. Детали:
+   [`DEPENDENCY_INVENTORY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md) §3a.
 2. **Оркестрация многокнижной сборки — в ядре.** `PrepareBook`, `ConcatAllHTMLFiles`,
    `PutFile1ToFile2` переезжают из `fMainForm` в модуль `MultiBook`, чтобы CLI/CI
    собирали весь корпус без формы.

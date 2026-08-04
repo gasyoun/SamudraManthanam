@@ -1,6 +1,6 @@
 # Corpus Builder (`cb.exe`)
 
-_Создано: 05-07-2026 · Обновлено: 01-08-2026_
+_Создано: 05-07-2026 · Обновлено: 04-08-2026_
 
 **Сборщик корпуса** — настольная утилита для Windows, которая готовит и собирает
 параллельный санскритско-русский корпус в формате HTML. Это **авторский/сборочный
@@ -90,7 +90,10 @@ IDE не требуется.
 2. **Сборка HTML** ([`uMhHTML.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/uMhHTML.pas),
    `TMhHTMLBuilder`) — читает `.ini`-конфиг, загружает все входные файлы в массивы
    записей (`SlokasArr`, `SanskritArr`, `CommentsArr`, `FootNotesArr`),
-   проверяет перекрестные ссылки и по главам/шлокам пишет HTML.
+   проверяет перекрестные ссылки и по главам/шлокам пишет HTML. С 04-08-2026
+   (H1485) движок не зависит от VCL: прогресс, подтверждения и ошибки идут через
+   nil-safe sink-и, которые назначает форма-хозяин, а `Err.txt` открывает
+   вызывающий (`HasErrors` / `ErrFileFullPath`).
 3. **Многокнижная сборка** ([`fMainForm.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/fMainForm.pas)) —
    разбивает `ManyBooks_0N_*.txt` на отдельные книги, собирает каждую и склеивает
    результаты в единый выходной HTML между маркерами вставки.

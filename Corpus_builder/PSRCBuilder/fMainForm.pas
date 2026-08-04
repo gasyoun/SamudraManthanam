@@ -73,6 +73,10 @@ type
     procedure ConcatAllHTMLFiles(AFileName:string; BooksCount:integer);
 
 
+    // H1485: sinks handed to TMhHTMLBuilder so the engine stays GUI-free.
+    procedure BuilderProgress(APanel:integer; const AText:string);
+    function  BuilderConfirm(const AText:string):boolean;
+    procedure BuilderError(const AText:string);
     { Private declarations }
   public
     { Public declarations }
@@ -92,6 +96,29 @@ uses fCheckDialog,textu, shellapi, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles;
 
 
 {$R *.dfm}
+
+// H1485 --- builder sinks ------------------------------------------------
+// The engine used to write Form1.StatusBar1 directly and call
+// Application.ProcessMessages / StatusBar1.Refresh at different call sites.
+// Both are now the host's business and are applied uniformly here.
+procedure TForm1.BuilderProgress(APanel:integer; const AText:string);
+begin
+ StatusBar1.Panels[APanel].Text:=AText;
+ StatusBar1.Refresh;
+ Application.ProcessMessages;
+end;
+
+function TForm1.BuilderConfirm(const AText:string):boolean;
+begin
+ result:=MessageDlg(AText,mtConfirmation,mbOKCancel,0)=mrOk;
+end;
+
+procedure TForm1.BuilderError(const AText:string);
+begin
+ // The engine already appended this to its ErrList (and thus Err.txt);
+ // mirror it into the log memo instead of blocking on a modal popup.
+ Memo1.Lines.Add(AText);
+end;
 
 Function GetRusTextIndex (const S:widestring;const WSArr:TWideStringArr):integer;
 var
@@ -745,7 +772,12 @@ var
 begin
  If not OpenDialog1.Execute then exit;
  MhHTMLBuilder:=TMhHTMLBuilder.Create;
+ MhHTMLBuilder.OnProgress:=BuilderProgress;
+ MhHTMLBuilder.OnConfirm:=BuilderConfirm;
+ MhHTMLBuilder.OnError:=BuilderError;
  MhHTMLBuilder.Execute(OpenDialog1.FileName);
+ if MhHTMLBuilder.HasErrors then
+  ShellExecute(Handle,'open',PChar(MhHTMLBuilder.ErrFileFullPath),nil,nil,SW_SHOWNORMAL);
  MhHTMLBuilder.Destroy;
  StatusBar1.Panels[0].Text:='HTML build comlete!';
  MessageBeep(1000);
@@ -1095,7 +1127,12 @@ begin
  begin
    Memo1.Lines.Add('Processing '+ List[i-1]);
    MhHTMLBuilder:=TMhHTMLBuilder.Create;
+   MhHTMLBuilder.OnProgress:=BuilderProgress;
+   MhHTMLBuilder.OnConfirm:=BuilderConfirm;
+   MhHTMLBuilder.OnError:=BuilderError;
    MhHTMLBuilder.Execute(List[i-1]);
+   if MhHTMLBuilder.HasErrors then
+    ShellExecute(Handle,'open',PChar(MhHTMLBuilder.ErrFileFullPath),nil,nil,SW_SHOWNORMAL);
    MhHTMLBuilder.Destroy;
    StatusBar1.Panels[0].Text:='HTML build comlete for '+List[i-1];
   end;
@@ -1381,7 +1418,12 @@ begin
  begin
   PrepareBook (OpenDialog1.FileName,i);
   MhHTMLBuilder:=TMhHTMLBuilder.Create;
+  MhHTMLBuilder.OnProgress:=BuilderProgress;
+  MhHTMLBuilder.OnConfirm:=BuilderConfirm;
+  MhHTMLBuilder.OnError:=BuilderError;
   MhHTMLBuilder.Execute(OpenDialog1.FileName);
+  if MhHTMLBuilder.HasErrors then
+   ShellExecute(Handle,'open',PChar(MhHTMLBuilder.ErrFileFullPath),nil,nil,SW_SHOWNORMAL);
   OutputHTML:=MhHTMLBuilder.KeyWords.OutputHTML;
   MhHTMLBuilder.Destroy;
 //  ShowMessage('Book '+IntToStr(i)+' complete!');

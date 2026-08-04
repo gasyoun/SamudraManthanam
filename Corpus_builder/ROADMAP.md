@@ -1,6 +1,6 @@
 # Corpus Builder — план развития (Roadmap)
 
-_Создано: 05-07-2026 · Обновлено: 01-08-2026_
+_Создано: 05-07-2026 · Обновлено: 04-08-2026_
 
 > **Обновление 10-07-2026 (H534).** Появился **альтернативный, агент-исполнимый
 > путь ингеста на Python** — не порт `cb.exe` на Lazarus, а замена его для
@@ -89,9 +89,26 @@ Delphi 7.
       **Correction:** `uMhHTML` is **not** GUI-free today (`MessageDlg`/`ShowMessage`/
       `ShellExecute`/`Application.ProcessMessages`/`Form1.StatusBar1` + `uses
       dialogs,fMainForm,Forms,…`) — Phase 1 «отделить движок» (H1485) is load-bearing.
-- [ ] **Отделить движок от формы.** Логику сборки в `TMhHTMLBuilder` держать
-      свободной от `ShowMessage`/VCL-вызовов (в `CLAUDE.md` это уже правило) — так
-      движок компилируется без LCL.
+- [x] **Отделить движок от формы.** Done 04-08-2026 (H1485, Opus 5 `claude-opus-5[1m]`):
+      [`uMhHTML.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/uMhHTML.pas)
+      больше не тянет `dialogs`/`fMainForm`/`Forms`/`controls`/`ShellApi` — реализационный
+      `uses` сократился до `SysUtils, textu, windows, MyUtils` (`windows` остался только
+      ради `GlobalMemoryStatus`). Введены три nil-safe sink-типа (`TProgressSink` /
+      `TConfirmSink` / `TErrorSink`): прогресс идёт через `Progress(APanel, AText)`
+      вместо `Form1.StatusBar1`, подтверждение — через `Confirm`, ошибки — через
+      `ReportError` в `ErrList` (правило `CLAUDE.md`) вместо `ShowMessage`.
+      `ShellExecute` файла ошибок вынесен к вызывающему:
+      [`fMainForm.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/fMainForm.pas)
+      реализует sink-и и проверяет `HasErrors`/`ErrFileFullPath` на всех трёх
+      точках вызова. Обратное ребро `uMhHTML → fMainForm` из графа зависимостей
+      удалено. **Остаток на человека:** машины с Delphi 7 нет — `dcc32` не запускался,
+      проверка source-level (см. «Верификация» в
+      [`DEPENDENCY_INVENTORY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md)).
+- [ ] **Мёртвые VCL-импорты.** Убрать неиспользуемый `Dialogs` из `uSort.pas`,
+      развести VCL-половину `TextU` (`CheckLst`/`StdCtrls`/`ComCtrls`/`ClipBrd`)
+      с чистыми строковыми хелперами — пп. 3–4 из §7
+      [`DEPENDENCY_INVENTORY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md).
+      Не входило в H1485 (тот закрывал только сам движок).
 - [ ] **Единый слой кодировок.** Заменить ручные `AnsiToUTF8`/`UTF8ToAnsi` на
       явные UTF-8 операции через `lazUTF8` (в основном приложении это уже норма).
       Уйти от предположения «исходники в CP-1251» в сторону UTF-8.
