@@ -34,10 +34,10 @@ PHASE2_PLAN) remain valid **specs**; they are not open work queues.
 ### Lane A — platform
 
 1. **Structured search-result export** — JSON + CSV on existing export path
-   ([H1502](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1502-Sonnet_SamudraManthanam_search-export-json-csv_22.07.26.md)).
+   ([H1502](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1502-Sonnet_SamudraManthanam_search-export-json-csv_22.07.26.md)).
    Results only; no bulk corpus dump.
 2. **`morph_cache` schema drop**
-   ([H1503](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1503-Sonnet_SamudraManthanam_drop-dead-morph-cache-table_22.07.26.md)).
+   ([H1503](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1503-Sonnet_SamudraManthanam_drop-dead-morph-cache-table_22.07.26.md)).
 3. **SSE `/api/search/stream`** — keep; strengthen hermetic tests; leave UI unwired.
 
 ### Lane B — integrity
