@@ -8,6 +8,8 @@ web/corpus_builder/jsonl/ does not exist.
 import json
 import os
 import sys
+from collections import Counter
+
 import pytest
 from pathlib import Path
 
@@ -404,14 +406,22 @@ def test_gate4_dup_suffix_records_are_valid(all_records):
 
 # H1828: known residual orphan(s) left to H1438 Ignatiev territory — do not
 # touch chinachara-tantra files in this handoff.
-_GATE5_KNOWN_ORPHAN_WORKS = frozenset({"chinachara-tantra"})
+# H1438 Ignatiev territory: chinachara-tantra carries exactly ONE known orphan,
+# deliberately left untouched by H1828.
+#
+# H2219: this was a work-level `continue`, i.e. a blanket exemption — every
+# future chinachara orphan would have been invisible too, so the gate could not
+# detect a regression in the one work it was excusing. Bound it to the measured
+# count instead: the residual stays tolerated, a second one fails the gate.
+_GATE5_KNOWN_ORPHAN_WORKS = {"chinachara-tantra": 1}
 
 
 @pytest.mark.corpus
 def test_gate5_all_comm_annotates_resolve(all_records):
     """Gate 5: every commentary record's annotates field names an emitted passage.
 
-    No orphaned commentaries allowed (except H1438 chinachara residual).
+    No orphaned commentaries allowed, except a bounded, per-work count of known
+    residuals (H1438 chinachara) — bounded, not blanket-exempt.
     """
     # Build set of all emitted (work, passage) pairs for verse/dict/prose records
     emitted_passages: set[tuple[str, str]] = set()
@@ -420,16 +430,57 @@ def test_gate5_all_comm_annotates_resolve(all_records):
             emitted_passages.add((rec["work"], rec["passage"]))
 
     orphaned = []
+    allowed_orphans: Counter = Counter()
     for rec in all_records:
         if (rec.get("seg") or "").startswith("comm"):
-            if rec.get("work") in _GATE5_KNOWN_ORPHAN_WORKS:
-                continue
             ann = rec.get("annotates")
             work = rec["work"]
-            if ann is None or (work, ann) not in emitted_passages:
-                orphaned.append(rec["id"])
+            if ann is not None and (work, ann) in emitted_passages:
+                continue
+            budget = _GATE5_KNOWN_ORPHAN_WORKS.get(work, 0)
+            if allowed_orphans[work] < budget:
+                allowed_orphans[work] += 1
+                continue
+            orphaned.append(rec["id"])
 
     assert not orphaned, (
-        f"Gate 5 FAIL: {len(orphaned)} orphaned commentary records. "
+        f"Gate 5 FAIL: {len(orphaned)} orphaned commentary records beyond the "
+        f"known-residual budget {_GATE5_KNOWN_ORPHAN_WORKS}. "
         f"First 5: {orphaned[:5]}"
+    )
+
+
+@pytest.mark.corpus
+def test_gate5b_remapped_annotates_carry_provenance(all_records):
+    """Gate 5b (H2219): a moved anchor must say so.
+
+    H1828 removed every dead anchor by re-pointing the endnote at the nearest
+    emitted verse — sometimes an OCR-digit repair the remap gets right
+    (``6.5.559 -> 6.005.059``), sometimes a 19-verse move with no evidence
+    behind it (``12.8.111 -> 12.008.092``). Gate 5 reports zero orphans for
+    both. This gate asserts that any record carrying the provenance field
+    reports a valid resolution and, when the anchor moved, preserves the
+    target the endnote originally named.
+
+    Records generated before the field existed are skipped: the shipped corpus
+    predates it and cannot be regenerated without the off-git source PDFs, so
+    this gate binds newly generated data rather than false-failing on old.
+    """
+    checked = 0
+    bad = []
+    for rec in all_records:
+        res = rec.get("annotates_resolution")
+        if res is None:
+            continue
+        checked += 1
+        if res not in ("exact", "nearest"):
+            bad.append((rec["id"], f"unknown resolution {res!r}"))
+        elif res == "nearest" and not rec.get("annotates_requested"):
+            bad.append((rec["id"], "moved anchor without annotates_requested"))
+        elif res == "exact" and rec.get("annotates_requested"):
+            bad.append((rec["id"], "exact anchor carries annotates_requested"))
+
+    assert not bad, (
+        f"Gate 5b FAIL: {len(bad)} of {checked} provenance-bearing commentary "
+        f"records are malformed. First 5: {bad[:5]}"
     )

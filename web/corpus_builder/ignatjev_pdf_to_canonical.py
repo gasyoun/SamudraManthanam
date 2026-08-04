@@ -396,6 +396,9 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
         "work": WORK_SLUG, "volume": vol_num, "skandhas": {},
         "verse_count": 0, "comment_count": 0, "chapters": 0,
         "verse_gaps": [], "orphan_notes": [], "chapter_titles": [],
+        # H2219: audit trail for the H1828 nearest-verse annotates fallback.
+        "annotates_remapped": 0, "annotates_remap_max_delta": 0,
+        "annotates_remaps": [],
     }
 
     # Endnotes per skandha (filled as we cross each note block, in order).
@@ -674,12 +677,19 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
             if tgt_ch != ch["chapter"]:
                 continue
             tgt_v = note["verse"] or 1
-            annot = zero_pad_passage(sk, ch["chapter"], str(tgt_v))
-            annot = _resolve_annotates_to_emitted(annot, chapter_passages, sk, ch["chapter"])
-            comm_by_verse.setdefault(annot, []).append((fn, note))
+            requested = zero_pad_passage(sk, ch["chapter"], str(tgt_v))
+            annot, resolution, delta = _resolve_annotates_to_emitted(
+                requested, chapter_passages, sk, ch["chapter"])
+            if resolution == "nearest":
+                report["annotates_remapped"] += 1
+                report["annotates_remap_max_delta"] = max(
+                    report["annotates_remap_max_delta"], delta)
+                report["annotates_remaps"].append(
+                    {"requested": requested, "resolved": annot, "delta": delta, "fn": fn})
+            comm_by_verse.setdefault(annot, []).append((fn, note, requested, resolution))
 
         for annot, items in comm_by_verse.items():
-            for k, (fn, note) in enumerate(items, 1):
+            for k, (fn, note, requested, resolution) in enumerate(items, 1):
                 seq += 1
                 cid = f"{WORK_SLUG}:{annot}.comm{k}"
                 # Strip the leading footnote number from the note text; the
@@ -697,6 +707,11 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
                     "html": html_c, "structure": "verse",
                     "chapter": str(ch["chapter"]), "skandha": str(sk),
                     "annotates": annot, "fn": fn, "seq": seq, "deleted": False,
+                    # H2219 provenance: was this anchor the endnote's own
+                    # target, or the nearest emitted verse we fell back to?
+                    "annotates_resolution": resolution,
+                    **({"annotates_requested": requested}
+                       if resolution != "exact" else {}),
                 })
                 report["comment_count"] += 1
                 sk_rep["comments"] += 1
@@ -706,19 +721,34 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
 
 def _resolve_annotates_to_emitted(
     annot: str, chapter_passages: list[str], skandha: int, chapter: int,
-) -> str:
+) -> tuple[str, str, int]:
     """Map an endnote target onto a passage that was actually emitted (H1828).
+
+    Returns ``(resolved_passage, resolution, delta)`` where ``resolution`` is
+    ``"exact"`` when the endnote's own target was emitted and ``"nearest"``
+    when it was not and the anchor had to be moved, and ``delta`` is how many
+    verses it moved (0 for exact).
 
     Resolution order:
       1. Exact match in chapter_passages
       2. Nearest numeric verse in the same skandha.chapter (by verse number)
-      3. First passage of the chapter if any exist
-      4. Original annot unchanged (no host verse at all — rare empty chapter)
+      3. Original annot unchanged (no host verse at all — rare empty chapter)
+
+    **Why the return type carries provenance (H2219).** The H1828 fix removed
+    every dead anchor by silently overwriting ``annotates`` with the nearest
+    emitted verse, which also rewrites the record id — so the target the
+    endnote actually named was destroyed and nothing downstream could tell a
+    genuine anchor from a heuristic one. Both readings occur in the real data:
+    ``6.5.559 -> 6.005.059`` is an OCR-digit repair the remap gets *right*,
+    while ``12.8.111 -> 12.008.092`` moves a note 19 verses with no evidence
+    it belongs there. Gate 5 reports zero orphans either way. Emitting the
+    resolution kind and the original target is what makes the difference
+    auditable instead of invisible.
     """
     if annot in chapter_passages:
-        return annot
+        return annot, "exact", 0
     if not chapter_passages:
-        return annot
+        return annot, "exact", 0
 
     def _verse_key(p: str) -> int:
         # passage is SK.CH.VVV or SK.CH.VVV-WWW or with letter suffix
@@ -728,7 +758,7 @@ def _resolve_annotates_to_emitted(
 
     target_key = _verse_key(annot)
     best = min(chapter_passages, key=lambda p: (abs(_verse_key(p) - target_key), _verse_key(p)))
-    return best
+    return best, "nearest", abs(_verse_key(best) - target_key)
 
 
 _CAPS_TITLE_RE = re.compile(r"^[А-ЯЁ][А-ЯЁ0-9 ,.«»\-—:()]{2,}?(?=[А-ЯЁ][а-яё])")

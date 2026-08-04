@@ -271,3 +271,34 @@ def test_parse_parts_isolates_per_part_endnotes():
     assert report["verse_count"] == 2
     comm = [r for r in records if r["seg"].startswith("comm")]
     assert len(comm) == 1
+
+
+# ---------------------------------------------------------------------------
+# H2219: annotates-remap provenance (audit trail for the H1828 fallback)
+# ---------------------------------------------------------------------------
+
+def test_resolve_flat_annotates_reports_exact_when_target_was_emitted():
+    """An endnote naming a verse that exists must not be recorded as moved."""
+    resolved, resolution, delta = ig._resolve_flat_annotates(
+        "3.7", ["3.5", "3.6", "3.7", "3.8"], 3)
+    assert (resolved, resolution, delta) == ("3.7", "exact", 0)
+
+
+def test_resolve_flat_annotates_reports_distance_when_anchor_moves():
+    """A moved anchor reports 'nearest' plus how far it travelled.
+
+    Before H2219 this returned the bare passage, so a 19-verse move
+    (12.8.111 -> 12.008.092 in the shipped DBhP data) was indistinguishable
+    from an exact hit and Gate 5 counted both as zero orphans.
+    """
+    resolved, resolution, delta = ig._resolve_flat_annotates(
+        "3.111", ["3.90", "3.92", "3.95"], 3)
+    assert resolution == "nearest"
+    assert resolved == "3.95"
+    assert delta == 16
+
+
+def test_resolve_flat_annotates_leaves_empty_chapter_untouched():
+    """No emitted verse to anchor to → the original target survives unchanged."""
+    resolved, resolution, delta = ig._resolve_flat_annotates("4.1", [], 4)
+    assert (resolved, resolution, delta) == ("4.1", "exact", 0)
