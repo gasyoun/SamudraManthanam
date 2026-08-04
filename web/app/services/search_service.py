@@ -1,4 +1,5 @@
 import aiosqlite
+import logging
 import time
 from typing import List, Dict, Any, Optional
 
@@ -14,6 +15,15 @@ try:
 except ImportError:  # pragma: no cover - exercised only when regex missing
     import re as _re_engine  # type: ignore
     _HAS_REGEX_TIMEOUT = False
+    # H2219: the H1830 ReDoS fix degrades to the (unsafe) between-row budget
+    # when `regex` is absent. `regex` IS in web/requirements.txt, so this only
+    # fires on a deployment that skipped it — say so loudly at import rather
+    # than silently serving an unprotected /api/search?mode=regex.
+    logging.getLogger(__name__).warning(
+        "ReDoS protection DEGRADED: the `regex` package is not installed, so "
+        "search_regex has no per-match timeout (H1830). Install it from "
+        "web/requirements.txt to restore the guarantee."
+    )
 
 import re as _stdlib_re  # always available for escape_fts / whole-word filters
 
@@ -112,12 +122,18 @@ def _compile_user_regex(pattern: str, flags: int):
     return _re_engine.compile(pattern, flags)
 
 
-def _regex_search(compiled, text: str) -> bool:
+def _regex_search(compiled, text: str, stats: dict | None = None) -> bool:
     """Search with a genuine per-match timeout when the engine supports it.
 
     On timeout (catastrophic backtracking) treat as non-match and let the
     outer scan continue — the between-row MAX_TIME budget still bounds the
     whole request.
+
+    H2219: a swallowed timeout silently *under-reports* matches, so every
+    abandoned row is counted into ``stats`` and surfaced in the response's
+    ``search_metadata``. Without that, a user cannot distinguish "no hits" from
+    "we gave up on N rows", which is the false-passing-gate shape the org's
+    silent-failure rule exists to prevent.
     """
     if not text:
         return False
@@ -127,9 +143,13 @@ def _regex_search(compiled, text: str) -> bool:
         return compiled.search(text) is not None
     except TimeoutError:
         # regex package raises TimeoutError when timeout= is exceeded.
+        if stats is not None:
+            stats["match_timeouts"] = stats.get("match_timeouts", 0) + 1
         return False
     except Exception:
         # Other engine errors (e.g. interrupted) → non-match, keep scanning.
+        if stats is not None:
+            stats["match_errors"] = stats.get("match_errors", 0) + 1
         return False
 
 
@@ -175,6 +195,7 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
     scanned_rows = 0
     timeout = False
     budget_exceeded = False
+    match_stats: dict[str, int] = {}
 
     async with db.execute(sql, params) as cursor:
         async for row in cursor:
@@ -188,7 +209,7 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
 
             matched = False
             for cp in compiled_patterns:
-                if _regex_search(cp, row["line_text"]):
+                if _regex_search(cp, row["line_text"], match_stats):
                     matched = True
                     break
 
@@ -197,12 +218,18 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
                 if len(results) >= limit:
                     break
 
+    match_timeouts = match_stats.get("match_timeouts", 0)
     return {
         "results": results,
         "search_metadata": {
             "scanned_rows": scanned_rows,
             "timeout": timeout,
             "budget_exceeded": budget_exceeded,
-            "truncated": timeout or budget_exceeded
+            # H2219: rows abandoned mid-match (catastrophic backtracking) or
+            # lost to an engine error — results are incomplete when nonzero.
+            "match_timeouts": match_timeouts,
+            "match_errors": match_stats.get("match_errors", 0),
+            "regex_timeout_engine": _HAS_REGEX_TIMEOUT,
+            "truncated": timeout or budget_exceeded or bool(match_timeouts),
         }
     }

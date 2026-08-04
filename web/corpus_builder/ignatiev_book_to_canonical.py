@@ -561,6 +561,9 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     report = {
         "work": work_slug, "chapters": 0, "verse_count": 0, "comment_count": 0,
         "verse_gaps": [], "chapter_numbers": [], "unrecognised_endnotes": 0,
+        # H2219: audit trail for the H1828 nearest-verse annotates fallback.
+        "annotates_remapped": 0, "annotates_remap_max_delta": 0,
+        "annotates_remaps": [],
     }
     seq = 0
     seen_passages: set[str] = set()
@@ -620,15 +623,22 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
             p for p in seen_passages
             if p.startswith(f"{chn}.") and ".comm" not in p
         )
-        comm_by_verse: dict[str, list[tuple[int, dict]]] = {}
+        comm_by_verse: dict[str, list[tuple[int, dict, str, str]]] = {}
         for fn, note in sorted(fn_map.items()):
             if note["chapter"] != chn:
                 continue
-            annot = f"{chn}.{note['verse']}"
-            annot = _resolve_flat_annotates(annot, chapter_passages, chn)
-            comm_by_verse.setdefault(annot, []).append((fn, note))
+            requested = f"{chn}.{note['verse']}"
+            annot, resolution, delta = _resolve_flat_annotates(
+                requested, chapter_passages, chn)
+            if resolution == "nearest":
+                report["annotates_remapped"] += 1
+                report["annotates_remap_max_delta"] = max(
+                    report["annotates_remap_max_delta"], delta)
+                report["annotates_remaps"].append(
+                    {"requested": requested, "resolved": annot, "delta": delta, "fn": fn})
+            comm_by_verse.setdefault(annot, []).append((fn, note, requested, resolution))
         for annot, items in comm_by_verse.items():
-            for k, (fn, note) in enumerate(items, 1):
+            for k, (fn, note, requested, resolution) in enumerate(items, 1):
                 seq += 1
                 cid = f"{work_slug}:{annot}.comm{k}"
                 html_c = (
@@ -643,6 +653,10 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
                     "lang": "ru", "script": "cyrillic", "text": note["text"],
                     "html": html_c, "structure": "verse", "chapter": str(chn),
                     "annotates": annot, "fn": fn, "seq": seq, "deleted": False,
+                    # H2219 provenance for the H1828 nearest-verse fallback.
+                    "annotates_resolution": resolution,
+                    **({"annotates_requested": requested}
+                       if resolution != "exact" else {}),
                 })
                 report["comment_count"] += 1
 
@@ -654,12 +668,20 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
     return records, report
 
 
-def _resolve_flat_annotates(annot: str, chapter_passages: list[str], chn: int) -> str:
-    """Map flat CHAPTER.VERSE annotates onto an emitted passage (H1828)."""
+def _resolve_flat_annotates(
+    annot: str, chapter_passages: list[str], chn: int,
+) -> tuple[str, str, int]:
+    """Map flat CHAPTER.VERSE annotates onto an emitted passage (H1828).
+
+    Returns ``(resolved, resolution, delta)`` — ``"exact"`` when the endnote's
+    own target was emitted, ``"nearest"`` when the anchor had to move, and how
+    far it moved. See ``ignatjev_pdf_to_canonical._resolve_annotates_to_emitted``
+    for why the provenance is emitted rather than discarded (H2219).
+    """
     if annot in chapter_passages:
-        return annot
+        return annot, "exact", 0
     if not chapter_passages:
-        return annot
+        return annot, "exact", 0
 
     def _vkey(p: str) -> int:
         tail = p.split(".", 1)[-1]
@@ -667,7 +689,8 @@ def _resolve_flat_annotates(annot: str, chapter_passages: list[str], chn: int) -
         return int(m.group(1)) if m else 0
 
     target = _vkey(annot)
-    return min(chapter_passages, key=lambda p: (abs(_vkey(p) - target), _vkey(p)))
+    best = min(chapter_passages, key=lambda p: (abs(_vkey(p) - target), _vkey(p)))
+    return best, "nearest", abs(_vkey(best) - target)
 
 
 def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
@@ -693,6 +716,9 @@ def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
         "unrecognised_endnotes": 0,
         "id_collisions": [],
         "total_endnotes": 0,
+        "annotates_remapped": 0,
+        "annotates_remap_max_delta": 0,
+        "annotates_remaps": [],
         "parts": [],
     }
     seen_passages: dict[str, int] = {}
@@ -717,6 +743,10 @@ def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
         merged["unrecognised_endnotes"] += rep.get("unrecognised_endnotes", 0)
         merged["id_collisions"].extend(rep.get("id_collisions") or [])
         merged["total_endnotes"] += rep.get("total_endnotes", 0)
+        merged["annotates_remapped"] += rep.get("annotates_remapped", 0)
+        merged["annotates_remap_max_delta"] = max(
+            merged["annotates_remap_max_delta"], rep.get("annotates_remap_max_delta", 0))
+        merged["annotates_remaps"].extend(rep.get("annotates_remaps") or [])
         merged["parts"].append({
             "path": str(path),
             "chapters": rep.get("chapters", 0),
