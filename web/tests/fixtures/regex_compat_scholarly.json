@@ -1,0 +1,33 @@
+{
+  "_comment": [
+    "H1926 C2 compatibility corpus: legitimate scholarly regex that MUST keep",
+    "its documented semantics when the engine changed from stdlib `re` to the",
+    "timeout-capable `regex` package. Each case is (pattern, subject, expect).",
+    "These are the patterns the search contract promises to support; a change",
+    "that breaks one is a contract break, not a tuning decision."
+  ],
+  "cases": [
+    {"name": "iast_diacritic_literal", "pattern": "kṛṣṇa", "subject": "tataḥ kṛṣṇa uvāca", "case_sensitive": true, "expect": true},
+    {"name": "iast_anchored_word", "pattern": "\\barjuna\\b", "subject": "uvāca arjuna idam", "case_sensitive": true, "expect": true},
+    {"name": "iast_anchored_word_no_partial", "pattern": "\\barjuna\\b", "subject": "arjunasya rathaḥ", "case_sensitive": true, "expect": false},
+    {"name": "alternation_stems", "pattern": "(dharm|karm)a", "subject": "svadharma iti", "case_sensitive": true, "expect": true},
+    {"name": "optional_visarga", "pattern": "rāmaḥ?", "subject": "rāma uvāca", "case_sensitive": true, "expect": true},
+    {"name": "char_class_long_vowels", "pattern": "[āīūṛ]", "subject": "gītā", "case_sensitive": true, "expect": true},
+    {"name": "case_insensitive_ascii", "pattern": "yoga", "subject": "YOGA of action", "case_sensitive": false, "expect": true},
+    {"name": "case_sensitive_ascii_negative", "pattern": "yoga", "subject": "YOGA of action", "case_sensitive": true, "expect": false},
+    {"name": "cyrillic_literal", "pattern": "Кришна", "subject": "сказал Кришна", "case_sensitive": true, "expect": true},
+    {"name": "cyrillic_case_insensitive", "pattern": "кришна", "subject": "Кришна сказал", "case_sensitive": false, "expect": true},
+    {"name": "quantifier_bounded", "pattern": "a{2,3}b", "subject": "xaaab", "case_sensitive": true, "expect": true},
+    {"name": "anchor_start", "pattern": "^atha", "subject": "atha prathamo'dhyāyaḥ", "case_sensitive": true, "expect": true},
+    {"name": "anchor_start_negative", "pattern": "^atha", "subject": "iti atha", "case_sensitive": true, "expect": false},
+    {"name": "anchor_end", "pattern": "adhyāyaḥ$", "subject": "iti prathamo adhyāyaḥ", "case_sensitive": true, "expect": true},
+    {"name": "non_capturing_group", "pattern": "(?:sam|vi)yoga", "subject": "viyoga", "case_sensitive": true, "expect": true},
+    {"name": "lookahead", "pattern": "deva(?!tā)", "subject": "devaḥ", "case_sensitive": true, "expect": true},
+    {"name": "lookahead_negative_case", "pattern": "deva(?!tā)", "subject": "devatā", "case_sensitive": true, "expect": false},
+    {"name": "backreference", "pattern": "(\\w+) \\1", "subject": "oṃ oṃ namaḥ", "case_sensitive": true, "expect": true},
+    {"name": "escaped_dot_literal", "pattern": "2\\.13", "subject": "BhG 2.13", "case_sensitive": true, "expect": true},
+    {"name": "digit_class_verse_ref", "pattern": "\\d+\\.\\d+", "subject": "see 18.66 below", "case_sensitive": true, "expect": true},
+    {"name": "unicode_word_boundary_cyrillic", "pattern": "\\bмир\\b", "subject": "Привет мир быть", "case_sensitive": true, "expect": true},
+    {"name": "dot_matches_diacritic", "pattern": "g.tā", "subject": "gītā", "case_sensitive": true, "expect": true}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "_comment": [
+    "H1926 C1 adversarial set: patterns whose backtracking is exponential in the",
+    "subject length. Each subject is `subject_template` * `repeat` + `suffix`;",
+    "the suffix makes the match impossible, which is what forces the engine to",
+    "explore the whole space instead of stopping at the first success.",
+    "",
+    "MEASURED, NOT ASSUMED (04-08-2026, H1926). The textbook ReDoS shapes —",
+    "(a+)+$, (a*)*b, (x+x+)+y, (.*a){20} — are DEFUSED by the `regex` package's",
+    "optimizer and complete in under 4 ms at repeat=40, so freezing them here",
+    "would have produced a fixture that proves nothing while looking rigorous.",
+    "Every case below was measured to hit the 50 ms per-match timeout at",
+    "repeat=30 on that engine. Under stdlib `re` the same cases do not finish",
+    "in 120 s at repeat=24 — that gap IS the mitigation, which is why the",
+    "engine choice is part of the contract and not an implementation detail.",
+    "",
+    "The frozen expectation is TERMINATION (a counted timeout), never a match",
+    "verdict. A case that starts completing honestly has stopped being",
+    "adversarial and belongs in regex_compat_scholarly.json instead."
+  ],
+  "cases": [
+    {"name": "alternation_overlap", "pattern": "(a|aa)+$", "subject_template": "a", "repeat": 40, "suffix": "b"},
+    {"name": "overlap_three_way", "pattern": "(a|aa|aaa)+$", "subject_template": "a", "repeat": 40, "suffix": "b"},
+    {"name": "class_alt_overlap", "pattern": "([ab]|[ab][ab])+$", "subject_template": "ab", "repeat": 30, "suffix": "!"},
+    {"name": "nested_group_alt", "pattern": "((a)|(aa))+$", "subject_template": "a", "repeat": 40, "suffix": "b"},
+    {"name": "alt_with_optional_tail", "pattern": "(a|aa)+b?$", "subject_template": "a", "repeat": 40, "suffix": "c"},
+    {"name": "word_alt_overlap", "pattern": "(\\w|\\w\\w)+$", "subject_template": "a", "repeat": 40, "suffix": "!"},
+    {"name": "unicode_alt_overlap", "pattern": "(ā|āā)+$", "subject_template": "ā", "repeat": 40, "suffix": "b"},
+    {"name": "cyrillic_alt_overlap", "pattern": "(и|ии)+$", "subject_template": "и", "repeat": 40, "suffix": "б"}
+  ]
+}

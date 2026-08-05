@@ -141,18 +141,27 @@ async def test_export_filename_is_sanitized():
 
 @pytest.mark.asyncio
 async def test_invalid_regex():
+    """Both entry points answer with the SAME status and payload.
+
+    They used to disagree — POST 422 (pydantic's own error, which echoed the
+    offending pattern and the engine's message) against GET 400. H1926 routes
+    every regex refusal through one contract, so the shape below is now the
+    whole story; per-route detail lives in tests/test_regex_bounded.py.
+    """
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         # Invalid regex in POST
         response = await ac.post("/api/search", json={
-            "query": "[", 
+            "query": "[",
             "mode": "regex"
         })
-        assert response.status_code == 422
-        
+        assert response.status_code == 400
+        assert response.json()["error"] == "invalid_regex"
+
         # Invalid regex in GET
         response = await ac.get("/api/search/export?query=%5B&mode=regex")
         assert response.status_code == 400
+        assert response.json()["error"] == "invalid_regex"
 
 @pytest.mark.asyncio
 async def test_export_json_format():

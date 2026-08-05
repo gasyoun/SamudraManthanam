@@ -3,33 +3,18 @@ import logging
 import time
 from typing import List, Dict, Any, Optional
 
-# Prefer the third-party `regex` engine when available: it supports a genuine
-# per-match `timeout=` that aborts catastrophic backtracking mid-call.
-# stdlib `re` has no per-call timeout — its only wall-clock check sits BETWEEN
-# rows, so a single pathological pattern vs one line can hang the event loop
-# (H1830). Fall back to stdlib re only when `regex` is not installed; that path
-# still has the between-row budget but is not fully ReDoS-safe.
-try:
-    import regex as _re_engine  # type: ignore
-    _HAS_REGEX_TIMEOUT = True
-except ImportError:  # pragma: no cover - exercised only when regex missing
-    import re as _re_engine  # type: ignore
-    _HAS_REGEX_TIMEOUT = False
-    # H2219: the H1830 ReDoS fix degrades to the (unsafe) between-row budget
-    # when `regex` is absent. `regex` IS in web/requirements.txt, so this only
-    # fires on a deployment that skipped it — say so loudly at import rather
-    # than silently serving an unprotected /api/search?mode=regex.
-    logging.getLogger(__name__).warning(
-        "ReDoS protection DEGRADED: the `regex` package is not installed, so "
-        "search_regex has no per-match timeout (H1830). Install it from "
-        "web/requirements.txt to restore the guarantee."
-    )
+import re as _stdlib_re  # escape_fts / whole-word filters (never user patterns)
 
-import re as _stdlib_re  # always available for escape_fts / whole-word filters
+# H1926: every bound on user-supplied regex — engine choice, per-match timeout,
+# hard deadline, pattern caps, stable error codes — lives in one module.
+from app.services.regex_executor import (
+    HARD_DEADLINE_SECONDS,
+    MAX_SCANNED_ROWS,
+    BoundedRegexExecutor,
+    ScanStats,
+)
 
-# Per-match wall-clock budget for user-supplied regex (seconds).
-# Well under the 5s whole-scan MAX_TIME and the H1830 <2s regression bound.
-_REGEX_MATCH_TIMEOUT = 0.05
+logger = logging.getLogger(__name__)
 
 
 def escape_fts(term: str, whole_word: bool = False) -> str:
@@ -117,58 +102,21 @@ async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: boo
     return filtered
 
 
-def _compile_user_regex(pattern: str, flags: int):
-    """Compile a user-supplied pattern with the timeout-capable engine."""
-    return _re_engine.compile(pattern, flags)
-
-
-def _regex_search(compiled, text: str, stats: dict | None = None) -> bool:
-    """Search with a genuine per-match timeout when the engine supports it.
-
-    On timeout (catastrophic backtracking) treat as non-match and let the
-    outer scan continue — the between-row MAX_TIME budget still bounds the
-    whole request.
-
-    H2219: a swallowed timeout silently *under-reports* matches, so every
-    abandoned row is counted into ``stats`` and surfaced in the response's
-    ``search_metadata``. Without that, a user cannot distinguish "no hits" from
-    "we gave up on N rows", which is the false-passing-gate shape the org's
-    silent-failure rule exists to prevent.
-    """
-    if not text:
-        return False
-    try:
-        if _HAS_REGEX_TIMEOUT:
-            return compiled.search(text, timeout=_REGEX_MATCH_TIMEOUT) is not None
-        return compiled.search(text) is not None
-    except TimeoutError:
-        # regex package raises TimeoutError when timeout= is exceeded.
-        if stats is not None:
-            stats["match_timeouts"] = stats.get("match_timeouts", 0) + 1
-        return False
-    except Exception:
-        # Other engine errors (e.g. interrupted) → non-match, keep scanning.
-        if stats is not None:
-            stats["match_errors"] = stats.get("match_errors", 0) + 1
-        return False
-
-
 async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: bool, source_ids: Optional[List[int]], limit: int) -> Dict[str, Any]:
+    """Scan the corpus with user-supplied patterns under published bounds.
+
+    Raises :class:`RegexContractError` for a pattern the contract refuses (bad
+    syntax, over-long, too many, or no timeout-capable engine installed) so the
+    route can answer with a stable error instead of an empty result set that
+    looks like a legitimate "no hits".
+    """
     # Handle multi-line patterns
     patterns = [p.strip() for p in pattern.split('\n') if p.strip()]
     if not patterns:
         return {"results": [], "search_metadata": None}
 
-    flags = 0 if case_sensitive else _re_engine.IGNORECASE
-    compiled_patterns = []
-    for p in patterns:
-        try:
-            compiled_patterns.append(_compile_user_regex(p, flags))
-        except (_re_engine.error, _stdlib_re.error):
-            continue
-
-    if not compiled_patterns:
-        return {"results": [], "search_metadata": None}
+    # Raises RegexContractError; deliberately NOT caught here.
+    executor = BoundedRegexExecutor.compile_patterns(patterns, case_sensitive)
 
     source_filter = ""
     params = []
@@ -189,47 +137,23 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
 
     results = []
     start_time = time.time()
-    MAX_TIME = 5.0 # seconds
-    MAX_SCANNED_ROWS = 1000000 # 1M rows budget
-
-    scanned_rows = 0
-    timeout = False
-    budget_exceeded = False
-    match_stats: dict[str, int] = {}
+    stats = ScanStats()
 
     async with db.execute(sql, params) as cursor:
         async for row in cursor:
-            scanned_rows += 1
-            if time.time() - start_time > MAX_TIME:
-                timeout = True
+            stats.scanned_rows += 1
+            # H1926 C1: hard wall-clock deadline (was a 5 s soft budget). The
+            # per-match timeout bounds one match; this bounds the whole scan.
+            if time.time() - start_time > HARD_DEADLINE_SECONDS:
+                stats.deadline_exceeded = True
                 break
-            if scanned_rows > MAX_SCANNED_ROWS:
-                budget_exceeded = True
+            if stats.scanned_rows > MAX_SCANNED_ROWS:
+                stats.budget_exceeded = True
                 break
 
-            matched = False
-            for cp in compiled_patterns:
-                if _regex_search(cp, row["line_text"], match_stats):
-                    matched = True
-                    break
-
-            if matched:
+            if executor.matches(row["line_text"], stats):
                 results.append(dict(row))
                 if len(results) >= limit:
                     break
 
-    match_timeouts = match_stats.get("match_timeouts", 0)
-    return {
-        "results": results,
-        "search_metadata": {
-            "scanned_rows": scanned_rows,
-            "timeout": timeout,
-            "budget_exceeded": budget_exceeded,
-            # H2219: rows abandoned mid-match (catastrophic backtracking) or
-            # lost to an engine error — results are incomplete when nonzero.
-            "match_timeouts": match_timeouts,
-            "match_errors": match_stats.get("match_errors", 0),
-            "regex_timeout_engine": _HAS_REGEX_TIMEOUT,
-            "truncated": timeout or budget_exceeded or bool(match_timeouts),
-        }
-    }
+    return {"results": results, "search_metadata": stats.as_metadata()}

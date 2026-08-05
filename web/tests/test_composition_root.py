@@ -63,10 +63,23 @@ def test_no_pre_extraction_route_disappeared(client):
 
 
 def test_admin_route_still_registered(client):
-    """The one non-GET pre-extraction route, and the smoke suite's probe target."""
-    status = client.post("/api/admin/vacuum?key=not-a-real-key").status_code
+    """The one non-GET pre-extraction route, and the smoke suite's probe target.
+
+    Probed with a header since H1926: `?key=` is now refused as a *transport*
+    (400) before the value is ever compared, so it can no longer stand in for
+    "a bogus key is rejected".
+    """
+    status = client.post(
+        "/api/admin/vacuum", headers={"X-Admin-Key": "not-a-real-key"}
+    ).status_code
     assert status != 404, "/api/admin/vacuum disappeared from the app"
     assert status in (401, 403), f"a bogus admin key was not refused (got {status})"
+
+
+def test_admin_route_refuses_query_string_credentials(client):
+    """The transport half of the same surface (H1926 C3)."""
+    status = client.post("/api/admin/vacuum?key=not-a-real-key").status_code
+    assert status == 400, f"query-string credential was not refused (got {status})"
 
 
 def test_main_still_exports_the_names_tests_import():
