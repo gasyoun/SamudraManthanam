@@ -78,11 +78,12 @@ jobs:
         env:
           BUNDLE_URL: ${{ github.event.inputs.bundle_url }}
         run: |
-          # The bundle manifest and immutable-artifact resolver are Lane A's
-          # deliverable (H1924). Until that lands there is no pinned bundle to
-          # resolve, so this step reports the gap loudly and the job continues
-          # against whatever corpus data the checkout carries. It must NOT
-          # silently claim to have run a pinned gate it did not run.
+          # Lane A (H1924) shipped the manifest schema, a fixture and
+          # corpus_manifest.py, but no GENERATED manifest is committed yet, so
+          # there is still nothing to pin against. This step reports that gap
+          # loudly and continues against whatever corpus data the checkout
+          # carries. It must NOT silently claim to have run a pinned gate it did
+          # not run. Wire the real path once a manifest is published.
           if [ -f web/corpus_builder/manifest/corpus-manifest.json ]; then
             echo "manifest=present" >> "$GITHUB_OUTPUT"
           else

@@ -91,7 +91,7 @@ acceptance checks. New handoff IDs are wired after the autonomy-readiness gate.
 
 | Lane | Deliverable | Owner |
 |---|---|---|
-| A | Canonical manifest, immutable bundle contract, and publish validation | [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
+| A | ✅ **Shipped 05-08-2026** — canonical manifest, immutable bundle contract, and publish validation. Spec: [CORPUS_BUNDLE_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CORPUS_BUNDLE_SPEC.md); A1–A7 all covered by hermetic tests | [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
 | B | Durable identity propagation and reversible zero-orphan migration | [H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
 | C | Hard-bounded regex, secure admin transport, and two-tier correction identity | [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md) |
 | D | Checksum migrations, bounded `main.py` extraction, and dual-deployment contract smoke tests | [H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) — **✅ shipped 05-08-2026** |
