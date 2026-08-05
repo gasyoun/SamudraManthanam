@@ -94,7 +94,7 @@ acceptance checks. New handoff IDs are wired after the autonomy-readiness gate.
 | A | ✅ **Shipped 05-08-2026** — canonical manifest, immutable bundle contract, and publish validation. Spec: [CORPUS_BUNDLE_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CORPUS_BUNDLE_SPEC.md); A1–A7 all covered by hermetic tests | [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
 | B | Durable identity propagation and reversible zero-orphan migration | [H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
 | C | Hard-bounded regex, secure admin transport, and two-tier correction identity | [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md) |
-| D | Checksum migrations, bounded `main.py` extraction, and dual-deployment contract smoke tests | [H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) |
+| D | Checksum migrations, bounded `main.py` extraction, and dual-deployment contract smoke tests | [H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) — **✅ shipped 05-08-2026** |
 | E | Wisdomlib Stage C completion and manifest integration | Existing [issue #17](https://github.com/gasyoun/SamudraManthanam/issues/17); no duplicate handoff |
 | F | H1438 Wave-B branch recovery, validation, and merge | Existing [H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md); no duplicate handoff |
 | Guarded | Corpus Builder engine/GUI work | Existing H1485 claim; excluded from new Wave-1 ownership |
@@ -110,8 +110,12 @@ executed. The replacement executor for Lanes A–D is Opus 5 1M
   `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md and execute it.`
 - H1925, after H1924:
   `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md and execute it.`
-- H1927, independent substeps with final smoke after H1924–H1926:
-  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md and execute it.`
+- H1927 — 🔴 EXECUTED 05-08-2026, Opus 5 1M (`claude-opus-5[1m]`). D1–D7 shipped.
+  The final smoke runs against fixture databases on both profiles today; it
+  consumes Lane A's bundle fixture and Lane B/C public contracts when those
+  merge, and the corpus gate's pinned-bundle step declares itself a stub
+  (a loud `::warning::`) until H1924 lands rather than implying a gate it did
+  not run.
 
 Dependencies:
 

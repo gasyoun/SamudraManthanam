@@ -1,0 +1,105 @@
+name: Deployment contract (bare systemd/nginx)
+
+# H1927 / Lane D4. Both production paths are first-class, so both must be
+# checked by the SAME contract — the identical script CI runs against the
+# Docker image in ci.yml. What differs here is only how the thing is started:
+# uvicorn behind the repo's real deploy/samudra.nginx vhost, no container.
+#
+# This matters because nginx serves /static/ directly and therefore BYPASSES
+# the FastAPI security_headers middleware. The cross-origin and cache headers
+# are duplicated by hand in deploy/samudra.nginx, and hand-duplicated headers
+# drift. The container profile cannot detect that; this profile can.
+#
+# Scheduled rather than per-PR, per the plan's "bare rehearsal is
+# scheduled/pre-release on an ephemeral authorized host" mitigation: it needs
+# to install and configure nginx, which is too slow to put on every PR.
+
+on:
+  schedule:
+    # Mondays 04:17 UTC — off the hour to avoid the runner-queue rush.
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  bare-profile:
+    name: Bare systemd/nginx profile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: web/requirements.txt
+
+      - name: Install application dependencies
+        run: python -m pip install -r web/requirements.txt
+
+      - name: Build fixture databases
+        run: |
+          mkdir -p fixtures
+          PYTHONPATH=web python web/scripts/build_fixture_db.py \
+            --corpus-db fixtures/corpus.db --state-db fixtures/state.db
+
+      - name: Install nginx
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends nginx
+
+      - name: Install the repo's own nginx vhost
+        # The real deploy/samudra.nginx, with only the two site-specific values
+        # substituted. Rewriting the config here would test a config that no
+        # deployment uses.
+        run: |
+          sudo mkdir -p /opt/samudra
+          sudo cp -r web /opt/samudra/web
+          sed -e "s|<YOUR_DOMAIN>|127.0.0.1|" deploy/samudra.nginx | sudo tee /etc/nginx/sites-available/samudra > /dev/null
+          sudo ln -sf /etc/nginx/sites-available/samudra /etc/nginx/sites-enabled/samudra
+          sudo rm -f /etc/nginx/sites-enabled/default
+          sudo nginx -t
+          sudo systemctl restart nginx
+
+      - name: Start the application under systemd
+        # systemd-run gives a real unit with the service file's own hardening
+        # posture, rather than a bare background process pretending to be one.
+        run: |
+          sudo systemd-run --unit=samudra-contract \
+            --setenv=PYTHONPATH=/opt/samudra/web \
+            --setenv=DB_PATH=$PWD/fixtures/corpus.db \
+            --setenv=STATE_DB_PATH=$PWD/fixtures/state.db \
+            --setenv=APP_ENV=production \
+            --working-directory=/opt/samudra/web \
+            $(which python) -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+
+      - name: Deployment contract smoke (bare profile, through nginx)
+        run: |
+          python web/scripts/deployment_contract_smoke.py \
+            --base-url http://127.0.0.1 \
+            --profile bare \
+            --json-report bare-contract-report.json
+
+      - name: Service and nginx logs on failure
+        if: failure()
+        run: |
+          sudo journalctl -u samudra-contract --no-pager | tail -100 || true
+          sudo tail -50 /var/log/nginx/error.log || true
+
+      - name: Clean stop
+        if: always()
+        run: |
+          sudo systemctl stop samudra-contract || true
+          sudo systemctl stop nginx || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bare-contract-report
+          path: bare-contract-report.json
+          if-no-files-found: ignore
