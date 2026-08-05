@@ -91,7 +91,34 @@ That gap is the mitigation. The engine choice is part of this contract, not an i
 - **Primary Sort**: Sources are sorted by their `sort_order` defined in the `sources` table.
 - **Secondary Sort**: Within a source, lines are sorted by `line_num`.
 
-## 6. Constraints & Safety
+## 6. Canonical identity (additive, H1925 Lane B)
+
+Every result and export row carries the canonical tuple alongside the legacy
+ordinals. These fields are **additive** — no existing field changed meaning or
+was removed.
+
+| Field | Where | Meaning |
+|---|---|---|
+| `source_slug` | each result item, JSON/CSV export row | stable filename-derived source identity (`sources.slug`) |
+| `canonical_id` | each result item, JSON/CSV export row | passage id per [LINE_ID_SCHEME.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/LINE_ID_SCHEME.md), e.g. `bhagavadgita-1909:1.1` |
+| `corpus_version` | search response, `/api/search/context`, export `metadata` | which corpus the results were read from |
+
+- **Durability.** `source_id` and `line_num` are re-assigned on every ingest;
+  `(source_slug, canonical_id)` is not. A stored or exported citation must use
+  the canonical pair — the ordinals are compatibility fields for the migration
+  span, and any client that persists a reference should record the version too.
+- **Nullability.** `canonical_id` / `source_slug` are `null` only on a
+  pre-migration corpus DB whose lines have no canonical id yet. Clients degrade
+  (fall back to the ordinals) rather than failing.
+- **Corrections.** `POST /api/corrections/propose` accepts either address form:
+  `(source_slug, canonical_id)` or the legacy `(source_id, line_num)`. Both are
+  resolved against the live corpus before storage, and the stored row always
+  carries the canonical tuple. A reference that cannot be resolved
+  unambiguously is rejected with **409** — it is never bound to a nearby line.
+
+Full census: [docs/DURABLE_REFERENCE_INVENTORY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/DURABLE_REFERENCE_INVENTORY.md).
+
+## 7. Constraints & Safety
 - **Limits**: Standard searches are capped at 5,000 results by default to prevent browser crashes.
 - **Timeouts**: Morphological expansions have a 5-second timeout for the external API call.
 - **Regex**: see §3.3–3.5 — those bounds are the enforced ones.

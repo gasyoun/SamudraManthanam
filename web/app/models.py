@@ -43,6 +43,8 @@ class SearchRequest(BaseModel):
         return self
 
 class SearchResultItem(BaseModel):
+    # Compatibility (ordinal) identity. Re-assigned on every ingest — kept for
+    # the migration span, never the sole basis of a durable reference (B2).
     source_id: int
     source_title: str
     chapter: Optional[str] = ""
@@ -50,6 +52,11 @@ class SearchResultItem(BaseModel):
     link_id: Optional[str] = ""
     line_html: str
     line_text: str
+    # Canonical identity (H1925 / Lane B). `None` only on a pre-migration
+    # corpus.db whose lines have no canonical_id yet, or a source whose slug
+    # backfill has not run.
+    source_slug: Optional[str] = None
+    canonical_id: Optional[str] = None
 
 class SearchResult(BaseModel):
     query: str
@@ -59,6 +66,9 @@ class SearchResult(BaseModel):
     results: List[SearchResultItem]
     html_fragment: Optional[str] = None
     search_metadata: Optional[Dict[str, Any]] = None
+    # Third member of the canonical tuple: which corpus these results name.
+    # A reference is only durable together with the version it was taken from.
+    corpus_version: Optional[str] = None
 
 class SourceInfo(BaseModel):
     id: int

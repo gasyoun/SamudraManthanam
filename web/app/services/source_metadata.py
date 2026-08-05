@@ -205,6 +205,11 @@ def build_line_quotation(
         "isPartOf": {"@id": source_url},
         "url": anchor_url,
     }
+    # The canonical passage id is the citable, rebuild-surviving identity
+    # (H1925, B1/B2); the anchor URL above is a today's-ingest convenience.
+    canonical_id = line.get("canonical_id")
+    if canonical_id:
+        quotation["identifier"] = canonical_id
     if line.get("chapter"):
         quotation["citation"] = f"{line['chapter']}, {link_id}" if link_id else line["chapter"]
     return quotation

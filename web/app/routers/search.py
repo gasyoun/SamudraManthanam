@@ -102,7 +102,7 @@ async def post_search(request: SearchRequest):
         logger.info(f"search: mode={request.mode} query='{log_query}' sources={len(request.source_ids) if request.source_ids else 'all'} total={len(results)} elapsed={elapsed_ms:.2f}ms")
         
         html_fragment = render_fragment(request.query, results, search_metadata=search_metadata)
-        
+
         return SearchResult(
             query=request.query,
             total=len(results),
@@ -110,7 +110,10 @@ async def post_search(request: SearchRequest):
             sources_hit=sources_hit,
             results=[SearchResultItem(**r) for r in results],
             html_fragment=html_fragment,
-            search_metadata=search_metadata
+            search_metadata=search_metadata,
+            # Without the version, a result's canonical id names a passage but
+            # not the corpus it was read from (H1925, B2).
+            corpus_version=await get_corpus_version(db),
         )
     finally:
         await db.close()
@@ -204,10 +207,12 @@ async def get_context(
     db = await get_db(settings.DB_PATH)
     try:
         async with db.execute(
-            """SELECT line_num, link_id, chapter, line_html
-               FROM corpus_lines
-               WHERE source_id = ? AND line_num BETWEEN ? AND ?
-               ORDER BY line_num""",
+            """SELECT cl.line_num, cl.link_id, cl.chapter, cl.line_html,
+                      cl.canonical_id, s.slug AS source_slug
+               FROM corpus_lines cl
+               JOIN sources s ON s.id = cl.source_id
+               WHERE cl.source_id = ? AND cl.line_num BETWEEN ? AND ?
+               ORDER BY cl.line_num""",
             (source_id, line_num - window, line_num + window),
         ) as cursor:
             rows = await cursor.fetchall()
@@ -217,6 +222,7 @@ async def get_context(
             "before":  [l for l in lines if l["line_num"] < line_num],
             "current": next((l for l in lines if l["line_num"] == line_num), None),
             "after":   [l for l in lines if l["line_num"] > line_num],
+            "corpus_version": await get_corpus_version(db),
         }
     finally:
         await db.close()
@@ -290,6 +296,11 @@ async def get_export(
                         "chapter": r["chapter"],
                         "line_num": r["line_num"],
                         "link_id": r["link_id"],
+                        # Canonical tuple (H1925): an exported citation must
+                        # still resolve after the corpus is rebuilt. The
+                        # version lives once, in `metadata.corpus_version`.
+                        "source_slug": r.get("source_slug"),
+                        "canonical_id": r.get("canonical_id"),
                         # H1831: KWIC snippets only — never full untruncated text.
                         "line_html": _export_snippet_html(r.get("line_text") or "", query),
                         "line_text": _export_snippet_text(r.get("line_text") or "", query),
@@ -308,7 +319,10 @@ async def get_export(
             for key in ("query", "mode", "corpus_version", "timestamp", "source_filter", "result_count"):
                 writer.writerow([f"# {key}", metadata.get(key)])
             writer.writerow([])
-            writer.writerow(["source_id", "source_title", "chapter", "line_num", "link_id", "line_text"])
+            writer.writerow([
+                "source_id", "source_title", "chapter", "line_num", "link_id",
+                "source_slug", "canonical_id", "line_text",
+            ])
             for r in results:
                 writer.writerow([
                     r["source_id"],
@@ -316,6 +330,8 @@ async def get_export(
                     r["chapter"],
                     r["line_num"],
                     r["link_id"],
+                    r.get("source_slug") or "",
+                    r.get("canonical_id") or "",
                     # H1831: KWIC snippet, not full verse text.
                     _export_snippet_text(r.get("line_text") or "", query),
                 ])

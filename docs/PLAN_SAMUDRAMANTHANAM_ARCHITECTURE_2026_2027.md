@@ -92,7 +92,7 @@ acceptance checks. New handoff IDs are wired after the autonomy-readiness gate.
 | Lane | Deliverable | Owner |
 |---|---|---|
 | A | ✅ **Shipped 05-08-2026** — canonical manifest, immutable bundle contract, and publish validation. Spec: [CORPUS_BUNDLE_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CORPUS_BUNDLE_SPEC.md); A1–A7 all covered by hermetic tests | [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md) |
-| B | Durable identity propagation and reversible zero-orphan migration | [H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
+| B | ✅ **Shipped 05-08-2026** — canonical tuple reaches search, exports, citations, corrections and offline payloads; checksum-tracked reversible state migration + pinned legacy mapping; zero-orphan gate with rollback rehearsal. Census: [DURABLE_REFERENCE_INVENTORY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/DURABLE_REFERENCE_INVENTORY.md); B1–B6 covered by 45 hermetic tests | [H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md) |
 | C | Hard-bounded regex, secure admin transport, and two-tier correction identity | ✅ **Shipped 05-08-2026** — [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md); contracts: [SEARCH_CONTRACT §3](https://github.com/gasyoun/SamudraManthanam/blob/main/web/SEARCH_CONTRACT.md), [IDENTITY_TRUST_CONTRACT](https://github.com/gasyoun/SamudraManthanam/blob/main/web/IDENTITY_TRUST_CONTRACT.md) |
 | D | Checksum migrations, bounded `main.py` extraction, and dual-deployment contract smoke tests | [H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md) — **✅ shipped 05-08-2026** |
 | E | Wisdomlib Stage C completion and manifest integration | Existing [issue #17](https://github.com/gasyoun/SamudraManthanam/issues/17); no duplicate handoff |
@@ -104,12 +104,15 @@ executed. The replacement executor for Lanes A–D is Opus 5 1M
 (`claude-opus-5[1m]`) in Claude Code, folder
 `C:\Users\user\Documents\GitHub\SamudraManthanam`:
 
-- H1924:
-  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md and execute it.`
+- H1924: 🔴 EXECUTED 05-08-2026 — [archived handoff](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md)
 - H1926, independent:
   `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md and execute it.`
-- H1925, after H1924:
-  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md and execute it.`
+- H1925 — 🔴 EXECUTED 05-08-2026, Opus 5 (`claude-opus-5`). B1–B6 shipped:
+  [handoff](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md).
+  Lane B's canonical-reference state migrations carry their own checksum ledger
+  (`web/app/canonical_state_migrations.py`) and are written to be absorbed by
+  H1927's D1 runner rather than to compete with it — that consolidation is the
+  one open seam between the two lanes.
 - H1927 — 🔴 EXECUTED 05-08-2026, Opus 5 1M (`claude-opus-5[1m]`). D1–D7 shipped.
   The final smoke runs against fixture databases on both profiles today; it
   consumes Lane A's bundle fixture and Lane B/C public contracts when those
