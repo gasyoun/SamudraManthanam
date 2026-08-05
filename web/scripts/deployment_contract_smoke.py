@@ -249,7 +249,11 @@ def check_bounded_regex(base: str, report: Report) -> None:
     status code the app chooses — a timeout may legitimately surface as 4xx or
     5xx. What must never happen is the request hanging.
     """
-    evil = "(a+)+$"
+    # NOT the textbook `(a+)+$`: measured 05-08-2026, the `regex` engine this
+    # app uses optimises that one away (~1 ms on 40 chars), so a smoke built on
+    # it would report PASS without ever exercising the deadline. `(a|a)*$` is an
+    # alternation the optimiser cannot collapse.
+    evil = "(a|a)*$"
     started = time.monotonic()
     try:
         resp = request(

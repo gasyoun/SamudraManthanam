@@ -363,41 +363,57 @@ def test_gate4_all_ids_unique(canonical_jsonl_files):
 
 
 @pytest.mark.corpus
-def test_gate4_dup_suffix_records_are_valid(all_records):
-    """Gate 4: dup-suffix records (1.1b, 1.1c) appear only where source has true dups.
+def test_gate4_dup_suffix_invariants_hold(all_records):
+    """Gate 4: dup-suffix records satisfy the CATEGORISED invariant (H1927 D7).
 
-    H1829 (2026-08-02): nirvana-tantra alone held 284 of 429 corpus-wide
-    letter-suffix ids — a split_verses bug (footnote ``(N)`` markers misread
-    as verse boundaries), not genuine textual duplication. After collapsing
-    non-monotonic / footnote-debris splits, measured corpus total is ~147,
-    dominated by real multi-verse collisions:
+    This gate used to be a bare count ceiling. H1829 (02-08-2026) showed what
+    that costs: `<= 200` sat here with no recorded derivation while
+    nirvana-tantra alone held 284 of 429 suffixed ids, because footnote ``(N)``
+    markers were being read as verse boundaries. Lowering the number to a
+    measured 180 made the gate honest but no more capable — a count can only
+    ask "how many?", so any splitting bug that stays under the number is
+    invisible to it.
 
-      mahabhagavata-purana ~66, devibhagavata-purana ~24,
-      yoga-sutry_vyasa-bhashya ~16, ramayana kandas ~14, residual singles.
-
-    Ceiling is data-derived: measured total + ~20% headroom for legitimate
-    new genuine dups, NOT an arbitrary raise of the old 200 to swallow a bug.
+    VERIFICATION D7 asks for a categorised invariant instead. The rules live in
+    `scripts/dup_suffix_report.py` — one definition, also used to generate
+    docs/DUP_SUFFIX_INVARIANT_REPORT.md — and they are structural: an orphaned
+    suffix, a suffix run, and one work carrying the population are all shapes
+    that splitter debris has and genuine collisions do not. The count survives
+    only as a coarse backstop that prompts re-derivation.
     """
-    import re
-    from collections import Counter
-    dup_pattern = re.compile(r"^.+:[0-9.]+[b-z](#|\.comm).*$")
-    dup_records = [r for r in all_records if dup_pattern.match(r["id"])]
-    by_work = Counter(r["work"] for r in dup_records)
-    # Measured 2026-08-02 post-H1829: 147. Headroom → 180.
-    _GATE4_DUP_SUFFIX_CEILING = 180
-    assert len(dup_records) <= _GATE4_DUP_SUFFIX_CEILING, (
-        f"Unexpectedly many dup-suffix records: {len(dup_records)} "
-        f"(ceiling {_GATE4_DUP_SUFFIX_CEILING}, data-derived). "
-        f"Top works: {by_work.most_common(5)}"
+    import sys
+    from pathlib import Path
+
+    scripts_dir = Path(__file__).resolve().parents[1] / "scripts"
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
+    from dup_suffix_report import build_report
+
+    report = build_report(all_records)
+
+    assert not report.violations_for("base_present"), (
+        "Suffixed ids with no un-suffixed twin — the splitter invented a boundary "
+        f"(H1829 signature): "
+        f"{[v.record_id for v in report.violations_for('base_present')][:10]}"
     )
-    # Single-work runaway guard: no one work should dominate like the old
-    # nirvana-tantra 284/361 (79%) bug signature.
-    if dup_records:
-        top_work, top_n = by_work.most_common(1)[0]
-        assert top_n <= 100, (
-            f"Runaway dup-suffix concentration in {top_work}: {top_n} "
-            f"(likely verse-splitting bug, not genuine dups)"
-        )
+    assert not report.violations_for("suffix_depth"), (
+        "Suffix letters beyond 'b' — collisions should be pairs: "
+        f"{[v.record_id for v in report.violations_for('suffix_depth')][:10]}"
+    )
+    assert not report.violations_for("segment_pairing"), (
+        "Suffixed records outside the sa/ru parallel + commentary classes: "
+        f"{[v.record_id for v in report.violations_for('segment_pairing')][:10]}"
+    )
+    assert not report.violations_for("concentration"), (
+        "Runaway single-work concentration (the nirvana-tantra 79% shape): "
+        f"{[v.detail for v in report.violations_for('concentration')]}"
+    )
+    assert not report.violations_for("population_backstop"), (
+        f"{report.dup_records} suffixed ids exceeds the coarse backstop. The "
+        f"categorised invariants passed, so re-derive them against the new corpus "
+        f"rather than simply raising the number. "
+        f"Top works: {list(report.by_work.items())[:5]}"
+    )
 
 
 # ---------------------------------------------------------------------------
