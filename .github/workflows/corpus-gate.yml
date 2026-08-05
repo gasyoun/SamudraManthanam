@@ -60,6 +60,12 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v7
+        with:
+          # web/corpus_builder/jsonl/dic_mw.jsonl is LFS-tracked. Without this
+          # it checks out as a pointer stub, and a gate that reads it either
+          # dies on the pointer text or — worse — skips the source and reports
+          # a full-corpus pass it never performed.
+          lfs: true
 
       - uses: actions/setup-python@v7
         with:

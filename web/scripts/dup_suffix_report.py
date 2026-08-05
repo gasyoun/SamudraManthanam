@@ -159,14 +159,42 @@ def canonical_jsonl_files(web_root: Path | None = None) -> list[Path]:
     return sorted(files)
 
 
+class CorpusUnavailableError(Exception):
+    """A canonical source exists as a path but its content cannot be read."""
+
+
+_LFS_POINTER_PREFIX = "version https://git-lfs.github.com/spec/"
+
+
 def load_records(files: list[Path]) -> list[dict]:
+    """Load every record, refusing to quietly drop a source it cannot parse.
+
+    `web/corpus_builder/jsonl/dic_mw.jsonl` is LFS-tracked, so a checkout
+    without LFS leaves a pointer stub on disk. Reading that used to raise a bare
+    JSONDecodeError pointing at "line 1 column 1", which says nothing about the
+    cause. Worse would be skipping the file: the gate would then report a
+    full-corpus pass over a corpus it had not fully read.
+    """
     records: list[dict] = []
     for path in files:
         with open(path, encoding="utf-8") as fh:
-            for line in fh:
+            for lineno, line in enumerate(fh, start=1):
                 line = line.strip()
-                if line:
+                if not line:
+                    continue
+                if lineno == 1 and line.startswith(_LFS_POINTER_PREFIX):
+                    raise CorpusUnavailableError(
+                        f"{path.name} is a Git LFS pointer, not corpus content. "
+                        f"Run `git lfs pull` (or check out with lfs: true in CI). "
+                        f"Refusing to report on a corpus this process cannot read."
+                    )
+                try:
                     records.append(json.loads(line))
+                except json.JSONDecodeError as exc:
+                    raise CorpusUnavailableError(
+                        f"{path.name}:{lineno} is not valid JSON ({exc}). "
+                        f"Refusing to report on a partially-readable corpus."
+                    ) from exc
     return records
 
 
@@ -367,7 +395,15 @@ def main() -> int:
         )
         return 0
 
-    report = build_report(load_records(files))
+    try:
+        report = build_report(load_records(files))
+    except CorpusUnavailableError as exc:
+        # Loud and non-zero: an unreadable corpus is not a pass. Reporting
+        # "SKIP, exit 0" here is precisely the false-passing gate this report
+        # was written to replace.
+        print(f"FAIL  corpus unavailable — {exc}", file=sys.stderr)
+        return 2
+
     print(render_text(report))
 
     if args.json:

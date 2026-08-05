@@ -138,6 +138,35 @@ def test_report_counts_are_reported_even_when_passing():
     assert report.to_dict()["ok"] is True
 
 
+def test_lfs_pointer_is_refused_not_silently_skipped(tmp_path):
+    """An unreadable source must fail loudly, never shrink the population.
+
+    dic_mw.jsonl is LFS-tracked, so a checkout without LFS leaves a pointer
+    stub. Skipping it would let the gate report a full-corpus pass over a
+    corpus it never read — the false-passing shape this whole report replaces.
+    """
+    from dup_suffix_report import CorpusUnavailableError, load_records
+
+    stub = tmp_path / "dic_mw.jsonl"
+    stub.write_text(
+        "version https://git-lfs.github.com/spec/v1\n"
+        "oid sha256:0000000000000000000000000000000000000000000000000000000000000000\n"
+        "size 12345\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(CorpusUnavailableError, match="Git LFS pointer"):
+        load_records([stub])
+
+
+def test_malformed_jsonl_line_is_refused(tmp_path):
+    from dup_suffix_report import CorpusUnavailableError, load_records
+
+    bad = tmp_path / "broken.jsonl"
+    bad.write_text('{"id": "x:1.1#ru", "work": "x"}\nnot json at all\n', encoding="utf-8")
+    with pytest.raises(CorpusUnavailableError, match="not valid JSON"):
+        load_records([bad])
+
+
 @pytest.mark.parametrize(
     "rid,is_dup",
     [
