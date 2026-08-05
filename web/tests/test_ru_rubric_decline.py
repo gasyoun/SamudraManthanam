@@ -280,8 +280,19 @@ def test_real_rus_index_regenerates_identically_to_committed_file():
         pytest.skip("diplom-rubanova data not present")
     morph = rd.load_morph()
     entries = rd.generate_declined_index(str(rus_index_path), morph=morph)
-    regenerated = "\r\n".join(rd.format_line(b, f) for b, f in entries) + "\r\n"
-    committed = declined_path.read_bytes().decode("utf-8")
+
+    # Compared line-ending-agnostically, which does not loosen the gate. The
+    # parity property is that the committed file IS the generator's output — a
+    # claim about content. Line endings are git's to decide: the org-wide
+    # `.gitattributes` LF policy sets `* text=auto eol=lf`, so this file now
+    # materialises with LF on every platform and the hardcoded `\r\n` could
+    # never match again. It had been failing since that policy landed, unseen,
+    # because `-m corpus` did not run in CI until H1927 added the corpus gate.
+    def _lf(text: str) -> str:
+        return text.replace("\r\n", "\n")
+
+    regenerated = _lf("\n".join(rd.format_line(b, f) for b, f in entries) + "\n")
+    committed = _lf(declined_path.read_text(encoding="utf-8"))
     assert regenerated == committed
 
 
