@@ -10,10 +10,25 @@ refactor silently drops or renames a public path. Adding a route is expected and
 allowed; the assertion is one-directional (no path may disappear).
 """
 
+import importlib
+
 import pytest
 from fastapi.testclient import TestClient
 
-from app.main import app
+
+def current_app():
+    """Read `app.main.app` at call time, never as a module-level snapshot.
+
+    `tests/test_cors.py` calls `importlib.reload(app.main)`, which rebinds
+    `app.main.app` to a brand-new FastAPI instance. Anything holding the object
+    captured at import time is then asserting about an app the process no longer
+    serves — and whether that matters depends on test execution order, which is
+    exactly the kind of dependency that passes locally and fails in CI.
+    """
+    import app.main
+
+    return app.main.app
+
 
 # Captured from origin/main @ be9a303 before the Lane D2 extraction.
 PRE_EXTRACTION_PATHS = {
@@ -30,17 +45,21 @@ PRE_EXTRACTION_PATHS = {
 
 
 def _paths() -> set[str]:
-    return {getattr(r, "path", "") for r in app.routes}
+    return {getattr(r, "path", "") for r in current_app().routes}
 
 
 def test_no_pre_extraction_route_disappeared():
-    missing = PRE_EXTRACTION_PATHS - _paths()
-    assert not missing, f"routes lost in extraction: {sorted(missing)}"
+    present = _paths()
+    missing = PRE_EXTRACTION_PATHS - present
+    assert not missing, (
+        f"routes lost in extraction: {sorted(missing)}. "
+        f"App currently registers: {sorted(present)}"
+    )
 
 
 def test_route_names_are_stable():
     """Route *names* are part of the contract too — url_for() uses them."""
-    by_name = {getattr(r, "name", None) for r in app.routes}
+    by_name = {getattr(r, "name", None) for r in current_app().routes}
     for name in (
         "root",
         "robots",
@@ -101,7 +120,7 @@ def test_main_stays_bounded():
 
 @pytest.fixture
 def client():
-    return TestClient(app)
+    return TestClient(current_app())
 
 
 def test_html_pages_carry_coop(client):

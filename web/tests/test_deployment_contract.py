@@ -79,12 +79,12 @@ def test_admin_probe_path_exists_in_the_application():
     not exist — it returned 404 and reported PASS forever. Pin the probe path
     to a route the app actually registers.
     """
-    from app.main import app
+    import app.main  # read at call time — test_cors reloads this module
 
-    paths = {getattr(r, "path", "") for r in app.routes}
+    paths = {getattr(r, "path", "") for r in app.main.app.routes}
     assert smoke.ADMIN_PROBE_PATH in paths, (
         f"{smoke.ADMIN_PROBE_PATH} is not a registered route — the admin check "
-        f"would 404 and prove nothing"
+        f"would 404 and prove nothing. App registers: {sorted(paths)}"
     )
 
 
