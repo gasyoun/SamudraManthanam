@@ -55,7 +55,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        # 3.14 is the PRODUCTION runtime (Dockerfile FROM python:3.14-slim).
+        # It was absent from this matrix until H1927, so every release shipped
+        # on a version CI had never executed. tests/test_runtime_alignment.py
+        # fails if the Dockerfile's version ever leaves this list again.
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
     defaults:
       run:
         working-directory: web
@@ -106,12 +110,65 @@ jobs:
           python -m pip_audit -r web/requirements.txt
 
   docker-build:
-    name: Docker runtime image
+    name: Docker runtime image + deployment contract
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - name: Build hardened runtime image
         run: docker build --tag samudra-manthanam:ci .
+
+      # H1927 / Lane D3-D4. Building the image proved only that it builds.
+      # These steps boot it against fixture databases and run the SAME contract
+      # the bare systemd/nginx profile runs in deployment-contract-bare.yml —
+      # one script, one definition of "this deployment works".
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - name: Build fixture databases
+        run: |
+          python -m pip install -r web/requirements.txt
+          mkdir -p fixtures
+          PYTHONPATH=web python web/scripts/build_fixture_db.py \
+            --corpus-db fixtures/corpus.db --state-db fixtures/state.db
+          chmod -R a+rw fixtures
+
+      - name: Boot the image against fixtures
+        run: |
+          docker run -d --name samudra-ci -p 8000:8000 \
+            -v "$PWD/fixtures/corpus.db:/app/corpus.db" \
+            -v "$PWD/fixtures/state.db:/app/state.db" \
+            -e STATE_DB_PATH=/app/state.db \
+            -e APP_ENV=production \
+            samudra-manthanam:ci
+
+      - name: Deployment contract smoke (docker profile)
+        run: |
+          python web/scripts/deployment_contract_smoke.py \
+            --base-url http://127.0.0.1:8000 \
+            --profile docker \
+            --json-report docker-contract-report.json
+
+      - name: Container logs on failure
+        if: failure()
+        run: docker logs samudra-ci
+
+      - name: Clean stop
+        if: always()
+        run: |
+          docker stop --timeout 20 samudra-ci
+          # D4 "clean stop/rollback behaviour": uvicorn must exit on SIGTERM
+          # rather than be killed after the timeout. 137 = SIGKILL.
+          code=$(docker inspect -f '{{.State.ExitCode}}' samudra-ci)
+          echo "container exit code: $code"
+          docker rm samudra-ci
+          test "$code" != "137" || { echo "::error::container had to be SIGKILLed — unclean shutdown"; exit 1; }
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: docker-contract-report
+          path: docker-contract-report.json
+          if-no-files-found: ignore
 
   yaml-lint:
     name: YAML lint

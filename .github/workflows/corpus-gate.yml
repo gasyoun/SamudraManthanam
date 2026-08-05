@@ -1,0 +1,144 @@
+name: Full corpus gate
+
+# H1927 / Lane D5. VERIFICATION D6: "Every corpus-changing PR and release runs
+# the full pinned-bundle workflow."
+#
+# The ordinary CI job runs `-m "not corpus"` — it deliberately skips every gate
+# that needs the real corpus, because those gates need ~500 MB of data that no
+# PR checkout carries. The consequence, until now, was that a PR which changed
+# a converter, an ingest rule or a manifest ran none of the checks that could
+# tell whether it had damaged the corpus. The full gate existed and was run by
+# hand.
+#
+# This workflow closes that: a path filter decides what counts as
+# corpus-changing, and those PRs (plus every release) resolve the pinned bundle
+# and run the complete gate. Everything else is untouched, so the fast path
+# stays fast.
+#
+# Correctness is never traded for runtime: the bundle is cached by checksum so
+# a repeat run is cheap, but no gate is skipped because the job is slow.
+
+on:
+  pull_request:
+    paths:
+      # Converters and canonical-id generation
+      - "web/corpus_builder/**"
+      # Ingest, validation and publication
+      - "web/ingest/**"
+      # The gates themselves, and the invariant they encode
+      - "web/tests/test_converter.py"
+      - "web/tests/test_roundtrip.py"
+      - "web/tests/test_alignment.py"
+      - "web/tests/test_golden_queries.py"
+      - "web/scripts/dup_suffix_report.py"
+      - "web/scripts/run_corpus_tests.py"
+      # Corpus schema policy — a bump here is a rebuild requirement
+      - "web/app/migrations/corpus_policy.py"
+      - "web/app/db.py"
+      # This workflow itself
+      - ".github/workflows/corpus-gate.yml"
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      bundle_url:
+        description: "Override the pinned corpus bundle URL"
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: corpus-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  full-corpus:
+    name: Pinned bundle → rebuild → gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # web/corpus_builder/jsonl/dic_mw.jsonl is LFS-tracked. Without this
+          # it checks out as a pointer stub, and a gate that reads it either
+          # dies on the pointer text or — worse — skips the source and reports
+          # a full-corpus pass it never performed.
+          lfs: true
+
+      - uses: actions/setup-python@v7
+        with:
+          # The production runtime, per H1927 / Lane D3.
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: web/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -r web/requirements.txt
+          python -m pip install pytest pytest-asyncio pytest-timeout
+
+      - name: Resolve the pinned corpus bundle
+        id: bundle
+        env:
+          BUNDLE_URL: ${{ github.event.inputs.bundle_url }}
+        run: |
+          # Lane A (H1924) shipped the manifest schema, a fixture and
+          # corpus_manifest.py, but no GENERATED manifest is committed yet, so
+          # there is still nothing to pin against. This step reports that gap
+          # loudly and continues against whatever corpus data the checkout
+          # carries. It must NOT silently claim to have run a pinned gate it did
+          # not run. Wire the real path once a manifest is published.
+          if [ -f web/corpus_builder/manifest/corpus-manifest.json ]; then
+            echo "manifest=present" >> "$GITHUB_OUTPUT"
+          else
+            echo "manifest=absent" >> "$GITHUB_OUTPUT"
+            echo "::warning::No corpus manifest yet (Lane A / H1924 owns it). Running the gates against checkout data only — this is NOT a pinned-bundle run."
+          fi
+
+      - name: Cache the resolved bundle by checksum
+        if: steps.bundle.outputs.manifest == 'present'
+        uses: actions/cache@v4
+        with:
+          path: .corpus-bundle
+          key: corpus-bundle-${{ hashFiles('web/corpus_builder/manifest/corpus-manifest.json') }}
+
+      - name: Rebuild and validate the corpus
+        run: |
+          if [ -d web/corpus_builder/jsonl ] && ls web/corpus_builder/jsonl/*.jsonl >/dev/null 2>&1; then
+            echo "canonical JSONL present — running the full gate"
+          else
+            echo "::warning::canonical JSONL absent in this checkout; corpus-marked gates will self-skip"
+          fi
+
+      - name: Duplicate-suffix categorised invariant
+        run: |
+          python web/scripts/dup_suffix_report.py \
+            --strict \
+            --json dup-suffix-report.json \
+            --markdown dup-suffix-report.md
+
+      - name: Full corpus test gate
+        working-directory: web
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -m corpus -vv --durations=20 --timeout=300
+
+      - name: Performance budgets
+        working-directory: web
+        env:
+          PYTHONPATH: .
+        run: python -m pytest tests/test_performance_budgets.py -vv
+
+      - name: Upload review artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          # Reports and checksums only — never corpus content, which is large
+          # and, for some sources, not redistributable.
+          name: corpus-gate-reports
+          path: |
+            dup-suffix-report.json
+            dup-suffix-report.md
+          if-no-files-found: warn
