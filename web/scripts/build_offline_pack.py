@@ -156,9 +156,14 @@ def build_pack(
     """Build one offline pack. Returns stats dict."""
     src = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
 
-    # Corpus version
+    # Corpus version and, when the DB was built from a manifest, the bundle
+    # identity this pack inherits — a pack is a derivative view, so it must name
+    # the same input manifest the web DB does (criterion A6).
     row = src.execute("SELECT value FROM corpus_meta WHERE key = 'corpus_version'").fetchone()
     corpus_version = row[0] if row else "unknown"
+    corpus_meta = dict(src.execute("SELECT key, value FROM corpus_meta").fetchall())
+    input_manifest_hash = corpus_meta.get("input_manifest_hash", "")
+    bundle_version = corpus_meta.get("bundle_version", "")
 
     # Decide which sources go in this pack
     all_rows = src.execute("SELECT id, slug, title, filename FROM sources ORDER BY sort_order").fetchall()
@@ -275,7 +280,9 @@ def build_pack(
             ("built_at", now),
             ("source_count", str(source_count)),
             ("row_count", str(row_count)),
-        ],
+        ]
+        + ([("input_manifest_hash", input_manifest_hash)] if input_manifest_hash else [])
+        + ([("bundle_version", bundle_version)] if bundle_version else []),
     )
     dst.commit()
     # Fold the WAL back into the main db file and drop the -wal/-shm sidecars so
@@ -321,11 +328,44 @@ def build_pack(
         "source_count": source_count,
         "row_count": row_count,
         "sha256": sha,
+        "input_manifest_hash": input_manifest_hash,
+        "bundle_version": bundle_version,
         "raw_size_mb": raw_size_mb,    # on-disk / OPFS footprint on the client
         "wire_size_mb": wire_size_mb,  # actual download (gated)
         "size_ok": wire_size_mb <= limit_mb,
         "size_limit_mb": limit_mb,
     }
+
+
+def write_pack_report(out_path: str, stats: dict) -> str:
+    """Register a built pack against the input manifest it inherited."""
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from corpus_builder.build_report import (
+        build_report,
+        manifest_reference_from_meta,
+        output_entry,
+        write_report,
+    )
+
+    reference = manifest_reference_from_meta({
+        "input_manifest_hash": stats["input_manifest_hash"],
+        "bundle_version": stats.get("bundle_version"),
+        "source_count": stats["source_count"],
+        "record_count": stats["row_count"],
+    })
+    outputs = [output_entry(out_path, record_count=stats["row_count"])]
+    gz_path = out_path + ".gz"
+    if os.path.exists(gz_path):
+        outputs.append(output_entry(gz_path))
+    report = build_report(
+        artifact_name=f"{stats['pack_type']}.db",
+        artifact_kind="offline-pack",
+        manifest_ref=reference,
+        outputs=outputs,
+        counts={"sources": stats["source_count"], "rows": stats["row_count"]},
+        generator="build_offline_pack/1",
+    )
+    return str(write_report(report, out_path + ".build-report.json"))
 
 
 def main() -> int:
@@ -360,6 +400,12 @@ def main() -> int:
                 f"({stats['size_limit_mb']} MB wire limit) [{gate}]"
             )
             print(f"  SHA-256 (raw .db): {stats['sha256']}")
+            if stats.get("input_manifest_hash"):
+                report_path = write_pack_report(out_path, stats)
+                print(f"  Input manifest:    {stats['input_manifest_hash']}")
+                print(f"  Build report:      {report_path}")
+            else:
+                print("  Input manifest:    none (corpus.db was built without a manifest)")
             if not stats["size_ok"]:
                 print(
                     f"FAIL: {pack_type}.db.gz ({stats['wire_size_mb']:.1f} MB) exceeds "

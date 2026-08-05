@@ -17,6 +17,7 @@ from app.services.slug import make_unique_slug
 from parse_html import get_source_title
 
 _JSONL_DIR = Path(web_dir) / "corpus_builder" / "jsonl"
+_REPO_ROOT = Path(web_dir).parent
 
 def get_sha256(file_path):
     sha256_hash = hashlib.sha256()
@@ -87,13 +88,70 @@ async def _validate_jsonl_ingest(db):
         raise ValueError(f"JSONL ingest validation failed: sources inserted zero rows: {sample}")
 
 
-async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
-    jsonl_root = Path(jsonl_dir) if jsonl_dir else _JSONL_DIR
-    
+def _enumerate_from_manifest(manifest, repo_root: Path):
+    """Sources to ingest, taken from a corpus manifest.
+
+    Each canonical JSONL is hashed here and compared with the manifest before a
+    single row is inserted, so a mutated byte fails ingest rather than reaching
+    the published database. `filename`, `title` and ordering come from the
+    manifest too — the legacy `data.txt` is not consulted at all on this path.
+    """
+    corpus_root = repo_root / manifest["bundle"]["corpus_root"]
+    entries = []
+    mismatches = []
+
+    for src in manifest["bundle"]["sources"]:
+        canonical = src["canonical"]
+        jsonl_path = corpus_root / canonical["path"]
+        if not jsonl_path.exists():
+            mismatches.append(f"{src['slug']}: canonical file missing: {jsonl_path}")
+            continue
+        actual = get_sha256(jsonl_path)
+        if actual != canonical["sha256"]:
+            mismatches.append(
+                f"{src['slug']}: sha256 mismatch for {canonical['path']}: "
+                f"manifest {canonical['sha256']}, on disk {actual}"
+            )
+            continue
+
+        html_path = None
+        source_file = src.get("source_file")
+        if source_file:
+            candidate = corpus_root / source_file["path"]
+            if candidate.exists():
+                html_path = str(candidate)
+
+        entries.append({
+            "idx": src["sort_order"],
+            "filename": src["filename"],
+            "file_path": html_path,
+            "title": src["title"],
+            # The recorded hash/size describe the CANONICAL input, which is what
+            # was actually published — not the legacy HTML view.
+            "sha256": canonical["sha256"],
+            "size": canonical["bytes"],
+            "slug": src["slug"],
+            "jsonl_path": jsonl_path,
+            "expected_records": canonical["record_count"],
+            "meta_path": (corpus_root / src["metadata"]["path"]) if src.get("metadata") else None,
+        })
+
+    if mismatches:
+        raise ValueError(
+            "Manifest verification failed before ingest:\n  " + "\n  ".join(mismatches)
+        )
+    return entries
+
+
+def _enumerate_from_data_txt(corpus_path: str, jsonl_root: Path):
+    """Legacy enumeration from the desktop `Programdata/data.txt` listing.
+
+    Retained for bundles that have no manifest yet. It cannot verify content —
+    that is exactly the gap the manifest path closes.
+    """
     data_txt_path = os.path.join(corpus_path, "Programdata", "data.txt")
     if not os.path.exists(data_txt_path):
-        print(f"Error: {data_txt_path} not found.")
-        return
+        raise FileNotFoundError(f"{data_txt_path} not found.")
 
     with open(data_txt_path, "r", encoding="utf-8") as f:
         filenames = [line.strip() for line in f if line.strip()]
@@ -104,7 +162,7 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
     # extended as each new slug is minted. This lets `make_unique_slug`
     # disambiguate across the entire ingest batch in one pass.
     seen_slugs: set[str] = set()
-    sources_to_ingest = []
+    entries = []
     missing_jsonl = []
 
     for idx, filename in enumerate(filenames):
@@ -121,7 +179,7 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
         jsonl_path = jsonl_root / f"{slug}.jsonl"
         if not jsonl_path.exists():
             missing_jsonl.append(f"{filename} (slug {slug!r}): {jsonl_path}")
-        sources_to_ingest.append({
+        entries.append({
             "idx": idx,
             "filename": filename,
             "file_path": file_path,
@@ -130,6 +188,8 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
             "size": size,
             "slug": slug,
             "jsonl_path": jsonl_path,
+            "expected_records": None,
+            "meta_path": Path(file_path + ".meta.json"),
         })
 
     if missing_jsonl:
@@ -137,6 +197,39 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
         raise FileNotFoundError(
             "Missing canonical JSONL for active sources:\n  " + sample
         )
+    return entries
+
+
+async def ingest(
+    corpus_path: str,
+    db_path: str,
+    jsonl_dir: str | None = None,
+    manifest_path: str | None = None,
+    repo_root: str | None = None,
+):
+    jsonl_root = Path(jsonl_dir) if jsonl_dir else _JSONL_DIR
+    root = Path(repo_root) if repo_root else _REPO_ROOT
+
+    manifest = None
+    if manifest_path:
+        from corpus_builder.corpus_manifest import load_manifest
+        manifest = load_manifest(manifest_path)
+        sources_to_ingest = _enumerate_from_manifest(manifest, root)
+        print(
+            f"Manifest {manifest['content_hash']} "
+            f"({manifest['bundle']['bundle_version']}): "
+            f"{len(sources_to_ingest)} sources verified"
+        )
+    else:
+        data_txt_path = os.path.join(corpus_path, "Programdata", "data.txt")
+        if not os.path.exists(data_txt_path):
+            # Preserved from the original: a missing enumeration is a soft
+            # no-op, while a missing JSONL below still raises.
+            print(f"Error: {data_txt_path} not found.")
+            return
+        sources_to_ingest = _enumerate_from_data_txt(corpus_path, jsonl_root)
+
+    filenames = [entry["filename"] for entry in sources_to_ingest]
 
     db = await get_db(db_path)
     await create_schema(db)
@@ -157,6 +250,59 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
                     await db.execute("DELETE FROM sources WHERE id = ?", (sid,))
         await db.commit()
 
+    try:
+        await _ingest_sources(db, sources_to_ingest, filenames)
+    except BaseException:
+        # Close the aiosqlite worker before propagating. On Windows an open
+        # handle keeps the temp DB file locked, so a caller that aborts a bad
+        # candidate cannot delete it — the failure then surfaces as a spurious
+        # PermissionError instead of the real validation error.
+        await db.close()
+        raise
+
+    try:
+        await _validate_jsonl_ingest(db)
+    except BaseException:
+        # Validation failures are expected in tests and can also occur on a
+        # damaged build input. Close the aiosqlite worker before propagating
+        # the failure so Python 3.10–3.12 processes terminate cleanly.
+        await db.close()
+        raise
+
+    # Insert metadata. source_count comes from the actual rows in `sources`,
+    # not len(filenames) — they diverge if any files were skipped due to a
+    # missing file warning above.
+    import datetime
+    async with db.execute("SELECT COUNT(*) FROM sources") as cursor:
+        row = await cursor.fetchone()
+        actual_source_count = row[0]
+
+    # With a manifest the corpus version IS the bundle version — a date stamp
+    # would make two rebuilds of one bundle look like different corpora, which
+    # is what made "which corpus is this?" unanswerable before Lane A.
+    if manifest is not None:
+        version = manifest["bundle"]["bundle_version"]
+    else:
+        version = f"v{datetime.datetime.now().strftime('%Y.%m.%d')}"
+    meta = [
+        ("corpus_version", version),
+        ("generated_at", datetime.datetime.now().isoformat()),
+        ("source_count", str(actual_source_count)),
+    ]
+    if manifest is not None:
+        # The join key every build report shares (criterion A6).
+        meta.append(("input_manifest_hash", manifest["content_hash"]))
+        meta.append(("bundle_version", manifest["bundle"]["bundle_version"]))
+    await db.execute("DELETE FROM corpus_meta")
+    await db.executemany("INSERT INTO corpus_meta (key, value) VALUES (?, ?)", meta)
+    await db.commit()
+
+    print(f"Ingestion complete. Corpus Version: {version}")
+    await db.close()
+
+
+async def _ingest_sources(db, sources_to_ingest, filenames):
+    """Insert every enumerated source and its canonical rows."""
     for entry in sources_to_ingest:
         idx = entry["idx"]
         filename = entry["filename"]
@@ -185,9 +331,10 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
         
         print(f"[{idx+1}/{len(filenames)}] Ingesting {filename}: {title}")
 
-        # Load bibliographic metadata from sibling .meta.json if present.
-        meta_json_path = file_path + ".meta.json"
-        if os.path.exists(meta_json_path):
+        # Load bibliographic metadata from the sidecar the manifest names (or,
+        # on the legacy path, the sibling of the HTML file).
+        meta_json_path = entry.get("meta_path")
+        if meta_json_path and os.path.exists(meta_json_path):
             with open(meta_json_path, "r", encoding="utf-8") as fh:
                 meta = json.load(fh)
             await db.execute(
@@ -228,45 +375,37 @@ async def ingest(corpus_path: str, db_path: str, jsonl_dir: str | None = None):
             raise ValueError(
                 f"JSONL ingest validation failed: {filename} ({slug}) inserted zero rows"
             )
+        expected_records = entry.get("expected_records")
+        if expected_records is not None and inserted_for_source != expected_records:
+            # The file hashed correctly, so this means the manifest's own count
+            # is wrong — a stale manifest, not a mutated file. Either way the
+            # bundle is not what it claims to be.
+            raise ValueError(
+                f"Manifest count mismatch for {slug}: manifest declares "
+                f"{expected_records} records, ingest inserted {inserted_for_source}"
+            )
 
         await db.commit()
 
-    try:
-        await _validate_jsonl_ingest(db)
-    except BaseException:
-        # Validation failures are expected in tests and can also occur on a
-        # damaged build input. Close the aiosqlite worker before propagating
-        # the failure so Python 3.10–3.12 processes terminate cleanly.
-        await db.close()
-        raise
-    
-    # Insert metadata. source_count comes from the actual rows in `sources`,
-    # not len(filenames) — they diverge if any files were skipped due to a
-    # missing file warning above.
-    import datetime
-    async with db.execute("SELECT COUNT(*) FROM sources") as cursor:
-        row = await cursor.fetchone()
-        actual_source_count = row[0]
-
-    version = f"v{datetime.datetime.now().strftime('%Y.%m.%d')}"
-    meta = [
-        ("corpus_version", version),
-        ("generated_at", datetime.datetime.now().isoformat()),
-        ("source_count", str(actual_source_count)),
-    ]
-    await db.execute("DELETE FROM corpus_meta")
-    await db.executemany("INSERT INTO corpus_meta (key, value) VALUES (?, ?)", meta)
-    await db.commit()
-
-    print(f"Ingestion complete. Corpus Version: {version}")
-    await db.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Ingest corpus HTML files into SQLite")
-    parser.add_argument("--corpus-path", required=True, help="Path to the corpus directory (containing Data/ and Programdata/)")
+    parser.add_argument("--corpus-path", default="", help="Path to the corpus directory (containing Data/ and Programdata/); not needed with --manifest")
     parser.add_argument("--db-path", default="corpus.db", help="Path to the output SQLite database")
     parser.add_argument("--jsonl-dir", default=str(_JSONL_DIR), help="Path to canonical JSONL directory")
-    
+    parser.add_argument("--manifest", default=None,
+                        help="Corpus manifest to enumerate and verify from (preferred over data.txt)")
+    parser.add_argument("--repo-root", default=str(_REPO_ROOT),
+                        help="Root that manifest corpus_root is relative to")
+
     args = parser.parse_args()
-    
-    asyncio.run(ingest(args.corpus_path, args.db_path, args.jsonl_dir))
+    if not args.manifest and not args.corpus_path:
+        parser.error("one of --manifest or --corpus-path is required")
+
+    asyncio.run(ingest(
+        args.corpus_path,
+        args.db_path,
+        args.jsonl_dir,
+        manifest_path=args.manifest,
+        repo_root=args.repo_root,
+    ))

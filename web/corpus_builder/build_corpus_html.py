@@ -271,6 +271,43 @@ def append_data_txt(data_txt: Path, filenames: list[str]) -> list[str]:
     return added
 
 
+def write_desktop_report(*, manifest_path: str, data_dir: Path, filenames: list[str],
+                         record_count: int, slug: str, out_path: str | None = None) -> str:
+    """Register emitted desktop views against the bundle they were rendered from.
+
+    The desktop HTML is a generated view of the same canonical JSONL the web DB
+    and the offline packs consume, so it names the same input manifest hash
+    (criterion A6). Every emitted file — including the `.no_tags` sidecar the
+    reader actually searches — is hashed, so a desktop artifact can be traced to
+    its bundle without guessing from timestamps.
+    """
+    import sys as _sys
+
+    web_dir = str(Path(__file__).resolve().parent.parent)
+    if web_dir not in _sys.path:
+        _sys.path.insert(0, web_dir)
+    from corpus_builder.build_report import build_report, output_entry, write_report
+    from corpus_builder.corpus_manifest import load_manifest
+
+    outputs = []
+    for filename in filenames:
+        outputs.append(output_entry(data_dir / filename))
+        notags = data_dir / (filename.replace(".html", "") + ".no_tags")
+        if notags.exists():
+            outputs.append(output_entry(notags))
+
+    report = build_report(
+        artifact_name=f"{slug}-desktop-html",
+        artifact_kind="desktop-view",
+        manifest=load_manifest(manifest_path),
+        outputs=outputs,
+        counts={"documents": len(filenames), "records": record_count},
+        generator="build_corpus_html/1",
+    )
+    target = out_path or str(data_dir / f"{slug}.build-report.json")
+    return str(write_report(report, target))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--jsonl", required=True)
@@ -281,6 +318,10 @@ def main() -> None:
     ap.add_argument("--split", choices=["skandha", "none"], default="none")
     ap.add_argument("--combined", action="store_true")
     ap.add_argument("--slug", default="devibhagavata-purana")
+    ap.add_argument("--manifest", help="Corpus manifest these views are rendered from; "
+                                       "emits a build report naming its content hash")
+    ap.add_argument("--build-report", help="Where to write that report "
+                                           "(default: <data-dir>/<slug>.build-report.json)")
     args = ap.parse_args()
 
     records = load_jsonl(Path(args.jsonl))
@@ -318,6 +359,17 @@ def main() -> None:
     if args.data_txt:
         added = append_data_txt(Path(args.data_txt), written)
         print(f"data.txt: appended {len(added)} of {len(written)} filenames")
+
+    if args.manifest:
+        report_path = write_desktop_report(
+            manifest_path=args.manifest,
+            data_dir=data_dir,
+            filenames=written,
+            record_count=len(records),
+            slug=args.slug,
+            out_path=args.build_report,
+        )
+        print(f"build report: {report_path}")
 
 
 if __name__ == "__main__":
