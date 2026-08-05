@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "slug": "fixture-beta",
+  "title_ru": "Фикстура Бета",
+  "title_display": "Фикстура Бета",
+  "credit": "Test fixture",
+  "year": 2026,
+  "provenance": "hand-authored hermetic fixture for the Lane A bundle contract; not derived from any real edition",
+  "rights": "synthetic test data, no rights encumbrance"
+}

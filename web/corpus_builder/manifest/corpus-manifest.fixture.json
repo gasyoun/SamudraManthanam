@@ -1,0 +1,77 @@
+{
+  "build": {
+    "generator": "corpus_manifest/1",
+    "revision": "fixture"
+  },
+  "bundle": {
+    "bundle_version": "fixture-1",
+    "corpus_root": "web",
+    "generated_artifacts": [
+      {
+        "kind": "web-db",
+        "name": "corpus.db",
+        "required": true
+      },
+      {
+        "kind": "offline-pack",
+        "name": "base.db",
+        "required": true
+      },
+      {
+        "kind": "offline-pack",
+        "name": "dict.db",
+        "required": true
+      },
+      {
+        "kind": "desktop-view",
+        "name": "desktop-html",
+        "required": false
+      }
+    ],
+    "sources": [
+      {
+        "canonical": {
+          "bytes": 618,
+          "first_canonical_id": "alpha.1.1",
+          "last_canonical_id": "alpha.2.1",
+          "path": "tests/fixtures/corpus_bundle/fixture-alpha.jsonl",
+          "record_count": 3,
+          "sha256": "6099a3dd05c360cc4cc4761ea41149f8efd1e5accb095429d47558ed586023cd"
+        },
+        "filename": "fixture-alpha.html",
+        "provenance": "canonical JSONL fixture-alpha.jsonl",
+        "slug": "fixture-alpha",
+        "sort_order": 0,
+        "title": "fixture-alpha"
+      },
+      {
+        "canonical": {
+          "bytes": 352,
+          "first_canonical_id": "beta.1.1",
+          "last_canonical_id": "beta.1.2",
+          "path": "tests/fixtures/corpus_bundle/fixture-beta.jsonl",
+          "record_count": 2,
+          "sha256": "71b76a9082cbe300d50667b9dbc312214af4224c2c0598237c182a4239541030"
+        },
+        "filename": "fixture-beta.html",
+        "metadata": {
+          "bytes": 361,
+          "path": "tests/fixtures/corpus_bundle/fixture-beta.meta.json",
+          "sha256": "532ec724f5041f9d592165c3c2703864de2ac42beb34df68703cdf9158fa72ed"
+        },
+        "provenance": "hand-authored hermetic fixture for the Lane A bundle contract; not derived from any real edition",
+        "rights": "synthetic test data, no rights encumbrance",
+        "slug": "fixture-beta",
+        "sort_order": 1,
+        "title": "Фикстура Бета"
+      }
+    ],
+    "totals": {
+      "canonical_bytes": 970,
+      "record_count": 5,
+      "source_count": 2
+    }
+  },
+  "content_hash": "sha256:1e7f8c8d8b0c9e38ba8ae08014e37ea47a38e08a619261f584bd4ae373782ece",
+  "schema_version": 1
+}

@@ -1,6 +1,6 @@
 # IMPLEMENTATION — SamudraManthanam architecture-integrity Wave 1
 
-_Created: 30-07-2026 · Last updated: 30-07-2026_
+_Created: 30-07-2026 · Last updated: 05-08-2026_
 
 Ordered implementation companion to
 [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
@@ -25,6 +25,13 @@ already present in `h1438-ignatjev-waveb`.
 **Owner:** [H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md)
 
 **Dependencies:** none. This is the Wave-1 foundation.
+
+**Status: ✅ shipped 05-08-2026** (A1–A5 below all landed; A6/A7 covered by the
+verification suite). The contract as built is written up in
+[CORPUS_BUNDLE_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CORPUS_BUNDLE_SPEC.md),
+which also records what was deliberately left open — `generated_artifacts` is
+declarative rather than gated (Lane D), and the manifest-less `data.txt`
+publication path still exists behind a warning.
 
 ### A1. Specify schema and fixtures
 
