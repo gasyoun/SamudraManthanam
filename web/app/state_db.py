@@ -100,3 +100,20 @@ async def init_state_db(db):
 
     await db.execute("PRAGMA journal_mode=WAL")
     await db.commit()
+
+    # H1925 (Lane B): canonical-reference columns on `corrections` and the
+    # `legacy_ref_map` table are applied by their own ordered, checksum-tracked
+    # migration set rather than being spelled out here as more ad-hoc ALTERs.
+    # Idempotent, so the correction path can also call it defensively.
+    if settings.STATE_DB_PATH:
+        import logging
+
+        from app.canonical_state_migrations import ensure_canonical_state
+
+        try:
+            await ensure_canonical_state(settings.STATE_DB_PATH)
+        except Exception:
+            logging.getLogger(__name__).exception(
+                "canonical reference migrations failed; corrections will fall back "
+                "to legacy-only columns"
+            )

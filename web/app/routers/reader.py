@@ -65,6 +65,12 @@ def _merge_jsonl_lines(lines: list[dict]) -> list[dict]:
         line_num = recs_sorted[0]["line_num"]
         link_id = recs_sorted[0].get("link_id", "")
         line_text = ""
+        # The passage-level canonical id: segment ids share it, so drop the
+        # '#seg' suffix. Carried through the merge so the citation path can
+        # emit a durable identifier (H1925, B1/B2) rather than an anchor URL
+        # that only means anything against today's ingest.
+        first_cid = recs_sorted[0].get("canonical_id") or ""
+        passage_canonical_id = first_cid.split("#", 1)[0] or None
 
         for rec in recs_sorted:
             cid = rec.get("canonical_id") or ""
@@ -104,6 +110,7 @@ def _merge_jsonl_lines(lines: list[dict]) -> list[dict]:
             "chapter": chapter,
             "line_html": passage_html,
             "line_text": line_text,
+            "canonical_id": passage_canonical_id,
         })
 
     return merged

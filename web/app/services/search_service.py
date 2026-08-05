@@ -71,8 +71,13 @@ async def search_plain(db: aiosqlite.Connection, query: str, case_sensitive: boo
         sql_limit = limit
     params.append(sql_limit)
 
+    # s.slug / cl.canonical_id are the canonical half of every result's identity
+    # (H1925, Lane B B2). They ride along with the ordinal fields rather than
+    # replacing them — see app/canonical_refs.py for why the ordinals alone
+    # cannot survive a corpus rebuild.
     sql = f"""
         SELECT cl.source_id, s.title as source_title, s.filename as source_filename,
+               s.slug as source_slug, cl.canonical_id,
                cl.line_num, cl.link_id, cl.chapter, cl.line_html, cl.line_text
         FROM corpus_lines cl
         JOIN sources s ON cl.source_id = s.id
@@ -180,6 +185,7 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
 
     sql = f"""
         SELECT cl.source_id, s.title as source_title, s.filename as source_filename,
+               s.slug as source_slug, cl.canonical_id,
                cl.line_num, cl.link_id, cl.chapter, cl.line_html, cl.line_text
         FROM corpus_lines cl
         JOIN sources s ON cl.source_id = s.id

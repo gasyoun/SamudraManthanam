@@ -100,6 +100,17 @@ contract and register currently available outputs.
 
 **Dependencies:** Lane A schema/identity fields merged.
 
+**Status: ✅ shipped 05-08-2026** (B1–B5 landed; B6 compatibility covered by the
+suite). The census as built, with the measured real-scale evidence and the known
+limitations, is
+[DURABLE_REFERENCE_INVENTORY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/DURABLE_REFERENCE_INVENTORY.md);
+the additive public fields are in
+[web/SEARCH_CONTRACT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/web/SEARCH_CONTRACT.md)
+§6. Deliberately left open: the legacy ordinals are still stored as
+compatibility fields (their deprecation waits on a clean gate run over a real
+production rebuild cycle), and the gate compares two built corpus DBs rather
+than monitoring a live one.
+
 ### B1. Inventory durable references
 
 Create a checked report or test inventory covering:
