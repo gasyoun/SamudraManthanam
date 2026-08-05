@@ -76,15 +76,22 @@ def test_admin_probe_path_exists_in_the_application():
     """Guards against the check that passes because its URL 404s.
 
     The first version of this smoke probed `/api/admin/corrections`, which does
-    not exist — it returned 404 and reported PASS forever. Pin the probe path
-    to a route the app actually registers.
+    not exist — it returned 404 and reported PASS forever. Pin the probe path to
+    a route the app actually serves.
+
+    Asserted by request rather than by scanning `app.routes`: other test modules
+    reload `app.main`, so the route table an introspecting test sees depends on
+    execution order, while the response does not.
     """
+    from fastapi.testclient import TestClient
+
     import app.main  # read at call time — test_cors reloads this module
 
-    paths = {getattr(r, "path", "") for r in app.main.app.routes}
-    assert smoke.ADMIN_PROBE_PATH in paths, (
-        f"{smoke.ADMIN_PROBE_PATH} is not a registered route — the admin check "
-        f"would 404 and prove nothing. App registers: {sorted(paths)}"
+    client = TestClient(app.main.app)
+    status = client.post(f"{smoke.ADMIN_PROBE_PATH}?key=not-a-real-key").status_code
+    assert status != 404, (
+        f"{smoke.ADMIN_PROBE_PATH} is not served by the app — the smoke's admin "
+        f"check would 404 and prove nothing"
     )
 
 
