@@ -49,11 +49,18 @@ def _paths() -> set[str]:
 
 
 def test_no_pre_extraction_route_disappeared():
+    import sys
+
+    import app.main
+
     present = _paths()
     missing = PRE_EXTRACTION_PATHS - present
     assert not missing, (
         f"routes lost in extraction: {sorted(missing)}. "
-        f"App currently registers: {sorted(present)}"
+        f"App currently registers: {sorted(present)}. "
+        f"app.main resolved to {app.main.__file__!r}; "
+        f"app package at {sys.modules['app'].__file__!r}; "
+        f"sys.path[:4]={sys.path[:4]}"
     )
 
 
