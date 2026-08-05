@@ -85,13 +85,15 @@ async def test_identity_lead_backwards_compat_omits_new_fields():
 
 @pytest.mark.asyncio
 async def test_correction_proposal():
-    # First create a user
+    # An account exists for this address — but the proposal below only *types*
+    # it, and since H1926 (C6) typing an address is not proof of owning it, so
+    # the correction must land anonymous and unlinked.
     client.post("/api/identity/lead", json={
         "email": "corrector@example.com",
         "consent_data": True,
         "consent_marketing": True
     })
-    
+
     response = client.post("/api/corrections/propose", json={
         "source_id": 1,
         "line_num": 10,
@@ -101,18 +103,22 @@ async def test_correction_proposal():
     })
     assert response.status_code == 200
     assert response.json()["status"] == "success"
-    
-    # Verify pending (dev key required). Restore APP_ENV to avoid leaking dev
-    # mode into later tests that depend on production-mode behavior.
+    assert response.json()["trust_tier"] == "anonymous"
+
+    # Verify pending (admin header required). Restore APP_ENV to avoid leaking
+    # dev mode into later tests that depend on production-mode behavior.
     old_env = settings.APP_ENV
     settings.APP_ENV = "development"
     try:
-        response = client.get("/api/corrections/pending?key=dev")
+        response = client.get("/api/corrections/pending", headers={"X-Admin-Key": "dev"})
         assert response.status_code == 200
         data = response.json()
         assert len(data) == 1
         assert data[0]["new_text"] == "new"
         assert data[0]["status"] == "pending"
+        # The typed address is retained as contact text only.
+        assert data[0]["user_id"] is None
+        assert data[0]["contact_email"] == "corrector@example.com"
     finally:
         settings.APP_ENV = old_env
 
@@ -121,13 +127,18 @@ async def test_pending_corrections_rejects_missing_or_wrong_key():
     old_env = settings.APP_ENV
     old_admin_key = settings.ADMIN_SECRET_KEY
     settings.APP_ENV = "development"
-    settings.ADMIN_SECRET_KEY = ""
+    settings.ADMIN_SECRET_KEY = "not-dev"
     try:
         response = client.get("/api/corrections/pending")
         assert response.status_code == 403
 
-        response = client.get("/api/corrections/pending?key=wrong")
+        response = client.get("/api/corrections/pending", headers={"X-Admin-Key": "wrong"})
         assert response.status_code == 403
+
+        # A credential in the query string is refused outright (400), not
+        # compared — it has already leaked to the access log by then (C3).
+        response = client.get("/api/corrections/pending?key=not-dev")
+        assert response.status_code == 400
     finally:
         settings.APP_ENV = old_env
         settings.ADMIN_SECRET_KEY = old_admin_key

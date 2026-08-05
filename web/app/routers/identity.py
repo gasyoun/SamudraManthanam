@@ -1,10 +1,17 @@
-from fastapi import APIRouter, HTTPException, Request
-from pydantic import BaseModel, EmailStr
+from fastapi import APIRouter, HTTPException, Request, Response
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 import datetime
 import hashlib
 import logging
 import aiosqlite
+from app.services.session_service import (
+    SESSION_COOKIE,
+    SESSION_TTL_DAYS,
+    create_verification_challenge,
+    redeem_verification,
+)
+from app.settings import settings
 from app.state_db import get_state_db
 
 logger = logging.getLogger(__name__)
@@ -72,7 +79,11 @@ async def post_lead(request: Request, lead: LeadRequest):
         )
         
         await db.commit()
-        return {"status": "success", "user_id": user_id}
+        # H1926 C4: the internal users.id is NOT returned. It is a database
+        # primary key, not a capability — echoing it to an anonymous caller
+        # publishes the account sequence and invites clients to treat a guessed
+        # integer as identity. Nothing in the lead flow needs it.
+        return {"status": "success"}
     except HTTPException:
         await db.rollback()
         raise
@@ -80,5 +91,87 @@ async def post_lead(request: Request, lead: LeadRequest):
         await db.rollback()
         logger.exception("identity.lead failed for email=%s", lead.email)
         raise HTTPException(status_code=500, detail="Internal server error")
+    finally:
+        await db.close()
+
+
+class VerificationRequest(BaseModel):
+    email: EmailStr
+
+
+class VerificationConfirm(BaseModel):
+    token: str = Field(..., min_length=8, max_length=256)
+
+
+@router.post("/verify/request", status_code=202)
+async def post_verify_request(payload: VerificationRequest):
+    """Mint a single-use verification challenge for an address (H1926 C6).
+
+    The response is identical whether or not the address has an account, so
+    this endpoint cannot be used to enumerate users. See
+    web/IDENTITY_TRUST_CONTRACT.md § Delivery for why the token is returned in
+    non-production and logged in production rather than emailed: message
+    delivery is out of scope for this lane and is not faked.
+    """
+    try:
+        db = await get_state_db()
+    except Exception:
+        logger.exception("identity.verify: failed to open state DB")
+        raise HTTPException(status_code=503, detail="Identity service unavailable")
+    if not db:
+        raise HTTPException(status_code=503, detail="Identity service unavailable")
+
+    try:
+        token = await create_verification_challenge(db, payload.email)
+        response: dict = {"status": "accepted"}
+        if token:
+            if settings.APP_ENV == "production":
+                logger.info(
+                    "identity.verify: challenge issued for %s "
+                    "(no mailer configured — relay manually)",
+                    payload.email,
+                )
+            else:
+                response["verification_token"] = token
+        return response
+    finally:
+        await db.close()
+
+
+@router.post("/verify/confirm")
+async def post_verify_confirm(payload: VerificationConfirm, response: Response):
+    """Redeem a challenge token for a session.
+
+    A rejected token gets one undifferentiated 400: distinguishing expired from
+    unknown from already-redeemed tells an attacker which guess was closer.
+    """
+    try:
+        db = await get_state_db()
+    except Exception:
+        logger.exception("identity.verify_confirm: failed to open state DB")
+        raise HTTPException(status_code=503, detail="Identity service unavailable")
+    if not db:
+        raise HTTPException(status_code=503, detail="Identity service unavailable")
+
+    try:
+        redeemed = await redeem_verification(db, payload.token)
+        if not redeemed:
+            raise HTTPException(status_code=400, detail="Invalid or expired token")
+        session, session_token = redeemed
+        response.set_cookie(
+            SESSION_COOKIE,
+            session_token,
+            max_age=SESSION_TTL_DAYS * 24 * 3600,
+            httponly=True,
+            samesite="lax",
+            secure=settings.APP_ENV == "production",
+        )
+        # Returned once so non-browser clients (scripts, the desktop app) can
+        # send it back in X-Session-Token; only its hash is stored server-side.
+        return {
+            "status": "verified",
+            "session_token": session_token,
+            "expires_at": session.expires_at,
+        }
     finally:
         await db.close()

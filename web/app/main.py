@@ -21,10 +21,13 @@ pins that.
 
 import logging
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 # Imported for its side effect of registering the .mjs mimetype before any
 # static file is served, as well as for STATIC_DIR / mount_static.
+from app.security import install_credential_log_redaction
+from app.services.regex_executor import ERROR_ENGINE_UNAVAILABLE, RegexContractError
 from app.static_assets import STATIC_DIR, mount_static
 from app.http_headers import configure_cors, security_headers
 from app.lifespan import lifespan
@@ -52,7 +55,28 @@ from app.routers import (
 
 logger = logging.getLogger(__name__)
 
+# H1926 C5: attach the credential-scrubbing log filter at import time, before
+# the first request can be access-logged. Admin routes already refuse a
+# query-string credential, but the refused request's own log line would
+# otherwise preserve the very value the refusal exists to protect.
+install_credential_log_redaction()
+
 app = FastAPI(title="Samudra Manthanam API", lifespan=lifespan)
+
+
+@app.exception_handler(RegexContractError)
+async def regex_contract_error_handler(request: Request, exc: RegexContractError):
+    """One stable payload for every refused user regex (H1926 C1/C3).
+
+    Registered app-wide so /api/search, /api/search/stream and
+    /api/search/export cannot drift into three different error shapes. 503 when
+    the timeout-capable engine is missing — that is an operational fault, not
+    the user's pattern; 400 for a pattern the published contract refuses.
+    Neither carries engine text, offsets, or paths.
+    """
+    status = 503 if exc.code == ERROR_ENGINE_UNAVAILABLE else 400
+    return JSONResponse(status_code=status, content=exc.as_payload())
+
 
 configure_cors(app)
 app.middleware("http")(security_headers)

@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import List, Optional, Dict, Any
 from enum import Enum
 
+from app.services.regex_executor import validate_patterns
+
 class SearchMode(str, Enum):
     plain = "plain"
     regex = "regex"
@@ -24,14 +26,20 @@ class SearchRequest(BaseModel):
 
     @model_validator(mode='after')
     def validate_regex(self):
+        """Gate user patterns on the published regex contract (H1926 C1/C3).
+
+        Was a bare `re.compile` whose ValueError echoed the pattern and the
+        engine's message ("Invalid regex pattern: {p} ({e})") into a 422 — the
+        contract requires an error payload that reveals no internal details.
+        It also accepted patterns the executor refuses (over-long, too many),
+        so a request could pass validation and then fail deeper in.
+
+        RegexContractError is not a ValueError, so it escapes pydantic
+        unwrapped and is rendered by the app-wide handler in main.py — one
+        payload shape for every regex entry point.
+        """
         if self.mode == SearchMode.regex:
-            patterns = [p.strip() for p in self.query.split('\n') if p.strip()]
-            for p in patterns:
-                try:
-                    import re
-                    re.compile(p)
-                except re.error as e:
-                    raise ValueError(f'Invalid regex pattern: {p} ({e})')
+            validate_patterns(self.query.split('\n'), self.case_sensitive)
         return self
 
 class SearchResultItem(BaseModel):

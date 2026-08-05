@@ -152,9 +152,21 @@ fingerprints and support rollback rehearsal.
 
 ## Lane C — bounded regex and trusted public boundaries
 
-**Owner:** [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md)
+**Owner:** [H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md)
 
 **Dependencies:** none; keep public response shape compatible.
+
+**Status: ✅ SHIPPED 05-08-2026** (Opus 5 1M, `claude-opus-5[1m]`). C1–C7 all
+delivered; steps C1–C4 below are the as-built record. Contracts:
+[SEARCH_CONTRACT.md §3](https://github.com/gasyoun/SamudraManthanam/blob/main/web/SEARCH_CONTRACT.md)
+and
+[IDENTITY_TRUST_CONTRACT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/web/IDENTITY_TRUST_CONTRACT.md).
+Two deliberate deltas from the text below, both recorded rather than silently
+absorbed: the response shape for a *refused* pattern **did** change (three
+entry points that disagreed — POST 422 echoing the pattern, GET 400 — now share
+one payload), and no timed compatibility path was kept for query-string admin
+credentials, because the only callers were this repo's tests and the operator
+runbook. Verification-token *delivery* remains out of scope and is not faked.
 
 ### C1. Measure and specify regex compatibility
 

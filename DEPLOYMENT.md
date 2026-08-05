@@ -79,7 +79,12 @@ PUBLIC_BASE_URL=https://<YOUR_DOMAIN>
 # CORS — comma-separated list of allowed origins
 ALLOWED_ORIGINS=https://<YOUR_DOMAIN>
 
-# Admin API key (for /api/admin/vacuum and /api/corrections/pending)
+# Admin API key (for /api/admin/vacuum and /api/corrections/pending).
+# Sent as a HEADER, never as ?key= — a query-string credential is refused with
+# 400 because the access log has already recorded it by then. See
+# web/IDENTITY_TRUST_CONTRACT.md §1.
+#   curl -X POST -H "X-Admin-Key: $ADMIN_SECRET_KEY" https://<host>/api/admin/vacuum
+# Unset in production = the admin surface is closed (403), not open with a default.
 ADMIN_SECRET_KEY=<generate a long random string>
 
 # Cross-link target — paid course platform (leave blank to hide the CTA banner)
