@@ -142,11 +142,13 @@ def test_regex_executor_aborts_backtracking_at_engine_level():
     blow up `(a+)+$`, so the assertion is about the engine's per-match timeout
     (H1830) and holds whatever the corpus contains.
     """
-    from app.services.search_service import (
-        _HAS_REGEX_TIMEOUT,
-        _REGEX_MATCH_TIMEOUT,
-        _compile_user_regex,
-        _regex_search,
+    # H1926 moved these out of search_service into the executor module that now
+    # owns every regex bound.
+    from app.services.regex_executor import (
+        HAS_TIMEOUT_ENGINE as _HAS_REGEX_TIMEOUT,
+        PER_MATCH_TIMEOUT as _REGEX_MATCH_TIMEOUT,
+        BoundedRegexExecutor,
+        ScanStats,
     )
 
     if not _HAS_REGEX_TIMEOUT:
@@ -159,24 +161,24 @@ def test_regex_executor_aborts_backtracking_at_engine_level():
     # textbook ReDoS pattern away — it returns in ~1 ms on 40 chars and never
     # reaches the timeout, so a test built on it asserts nothing. `(a|a)*$` is
     # an alternation the optimiser cannot collapse and does blow up.
-    compiled = _compile_user_regex("(a|a)*$", 0)
+    executor = BoundedRegexExecutor.compile_patterns(["(a|a)*$"], True)
     pathological = "a" * 40 + "!"  # matches the prefix, never the anchor
-    stats: dict = {}
+    stats = ScanStats()
 
     started = time.perf_counter()
-    matched = _regex_search(compiled, pathological, stats)
+    matched = executor.matches(pathological, stats)
     elapsed = time.perf_counter() - started
 
     print(
         f"\n[perf] regex executor: aborted in {elapsed:.3f}s "
-        f"(per-match timeout {_REGEX_MATCH_TIMEOUT}s, timeouts recorded={stats.get('match_timeouts', 0)})"
+        f"(per-match timeout {_REGEX_MATCH_TIMEOUT}s, timeouts recorded={stats.match_timeouts})"
     )
     assert matched is False
     assert elapsed < _REGEX_MATCH_TIMEOUT + 1.0, (
         f"per-match timeout did not fire: {elapsed:.2f}s on a pattern that should "
         f"abort at {_REGEX_MATCH_TIMEOUT}s"
     )
-    assert stats.get("match_timeouts", 0) == 1, (
+    assert stats.match_timeouts == 1, (
         "the abandoned row was not counted — a swallowed timeout silently "
         "under-reports matches (H2219)"
     )

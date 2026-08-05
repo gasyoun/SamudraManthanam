@@ -22,6 +22,7 @@ from app.main import app
 from app.models import SearchResult, SearchResultItem
 from app.services.source_metadata import build_line_quotation
 from app.settings import settings
+from app.state_db import init_state_db
 from canonical_fixtures import make_state
 
 CORPUS_VERSION = "v2026.test"
@@ -56,6 +57,25 @@ async def canonical_corpus(tmp_path, monkeypatch):
     settings.DB_PATH = db_path
     yield db_path
     settings.DB_PATH = previous
+
+
+async def _make_state_db(path: str) -> str:
+    """Build a state DB through the real migration path.
+
+    Not hand-rolled CREATE TABLEs: the correction route needs Lane C's
+    rate-limit and audit tables plus Lane B's canonical columns, and a
+    hand-written snapshot of that schema silently rots the moment either lane
+    adds a table.
+    """
+    previous = settings.STATE_DB_PATH
+    settings.STATE_DB_PATH = path
+    try:
+        db = await aiosqlite.connect(path)
+        await init_state_db(db)
+        await db.close()
+    finally:
+        settings.STATE_DB_PATH = previous
+    return path
 
 
 async def _client():
@@ -207,15 +227,7 @@ async def test_correction_written_via_the_api_is_stored_canonically(
     canonical_corpus, tmp_path
 ):
     state_path = str(tmp_path / "state_api.db")
-    conn = sqlite3.connect(state_path)
-    conn.executescript(
-        "CREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT UNIQUE NOT NULL);"
-        "CREATE TABLE corrections (id INTEGER PRIMARY KEY, source_id INTEGER NOT NULL,"
-        " line_num INTEGER NOT NULL, old_text TEXT NOT NULL, new_text TEXT NOT NULL,"
-        " user_id INTEGER, status TEXT NOT NULL DEFAULT 'pending', created_at TEXT NOT NULL);"
-    )
-    conn.commit()
-    conn.close()
+    await _make_state_db(state_path)
 
     previous = settings.STATE_DB_PATH
     settings.STATE_DB_PATH = state_path
@@ -250,15 +262,7 @@ async def test_correction_written_via_the_api_is_stored_canonically(
 async def test_legacy_correction_client_still_works(canonical_corpus, tmp_path):
     """B6: legacy records/clients remain usable during the compatibility span."""
     state_path = str(tmp_path / "state_legacy.db")
-    conn = sqlite3.connect(state_path)
-    conn.executescript(
-        "CREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT UNIQUE NOT NULL);"
-        "CREATE TABLE corrections (id INTEGER PRIMARY KEY, source_id INTEGER NOT NULL,"
-        " line_num INTEGER NOT NULL, old_text TEXT NOT NULL, new_text TEXT NOT NULL,"
-        " user_id INTEGER, status TEXT NOT NULL DEFAULT 'pending', created_at TEXT NOT NULL);"
-    )
-    conn.commit()
-    conn.close()
+    await _make_state_db(state_path)
 
     previous = settings.STATE_DB_PATH
     settings.STATE_DB_PATH = state_path
@@ -285,15 +289,7 @@ async def test_correction_against_an_unknown_reference_is_refused(
     canonical_corpus, tmp_path
 ):
     state_path = str(tmp_path / "state_bad.db")
-    conn = sqlite3.connect(state_path)
-    conn.executescript(
-        "CREATE TABLE users (id INTEGER PRIMARY KEY, email TEXT UNIQUE NOT NULL);"
-        "CREATE TABLE corrections (id INTEGER PRIMARY KEY, source_id INTEGER NOT NULL,"
-        " line_num INTEGER NOT NULL, old_text TEXT NOT NULL, new_text TEXT NOT NULL,"
-        " user_id INTEGER, status TEXT NOT NULL DEFAULT 'pending', created_at TEXT NOT NULL);"
-    )
-    conn.commit()
-    conn.close()
+    await _make_state_db(state_path)
 
     previous = settings.STATE_DB_PATH
     settings.STATE_DB_PATH = state_path

@@ -17,6 +17,7 @@ from app.db import get_db
 from app.models import SearchRequest, SearchResult, SearchResultItem, SearchMode
 from app.services.html_service import render_fragment, render_full_page, render_standalone, kwic_excerpt
 from app.services.dispatch_service import dispatch_search
+from app.services.regex_executor import validate_patterns
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 
 from app.settings import settings
@@ -128,15 +129,13 @@ async def get_search_stream(
     # Handle source_ids from query params
     source_ids = parse_source_ids(request.query_params.get("source_ids"))
 
-    # Validate regex if needed
+    # Validate against the published regex contract before opening a stream.
+    # H1926: `re.compile` accepted patterns the executor refuses (over-long,
+    # too many) and echoed the engine's message — which quotes the pattern and
+    # internal parser state — straight back to the caller.
     if mode == SearchMode.regex:
-        patterns = [p.strip() for p in query.split('\n') if p.strip()]
-        for p in patterns:
-            try:
-                re.compile(p)
-            except re.error as e:
-                raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
-    
+        validate_patterns(query.split('\n'), case_sensitive)
+
     async def event_generator():
         start_time = time.time()
         db = await get_db(settings.DB_PATH)
@@ -241,14 +240,9 @@ async def get_export(
     # Handle source_ids from query params
     source_ids = parse_source_ids(request.query_params.get("source_ids"))
 
-    # Validate regex if needed
+    # Same contract gate as /stream — see the note there.
     if mode == SearchMode.regex:
-        patterns = [p.strip() for p in query.split('\n') if p.strip()]
-        for p in patterns:
-            try:
-                re.compile(p)
-            except re.error as e:
-                raise HTTPException(status_code=400, detail=f"Invalid regex: {e}")
+        validate_patterns(query.split('\n'), case_sensitive)
 
     db = await get_db(settings.DB_PATH)
     search_metadata = None

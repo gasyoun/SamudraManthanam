@@ -101,10 +101,13 @@ def request(
     *,
     method: str = "GET",
     payload: dict | None = None,
+    headers: dict | None = None,
     timeout: float = DEFAULT_TIMEOUT,
 ) -> Response:
     data = None
+    extra_headers = headers or {}
     headers = {"User-Agent": "samudra-deployment-contract-smoke/1"}
+    headers.update(extra_headers)
     if payload is not None:
         data = json.dumps(payload).encode("utf-8")
         headers["Content-Type"] = "application/json"
@@ -429,20 +432,23 @@ ADMIN_PROBE_PATH = "/api/admin/vacuum"
 def check_admin_credentials(base: str, report: Report) -> None:
     """Two different questions about the admin surface, kept apart on purpose.
 
-    1. **Does a wrong key get in?** Required. A deployment that honours a bogus
-       admin key is broken now, on this profile, and must fail the contract.
-    2. **Are credentials carried in the URL at all?** Reported, not enforced.
-       `/api/admin/vacuum?key=…` puts the secret in nginx access logs, browser
-       history and Referer headers — a real defect, and Lane C3's to fix
-       (H1926). Failing D4's build for it would only pressure someone to delete
-       the check before the owning lane lands. So it is a standing WARN that
-       shows up in every smoke report until it goes away.
+    1. **Does a wrong key get in?** A deployment that honours a bogus admin key
+       is broken now, on this profile, and must fail the contract.
+    2. **Are credentials accepted from the URL at all?** `?key=…` puts the
+       secret in nginx access logs, browser history and Referer headers.
 
-    The probe hits the real endpoint. A check pointed at a path that does not
+    Both are now **required**. Question 2 was a standing WARN while it was
+    Lane C3's to fix; H1926 landed the header-only transport, so a deployment
+    that still honours a query-string credential is running pre-H1926 code and
+    the contract should say so rather than keep tolerating it.
+
+    The probes hit the real endpoint. A check pointed at a path that does not
     exist would 404 and "pass" forever.
     """
     resp = request(
-        f"{base}{ADMIN_PROBE_PATH}?key=smoke-test-not-a-real-key", method="POST"
+        f"{base}{ADMIN_PROBE_PATH}",
+        method="POST",
+        headers={"X-Admin-Key": "smoke-test-not-a-real-key"},
     )
     if resp.status == 404:
         report.add(
@@ -462,18 +468,27 @@ def check_admin_credentials(base: str, report: Report) -> None:
             "admin_rejects_wrong_key",
             refused,
             True,
-            f"{ADMIN_PROBE_PATH} with a bogus key returned {resp.status} "
+            f"{ADMIN_PROBE_PATH} with a bogus header key returned {resp.status} "
             f"({'refused' if refused else 'NOT REFUSED'})",
             int(resp.elapsed * 1000),
         )
     )
+
+    query_resp = request(
+        f"{base}{ADMIN_PROBE_PATH}?key=smoke-test-not-a-real-key", method="POST"
+    )
+    # 400 is the H1926 refusal-without-comparison. 401/403 would mean the
+    # credential was still *read* from the query string, just not honoured —
+    # the leak has already happened by then, so that is not a pass.
+    query_refused = query_resp.status == 400
     report.add(
         CheckResult(
             "no_query_string_credentials",
-            False,
-            False,
-            f"{ADMIN_PROBE_PATH} accepts its key as a query-string parameter; "
-            f"secrets reach access logs and Referer headers. Owned by Lane C3 / H1926.",
+            query_refused,
+            True,
+            f"{ADMIN_PROBE_PATH}?key=… returned {query_resp.status} "
+            f"({'refused outright' if query_refused else 'NOT refused as a transport — pre-H1926 code?'})",
+            int(query_resp.elapsed * 1000),
         )
     )
 

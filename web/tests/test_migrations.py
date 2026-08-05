@@ -282,8 +282,13 @@ async def test_preexisting_state_db_is_adopted_without_loss(tmp_path):
         )
         await db.commit()
 
+        # Derived from disk, not a hardcoded list: every future migration would
+        # otherwise fail this test for no reason, and the property under test is
+        # "a legacy DB adopts the whole shipped set", not "there are exactly N".
+        expected = [p.name.split("_", 1)[0] for p in sorted(state_migrations_dir().glob("*.sql"))]
         applied = await apply_migrations(db, state_migrations_dir())
-        assert applied == ["0001", "0002"]
+        assert applied == expected
+        assert expected[:2] == ["0001", "0002"]
 
         async with db.execute("SELECT email FROM users WHERE id = 1") as cur:
             assert (await cur.fetchone())[0] == "a@example.com"
@@ -305,7 +310,12 @@ async def test_init_state_db_delegates_to_the_runner(tmp_path, monkeypatch):
         await state_db_module.init_state_db(db)
         async with db.execute("SELECT version FROM schema_migrations ORDER BY version") as cur:
             versions = [row[0] for row in await cur.fetchall()]
-        assert versions == ["0001", "0002"]
+        # Every shipped migration, derived from disk — see the note in
+        # test_preexisting_state_db_is_adopted_without_loss.
+        assert versions == [
+            p.name.split("_", 1)[0] for p in sorted(state_migrations_dir().glob("*.sql"))
+        ]
+        assert versions[:2] == ["0001", "0002"]
 
         async with db.execute("PRAGMA journal_mode") as cur:
             assert (await cur.fetchone())[0].lower() == "wal"
