@@ -338,13 +338,19 @@ def _looks_like_footnote_debris(text: str) -> bool:
 
 
 def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
-    """Merge false ``(N)`` splits from footnote prose (H1829).
+    """Merge false ``(N)`` splits from footnote prose (H1829 / H2273).
 
-    Two classes of debris:
+    Three classes of debris:
       1. Non-monotonic restarts (e.g. 5→1, 3→1) — always merge into previous.
       2. Same-N or early-N chunks whose text looks like a footnote header /
          gloss continuation — merge; genuine same-N duplicates with real
          verse-length prose still pass through and get letter suffixes.
+      3. Higher-N chunks that still look like footnote debris (H2273) —
+         merge too. Without this, a false high-N footnote body (e.g. a
+         gloss mis-split as ``(30)`` after real verse 6) becomes the new
+         high-water mark and every later real verse 7…14 is swallowed as a
+         "non-monotonic restart" into that note bag. Measured on
+         nirvāṇa-tantra ch.8 pre-H1829 JSONL.
     """
     if not verses:
         return verses
@@ -357,7 +363,9 @@ def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
             if n < prev_end:
                 out[-1]["text"] = (out[-1]["text"] + " " + text).strip()
                 continue
-            if n <= prev_end and _looks_like_footnote_debris(text):
+            # Same-or-higher N that is still debris-shaped: absorb so a false
+            # high-N footnote never becomes prev_end (class 2 + class 3).
+            if _looks_like_footnote_debris(text) and n >= prev_end:
                 out[-1]["text"] = (out[-1]["text"] + " " + text).strip()
                 continue
         out.append(v)

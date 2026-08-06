@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- **Nirvāṇa-tantra 821→492 verse-count drop justified (H2273, Grok 4.5 `grok-4.5`).** Chapter-by-chapter pre/post table against the printed Ignatiev PDF numbering, ≥12 sampled absorbed chunks with debris verdicts, and a ruling on residual `id_collisions` `9.1`/`9.4`. Narrow fix: high-N footnote debris no longer becomes `prev_end` and swallows later real verses (ch.8 measured). Doc: [`docs/NIRVANA_TANTRA_VERSE_COUNT_DROP_H2273.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_VERSE_COUNT_DROP_H2273.md). Corpus JSONL regen deferred until `pdftotext` parity is available.
+
 ### Fixed
 - **Wave-B Ignatiev dual-run compare (H2076, Sonnet 5 `claude-sonnet-5`).** Independent Sonnet re-run of Grok's Wave-B ingest ([PR #125](https://github.com/gasyoun/SamudraManthanam/pull/125)) confirms 3/5 works byte-identical (Nīlamata, Kulārṇava, Yoginī) and independently reproduces the ≥99% round-trip claim for all 5 via `html_to_canonical.py` against the live corpus. Two works (Adbhuta-rāmāyaṇa, Mahābhāgavata-purāṇa) diverge under a different pandoc build on already-flagged out-of-order source verse numbering — root cause is an unpinned pandoc version, not a corpus defect; the merged corpus (which explicitly logs both anomalies) is confirmed correct-or-better and kept as-is. Also fixes a doc slip (Wave-B unit test count "19" → actual 23). Full memo: [`web/corpus_builder/H2076_SONNET_WAVEB_DUAL_RUN_COMPARE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/H2076_SONNET_WAVEB_DUAL_RUN_COMPARE.md).
 
