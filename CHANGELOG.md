@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.19.1] - 2026-08-06
 ### Changed
 - **Nirvāṇa-tantra re-ingest after H2273 high-N fix (Grok 4.5 `grok-4.5`).** Regenerated `nirvana-tantra.jsonl` / `.raw.jsonl` / `.report.json` from a `pypdf` text-layer extract of the archive PDF: **492 → 465** verses; `id_collisions` shrinks to `["9.1"]` (debris `9.4` primary removed); ch.8 recovers addressable 9/11/12–13/14 (no more `6->30` note bag); ch.13 51→74. Not `pdftotext`-byte-identical — documented in [`docs/NIRVANA_TANTRA_VERSE_COUNT_DROP_H2273.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_VERSE_COUNT_DROP_H2273.md).
 
