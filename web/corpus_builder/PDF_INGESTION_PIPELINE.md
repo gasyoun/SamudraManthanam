@@ -1,6 +1,6 @@
 # PDF → Corpus Ingestion Pipeline (house standard)
 
-_Created: 10-07-2026 · Last updated: 01-08-2026_
+_Created: 10-07-2026 · Last updated: 06-08-2026_
 
 The reusable, agent-runnable pipeline that turns a print-derived **PDF**
 translation into the app-ready corpus HTML the desktop reader «Пахтанье
@@ -308,7 +308,9 @@ registered in `Programdata/data.txt`, all HTML block-count round-trip ≥99%:
 | Yoginī-tantra | docx + `.doc` | 19 | 1285 | 340 | ch.8–19 via OLE UTF-16 extract (antiword/Word COM absent) |
 | Mahābhāgavata-purāṇa | 2× docx | 78 | 4232 | 265 | source lacks ch.36–37 and 56 headings; ch.55 renumbers mid-chapter |
 
-**Three Wave-B parser hardenings** (3 new unit tests; 19 total):
+**Three Wave-B parser hardenings** (3 new unit tests; 23 total in
+[`test_ignatiev_book_units.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ignatiev_book_units.py) —
+corrected 06-08-2026, [H2076 compare memo](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/H2076_SONNET_WAVEB_DUAL_RUN_COMPARE.md); the "19" figure was a doc slip):
 
 1. **ToC leader-dot reject** — `Глава восьмая ……… 48` is not a chapter open.
 2. **Per-part multi-file parse** — each `--input` file is parsed alone, then
@@ -321,6 +323,21 @@ registered in `Programdata/data.txt`, all HTML block-count round-trip ≥99%:
 Also: `.doc` OLE WordDocument UTF-16 fallback when antiword is missing;
 `.txt` pre-extract input accepted; `build_corpus_html` flat-work skandha
 fix (2-part `CHAPTER.VERSE` ids no longer misread as skandha).
+
+**Reproducibility caveat (Sonnet dual-run, 06-08-2026 — full memo:
+[H2076_SONNET_WAVEB_DUAL_RUN_COMPARE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/H2076_SONNET_WAVEB_DUAL_RUN_COMPARE.md)):**
+stage 1 depends on `pandoc`'s docx→plain-text output, and pandoc's paragraph
+handling is **not pinned** anywhere in this repo. Ingested against pandoc
+`3.9.0.2`. An independent re-run on the same pandoc version reproduced
+Nīlamata / Kulārṇava / Yoginī byte-for-byte, but a **different pandoc
+build** measurably diverged on two source-side edge cases already flagged
+above — Adbhuta-rāmāyaṇa's out-of-order ch.23 verse numbering (off by 1
+verse) and Mahābhāgavata's ch.55 mid-chapter renumber (off by 63 verses /
+~1.5%, all inside the already-logged `id_collisions` set). The corpus
+currently live is correct (it preserves both anomalies explicitly rather
+than silently merging them); **any future re-ingestion of these two works
+should re-verify verse counts against this table, not assume byte-identical
+reproduction, until pandoc is pinned.**
 
 **Remaining ~9–10 works** (Wave C in-DCS purāṇas needing real Sanskrit
 alignment — Kālikā, Devīmāhātmya; Wave D fragments; Māyā-tantra deferred
