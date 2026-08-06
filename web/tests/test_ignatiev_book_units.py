@@ -65,6 +65,27 @@ def test_split_verses_collapses_nonmonotonic_footnote_restarts():
     assert "сноска" in verses[2]["text"]
 
 
+def test_split_verses_high_n_debris_does_not_swallow_later_reals():
+    """H2273: a false high-N footnote body must not set prev_end and eat 7..N.
+
+    Nirvāṇa-tantra ch.8 had a gloss mis-split as ``(30)`` after real verse 6;
+    non-monotonic collapse then absorbed real 7–14 into that note bag.
+    Debris-shaped higher-N chunks are absorbed without advancing the mark.
+    """
+    body = (
+        "Реальный стих шесть про янтры. (6) "
+        ". на Жемчужном острове – сноска-глосса мифологическая. (30) "
+        "Реальный стих девять про знание. (9) "
+        "Реальный стих одиннадцать про властелина. (11) "
+        "Реальный стих четырнадцать про гуны. (14)"
+    )
+    verses = ig.split_verses(body)
+    labels = [v["verse"] for v in verses]
+    assert labels == ["6", "9", "11", "14"], labels
+    assert "Жемчужном" in verses[0]["text"]
+    assert "знание" in verses[1]["text"]
+
+
 def test_parse_endnotes_bracket_style_with_continuation():
     lines = [
         "[1] 1.1(1). первая заметка,",
