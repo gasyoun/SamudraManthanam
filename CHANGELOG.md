@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Corpus_builder dead VCL cleanup (H2370, Grok 4.5 `grok-4.5`).** Dropped unused `Dialogs` from [`uSort.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uSort.pas). Split VCL list/clipboard/RichEdit helpers out of [`TextU.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/TextU.pas) into [`TextUVCL.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/TextUVCL.pas) so the engine path (`uMhHTML` → `TextU`) no longer imports `CheckLst`/`StdCtrls`/`ComCtrls`/`ClipBrd`/`Windows`. Roadmap unit ticked; inventory §4–§5/§7 updated. Static proof (no dcc32/FPC on this host): [`docs/H2370_DEAD_VCL_STATIC_PROOF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_DEAD_VCL_STATIC_PROOF.md).
+
 ## [0.19.4] - 2026-08-07
 
 ### Added

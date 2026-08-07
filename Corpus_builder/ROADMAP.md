@@ -104,11 +104,15 @@ Delphi 7.
       удалено. **Остаток на человека:** машины с Delphi 7 нет — `dcc32` не запускался,
       проверка source-level (см. «Верификация» в
       [`DEPENDENCY_INVENTORY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md)).
-- [ ] **Мёртвые VCL-импорты.** Убрать неиспользуемый `Dialogs` из `uSort.pas`,
+- [x] **Мёртвые VCL-импорты.** Убрать неиспользуемый `Dialogs` из `uSort.pas`,
       развести VCL-половину `TextU` (`CheckLst`/`StdCtrls`/`ComCtrls`/`ClipBrd`)
       с чистыми строковыми хелперами — пп. 3–4 из §7
       [`DEPENDENCY_INVENTORY.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/DEPENDENCY_INVENTORY.md).
-      Не входило в H1485 (тот закрывал только сам движок).
+      **Done 07-08-2026 (H2370, Grok 4.5 `grok-4.5`):** `uSort` implementation
+      `uses Math` only; VCL helpers live in
+      [`TextUVCL.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/TextUVCL.pas);
+      `TextU` keeps pure string/IAST/UTF path. Static proof (no dcc32/FPC here):
+      [`docs/H2370_DEAD_VCL_STATIC_PROOF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_DEAD_VCL_STATIC_PROOF.md).
 - [ ] **Единый слой кодировок.** Заменить ручные `AnsiToUTF8`/`UTF8ToAnsi` на
       явные UTF-8 операции через `lazUTF8` (в основном приложении это уже норма).
       Уйти от предположения «исходники в CP-1251» в сторону UTF-8.

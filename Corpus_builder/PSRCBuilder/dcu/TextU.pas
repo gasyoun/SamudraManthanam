@@ -1,8 +1,8 @@
 Unit TextU ;
   {$N+}
 interface
- uses uTypes,classes,CheckLst,StdCtrls, ComCTRLS;
-function WSExtractDigits(S:string):string;// извлекает только цифры и дефис
+ uses uTypes, classes;
+function WSExtractDigits(S:string):string;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 function VarArrToStr(const V:variant):string;
 function GetOnlyLetters(S:string;UseCase:boolean):string;
 Function GetMaxCommonLettersSubStr(S1,S2:string;UseCase:boolean):String;
@@ -40,11 +40,10 @@ Function BoolArrToStr(const Arr:TBoolArr):string;
 function StrToCode(const S:string):double;
 function CalcSymbolsCount(const S:string; Symbol:char):integer;
 function DayOfWeekStr(const aDate:TDateTime):string;
-procedure CBListToList(const CBList:TCheckListBox; var List: TStringList);
 function StringSimilarityRatio(const Str1, Str2: String; IgnoreCase: Boolean): Double;
-function NumEqDigits(Str1,Str2:string):integer;// кол-во совпадающих цифр
-function ExtractDigits(S:string):string;// извлекает только цифры
-function CompareStrDigits(Str1,Str2:string;ValueIfNoDigits:boolean):boolean;//сравнивает только числа в строках
+function NumEqDigits(Str1,Str2:string):integer;// пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+function ExtractDigits(S:string):string;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+function CompareStrDigits(Str1,Str2:string;ValueIfNoDigits:boolean):boolean;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function FirstLetterUpperCase (S:string):string;
 Function IntToStrNils(Num:integer;NilsCount:byte):string;
 
@@ -54,7 +53,7 @@ Function FullStr ( s : string ; l : byte ; N : PositionStr ) : string ;
 function CutNextUseDelimiterNoTrim(var Source: string;Delimiter:string): string;
 function WSCutNextUseDelimiterNoTrim(var Source: widestring;Delimiter:string): widestring;
 procedure StringToStrArr(const Source,Delimeter:string; var StringArr:TStringArr);
-function SortStringElms(const Source,Delimeter:string):string;// выдает ту же строку, только с элементами, отсортированными по алфавиту
+function SortStringElms(const Source,Delimeter:string):string;// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 procedure StringToList(const Source,Delimeter:string; var List:TStringList;bClear:boolean);
 function GetInitials(const FullName: String): String;
 Function FormatPhone(const PhoneNum:string):string;
@@ -63,7 +62,6 @@ Function NumDigits(const S:String):Integer;
 Function NumCapsRus(const S:String):Integer;
 function IsDate(str: string): Boolean;
 function IsTime(str: string): Boolean;
-procedure CopyStringToClipboard(const Value: String);
 Function BytesArrToStr(const Arr:TByteArr):String;
 Procedure StrToBytesArr(const S:string; var Arr:TByteArr);
 procedure BoolArrToPackedByteArr(const BoolArr: TBoolArr;
@@ -72,7 +70,6 @@ procedure PackedByteArrToBoolArr(const PackedArr: TByteArr; var BoolArr: TBoolAr
 function BoolArrToPackedStr(const BA: TBoolArr): string;
 procedure PackedStrToBoolArr(const S: string; BA: TBoolArr);
 function GetLevenshteinDistance(const Str1, Str2: String): Integer;
-procedure ListBoxToStringList(var LB:TListBox; var List:TStringList);
 Function SetDateTo01MMYYYY(Date:TDateTime):TDateTime;
 function SentenceCase (S:string):string;
 function FormatCity (City:string):string;
@@ -83,8 +80,6 @@ function GetWordByNum(const aStr : String; const aNum : Integer) : String;
 function UTF8ReverseString(const AText: widestring): widestring;
 function UTF8CutNextUseDelimiterNoTrim(var Source: widestring; const Delimiter:string): widestring;
 function AddBracketsToNums(const S,Brackets:string):string;
-function Search_And_Replace(RichEdit: TRichEdit;
-  SearchText, ReplaceText: string): Boolean;
 function IsRussianLowerCase(C: Char): Boolean;
 function IsRussianUpperCase(C: Char): Boolean;
 
@@ -96,31 +91,31 @@ var
  s:string;
 implementation
 
-uses sysutils, Math, dateUtils, Windows, clipbrd, calcsimu, StatProcs, variants;
+uses sysutils, Math, dateUtils, calcsimu, StatProcs, variants;
 
 const
 cUsedBits=7;
-// отрезает символы до точки вначале строки
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 const
   R: array[1..13] of string[2] =
   ('I', 'IV', 'V', 'IX', 'X', 'XL', 'L', 'XC', 'C', 'CD', 'D', 'CM', 'M');
   A: array[1..13] of Integer =
   (1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000);
-// обрамляет скобками Brackets[1],Brackets[2] любой номер в строке
-// например, для:  Caption:= AddBracketsToNums('Кришна,1Арджуна.113 115','()');
-// Caption='Кришна,(1)Арджуна.(113) (115)';
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Brackets[1],Brackets[2] пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ:  Caption:= AddBracketsToNums('пїЅпїЅпїЅпїЅпїЅпїЅ,1пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.113 115','()');
+// Caption='пїЅпїЅпїЅпїЅпїЅпїЅ,(1)пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.(113) (115)';
 
 function IsRussianLowerCase(C: Char): Boolean;
 begin
-  Result := ((C >= 'а') and (C <= 'я')) or (C = 'ё');
+  Result := ((C >= 'пїЅ') and (C <= 'пїЅ')) or (C = 'пїЅ');
 end;
 
 function IsRussianUpperCase(C: Char): Boolean;
 begin
-  Result := ((C >= 'А') and (C <= 'Я')) or (C = 'Ё');
+  Result := ((C >= 'пїЅ') and (C <= 'пїЅ')) or (C = 'пїЅ');
 end;
 
-function WSExtractDigits(S:string):string;// извлекает только цифры и дефис
+function WSExtractDigits(S:string):string;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
 var
  i:integer;
 begin
@@ -128,32 +123,6 @@ begin
  for i:=1 to Length(S) do if not(S[i] in ['a'..'z',',']) then Result:=ConCat(Result,S[i]);
  if not (result[Length(result)] in ['0'..'9']) then SetLength(Result,Length(Result)-1);
 end;
-
-function Search_And_Replace(RichEdit: TRichEdit;
-  SearchText, ReplaceText: string): Boolean;
-var
-  startpos, Position, endpos: integer;
-begin
-  startpos := 0;
-  with RichEdit do
-  begin
-    endpos := Length(RichEdit.Text);
-    Lines.BeginUpdate;
-    while FindText(SearchText, startpos, endpos, [stMatchCase])<>-1 do
-    begin
-      endpos   := Length(RichEdit.Text) - startpos;
-      Position := FindText(SearchText, startpos, endpos, [stMatchCase]);
-      Inc(startpos, Length(SearchText));
-      SetFocus;
-      SelStart  := Position;
-      SelLength := Length(SearchText);
-      richedit.clearselection;
-      SelText := ReplaceText;
-    end;
-    Lines.EndUpdate;
-  end;
-end;
-
 
 function AddBracketsToNums(const S,Brackets:string):string;
 var
@@ -169,16 +138,16 @@ begin
   inc(i);
   if i>Length(S) then break;
   if S[i] in ['0'..'9']
-   then SN:=SN+S[i]  // если номер то суммируем
+   then SN:=SN+S[i]  // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
    else
-   begin // если не номер
-            // предыдущий был номер
+   begin // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     if Prev in ['0'..'9'] then
      begin
       result:=result+Brackets[1]+SN+Brackets[2];
       SN:='';
      end;
-           // в любом случае
+           // пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     result:=result+S[i];
    end;
   Prev:=S[i];
@@ -187,10 +156,10 @@ begin
 end;
 
 
-  //Поиск слова слева-направо.
+  //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 function GetWordByNumL(const aStr : String; const aNum : Integer) : String;
 const
-  //Разделители слов.
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
   D = ['.', ',', ':', ';', '!', '?', '-', ' ', #9, #10, #13];
 var
   i, j, Pos1, Len, LenW : Integer;
@@ -202,30 +171,30 @@ begin
   Pos1 := 0;
   j := 0;
   for i := 1 to Len do begin
-    //Пропускаем разделители.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     if aStr[i] in D then Continue;
-    //Отслеживаем начало слова.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
     if (i = 1) or (aStr[i - 1] in D) then Pos1 := i;
-    //Отслеживаем конец слова.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
     if (i = Len) or (aStr[i + 1] in D) then begin
-      //Порядковый номер слова:
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
       Inc(j);
       if j = aNum then begin
-        //Длина слова.
+        //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
         LenW := i - Pos1 + 1;
-        //Слово.
+        //пїЅпїЅпїЅпїЅпїЅ.
         Result := Copy(aStr, Pos1, LenW);
-        //Завершаем поиск.
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
         Break;
       end;
     end;
   end;
 end;
 
-//Поиск слова справа-налево.
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅ.
 function GetWordByNumR(const aStr : String; const aNum : Integer) : String;
 const
-  //Разделители слов.
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
   D = ['.', ',', ':', ';', '!', '?', '-', ' ', #9, #10, #13];
 var
   i, j, Pos2, Len, LenW : Integer;
@@ -237,27 +206,27 @@ begin
   Pos2 := 0;
   j := 0;
   for i := Len downto 1 do begin
-    //Пропускаем разделители.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     if aStr[i] in D then Continue;
-    //Отслеживаем конец слова.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
     if (i = Len) or (aStr[i + 1] in D) then Pos2 := i;
-    //Отслеживаем начало слова.
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
     if (i = 1) or (aStr[i - 1] in D) then begin
-      //Порядковый номер слова:
+      //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:
       Dec(j);
       if j = aNum then begin
-        //Длина слова.
+        //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
         LenW := Pos2 - i + 1;
-        //Слово.
+        //пїЅпїЅпїЅпїЅпїЅ.
         Result := Copy(aStr, i, LenW);
-        //Завершаем поиск.
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
         Break;
       end;
     end;
   end;
 end;
 
-//Поиск слова в любом направлении.
+//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 function GetWordByNum(const aStr : String; const aNum : Integer) : String;
 begin
   Result := '';
@@ -290,7 +259,7 @@ begin
 end;
 function RomanToArabic(
          const romanNumber : string) : integer ;
-// Примечание: RomanToArabic вернет -1, если параметр romanNumber написан не латинскими буквами (например, MIXKIX не является римской цифра).
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: RomanToArabic пїЅпїЅпїЅпїЅпїЅпїЅ -1, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ romanNumber пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, MIXKIX пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ).
  const
    romanChars = 'IVXLCDMvxlcdm?!#' ;
    decades : array [0..8] of integer = (
@@ -318,7 +287,7 @@ function RomanToArabic(
    end ;
  end;
 
-// отрезает символы до точки вначале строки
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 Function IntToStrNils(Num:integer;NilsCount:byte):string;
 var
  AddNum,i:integer;
@@ -349,8 +318,8 @@ var
  i:integer;
 begin
  if not UseCAse then S:=AnsiLowerCase(S);
- S:=StringReplace(S,'і','и',[rfReplaceAll]);
- S:=StringReplace(S,'є','е',[rfReplaceAll]);
+ S:=StringReplace(S,'пїЅ','пїЅ',[rfReplaceAll]);
+ S:=StringReplace(S,'пїЅ','пїЅ',[rfReplaceAll]);
  result:='';
  for i:=1 to Length(S) do
   if Ord(S[i]) in [168,170,175,178,179,184,186,191..255] then result:=Result+S[i] ;//else result:=Result+' ';
@@ -416,7 +385,7 @@ begin
 end;
 
 
-function CompareStrDigits(Str1,Str2:string;ValueIfNoDigits:boolean):boolean;//сравнивает только числа в строках
+function CompareStrDigits(Str1,Str2:string;ValueIfNoDigits:boolean):boolean;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 var
  S1,S2:string;
 begin
@@ -425,7 +394,7 @@ begin
  Result:=(S1=S2);
  if Result and (s1='') then Result:=ValueIfNoDigits;
 end;
-function ExtractDigits(S:string):string;// извлекает только цифры
+function ExtractDigits(S:string):string;// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 var
  i:integer;
 begin
@@ -486,19 +455,6 @@ var
  S:string absolute Arr;
 begin
  Result:=S;
-end;
-
-procedure ListBoxToStringList(var LB:TListBox; var List:TStringList);
-var
- i:integer;
-begin
- List.Clear;
- List.Sorted:=True;
- for i:=1 to LB.Count do
- if LB.Selected[i-1] then 
- begin
-  List.Add(Lb.Items[i-1])
- end;
 end;
 
 function GetLevenshteinDistance(const Str1, Str2: String): Integer;
@@ -684,7 +640,7 @@ begin
   BitNum:=i mod cUsedBits;
   ElmNum:=i div cUsedBits;
   SetByteBit(PackedArr[ElmNum],BitNum,BoolArr[i]);
-  SetByteBit(PackedArr[ElmNum],7,True); // Для того, чтобы строка не = #0
+  SetByteBit(PackedArr[ElmNum],7,True); // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ = #0
  end;
 end;
 
@@ -714,34 +670,6 @@ begin
  PackedByteArrToBoolArr(PBA,BA);
 end;
 
-
-procedure CopyStringToClipboard(const Value: String);
-const
-  RusLocale = (SUBLANG_DEFAULT shl $A) or LANG_RUSSIAN;
-var
-  hMem: THandle;
-  pData: Pointer;
-begin
-  Clipboard.Clear;
-  Clipboard.Open;
-  try
-    Clipboard.AsText := Value;
-    hMem := GlobalAlloc(GMEM_MOVEABLE, SizeOf(DWORD));
-    try
-      pData := GlobalLock(hMem);
-      try
-        DWORD(pData^) := RusLocale;
-      finally
-        GlobalUnlock(hMem);
-      end;
-        Clipboard.SetAsHandle(CF_LOCALE, hMem);
-    finally
-      GlobalFree(hMem);
-    end;
-  finally
-    Clipboard.Close;
-  end;
-end;
 
 function IsDate(str: string): Boolean;
 var
@@ -781,7 +709,7 @@ var
 begin
  result:=0;
  for i:=1 to Length(S) do
-  if S[i] in ['А'..'Я'] then inc(result);
+  if S[i] in ['пїЅ'..'пїЅ'] then inc(result);
 end;
 
 Function FormatPhones(const PhoneNums:string;Prefics,DefCode:string):string;
@@ -795,7 +723,7 @@ begin
  S:=PhoneNums;
  S:=StringReplace(S,'.',';',[rfReplaceAll, rfIgnoreCase]);
  S:=StringReplace(S,',',';',[rfReplaceAll, rfIgnoreCase]);
- S:=StringReplace(S,' и ',';',[rfReplaceAll, rfIgnoreCase]);
+ S:=StringReplace(S,' пїЅ ',';',[rfReplaceAll, rfIgnoreCase]);
  while S<>'' do
  begin
   PhoneNum:=CutNextUseDelimiter(S,';');
@@ -856,14 +784,14 @@ var
 begin
  ADayOfWeek:=DayOfTheWeek(aDate);
  Case ADayOfWeek of
-  DayMonday: result:= 'Понедельник';
-  DayTuesday: result := 'Вторник';
-  DayWednesday: result := 'Среда';
-  DayThursday: result := 'Четверг';
-  DayFriday: result := 'Пятница';
-  DaySaturday: result := 'Суббота';
-  DaySunday: result  := 'Воскресенье';
-  else result  := 'Это не день недели!';
+  DayMonday: result:= 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+  DayTuesday: result := 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+  DayWednesday: result := 'пїЅпїЅпїЅпїЅпїЅ';
+  DayThursday: result := 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+  DayFriday: result := 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+  DaySaturday: result := 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+  DaySunday: result  := 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ';
+  else result  := 'пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!';
  end
 end;
 function SortStringElms(const Source,Delimeter:string):string;
@@ -1218,7 +1146,7 @@ Function FullStr ( s : string ; l : byte ; N : PositionStr ) : string ;
           s := s + Space ( l ) ;
           FullStr := Copy ( s , 1 , l )
         end ;
-      CenterFull :      { ЌҐ®Ўе®¤Ё¬  ¤®а Ў®вЄ  }
+      CenterFull :      { пїЅпїЅпїЅпїЅе®¤пїЅпїЅпїЅ пїЅпїЅа ЎпїЅвЄ  }
         begin
           i := ( l - Length(S) ) div 2 ;
           s := space ( i ) + s + Space ( i ) ;
@@ -1379,14 +1307,6 @@ begin
 end;
 {==========================================================================}
 
-procedure CBListToList(const CBList:TCheckListBox; var List: TStringList);
-var
- i:integer;
-begin
- List.Clear;
- for i:=1 to CBList.Items.Count do
- if CBList.Checked[i-1] then List.Add(CBList.Items[i-1])
-end;
 Function MyStr16 (a:longint):string;
 var
  Mod16:longint;

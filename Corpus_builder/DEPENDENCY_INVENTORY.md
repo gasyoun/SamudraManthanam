@@ -1,6 +1,6 @@
 # Corpus Builder — dependency inventory (Phase 1)
 
-_Created: 01-08-2026 · Last updated: 04-08-2026_
+_Created: 01-08-2026 · Last updated: 07-08-2026_
 
 Source: [Corpus_builder/ROADMAP.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) Phase 1 item
 «Инвентаризация зависимостей». Closed by the `/roadmap-item-exec` pass that
@@ -33,13 +33,14 @@ Pascal files participate.
 | `fMainForm` | `PSRCBuilder/fMainForm.pas` | 1539 | main window, menus, multi-book orchestration |
 | `fCheckDialog` | `PSRCBuilder/fCheckDialog.pas` | 295 | integrity-check dialog (`TOKBottomDlg`) |
 | `uMhHTML` | `PSRCBuilder/uMhHTML.pas` | 1877 | `TMhHTMLBuilder` — HTML corpus engine |
-| `TextU` | `PSRCBuilder/dcu/TextU.pas` | 1442 | string/UTF-8/IAST helpers (+ some VCL list helpers) |
+| `TextU` | `PSRCBuilder/dcu/TextU.pas` | ~1360 | string/UTF-8/IAST helpers (VCL-free since H2370) |
+| `TextUVCL` | `PSRCBuilder/dcu/TextUVCL.pas` | ~100 | VCL list/clipboard/RichEdit helpers (H2370; not on `cb.dpr` BFS until a form `uses` it) |
 | `uTypes` | `PSRCBuilder/dcu/uTypes.pas` | 79 | shared array/record aliases |
 | `myutils` | `PSRCBuilder/dcu/myutils.pas` | 227 | `PutFile1ToFile2`, `MergeFiles` |
 | `mytypes` | `PSRCBuilder/dcu/mytypes.pas` | 12 | basic type aliases for `myutils` |
 | `CalcSimU` | `PSRCBuilder/dcu/CalcSimU.pas` | 326 | calculator-sim helpers (via `TextU`) |
 | `StatProcs` | `PSRCBuilder/dcu/statprocs.pas` | 605 | stats/arithmetic (via `TextU`) |
-| `uSort` | `PSRCBuilder/dcu/uSort.pas` | 177 | sorting (via `StatProcs`) |
+| `uSort` | `PSRCBuilder/dcu/uSort.pas` | 176 | sorting (via `StatProcs`); no `Dialogs` since H2370 |
 | `ArtMath` | `PSRCBuilder/dcu/ArtMath.pas` | 679 | arithmetic (via `uSort`) |
 
 Dependency graph (project-local edges only):
@@ -65,20 +66,20 @@ cb
 
 | Unit | Imported by |
 |---|---|
-| `Forms` | `cb`, `fMainForm`, `fCheckDialog`, **`uMhHTML`** |
-| `Dialogs` | `fMainForm`, `fCheckDialog`, **`uMhHTML`**, `uSort` (import only — see §4) |
-| `Controls` | `fMainForm`, `fCheckDialog`, **`uMhHTML`** |
+| `Forms` | `cb`, `fMainForm`, `fCheckDialog` |
+| `Dialogs` | `fMainForm`, `fCheckDialog` |
+| `Controls` | `fMainForm`, `fCheckDialog` |
 | `Graphics` | `fMainForm`, `fCheckDialog` |
-| `StdCtrls` | `fMainForm`, `fCheckDialog`, **`TextU`** |
+| `StdCtrls` | `fMainForm`, `fCheckDialog`, **`TextUVCL`** |
 | `Buttons` | `fCheckDialog` |
 | `ExtCtrls` | `fCheckDialog` |
 | `Menus` | `fMainForm` |
-| `ComCtrls` | `fMainForm`, **`TextU`** |
-| `CheckLst` | **`TextU`** |
-| `ClipBrd` | `fMainForm`, **`TextU`** |
+| `ComCtrls` | `fMainForm`, **`TextUVCL`** |
+| `CheckLst` | **`TextUVCL`** |
+| `ClipBrd` | `fMainForm`, **`TextUVCL`** |
 | `Messages` | `fMainForm` |
-| `Windows` | `fMainForm`, `fCheckDialog`, **`uMhHTML`**, **`TextU`** |
-| `ShellApi` | `fMainForm`, **`uMhHTML`** |
+| `Windows` | `fMainForm`, `fCheckDialog`, **`uMhHTML`**, **`TextUVCL`** |
+| `ShellApi` | `fMainForm` |
 
 ### RTL / portable under FPC `{$MODE Delphi}`
 
@@ -131,7 +132,9 @@ Phase 1 «Отделить движок от формы» must therefore:
 5. Split `TextU` into pure string helpers (engine path) vs VCL list/clipboard helpers
    (GUI path) — the latter are unused by the load/build core.
 
-Items 1–4 are **done** (H1485); item 5 is not — see §3a and §7.
+Items 1–4 are **done** (H1485); item 5 is **done** (H2370) — VCL helpers live in
+[`TextUVCL.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/TextUVCL.pas);
+`TextU` is VCL-free.
 
 ---
 
@@ -235,15 +238,19 @@ source-level:
 
 ---
 
-## 4. Dead / soft VCL imports
+## 4. Dead / soft VCL imports — **cleared H2370 (07-08-2026)**
 
-| Unit | Import | Evidence |
+| Unit | Import | Outcome |
 |---|---|---|
-| `uSort.pas` | `Dialogs` | no `ShowMessage` / `MessageDlg` / `Dialogs.` reference in body — safe to delete from `uses` |
-| `TextU.pas` | `CheckLst`, `StdCtrls`, `ComCTRLS` | only used by `CBListToList` / `ListBoxToStringList`; not on the `TMhHTMLBuilder` call path |
-| `TextU.pas` | `clipbrd` / `Windows` (clipboard) | only `CopyStringToClipboard`; engine path does not need them |
+| `uSort.pas` | `Dialogs` | **Removed** — no `ShowMessage` / `MessageDlg` / `Dialogs.` in body |
+| `TextU.pas` | `CheckLst`, `StdCtrls`, `ComCTRLS` | **Moved** to [`TextUVCL.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/TextUVCL.pas) with `CBListToList` / `ListBoxToStringList` / `Search_And_Replace` |
+| `TextU.pas` | `clipbrd` / `Windows` (clipboard) | **Moved** to `TextUVCL` with `CopyStringToClipboard` |
 
-These are cheap Phase 1 cleanups after the engine is cut free of `fMainForm`.
+`TextU` interface `uses` is now `uTypes, classes` only; implementation drops
+`Windows` and `clipbrd`. No remaining `Dialogs` in any `dcu/*.pas` unit.
+
+Static proof (no Delphi/FPC on this machine): see
+[`docs/H2370_DEAD_VCL_STATIC_PROOF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_DEAD_VCL_STATIC_PROOF.md).
 
 ---
 
@@ -260,13 +267,13 @@ first candidates to compile under FPC without LCL:
 | `ArtMath` | `Math`, `uTypes` | numeric |
 | `CalcSimU` | `Math`, `uTypes` | numeric |
 | `StatProcs` | `Math`, `uTypes`, `uSort` | numeric |
-| `uSort` | `Math`, `uTypes`, `ArtMath` (+ dead `Dialogs`) | drop dead import → portable |
+| `uSort` | `Math`, `uTypes`, `ArtMath` | portable after H2370 (dead `Dialogs` gone) |
+| `TextU` | `SysUtils`, `Classes`, `Math`, `DateUtils`, `CalcSimU`, `StatProcs`, `Variants`, `uTypes` | VCL-free after H2370 |
 
-**Not yet portable:** `TextU` (partial), `fMainForm`, `fCheckDialog`.
+**Not yet portable:** `fMainForm`, `fCheckDialog`, `TextUVCL` (VCL by design).
 
-`uMhHTML` moved out of that list on 04-08-2026 (H1485): it is now VCL-free and
-blocked on `TextU`'s VCL half (§7 item 3) and `windows`/`GlobalMemoryStatus`
-alone, not on LCL.
+`uMhHTML` moved out of that list on 04-08-2026 (H1485): VCL-free aside from
+`windows`/`GlobalMemoryStatus`. TextU VCL half no longer blocks the engine path.
 
 ---
 
@@ -288,8 +295,8 @@ builder copy is a subset of the main app.
 
 1. **Inventory** — this document (done, H2064).
 2. **Cut `uMhHTML` ↔ `fMainForm`** — progress sink + no `ShowMessage`/`ShellExecute`/`ProcessMessages` in engine. **Done 04-08-2026 (H1485)** — see §3a.
-3. **Split or `#ifdef` the VCL half of `TextU`** — keep string/IAST/UTF helpers on the engine path.
-4. **Drop dead `Dialogs` from `uSort`**; audit remaining soft imports.
+3. **Split the VCL half of `TextU`** — keep string/IAST/UTF helpers on the engine path. **Done 07-08-2026 (H2370)** — helpers in `TextUVCL.pas`.
+4. **Drop dead `Dialogs` from `uSort`**; audit remaining soft imports. **Done 07-08-2026 (H2370)**.
 5. **Encoding layer** (roadmap item) and `{$MODE Delphi}` directives once the engine unit set is stable under Delphi 7 still.
 
 Golden-file residual (Phase 0 `[~]`) remains blocked on interactive `cb.exe`

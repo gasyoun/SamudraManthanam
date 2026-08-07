@@ -117,9 +117,10 @@ PSRCBuilder/
   uMhHTML.pas          TMhHTMLBuilder — ядро сборщика HTML-корпуса
 
   dcu/                 общие утилиты (исходники .pas + скомпилированные .dcu)
-    TextU.pas            строки: UTF-8/WideString, разделители, IAST-хелперы
+    TextU.pas            строки: UTF-8/WideString, разделители, IAST-хелперы (без VCL)
+    TextUVCL.pas         VCL-хелперы (списки/clipboard/RichEdit), вынесены из TextU (H2370)
     uTypes.pas           общие псевдонимы типов (TIntArr, TStringArr, …)
-    uSort.pas            сортировка
+    uSort.pas            сортировка (без Dialogs)
     myutils.pas          слияние/вставка файлов (PutFile1ToFile2, MergeFiles)
     mytypes.pas          базовые псевдонимы типов
     StatProcs.pas        статистические/арифметические процедуры
