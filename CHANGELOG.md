@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.20] - 2026-08-08
 ### Changed
 - **Wave-A PDF tantras glued-digit re-baseline (H2412–H2414, Grok 4.5 `grok-4.5`).** Yoni 221/0→221/192, Niruttara 674/0→676/322, Guptasādhana 319/0→319/368 comments; HTML→JSONL ≥99.9%; all re-run stable. Census of all Ignatiev registered works: docx stay bracket. Doc: [`docs/WAVE_A_PDF_GLUED_DIGIT_REBASELINE_H2412_14.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/WAVE_A_PDF_GLUED_DIGIT_REBASELINE_H2412_14.md). Residual archive remainder: H2415.
 
