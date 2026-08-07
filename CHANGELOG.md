@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Wave-A PDF tantras glued-digit re-baseline (H2412–H2414, Grok 4.5 `grok-4.5`).** Yoni 221/0→221/192, Niruttara 674/0→676/322, Guptasādhana 319/0→319/368 comments; HTML→JSONL ≥99.9%; all re-run stable. Census of all Ignatiev registered works: docx stay bracket. Doc: [`docs/WAVE_A_PDF_GLUED_DIGIT_REBASELINE_H2412_14.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/WAVE_A_PDF_GLUED_DIGIT_REBASELINE_H2412_14.md). Residual archive remainder: H2415.
+
 ## [0.19.8] - 2026-08-07
 ### Changed
 - **H2370 optional FPC compile residual (Grok 4.5 `grok-4.5`).** Installed Free Pascal 3.2.2 (user prefix); portable stack `mytypes`…`uSort` **compiles and runs** smoke after Dialogs removal. Full `cb.dpr` still needs Delphi 7 `dcc32` (absent). `TextU` has one pre-existing CP-1251 char-set FPC error (not H2370). Logs: [`docs/H2370_FPC_USORT_COMPILE.log`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_FPC_USORT_COMPILE.log), [`docs/H2370_DEAD_VCL_STATIC_PROOF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_DEAD_VCL_STATIC_PROOF.md) § FPC compile proof.

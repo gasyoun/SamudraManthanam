@@ -2,7 +2,7 @@
   "work": "yoni-tantra",
   "chapters": 8,
   "verse_count": 221,
-  "comment_count": 0,
+  "comment_count": 192,
   "verse_gaps": [],
   "chapter_numbers": [
     1,
@@ -14,9 +14,21 @@
     7,
     8
   ],
-  "unrecognised_endnotes": 0,
+  "unrecognised_endnotes": 5,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "footnote_mode": "glued-digit",
+  "footnote_mode_requested": "glued-digit",
+  "glued_digit_stats": {
+    "footnote_mode": "glued-digit",
+    "pages_total": 201,
+    "pages_with_notes": 49,
+    "strong_note_starts": 191,
+    "total_endnotes": 192
+  },
   "id_collisions": [
     "1.22"
   ],
-  "total_endnotes": 0
+  "total_endnotes": 192
 }

@@ -2,7 +2,7 @@
   "work": "guptasadhana-tantra",
   "chapters": 12,
   "verse_count": 319,
-  "comment_count": 0,
+  "comment_count": 368,
   "verse_gaps": [
     "9: 56->58"
   ],
@@ -20,6 +20,18 @@
     11,
     12
   ],
-  "unrecognised_endnotes": 0,
-  "total_endnotes": 0
+  "unrecognised_endnotes": 42,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "footnote_mode": "glued-digit",
+  "footnote_mode_requested": "glued-digit",
+  "glued_digit_stats": {
+    "footnote_mode": "glued-digit",
+    "pages_total": 163,
+    "pages_with_notes": 82,
+    "strong_note_starts": 369,
+    "total_endnotes": 368
+  },
+  "total_endnotes": 368
 }

@@ -9,9 +9,11 @@
   "imprint": "неопубликованный перевод",
   "publisher": null,
   "year": null,
-  "scripts": ["cyrillic"],
+  "scripts": [
+    "cyrillic"
+  ],
   "structure": "verse",
-  "provenance": "А. Игнатьев (перев.). Нируттара-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
+  "provenance": "А. Игнатьев (перев.). Нируттара-тантра (архив переводчика). PDF -> canonical via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377 front-end Wave-A re-baseline). 15 ch / 676 RU verses / 322 comments; HTML→JSONL round-trip 675/676 (100%). alignment: none.",
   "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
   "needs_review": false
 }

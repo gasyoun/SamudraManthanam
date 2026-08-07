@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "d4abfea266b8fdf67063db7c86c30c5a212ae3b2"
+    "revision": "7cd319372903a1164f6d5c5b29f4bf2f90bfbef9"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -2975,12 +2975,12 @@
       },
       {
         "canonical": {
-          "bytes": 883911,
+          "bytes": 883172,
           "first_canonical_id": "nirvana-tantra:1.1#ru",
           "last_canonical_id": "nirvana-tantra:15.27.comm1",
           "path": "corpus_builder/jsonl/nirvana-tantra.jsonl",
           "record_count": 739,
-          "sha256": "eb7f32b1e1954d318547ebd2745acf4abd58f98e07378a2add41e59bf2a9d91f"
+          "sha256": "a1b5e063c141c7699318efa63334aa2110df9a5b79a46ed6a4cba898bc4fdb82"
         },
         "filename": "nirvana-tantra.html",
         "provenance": "А. Игнатьев (перев.). Нирвана-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
@@ -2991,15 +2991,15 @@
       },
       {
         "canonical": {
-          "bytes": 532685,
+          "bytes": 1183415,
           "first_canonical_id": "niruttara-tantra:1.1#ru",
           "last_canonical_id": "niruttara-tantra:15.3#ru",
           "path": "corpus_builder/jsonl/niruttara-tantra.jsonl",
-          "record_count": 674,
-          "sha256": "f5806762429fb5fe1be945e8824364db59a2361a63f7c7de6fc4aaf82b86b671"
+          "record_count": 998,
+          "sha256": "c648a84472c83b336a1dd93afcc98d38a603bd8ff7c6f7cd3f6056a1446e51a0"
         },
         "filename": "niruttara-tantra.html",
-        "provenance": "А. Игнатьев (перев.). Нируттара-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
+        "provenance": "А. Игнатьев (перев.). Нируттара-тантра (архив переводчика). PDF -> canonical via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377 front-end Wave-A re-baseline). 15 ch / 676 RU verses / 322 comments; HTML→JSONL round-trip pending. alignment: none.",
         "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
         "slug": "niruttara-tantra",
         "sort_order": 185,
@@ -3007,15 +3007,15 @@
       },
       {
         "canonical": {
-          "bytes": 254206,
+          "bytes": 972679,
           "first_canonical_id": "guptasadhana-tantra:1.1#ru",
-          "last_canonical_id": "guptasadhana-tantra:12.15#ru",
+          "last_canonical_id": "guptasadhana-tantra:12.15.comm2",
           "path": "corpus_builder/jsonl/guptasadhana-tantra.jsonl",
-          "record_count": 319,
-          "sha256": "7fabc17f6fd3ecf574e8cf916d4b6a348e30f717aa98fb9945a48c2e4886e95b"
+          "record_count": 687,
+          "sha256": "93ff13cbbbe9f9e97c87d6c169fc78755445991932987c28b2374c696bb00173"
         },
         "filename": "guptasadhana-tantra.html",
-        "provenance": "А. Игнатьев (перев.). Гуптасадхана-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
+        "provenance": "А. Игнатьев (перев.). Гуптасадхана-тантра (архив переводчика). PDF -> canonical via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377 front-end Wave-A re-baseline). 12 ch / 319 RU verses / 368 comments; HTML→JSONL round-trip pending. alignment: none.",
         "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
         "slug": "guptasadhana-tantra",
         "sort_order": 186,
@@ -3023,15 +3023,15 @@
       },
       {
         "canonical": {
-          "bytes": 163035,
+          "bytes": 587227,
           "first_canonical_id": "yoni-tantra:1.1#ru",
-          "last_canonical_id": "yoni-tantra:8.14#ru",
+          "last_canonical_id": "yoni-tantra:8.14.comm2",
           "path": "corpus_builder/jsonl/yoni-tantra.jsonl",
-          "record_count": 221,
-          "sha256": "0ec75a256c145200e81ae2f0364c0438936c08681334c9a0a2df5084f6b50d2f"
+          "record_count": 413,
+          "sha256": "d527944e2bcf6a081bb7a0858c7b73cdba89b17fd06acef1b534e46017be0d71"
         },
         "filename": "yoni-tantra.html",
-        "provenance": "А. Игнатьев (перев.). Йони-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438). Ch.8's true colophon closes the translated work; the source PDF appends supplementary hymns quoted from other named tantras (ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ) after it -- excluded here as not part of Yoni-tantra itself.",
+        "provenance": "А. Игнатьев (перев.). Йони-тантра (архив переводчика). PDF -> canonical via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377 front-end Wave-A re-baseline). 8 ch / 221 RU verses / 192 comments; HTML→JSONL round-trip pending. alignment: none.",
         "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
         "slug": "yoni-tantra",
         "sort_order": 187,
@@ -3263,11 +3263,11 @@
       }
     ],
     "totals": {
-      "canonical_bytes": 679928495,
-      "record_count": 691494,
+      "canonical_bytes": 681721151,
+      "record_count": 692378,
       "source_count": 202
     }
   },
-  "content_hash": "sha256:c8dc503d879547097085cf4b327895ddede5ad2c241aa28b9403d4db235fe12d",
+  "content_hash": "sha256:7ed918c52a2313abbf3f352ad0fe1b0ad156971c2c67f31aa3e2f692072a2804",
   "schema_version": 1
 }
