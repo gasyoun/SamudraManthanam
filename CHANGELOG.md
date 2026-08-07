@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Nirvāṇa-tantra glued-digit re-baseline (H2385, Grok 4.5 `grok-4.5`).** Re-ingest with H2377 `--footnote-mode glued-digit`: **465 → 527** RU verses, **0 → 212** comments, gaps 64→3, no id_collisions, HTML→JSONL **100%**. Doc: [`docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md). H2273 debris-path note updated with supersession pointer.
+
 ## [0.19.7] - 2026-08-07
 ### Added
 - **Māyā-tantra glued-digit front-end + ingest (H2377, Grok 4.5 `grok-4.5`).** New `--footnote-mode glued-digit|bracket|auto` on `ignatiev_book_to_canonical.py`: page-local DBhP-style notes stripped before verse split; inline glued-digit linking; ToC ghost-chapter drop. Māyā registered: **12 ch / 343 RU verses / 148 comments**, HTML→JSONL round-trip **100%**, re-run stable. `auto` stays `bracket` (Wave-A count lock). Design: [`docs/MAYA_TANTRA_GLUED_DIGIT_MODE_H2377.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/MAYA_TANTRA_GLUED_DIGIT_MODE_H2377.md). Corpus-manifest pin rebuilt.
