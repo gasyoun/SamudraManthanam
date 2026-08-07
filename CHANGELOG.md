@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.4] - 2026-08-07
+
 ### Added
 - **H1438 Wave C: Kālikā-purāṇa + Devīmāhātmya (H2353, Grok 4.5 `grok-4.5`).** Both works registered in `Programdata/data.txt` with desktop HTML + JSONL. Devīmāhātmya: 13 ch / 595 RU verses / **497 SA matched** (83.5%) via GRETIL Mārkaṇḍeya adhy. 81–93 key-join. Kālikā-purāṇa: 90 ch / 8137 RU verses, `alignment: none` (no keyed SA witness). HTML→JSONL round-trip **100%** on both. Parser hardenings: OLE glued unit-ordinal peel (ch.62), colophon/absurd-jump drop, empty-verse filter. Converter: [`gretil_markp_devimahatmya_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/gretil_markp_devimahatmya_to_canonical.py). Doc: [`PDF_INGESTION_PIPELINE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md) § Wave C. Corpus-manifest pin rebuilt in the same pass (H2351).
 
