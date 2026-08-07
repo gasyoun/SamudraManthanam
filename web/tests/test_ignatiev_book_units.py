@@ -15,6 +15,7 @@ _CB = Path(__file__).resolve().parents[1] / "corpus_builder"
 sys.path.insert(0, str(_CB))
 
 import ignatiev_book_to_canonical as ig  # noqa: E402
+from ru_ordinals import ordinal_f_to_int  # noqa: E402
 
 
 def test_chapter_open_matches_bare_and_titled_forms():
@@ -472,6 +473,52 @@ def test_extract_text_rejects_unsupported_suffix(tmp_path):
     import pytest
     with pytest.raises(ValueError, match="unsupported source format"):
         ig.extract_text(p)
+
+
+def test_chapter_open_peels_ole_glued_unit_ordinal():
+    """H2353: OLE glue ``Глава шестьдесят втораяовно…`` must open ch.62."""
+    line = "Глава шестьдесят втораяовно свинцовый сурик, (104)"
+    m = ig._is_chapter_open(line)
+    assert m is not None
+    assert m.group("ord") == "шестьдесят вторая"
+    assert ordinal_f_to_int(m.group("ord")) == 62
+    rest = (m.group("rest") or "")
+    assert rest.startswith("овно") or "свинцовый" in rest
+    # Bare tens-prefix alone is not a chapter open.
+    assert ig._is_chapter_open("Глава шестьдесят") is None
+
+
+def test_colophon_and_absurd_jump_dropped_not_emitted():
+    """H2353: colophon + high-N marker after real verses is not a verse."""
+    body = (
+        "Последний реальный стих главы. (158) "
+        "Так в Калика-пуране заканчивается двадцатая глава, "
+        "называющаяся «Дакша проклинает Чандру». (1401-1464)"
+    )
+    verses = ig.split_verses(body)
+    labels = [v["verse"] for v in verses]
+    assert labels == ["158"], labels
+    assert "заканчивается" not in verses[0]["text"]
+
+
+def test_empty_verse_after_heading_not_emitted():
+    """H2353: bare ``(1)`` with no body must not mint a blank passage.
+
+    ``split_verses`` already skips empty pre-marker chunks; the emit-side
+    empty filter is an extra guard when text is non-empty but cleans to
+    blank after footnote stripping. Either path must leave no blank cards.
+    """
+    text = (
+        "Глава первая\n"
+        " (1) "
+        "Реальный первый стих с текстом. (2) "
+        "Ещё один. (3)\n"
+    )
+    recs, rep = ig.parse_book(text, "probe")
+    ru = [r for r in recs if r.get("seg") == "ru"]
+    assert [r["passage"] for r in ru] == ["1.2", "1.3"]
+    assert all(r["text"].strip() for r in ru)
+    assert rep["verse_count"] == 2
 
 
 def test_extract_text_doc_antiword_live_or_skip():

@@ -60,7 +60,12 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
-from ru_ordinals import ordinal_f_to_int, ORDINAL_WORD_PATTERN  # noqa: E402
+from ru_ordinals import (  # noqa: E402
+    ordinal_f_to_int,
+    ORDINAL_WORD_PATTERN,
+    _UNITS_F,
+    _TENS_PREFIX,
+)
 
 # --- structural markers -----------------------------------------------------
 
@@ -108,13 +113,75 @@ _CHAPTER_OPEN_RE = re.compile(
 # inventing empty chapters out of their own ToC (Yoginī 1-7 + 8-19, Kulārṇava).
 _TOC_LEADER_RE = re.compile(r"[.…·•]{3,}|\s{2,}\d{1,4}\s*$")
 
+# Colophon line that OLE/PDF sometimes leaves inside the body with a false
+# high-N ``(N)`` marker (H2353 Kālikā ch.20: ``...заканчивается двадцатая
+# глава... (1401-1464)``). Not a real verse.
+_COLOPHON_BODY_RE = re.compile(
+    r"Так\s+в\s+\S.+\s+заканчивается\s+",
+    re.IGNORECASE,
+)
+
+
+def _peel_glued_unit_ordinal(ord_phrase: str, rest: str) -> tuple[str, str]:
+    """Recover a compound ordinal when OLE/PDF glues the unit onto body text.
+
+    H2353: OLE extract of Kālikā-purāṇa ch.62 produced
+    ``Глава шестьдесят втораяовно свинцовый...`` — the second ordinal word
+    ``вторая`` is glued to the chapter's first body word with no space, so
+    the chapter-open regex captures only the tens prefix ``шестьдесят``
+    (not itself a full ordinal — ``ordinal_f_to_int`` returns None) and the
+    whole chapter body is dropped. Peel a known unit ordinal off the front
+    of ``rest`` when the captured ``ord`` is a bare tens prefix.
+    """
+    if not rest:
+        return ord_phrase, rest
+    if ordinal_f_to_int(ord_phrase) is not None:
+        return ord_phrase, rest
+    tens = _TENS_PREFIX.get(ord_phrase.strip().lower().replace("ё", "е"))
+    if tens is None:
+        tens = _TENS_PREFIX.get(ord_phrase.strip().lower())
+    if tens is None:
+        return ord_phrase, rest
+    rest_norm = rest.lower().replace("ё", "е")
+    for unit in sorted(_UNITS_F, key=len, reverse=True):
+        unit_norm = unit.replace("ё", "е")
+        if rest_norm.startswith(unit_norm):
+            peeled = f"{ord_phrase.strip()} {unit}"
+            if ordinal_f_to_int(peeled) is not None:
+                return peeled, rest[len(unit_norm):].lstrip()
+    return ord_phrase, rest
+
+
+class _ChapterOpen:
+    """Lightweight stand-in for a regex match with the same ``.group(name)``
+    API, so callers keep working after glued-ordinal peeling rewrites ``ord``
+    / ``rest``.
+    """
+
+    __slots__ = ("_g",)
+
+    def __init__(self, ord_s, rest_s, title, prefix):
+        self._g = {
+            "ord": ord_s,
+            "rest": rest_s,
+            "title": title,
+            "prefix": prefix,
+        }
+
+    def group(self, name):
+        return self._g.get(name)
+
 
 def _is_chapter_open(line: str):
     """Match a real chapter-opening heading, or None for ToC / non-matches.
 
-    Returns the regex match object on success. ToC leader-dot lines (and
-    lines whose 'rest' is only a bare page number) are rejected even though
-    they satisfy the raw ordinal form.
+    Returns a match-like object (``.group(name)``) on success. ToC leader-dot
+    lines (and lines whose 'rest' is only a bare page number) are rejected
+    even though they satisfy the raw ordinal form.
+
+    On OLE/PDF glue where the unit ordinal is fused to the first body word
+    (H2353 Kālikā ch.62), peels the unit off ``rest`` so the chapter is not
+    silently dropped.
     """
     m = _CHAPTER_OPEN_RE.match(line)
     if not m:
@@ -127,7 +194,12 @@ def _is_chapter_open(line: str):
     # whole-line form.
     if _TOC_LEADER_RE.search(line):
         return None
-    return m
+    ord_phrase, rest = _peel_glued_unit_ordinal(m.group("ord"), rest)
+    # Bare tens-prefix alone is not a usable chapter open (would become
+    # chapter=None and drop the body).
+    if ordinal_f_to_int(ord_phrase) is None:
+        return None
+    return _ChapterOpen(ord_phrase, rest or None, m.group("title"), m.group("prefix"))
 
 # Endnote-block heading: "Комментарий"/"Комментарии"/"Примечания" alone on a
 # line, optionally with pandoc's glued first footnote marker ("[1]
@@ -399,13 +471,16 @@ def _looks_like_footnote_debris(text: str) -> bool:
     # Continuation after a footnote number was stripped: ". gloss …".
     if t.startswith(". ") or t.startswith("– ") or t.startswith("- "):
         return True
+    # Chapter colophon left in body with a false high-N marker (H2353).
+    if _COLOPHON_BODY_RE.search(t):
+        return True
     return False
 
 
 def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
-    """Merge false ``(N)`` splits from footnote prose (H1829 / H2273).
+    """Merge false ``(N)`` splits from footnote prose (H1829 / H2273 / H2353).
 
-    Three classes of debris:
+    Four classes of debris:
       1. Non-monotonic restarts (e.g. 5→1, 3→1) — always merge into previous.
       2. Same-N or early-N chunks whose text looks like a footnote header /
          gloss continuation — merge; genuine same-N duplicates with real
@@ -416,6 +491,9 @@ def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
          high-water mark and every later real verse 7…14 is swallowed as a
          "non-monotonic restart" into that note bag. Measured on
          nirvāṇa-tantra ch.8 pre-H1829 JSONL.
+      4. Impossible forward jumps (H2353): start-N ≥ prev_end + 50 while
+         prev_end ≥ 1 — a colophon/endnote marker like ``(1401-1464)`` after
+         real verse 158. Drop (do not merge — colophon text is not verse).
     """
     if not verses:
         return verses
@@ -431,7 +509,13 @@ def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
             # Same-or-higher N that is still debris-shaped: absorb so a false
             # high-N footnote never becomes prev_end (class 2 + class 3).
             if _looks_like_footnote_debris(text) and n >= prev_end:
+                # Colophon debris: drop rather than glue onto the last verse.
+                if _COLOPHON_BODY_RE.search(text):
+                    continue
                 out[-1]["text"] = (out[-1]["text"] + " " + text).strip()
+                continue
+            # Class 4: absurd forward jump (colophon/range misread as verse N).
+            if prev_end >= 1 and n >= prev_end + 50:
                 continue
         out.append(v)
         if n is not None:
@@ -656,13 +740,20 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
         report["chapter_numbers"].append(chn)
 
         prev_v = 0
+        empty_skipped = 0
         for v in verses:
-            seq += 1
             label = v["verse"].replace(" ", "")
             if "-" in label or "–" in label:
                 passage = f"{chn}.{re.split(r'[-–]', label)[0]}-{re.split(r'[-–]', label)[1]}"
             else:
                 passage = f"{chn}.{label}"
+            clean, html_text, _refs = link_footnotes(v["text"], fn_numbers, used_fn)
+            # OLE/PDF sometimes leaves a bare ``(1)`` with no body after the
+            # chapter heading (H2353 Devīmāhātmya ch.1/2/13). Empty verses are
+            # not real passages — skip rather than mint blank cards.
+            if not clean.strip():
+                empty_skipped += 1
+                continue
             if passage in seen_passages:
                 report.setdefault("id_collisions", []).append(passage)
                 suffix = "b"
@@ -671,7 +762,7 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
                 passage = f"{passage}{suffix}"
             seen_passages.add(passage)
             group = f"{work_slug}:{passage}"
-            clean, html_text, _refs = link_footnotes(v["text"], fn_numbers, used_fn)
+            seq += 1
             rec = {
                 "id": f"{work_slug}:{passage}#ru", "work": work_slug,
                 "passage": passage, "seg": "ru", "group": group, "lang": "ru",
@@ -690,6 +781,9 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
                 prev_v = int(re.split(r"[-–]", label)[-1])
             except ValueError:
                 pass
+        if empty_skipped:
+            report.setdefault("empty_verses_skipped", 0)
+            report["empty_verses_skipped"] += empty_skipped
 
         # H1828: resolve endnote targets to passages actually emitted this chapter.
         chapter_passages = sorted(
@@ -820,6 +914,9 @@ def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
         merged["annotates_remap_max_delta"] = max(
             merged["annotates_remap_max_delta"], rep.get("annotates_remap_max_delta", 0))
         merged["annotates_remaps"].extend(rep.get("annotates_remaps") or [])
+        if rep.get("empty_verses_skipped"):
+            merged.setdefault("empty_verses_skipped", 0)
+            merged["empty_verses_skipped"] += rep["empty_verses_skipped"]
         merged["parts"].append({
             "path": str(path),
             "chapters": rep.get("chapters", 0),

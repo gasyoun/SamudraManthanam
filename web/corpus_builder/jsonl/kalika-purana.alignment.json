@@ -1,0 +1,370 @@
+{
+  "ru_verses": 8137,
+  "sa_verses": 0,
+  "matched": 0,
+  "ru_only": 8137,
+  "sa_orphan": 0,
+  "by_chapter": {
+    "?.1": {
+      "matched": 0,
+      "ru_only": 62
+    },
+    "?.2": {
+      "matched": 0,
+      "ru_only": 58
+    },
+    "?.3": {
+      "matched": 0,
+      "ru_only": 50
+    },
+    "?.4": {
+      "matched": 0,
+      "ru_only": 42
+    },
+    "?.5": {
+      "matched": 0,
+      "ru_only": 71
+    },
+    "?.6": {
+      "matched": 0,
+      "ru_only": 72
+    },
+    "?.7": {
+      "matched": 0,
+      "ru_only": 35
+    },
+    "?.8": {
+      "matched": 0,
+      "ru_only": 73
+    },
+    "?.9": {
+      "matched": 0,
+      "ru_only": 59
+    },
+    "?.10": {
+      "matched": 0,
+      "ru_only": 77
+    },
+    "?.11": {
+      "matched": 0,
+      "ru_only": 58
+    },
+    "?.12": {
+      "matched": 0,
+      "ru_only": 66
+    },
+    "?.13": {
+      "matched": 0,
+      "ru_only": 52
+    },
+    "?.14": {
+      "matched": 0,
+      "ru_only": 57
+    },
+    "?.15": {
+      "matched": 0,
+      "ru_only": 52
+    },
+    "?.16": {
+      "matched": 0,
+      "ru_only": 67
+    },
+    "?.17": {
+      "matched": 0,
+      "ru_only": 55
+    },
+    "?.18": {
+      "matched": 0,
+      "ru_only": 119
+    },
+    "?.19": {
+      "matched": 0,
+      "ru_only": 81
+    },
+    "?.20": {
+      "matched": 0,
+      "ru_only": 158
+    },
+    "?.21": {
+      "matched": 0,
+      "ru_only": 121
+    },
+    "?.22": {
+      "matched": 0,
+      "ru_only": 116
+    },
+    "?.23": {
+      "matched": 0,
+      "ru_only": 152
+    },
+    "?.24": {
+      "matched": 0,
+      "ru_only": 120
+    },
+    "?.25": {
+      "matched": 0,
+      "ru_only": 59
+    },
+    "?.26": {
+      "matched": 0,
+      "ru_only": 30
+    },
+    "?.27": {
+      "matched": 0,
+      "ru_only": 53
+    },
+    "?.28": {
+      "matched": 0,
+      "ru_only": 16
+    },
+    "?.29": {
+      "matched": 0,
+      "ru_only": 42
+    },
+    "?.30": {
+      "matched": 0,
+      "ru_only": 185
+    },
+    "?.31": {
+      "matched": 0,
+      "ru_only": 43
+    },
+    "?.32": {
+      "matched": 0,
+      "ru_only": 54
+    },
+    "?.33": {
+      "matched": 0,
+      "ru_only": 71
+    },
+    "?.34": {
+      "matched": 0,
+      "ru_only": 85
+    },
+    "?.35": {
+      "matched": 0,
+      "ru_only": 22
+    },
+    "?.36": {
+      "matched": 0,
+      "ru_only": 50
+    },
+    "?.37": {
+      "matched": 0,
+      "ru_only": 60
+    },
+    "?.38": {
+      "matched": 0,
+      "ru_only": 165
+    },
+    "?.39": {
+      "matched": 0,
+      "ru_only": 59
+    },
+    "?.40": {
+      "matched": 0,
+      "ru_only": 36
+    },
+    "?.41": {
+      "matched": 0,
+      "ru_only": 85
+    },
+    "?.42": {
+      "matched": 0,
+      "ru_only": 189
+    },
+    "?.43": {
+      "matched": 0,
+      "ru_only": 117
+    },
+    "?.44": {
+      "matched": 0,
+      "ru_only": 61
+    },
+    "?.45": {
+      "matched": 0,
+      "ru_only": 186
+    },
+    "?.46": {
+      "matched": 0,
+      "ru_only": 92
+    },
+    "?.47": {
+      "matched": 0,
+      "ru_only": 95
+    },
+    "?.48": {
+      "matched": 0,
+      "ru_only": 77
+    },
+    "?.49": {
+      "matched": 0,
+      "ru_only": 79
+    },
+    "?.50": {
+      "matched": 0,
+      "ru_only": 157
+    },
+    "?.51": {
+      "matched": 0,
+      "ru_only": 212
+    },
+    "?.52": {
+      "matched": 0,
+      "ru_only": 30
+    },
+    "?.53": {
+      "matched": 0,
+      "ru_only": 40
+    },
+    "?.54": {
+      "matched": 0,
+      "ru_only": 46
+    },
+    "?.55": {
+      "matched": 0,
+      "ru_only": 104
+    },
+    "?.56": {
+      "matched": 0,
+      "ru_only": 82
+    },
+    "?.57": {
+      "matched": 0,
+      "ru_only": 188
+    },
+    "?.58": {
+      "matched": 0,
+      "ru_only": 72
+    },
+    "?.59": {
+      "matched": 0,
+      "ru_only": 95
+    },
+    "?.60": {
+      "matched": 0,
+      "ru_only": 162
+    },
+    "?.61": {
+      "matched": 0,
+      "ru_only": 117
+    },
+    "?.62": {
+      "matched": 0,
+      "ru_only": 43
+    },
+    "?.63": {
+      "matched": 0,
+      "ru_only": 201
+    },
+    "?.64": {
+      "matched": 0,
+      "ru_only": 85
+    },
+    "?.65": {
+      "matched": 0,
+      "ru_only": 66
+    },
+    "?.66": {
+      "matched": 0,
+      "ru_only": 118
+    },
+    "?.67": {
+      "matched": 0,
+      "ru_only": 198
+    },
+    "?.68": {
+      "matched": 0,
+      "ru_only": 69
+    },
+    "?.69": {
+      "matched": 0,
+      "ru_only": 162
+    },
+    "?.70": {
+      "matched": 0,
+      "ru_only": 54
+    },
+    "?.71": {
+      "matched": 0,
+      "ru_only": 25
+    },
+    "?.72": {
+      "matched": 0,
+      "ru_only": 88
+    },
+    "?.73": {
+      "matched": 0,
+      "ru_only": 34
+    },
+    "?.74": {
+      "matched": 0,
+      "ru_only": 230
+    },
+    "?.75": {
+      "matched": 0,
+      "ru_only": 93
+    },
+    "?.76": {
+      "matched": 0,
+      "ru_only": 118
+    },
+    "?.77": {
+      "matched": 0,
+      "ru_only": 34
+    },
+    "?.78": {
+      "matched": 0,
+      "ru_only": 108
+    },
+    "?.79": {
+      "matched": 0,
+      "ru_only": 186
+    },
+    "?.80": {
+      "matched": 0,
+      "ru_only": 193
+    },
+    "?.81": {
+      "matched": 0,
+      "ru_only": 38
+    },
+    "?.82": {
+      "matched": 0,
+      "ru_only": 79
+    },
+    "?.83": {
+      "matched": 0,
+      "ru_only": 45
+    },
+    "?.84": {
+      "matched": 0,
+      "ru_only": 131
+    },
+    "?.85": {
+      "matched": 0,
+      "ru_only": 76
+    },
+    "?.86": {
+      "matched": 0,
+      "ru_only": 143
+    },
+    "?.87": {
+      "matched": 0,
+      "ru_only": 58
+    },
+    "?.88": {
+      "matched": 0,
+      "ru_only": 72
+    },
+    "?.89": {
+      "matched": 0,
+      "ru_only": 160
+    },
+    "?.90": {
+      "matched": 0,
+      "ru_only": 41
+    }
+  },
+  "sa_orphans": []
+}
