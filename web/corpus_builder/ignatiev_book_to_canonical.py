@@ -192,6 +192,11 @@ _ENDNOTE_RE = re.compile(
 )
 
 
+# antiword wall-clock budget for a single .doc (H2352). Large multi-MB
+# Ignatiev files stay well under this; a hung process is a hard error.
+_ANTIWORD_TIMEOUT_S = 120
+
+
 def _extract_doc_ole_utf16(path: Path) -> str:
     """Best-effort body extract from a Word 97-2003 .doc via the OLE
     WordDocument stream (UTF-16LE). Used when antiword is absent and Word
@@ -200,15 +205,26 @@ def _extract_doc_ole_utf16(path: Path) -> str:
     plain-prose scholarly translations where chapter headings and ``(N)``
     verse markers survive as contiguous UTF-16 runs. Requires ``olefile``.
     """
-    import olefile  # lazy: only needed for the .doc fallback path
+    try:
+        import olefile  # lazy: only needed for the .doc fallback path
+    except ImportError as e:
+        raise RuntimeError(
+            f"cannot extract .doc {path}: antiword not on PATH and "
+            f"olefile is not installed (pip install olefile)"
+        ) from e
 
-    ole = olefile.OleFileIO(str(path))
+    try:
+        ole = olefile.OleFileIO(str(path))
+    except Exception as e:
+        raise RuntimeError(f"cannot open .doc as OLE compound file: {path}") from e
     try:
         if not ole.exists("WordDocument"):
-            raise ValueError(f"no WordDocument stream in {path}")
+            raise RuntimeError(f"no WordDocument stream in {path}")
         data = ole.openstream("WordDocument").read()
     finally:
         ole.close()
+    if not data:
+        raise RuntimeError(f"empty WordDocument stream in {path}")
     if len(data) % 2:
         data = data[:-1]
     raw = data.decode("utf-16le", errors="ignore")
@@ -227,7 +243,49 @@ def _extract_doc_ole_utf16(path: Path) -> str:
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r" *\n *", "\n", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
-    return text.strip() + "\n"
+    text = text.strip()
+    if not text:
+        raise RuntimeError(
+            f"OLE UTF-16 extract produced empty text for {path} "
+            f"(not a silent empty string)"
+        )
+    return text + "\n"
+
+
+def _extract_doc_antiword(path: Path) -> str:
+    """Run antiword on a legacy .doc; raise RuntimeError with path on failure.
+
+    Encoding: ``-m cp1251.txt`` + decode as cp1251 — Ignatiev's archive is
+    Russian Windows Word. Requires ``ANTIWORDHOME`` pointed at the mapping
+    directory (derived from the binary's install prefix).
+    """
+    antiword_bin = shutil.which("antiword")
+    if not antiword_bin:
+        raise FileNotFoundError("antiword not on PATH")
+    mapping_dir = str(Path(antiword_bin).parent.parent / "share" / "antiword")
+    env = {**os.environ, "ANTIWORDHOME": mapping_dir}
+    try:
+        out = subprocess.run(
+            [antiword_bin, "-m", "cp1251.txt", "-w", "0", str(path)],
+            capture_output=True,
+            timeout=_ANTIWORD_TIMEOUT_S,
+            env=env,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as e:
+        raise RuntimeError(
+            f"antiword timed out after {_ANTIWORD_TIMEOUT_S}s on {path}"
+        ) from e
+    if out.returncode != 0:
+        err = (out.stderr or b"").decode("utf-8", errors="replace").strip()
+        raise RuntimeError(
+            f"antiword failed (exit {out.returncode}) on {path}"
+            + (f": {err}" if err else "")
+        )
+    text = out.stdout.decode("cp1251", errors="replace").strip()
+    if not text:
+        raise RuntimeError(f"antiword returned empty text for {path}")
+    return text + "\n"
 
 
 def extract_text(path: Path) -> str:
@@ -251,20 +309,27 @@ def extract_text(path: Path) -> str:
         # pdftotext prepends a form-feed to the first line of every page.
         return out.stdout.replace("\x0c", "\n")
     if suffix == ".doc":
-        # Legacy binary Word format. Prefer antiword (correct Cyrillic when
+        # Legacy binary Word (H2352). Prefer antiword (correct Cyrillic when
         # ANTIWORDHOME + -m cp1251.txt are set); fall back to an OLE
-        # WordDocument UTF-16LE scan when antiword is missing or Word COM
-        # cannot open nested-ObjectPool files (Office 2007 rejects some).
-        antiword_bin = shutil.which("antiword")
-        if antiword_bin:
-            mapping_dir = str(Path(antiword_bin).parent.parent / "share" / "antiword")
-            env = {**os.environ, "ANTIWORDHOME": mapping_dir}
-            out = subprocess.run(
-                ["antiword", "-m", "cp1251.txt", "-w", "0", str(path)],
-                capture_output=True, check=True, env=env,
-            )
-            return out.stdout.decode("cp1251", errors="replace")
-        return _extract_doc_ole_utf16(path)
+        # WordDocument UTF-16LE scan when antiword is missing, times out,
+        # or returns non-zero. Never return a silent empty string — both
+        # paths raise RuntimeError with the source path on failure.
+        # CI policy: antiword is OPTIONAL; hermetic tests exercise the OLE
+        # path with a synthetic fixture; antiword tests skip when absent.
+        errors: list[str] = []
+        if shutil.which("antiword"):
+            try:
+                return _extract_doc_antiword(path)
+            except (RuntimeError, FileNotFoundError, OSError) as e:
+                errors.append(f"antiword: {e}")
+        try:
+            return _extract_doc_ole_utf16(path)
+        except RuntimeError as e:
+            errors.append(f"ole: {e}")
+            detail = "; ".join(errors) if errors else "no extractor available"
+            raise RuntimeError(
+                f"cannot extract text from .doc {path} ({detail})"
+            ) from e
     raise ValueError(f"unsupported source format: {suffix} ({path})")
 
 
