@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Wave-1 journal truth-pass (H2350, Grok 4.5 `grok-4.5`).** `.ai_state.md` Queue/WIP no longer claim H1926 “in flight” or print an H1927 execute starter — Lanes A–D are recorded as shipped (v0.16.0–v0.19.1); residuals point only at H2351–H2354. Hub GTD execute block for H1924–H1927 closed in the same pass.
+
 ## [0.19.2] - 2026-08-07
 
 ### Added
