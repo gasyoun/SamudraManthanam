@@ -1,0 +1,42 @@
+{
+  "work": "bhagavata-purana",
+  "chapters": 13,
+  "verse_count": 1176,
+  "comment_count": 0,
+  "verse_gaps": [],
+  "chapter_numbers": [
+    2,
+    3,
+    4,
+    5,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23
+  ],
+  "unrecognised_endnotes": 0,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "prose_paragraph_split_chapters": [
+    2,
+    3,
+    4,
+    5,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23
+  ],
+  "total_endnotes": 0
+}

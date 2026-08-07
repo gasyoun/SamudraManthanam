@@ -1,0 +1,38 @@
+{
+  "work": "linga-purana",
+  "chapters": 2,
+  "verse_count": 124,
+  "comment_count": 0,
+  "verse_gaps": [
+    "17: 27->31",
+    "29: 28->33"
+  ],
+  "chapter_numbers": [
+    17,
+    29
+  ],
+  "unrecognised_endnotes": 0,
+  "id_collisions": [],
+  "total_endnotes": 0,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "parts": [
+    {
+      "path": "C:\\Users\\user\\Documents\\GitHub\\SamudraManthanam\\archive_ignatiev_2026\\Переводы с санскрита\\Линга-пурана\\Линга-пурана. Глава 17.pdf",
+      "chapters": 1,
+      "verse_count": 45,
+      "chapter_numbers": [
+        17
+      ]
+    },
+    {
+      "path": "C:\\Users\\user\\Documents\\GitHub\\SamudraManthanam\\archive_ignatiev_2026\\Переводы с санскрита\\Линга-пурана\\Линга-пурана. Глава 29.pdf",
+      "chapters": 1,
+      "verse_count": 79,
+      "chapter_numbers": [
+        29
+      ]
+    }
+  ]
+}

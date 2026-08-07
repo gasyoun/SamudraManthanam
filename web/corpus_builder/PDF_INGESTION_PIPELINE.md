@@ -235,7 +235,7 @@ Differences from the DBhP path (module docstring has the full rationale):
 - Text extraction branches on file extension: `pandoc -f docx -t plain` or
   `pdftotext -enc UTF-8` (same form-feed normalisation as the DBhP path).
 
-**Status: 12/~20 works ingested (H1438).** Wave A (5) + Wave B (5) + Wave C (2) landed.
+**Status: 18/~20 works ingested (H1438).** Wave A (5) + Wave B (5) + Wave C (2) + Wave D (6) landed.
 Wave A tail (the 4 PDF tantras) plus the pilot's 2 works:
 
 - **Cīnācāra-tantra** (docx, pilot): 5 ch, 225 verses, 154/168 endnotes
@@ -373,8 +373,35 @@ reproduction, until pandoc is pinned.**
 SA converter: [`gretil_markp_devimahatmya_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/gretil_markp_devimahatmya_to_canonical.py)
 (source `sanskrit_src/mkp1-93u.htm`). Summary: `jsonl/wave_c_summary.json`.
 
-**Remaining** (Wave D fragments; Māyā-tantra deferred glued-digit front-end)
-stay scoped in
-[H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md).
+### Wave D (fragments / selected — explicit partial provenance) — landed 07-08-2026 (H2376)
+
+| Work | Source | Ch | Verses | Endnotes | SA | Notes |
+|---|---|---:|---:|---:|---|---|
+| Devī-purāṇa | docx | 1 | 18 | 0 | none | **ch.22 only** (`Из двадцать второй главы`); RT 18/18 (100%) |
+| Liṅga-purāṇa | 2× PDF | 2 | 124 | 0 | none | **ch.17 + 29 only**; pdftotext absent → pypdf fallback; RT 124/124 (100%) |
+| Padma-purāṇa | `.doc` (OLE) | 16 | 1039 | 0 | none | **Jālandhara tale only — NOT whole Padma**; RT 1038/1039 (99.9%) |
+| Bhāgavata-purāṇa | RTF-as-`.doc` | 13 | 1176 | 0 | none | **partial** (sk.4 ch.2–5 + 14–21,23); prose, no `(N)` → paragraph units; RT 1176/1176 (100%) |
+| Bṛhannīla-tantra | docx Избранное | 18 | 1387 | 1146 | none | **selected**; non-monotonic ch order; RT **1351/1387 (97.4%)** honest residue (36 endnote-adjacent passages re-keyed as `.commN` by `html_to_canonical`) |
+| Śāktisaṅgama-tantra | docx Избранное | 28 | 1494 | 1 | none | **selected**; multi-khaṇḍa overlap → `id_collisions`; RT 1491/1494 (99.8%) |
+
+**Four Wave-D parser/extract hardenings** (unit tests in
+[`test_ignatiev_book_units.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ignatiev_book_units.py);
+35 passed + 3 optional skips):
+
+1. **Excerpt heading** — `Из <ordinal gen> главы` (Devī ch.22) + genitive
+   feminine ordinals in `ru_ordinals.py`.
+2. **Trailing period on chapter open** — `ГЛАВА ВТОРАЯ.` (RTF/print).
+3. **Digit chapter heads** — `ГЛАВА 14` (Bhāgavata partial).
+4. **Extract front-ends** — pypdf PDF fallback when `pdftotext` missing;
+   RTF-as-`.doc` via pandoc + cp1251 mojibake reverse; prose chapters without
+   `(N)` markers fall back to paragraph units (`prose_paragraph_split_chapters`
+   in the report).
+
+Summary: [`jsonl/wave_d_summary.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/jsonl/wave_d_summary.json).
+Corpus-manifest pin rebuilt in the same pass (H2351 discipline: append, do not
+drop existing sources).
+
+**Remaining** under H1438: Māyā-tantra → [H2377](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2377-Grok_SamudraManthanam_h1438-maya-tantra_07.08.26.md)
+(if still open); Kāma-samūha / Kādambara / Прочее miscellany deferred.
 
 _Dr. Mārcis Gasūns_
