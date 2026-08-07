@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.2] - 2026-08-07
 ### Added
 - **Legacy `.doc` extract front-end hardened for H1438 remainder (H2352, Grok 4.5 `grok-4.5`).** `extract_text()` prefers `antiword` (cp1251, 120 s timeout, path-bearing errors) and falls back to the OLE WordDocument UTF-16 scan via `olefile`; never returns a silent empty string. Hermetic unit tests cover the OLE path with a synthetic minimal OLE fixture; antiword/archive smokes skip when absent (CI policy: antiword optional). Doc: [`PDF_INGESTION_PIPELINE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md) § Legacy `.doc` extract. Dep: `olefile==0.47`. Full Wave C/D ingest remains **H2353**.
 
