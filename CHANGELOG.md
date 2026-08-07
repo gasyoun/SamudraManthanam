@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Committed corpus pin + hard corpus-gate (H2351, Grok 4.5 `grok-4.5`).** Generated and committed [`web/corpus_builder/manifest/corpus-manifest.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/manifest/corpus-manifest.json) (`bundle_version` 2026.08, **197** sources / **703,699** records, full SHA-256 verify). [`corpus-gate.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/corpus-gate.yml) no longer only warns “NOT a pinned-bundle run”: missing pin exits 1; present pin is schema-validated always and full-hash + rebuild-diff validated when checkout JSONL is present. Optional `source_file`/`metadata` blocks that would fall outside `corpus_root` (schema-illegal `..` paths) are omitted. Spec: [`docs/CORPUS_BUNDLE_SPEC.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CORPUS_BUNDLE_SPEC.md).
+
 ### Changed
 - **Wave-1 journal truth-pass (H2350, Grok 4.5 `grok-4.5`).** `.ai_state.md` Queue/WIP no longer claim H1926 “in flight” or print an H1927 execute starter — Lanes A–D are recorded as shipped (v0.16.0–v0.19.1); residuals point only at H2351–H2354. Hub GTD execute block for H1924–H1927 closed in the same pass.
 

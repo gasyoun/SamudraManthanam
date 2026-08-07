@@ -1,6 +1,6 @@
 # CORPUS BUNDLE SPEC — canonical manifest and immutable bundle
 
-_Created: 05-08-2026 · Last updated: 05-08-2026_
+_Created: 05-08-2026 · Last updated: 07-08-2026_
 
 Lane A of
 [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
@@ -35,6 +35,7 @@ came from. The manifest closes both gaps.
 | Path | Role |
 |---|---|
 | [web/corpus_builder/manifest/schema-v1.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/manifest/schema-v1.json) | JSON Schema (draft 2020-12) — the single validator |
+| [web/corpus_builder/manifest/corpus-manifest.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/manifest/corpus-manifest.json) | **Committed pin** (H2351) — identity of the published JSONL bundle; corpus-gate fails hard if missing or stale |
 | [web/corpus_builder/manifest/corpus-manifest.fixture.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/manifest/corpus-manifest.fixture.json) | Worked example, validated by the test suite against its real files |
 | [web/corpus_builder/corpus_manifest.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/corpus_manifest.py) | `build` · `validate` · `diff` |
 | [web/corpus_builder/build_report.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/build_report.py) | Generated-view registration |
@@ -115,6 +116,23 @@ python corpus_builder/corpus_manifest.py diff <old> <new> [--json] [--fail-on-ch
 `--corpus-path` is given, and falls back to the canonical JSONL directory
 otherwise. Everything else — identity, content, counts — always comes from the
 JSONL.
+
+**Committed pin practice (H2351):** regenerate the pin from the JSONL tree
+(without `--corpus-path`) so every publishable source is named and every path
+stays under `web/` (schema forbids `..` traversal). Measured 07-08-2026:
+197 sources / 703,699 records after excluding 22 named pipeline intermediates
+(`*.raw.jsonl`, `*.sanskrit.jsonl`). `Programdata/data.txt` still lists only
+193 filenames; it remains a warn-path fallback for legacy HTML order, not the
+pin identity. After any JSONL change that should become the published bundle:
+
+```text
+python corpus_builder/corpus_manifest.py build \
+    --bundle-version 2026.08 \
+    --out corpus_builder/manifest/corpus-manifest.json
+python corpus_builder/corpus_manifest.py validate \
+    corpus_builder/manifest/corpus-manifest.json
+# then commit the pin in the same PR as the JSONL change
+```
 
 Publication consumes the manifest:
 

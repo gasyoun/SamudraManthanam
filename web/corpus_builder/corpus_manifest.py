@@ -108,6 +108,21 @@ def _rel_posix(path: Path, root: Path) -> str:
     return PurePosixPath(os.path.relpath(path, root).replace(os.sep, "/")).as_posix()
 
 
+def _rel_under_root(path: Path, root: Path) -> str | None:
+    """Relative POSIX path only when `path` stays under `root`.
+
+    Schema paths forbid `..` traversal. Legacy desktop trees (e.g. Index/...)
+    often sit outside the default `web/` corpus root; those optional blocks are
+    omitted rather than written as schema-illegal `../…` paths.
+    """
+    rel = _rel_posix(path, root)
+    if any(part == ".." for part in PurePosixPath(rel).parts):
+        return None
+    if rel.startswith("/"):
+        return None
+    return rel
+
+
 def _git_revision(cwd: Path) -> str:
     try:
         out = subprocess.run(
@@ -339,17 +354,21 @@ def build_manifest(
         if src.rights:
             entry["rights"] = src.rights
         if src.source_file is not None and src.source_file.exists():
-            entry["source_file"] = {
-                "path": _rel_posix(src.source_file, corpus_root),
-                "sha256": sha256_file(src.source_file),
-                "bytes": src.source_file.stat().st_size,
-            }
+            source_rel = _rel_under_root(src.source_file, corpus_root)
+            if source_rel is not None:
+                entry["source_file"] = {
+                    "path": source_rel,
+                    "sha256": sha256_file(src.source_file),
+                    "bytes": src.source_file.stat().st_size,
+                }
         if src.metadata_path is not None and src.metadata_path.exists():
-            entry["metadata"] = {
-                "path": _rel_posix(src.metadata_path, corpus_root),
-                "sha256": sha256_file(src.metadata_path),
-                "bytes": src.metadata_path.stat().st_size,
-            }
+            meta_rel = _rel_under_root(src.metadata_path, corpus_root)
+            if meta_rel is not None:
+                entry["metadata"] = {
+                    "path": meta_rel,
+                    "sha256": sha256_file(src.metadata_path),
+                    "bytes": src.metadata_path.stat().st_size,
+                }
         entries.append(entry)
 
     bundle = {
