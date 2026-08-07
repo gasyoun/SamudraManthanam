@@ -517,6 +517,61 @@ def test_committed_fixture_manifest_validates_against_its_files():
     assert report.ok, report.errors
 
 
+def test_committed_pin_manifest_is_structurally_valid():
+    """H2351 pin must stay schema-valid and self-consistent (no full-hash here).
+
+    Full file-hash validation of ~700 MB of JSONL belongs to corpus-gate CI,
+    not the hermetic suite. Structure + content_hash recompute still catch a
+    hand-edited totals block or a broken schema shape before a PR lands.
+    """
+    web_dir = Path(__file__).resolve().parent.parent
+    pin_path = web_dir / "corpus_builder" / "manifest" / "corpus-manifest.json"
+    assert pin_path.is_file(), f"committed pin missing: {pin_path}"
+    report = validate_manifest(
+        load_manifest(pin_path),
+        repo_root=web_dir.parent,
+        check_files=False,
+    )
+    assert report.ok, report.errors
+    assert report.stats.get("sources", 0) >= 1
+    assert report.stats.get("records", 0) >= 1
+
+
+def test_a1_out_of_root_optional_paths_are_omitted(bundle, tmp_path):
+    """Optional source_file/metadata outside corpus_root must not emit `..` paths."""
+    from corpus_builder.corpus_manifest import SourceInput, build_manifest
+
+    outside = tmp_path / "outside.html"
+    outside.write_text("<p>legacy</p>\n", encoding="utf-8")
+    outside_meta = tmp_path / "outside.html.meta.json"
+    outside_meta.write_text('{"title_ru": "out"}', encoding="utf-8")
+    jsonl = bundle["jsonl_dir"] / "fixture-alpha.jsonl"
+    sources = [
+        SourceInput(
+            slug="fixture-alpha",
+            filename="outside.html",
+            sort_order=0,
+            title="out",
+            jsonl_path=jsonl,
+            source_file=outside,
+            metadata_path=outside_meta,
+            provenance="test",
+        )
+    ]
+    manifest = build_manifest(
+        sources,
+        bundle_version="test-out",
+        corpus_root=bundle["corpus_root"],
+        repo_root=bundle["repo_root"],
+        revision="test",
+    )
+    entry = manifest["bundle"]["sources"][0]
+    assert "source_file" not in entry
+    assert "metadata" not in entry
+    report = validate_manifest(manifest, repo_root=bundle["repo_root"], check_files=True)
+    assert report.ok, report.errors
+
+
 def test_schema_file_is_valid_json_schema():
     import jsonschema
 

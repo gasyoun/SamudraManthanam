@@ -84,18 +84,17 @@ jobs:
         env:
           BUNDLE_URL: ${{ github.event.inputs.bundle_url }}
         run: |
-          # Lane A (H1924) shipped the manifest schema, a fixture and
-          # corpus_manifest.py, but no GENERATED manifest is committed yet, so
-          # there is still nothing to pin against. This step reports that gap
-          # loudly and continues against whatever corpus data the checkout
-          # carries. It must NOT silently claim to have run a pinned gate it did
-          # not run. Wire the real path once a manifest is published.
-          if [ -f web/corpus_builder/manifest/corpus-manifest.json ]; then
-            echo "manifest=present" >> "$GITHUB_OUTPUT"
-          else
-            echo "manifest=absent" >> "$GITHUB_OUTPUT"
-            echo "::warning::No corpus manifest yet (Lane A / H1924 owns it). Running the gates against checkout data only — this is NOT a pinned-bundle run."
+          # H2351: the pin is a committed artifact. Missing or stale pin is a
+          # hard failure on corpus-changing paths — never only ::warning::.
+          PIN=web/corpus_builder/manifest/corpus-manifest.json
+          if [ ! -f "$PIN" ]; then
+            echo "::error::Pinned corpus manifest missing at $PIN (H2351). Regenerate with corpus_manifest.py build and commit the pin before merging corpus-changing changes."
+            exit 1
           fi
+          echo "manifest=present" >> "$GITHUB_OUTPUT"
+          echo "pin=$PIN" >> "$GITHUB_OUTPUT"
+          # Schema + content_hash self-check always (no JSONL required).
+          python web/corpus_builder/corpus_manifest.py --repo-root . validate "$PIN" --no-files
 
       - name: Cache the resolved bundle by checksum
         if: steps.bundle.outputs.manifest == 'present'
@@ -106,10 +105,21 @@ jobs:
 
       - name: Rebuild and validate the corpus
         run: |
+          PIN=web/corpus_builder/manifest/corpus-manifest.json
           if [ -d web/corpus_builder/jsonl ] && ls web/corpus_builder/jsonl/*.jsonl >/dev/null 2>&1; then
-            echo "canonical JSONL present — running the full gate"
+            echo "canonical JSONL present — full-hash pin check + corpus gates"
+            # Every named file must match the pin (size + sha256).
+            python web/corpus_builder/corpus_manifest.py --repo-root . validate "$PIN"
+            # Rebuild from the checkout tree; content_hash must stay identical.
+            # (build.revision may differ; content_hash covers bundle only.)
+            BUNDLE_VERSION=$(python -c "import json; print(json.load(open('$PIN', encoding='utf-8'))['bundle']['bundle_version'])")
+            python web/corpus_builder/corpus_manifest.py --repo-root . build \
+              --bundle-version "$BUNDLE_VERSION" \
+              --out /tmp/corpus-manifest.rebuild.json
+            python web/corpus_builder/corpus_manifest.py --repo-root . diff \
+              "$PIN" /tmp/corpus-manifest.rebuild.json --fail-on-change
           else
-            echo "::warning::canonical JSONL absent in this checkout; corpus-marked gates will self-skip"
+            echo "::warning::canonical JSONL absent in this checkout; pin is schema-valid but file hashes were not re-checked; corpus-marked gates will self-skip"
           fi
 
       - name: Duplicate-suffix categorised invariant
