@@ -1,17 +1,19 @@
 # ROADMAP — SamudraManthanam, August 2026–July 2027
 
-_Created: 30-07-2026 · Last updated: 30-07-2026_
+_Created: 30-07-2026 · Last updated: 07-08-2026_
 
 **Status: LIVING.** This is the sole status roadmap for the programme indexed
 by [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
+
+**Companion (ACL / papers):** [ROADMAP_ACL_ANTHOLOGY_FOOTPRINT_2026_2027.md](https://github.com/gasyoun/Uprava/blob/main/ROADMAP_ACL_ANTHOLOGY_FOOTPRINT_2026_2027.md).
 
 ## Goal
 
 Preserve the successful web/desktop corpus product while making its canonical
 data, durable references, deployments, migrations, and public contribution
-surface reproducible and safe. Architecture integrity leads; corpus growth
-continues immediately; collaborative research features follow on the hardened
-contracts.
+surface reproducible and safe. Architecture integrity leads; **production
+ops (Wave P) is first-class** — a living site on `samskrte.ru` LXC is not a
+side note to research waves.
 
 ## Done — do not re-plan
 
@@ -23,29 +25,49 @@ contracts.
   DBhP uniqueness scoping, and Cyrillic-homoglyph regression guard.
 - Existing FTS5/search services, publication swap, offline-pack builders, and
   shared `sanskrit-util` adoption.
+- **Wave 1 Lanes B–D product code (H1925/H1926/H1927 + H2354 absorb):** durable
+  refs, bounded regex, trust tiers, D1 migrations, single-ledger 0004/0005.
+- **First prod install (07-08-2026):** LXC `samskrtam150` (`193.232.229.92`),
+  `/opt/samudra`, systemd `samudra`, nginx + Let's Encrypt on
+  `https://samudra.193.232.229.92.sslip.io/`, corpus.db v2026.07.15 (183
+  sources), state.db migrations 0001–0005. Ops notes: `/opt/samudra/OPS.md`.
+- **Search UX passes (07-08-2026):** wait timer; compact stats/sources;
+  bilingual flex; deep-link by `link_id` (PRs #158/#161 and follow-ons).
+
+## Wave P — production (NOW — ahead of research Wave 2)
+
+**Span:** August 2026 continuous.
+
+**Why separate:** install is live but **code is not pinned to `origin/main`**
+(measured 07-08-2026: prod `git` at `ca35937`, while main has advanced).
+Ops gaps (backup, monitors, branded DNS, offline packs, zero-orphan on
+prod state) are not optional research.
+
+| ID | Unit | Exit |
+|---|---|---|
+| P1 | **Sync prod tree to `origin/main` + restart + health** | `git rev-parse` matches main; `/api/health` green; search smoke |
+| P2 | **Deploy runbook** (pull/pip/restart/rollback) in OPS.md + DEPLOYMENT.md | one-command operator path documented |
+| P3 | **Backups** — corpus.db + state.db cron + retention | restore drill once |
+| P4 | **Monitors** — health cron + journald/logrotate | alert path written |
+| P5 | **Branded hostname + TLS** when DNS exists (sslip.io stays fallback) | certbot on real name |
+| P6 | **Offline packs** built and served under prod static/API | size gates pass |
+| P7 | **Zero-orphan / durable-ref gate** on prod state vs corpus | report artifact |
+| P8 | **Performance baseline** against public URL | PERFORMANCE_BASELINES row |
+| P9 | **UX acceptance** bilingual + deep-link on prod | checklist green |
+| P10 | **Admin key / env hardening** + header security (HSTS after stable HTTPS) | checklist |
+| P11 | **Systema co-host safety** — nginx only `server_name` samudra hosts | samskrte.ru unchanged |
+
+Minted handoffs use slug prefix `prod-…` (see Uprava registry same day).
 
 ## Wave 1 — integrity plus bounded corpus delivery
 
-**Span:** August–September 2026.
+**Span:** August–September 2026 (code largely shipped; residual = manifest +
+corpus lanes + full gate on every corpus PR).
 
-**Execution routing:** H1919–H1922 are superseded historical Codex packets.
-Run Lanes A–D from the Opus 5 1M (`claude-opus-5[1m]`) Claude Code handoffs:
-[H1924](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md),
-[H1925](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md),
-[H1926](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md),
-and
-[H1927](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md).
-Start H1924 and independent H1926 first; H1925 depends on H1924; H1927 may
-start independent substeps but its final smoke consumes H1924–H1926.
-
-- H1924:
-  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1924-Opus_SamudraManthanam_canonical-manifest-artifact-bundle_30.07.26.md and execute it.`
-- H1926:
-  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1926-Opus_SamudraManthanam_bounded-regex-correction-trust_30.07.26.md and execute it.`
-- H1925:
-  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1925-Opus_SamudraManthanam_durable-reference-zero-orphan_30.07.26.md and execute it.`
-- H1927:
-  `Read C:\Users\user\Documents\GitHub\Uprava\handoffs\H1927-Opus_SamudraManthanam_runtime-migrations-dual-deploy_30.07.26.md and execute it.`
+**Execution routing:** H1919–H1922 superseded. H1924–H1927 product lanes are
+**✅ code-side**; treat remaining work as residual registration/gates, not
+re-implementation. Prefer new `prod-*` and corpus handoffs over re-running
+full H1924–H1927.
 
 ### A. Canonical corpus and artifact contract
 
@@ -192,11 +214,12 @@ bundle and meets the published verification and performance contract.
 
 ## Human checkpoints
 
-No blocking implementation decision remains. Human review is limited to:
-
-- the stratified corpus samples required by the quality contract;
-- merging/reconciling existing H1438/H1485 work where ownership overlaps;
-- ordinary PR review and deployment authority;
-- research-feature prioritization after Wave-2 measurements.
+- **Wave P5** branded DNS (A/AAAA → 193.232.229.92) — human DNS only.
+- Stratified corpus samples for quality contract.
+- H1438/H1485 ownership merge where overlaps.
+- Ordinary PR review; deploy authority on the LXC is agent-reachable via
+  `/ssh` (`root@193.232.229.92`).
+- Research-feature prioritization after Wave-2 measurements.
+- ACL resource paper / MT rights for A41 (see Uprava ACL footprint roadmap).
 
 _Dr. Mārcis Gasūns_
