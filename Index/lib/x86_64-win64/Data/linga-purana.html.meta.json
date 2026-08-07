@@ -1,0 +1,20 @@
+{
+  "provenance": "А. Игнатьев (перев.).  (архив переводчика). H2376 Wave D fragment: ch.17 and ch.29 only (two PDF files). Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+  "title_display": "Линга-пурана",
+  "title_en": "Liṅga-purāṇa (Ignatiev, ch.17+29)",
+  "publisher": null,
+  "title_ru": "Линга-пурана; А. Игнатьев",
+  "schema_version": 1,
+  "credit": "А. Игнатьев",
+  "imprint": "неопубликованный перевод",
+  "needs_review": true,
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+  "scripts": [
+    "cyrillic"
+  ],
+  "year": null,
+  "credit_role": "Перевод с санскрита",
+  "slug": "linga-purana",
+  "structure": "verse",
+  "filename": "linga-purana.html"
+}

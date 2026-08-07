@@ -193,3 +193,9 @@ yogini-tantra.html
 mahabhagavata-purana.html
 devimahatmya.html
 kalika-purana.html
+devi-purana.html
+linga-purana.html
+padma-purana.html
+bhagavata-purana.html
+brihannila-tantra.html
+shaktisangama-tantra.html

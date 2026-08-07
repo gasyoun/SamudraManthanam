@@ -1,0 +1,39 @@
+{
+  "work": "padma-purana",
+  "chapters": 16,
+  "verse_count": 1039,
+  "comment_count": 0,
+  "verse_gaps": [
+    "1: 30->32",
+    "2: 32->34",
+    "2: 45->47",
+    "4: 29->31",
+    "5: 27->29"
+  ],
+  "chapter_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "unrecognised_endnotes": 0,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "id_collisions": [
+    "4.14"
+  ],
+  "total_endnotes": 0
+}
