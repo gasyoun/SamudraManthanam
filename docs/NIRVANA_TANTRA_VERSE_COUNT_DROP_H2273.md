@@ -1,6 +1,6 @@
 # Nirvāṇa-tantra verse-count drop justification (H2273)
 
-_Created: 06-08-2026 · Last updated: 06-08-2026_
+_Created: 06-08-2026 · Last updated: 07-08-2026_
 
 **Model:** Grok 4.5 (`grok-4.5`). Re-ingest follow-through same day. **Handoff:** [H2273](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2273-Grok_SamudraManthanam_h1829-nirvana-tantra-verse-count-drop-justification_04.08.26.md). **Parent fix:** [H1829](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H1829-Opus_SamudraManthanam_nirvana-tantra-split-verses-footnote-debris_02.08.26.md) / [PR #126](https://github.com/gasyoun/SamudraManthanam/pull/126).
 
@@ -16,6 +16,7 @@ _Created: 06-08-2026 · Last updated: 06-08-2026_
 - **Pre-fix snapshot:** `f14694036cd196a3fbd1f7654e74b67166446ac6^1` (`verse_count: 821`, `verse_gaps` full of in-chapter restarts like `1: 3->1`).
 - **Shipped (post-H1829, pre-regen):** `verse_count: 492`, gaps only `8: 6->30`, `9: 1->4`, `11: 44->65`, `13: 50->140`.
 - **Re-ingest 06-08-2026 (this section's follow-through):** source text from `pypdf` extract of the PDF (`nirvana-tantra.txt` beside the archive PDF; no `pdftotext` on host) through `ignatiev_book_to_canonical.py` with the H2273 high-N debris absorb. Result: **`verse_count: 465`**, `id_collisions: ["9.1"]` only (`9.4` debris primary gone; real `9.4` body kept). Ch.8 no longer has the `6->30` bag — real 9/11/12–13/14 are addressable again. Ch.13 rises 51→74 (recovered from false high-water marks). Layout is **not** pdftotext-byte-identical; some even-N gaps (e.g. ch.1 missing 2/4/8…) are high-N debris absorbs of footnote-shaped chunks that the old extract had kept as separate verse labels.
+- **Superseded for corpus pin 07-08-2026 (H2385):** re-ingest with H2377 `--footnote-mode glued-digit` (page-local note strip). New baseline: **`verse_count: 527`**, **`comment_count: 212`**, gaps 3, no id_collisions, HTML→JSONL **100%**. Full table: [`docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md). This H2273 note remains the justification for the intermediate 821→492→465 debris-absorb path.
 
 ## Chapter-by-chapter counts
 

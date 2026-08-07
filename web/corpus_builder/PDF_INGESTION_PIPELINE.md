@@ -242,8 +242,10 @@ Wave A tail (the 4 PDF tantras) plus the pilot's 2 works:
   attached — the long tail is verse-range note targets like `5.49(2)–50(1)`
   the endnote regex doesn't yet parse, gracefully merged into the preceding
   note's text rather than lost.
-- **Nirvāṇa-tantra** (PDF, pilot): 15 ch, 821 verses, 0 endnotes (source has
-  none).
+- **Nirvāṇa-tantra** (PDF, pilot; **H2385 glued-digit re-baseline**): 15 ch,
+  **527** verses / **212** page-local comments (was 465/0 under H2273
+  bracket+debris; earlier pre-H1829 821 included false footnote splits).
+  Doc: [`docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md).
 - **Niruttara-tantra** (PDF): 15 ch, 674 verses, round-trip 674/674.
 - **Guptasādhana-tantra** (PDF): 12 ch, 319 verses, round-trip 319/319.
 - **Yoni-tantra** (PDF): 8 ch, 221 verses, round-trip 221/221 — ch.8's true

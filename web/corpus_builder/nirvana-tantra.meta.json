@@ -9,9 +9,11 @@
   "imprint": "неопубликованный перевод",
   "publisher": null,
   "year": null,
-  "scripts": ["cyrillic"],
+  "scripts": [
+    "cyrillic"
+  ],
   "structure": "verse",
-  "provenance": "А. Игнатьев (перев.). Нирвана-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
+  "provenance": "А. Игнатьев (перев.). Нирвана-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2385 / H2377 front-end). Re-baseline from H2273 bracket+debris path (465 verses / 0 comments) to page-local note strip: 15 ch / 527 RU verses / 212 comments; HTML→JSONL round-trip 100%. alignment: none.",
   "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
   "needs_review": false
 }

@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "6f5526650353cbeff605b0a85127c6c60d416d11"
+    "revision": "d4abfea266b8fdf67063db7c86c30c5a212ae3b2"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -2975,12 +2975,12 @@
       },
       {
         "canonical": {
-          "bytes": 748131,
+          "bytes": 883911,
           "first_canonical_id": "nirvana-tantra:1.1#ru",
-          "last_canonical_id": "nirvana-tantra:15.42#ru",
+          "last_canonical_id": "nirvana-tantra:15.27.comm1",
           "path": "corpus_builder/jsonl/nirvana-tantra.jsonl",
-          "record_count": 465,
-          "sha256": "752b1ad765e2831c07547592f1db7fc42f4f2a76b5143f28b314296021d60e49"
+          "record_count": 739,
+          "sha256": "eb7f32b1e1954d318547ebd2745acf4abd58f98e07378a2add41e59bf2a9d91f"
         },
         "filename": "nirvana-tantra.html",
         "provenance": "А. Игнатьев (перев.). Нирвана-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
@@ -3247,12 +3247,12 @@
       },
       {
         "canonical": {
-          "bytes": 678169,
+          "bytes": 677678,
           "first_canonical_id": "maya-tantra:1.1#ru",
           "last_canonical_id": "maya-tantra:12.11.comm1",
           "path": "corpus_builder/jsonl/maya-tantra.jsonl",
           "record_count": 491,
-          "sha256": "a15296508ea2fac0b505539bc6f509a38e48200df2c920dfd3e2aa6021ed1679"
+          "sha256": "0606b9870e0afd3b51eb1778d48ea52102c85618b2c0190df36abea69e6951c8"
         },
         "filename": "maya-tantra.html",
         "provenance": "А. Игнатьев (перев.). Майя-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377). Page-local glued-digit footnotes stripped before verse split; 12 ch / 343 RU verses / 148 comments. alignment: none (no keyed SA witness found).",
@@ -3263,11 +3263,11 @@
       }
     ],
     "totals": {
-      "canonical_bytes": 679793206,
-      "record_count": 691220,
+      "canonical_bytes": 679928495,
+      "record_count": 691494,
       "source_count": 202
     }
   },
-  "content_hash": "sha256:7a99e21d8dc472cea534b3a9fdc73b12edc4ef1eea25f7865fa31a51525dc63c",
+  "content_hash": "sha256:c8dc503d879547097085cf4b327895ddede5ad2c241aa28b9403d4db235fe12d",
   "schema_version": 1
 }
