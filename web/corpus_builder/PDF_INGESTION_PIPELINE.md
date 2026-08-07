@@ -197,10 +197,25 @@ at the **end of each Комментарий note block** (notes close every skan
 [`ignatiev_book_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/ignatiev_book_to_canonical.py)
 generalizes stage 1 for А. Игнатьев's ~20 other translations (tantras +
 upapurāṇas, `archive_ignatiev_2026/Переводы с санскрита/`) — each a
-standalone work with no skandha/volume level, sourced as a single `.docx` or
-`.pdf` file rather than DBhP's 6-volume PDF set. Rights: cleared for
+standalone work with no skandha/volume level, sourced as a single `.docx`,
+`.doc`, or `.pdf` file rather than DBhP's 6-volume PDF set. Rights: cleared for
 "all my works ... whether published or unpublished" — see
 [RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md](https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md).
+
+### Legacy `.doc` extract (H2352)
+
+`extract_text()` accepts Word 97–2003 binary `.doc` as follows:
+
+| Path | When | Notes |
+|---|---|---|
+| **antiword** (preferred) | `antiword` on PATH | `-m cp1251.txt`, 120 s timeout; non-zero / empty / timeout → fall through |
+| **OLE UTF-16** (fallback) | antiword missing or failed | `olefile` WordDocument stream scan — hermetic CI path |
+
+**CI policy:** antiword is **optional** — hermetic unit tests always cover the OLE
+path with a synthetic fixture (`test_ignatiev_book_units.py`); antiword/archive
+smokes `pytest.skip` when the binary or gitignored archive is absent. Never
+return a silent empty string; both paths raise `RuntimeError` with the source
+path. Do **not** commit `archive_ignatiev_2026/` blobs. No `soffice` dependency.
 
 Differences from the DBhP path (module docstring has the full rationale):
 

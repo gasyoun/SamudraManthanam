@@ -7,6 +7,7 @@ heading-only chapter splitting (no closing colophon required), bracket-style
 passage ids (no skandha level). See ``ignatiev_book_to_canonical.py``'s module
 docstring for why each of these differs from the DBhP PDF pipeline.
 """
+import re
 import sys
 from pathlib import Path
 
@@ -323,3 +324,213 @@ def test_resolve_flat_annotates_leaves_empty_chapter_untouched():
     """No emitted verse to anchor to → the original target survives unchanged."""
     resolved, resolution, delta = ig._resolve_flat_annotates("4.1", [], 4)
     assert (resolved, resolution, delta) == ("4.1", "exact", 0)
+
+
+# ---------------------------------------------------------------------------
+# H2352: .doc → antiword (preferred) / OLE UTF-16 fallback (CI-safe)
+# ---------------------------------------------------------------------------
+# CI policy: antiword is OPTIONAL. Hermetic tests always exercise the OLE
+# path via a synthetic minimal OLE fixture (no antiword binary vendored).
+# When antiword IS on PATH, one extra test exercises it; otherwise it is
+# marked skip — never fail CI for a missing optional extractor.
+
+
+def _write_minimal_ole_doc(path: Path, body: str) -> Path:
+    """Write a minimal OLE compound file with a WordDocument stream.
+
+    Payload is UTF-16LE of *body*, padded past the 4096-byte MiniFAT cutoff
+    so olefile reads it via the regular FAT chain. Enough for
+    ``_extract_doc_ole_utf16`` / ``extract_text`` — not a full Word piece
+    table.
+    """
+    import struct
+
+    magic = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"
+    sector = 512
+    endofchain = 0xFFFFFFFE
+    freesect = 0xFFFFFFFF
+    fatsect = 0xFFFFFFFD
+    mini_cutoff = 4096
+
+    data = body.encode("utf-16-le")
+    if len(data) < mini_cutoff:
+        data = data + b"\x00" * (mini_cutoff - len(data))
+    data_sectors = (len(data) + sector - 1) // sector
+    padded = data + b"\x00" * (data_sectors * sector - len(data))
+
+    def dir_entry(
+        name, obj_type, start_sect, size, *,
+        color=1, left=0xFFFFFFFF, right=0xFFFFFFFF, child=0xFFFFFFFF,
+    ):
+        name_u = (name + "\x00").encode("utf-16-le")
+        name_pad = name_u + b"\x00" * (64 - len(name_u))
+        entry = bytearray(128)
+        entry[0:64] = name_pad
+        struct.pack_into("<H", entry, 64, len(name_u))
+        entry[66] = obj_type
+        entry[67] = color
+        struct.pack_into("<I", entry, 68, left)
+        struct.pack_into("<I", entry, 72, right)
+        struct.pack_into("<I", entry, 76, child)
+        struct.pack_into("<I", entry, 116, start_sect & 0xFFFFFFFF)
+        struct.pack_into("<Q", entry, 120, size)
+        return bytes(entry)
+
+    directory = (
+        dir_entry("Root Entry", 5, endofchain, 0, child=1)
+        + dir_entry("WordDocument", 2, 2, len(data))
+        + bytes(128)
+        + bytes(128)
+    )
+    fat = [fatsect, endofchain]
+    for i in range(data_sectors):
+        fat.append(2 + i + 1 if i < data_sectors - 1 else endofchain)
+    while len(fat) < sector // 4:
+        fat.append(freesect)
+    fat_bytes = b"".join(struct.pack("<I", x) for x in fat)
+
+    hdr = bytearray(sector)
+    hdr[0:8] = magic
+    struct.pack_into("<H", hdr, 0x18, 0x003E)
+    struct.pack_into("<H", hdr, 0x1A, 0x0003)
+    struct.pack_into("<H", hdr, 0x1C, 0xFFFE)
+    struct.pack_into("<H", hdr, 0x1E, 9)
+    struct.pack_into("<H", hdr, 0x20, 6)
+    struct.pack_into("<I", hdr, 0x2C, 1)
+    struct.pack_into("<I", hdr, 0x30, 1)
+    struct.pack_into("<I", hdr, 0x38, endofchain)
+    struct.pack_into("<I", hdr, 0x3C, 0)
+    struct.pack_into("<I", hdr, 0x40, endofchain)
+    struct.pack_into("<I", hdr, 0x44, 0)
+    struct.pack_into("<I", hdr, 0x4C, 0)
+    for i in range(1, 109):
+        struct.pack_into("<I", hdr, 0x4C + 4 * i, freesect)
+
+    path.write_bytes(bytes(hdr) + fat_bytes + directory + padded)
+    return path
+
+
+def test_extract_text_doc_ole_fallback_hermetic(tmp_path):
+    """OLE path extracts Cyrillic body without antiword (CI default)."""
+    import shutil
+
+    doc = _write_minimal_ole_doc(
+        tmp_path / "sample.doc",
+        "Глава первая\nТестовый стих. (1)\n",
+    )
+    # Force the OLE path even if a developer machine has antiword installed.
+    real_which = shutil.which
+
+    def _no_antiword(cmd):
+        if cmd == "antiword":
+            return None
+        return real_which(cmd)
+
+    shutil.which = _no_antiword  # type: ignore[assignment]
+    try:
+        text = ig.extract_text(doc)
+    finally:
+        shutil.which = real_which  # type: ignore[assignment]
+    assert "Глава первая" in text
+    assert "Тестовый стих" in text
+    assert text.strip()  # never silent empty
+
+
+def test_extract_text_doc_raises_on_corrupt_ole(tmp_path):
+    """Corrupt .doc must raise with the path — not return ''."""
+    import pytest
+
+    bad = tmp_path / "broken.doc"
+    bad.write_bytes(b"not-an-ole-file-at-all")
+    with pytest.raises(RuntimeError, match=re.escape(str(bad))):
+        ig.extract_text(bad)
+
+
+def test_extract_text_doc_antiword_failure_falls_back_to_ole(tmp_path, monkeypatch):
+    """antiword non-zero → OLE fallback, still non-empty."""
+    import subprocess
+
+    doc = _write_minimal_ole_doc(
+        tmp_path / "sample.doc",
+        "Глава вторая\nВторой стих. (1)\n",
+    )
+    monkeypatch.setattr(ig.shutil, "which", lambda cmd: "/fake/antiword" if cmd == "antiword" else None)
+
+    def _fail_antiword(*_a, **_k):
+        return subprocess.CompletedProcess(
+            args=["antiword"], returncode=1, stdout=b"", stderr=b"boom",
+        )
+
+    monkeypatch.setattr(ig.subprocess, "run", _fail_antiword)
+    text = ig.extract_text(doc)
+    assert "Глава вторая" in text
+
+
+def test_extract_text_rejects_unsupported_suffix(tmp_path):
+    p = tmp_path / "x.rtf"
+    p.write_text("hi", encoding="utf-8")
+    import pytest
+    with pytest.raises(ValueError, match="unsupported source format"):
+        ig.extract_text(p)
+
+
+def test_extract_text_doc_antiword_live_or_skip():
+    """When antiword is on PATH, run it on the synthetic fixture; else skip.
+
+    Marker is intentional: CI without antiword stays green. Local machines
+    with antiword get an extra live smoke of the preferred branch.
+    """
+    import pytest
+    import shutil
+    import tempfile
+
+    if not shutil.which("antiword"):
+        pytest.skip("antiword not on PATH — optional; OLE path covered hermetically")
+
+    with tempfile.TemporaryDirectory() as td:
+        # antiword needs a real Word .doc, not our synthetic OLE UTF-16
+        # payload. Prefer a real archive sample when present; otherwise skip
+        # (synthetic OLE is not a valid Word piece table for antiword).
+        archive = (
+            Path(__file__).resolve().parents[2]
+            / "archive_ignatiev_2026"
+            / "Переводы с санскрита"
+            / "Деви-махатмья"
+            / "Деви-махатмья.doc"
+        )
+        if not archive.is_file():
+            pytest.skip("archive .doc not present (gitignored) for live antiword smoke")
+        text = ig._extract_doc_antiword(archive)
+        assert text.strip()
+        assert len(text) > 100
+
+
+def test_extract_text_doc_archive_ole_smoke_or_skip():
+    """Optional real-archive smoke via OLE when the gitignored tree exists."""
+    import pytest
+    import shutil
+
+    archive = (
+        Path(__file__).resolve().parents[2]
+        / "archive_ignatiev_2026"
+        / "Переводы с санскрита"
+        / "Деви-махатмья"
+        / "Деви-махатмья.doc"
+    )
+    if not archive.is_file():
+        pytest.skip("archive .doc not present (gitignored)")
+    # Prefer OLE path for determinism in this smoke (antiword may mangle).
+    real_which = shutil.which
+
+    def _no_antiword(cmd):
+        if cmd == "antiword":
+            return None
+        return real_which(cmd)
+
+    shutil.which = _no_antiword  # type: ignore[assignment]
+    try:
+        text = ig.extract_text(archive)
+    finally:
+        shutil.which = real_which  # type: ignore[assignment]
+    assert text.strip()
+    assert len(text) > 500
