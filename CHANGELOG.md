@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **H2370 optional FPC compile residual (Grok 4.5 `grok-4.5`).** Installed Free Pascal 3.2.2 (user prefix); portable stack `mytypes`…`uSort` **compiles and runs** smoke after Dialogs removal. Full `cb.dpr` still needs Delphi 7 `dcc32` (absent). `TextU` has one pre-existing CP-1251 char-set FPC error (not H2370). Logs: [`docs/H2370_FPC_USORT_COMPILE.log`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_FPC_USORT_COMPILE.log), [`docs/H2370_DEAD_VCL_STATIC_PROOF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_DEAD_VCL_STATIC_PROOF.md) § FPC compile proof.
 - **Nirvāṇa-tantra glued-digit re-baseline (H2385, Grok 4.5 `grok-4.5`).** Re-ingest with H2377 `--footnote-mode glued-digit`: **465 → 527** RU verses, **0 → 212** comments, gaps 64→3, no id_collisions, HTML→JSONL **100%**. Doc: [`docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md). H2273 debris-path note updated with supersession pointer.
 
 ## [0.19.7] - 2026-08-07
