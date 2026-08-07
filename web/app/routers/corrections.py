@@ -31,7 +31,6 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, Field, model_validator
 
 from app.canonical_refs import DurableRef, resolve_one_async
-from app.canonical_state_migrations import ensure_canonical_state
 from app.db import get_db
 from app.security import require_admin
 from app.services.rate_limit import (
@@ -142,12 +141,8 @@ async def propose_correction(proposal: CorrectionProposal, request: Request):
         # Identity resolution happens AFTER the rate-limit check on purpose: it
         # reads the corpus, and an unauthenticated caller must not be able to
         # drive corpus lookups past the bucket that exists to bound them.
-        if settings.STATE_DB_PATH:
-            try:
-                await ensure_canonical_state(settings.STATE_DB_PATH)
-            except Exception:
-                logger.exception("corrections: canonical state migration failed")
-
+        # Canonical-reference columns (0004/0005) are applied once at startup
+        # by init_state_db → D1 runner (H2354); no per-request migration call.
         corpus_db = await get_db(settings.DB_PATH)
         resolution = await resolve_one_async(
             corpus_db,

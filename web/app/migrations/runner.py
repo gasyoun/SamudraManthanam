@@ -33,18 +33,37 @@ statement may be preceded by::
 Only that statement, and only an error whose text contains that substring, is
 swallowed. The directive is per-statement and auditable in review; a blanket
 exemption is not.
+
+H1925 / H2354 absorb
+--------------------
+Before H2354, Lane B applied canonical-reference migrations under a separate
+ledger table ``canonical_ref_migrations`` (see the historic module
+``app.canonical_state_migrations``). Those SQL steps now live as ``0004`` /
+``0005`` under ``migrations/state/``. On startup the runner one-time-adopts
+any rows in the old ledger into ``schema_migrations`` under the matching
+version keys, recording the **current** file checksum so edited-after-apply
+still refuses. The dual-ledger path is then gone for new writes.
 """
 
 from __future__ import annotations
 
 import hashlib
 import re
+import sqlite3
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
 _FILENAME_RE = re.compile(r"^(\d{4})_([A-Za-z0-9._-]+)\.sql$")
 _DIRECTIVE_RE = re.compile(r"^\s*--\s*@idempotent-error:\s*(.+?)\s*$", re.IGNORECASE)
+
+# H1925 B-lane ledger name → D1 version. Matched by *name* so renumbering
+# B's integer ids cannot mis-bridge. Checksums are NOT carried over — B
+# hashed statement strings, D1 hashes newline-normalised file bytes.
+LEGACY_CANONICAL_NAME_TO_VERSION: dict[str, str] = {
+    "canonical_reference_columns": "0004",
+    "canonical_reference_indices": "0005",
+}
 
 CREATE_SCHEMA_MIGRATIONS = """
 CREATE TABLE IF NOT EXISTS schema_migrations (
@@ -203,26 +222,45 @@ def split_statements(sql: str) -> list[tuple[str, str | None]]:
     return statements
 
 
-async def _applied_rows(db) -> dict[str, tuple[str, str]]:
-    async with db.execute(
-        "SELECT version, name, checksum FROM schema_migrations"
-    ) as cursor:
-        return {row[0]: (row[1], row[2]) for row in await cursor.fetchall()}
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
-async def apply_migrations(db, directory: Path | str | None = None) -> list[str]:
-    """Apply every pending migration in order. Returns the versions applied.
+def compute_legacy_adoptions(
+    legacy_rows: list[tuple[str, str]],
+    applied: dict[str, tuple[str, str]],
+    migrations: list[Migration],
+) -> list[tuple[str, str, str]]:
+    """Map B-lane ``(name, checksum)`` rows onto D1 ``(version, name, checksum)``.
 
-    Verification is done *before* anything is applied, so a tampered file is
-    refused without half-migrating the database.
+    The old B checksum is intentionally discarded — algorithms differ
+    (statement-join vs newline-normalised file). We stamp the *current* file
+    checksum so future edited-after-apply detection still works.
     """
-    migrations = discover_migrations(directory)
-    await db.execute(CREATE_SCHEMA_MIGRATIONS)
-    await db.commit()
+    by_version = {m.version: m for m in migrations}
+    out: list[tuple[str, str, str]] = []
+    seen_versions: set[str] = set()
+    for name, _old_checksum in legacy_rows:
+        version = LEGACY_CANONICAL_NAME_TO_VERSION.get(name)
+        if version is None:
+            continue
+        if version in applied or version in seen_versions:
+            continue
+        migration = by_version.get(version)
+        if migration is None:
+            raise MigrationError(
+                f"Legacy canonical_ref_migrations row {name!r} maps to version "
+                f"{version}, but no matching migration file is on disk."
+            )
+        out.append((version, migration.name, migration.checksum))
+        seen_versions.add(version)
+    return out
 
-    applied = await _applied_rows(db)
+
+def _verify_against_disk(
+    applied: dict[str, tuple[str, str]], migrations: list[Migration]
+) -> None:
     on_disk = {m.version for m in migrations}
-
     for version in sorted(applied):
         if version not in on_disk:
             raise MigrationMissingError(
@@ -239,6 +277,158 @@ async def apply_migrations(db, directory: Path | str | None = None) -> list[str]
                 f"it was applied (recorded {record[1][:12]}…, file {migration.checksum[:12]}…). "
                 f"Applied migrations are immutable — add a new migration instead."
             )
+
+
+def _execute_statement(conn: sqlite3.Connection, statement: str, tolerated: str | None) -> None:
+    try:
+        conn.execute(statement)
+    except Exception as exc:  # noqa: BLE001 — re-raised unless tolerated
+        if tolerated and tolerated.lower() in str(exc).lower():
+            return
+        first_sql_line = next(
+            (
+                ln.strip()
+                for ln in statement.splitlines()
+                if ln.strip() and not ln.strip().startswith("--")
+            ),
+            statement.strip(),
+        )
+        raise MigrationError(
+            f"Migration statement failed: {first_sql_line[:120]} — {exc}"
+        ) from exc
+
+
+def _read_legacy_canonical_sync(conn: sqlite3.Connection) -> list[tuple[str, str]]:
+    row = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='canonical_ref_migrations'"
+    ).fetchone()
+    if row is None:
+        return []
+    return [
+        (r[0], r[1])
+        for r in conn.execute(
+            "SELECT name, checksum FROM canonical_ref_migrations ORDER BY id"
+        ).fetchall()
+    ]
+
+
+def _applied_rows_sync(conn: sqlite3.Connection) -> dict[str, tuple[str, str]]:
+    rows = conn.execute(
+        "SELECT version, name, checksum FROM schema_migrations"
+    ).fetchall()
+    return {r[0]: (r[1], r[2]) for r in rows}
+
+
+def apply_migrations_sync(
+    conn: sqlite3.Connection, directory: Path | str | None = None
+) -> list[str]:
+    """Sync path used by scripts (backfill) and path-based helpers.
+
+    Same ledger semantics as :func:`apply_migrations` (async), including the
+    H2354 B-ledger adopt bridge.
+    """
+    migrations = discover_migrations(directory)
+    conn.execute(CREATE_SCHEMA_MIGRATIONS)
+    conn.commit()
+
+    applied = _applied_rows_sync(conn)
+    for version, name, checksum in compute_legacy_adoptions(
+        _read_legacy_canonical_sync(conn), applied, migrations
+    ):
+        conn.execute(
+            "INSERT INTO schema_migrations (version, name, checksum, applied_at) "
+            "VALUES (?, ?, ?, ?)",
+            (version, name, checksum, _now()),
+        )
+        applied[version] = (name, checksum)
+    conn.commit()
+
+    _verify_against_disk(applied, migrations)
+
+    newly_applied: list[str] = []
+    for migration in migrations:
+        if migration.version in applied:
+            continue
+        for statement, tolerated in split_statements(migration.sql):
+            try:
+                _execute_statement(conn, statement, tolerated)
+            except MigrationError as exc:
+                raise MigrationError(
+                    f"Migration {migration.version}_{migration.name}.sql failed on "
+                    f"{exc}"
+                ) from exc
+        conn.execute(
+            "INSERT INTO schema_migrations (version, name, checksum, applied_at) "
+            "VALUES (?, ?, ?, ?)",
+            (
+                migration.version,
+                migration.name,
+                migration.checksum,
+                _now(),
+            ),
+        )
+        conn.commit()
+        newly_applied.append(migration.version)
+        applied[migration.version] = (migration.name, migration.checksum)
+
+    return newly_applied
+
+
+def apply_migrations_at_path(
+    db_path: str | Path, directory: Path | str | None = None
+) -> list[str]:
+    """Open ``db_path``, apply migrations, close. For scripts and tests."""
+    conn = sqlite3.connect(str(db_path))
+    try:
+        return apply_migrations_sync(conn, directory)
+    finally:
+        conn.close()
+
+
+async def _applied_rows(db) -> dict[str, tuple[str, str]]:
+    async with db.execute(
+        "SELECT version, name, checksum FROM schema_migrations"
+    ) as cursor:
+        return {row[0]: (row[1], row[2]) for row in await cursor.fetchall()}
+
+
+async def _read_legacy_canonical(db) -> list[tuple[str, str]]:
+    async with db.execute(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='canonical_ref_migrations'"
+    ) as cursor:
+        if await cursor.fetchone() is None:
+            return []
+    async with db.execute(
+        "SELECT name, checksum FROM canonical_ref_migrations ORDER BY id"
+    ) as cursor:
+        return [(row[0], row[1]) for row in await cursor.fetchall()]
+
+
+async def apply_migrations(db, directory: Path | str | None = None) -> list[str]:
+    """Apply every pending migration in order. Returns the versions applied.
+
+    Verification is done *before* anything is applied, so a tampered file is
+    refused without half-migrating the database. Pre-H2354 databases that
+    already ran Lane B under ``canonical_ref_migrations`` are adopted into
+    ``schema_migrations`` first (no SQL re-run for those versions).
+    """
+    migrations = discover_migrations(directory)
+    await db.execute(CREATE_SCHEMA_MIGRATIONS)
+    await db.commit()
+
+    applied = await _applied_rows(db)
+    for version, name, checksum in compute_legacy_adoptions(
+        await _read_legacy_canonical(db), applied, migrations
+    ):
+        await db.execute(
+            "INSERT INTO schema_migrations (version, name, checksum, applied_at) "
+            "VALUES (?, ?, ?, ?)",
+            (version, name, checksum, _now()),
+        )
+        applied[version] = (name, checksum)
+    await db.commit()
+
+    _verify_against_disk(applied, migrations)
 
     newly_applied: list[str] = []
     for migration in migrations:
@@ -269,10 +459,11 @@ async def apply_migrations(db, directory: Path | str | None = None) -> list[str]
                 migration.version,
                 migration.name,
                 migration.checksum,
-                datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                _now(),
             ),
         )
         await db.commit()
         newly_applied.append(migration.version)
+        applied[migration.version] = (migration.name, migration.checksum)
 
     return newly_applied

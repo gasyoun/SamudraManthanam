@@ -14,6 +14,8 @@ from app.migrations.runner import (
     MigrationChecksumError,
     MigrationMissingError,
     apply_migrations,
+    apply_migrations_at_path,
+    apply_migrations_sync,
     discover_migrations,
     state_migrations_dir,
 )
@@ -23,6 +25,8 @@ __all__ = [
     "MigrationChecksumError",
     "MigrationMissingError",
     "apply_migrations",
+    "apply_migrations_at_path",
+    "apply_migrations_sync",
     "discover_migrations",
     "state_migrations_dir",
 ]

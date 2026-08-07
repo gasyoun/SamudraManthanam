@@ -13,10 +13,13 @@ async def get_state_db():
 async def init_state_db(db):
     """Bring the state database up to the latest schema.
 
-    The schema itself now lives in ordered, checksum-tracked SQL files under
-    `app/migrations/state/` (H1927 / Lane D1) instead of inline CREATE/ALTER
-    statements re-executed on every startup. `apply_migrations` is idempotent
+    The schema lives in ordered, checksum-tracked SQL files under
+    `app/migrations/state/` (H1927 / Lane D1, H2354 absorb of H1925 B).
+    One runner applies base schema, marketing columns, trust/session tables,
+    and canonical-reference columns/indices. `apply_migrations` is idempotent
     and refuses to run if an already-applied migration file was edited.
+    Pre-H2354 DBs that still have a `canonical_ref_migrations` ledger are
+    adopted into `schema_migrations` in that same call.
 
     Raises MigrationError on a tampered or missing migration. The caller
     (lifespan) already treats a state-DB init failure as degraded mode rather
@@ -29,20 +32,3 @@ async def init_state_db(db):
     # connection setup, not in a migration whose checksum would then cover it.
     await db.execute("PRAGMA journal_mode=WAL")
     await db.commit()
-
-    # H1925 (Lane B): canonical-reference columns on `corrections` and the
-    # `legacy_ref_map` table are applied by their own ordered, checksum-tracked
-    # migration set rather than being spelled out here as more ad-hoc ALTERs.
-    # Idempotent, so the correction path can also call it defensively.
-    if settings.STATE_DB_PATH:
-        import logging
-
-        from app.canonical_state_migrations import ensure_canonical_state
-
-        try:
-            await ensure_canonical_state(settings.STATE_DB_PATH)
-        except Exception:
-            logging.getLogger(__name__).exception(
-                "canonical reference migrations failed; corrections will fall back "
-                "to legacy-only columns"
-            )

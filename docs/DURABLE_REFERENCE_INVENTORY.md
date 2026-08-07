@@ -75,7 +75,7 @@ report do not.
 
 | Step | Command | Guarantees |
 |---|---|---|
-| Schema | applied automatically at state-DB init | ordered, checksum-recorded, idempotent, transactional, reversible ([canonical_state_migrations.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/app/canonical_state_migrations.py)) |
+| Schema | applied automatically at state-DB init | ordered, checksum-recorded, idempotent via D1 runner (`0004`/`0005`; H2354 absorbed the H1925 B ledger — see [migrations/README.md](https://github.com/gasyoun/SamudraManthanam/blob/main/web/app/migrations/README.md)) |
 | Backfill | `python scripts/backfill_canonical_refs.py --corpus corpus.db --state state.db --apply` | pinned to one corpus version, backs up `state.db` first, idempotent, refuses a mis-pinned corpus |
 | Gate | `python scripts/zero_orphan_report.py --before before.db --candidate candidate.db --state state.db --rollback-rehearsal` | fails on orphaned / ambiguous / re-bound; rehearses rollback |
 
