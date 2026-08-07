@@ -193,3 +193,4 @@ yogini-tantra.html
 mahabhagavata-purana.html
 devimahatmya.html
 kalika-purana.html
+maya-tantra.html

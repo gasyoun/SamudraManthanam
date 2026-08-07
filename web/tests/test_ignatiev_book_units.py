@@ -297,6 +297,130 @@ def test_parse_parts_isolates_per_part_endnotes():
 
 
 # ---------------------------------------------------------------------------
+# H2377: glued-digit page-local footnotes (Māyā-tantra false-verse class)
+# ---------------------------------------------------------------------------
+
+
+def _maya_like_pages() -> str:
+    """Synthetic multi-page glued-digit book (form-feed page breaks)."""
+    p1 = "\n".join([
+        "11",
+        "Глава первая",
+        "Благословенная Богиня сказала:",
+        "Слушай истину другую6, о небо и земля7, (1)",
+        "И лишь одна вода8. (2)",
+        "КОММЕНТАРИЙ",
+        "61.1(1).  я возвещу истину другую – gloss one.",
+        "7 1.1(2). небо и земля – three worlds.",
+        "8 1.2. Единый океан – ekārṇava.",
+    ])
+    p2 = "\n".join([
+        "12",
+        "другого, Владыка вспомнил Майю, (3)",
+        "На листе баньяна9. (4)",
+        "9 1.4(1). баньян – Ficus indica, sacred tree.",
+        "10 1.4(2). играм – līlā of the deity.",
+    ])
+    p3 = "\n".join([
+        "13",
+        "Глава вторая",
+        "Первый стих второй главы. (1)",
+        "Второй стих второй главы. (2)",
+        "11 2.1. заметка ко второй главе.",
+    ])
+    return "\x0c".join([p1, p2, p3])
+
+
+def test_detect_footnote_mode_is_conservative_bracket():
+    # auto always returns bracket so Wave-A re-parses stay count-stable;
+    # glued-digit is opt-in via --footnote-mode (H2377 design note).
+    pages = []
+    for i in range(25):
+        pages.append(
+            f"{i}\nстих на странице{i+1}. ({i % 5 + 1})\n"
+            f"{i+1} 1.{i % 5 + 1}. gloss page {i}."
+        )
+    text = "\x0c".join(pages)
+    assert ig.detect_footnote_mode(text) == "bracket"
+    assert ig.detect_footnote_mode(
+        "Глава первая\nстих. (1)\nКомментарий\n[1] 1.1. note.\n"
+    ) == "bracket"
+    sig = ig.glued_digit_signal(text)
+    assert sig["strong_note_starts"] >= 20
+    assert sig["pages_with_notes"] >= 1
+
+
+def test_strip_glued_digit_removes_page_notes_from_body():
+    body, fn_map, stats = ig.strip_glued_digit_page_notes(_maya_like_pages())
+    assert "Ficus indica" not in body
+    assert "ekārṇava" not in body
+    assert "Владыка вспомнил" in body
+    assert "Глава первая" in body
+    assert stats["pages_with_notes"] >= 2
+    assert 6 in fn_map and 7 in fn_map and 8 in fn_map
+    assert "истину другую" in fn_map[6]["text"]
+
+
+def test_glued_digit_mode_no_false_verse_from_note_citations():
+    """The measured Māyā false-verse class: note ``1.1(2)`` must not mint
+    a restart verse or id_collision after a real (1)/(2)."""
+    text = _maya_like_pages()
+    records, report = ig.parse_book(
+        text, "maya-test", footnote_mode="glued-digit",
+    )
+    ru = [r for r in records if r["seg"] == "ru"]
+    passages = [r["passage"] for r in ru]
+    # ch.1 real verses 1–4; ch.2 real 1–2. No 1.1b collision from note (2).
+    assert "1.1" in passages and "1.2" in passages
+    assert "1.3" in passages and "1.4" in passages
+    assert "2.1" in passages and "2.2" in passages
+    assert not any(p.endswith("b") for p in passages), passages
+    assert report["footnote_mode"] == "glued-digit"
+    assert report["comment_count"] >= 3
+    # Glued inline digit stripped from searchable text.
+    v1 = next(r for r in ru if r["passage"] == "1.1")
+    assert "другую6" not in v1["text"]
+    assert "другую" in v1["text"]
+
+
+def test_glued_digit_debris_scholarly_note_absorbed():
+    """Residual note prose that leaks past the strip must not mint high-N
+    verses (the 4.26 / 4.52 Māyā class). Aggressive only in glued-digit mode."""
+    body = (
+        "Реальный стих шесть. (6) "
+        "ту пору для индийцев жертвоприношение [Там же: 72]. (26) "
+        "). Остановимся на Ocimum sanctum это базилик. (52) "
+        "Реальный стих семь. (7)"
+    )
+    verses = ig.split_verses(body, aggressive_debris=True)
+    labels = [v["verse"] for v in verses]
+    assert labels == ["6", "7"], labels
+    assert "жертвоприношение" in verses[0]["text"] or "Ocimum" in verses[0]["text"]
+
+
+def test_toc_soderzhanie_does_not_double_chapters():
+    """Bare ToC ``Глава N`` lines under СОДЕРЖАНИЕ must not mint a first
+    empty 1..N run before the real chapters (Māyā H2377)."""
+    text = "\n".join([
+        "СОДЕРЖАНИЕ",
+        "Предисловие",
+        "Глава первая",
+        "Глава вторая",
+        "ПРЕДИСЛОВИЕ",
+        "Вводный абзац переводчика.",
+        "Глава первая",
+        "Первый стих. (1)",
+        "Второй стих. (2)",
+        "Глава вторая",
+        "Стих главы два. (1)",
+    ])
+    records, report = ig.parse_book(text, "toc-test", footnote_mode="bracket")
+    assert report["chapters"] == 2
+    assert report["chapter_numbers"] == [1, 2]
+    assert report["verse_count"] == 3
+
+
+# ---------------------------------------------------------------------------
 # H2219: annotates-remap provenance (audit trail for the H1828 fallback)
 # ---------------------------------------------------------------------------
 

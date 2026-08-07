@@ -1,0 +1,158 @@
+{
+  "work": "maya-tantra",
+  "chapters": 12,
+  "verse_count": 343,
+  "comment_count": 148,
+  "verse_gaps": [
+    "2: 3->5",
+    "2: 8->11",
+    "2: 11->13",
+    "2: 32->34",
+    "3: 16->19",
+    "4: 6->8",
+    "4: 9->11",
+    "4: 17->19",
+    "4: 20->22",
+    "6: 3->5",
+    "6: 8->10",
+    "6: 12->14",
+    "6: 22->24",
+    "7: 26->28",
+    "7: 32->34",
+    "11: 17->19"
+  ],
+  "chapter_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "unrecognised_endnotes": 16,
+  "annotates_remapped": 17,
+  "annotates_remap_max_delta": 1,
+  "annotates_remaps": [
+    {
+      "requested": "2.4",
+      "resolved": "2.3",
+      "delta": 1,
+      "fn": 23
+    },
+    {
+      "requested": "3.18",
+      "resolved": "3.19",
+      "delta": 1,
+      "fn": 54
+    },
+    {
+      "requested": "4.18",
+      "resolved": "4.17",
+      "delta": 1,
+      "fn": 72
+    },
+    {
+      "requested": "4.21",
+      "resolved": "4.20",
+      "delta": 1,
+      "fn": 73
+    },
+    {
+      "requested": "6.5",
+      "resolved": "6.5-6",
+      "delta": 0,
+      "fn": 82
+    },
+    {
+      "requested": "6.9",
+      "resolved": "6.8",
+      "delta": 1,
+      "fn": 83
+    },
+    {
+      "requested": "6.13",
+      "resolved": "6.12",
+      "delta": 1,
+      "fn": 84
+    },
+    {
+      "requested": "6.13",
+      "resolved": "6.12",
+      "delta": 1,
+      "fn": 85
+    },
+    {
+      "requested": "6.13",
+      "resolved": "6.12",
+      "delta": 1,
+      "fn": 86
+    },
+    {
+      "requested": "6.13",
+      "resolved": "6.12",
+      "delta": 1,
+      "fn": 87
+    },
+    {
+      "requested": "6.13",
+      "resolved": "6.12",
+      "delta": 1,
+      "fn": 88
+    },
+    {
+      "requested": "6.13",
+      "resolved": "6.12",
+      "delta": 1,
+      "fn": 89
+    },
+    {
+      "requested": "6.13",
+      "resolved": "6.12",
+      "delta": 1,
+      "fn": 90
+    },
+    {
+      "requested": "7.27",
+      "resolved": "7.26",
+      "delta": 1,
+      "fn": 108
+    },
+    {
+      "requested": "8.18",
+      "resolved": "8.17-18",
+      "delta": 1,
+      "fn": 120
+    },
+    {
+      "requested": "8.18",
+      "resolved": "8.17-18",
+      "delta": 1,
+      "fn": 121
+    },
+    {
+      "requested": "11.18",
+      "resolved": "11.17",
+      "delta": 1,
+      "fn": 158
+    }
+  ],
+  "footnote_mode": "glued-digit",
+  "footnote_mode_requested": "glued-digit",
+  "glued_digit_stats": {
+    "footnote_mode": "glued-digit",
+    "pages_total": 196,
+    "pages_with_notes": 63,
+    "strong_note_starts": 148,
+    "total_endnotes": 148
+  },
+  "id_collisions": [
+    "3.20"
+  ],
+  "total_endnotes": 148
+}

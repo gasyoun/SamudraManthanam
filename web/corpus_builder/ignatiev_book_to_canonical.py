@@ -20,21 +20,37 @@ Differences from the DBhP PDF pipeline this generalizes:
   the Chinachara-tantra says "Такова ... N глава" with no "заканчивается"
   at all -- so it is read only as an optional decorative strip, never
   required to split a chapter.
-* **Endnotes are real Word footnotes.** Pandoc's plain-text writer renders
-  both the inline reference and the collected note text bracket-wrapped
-  (``...его[1].`` in the body; ``[1] 1.1(1). <text>`` in the endnote
-  block) -- an exact ``[N]`` match, simpler and more reliable than the DBhP
-  PDF's glued-digit superscript heuristic. Footnote 1 is a known pandoc
-  quirk: its ``[1]`` marker lands glued to the endnote *section heading*
-  rather than its own note line -- handled as a special case, matching the
-  DBhP script's "keep every verse, itemize anomalies in the report" policy
-  (a missed footnote never blocks a chapter/verse from being emitted).
+* **Endnotes are real Word footnotes (default ``bracket`` mode).** Pandoc's
+  plain-text writer renders both the inline reference and the collected note
+  text bracket-wrapped (``...его[1].`` in the body; ``[1] 1.1(1). <text>``
+  in the endnote block) -- an exact ``[N]`` match, simpler and more reliable
+  than the DBhP PDF's glued-digit superscript heuristic. Footnote 1 is a
+  known pandoc quirk: its ``[1]`` marker lands glued to the endnote *section
+  heading* rather than its own note line -- handled as a special case,
+  matching the DBhP script's "keep every verse, itemize anomalies in the
+  report" policy (a missed footnote never blocks a chapter/verse from being
+  emitted).
+* **Glued-digit page-local footnotes (``glued-digit`` mode, H2377).** Some
+  PDF pressings (Māyā-tantra) put footnotes at the bottom of nearly every
+  page in the OLD DBhP-style convention: inline refs are digits glued to
+  words (``другую6``), and note bodies start ``N ch.v(pada). text`` (or
+  ``Nch.v`` when the space is lost). The single end-of-work
+  ``_NOTES_HEAD_RE`` search cannot see those blocks, so they used to pollute
+  every chapter body and fake ``(N)`` verse boundaries. Mode
+  ``glued-digit`` strips per-page note regions first, then links inline
+  digits with the DBhP heuristic. ``--footnote-mode auto`` (default)
+  picks ``glued-digit`` when mid-body page-local note-start lines are
+  dense, else ``bracket``.
 
 Usage:
     python web/corpus_builder/ignatiev_book_to_canonical.py \
         --input "archive_ignatiev_2026/.../Чиначара-тантра.docx" \
         --work-slug chinachara-tantra \
         --output-dir web/corpus_builder/jsonl
+    # Māyā-tantra (or any page-local glued-digit PDF):
+    python web/corpus_builder/ignatiev_book_to_canonical.py \
+        --input ".../Майя-тантра.pdf" --work-slug maya-tantra \
+        --footnote-mode glued-digit
 
 Multi-part works (Ignatjev split some translations across several files,
 e.g. Kularnava-tantra "Часть первая"/"Часть вторая", each continuing the
@@ -263,6 +279,280 @@ _ENDNOTE_RE = re.compile(
     r"(?:\s*[-–]\s*\d+)?(?:\((?P<pada>[^)]{0,10})\))?\.\s*(?P<text>.*)"
 )
 
+# --- glued-digit page-local footnotes (H2377 / Māyā-tantra) -----------------
+#
+# Mode name: ``glued-digit``. Detection signal + rejected alternatives: see
+# docs/MAYA_TANTRA_GLUED_DIGIT_MODE_H2377.md.
+#
+# Strong note-start: ``N ch.v(pada). text`` with a space after N (DBhP PDF),
+# or the space-lost form ``Nch.v(pada). text`` (``61.1(1).`` = fn 6 + 1.1(1)).
+# ALL-CAPS ``КОММЕНТАРИЙ`` alone on a line is an optional block head (rare
+# in Māyā — only the first page of ch.1 uses it). Title-case TOC
+# ``Комментарий`` is deliberately NOT a block head.
+
+_GLUED_NOTES_HEAD_RE = re.compile(r"^\s*КОММЕНТАРИ[ЙИ]\s*$")
+_SPACED_GLUED_NOTE_RE = re.compile(
+    r"^\s*(?P<fn>\d{1,3})\s+(?P<ch>\d+)\.\s?(?P<v>\d+)"
+    r"(?:\s*[-–]\s*\d+)?(?:\((?P<pada>[^)]{0,10})\))?\.\s*(?P<text>.*)"
+)
+_VERSE_END_LINE_RE = re.compile(r"\(\d+(?:\s*[-–]\s*\d+)?\)\s*$")
+_FN_GAP_TOL_GLUED = 8
+# Auto-detect thresholds (H2377). Tuned so Māyā (~60 pages with bottom
+# notes, ~140 strong starts) selects glued-digit, while Wave-A PDF tantras
+# that only have a few coincidental ``N ch.v`` shapes in end-matter stay on
+# ``bracket`` (regression: nirvāṇa-tantra must not flip).
+_AUTO_GLUED_MIN_STRONG_NOTES = 40
+_AUTO_GLUED_MIN_PAGES_WITH_NOTES = 20
+
+
+def _is_strong_glued_note_start(line: str) -> bool:
+    """True if *line* starts a DBhP/Māyā page-local footnote body."""
+    if _SPACED_GLUED_NOTE_RE.match(line):
+        return True
+    s = line.strip()
+    for flen in (1, 2, 3):
+        if len(s) <= flen or not s[:flen].isdigit():
+            continue
+        # no space between fn and chapter (``61.1(1).``)
+        if s[flen:flen + 1].isspace():
+            continue
+        rest = s[flen:]
+        if re.match(r"\d+\.\s?\d+(?:\s*[-–]\s*\d+)?(?:\([^)]{0,10}\))?\.", rest):
+            return True
+    return False
+
+
+def _parse_strong_glued_note_start(
+    line: str, last_fn: int,
+) -> tuple[int, int | None, int | None, str | None, str] | None:
+    """Parse a note-start line under a monotonic fn gate.
+
+    Returns ``(fn, chapter, verse, pada, text)`` or None. For the glued form
+    ``61.1(1).``, tries expected fn = last_fn+1 .. last_fn+_FN_GAP_TOL so
+    ``6``+``1.1(1)`` wins over the false ``61``+``.1(1)`` reading.
+    """
+    m = _SPACED_GLUED_NOTE_RE.match(line)
+    if m:
+        fn = int(m.group("fn"))
+        if last_fn < fn <= last_fn + _FN_GAP_TOL_GLUED:
+            return (
+                fn, int(m.group("ch")), int(m.group("v")),
+                m.group("pada"), (m.group("text") or "").strip(),
+            )
+        return None
+    s = line.strip()
+    for expected in range(last_fn + 1, last_fn + _FN_GAP_TOL_GLUED + 1):
+        token = str(expected)
+        if not s.startswith(token):
+            continue
+        rest = s[len(token):]
+        m2 = re.match(
+            r"^(?P<ch>\d+)\.\s?(?P<v>\d+)"
+            r"(?:\s*[-–]\s*\d+)?(?:\((?P<pada>[^)]{0,10})\))?\.\s*(?P<text>.*)",
+            rest,
+        )
+        if m2:
+            return (
+                expected, int(m2.group("ch")), int(m2.group("v")),
+                m2.group("pada"), (m2.group("text") or "").strip(),
+            )
+    # fn-only gloss with no ch.v target: ``12 Лакуна в оригинале.``
+    m3 = re.match(
+        r"^\s*(?P<fn>\d{1,3})\s+(?P<text>[А-Яа-яЁё«\[\*].+)$", line,
+    )
+    if m3:
+        fn = int(m3.group("fn"))
+        if last_fn < fn <= last_fn + _FN_GAP_TOL_GLUED:
+            return fn, None, None, None, m3.group("text").strip()
+    return None
+
+
+def _find_page_notes_start(lines: list[str]) -> int | None:
+    """Index of the first page-local footnote line, or None if the page has none.
+
+    Notes sit at the page bottom. Start at the first strong note-start (or
+    ALL-CAPS ``КОММЕНТАРИЙ``), then walk backward over note-continuation
+    lines left over from the previous page's last note.
+    """
+    for i, ln in enumerate(lines):
+        if _GLUED_NOTES_HEAD_RE.match(ln):
+            return i
+    first_ns = None
+    for i, ln in enumerate(lines):
+        if _is_strong_glued_note_start(ln):
+            first_ns = i
+            break
+    if first_ns is None:
+        return None
+    i = first_ns
+    while i > 0:
+        prev = lines[i - 1].strip()
+        if not prev or _PAGENUM_RE.match(prev):
+            i -= 1
+            continue
+        if _VERSE_END_LINE_RE.search(prev):
+            break
+        if re.match(r"^Глава\s+", prev, re.IGNORECASE):
+            break
+        # bare ALL-CAPS running title (not a note continuation)
+        if re.match(r"^[А-ЯЁ][А-ЯЁ.\s\-]{5,50}$", prev):
+            break
+        i -= 1
+    return i
+
+
+def strip_glued_digit_page_notes(
+    text: str,
+) -> tuple[str, dict[int, dict], dict]:
+    """Front-end: peel per-page footnote blocks out of *text*.
+
+    Returns ``(body_text, fn_map, stats)``. ``fn_map`` keys are footnote
+    numbers; values carry ``chapter``/``verse``/``pada``/``text`` (chapter/
+    verse may be None for fn-only glosses — attached later via nearest).
+    Page boundaries are form-feeds (``\\x0c``), as emitted by pdftotext and
+    the pymupdf fallback.
+    """
+    pages = text.split("\x0c")
+    body_parts: list[str] = []
+    note_lines: list[str] = []
+    pages_with_notes = 0
+    for page in pages:
+        lines = page.split("\n")
+        ns = _find_page_notes_start(lines)
+        if ns is None:
+            body_parts.extend(lines)
+        else:
+            pages_with_notes += 1
+            body_parts.extend(lines[:ns])
+            note_lines.extend(lines[ns:])
+        body_parts.append("")  # page separator as blank line
+
+    fn_map = parse_glued_digit_endnotes(note_lines)
+    stats = {
+        "footnote_mode": "glued-digit",
+        "pages_total": len(pages),
+        "pages_with_notes": pages_with_notes,
+        "strong_note_starts": sum(
+            1 for ln in note_lines if _is_strong_glued_note_start(ln)
+        ),
+        "total_endnotes": len(fn_map),
+    }
+    return "\n".join(body_parts), fn_map, stats
+
+
+def parse_glued_digit_endnotes(note_lines: list[str]) -> dict[int, dict]:
+    """Parse stripped page-local note lines into ``{fn: note_dict}``."""
+    notes: dict[int, dict] = {}
+    current: dict | None = None
+    last_fn = 0
+    for raw in note_lines:
+        line = raw.rstrip()
+        if not line.strip() or _PAGENUM_RE.match(line):
+            continue
+        if _GLUED_NOTES_HEAD_RE.match(line):
+            continue
+        info = _parse_strong_glued_note_start(line, last_fn)
+        if info is not None:
+            fn, ch, v, pada, text = info
+            # If chapter/verse missing, inherit from previous note (fn-only
+            # glosses like ``12 Лакуна`` sit next to the verse they annotate).
+            if ch is None and current is not None:
+                ch = current.get("chapter")
+                v = current.get("verse")
+            current = {
+                "fn": fn, "chapter": ch, "verse": v, "pada": pada, "text": text,
+            }
+            notes[fn] = current
+            last_fn = fn
+        elif current is not None:
+            current["text"] += " " + line.strip()
+    for n in notes.values():
+        n["text"] = re.sub(r"\s+", " ", n["text"]).strip()
+        # Strip a leading ``N ch.v`` echo left in text when the classifier
+        # consumed only part of a glued header (defensive).
+        n["text"] = re.sub(
+            r"^\d+\s+\d+\.\s?\d+(?:\([^)]*\))?\.\s*", "", n["text"],
+        ).strip()
+        # fn-only glosses with no inherit target: park on 1.1 rather than
+        # drop (annotates nearest will move them if needed).
+        if n.get("chapter") is None:
+            n["chapter"] = 1
+        if n.get("verse") is None:
+            n["verse"] = 1
+    return notes
+
+
+def detect_footnote_mode(text: str) -> str:
+    """``auto`` detector for page-local glued-digit footnotes (H2377).
+
+    Returns ``bracket`` by default. Several Wave-A PDFs (Nirvāṇa, Yoni, …)
+    also carry page-local notes whose counts were frozen under the old
+    bracket + H1829 path; flipping them automatically would fail the
+    regression gate. Callers that want the front-end on a known Māyā-class
+    work must pass ``--footnote-mode glued-digit`` explicitly.
+
+    The density signals below are still computed and exposed via
+    ``glued_digit_stats`` when the mode is forced, and the design note
+    documents how to re-enable a riskier auto later (dry-run gap/osc
+    signature after a Wave-A re-baseline).
+    """
+    del text  # reserved for a future density-based auto re-enable
+    return "bracket"
+
+
+def glued_digit_signal(text: str) -> dict:
+    """Diagnostic density of page-local note markers (does not select mode)."""
+    pages = text.split("\x0c") if "\x0c" in text else [text]
+    pages_with = 0
+    strong = 0
+    for page in pages:
+        lines = page.split("\n")
+        strong += sum(1 for ln in lines if _is_strong_glued_note_start(ln))
+        if _find_page_notes_start(lines) is not None:
+            pages_with += 1
+    return {
+        "pages_total": len(pages),
+        "pages_with_notes": pages_with,
+        "strong_note_starts": strong,
+        "would_suggest_glued_digit": (
+            pages_with >= _AUTO_GLUED_MIN_PAGES_WITH_NOTES
+            and strong >= _AUTO_GLUED_MIN_STRONG_NOTES
+        ),
+    }
+
+
+def link_footnotes_glued(text: str, fn_numbers: set[int], used: set[int]):
+    """DBhP-style: strip digits glued to Cyrillic/bracket/quote ends.
+
+    Mirrors ``ignatjev_pdf_to_canonical.link_footnotes``. Only consumes a
+    digit run when its value is a still-unused real footnote number.
+    """
+    refs: list[int] = []
+    _L, _R = "", ""
+
+    def _repl(mo):
+        num = int(mo.group(2))
+        if num in fn_numbers and num not in used:
+            used.add(num)
+            refs.append(num)
+            return f"{mo.group(1)}{_L}{num}{_R}"
+        return mo.group(0)
+
+    marked = re.sub(r"([А-яёЁ»\)\]])(\d{1,3})(?![\d(])", _repl, text)
+    clean = re.sub(_L + r"\d+" + _R, "", marked)
+    clean = re.sub(r"\s+", " ", clean).strip()
+
+    def _htmlref(mo):
+        num = mo.group(1)
+        return (
+            "<a href='#comment_" + num + "' class='comment_sub'>"
+            "<sup><small>" + num + "</small></sup></a>"
+        )
+
+    html_text = _htmllib.escape(marked, quote=False)
+    html_text = re.sub(_L + r"(\d+)" + _R, _htmlref, html_text)
+    return clean, html_text, refs
+
 
 # antiword wall-clock budget for a single .doc (H2352). Large multi-MB
 # Ignatiev files stay well under this; a hung process is a hard error.
@@ -360,12 +650,30 @@ def _extract_doc_antiword(path: Path) -> str:
     return text + "\n"
 
 
+def _extract_pdf_pymupdf(path: Path) -> str:
+    """pdftotext fallback via PyMuPDF; form-feed between pages (H2377)."""
+    try:
+        import fitz  # PyMuPDF
+    except ImportError as e:
+        raise RuntimeError(
+            f"cannot extract PDF {path}: pdftotext not on PATH and "
+            f"pymupdf is not installed (pip install pymupdf)"
+        ) from e
+    doc = fitz.open(str(path))
+    try:
+        parts = [doc[i].get_text("text") for i in range(doc.page_count)]
+    finally:
+        doc.close()
+    return "\x0c".join(parts)
+
+
 def extract_text(path: Path) -> str:
     """Extract plain UTF-8 text from a .docx / .pdf / .doc / .txt source."""
     suffix = path.suffix.lower()
     if suffix == ".txt":
         # Pre-extracted plain text (e.g. a one-shot .doc salvage, or a
         # pandoc dump parked next to the source). Read as UTF-8.
+        # Preserve form-feeds if present (glued-digit page markers).
         return path.read_text(encoding="utf-8", errors="replace")
     if suffix == ".docx":
         out = subprocess.run(
@@ -374,12 +682,20 @@ def extract_text(path: Path) -> str:
         )
         return out.stdout
     if suffix == ".pdf":
-        out = subprocess.run(
-            ["pdftotext", "-enc", "UTF-8", str(path), "-"],
-            capture_output=True, encoding="utf-8", errors="replace", check=True,
-        )
-        # pdftotext prepends a form-feed to the first line of every page.
-        return out.stdout.replace("\x0c", "\n")
+        # Prefer poppler pdftotext (house standard). Fall back to pymupdf
+        # when pdftotext is not on PATH (common on agent Windows boxes);
+        # preserve form-feeds so glued-digit page-local stripping still
+        # sees page boundaries (H2377).
+        if shutil.which("pdftotext"):
+            out = subprocess.run(
+                ["pdftotext", "-enc", "UTF-8", str(path), "-"],
+                capture_output=True, encoding="utf-8", errors="replace",
+                check=True,
+            )
+            # Keep \x0c as page markers for strip_glued_digit_page_notes;
+            # only normalise when the caller reflows (body path).
+            return out.stdout
+        return _extract_pdf_pymupdf(path)
     if suffix == ".doc":
         # Legacy binary Word (H2352). Prefer antiword (correct Cyrillic when
         # ANTIWORDHOME + -m cp1251.txt are set); fall back to an OLE
@@ -420,7 +736,7 @@ def _reflow(lines: list[str]) -> str:
     return " ".join(kept)
 
 
-def split_verses(body: str) -> list[dict]:
+def split_verses(body: str, *, aggressive_debris: bool = False) -> list[dict]:
     """Split a chapter's running text into verse chunks. See
     ignatjev_pdf_to_canonical.split_verses (identical algorithm).
 
@@ -431,6 +747,12 @@ def split_verses(body: str) -> list[dict]:
     corpus-wide dup-suffixes). A decrease in verse number within a
     chapter is treated as footnote debris — its text is appended to the
     previous verse rather than minted as a new passage.
+
+    ``aggressive_debris`` (H2377 glued-digit mode only) also absorbs
+    scholarly note residue (``[Там же]``, botanical Latin glosses) so
+    residual leaks past the page-local strip do not mint high-N false
+    verses. Left off by default so Wave-A bracket re-parses stay
+    count-stable against committed ``.raw.jsonl``.
     """
     verses: list[dict] = []
     pos = 0
@@ -449,7 +771,9 @@ def split_verses(body: str) -> list[dict]:
         else:
             author = carry_author
         verses.append({"verse": label, "text": chunk, "author": author})
-    return _collapse_nonmonotonic_verses(verses)
+    return _collapse_nonmonotonic_verses(
+        verses, aggressive_debris=aggressive_debris,
+    )
 
 
 def _verse_num_start(label: str) -> int | None:
@@ -460,7 +784,9 @@ def _verse_num_start(label: str) -> int | None:
         return None
 
 
-def _looks_like_footnote_debris(text: str) -> bool:
+def _looks_like_footnote_debris(
+    text: str, *, aggressive: bool = False,
+) -> bool:
     """Heuristic: chunk is footnote prose, not a real verse body (H1829)."""
     t = (text or "").strip()
     if not t:
@@ -474,10 +800,26 @@ def _looks_like_footnote_debris(text: str) -> bool:
     # Chapter colophon left in body with a false high-N marker (H2353).
     if _COLOPHON_BODY_RE.search(t):
         return True
+    if not aggressive:
+        return False
+    # --- H2377 aggressive extras (glued-digit mode only) ---
+    if t.startswith("). ") or t.startswith(") "):
+        return True
+    if re.search(
+        r"\[Там же|цит\.?\s*по|Goudriaan|Biernacki|"
+        r"\d{4}:\s*\d|см\.\s+[А-ЯA-Z]|Индуизм\s+\d{4}",
+        t,
+    ):
+        return True
+    if re.search(r"\b[A-Z][a-z]+ [a-z]+\b", t) and len(t) > 80:
+        if re.search(r"это |является |называ|означа", t):
+            return True
     return False
 
 
-def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
+def _collapse_nonmonotonic_verses(
+    verses: list[dict], *, aggressive_debris: bool = False,
+) -> list[dict]:
     """Merge false ``(N)`` splits from footnote prose (H1829 / H2273 / H2353).
 
     Four classes of debris:
@@ -508,7 +850,10 @@ def _collapse_nonmonotonic_verses(verses: list[dict]) -> list[dict]:
                 continue
             # Same-or-higher N that is still debris-shaped: absorb so a false
             # high-N footnote never becomes prev_end (class 2 + class 3).
-            if _looks_like_footnote_debris(text) and n >= prev_end:
+            if (
+                _looks_like_footnote_debris(text, aggressive=aggressive_debris)
+                and n >= prev_end
+            ):
                 # Colophon debris: drop rather than glue onto the last verse.
                 if _COLOPHON_BODY_RE.search(text):
                     continue
@@ -600,8 +945,31 @@ def link_footnotes(text: str, fn_numbers: set[int], used: set[int]):
     return clean, html_text, refs
 
 
-def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
-    """Parse one Ignatjev single-book translation into (records, report)."""
+def parse_book(
+    text: str,
+    work_slug: str,
+    footnote_mode: str = "auto",
+) -> tuple[list[dict], dict]:
+    """Parse one Ignatjev single-book translation into (records, report).
+
+    ``footnote_mode``: ``auto`` | ``bracket`` | ``glued-digit`` (H2377).
+    """
+    mode = footnote_mode
+    glued_stats: dict = {}
+    pre_fn_map: dict[int, dict] | None = None
+    if mode == "auto":
+        mode = detect_footnote_mode(text)
+    if mode == "glued-digit":
+        text, pre_fn_map, glued_stats = strip_glued_digit_page_notes(text)
+    elif mode != "bracket":
+        raise ValueError(
+            f"unknown footnote_mode {footnote_mode!r} "
+            f"(resolved {mode!r}); expected auto|bracket|glued-digit"
+        )
+    # Form-feeds are page markers for the glued-digit front-end; once notes
+    # are stripped (or in bracket mode) treat them as plain newlines so
+    # chapter/verse regexes see one line per physical line.
+    text = text.replace("\x0c", "\n")
     lines = text.split("\n")
     n = len(lines)
 
@@ -665,24 +1033,69 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
             j += 1
         notes_end = j
     note_lines = lines[notes_start:notes_end] if notes_start is not None else []
-    fn_map = parse_endnotes(note_lines, fn1_glued) if note_lines else {}
-
-    if notes_start is not None:
-        body_end = notes_start - 1
-    elif backmatter_idx is not None:
-        body_end = backmatter_idx
+    if pre_fn_map is not None:
+        # Glued-digit front-end already collected page-local notes; do not
+        # also parse a trailing bracket end-block (would double-count).
+        fn_map = pre_fn_map
+        # Still cut body_end at backmatter / trailing notes heading so a
+        # glossary after the last chapter is not verse-split.
+        if notes_start is not None:
+            body_end = notes_start - 1
+        elif backmatter_idx is not None:
+            body_end = backmatter_idx
+        else:
+            body_end = n
     else:
-        body_end = n
+        fn_map = parse_endnotes(note_lines, fn1_glued) if note_lines else {}
+        if notes_start is not None:
+            body_end = notes_start - 1
+        elif backmatter_idx is not None:
+            body_end = backmatter_idx
+        else:
+            body_end = n
 
     # Walk the body: cut at chapter-opening headings. The FIRST chapter
     # opening marks the true start of the work (front matter -- title page,
     # table of contents, preface -- precedes it and is discarded).
     # ToC leader-dot lines are rejected by _is_chapter_open (see below).
+    #
+    # Māyā-tantra (and some other PDFs) list bare ``Глава N`` lines in a
+    # ``СОДЕРЖАНИЕ`` block with no leader dots — those would otherwise mint
+    # a first empty 1..N run and then a second real run (24 chapters for a
+    # 12-chapter book). Suppress chapter opens while inside that ToC window.
+    _TOC_HEAD_RE = re.compile(r"^\s*СОДЕРЖАНИЕ\s*$", re.IGNORECASE)
+    # Real preface heading is ALL-CAPS (``ПРЕДИСЛОВИЕ``). Title-case
+    # ``Предисловие`` is only a ToC *entry* listing the preface and must
+    # NOT exit the ToC window (Māyā-tantra H2377).
+    _PREFACE_HEAD_RE = re.compile(r"^\s*ПРЕДИСЛОВИЕ\s*$")
     chapters: list[dict] = []
     cur: dict | None = None
     idx = 0
+    in_toc = False
     while idx < body_end:
         line = lines[idx]
+        if _TOC_HEAD_RE.match(line):
+            in_toc = True
+            idx += 1
+            continue
+        if in_toc and _PREFACE_HEAD_RE.match(line):
+            in_toc = False
+            # preface itself is front matter; keep suppressing until a real
+            # chapter open with body (in_toc stays False, next chapter wins).
+            idx += 1
+            continue
+        if in_toc:
+            # Exit ToC early when a chapter open is followed by real verse
+            # markers (works with no separate ПРЕДИСЛОВИЕ heading).
+            om_peek = _is_chapter_open(line)
+            if om_peek and _VERSE_NUM_RE.search(
+                "\n".join(lines[idx: min(idx + 20, body_end)])
+            ):
+                in_toc = False
+                # fall through and treat this line as a real chapter open
+            else:
+                idx += 1
+                continue
         om = _is_chapter_open(line)
         if om:
             if cur is not None:
@@ -699,6 +1112,28 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
         idx += 1
     if cur is not None:
         chapters.append(cur)
+
+    # Drop ToC ghost chapters: a bare ``Глава N`` list under СОДЕРЖАНИЕ can
+    # still slip through when the ToC window is missed; those ghosts have
+    # empty (or verse-marker-free) bodies and are followed by a second real
+    # run of the same chapter numbers. Keep the last non-empty body per
+    # chapter number (H2377 Māyā).
+    if chapters:
+        best: dict[int, dict] = {}
+        order: list[int] = []
+        for ch in chapters:
+            n = ch["chapter"]
+            body_text = " ".join(ch.get("body") or [])
+            has_verse = bool(_VERSE_NUM_RE.search(body_text))
+            if n not in best:
+                best[n] = ch
+                order.append(n)
+            elif has_verse:
+                best[n] = ch
+            # else: keep the earlier entry if the new one is also empty
+        # Prefer the later non-empty run's order when numbers restart.
+        if len(chapters) > len(best):
+            chapters = [best[n] for n in order if n in best]
 
     # Some excerpted works (e.g. Nīlamata-purāṇa's śloka 1-411 fragment) carry
     # no "Глава <ordinal>" heading at all -- a single continuous run of
@@ -721,11 +1156,20 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
         # H2219: audit trail for the H1828 nearest-verse annotates fallback.
         "annotates_remapped": 0, "annotates_remap_max_delta": 0,
         "annotates_remaps": [],
+        "footnote_mode": mode,
+        "footnote_mode_requested": footnote_mode,
     }
+    if glued_stats:
+        report["glued_digit_stats"] = glued_stats
     seq = 0
     seen_passages: set[str] = set()
     all_fn = set(fn_map)
     used_fn: set[int] = set()
+    # Glued-digit notes are book-global (fn numbers rise across chapters);
+    # bracket endnotes are scoped per chapter in the pandoc block. Inline
+    # linking: glued mode may see any remaining unused fn; bracket mode
+    # keeps the per-chapter set.
+    all_fn_numbers = set(fn_map)
 
     for ch in chapters:
         if ch["chapter"] is None:
@@ -734,8 +1178,19 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
             continue
         chn = ch["chapter"]
         body = _reflow(ch["body"])
-        verses = split_verses(body)
-        fn_numbers = {fn for fn, note in fn_map.items() if note["chapter"] == chn}
+        verses = split_verses(
+            body, aggressive_debris=(mode == "glued-digit"),
+        )
+        if mode == "glued-digit":
+            # Book-global fn numbers (rise across chapters); consume in order
+            # so a digit is never re-linked to an earlier chapter's note.
+            fn_numbers = all_fn_numbers
+            link_fn = link_footnotes_glued
+        else:
+            fn_numbers = {
+                fn for fn, note in fn_map.items() if note.get("chapter") == chn
+            }
+            link_fn = link_footnotes
         report["chapters"] += 1
         report["chapter_numbers"].append(chn)
 
@@ -747,7 +1202,7 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
                 passage = f"{chn}.{re.split(r'[-–]', label)[0]}-{re.split(r'[-–]', label)[1]}"
             else:
                 passage = f"{chn}.{label}"
-            clean, html_text, _refs = link_footnotes(v["text"], fn_numbers, used_fn)
+            clean, html_text, _refs = link_fn(v["text"], fn_numbers, used_fn)
             # OLE/PDF sometimes leaves a bare ``(1)`` with no body after the
             # chapter heading (H2353 Devīmāhātmya ch.1/2/13). Empty verses are
             # not real passages — skip rather than mint blank cards.
@@ -792,9 +1247,10 @@ def parse_book(text: str, work_slug: str) -> tuple[list[dict], dict]:
         )
         comm_by_verse: dict[str, list[tuple[int, dict, str, str]]] = {}
         for fn, note in sorted(fn_map.items()):
-            if note["chapter"] != chn:
+            if note.get("chapter") != chn:
                 continue
-            requested = f"{chn}.{note['verse']}"
+            nverse = note.get("verse") or 1
+            requested = f"{chn}.{nverse}"
             annot, resolution, delta = _resolve_flat_annotates(
                 requested, chapter_passages, chn)
             if resolution == "nearest":
@@ -860,7 +1316,11 @@ def _resolve_flat_annotates(
     return best, "nearest", abs(_vkey(best) - target)
 
 
-def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
+def parse_parts(
+    paths: list[Path],
+    work_slug: str,
+    footnote_mode: str = "auto",
+) -> tuple[list[dict], dict]:
     """Parse one or more source files of a multi-part work.
 
     Each file is parsed independently (so part-1 endnotes / back-matter are
@@ -870,7 +1330,9 @@ def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
     restart.
     """
     if len(paths) == 1:
-        return parse_book(extract_text(paths[0]), work_slug)
+        return parse_book(
+            extract_text(paths[0]), work_slug, footnote_mode=footnote_mode,
+        )
 
     all_records: list[dict] = []
     merged = {
@@ -887,11 +1349,12 @@ def parse_parts(paths: list[Path], work_slug: str) -> tuple[list[dict], dict]:
         "annotates_remap_max_delta": 0,
         "annotates_remaps": [],
         "parts": [],
+        "footnote_mode": footnote_mode,
     }
     seen_passages: dict[str, int] = {}
     for path in paths:
         text = extract_text(path)
-        recs, rep = parse_book(text, work_slug)
+        recs, rep = parse_book(text, work_slug, footnote_mode=footnote_mode)
         # Re-seq across parts so build_corpus_html's order is stable.
         base_seq = len(all_records)
         for r in recs:
@@ -937,11 +1400,20 @@ def main() -> None:
                           "(multi-part works are parsed per-file then merged)")
     ap.add_argument("--work-slug", required=True)
     ap.add_argument("--output-dir", default="web/corpus_builder/jsonl")
+    ap.add_argument(
+        "--footnote-mode",
+        choices=("auto", "bracket", "glued-digit"),
+        default="auto",
+        help="endnote front-end: auto-detect (default), pandoc bracket [N] "
+             "block, or page-local glued-digit (DBhP/Māyā PDF convention)",
+    )
     ap.add_argument("--stdout-report", action="store_true")
     args = ap.parse_args()
 
     src_paths = [Path(p) for p in args.input]
-    records, report = parse_parts(src_paths, args.work_slug)
+    records, report = parse_parts(
+        src_paths, args.work_slug, footnote_mode=args.footnote_mode,
+    )
 
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
