@@ -244,6 +244,7 @@ async def test_real_migrations_build_the_expected_schema(tmp_path):
             "corrections",
             "ai_cache",
             "schema_migrations",
+            "legacy_ref_map",
         } <= tables
 
         async with db.execute("PRAGMA table_info(users)") as cur:
@@ -254,6 +255,15 @@ async def test_real_migrations_build_the_expected_schema(tmp_path):
             "utm_medium",
             "utm_campaign",
         } <= cols
+
+        async with db.execute("PRAGMA table_info(corrections)") as cur:
+            corr_cols = {row[1] for row in await cur.fetchall()}
+        assert {
+            "source_slug",
+            "canonical_id",
+            "ref_status",
+            "corpus_version",
+        } <= corr_cols
     finally:
         await db.close()
 
