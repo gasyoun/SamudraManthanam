@@ -200,11 +200,15 @@ $(document).ready(function() {
 
     $(document).on('change', '#sourcesGrid input', updateSourceCount);
 
-    $('#selectAll').click(() => {
+    $('#selectAll').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         $('#sourcesGrid input').prop('checked', true);
         updateSourceCount();
     });
-    $('#selectNone').click(() => {
+    $('#selectNone').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         $('#sourcesGrid input').prop('checked', false);
         updateSourceCount();
     });

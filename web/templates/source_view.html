@@ -423,11 +423,36 @@
 
 {% block extra_body %}
 <script>
-    // Scroll to highlighted line on initial load.
-    window.addEventListener('DOMContentLoaded', () => {
-        const highlighted = document.querySelector('.highlighted');
-        if (highlighted) {
-            highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Scroll to the deep-linked line. Prefer .highlighted (from ?highlight=),
+    // then #hash (e.g. #L123 from search results), then data-link-id match.
+    // Retry once after layout — large sources paint late and miss first scroll.
+    function scrollToDeepLink() {
+        var target = document.querySelector('.line-row.highlighted');
+        if (!target && location.hash) {
+            try {
+                target = document.querySelector(location.hash);
+            } catch (e) { /* invalid hash */ }
+        }
+        if (!target) {
+            var params = new URLSearchParams(location.search);
+            var hl = params.get('highlight');
+            if (hl) {
+                target = document.querySelector('.line-row[data-link-id="' + CSS.escape(hl) + '"]')
+                    || document.querySelector('.line-row[data-line-num="' + CSS.escape(hl) + '"]')
+                    || document.getElementById('L' + hl);
+            }
+        }
+        if (target) {
+            target.classList.add('highlighted', 'focused');
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return true;
+        }
+        return false;
+    }
+    window.addEventListener('DOMContentLoaded', function () {
+        if (!scrollToDeepLink()) {
+            setTimeout(scrollToDeepLink, 120);
+            setTimeout(scrollToDeepLink, 480);
         }
     });
 </script>

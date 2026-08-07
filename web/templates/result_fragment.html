@@ -1,61 +1,70 @@
-<div class="button-container">
-    <button id="prevButton">&lt;</button>
-    <button id="nearestButton">=</button>
-    <button id="nextButton">&gt;</button>
+{# Compact stats strip — the old multi-line "При пахтании океана…" header +
+   bar chart + 16%-wide TOC blocked the actual hits. Keep one line + actions. #}
+<div class="button-container result-nav-buttons" aria-label="Навигация по подсветкам">
+    <button id="prevButton" type="button" title="Предыдущее совпадение">&lt;</button>
+    <button id="nearestButton" type="button" title="Ближайшее">=</button>
+    <button id="nextButton" type="button" title="Следующее совпадение">&gt;</button>
 </div>
-<div class="header header_1">
+<div class="result-stats" id="resultStats">
     {% if total == 0 %}
-        По запросу „{{ query_display }}“ ничего не найдено.
-        <div style="font-size: 14px; margin-top: 5px; font-weight: normal; color: #666;">
-            Попробуйте изменить условия поиска или проверить правильность написания.
+        <div class="result-stats-line">
+            По запросу «{{ query_display }}» ничего не найдено.
+        </div>
+        <div class="result-stats-hint">
+            Измените запрос или проверьте написание (IAST / кириллица / деванагари).
         </div>
     {% else %}
-        При пахтании океана
-        {{ sklonenie_v_n_poiskovyh_zaprosah(query_count) }}
-        для слова „{{ query_display }}“
-        {{ sklonenie_naideno_x_zapisey(total) }}
-        {{ sklonenie_naideno_v_y_istochnikah(sources_hit) }}
-        {% if search_metadata and search_metadata.stems %}
-            <div style="font-size: 0.9rem; color: #555; margin-top: 5px; font-weight: normal;">
-                Поиск по основам: 
+        <div class="result-stats-line">
+            <strong>{{ total }}</strong>
+            {% if total % 10 == 1 and total % 100 != 11 %}запись
+            {% elif 2 <= total % 10 <= 4 and (total % 100 < 10 or total % 100 > 20) %}записи
+            {% else %}записей{% endif %}
+            · <strong>{{ sources_hit }}</strong>
+            {% if sources_hit % 10 == 1 and sources_hit % 100 != 11 %}источник
+            {% elif 2 <= sources_hit % 10 <= 4 and (sources_hit % 100 < 10 or sources_hit % 100 > 20) %}источника
+            {% else %}источников{% endif %}
+            · «{{ query_display }}»
+            {% if search_metadata and search_metadata.stems %}
+                · основы:
                 {% for stem in search_metadata.stems %}
-                    <span style="font-style: italic;">{{ stem }}</span>{% if not loop.last %}, {% endif %}
+                    <em>{{ stem }}</em>{% if not loop.last %}, {% endif %}
                 {% endfor %}
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
         {% if limit_reached %}
-            <div class="red-text" style="font-size: 16px; margin-top: 10px;">
-                ⚠️ Внимание: Показаны первые 5000 записей. Пожалуйста, уточните запрос.
-            </div>
+            <div class="result-stats-hint red-text">Показаны первые 5000 записей — уточните запрос.</div>
         {% endif %}
-        <div style="margin-top: 15px; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <button id="askAiBtn" class="btn-ai">
-                <span>✨ Спросить AI о результатах</span>
+        <div class="result-stats-actions">
+            <button id="askAiBtn" class="btn-ai" type="button">
+                <span>✨ AI о результатах</span>
             </button>
             {% if total > 1 %}
-            <button id="toggleCompactBtn" type="button"
-                    style="background: white; border: 1px solid #ddd; padding: 0.4rem 0.9rem; border-radius: 8px; font-size: 0.85rem; cursor: pointer; color: #555;"
-                    title="Переключить компактный вид с краткими цитатами">
+            <button id="toggleCompactBtn" type="button" class="btn-secondary-sm"
+                    title="Краткие цитаты вместо полного текста">
                 ☰ Компактный вид
+            </button>
+            {% endif %}
+            {% if source_chart %}
+            <button type="button" class="btn-secondary-sm" id="toggleSourceChart"
+                    title="Показать распределение по источникам">
+                ▸ По источникам
             </button>
             {% endif %}
         </div>
     {% endif %}
 </div>
 
-{# Per-source bar chart: hides when 0-1 sources hit. Pure inline SVG, no JS
-   library. Bars are sorted by count descending in build_source_chart_data;
-   click a bar to jump to that source's group via #chapter_N anchor. #}
 {% if source_chart %}
 {% set chart_max = source_chart | map(attribute='count') | max %}
 {% set chart_count = source_chart | length %}
 {% set chart_height = (chart_count * 24) + 8 %}
-<div class="search-bar-chart" style="background:white;border:1px solid #eee;border-radius:8px;padding:1rem 1.2rem;margin:0.8rem 0;">
+<div class="search-bar-chart" id="sourceChartPanel" hidden
+     style="background:white;border:1px solid #eee;border-radius:8px;padding:1rem 1.2rem;margin:0.5rem 0 0.8rem;">
     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.5rem;">
-        <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;">Распределение по источникам</span>
-        <span style="font-size:0.8rem;color:#aaa;">{{ chart_count }} источник{% if chart_count == 1 %}{% elif chart_count < 5 %}а{% else %}ов{% endif %}</span>
+        <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;">По источникам</span>
+        <span style="font-size:0.8rem;color:#aaa;">{{ chart_count }}</span>
     </div>
-    <svg width="100%" height="{{ chart_height }}" role="img" aria-label="Распределение результатов по источникам">
+    <svg width="100%" height="{{ chart_height }}" role="img" aria-label="Распределение по источникам">
         {% for row in source_chart %}
             {% set bar_width = (row.count / chart_max * 60) %}
             {% set y = loop.index0 * 24 %}
@@ -73,13 +82,6 @@
     </svg>
 </div>
 {% endif %}
-<div class="contents">
-    {% for group in groups %}
-        <div class="content_item">
-            <a href="#chapter_{{ loop.index }}">{{ group['title'] }}</a>
-        </div>
-    {% endfor %}
-</div>
 <div class="chapters">
     {% for group in groups %}
     <div class="chapter">
@@ -120,7 +122,14 @@
                            title="Сравнить переводы этого стиха"
                            style="background:none;border:1px solid #e67e22;border-radius:3px;font-size:0.7rem;padding:1px 5px;color:#e67e22;line-height:1.4;font-weight:600;text-decoration:none;">⇔ переводы</a>
                         {% endif %}
-                        <a href="/sources/{{ item.source_slug or item.source_id }}?highlight={{ item.line_num }}" target="_blank" title="Открыть в источнике" style="color: #e67e22; text-decoration: none; font-weight: 600;">
+                        {# Deep-link by link_id (stable verse id), not bare line_num —
+                           line_num alone often lands on the wrong passage after re-ingest
+                           or JSONL segment merge. Fall back to line_num only if no link_id. #}
+                        <a href="/sources/{{ item.source_slug or item.source_id }}?highlight={{ (item.link_id or item.line_num)|urlencode }}#L{{ item.line_num }}"
+                           target="_blank"
+                           rel="noopener"
+                           title="Открыть это место в корпусе"
+                           style="color: #e67e22; text-decoration: none; font-weight: 600;">
                             {{ item.link_id or item.line_num }} ↗
                         </a>
                     </div>
@@ -143,33 +152,81 @@
 </div>
 
 <style>
-    /* Compact view: KWIC visible, full corpus HTML hidden. Toggled by the
-     * "Компактный вид" button which sets body.compact-mode. Reverting back
-     * via the same button. State is per-pageview (not persisted) — users
-     * who prefer compact can re-toggle each session; future enhancement
-     * could persist via localStorage. */
+    .result-stats {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        padding: 0.7rem 1rem;
+        margin: 0.6rem 0 1rem;
+    }
+    .result-stats-line {
+        font-size: 0.95rem;
+        color: #333;
+        line-height: 1.45;
+    }
+    .result-stats-hint {
+        font-size: 0.82rem;
+        color: #777;
+        margin-top: 0.25rem;
+    }
+    .result-stats-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 0.55rem;
+    }
+    .btn-secondary-sm {
+        background: white;
+        border: 1px solid #ddd;
+        padding: 0.4rem 0.85rem;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        cursor: pointer;
+        color: #555;
+    }
+    .btn-secondary-sm:hover { border-color: #e67e22; color: #e67e22; }
+    /* Keep highlight-nav, but not as a full-width sticky bar covering the page. */
+    .result-nav-buttons.button-container {
+        position: fixed;
+        top: auto;
+        bottom: 1rem;
+        left: 1rem;
+        right: auto;
+        padding: 0.35rem 0.5rem;
+        border-radius: 8px;
+        opacity: 0.85;
+        font-size: 0.85rem;
+    }
     body.compact-mode .kwic-preview { display: block !important; }
     body.compact-mode .citation_block .full-content { display: none; }
     body.compact-mode .citation_block .context-panel { display: none !important; }
     body.compact-mode .citation_block { padding: 4px 0; }
     body.compact-mode .citation_block hr { display: none; }
-
-    /* Bar chart link styling: rects darken on hover via opacity. */
     .search-bar-chart svg a { transition: opacity 0.15s; }
     .search-bar-chart svg a:hover { opacity: 0.75; }
 </style>
 
 <script>
-    // Compact view toggle.
     (function () {
         var btn = document.getElementById('toggleCompactBtn');
-        if (!btn) return;
-        btn.addEventListener('click', function () {
-            document.body.classList.toggle('compact-mode');
-            btn.textContent = document.body.classList.contains('compact-mode')
-                ? '☰ Полный вид'
-                : '☰ Компактный вид';
-        });
+        if (btn) {
+            btn.addEventListener('click', function () {
+                document.body.classList.toggle('compact-mode');
+                btn.textContent = document.body.classList.contains('compact-mode')
+                    ? '☰ Полный вид'
+                    : '☰ Компактный вид';
+            });
+        }
+        var chartBtn = document.getElementById('toggleSourceChart');
+        var chart = document.getElementById('sourceChartPanel');
+        if (chartBtn && chart) {
+            chartBtn.addEventListener('click', function () {
+                var open = chart.hasAttribute('hidden');
+                if (open) chart.removeAttribute('hidden');
+                else chart.setAttribute('hidden', '');
+                chartBtn.textContent = open ? '▾ По источникам' : '▸ По источникам';
+            });
+        }
     })();
 
     function initHighlighting() {
