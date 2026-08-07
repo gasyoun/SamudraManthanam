@@ -1,0 +1,4 @@
+H2370 uSort smoke OK: 5 4 3 2 1
+compiler: Free Pascal 3.2.2 i386-win32
+host: WIN-NJTORH3267V 2026-08-07T22:14:02.5383900+03:00
+
