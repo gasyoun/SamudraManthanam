@@ -1,6 +1,6 @@
 # PDF → Corpus Ingestion Pipeline (house standard)
 
-_Created: 10-07-2026 · Last updated: 06-08-2026_
+_Created: 10-07-2026 · Last updated: 07-08-2026_
 
 The reusable, agent-runnable pipeline that turns a print-derived **PDF**
 translation into the app-ready corpus HTML the desktop reader «Пахтанье
@@ -235,7 +235,7 @@ Differences from the DBhP path (module docstring has the full rationale):
 - Text extraction branches on file extension: `pandoc -f docx -t plain` or
   `pdftotext -enc UTF-8` (same form-feed normalisation as the DBhP path).
 
-**Status: 10/~20 works ingested (H1438).** Wave A (5) + Wave B (5) landed.
+**Status: 12/~20 works ingested (H1438).** Wave A (5) + Wave B (5) + Wave C (2) landed.
 Wave A tail (the 4 PDF tantras) plus the pilot's 2 works:
 
 - **Cīnācāra-tantra** (docx, pilot): 5 ch, 225 verses, 154/168 endnotes
@@ -354,9 +354,27 @@ than silently merging them); **any future re-ingestion of these two works
 should re-verify verse counts against this table, not assume byte-identical
 reproduction, until pandoc is pinned.**
 
-**Remaining ~9–10 works** (Wave C in-DCS purāṇas needing real Sanskrit
-alignment — Kālikā, Devīmāhātmya; Wave D fragments; Māyā-tantra deferred
-glued-digit front-end) stay scoped in
+### Wave C (in-DCS purāṇas + SA where keyed) — landed 07-08-2026 (H2353)
+
+| Work | Source | Ch | Verses | Endnotes | SA | Notes |
+|---|---|---:|---:|---:|---|---|
+| Devīmāhātmya | `.doc` (OLE) | 13 | 595 | 0 | **497 matched** / 98 ru_only / 90 sa_orphan (GRETIL MarkP 81–93 → flat 1–13) | 13 empty bare-`(N)` after heading skipped; HTML round-trip 595/595 (100%) |
+| Kālikā-purāṇa | 6-part `.doc`/`.docx` | 90 | 8137 | 3 | **none** (no keyed GRETIL/sanskritdocuments witness) | ch.62 recovered via OLE glued-ordinal peel; absurd high-N colophon drop; HTML round-trip 8137/8137 (100%) |
+
+**Three Wave-C parser hardenings** (3 new unit tests; 31 total + 2 optional skips in
+[`test_ignatiev_book_units.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ignatiev_book_units.py)):
+
+1. **OLE glued unit-ordinal peel** — `Глава шестьдесят втораяовно…` opens ch.62
+   (tens-prefix alone is rejected).
+2. **Colophon / absurd forward-jump drop** — body colophon with false
+   `(1401-1464)` after real verse 158 is not a verse.
+3. **Empty-verse emit filter** — bare `(N)` with blank body does not mint cards.
+
+SA converter: [`gretil_markp_devimahatmya_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/gretil_markp_devimahatmya_to_canonical.py)
+(source `sanskrit_src/mkp1-93u.htm`). Summary: `jsonl/wave_c_summary.json`.
+
+**Remaining** (Wave D fragments; Māyā-tantra deferred glued-digit front-end)
+stay scoped in
 [H1438](https://github.com/gasyoun/Uprava/blob/main/handoffs/H1438-Sonnet_SamudraManthanam_ignatjev-tantras-puranas-ingest_22.07.26.md).
 
 _Dr. Mārcis Gasūns_

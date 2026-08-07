@@ -191,3 +191,5 @@ adbhuta-ramayana.html
 kularnava-tantra.html
 yogini-tantra.html
 mahabhagavata-purana.html
+devimahatmya.html
+kalika-purana.html

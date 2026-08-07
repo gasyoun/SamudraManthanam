@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "slug": "devimahatmya",
+  "title_ru": "Деви-махатмья; А. Игнатьев",
+  "title_display": "Деви-махатмья",
+  "title_en": "Devīmāhātmya (Ignatiev)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "verse",
+  "needs_review": true,
+  "provenance": "А. Игнатьев (перев.). Деви-махатмья (архив переводчика). H2353 Wave C: legacy .doc via OLE UTF-16 extract; 13 chapters; empty bare-(N) verses skipped. SA layer: GRETIL Mārkaṇḍeya-purāṇa (Sansknet) adhy. 81–93 keyed MarkP_N.M → renumbered 1–13; markup join via align_sanskrit.py (not statistical). Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py → build_corpus_html.py.",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md"
+}

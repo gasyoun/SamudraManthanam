@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "ca35937f3c1860460d58e430c08ea41961f8784a"
+    "revision": "ad5356baa6faf0754a61edac827f3ac3fe90458a"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -2983,14 +2983,54 @@
         "slug": "yotat-up",
         "sort_order": 196,
         "title": "yotat-up"
+      },
+      {
+        "slug": "devimahatmya",
+        "filename": "devimahatmya.html",
+        "sort_order": 197,
+        "title": "Devīmāhātmya",
+        "provenance": "canonical JSONL devimahatmya.jsonl (H2353 Wave C)",
+        "canonical": {
+          "path": "corpus_builder/jsonl/devimahatmya.jsonl",
+          "sha256": "9e361fbc588e3b55c2175970dd9e644480ab9c27409378d3705a1fdb1c625768",
+          "bytes": 695037,
+          "record_count": 1092,
+          "first_canonical_id": "devimahatmya:1.2#sa",
+          "last_canonical_id": "devimahatmya:13.29#ru"
+        },
+        "metadata": {
+          "path": "corpus_builder/devimahatmya.meta.json",
+          "sha256": "0b2593804069df741037366c4c61440e99e62c0d600764d548aeda572d57c549",
+          "bytes": 1352
+        }
+      },
+      {
+        "slug": "kalika-purana",
+        "filename": "kalika-purana.html",
+        "sort_order": 198,
+        "title": "Kālikā-purāṇa",
+        "provenance": "canonical JSONL kalika-purana.jsonl (H2353 Wave C)",
+        "canonical": {
+          "path": "corpus_builder/jsonl/kalika-purana.jsonl",
+          "sha256": "9f107bf6393ac2494568d373ad74d86015c202baeaba5d120daa1c75c4545a44",
+          "bytes": 6349657,
+          "record_count": 8140,
+          "first_canonical_id": "kalika-purana:1.1#ru",
+          "last_canonical_id": "kalika-purana:90.41#ru"
+        },
+        "metadata": {
+          "path": "corpus_builder/kalika-purana.meta.json",
+          "sha256": "e4cda802f55ecf446c16ebbff048d5c2f234a9bfa38bc71e7fcbe544b5e61a53",
+          "bytes": 1371
+        }
       }
     ],
     "totals": {
-      "canonical_bytes": 685094683,
-      "record_count": 703699,
-      "source_count": 197
+      "source_count": 199,
+      "record_count": 712931,
+      "canonical_bytes": 692139377
     }
   },
-  "content_hash": "sha256:23a32ce953e71852ed1877bcbe54ff4d31a0da52cee36c84cd6d50aa19251fe9",
+  "content_hash": "sha256:5e7154385a96e7836cea21ec4ff22059647ac93be75d8ea5ab25152c7e529b5c",
   "schema_version": 1
 }
