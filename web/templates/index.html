@@ -70,14 +70,55 @@
         color: #7a5a00;
     }
 
-    .sources-selector { margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem; }
+    .sources-selector {
+        margin-top: 0.5rem;
+        border-top: 1px solid #eee;
+        padding-top: 0.6rem;
+    }
+    .sources-selector > summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem 1rem;
+        font-size: 0.9rem;
+        color: #444;
+        user-select: none;
+    }
+    .sources-selector > summary::-webkit-details-marker { display: none; }
+    .sources-selector > summary::before {
+        content: '▸';
+        color: #e67e22;
+        font-weight: 700;
+        width: 1rem;
+    }
+    .sources-selector[open] > summary::before { content: '▾'; }
+    .sources-selector .sources-summary-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: auto;
+    }
+    .sources-selector .sources-summary-actions button {
+        font-size: 0.78rem;
+        padding: 0.25rem 0.55rem;
+        border-radius: 6px;
+        border: 1px solid #ddd;
+        background: #fff;
+        cursor: pointer;
+    }
     .sources-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 0.5rem;
-        max-height: 200px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 0.4rem;
+        max-height: 220px;
         overflow-y: auto;
-        margin-top: 1rem;
+        margin-top: 0.75rem;
+        padding: 0.5rem;
+        background: #fafbfc;
+        border-radius: 8px;
+        border: 1px solid #eee;
         padding: 0.5rem;
         background: #fff;
         border-radius: 8px;
@@ -230,21 +271,21 @@
                 <div class="option-item" id="netStatus" title="Состояние сети"></div>
             </div>
 
-            <div class="sources-selector">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <label>Источники:</label>
-                    <div>
-                        <span id="sourceCount" style="font-size: 0.8rem; margin-right: 1rem; color: #666;">Загрузка...</span>
+            <details class="sources-selector" id="sourcesSelector">
+                <summary>
+                    <span>Источники</span>
+                    <span id="sourceCount" style="font-size: 0.82rem; color: #666;">Загрузка…</span>
+                    <span class="sources-summary-actions">
                         <button type="button" id="selectAll">Все</button>
                         <button type="button" id="selectNone">Ни одного</button>
-                    </div>
-                </div>
+                    </span>
+                </summary>
                 <div id="sourcesGrid" class="sources-grid">
                     <div class="skeleton"></div>
                     <div class="skeleton"></div>
                     <div class="skeleton"></div>
                 </div>
-            </div>
+            </details>
         </form>
 
         <div id="progressContainer" class="progress-container" role="status" aria-live="polite">
@@ -324,5 +365,5 @@
 <!-- Offline-search bridge (ES module): sets window.SamudraOffline, lazy-loads
      the sqlite-wasm worker only when the user goes offline. -->
 <script type="module" src="/static/scripts/offline-search-bridge.js?v=3e-2"></script>
-<script src="/static/search.js?v=3e-3-wait-timer"></script>
+<script src="/static/search.js?v=3e-4-ux-compact"></script>
 {% endblock %}
