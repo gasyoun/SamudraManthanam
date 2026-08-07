@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "68d158a7cb57be8db21868a42fcabad7de248fca"
+    "revision": "6f5526650353cbeff605b0a85127c6c60d416d11"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -3151,12 +3151,12 @@
       },
       {
         "canonical": {
-          "bytes": 15168,
+          "bytes": 15150,
           "first_canonical_id": "devi-purana:22.3#ru",
           "last_canonical_id": "devi-purana:22.24#ru",
           "path": "corpus_builder/jsonl/devi-purana.jsonl",
           "record_count": 18,
-          "sha256": "ba57f9f4aea1400b39c899407586afbadc2dcb37c4082425c920d4731566e662"
+          "sha256": "80733b5149af8894f9026f8c8db734f1974c991568f9c4235eb4bd8af9a583e8"
         },
         "filename": "devi-purana.html",
         "provenance": "А. Игнатьев (перев.).  (архив переводчика). H2376 Wave D fragment: ch.22 only; excerpt heading «Из двадцать второй главы». Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
@@ -3167,12 +3167,12 @@
       },
       {
         "canonical": {
-          "bytes": 91342,
+          "bytes": 91218,
           "first_canonical_id": "linga-purana:17.1#ru",
           "last_canonical_id": "linga-purana:29.83#ru",
           "path": "corpus_builder/jsonl/linga-purana.jsonl",
           "record_count": 124,
-          "sha256": "05cb136aad59a37c60a10e8d9945a3ef620db854433aa5c1b21d6438d73eab1e"
+          "sha256": "42b05923f36027d88aa70bd83f38289efa4412893278ed6476a3418236a693ca"
         },
         "filename": "linga-purana.html",
         "provenance": "А. Игнатьев (перев.).  (архив переводчика). H2376 Wave D fragment: ch.17 and ch.29 only (two PDF files). Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
@@ -3183,12 +3183,12 @@
       },
       {
         "canonical": {
-          "bytes": 776186,
+          "bytes": 775147,
           "first_canonical_id": "padma-purana:1.1#ru",
           "last_canonical_id": "padma-purana:16.155#ru",
           "path": "corpus_builder/jsonl/padma-purana.jsonl",
           "record_count": 1039,
-          "sha256": "4543931828e5effadc5c4acc1917fc2a201679fdb9934a96742b4842f202e6d7"
+          "sha256": "ac004c949cda780240b2aae983c4803b7fbcec917901697bc5a1bc05bd44a037"
         },
         "filename": "padma-purana.html",
         "provenance": "А. Игнатьев (перев.).  (архив переводчика). H2376 Wave D fragment: Jālandhara tale only (Сказание о Джаландхаре) — NOT whole Padma-purāṇa. Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
@@ -3199,12 +3199,12 @@
       },
       {
         "canonical": {
-          "bytes": 526902,
+          "bytes": 525726,
           "first_canonical_id": "bhagavata-purana:2.1#ru",
           "last_canonical_id": "bhagavata-purana:23.110#ru",
           "path": "corpus_builder/jsonl/bhagavata-purana.jsonl",
           "record_count": 1176,
-          "sha256": "dd4a7847cfb4033f2845283f89aa1e57ac9987dec2f208dc226c627222403b95"
+          "sha256": "55df0d635b32f786c9cb316a4799151b547779f01104f7e5cfd47111b03b6aed"
         },
         "filename": "bhagavata-purana.html",
         "provenance": "А. Игнатьев (перев.).  (архив переводчика). H2376 Wave D fragment: partial chapters (pesh 4 ch.2–5 + ch.14–21,23); RTF masquerading as .doc; prose without (N) verse markers → paragraph units. Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
@@ -3215,12 +3215,12 @@
       },
       {
         "canonical": {
-          "bytes": 3159740,
+          "bytes": 3157207,
           "first_canonical_id": "brihannila-tantra:4.92.comm1",
           "last_canonical_id": "brihannila-tantra:22.172.comm1",
           "path": "corpus_builder/jsonl/brihannila-tantra.jsonl",
           "record_count": 2533,
-          "sha256": "da0c45be888210e14c7217656f8f15740ca6fa8eaab87a404ba377a9abf81154"
+          "sha256": "e2b56899fe0eb48a4a918dae3d406c6b3190453190d3930b30d0800f62769d42"
         },
         "filename": "brihannila-tantra.html",
         "provenance": "А. Игнатьев (перев.).  (архив переводчика). H2376 Wave D fragment: selected chapters (Избранное) — not the whole tantra; source chapter order non-monotonic. Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
@@ -3231,12 +3231,12 @@
       },
       {
         "canonical": {
-          "bytes": 2564598,
+          "bytes": 2563103,
           "first_canonical_id": "shaktisangama-tantra:37.1#ru",
           "last_canonical_id": "shaktisangama-tantra:9.8#ru",
           "path": "corpus_builder/jsonl/shaktisangama-tantra.jsonl",
           "record_count": 1495,
-          "sha256": "63c8ae492d09858daac0d62588fb7ce7b88d4aef7e6df29b3c68b4ea331732e8"
+          "sha256": "b41969ecdecd981fcbd3dcefd0373bb26b57b85cad4026de59d57aca673bd076"
         },
         "filename": "shaktisangama-tantra.html",
         "provenance": "А. Игнатьев (перев.).  (архив переводчика). H2376 Wave D fragment: selected chapters (Избранное) — not the whole tantra; multi-khaṇḍa excerpts with overlapping chapter numbers → id_collisions logged. Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
@@ -3244,14 +3244,30 @@
         "slug": "shaktisangama-tantra",
         "sort_order": 200,
         "title": "Шактисангама-тантра. Избранное; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 678169,
+          "first_canonical_id": "maya-tantra:1.1#ru",
+          "last_canonical_id": "maya-tantra:12.11.comm1",
+          "path": "corpus_builder/jsonl/maya-tantra.jsonl",
+          "record_count": 491,
+          "sha256": "a15296508ea2fac0b505539bc6f509a38e48200df2c920dfd3e2aa6021ed1679"
+        },
+        "filename": "maya-tantra.html",
+        "provenance": "А. Игнатьев (перев.). Майя-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377). Page-local glued-digit footnotes stripped before verse split; 12 ch / 343 RU verses / 148 comments. alignment: none (no keyed SA witness found).",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "maya-tantra",
+        "sort_order": 201,
+        "title": "Майя-тантра; А. Игнатьев"
       }
     ],
     "totals": {
-      "canonical_bytes": 679121422,
-      "record_count": 690729,
-      "source_count": 201
+      "canonical_bytes": 679793206,
+      "record_count": 691220,
+      "source_count": 202
     }
   },
-  "content_hash": "sha256:77177eb4affa6bd327c22eaa40e5656037d32609d9c9800be78b564804cd635e",
+  "content_hash": "sha256:7a99e21d8dc472cea534b3a9fdc73b12edc4ef1eea25f7865fa31a51525dc63c",
   "schema_version": 1
 }

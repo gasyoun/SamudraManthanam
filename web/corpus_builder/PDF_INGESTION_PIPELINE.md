@@ -293,21 +293,15 @@ one per bug found; all previously-shipped works (Cīnācāra/Nirvāṇa-tantra)
 byte-identical before/after each fix (regression-diffed against their
 committed `.raw.jsonl`).
 
-**Māyā-tantra: a DIFFERENT, larger front-end gap, deliberately NOT attempted
-this pass.** Its PDF's footnotes are NOT collected once at the end (unlike
-every other Wave-A-tail work) — they recur on nearly every page throughout
-the ENTIRE book, in the OLD glued-digit-superscript convention this
-generalized parser deliberately dropped in favour of bracket-style `[N]`
-matching (see the module docstring). Because the current single-block
-`_NOTES_HEAD_RE` search only looks after the LAST chapter heading, every
-scattered per-page footnote block currently reads as ordinary running body
-text in every chapter — and a footnote's own embedded citation numbers
-(e.g. `1.1(2)`) get misread by `split_verses` as verse boundaries, producing
-wild verse-count oscillation (diagnosed: `verse_gaps`/`id_collisions` jumping
-`1↔2` repeatedly, and one bogus `4: 2->1772` jump). Fixing this properly
-means reintroducing something like the OLD DBhP-PDF glued-digit heuristic as
-an additional front-end mode, auto-detected per work — a real design task,
-not a regex tweak; scoped as the next Wave-A-tail item rather than rushed.
+**Māyā-tantra: glued-digit front-end landed (H2377, Grok 4.5 `grok-4.5`).**
+Page-local footnotes (DBhP-style digits glued to words + `N ch.v.` note
+bodies at page bottoms) are stripped by
+`--footnote-mode glued-digit` before the chapter walk. Result: **12 ch /
+343 RU verses / 148 comments**, HTML→JSONL round-trip **343/343 (100%)**,
+re-run stable. Design + before/after table:
+[`docs/MAYA_TANTRA_GLUED_DIGIT_MODE_H2377.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/MAYA_TANTRA_GLUED_DIGIT_MODE_H2377.md).
+`auto` stays conservative (`bracket`) so Wave-A committed counts are not
+re-baselined; force `glued-digit` for Māyā-class PDFs.
 
 ### Wave B (docx tantras + upapurāṇas) — landed 01-08-2026
 
