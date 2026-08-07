@@ -246,12 +246,15 @@ Wave A tail (the 4 PDF tantras) plus the pilot's 2 works:
   **527** verses / **212** page-local comments (was 465/0 under H2273
   bracket+debris; earlier pre-H1829 821 included false footnote splits).
   Doc: [`docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_GLUED_DIGIT_REBASELINE_H2385.md).
-- **Niruttara-tantra** (PDF): 15 ch, 674 verses, round-trip 674/674.
-- **Guptasādhana-tantra** (PDF): 12 ch, 319 verses, round-trip 319/319.
-- **Yoni-tantra** (PDF): 8 ch, 221 verses, round-trip 221/221 — ch.8's true
-  colophon closes the translated work; the source PDF appends supplementary
-  hymns quoted from OTHER named tantras after it (`meta.json` `provenance`
-  notes this) — excluded, not part of Yoni-tantra itself.
+- **Niruttara-tantra** (PDF; **H2413 glued-digit**): 15 ch, **676** verses /
+  **322** comments (was 674/0 under bracket), RT 99.9%.
+- **Guptasādhana-tantra** (PDF; **H2414 glued-digit**): 12 ch, **319** verses /
+  **368** comments (was 319/0), RT 100%.
+- **Yoni-tantra** (PDF; **H2412 glued-digit**): 8 ch, **221** verses /
+  **192** page-local comments (was 0 under bracket), RT 100%.
+  Ch.8's true colophon closes the translated work; the source PDF appends
+  supplementary hymns from OTHER named tantras after it — excluded.
+  Wave-A PDF rollup: [`docs/WAVE_A_PDF_GLUED_DIGIT_REBASELINE_H2412_14.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/WAVE_A_PDF_GLUED_DIGIT_REBASELINE_H2412_14.md).
 
 All five registered in `Programdata/data.txt`; all five FTS5-searchable
 (verified against a scratch `ingest.py` DB build, real hit counts per work).

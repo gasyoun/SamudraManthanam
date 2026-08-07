@@ -1,8 +1,8 @@
 {
   "work": "niruttara-tantra",
   "chapters": 15,
-  "verse_count": 674,
-  "comment_count": 0,
+  "verse_count": 676,
+  "comment_count": 322,
   "verse_gaps": [
     "2: 55->57",
     "10: 49->51",
@@ -25,9 +25,21 @@
     14,
     15
   ],
-  "unrecognised_endnotes": 0,
+  "unrecognised_endnotes": 2,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "footnote_mode": "glued-digit",
+  "footnote_mode_requested": "glued-digit",
+  "glued_digit_stats": {
+    "footnote_mode": "glued-digit",
+    "pages_total": 224,
+    "pages_with_notes": 73,
+    "strong_note_starts": 325,
+    "total_endnotes": 322
+  },
   "id_collisions": [
     "8.45"
   ],
-  "total_endnotes": 0
+  "total_endnotes": 322
 }
