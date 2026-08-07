@@ -1,0 +1,619 @@
+{
+  "total_sources": 2,
+  "total_records": 491,
+  "sources": [
+    {
+      "slug": "maya-tantra",
+      "error": "file_not_found",
+      "records": 0
+    },
+    {
+      "slug": "maya-tantra",
+      "filename": "maya-tantra.html",
+      "structure": "verse",
+      "path": "clean",
+      "records": 491,
+      "seg_counts": {
+        "ru": 343,
+        "comm1": 148
+      },
+      "needs_review": 148
+    }
+  ],
+  "global_issues": {
+    "comm_review": [
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_6"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_7"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_8"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_9"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_10"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_11"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_12"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_13"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_14"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_15"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_16"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_17"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_18"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_19"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_20"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_21"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_23"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_24"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_25"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_29"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_30"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_31"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_32"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_33"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_34"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_36"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_37"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_38"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_39"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_40"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_41"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_42"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_43"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_47"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_48"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_50"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_56"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_51"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_52"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_53"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_54"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_55"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_57"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_58"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_59"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_60"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_61"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_62"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_63"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_64"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_65"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_66"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_67"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_68"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_70"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_72"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_73"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_74"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_76"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_77"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_78"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_79"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_80"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_81"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_82"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_83"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_84"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_85"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_86"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_87"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_88"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_89"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_90"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_91"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_92"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_93"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_94"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_95"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_96"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_97"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_98"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_99"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_100"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_101"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_102"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_103"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_105"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_106"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_107"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_108"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_109"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_110"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_112"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_113"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_114"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_115"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_116"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_117"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_118"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_119"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_120"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_121"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_122"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_123"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_124"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_125"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_126"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_127"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_128"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_129"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_130"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_131"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_132"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_133"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_134"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_135"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_136"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_137"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_138"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_139"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_140"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_141"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_142"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_143"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_145"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_146"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_148"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_149"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_150"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_151"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_153"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_154"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_155"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_156"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_157"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_158"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_159"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_160"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_162"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_163"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_164"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_165"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_166"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_168"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_169"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_170"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_171"
+      },
+      {
+        "slug": "maya-tantra",
+        "anchor_id": "comment_173"
+      }
+    ]
+  }
+}

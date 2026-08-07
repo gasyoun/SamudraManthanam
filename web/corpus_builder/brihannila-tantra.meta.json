@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "slug": "brihannila-tantra",
+  "title_ru": "Бриханнила-тантра. Избранное; А. Игнатьев",
+  "title_display": "Бриханнила-тантра (избранное)",
+  "title_en": "Bṛhannīla-tantra (Ignatiev, selected)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "verse",
+  "needs_review": true,
+  "provenance": "А. Игнатьев (перев.). Бриханнила-тантра (избранное) (архив переводчика). H2376 Wave D fragment: selected chapters (Избранное) — not the whole tantra; non-monotonic chapter order; id_collisions logged. Ingest via ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md"
+}

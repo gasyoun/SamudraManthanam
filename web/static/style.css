@@ -196,12 +196,50 @@ a {
     text-align: justify;
 }
 
+/* Parallel Sa/Ru layout (ported from style0 + flex so Russian never
+   disappears off-screen when the container is narrower than 440+620). */
+.chapter_content,
+.clear {
+    clear: both;
+}
+
+.chapter_content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.chapter_content > .chapter_block {
+    display: block;
+    vertical-align: top;
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.chapter_content > .chapter_block.iast,
+.chapter_content > .iast {
+    flex: 1 1 16rem;
+    max-width: 100%;
+}
+
+.chapter_content > .chapter_block.translation,
+.chapter_content > .translation {
+    flex: 1 1 18rem;
+    max-width: 100%;
+}
+
 .iast {
     font-size: 16px;
     text-align: left;
     padding-right: 10px;
-    width: 440px;
-    color: #708090;  
+    /* width was fixed 440px — overflows and hides the translation sibling */
+    width: auto;
+    max-width: 100%;
+    color: #708090;
     word-wrap: break-word;
     word-break: break-word;
 }
@@ -213,7 +251,8 @@ a {
 .translation {
     font-size: 18px;
     text-align: justify;
-    width: 620px;
+    width: auto;
+    max-width: 100%;
 }
 .comments {
     margin-bottom: 30px;
@@ -258,19 +297,38 @@ a {
      color: red;
 }
 
-/* ── 380 px responsive — corpus content ─────────────────────────────────────
-   .iast (440 px) and .translation (620 px) are fixed-width in the legacy
-   corpus stylesheet. On narrow screens both overflow — collapse them to full
-   width and stack them vertically under each other.                         */
-@media (max-width: 600px) {
+/* Narrow screens: stack Sa then Ru (flex-wrap already does this; force column). */
+@media (max-width: 700px) {
     body { padding: 0 8px; }
-    .iast       { width: 100%; max-width: 100%; padding-right: 0; float: none; }
-    .translation { width: 100%; max-width: 100%; float: none; }
     .chapter_content {
-        display: flex;
         flex-direction: column;
         gap: 0.5rem;
     }
+    .iast,
+    .translation,
+    .chapter_content > .chapter_block.iast,
+    .chapter_content > .chapter_block.translation {
+        width: 100%;
+        max-width: 100%;
+        flex: 1 1 auto;
+        padding-right: 0;
+        float: none;
+    }
     .citation_block { overflow-x: visible; }
     .comments { margin-bottom: 12px; }
+}
+
+/* Nested citation_block inside search results (ingest packs a full block
+   into line_html) — keep both languages readable, de-emphasize inner chrome. */
+.full-content > .citation_block {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.full-content > .citation_block > .range {
+    float: none;
+    display: inline-block;
+    margin: 0 0 0.4rem 0;
+    font-size: 0.85rem;
+    color: #888;
 }

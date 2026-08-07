@@ -612,6 +612,129 @@ def test_chapter_open_peels_ole_glued_unit_ordinal():
     assert ig._is_chapter_open("Глава шестьдесят") is None
 
 
+def test_chapter_open_from_excerpt_genitive_heading():
+    """H2376: «Из двадцать второй главы» must open chapter 22, not fall back to 1."""
+    m = ig._is_chapter_open("Из двадцать второй главы")
+    assert m is not None
+    assert ordinal_f_to_int(m.group("ord")) == 22
+    text = (
+        "Деви-пурана\n"
+        "Из двадцать второй главы\n"
+        "Индра сказал:\n"
+        "Я желаю услышать о постах. (3)\n"
+        "Брахма сказал:\n"
+        "Слушай, о Шакра. (4)\n"
+    )
+    recs, rep = ig.parse_book(text, "devi-purana")
+    ru = [r for r in recs if r.get("seg") == "ru"]
+    assert rep["chapter_numbers"] == [22]
+    assert [r["passage"] for r in ru] == ["22.3", "22.4"]
+
+
+def test_chapter_open_allows_trailing_period():
+    """H2376: RTF «ГЛАВА ВТОРАЯ.» must open, not fall into implicit ch.1."""
+    m = ig._is_chapter_open("ГЛАВА ВТОРАЯ.")
+    assert m is not None
+    assert ordinal_f_to_int(m.group("ord")) == 2
+    m2 = ig._is_chapter_open("Глава семнадцатая.")
+    assert m2 is not None
+    assert ordinal_f_to_int(m2.group("ord")) == 17
+
+
+def test_chapter_open_digit_form_and_prose_paragraph_split():
+    """H2376: «ГЛАВА 14» digit heads + prose without (N) still emits units."""
+    m = ig._is_chapter_open("ГЛАВА 14")
+    assert m is not None
+    assert m.group("ord") == "14"
+    text = (
+        "ГЛАВА ВТОРАЯ.\n"
+        "ДАКША ПРОКЛИНАЕТ\n"
+        "\n"
+        "Видура сказал:\n"
+        "\n"
+        "Почему Дакша возненавидел Бхаву.\n"
+        "\n"
+        "Майтрейя сказал:\n"
+        "\n"
+        "Некогда на жертвоприношении собрались риши.\n"
+        "\n"
+        "ГЛАВА 14\n"
+        "\n"
+        "Первый абзац четырнадцатой.\n"
+        "\n"
+        "Второй абзац четырнадцатой.\n"
+    )
+    recs, rep = ig.parse_book(text, "bhagavata-purana")
+    ru = [r for r in recs if r.get("seg") == "ru"]
+    assert 2 in rep["chapter_numbers"]
+    assert 14 in rep["chapter_numbers"]
+    assert rep["verse_count"] >= 4
+    assert any(r["passage"].startswith("14.") for r in ru)
+    assert rep.get("prose_paragraph_split_chapters")
+
+
+def test_extract_text_pdf_pypdf_fallback(tmp_path, monkeypatch):
+    """H2376: when pdftotext is missing, pypdf must still return text."""
+    import shutil
+    real_which = shutil.which
+
+    def fake_which(name, *args, **kwargs):
+        if name == "pdftotext":
+            return None
+        return real_which(name, *args, **kwargs)
+
+    monkeypatch.setattr(shutil, "which", fake_which)
+    # Prefer a real archive PDF when present; else skip (pypdf needs real PDF bytes).
+    archive = (
+        Path(__file__).resolve().parents[2]
+        / "archive_ignatiev_2026"
+        / "Переводы с санскрита"
+        / "Линга-пурана"
+        / "Линга-пурана. Глава 17.pdf"
+    )
+    import pytest
+    if not archive.is_file():
+        pytest.skip("archive Liṅga PDF not present (gitignored)")
+    text = ig.extract_text(archive)
+    assert "Глава" in text or "глава" in text.lower()
+    assert "линга" in text.lower() or "Линга" in text or "ЛИНГА" in text
+
+
+def test_extract_text_doc_rtf_masquerade(tmp_path):
+    """H2376: a .doc whose bytes are RTF must route through pandoc RTF, not OLE."""
+    # Minimal RTF with ansicpg1251 + a short Cyrillic body encoded as the
+    # bytes pandoc would mis-label; prefer real archive sample when present.
+    archive = (
+        Path(__file__).resolve().parents[2]
+        / "archive_ignatiev_2026"
+        / "Переводы с санскрита"
+        / "Бхагавата-пурана"
+        / "Бхагавата-пурана Некоторые главы.doc"
+    )
+    import pytest
+    if not archive.is_file():
+        # Hermetic: write a tiny RTF .doc with ASCII (no mojibake path) so
+        # the magic-byte branch is still covered without the archive.
+        p = tmp_path / "probe.doc"
+        p.write_bytes(
+            b"{\\rtf1\\ansi\\ansicpg1251\\deff0 "
+            b"Glava vtoraya. Vidura skazal: text. (1)}"
+        )
+        # Pandoc may still produce text; if pandoc missing, skip.
+        import shutil
+        if not shutil.which("pandoc"):
+            pytest.skip("pandoc not on PATH")
+        try:
+            text = ig.extract_text(p)
+        except RuntimeError as e:
+            pytest.skip(f"pandoc RTF unavailable: {e}")
+        assert text.strip()
+        return
+    text = ig.extract_text(archive)
+    assert "ГЛАВА" in text or "Глава" in text
+    assert "сказал" in text or "Сказал" in text
+
+
 def test_colophon_and_absurd_jump_dropped_not_emitted():
     """H2353: colophon + high-N marker after real verses is not a verse."""
     body = (

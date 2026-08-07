@@ -39,6 +39,45 @@ $(document).ready(function() {
     // Show on page load if the user already crossed the threshold on a prior visit
     maybeShowEngagedCta();
 
+    // ── Wait timer (search + AI) ─────────────────────────────────────────────
+    // Long queries (full corpus, morph, regex, AI) used to sit on a static
+    // "Поиск…" with no clock — users could not tell if the tab was frozen.
+    function formatElapsed(ms) {
+        const s = ms / 1000;
+        if (s < 60) {
+            return (s < 10 ? s.toFixed(1) : String(Math.floor(s))).replace('.', ',') + ' с';
+        }
+        const m = Math.floor(s / 60);
+        const rem = Math.floor(s % 60);
+        return m + ' мин ' + rem + ' с';
+    }
+    function startWaitTimer(onTick, intervalMs) {
+        const t0 = (typeof performance !== 'undefined' && performance.now)
+            ? performance.now()
+            : Date.now();
+        const tick = function () {
+            const now = (typeof performance !== 'undefined' && performance.now)
+                ? performance.now()
+                : Date.now();
+            onTick(now - t0);
+        };
+        tick();
+        const id = setInterval(tick, intervalMs || 200);
+        return {
+            stop: function () {
+                clearInterval(id);
+                const now = (typeof performance !== 'undefined' && performance.now)
+                    ? performance.now()
+                    : Date.now();
+                return now - t0;
+            }
+        };
+    }
+    /** Progress bar that creeps toward 90% while waiting (never pretends to know %). */
+    function waitProgressPct(ms) {
+        return Math.min(90, 8 + 82 * (1 - Math.exp(-ms / 12000)));
+    }
+
     // ── Sources ──────────────────────────────────────────────────────────────
     // Disable Find/HTML buttons until sources resolve — submitting earlier would
     // send source_ids=[] and the server (correctly) returns no results, leaving
@@ -161,11 +200,15 @@ $(document).ready(function() {
 
     $(document).on('change', '#sourcesGrid input', updateSourceCount);
 
-    $('#selectAll').click(() => {
+    $('#selectAll').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         $('#sourcesGrid input').prop('checked', true);
         updateSourceCount();
     });
-    $('#selectNone').click(() => {
+    $('#selectNone').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         $('#sourcesGrid input').prop('checked', false);
         updateSourceCount();
     });
@@ -205,9 +248,14 @@ $(document).ready(function() {
 
         $('#progressContainer').show();
         $('#searchProgress').val(0);
-        $('#progressText').text('Поиск...');
-        $('#results-area').empty().append('<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>');
-        $('#searchProgress').val(30);
+        $('#results-area').empty().append(
+            '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>'
+        );
+
+        const wait = startWaitTimer(function (ms) {
+            $('#progressText').text('Идёт поиск… ' + formatElapsed(ms));
+            $('#searchProgress').val(waitProgressPct(ms));
+        });
 
         fetch('/api/search', {
             method: 'POST',
@@ -219,8 +267,18 @@ $(document).ready(function() {
             return response.json();
         })
         .then(data => {
+            const wallMs = wait.stop();
             $('#searchProgress').val(100);
-            $('#progressContainer').hide();
+            const serverMs = (data && typeof data.elapsed_ms === 'number') ? data.elapsed_ms : null;
+            const doneLabel = serverMs != null
+                ? ('Готово за ' + formatElapsed(serverMs) +
+                   (Math.abs(serverMs - wallMs) > 500
+                       ? ' (в браузере ' + formatElapsed(wallMs) + ')'
+                       : ''))
+                : ('Готово за ' + formatElapsed(wallMs));
+            $('#progressText').text(doneLabel);
+            // Keep the "done in Xs" line visible briefly so the clock is not lost.
+            setTimeout(function () { $('#progressContainer').hide(); }, 1200);
             if (data.html_fragment) {
                 $('#results-area').html(data.html_fragment);
                 window.scrollTo({ top: $('#results-area').offset().top - 20, behavior: 'smooth' });
@@ -229,6 +287,7 @@ $(document).ready(function() {
             }
         })
         .catch(error => {
+            wait.stop();
             $('#progressContainer').hide();
             $('#results-area').html(`<p style="color: red;">Ошибка при поиске: ${error.message}</p>`);
             console.error('Search error:', error);
@@ -238,9 +297,13 @@ $(document).ready(function() {
     // ── Offline search (local, via window.SamudraOffline bridge) ──────────────
     function runOfflineSearch(query, mode, case_sensitive, whole_word, source_ids) {
         $('#progressContainer').show();
-        $('#searchProgress').val(20);
-        $('#progressText').text('Офлайн-поиск…');
+        $('#searchProgress').val(0);
         $('#results-area').empty().append('<div class="skeleton"></div><div class="skeleton"></div>');
+
+        const wait = startWaitTimer(function (ms) {
+            $('#progressText').text('Офлайн-поиск… ' + formatElapsed(ms));
+            $('#searchProgress').val(waitProgressPct(ms));
+        });
 
         window.SamudraOffline.search({
             query: query,
@@ -250,8 +313,10 @@ $(document).ready(function() {
             sourceIds: source_ids.length ? source_ids : null
         })
         .then(function(res) {
+            const wallMs = wait.stop();
             $('#searchProgress').val(100);
-            $('#progressContainer').hide();
+            $('#progressText').text('Готово за ' + formatElapsed(wallMs));
+            setTimeout(function () { $('#progressContainer').hide(); }, 1200);
             $('#results-area').html(window.SamudraOffline.renderHtml(query, res.rows, { timeout: res.timeout }));
             updateNetPill();
             if (res.rows.length) {
@@ -259,6 +324,7 @@ $(document).ready(function() {
             }
         })
         .catch(function(err) {
+            wait.stop();
             $('#progressContainer').hide();
             if (err && err.code === 'NO_PACK') {
                 $('#results-area').html('<div class="offline-banner">⚡ Офлайн · нет загруженного индекса для поиска. ' +
@@ -480,7 +546,14 @@ $(document).ready(function() {
 
         $('#aiPanel').addClass('active');
         $('#aiLoading').show();
-        $('#aiContent').empty();
+        $('#aiContent').html(
+            '<div id="aiThinkStatus" class="ai-think-status" role="status" aria-live="polite">' +
+            'ИИ думает… 0,0 с</div>'
+        );
+
+        const wait = startWaitTimer(function (ms) {
+            $('#aiThinkStatus').text('ИИ думает… ' + formatElapsed(ms));
+        });
 
         fetch('/api/ai/explain', {
             method: 'POST',
@@ -489,16 +562,23 @@ $(document).ready(function() {
         })
         .then(response => response.json())
         .then(data => {
+            const wallMs = wait.stop();
             $('#aiLoading').hide();
             if (data.explanation) {
-                $('#aiContent').text(data.explanation);
+                $('#aiContent').html(
+                    '<div class="ai-think-done">Ответ за ' + formatElapsed(wallMs) + '</div>'
+                );
+                // text() after prepend would wipe the badge — append text node.
+                $('#aiContent').append(document.createTextNode(data.explanation));
             } else {
-                $('#aiContent').text('Ошибка: ' + (data.detail || 'не удалось получить ответ от ИИ.'));
+                $('#aiContent').text('Ошибка: ' + (data.detail || 'не удалось получить ответ от ИИ.') +
+                    ' (ждали ' + formatElapsed(wallMs) + ')');
             }
         })
         .catch(err => {
+            const wallMs = wait.stop();
             $('#aiLoading').hide();
-            $('#aiContent').text('Ошибка сети: ' + err);
+            $('#aiContent').text('Ошибка сети: ' + err + ' (ждали ' + formatElapsed(wallMs) + ')');
         });
     });
 

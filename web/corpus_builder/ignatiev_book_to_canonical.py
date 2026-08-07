@@ -116,10 +116,27 @@ from ru_ordinals import (  # noqa: E402
 # ToC line before the scoped fix, corrupting chapter numbering).
 _CHAPTER_OPEN_RE = re.compile(
     r"^\s*(?:(?-i:(?P<prefix>[А-ЯЁ][А-ЯЁ0-9 ,.\-]{1,90}))\s+)?"
-    r"Глава\s+(?P<ord>" + ORDINAL_WORD_PATTERN +
+    r"Глава\s+(?:"
+    # H2376 Bhāgavata partial: "ГЛАВА 14" (digit) as well as word ordinals.
+    r"(?P<ord_num>\d{1,3})"
+    r"|(?P<ord>" + ORDINAL_WORD_PATTERN +
     r"(?:\s+" + ORDINAL_WORD_PATTERN + r")?)"
+    r")"
     r"(?:\s+(?-i:(?P<title>[А-ЯЁ][А-ЯЁ0-9 ,.\-]{1,90})))?"
-    r"(?:\s+(?P<rest>\S.*))?\s*$",
+    r"(?:\s+(?P<rest>\S.*))?"
+    # H2376: RTF/print sources often end the heading with a full stop
+    # ("ГЛАВА ВТОРАЯ.") — without this the whole open fails and the chapter
+    # falls into the implicit-ch.1 bag.
+    r"\s*[.…]*\s*$",
+    re.IGNORECASE,
+)
+
+# Excerpt heading: "Из двадцать второй главы" (H2376 Devī-purāṇa ch.22).
+# Genitive ordinal + genitive «главы»; no body text on the same line.
+_CHAPTER_FROM_RE = re.compile(
+    r"^\s*Из\s+(?P<ord>" + ORDINAL_WORD_PATTERN +
+    r"(?:\s+" + ORDINAL_WORD_PATTERN + r")?)"
+    r"\s+глав[аыуе]?\s*[.…]*\s*$",
     re.IGNORECASE,
 )
 
@@ -198,24 +215,41 @@ def _is_chapter_open(line: str):
     On OLE/PDF glue where the unit ordinal is fused to the first body word
     (H2353 Kālikā ch.62), peels the unit off ``rest`` so the chapter is not
     silently dropped.
+
+    H2376: also matches excerpt headings «Из <ordinal gen> главы» and
+    allows a trailing full stop after the ordinal («ГЛАВА ВТОРАЯ.»).
     """
     m = _CHAPTER_OPEN_RE.match(line)
-    if not m:
-        return None
-    rest = (m.group("rest") or "").strip()
-    if rest and _TOC_LEADER_RE.search(rest):
-        return None
-    # "Глава восьмая ………………………………………………………………48" puts the leaders in
-    # the title group when they start with a non-letter — also catch the
-    # whole-line form.
-    if _TOC_LEADER_RE.search(line):
-        return None
-    ord_phrase, rest = _peel_glued_unit_ordinal(m.group("ord"), rest)
-    # Bare tens-prefix alone is not a usable chapter open (would become
-    # chapter=None and drop the body).
-    if ordinal_f_to_int(ord_phrase) is None:
-        return None
-    return _ChapterOpen(ord_phrase, rest or None, m.group("title"), m.group("prefix"))
+    if m:
+        rest = (m.group("rest") or "").strip()
+        if rest and _TOC_LEADER_RE.search(rest):
+            return None
+        # "Глава восьмая ………………………………………………………………48" puts the leaders in
+        # the title group when they start with a non-letter — also catch the
+        # whole-line form.
+        if _TOC_LEADER_RE.search(line):
+            return None
+        # Digit form "Глава 14" (H2376 Bhāgavata) — synthesise a phrase the
+        # walk loop can turn into an int via a numeric short-circuit.
+        if m.group("ord_num"):
+            return _ChapterOpen(
+                m.group("ord_num"), rest or None,
+                m.group("title"), m.group("prefix"))
+        ord_phrase, rest = _peel_glued_unit_ordinal(m.group("ord") or "", rest)
+        # Bare tens-prefix alone is not a usable chapter open (would become
+        # chapter=None and drop the body).
+        if ordinal_f_to_int(ord_phrase) is None:
+            return None
+        return _ChapterOpen(
+            ord_phrase, rest or None, m.group("title"), m.group("prefix"))
+    # Excerpt form: "Из двадцать второй главы" (H2376 Devī-purāṇa).
+    fm = _CHAPTER_FROM_RE.match(line)
+    if fm:
+        ord_phrase = fm.group("ord")
+        if ordinal_f_to_int(ord_phrase) is None:
+            return None
+        return _ChapterOpen(ord_phrase, None, None, None)
+    return None
 
 # Endnote-block heading: "Комментарий"/"Комментарии"/"Примечания" alone on a
 # line, optionally with pandoc's glued first footnote marker ("[1]
@@ -666,6 +700,81 @@ def _extract_pdf_pymupdf(path: Path) -> str:
         doc.close()
     return "\x0c".join(parts)
 
+def _extract_pdf_pypdf(path: Path) -> str:
+    """Fallback PDF text extract when ``pdftotext`` is not on PATH (H2376).
+
+    Uses ``pypdf`` (already a host dependency for the Nirvana re-ingest path).
+    Form-feeds are not produced; page breaks become newlines.
+    """
+    try:
+        from pypdf import PdfReader  # lazy: only the no-pdftotext path
+    except ImportError as e:
+        raise RuntimeError(
+            f"cannot extract PDF {path}: pdftotext not on PATH and "
+            f"pypdf is not installed (pip install pypdf)"
+        ) from e
+    reader = PdfReader(str(path))
+    pages: list[str] = []
+    for page in reader.pages:
+        pages.append(page.extract_text() or "")
+    text = "\n".join(pages).replace("\x0c", "\n").strip()
+    if not text:
+        raise RuntimeError(f"pypdf produced empty text for {path}")
+    return text + "\n"
+
+
+def _extract_rtf_pandoc(path: Path) -> str:
+    """Extract RTF (incl. ``.doc`` files that are actually RTF — H2376).
+
+    Pandoc's RTF reader mis-labels cp1251 body text as Latin-1 and re-encodes
+    it as UTF-8, producing classic mojibake for Russian. Reverse the round-
+    trip (UTF-8 → latin-1 bytes → cp1251) when the source declares
+    ``\\ansicpg1251`` (Ignatiev archive default).
+    """
+    raw = path.read_bytes()
+    if not raw.lstrip().startswith(b"{\\rtf"):
+        raise RuntimeError(f"not an RTF payload: {path}")
+    out = subprocess.run(
+        ["pandoc", "-f", "rtf", "-t", "plain", str(path)],
+        capture_output=True, check=False,
+    )
+    if out.returncode != 0:
+        err = (out.stderr or b"").decode("utf-8", errors="replace").strip()
+        raise RuntimeError(
+            f"pandoc RTF failed (exit {out.returncode}) on {path}"
+            + (f": {err}" if err else "")
+        )
+    if not out.stdout:
+        raise RuntimeError(f"pandoc RTF returned empty text for {path}")
+    # Detect source code page from the RTF header.
+    head = raw[:2048].decode("latin-1", errors="replace").lower()
+    if "ansicpg1251" in head or "deflang1049" in head:
+        text = out.stdout.decode("utf-8", errors="replace")
+        # Pandoc re-encodes cp1251 body as Latin-1 codepoints → UTF-8.
+        # Smart quotes and a few Unicode punctuation marks survive as real
+        # multi-byte chars; replace those on encode so the reverse path
+        # still recovers the Cyrillic mass (H2376 Bhāgavata).
+        text = (
+            text
+            .replace("\u201c", '"').replace("\u201d", '"')
+            .replace("\u2018", "'").replace("\u2019", "'")
+            .replace("\u2013", "-").replace("\u2014", "-")
+            .replace("\u2026", "...")
+        )
+        try:
+            text = text.encode("latin-1", errors="strict").decode(
+                "cp1251", errors="replace")
+        except UnicodeEncodeError:
+            # Residual non-Latin-1 chars: replace rather than keep mojibake.
+            text = text.encode("latin-1", errors="replace").decode(
+                "cp1251", errors="replace")
+    else:
+        text = out.stdout.decode("utf-8", errors="replace")
+    text = text.strip()
+    if not text:
+        raise RuntimeError(f"RTF extract produced empty text for {path}")
+    return text + "\n"
+
 
 def extract_text(path: Path) -> str:
     """Extract plain UTF-8 text from a .docx / .pdf / .doc / .txt source."""
@@ -682,21 +791,27 @@ def extract_text(path: Path) -> str:
         )
         return out.stdout
     if suffix == ".pdf":
-        # Prefer poppler pdftotext (house standard). Fall back to pymupdf
-        # when pdftotext is not on PATH (common on agent Windows boxes);
-        # preserve form-feeds so glued-digit page-local stripping still
-        # sees page boundaries (H2377).
+        # Prefer pdftotext (form-feeds for glued-digit H2377).
+        # Fall back: pymupdf (keeps page markers) then pypdf (H2376).
         if shutil.which("pdftotext"):
             out = subprocess.run(
                 ["pdftotext", "-enc", "UTF-8", str(path), "-"],
                 capture_output=True, encoding="utf-8", errors="replace",
                 check=True,
             )
-            # Keep \x0c as page markers for strip_glued_digit_page_notes;
-            # only normalise when the caller reflows (body path).
+            # Keep \x0c as page markers for strip_glued_digit_page_notes.
             return out.stdout
-        return _extract_pdf_pymupdf(path)
+        try:
+            return _extract_pdf_pymupdf(path)
+        except RuntimeError:
+            return _extract_pdf_pypdf(path)
     if suffix == ".doc":
+        # H2376: some archive ".doc" files are RTF with a .doc extension
+        # (Bhāgavata partial). Detect by magic and route through pandoc RTF
+        # before the OLE path (which correctly refuses non-OLE payloads).
+        head = path.read_bytes()[:16]
+        if head.lstrip().startswith(b"{\\rtf"):
+            return _extract_rtf_pandoc(path)
         # Legacy binary Word (H2352). Prefer antiword (correct Cyrillic when
         # ANTIWORDHOME + -m cp1251.txt are set); fall back to an OLE
         # WordDocument UTF-16LE scan when antiword is missing, times out,
@@ -1100,7 +1215,11 @@ def parse_book(
         if om:
             if cur is not None:
                 chapters.append(cur)
-            onum = ordinal_f_to_int(om.group("ord"))
+            ord_raw = om.group("ord")
+            if ord_raw and re.fullmatch(r"\d{1,3}", ord_raw.strip()):
+                onum = int(ord_raw.strip())
+            else:
+                onum = ordinal_f_to_int(ord_raw)
             cur = {"chapter": onum, "body": []}
             # Keep trailing body text glued onto the heading line (the
             # pre-existing rest-group behaviour of _CHAPTER_OPEN_RE).
@@ -1181,14 +1300,32 @@ def parse_book(
         verses = split_verses(
             body, aggressive_debris=(mode == "glued-digit"),
         )
+        # H2376: some partials (Bhāgavata-purāṇa RTF) are prose with chapter
+        # heads but no trailing ``(N)`` verse markers. Fall back to
+        # blank-line paragraphs as sequential units so the chapter is not
+        # silently emptied. Flagged in the report as prose_paragraph_split.
+        if not verses and any(ln.strip() for ln in ch["body"]):
+            paras = [
+                re.sub(r"\s+", " ", p).strip()
+                for p in re.split(r"\n\s*\n", "\n".join(ch["body"]))
+                if p.strip()
+            ]
+            verses = [
+                {"verse": str(i), "text": para, "author": None}
+                for i, para in enumerate(paras, 1)
+                if para
+            ]
+            if verses:
+                report.setdefault(
+                    "prose_paragraph_split_chapters", []
+                ).append(chn)
         if mode == "glued-digit":
-            # Book-global fn numbers (rise across chapters); consume in order
-            # so a digit is never re-linked to an earlier chapter's note.
             fn_numbers = all_fn_numbers
             link_fn = link_footnotes_glued
         else:
             fn_numbers = {
-                fn for fn, note in fn_map.items() if note.get("chapter") == chn
+                fn for fn, note in fn_map.items()
+                if note.get("chapter") == chn
             }
             link_fn = link_footnotes
         report["chapters"] += 1

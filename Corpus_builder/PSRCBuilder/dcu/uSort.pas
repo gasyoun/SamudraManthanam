@@ -25,7 +25,7 @@ procedure SortLongWordArr(var Values:array of LongWord);
 procedure SortByteArr(const Values:TByteArr; var SortValues:TByteArr);
 
 implementation
- uses  dialogs, Math;
+ uses Math;
 
 procedure RangeByValuesSlowly(Values:TDoubleArr; var NewIds:TIntArr);
 var

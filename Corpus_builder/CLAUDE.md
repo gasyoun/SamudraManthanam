@@ -101,4 +101,5 @@ Errors are collected in `ErrList` (shown in `Memo1`) and saved to `<input>_err.t
   - opening `Err.txt` is the **caller's** job — the engine writes the file and exposes `HasErrors` / `ErrFileFullPath`; `fMainForm` does the `ShellExecute`.
 
   Putting `Forms`, `Dialogs`, `Controls`, `ShellApi` or `fMainForm` back into `uMhHTML.pas` re-creates the reverse dependency edge this removed. Before/after map: `DEPENDENCY_INVENTORY.md` §3/§3a.
-- **`fCheckDialog.pas` and `TextU.pas` are still GUI-coupled** — that is the next Phase 1 item, not an oversight.
+- **`TextU.pas` is VCL-free** (H2370, 07-08-2026). List/clipboard/RichEdit helpers live in `TextUVCL.pas` — do not pull `CheckLst`/`StdCtrls`/`ComCtrls`/`ClipBrd` back into `TextU`. `fCheckDialog.pas` remains GUI-coupled by design.
+- **`uSort.pas` has no `Dialogs`** (H2370) — keep it portable (`uses Math` in implementation).
