@@ -1,0 +1,30 @@
+{
+  "work": "mahabharata-mausalaparva-ignatiev",
+  "chapters": 8,
+  "verse_count": 285,
+  "comment_count": 0,
+  "verse_gaps": [
+    "3: 35->37",
+    "6: 14->16"
+  ],
+  "chapter_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "unrecognised_endnotes": 0,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "footnote_mode": "bracket",
+  "footnote_mode_requested": "auto",
+  "id_collisions": [
+    "3.35"
+  ],
+  "total_endnotes": 0
+}

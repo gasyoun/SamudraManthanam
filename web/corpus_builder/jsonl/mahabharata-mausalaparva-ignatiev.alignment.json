@@ -1,0 +1,42 @@
+{
+  "ru_verses": 285,
+  "sa_verses": 0,
+  "matched": 0,
+  "ru_only": 285,
+  "sa_orphan": 0,
+  "by_chapter": {
+    "?.1": {
+      "matched": 0,
+      "ru_only": 31
+    },
+    "?.2": {
+      "matched": 0,
+      "ru_only": 24
+    },
+    "?.3": {
+      "matched": 0,
+      "ru_only": 45
+    },
+    "?.4": {
+      "matched": 0,
+      "ru_only": 28
+    },
+    "?.5": {
+      "matched": 0,
+      "ru_only": 15
+    },
+    "?.6": {
+      "matched": 0,
+      "ru_only": 28
+    },
+    "?.7": {
+      "matched": 0,
+      "ru_only": 76
+    },
+    "?.8": {
+      "matched": 0,
+      "ru_only": 38
+    }
+  },
+  "sa_orphans": []
+}

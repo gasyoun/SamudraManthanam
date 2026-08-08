@@ -1,6 +1,6 @@
 # PDF → Corpus Ingestion Pipeline (house standard)
 
-_Created: 10-07-2026 · Last updated: 07-08-2026_
+_Created: 10-07-2026 · Last updated: 08-08-2026_
 
 The reusable, agent-runnable pipeline that turns a print-derived **PDF**
 translation into the app-ready corpus HTML the desktop reader «Пахтанье
@@ -400,7 +400,28 @@ Summary: [`jsonl/wave_d_summary.json`](https://github.com/gasyoun/SamudraManthan
 Corpus-manifest pin rebuilt in the same pass (H2351 discipline: append, do not
 drop existing sources).
 
-**Remaining** under H1438: Māyā-tantra → [H2377](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2377-Grok_SamudraManthanam_h1438-maya-tantra_07.08.26.md)
-(if still open); Kāma-samūha / Kādambara / Прочее miscellany deferred.
+### Wave remainder (H2415) — landed 08-08-2026
+
+Closed the last H1438 single-book folders still archive-only (Kāma-samūha,
+Kādambara-svīkaraṇa-kārikā, MBH books 16–18 Ignatiev, Прочее ×2). Driver:
+[`h2415_remainder_ingest.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/h2415_remainder_ingest.py).
+Census: [`docs/H2415_IGNATIEV_ARCHIVE_REMAINDER_CENSUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2415_IGNATIEV_ARCHIVE_REMAINDER_CENSUS.md).
+
+| Work | Source | Ch | Verses | SA | Notes |
+|---|---|---:|---:|---|---|
+| Kāma-samūha | docx | 1 | 685 | none | synthetic ch.1 after preface strip; RT 100% |
+| Kādambara-svīkaraṇa-kārikā | .doc OLE | 1 | 128 | none | start at post-preface title; RT 100% |
+| MBH XVI Mausala (Ignatiev) | docx book split | 8 | 285 | none | distinct from Vasilkov/Neveleva 16_*; RT 100% |
+| MBH XVII Mahāprasthānika (Ignatiev) | docx book split | 3 | 110 | none | RT 100% |
+| MBH XVIII Svargārohaṇa (Ignatiev) | docx book split | 6 | 319 | none | ch.4–5 recovered via trailing-`[N]` chapter open; RT 100% |
+| Yoni-pūjā texts (Прочее) | docx | 1 | 16 | none | short liturgical miscellany; RT 100% |
+| Bhagavatī-mānasa-pūjā-stotra (Прочее) | .doc OLE | 1 | 69 | none | RT 100% |
+
+**Parser hardening (H2415):** chapter-open accepts optional trailing pandoc
+footnote ref (`Глава четвертая[249]`) — unit test
+`test_chapter_open_allows_trailing_footnote_ref`. Summary:
+[`jsonl/wave_h2415_remainder_summary.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/jsonl/wave_h2415_remainder_summary.json).
+Corpus-manifest pin rebuilt (209 sources). DBhP remains the separate multi-skandha
+pipeline; no further unregistered folders under `Переводы с санскрита`.
 
 _Dr. Mārcis Gasūns_

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "slug": "yoni-puja-texts",
+  "title_ru": "Тексты для йони-пуджи; А. Игнатьев",
+  "title_display": "Тексты для йони-пуджи",
+  "title_en": "Yoni-pūjā texts (Ignatiev miscellany)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "verse",
+  "needs_review": true,
+  "provenance": "А. Игнатьев (перев.). Тексты по йони-пудже.docx (Прочее). H2415 remainder: short liturgical miscellany (dhyāna, nyāsa, stotra, kavaca); synthetic ch.1; ru_only. Ingest via h2415_remainder_ingest.py.",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md"
+}

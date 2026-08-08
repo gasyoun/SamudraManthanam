@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "7cd319372903a1164f6d5c5b29f4bf2f90bfbef9"
+    "revision": "dcd7ded062caa59c6fef48992aba42de47b37a6e"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -2991,15 +2991,15 @@
       },
       {
         "canonical": {
-          "bytes": 1183415,
+          "bytes": 1182417,
           "first_canonical_id": "niruttara-tantra:1.1#ru",
           "last_canonical_id": "niruttara-tantra:15.3#ru",
           "path": "corpus_builder/jsonl/niruttara-tantra.jsonl",
           "record_count": 998,
-          "sha256": "c648a84472c83b336a1dd93afcc98d38a603bd8ff7c6f7cd3f6056a1446e51a0"
+          "sha256": "036385809a154fd9d5727da05054b98ce2008dc07a84909ffa05007b85ca65f7"
         },
         "filename": "niruttara-tantra.html",
-        "provenance": "А. Игнатьев (перев.). Нируттара-тантра (архив переводчика). PDF -> canonical via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377 front-end Wave-A re-baseline). 15 ch / 676 RU verses / 322 comments; HTML→JSONL round-trip pending. alignment: none.",
+        "provenance": "А. Игнатьев (перев.). Нируттара-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
         "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
         "slug": "niruttara-tantra",
         "sort_order": 185,
@@ -3007,15 +3007,15 @@
       },
       {
         "canonical": {
-          "bytes": 972679,
+          "bytes": 971992,
           "first_canonical_id": "guptasadhana-tantra:1.1#ru",
           "last_canonical_id": "guptasadhana-tantra:12.15.comm2",
           "path": "corpus_builder/jsonl/guptasadhana-tantra.jsonl",
           "record_count": 687,
-          "sha256": "93ff13cbbbe9f9e97c87d6c169fc78755445991932987c28b2374c696bb00173"
+          "sha256": "9d923ae56819abb56736ddbfb898d1e3abbf26305284eb489d7ac3bfa69c7a00"
         },
         "filename": "guptasadhana-tantra.html",
-        "provenance": "А. Игнатьев (перев.). Гуптасадхана-тантра (архив переводчика). PDF -> canonical via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377 front-end Wave-A re-baseline). 12 ch / 319 RU verses / 368 comments; HTML→JSONL round-trip pending. alignment: none.",
+        "provenance": "А. Игнатьев (перев.). Гуптасадхана-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438).",
         "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
         "slug": "guptasadhana-tantra",
         "sort_order": 186,
@@ -3023,15 +3023,15 @@
       },
       {
         "canonical": {
-          "bytes": 587227,
+          "bytes": 586814,
           "first_canonical_id": "yoni-tantra:1.1#ru",
           "last_canonical_id": "yoni-tantra:8.14.comm2",
           "path": "corpus_builder/jsonl/yoni-tantra.jsonl",
           "record_count": 413,
-          "sha256": "d527944e2bcf6a081bb7a0858c7b73cdba89b17fd06acef1b534e46017be0d71"
+          "sha256": "0e45db84c38859bb974a4eb16acde4be25c1c31775dd62814f4f5cfe63532023"
         },
         "filename": "yoni-tantra.html",
-        "provenance": "А. Игнатьев (перев.). Йони-тантра (архив переводчика). PDF -> canonical via ignatiev_book_to_canonical.py --footnote-mode glued-digit (H2377 front-end Wave-A re-baseline). 8 ch / 221 RU verses / 192 comments; HTML→JSONL round-trip pending. alignment: none.",
+        "provenance": "А. Игнатьев (перев.). Йони-тантра (рукопись, архив переводчика). PDF -> canonical JSONL via ignatiev_book_to_canonical.py (H1438). Ch.8's true colophon closes the translated work; the source PDF appends supplementary hymns quoted from other named tantras (ТЕКСТЫ ПО ПОЧИТАНИЮ ЙОНИ) after it -- excluded here as not part of Yoni-tantra itself.",
         "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
         "slug": "yoni-tantra",
         "sort_order": 187,
@@ -3260,14 +3260,126 @@
         "slug": "maya-tantra",
         "sort_order": 201,
         "title": "Майя-тантра; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 596969,
+          "first_canonical_id": "kama-samuha:1.1#ru",
+          "last_canonical_id": "kama-samuha:1.751#ru",
+          "path": "corpus_builder/jsonl/kama-samuha.jsonl",
+          "record_count": 685,
+          "sha256": "c9fee39427c67f19435e709265ffc87ceb625bf928faa95d26fb52911dcd242e"
+        },
+        "filename": "kama-samuha.html",
+        "provenance": "А. Игнатьев (перев.). Кама-самуха (архив переводчика). H2415 remainder: full translation (no chapter heads — synthetic Глава первая after preface strip). Ingest via h2415_remainder_ingest.py → ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "kama-samuha",
+        "sort_order": 202,
+        "title": "Кама-самуха; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 85447,
+          "first_canonical_id": "kadambara-svikarana-karika:1.1#ru",
+          "last_canonical_id": "kadambara-svikarana-karika:1.131#ru",
+          "path": "corpus_builder/jsonl/kadambara-svikarana-karika.jsonl",
+          "record_count": 128,
+          "sha256": "323449187ca352124fe512f5b29c15e12e147a0f5f0e5ef26ab6bcb74d901f2d"
+        },
+        "filename": "kadambara-svikarana-karika.html",
+        "provenance": "А. Игнатьев (перев.). Кадамбара-свикарана-карика (архив переводчика, .doc OLE). H2415 remainder: full short kāmaśāstra (≈132 ślokas); synthetic ch.1. Ingest via h2415_remainder_ingest.py → ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "kadambara-svikarana-karika",
+        "sort_order": 203,
+        "title": "Кадамбара-свикарана-карика; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 223206,
+          "first_canonical_id": "mahabharata-mausalaparva-ignatiev:1.1#ru",
+          "last_canonical_id": "mahabharata-mausalaparva-ignatiev:8.38#ru",
+          "path": "corpus_builder/jsonl/mahabharata-mausalaparva-ignatiev.jsonl",
+          "record_count": 285,
+          "sha256": "d396629b7052408e7e95dcf19c60806a471e3787258051dd4b56d4fbfcc2b3f8"
+        },
+        "filename": "mahabharata-mausalaparva-ignatiev.html",
+        "provenance": "А. Игнатьев (перев.). Махабхарата — PARTIAL: book 16 only (from «Три заключительные книги»). Source: «Махабхарата Три заключительные книги.docx». Distinct from Vasilkov/Neveleva 2005 editions already in corpus (16–18_mahabharata-*.html). H2415. Ingest via h2415_remainder_ingest.py → ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "mahabharata-mausalaparva-ignatiev",
+        "sort_order": 204,
+        "title": "Махабхарата XVI Маусала-парва; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 87873,
+          "first_canonical_id": "mahabharata-mahaprasthanikaparva-ignatiev:1.1#ru",
+          "last_canonical_id": "mahabharata-mahaprasthanikaparva-ignatiev:3.38#ru",
+          "path": "corpus_builder/jsonl/mahabharata-mahaprasthanikaparva-ignatiev.jsonl",
+          "record_count": 110,
+          "sha256": "d3a2757f49b1ce7b398804be091a1101c30e98d0062c2f4fe191d37908afc977"
+        },
+        "filename": "mahabharata-mahaprasthanikaparva-ignatiev.html",
+        "provenance": "А. Игнатьев (перев.). Махабхарата — PARTIAL: book 17 only (from «Три заключительные книги»). Source: «Махабхарата Три заключительные книги.docx». Distinct from Vasilkov/Neveleva 2005 editions already in corpus (16–18_mahabharata-*.html). H2415. Ingest via h2415_remainder_ingest.py → ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "mahabharata-mahaprasthanikaparva-ignatiev",
+        "sort_order": 205,
+        "title": "Махабхарата XVII Махапрастханика-парва; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 259920,
+          "first_canonical_id": "mahabharata-svargarohanikaparva-ignatiev:1.1#ru",
+          "last_canonical_id": "mahabharata-svargarohanikaparva-ignatiev:6.105#ru",
+          "path": "corpus_builder/jsonl/mahabharata-svargarohanikaparva-ignatiev.jsonl",
+          "record_count": 319,
+          "sha256": "a03980001617e488ffd1d7e84ba24e95f5f712b9051b6076e1e0588f05474f42"
+        },
+        "filename": "mahabharata-svargarohanikaparva-ignatiev.html",
+        "provenance": "А. Игнатьев (перев.). Махабхарата — PARTIAL: book 18 only (from «Три заключительные книги»). Source: «Махабхарата Три заключительные книги.docx». Distinct from Vasilkov/Neveleva 2005 editions already in corpus (16–18_mahabharata-*.html). H2415. Ingest via h2415_remainder_ingest.py → ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "mahabharata-svargarohanikaparva-ignatiev",
+        "sort_order": 206,
+        "title": "Махабхарата XVIII Сварга-арохана-парва; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 20979,
+          "first_canonical_id": "yoni-puja-texts:1.1#ru",
+          "last_canonical_id": "yoni-puja-texts:1.16#ru",
+          "path": "corpus_builder/jsonl/yoni-puja-texts.jsonl",
+          "record_count": 16,
+          "sha256": "f369d22713799d1f708482efa771c16e3eae367c7ceae91000e735a06f8af0ee"
+        },
+        "filename": "yoni-puja-texts.html",
+        "provenance": "А. Игнатьев (перев.). Тексты по йони-пудже.docx (Прочее). H2415 remainder: short liturgical miscellany (dhyāna, nyāsa, stotra, kavaca); synthetic ch.1; ru_only. Ingest via h2415_remainder_ingest.py.",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "yoni-puja-texts",
+        "sort_order": 207,
+        "title": "Тексты для йони-пуджи; А. Игнатьев"
+      },
+      {
+        "canonical": {
+          "bytes": 72327,
+          "first_canonical_id": "bhagavati-manasa-puja-stotra:1.1#ru",
+          "last_canonical_id": "bhagavati-manasa-puja-stotra:1.73#ru",
+          "path": "corpus_builder/jsonl/bhagavati-manasa-puja-stotra.jsonl",
+          "record_count": 69,
+          "sha256": "b8ebc59271496991dfed3a3545a2d622b6ec22f256c66994b8f194d4bcf51075"
+        },
+        "filename": "bhagavati-manasa-puja-stotra.html",
+        "provenance": "А. Игнатьев (перев.). Шри-Бхагавати-манаса-пуджа-стотра.doc (Прочее; attrib. Śaṅkara). H2415 remainder: short stotra with (N) verse markers; synthetic ch.1; ru_only. Ingest via h2415_remainder_ingest.py.",
+        "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+        "slug": "bhagavati-manasa-puja-stotra",
+        "sort_order": 208,
+        "title": "Шри-Бхагавати-манаса-пуджа-стотра; А. Игнатьев"
       }
     ],
     "totals": {
-      "canonical_bytes": 681721151,
-      "record_count": 692378,
-      "source_count": 202
+      "canonical_bytes": 683065774,
+      "record_count": 693990,
+      "source_count": 209
     }
   },
-  "content_hash": "sha256:7ed918c52a2313abbf3f352ad0fe1b0ad156971c2c67f31aa3e2f692072a2804",
+  "content_hash": "sha256:3271596deac014ca9641e0c69205efc66a405c424639f58ddce50fe3ffd756e9",
   "schema_version": 1
 }
