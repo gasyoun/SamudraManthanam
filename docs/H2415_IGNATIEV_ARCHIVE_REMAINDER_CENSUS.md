@@ -29,8 +29,8 @@ H1438 waves A–D + H2377/H2385/H2412–14 covered the main tantra/purāṇa set
 | Item | Reason | Residual |
 |---|---|---|
 | Devībhāgavata-purāṇa (12 skandha multi-file) | Separate multi-skandha pipeline (already ingested H534/H558); out of handoff scope | n/a (already done) |
-| Prefaces, dictionaries, bibliographies inside remainder books | Back-matter; not verse units (cut at `КОММЕНТАРИЙ` / `СЛОВАРЬ` / `ЛИТЕРАТУРА`) | **H2449** — real work |
-| Prose commentary blocks after translation | Numbered `N. Источник:` notes are not pandoc `[N]` endnotes — `comment_count=0` is honest; body verses still RT-clean | **H2450** — real work |
+| Prefaces, dictionaries, bibliographies inside remainder books | Back-matter; not verse units (cut at `КОММЕНТАРИЙ` / `СЛОВАРЬ` / `ЛИТЕРАТУРА`) | **H2449 done** — [census](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2449_IGNATIEV_BACKMATTER_LAYERS_CENSUS.md) (17 layers) |
+| Prose commentary blocks after translation | Numbered `N. Источник:` notes are not pandoc `[N]` endnotes — `comment_count=0` is honest; body verses still RT-clean | **H2450** — open |
 | Vasilkov/Neveleva MBH 16–18 already in corpus | **Different translator.** Ignatiev triple is registered under `*-ignatiev` slugs so the two editions coexist | n/a (parallel edition already present) |
 
 ## Full `Переводы с санскрита` folder map (post-H2415)

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "slug": "kadambara-svikarana-karika-preface",
+  "parent_work": "kadambara-svikarana-karika",
+  "layer": "preface",
+  "layer_title": "ПРЕДИСЛОВИЕ",
+  "title_ru": "Кадамбара-свикарана-карика — Предисловие; А. Игнатьев",
+  "title_display": "Кадамбара-свикарана-карика: Предисловие",
+  "title_en": "kadambara-svikarana-karika / preface (Ignatiev)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "prose",
+  "needs_review": true,
+  "provenance": "H2449 back-matter layer of parent 'kadambara-svikarana-karika' (H2415 remainder). Section heading 'ПРЕДИСЛОВИЕ'. Extracted via ignatiev_backmatter.py; not verse-aligned.",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md"
+}

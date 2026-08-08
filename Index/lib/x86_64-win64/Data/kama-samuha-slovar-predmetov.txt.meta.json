@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "slug": "kama-samuha-slovar-predmetov",
+  "parent_work": "kama-samuha",
+  "layer": "glossary",
+  "layer_title": "СЛОВАРЬ ПРЕДМЕТОВ И ТЕРМИНОВ",
+  "title_ru": "Кама-самуха — СЛОВАРЬ ПРЕДМЕТОВ И ТЕРМИНОВ; А. Игнатьев",
+  "title_display": "Кама-самуха: СЛОВАРЬ ПРЕДМЕТОВ И ТЕРМИНОВ",
+  "title_en": "kama-samuha / slovar-predmetov (Ignatiev)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "dictionary",
+  "needs_review": true,
+  "provenance": "H2449 back-matter layer of parent 'kama-samuha' (H2415 remainder). Section heading 'СЛОВАРЬ ПРЕДМЕТОВ И ТЕРМИНОВ'. Extracted via ignatiev_backmatter.py; not verse-aligned.",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md",
+  "filename": "kama-samuha-slovar-predmetov.txt"
+}
