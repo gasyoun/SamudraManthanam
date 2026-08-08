@@ -23,6 +23,9 @@
             {% if sources_hit % 10 == 1 and sources_hit % 100 != 11 %}источник
             {% elif 2 <= sources_hit % 10 <= 4 and (sources_hit % 100 < 10 or sources_hit % 100 > 20) %}источника
             {% else %}источников{% endif %}
+            {% if elapsed_display %}
+            · <span class="result-elapsed" title="Время поиска на сервере">{{ elapsed_display }}</span>
+            {% endif %}
             · «{{ query_display }}»
             {% if search_metadata and search_metadata.stems %}
                 · основы:
@@ -46,7 +49,7 @@
             {% endif %}
             {% if source_chart %}
             <button type="button" class="btn-secondary-sm" id="toggleSourceChart"
-                    title="Показать распределение по источникам">
+                    title="Компактный обзор по источникам (без длинного графика)">
                 ▸ По источникам
             </button>
             {% endif %}
@@ -55,31 +58,50 @@
 </div>
 
 {% if source_chart %}
-{% set chart_max = source_chart | map(attribute='count') | max %}
+{# Compact text overview: top-N rows + residue. A full SVG at 24px/source was
+   ~3 screens for 159 sources — keep the distribution scannable. #}
 {% set chart_count = source_chart | length %}
-{% set chart_height = (chart_count * 24) + 8 %}
-<div class="search-bar-chart" id="sourceChartPanel" hidden
-     style="background:white;border:1px solid #eee;border-radius:8px;padding:1rem 1.2rem;margin:0.5rem 0 0.8rem;">
-    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.5rem;">
+<div class="source-overview" id="sourceChartPanel" hidden
+     style="background:white;border:1px solid #eee;border-radius:8px;padding:0.85rem 1.1rem;margin:0.5rem 0 0.8rem;">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.45rem;">
         <span style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:#888;">По источникам</span>
-        <span style="font-size:0.8rem;color:#aaa;">{{ chart_count }}</span>
+        <span style="font-size:0.8rem;color:#aaa;">топ {{ source_top|length }} из {{ chart_count }}</span>
     </div>
-    <svg width="100%" height="{{ chart_height }}" role="img" aria-label="Распределение по источникам">
-        {% for row in source_chart %}
-            {% set bar_width = (row.count / chart_max * 60) %}
-            {% set y = loop.index0 * 24 %}
-            <a href="#{{ row.chart_anchor }}">
-                <rect x="40%" y="{{ y + 4 }}" height="16"
-                      width="{{ bar_width }}%" fill="#e67e22" rx="2" style="cursor:pointer;">
-                    <title>{{ row.title }}: {{ row.count }}</title>
-                </rect>
-                <text x="39%" y="{{ y + 16 }}" text-anchor="end"
-                      style="font-size:0.78rem;fill:#444;cursor:pointer;">{{ row.title[:42] }}{% if row.title | length > 42 %}…{% endif %}</text>
-                <text x="{{ 40 + bar_width + 0.5 }}%" y="{{ y + 16 }}"
-                      style="font-size:0.78rem;fill:#888;font-variant-numeric:tabular-nums;">{{ row.count }}</text>
-            </a>
+    <ol class="source-overview-list" style="margin:0;padding:0;list-style:none;font-size:0.88rem;line-height:1.45;color:#333;">
+        {% for row in source_top %}
+        {% set pct = (100.0 * row.count / total) if total else 0 %}
+        <li style="display:flex;gap:0.5rem;align-items:baseline;padding:0.12rem 0;border-bottom:1px solid #f3f3f3;">
+            <span style="color:#aaa;font-variant-numeric:tabular-nums;min-width:1.6rem;">{{ loop.index }}.</span>
+            <a href="#{{ row.chart_anchor }}" style="flex:1;color:#333;text-decoration:none;">{{ row.title }}</a>
+            <span style="font-variant-numeric:tabular-nums;color:#888;white-space:nowrap;">{{ row.count }} · {{ '%.1f'|format(pct) }}%</span>
+        </li>
         {% endfor %}
-    </svg>
+    </ol>
+    {% if source_rest %}
+    <div class="source-overview-rest" style="margin-top:0.45rem;font-size:0.82rem;color:#777;">
+        … ещё {{ source_rest|length }}
+        {% if source_rest|length % 10 == 1 and source_rest|length % 100 != 11 %}источник
+        {% elif 2 <= source_rest|length % 10 <= 4 and (source_rest|length % 100 < 10 or source_rest|length % 100 > 20) %}источника
+        {% else %}источников{% endif %}
+        · {{ source_rest_hits }} записей
+        <button type="button" id="toggleSourceOverviewAll" class="btn-secondary-sm"
+                style="margin-left:0.4rem;padding:0.15rem 0.5rem;font-size:0.78rem;">
+            показать все
+        </button>
+    </div>
+    <ol id="sourceOverviewAll" hidden
+        class="source-overview-list source-overview-all"
+        style="margin:0.4rem 0 0;padding:0;list-style:none;font-size:0.82rem;line-height:1.4;color:#444;max-height:14rem;overflow:auto;border-top:1px dashed #eee;padding-top:0.35rem;">
+        {% for row in source_rest %}
+        {% set pct = (100.0 * row.count / total) if total else 0 %}
+        <li style="display:flex;gap:0.5rem;align-items:baseline;padding:0.08rem 0;">
+            <span style="color:#aaa;font-variant-numeric:tabular-nums;min-width:1.6rem;">{{ loop.index + source_top|length }}.</span>
+            <a href="#{{ row.chart_anchor }}" style="flex:1;color:#444;text-decoration:none;">{{ row.title }}</a>
+            <span style="font-variant-numeric:tabular-nums;color:#999;white-space:nowrap;">{{ row.count }} · {{ '%.1f'|format(pct) }}%</span>
+        </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
 </div>
 {% endif %}
 <div class="chapters">
@@ -202,8 +224,8 @@
     body.compact-mode .citation_block .context-panel { display: none !important; }
     body.compact-mode .citation_block { padding: 4px 0; }
     body.compact-mode .citation_block hr { display: none; }
-    .search-bar-chart svg a { transition: opacity 0.15s; }
-    .search-bar-chart svg a:hover { opacity: 0.75; }
+    .source-overview-list a:hover { color: #e67e22; }
+    .result-elapsed { color: #666; font-variant-numeric: tabular-nums; }
 </style>
 
 <script>
@@ -225,6 +247,16 @@
                 if (open) chart.removeAttribute('hidden');
                 else chart.setAttribute('hidden', '');
                 chartBtn.textContent = open ? '▾ По источникам' : '▸ По источникам';
+            });
+        }
+        var allBtn = document.getElementById('toggleSourceOverviewAll');
+        var allList = document.getElementById('sourceOverviewAll');
+        if (allBtn && allList) {
+            allBtn.addEventListener('click', function () {
+                var open = allList.hasAttribute('hidden');
+                if (open) allList.removeAttribute('hidden');
+                else allList.setAttribute('hidden', '');
+                allBtn.textContent = open ? 'свернуть' : 'показать все';
             });
         }
     })();

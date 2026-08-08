@@ -90,7 +90,12 @@ async def view_popular_term(request: Request, slug: str):
 
     results = search_data["results"]
     total = len(results)
-    fragment = render_fragment(search_query, results, search_metadata=search_data.get("search_metadata"))
+    fragment = render_fragment(
+        search_query,
+        results,
+        search_metadata=search_data.get("search_metadata"),
+        elapsed_ms=elapsed_ms,
+    )
 
     # Build "Все результаты" deep-link with the proper URL encoding so Cyrillic
     # survives the GET.

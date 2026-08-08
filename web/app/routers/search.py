@@ -101,7 +101,12 @@ async def post_search(request: SearchRequest):
         log_query = request.query if settings.APP_ENV == "development" else f"{request.query[:50]}..."
         logger.info(f"search: mode={request.mode} query='{log_query}' sources={len(request.source_ids) if request.source_ids else 'all'} total={len(results)} elapsed={elapsed_ms:.2f}ms")
         
-        html_fragment = render_fragment(request.query, results, search_metadata=search_metadata)
+        html_fragment = render_fragment(
+            request.query,
+            results,
+            search_metadata=search_metadata,
+            elapsed_ms=elapsed_ms,
+        )
 
         return SearchResult(
             query=request.query,
@@ -256,7 +261,12 @@ async def get_export(
 
             
         limit_reached = len(results) >= limit
-        fragment = render_fragment(query, results, limit_reached=limit_reached, search_metadata=search_metadata)
+        fragment = render_fragment(
+            query,
+            results,
+            limit_reached=limit_reached,
+            search_metadata=search_metadata,
+        )
         
         # Collect export metadata
         corpus_version = await get_corpus_version(db)
