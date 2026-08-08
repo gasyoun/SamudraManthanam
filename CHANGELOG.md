@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Corpus_builder Phase 0 golden + Phase 3 re-verify (H2427, Grok 4.5 grok-4.5).** case01 fixtures under 	ests/golden/case01/; headless cb_headless (console) drives TMhHTMLBuilder + CheckAll; 
+un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; portable check JSON input basename; RusPage init. Doc: [docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md).
+
 ### Fixed
 - **Search stats show server elapsed time** permanently in the result strip (not only a 1.2 s flash on the progress bar).
 - **AI Разбор `[object Object]`** on long context lines: client truncates each line to 2000 chars (server cap) and formats FastAPI validation `detail` arrays as readable messages (H2426).

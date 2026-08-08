@@ -923,6 +923,7 @@ begin
  dec(CurSkazanie);
  Inforec.NBook:=NBook;
  CurChapter:=0;
+ RusPage:=0; // H2427: stable data-page in golden output
  rewrite(F2);
  i:=0;
  Paragraph_Num:=0;

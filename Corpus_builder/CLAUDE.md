@@ -16,6 +16,18 @@ This file provides guidance to Claude Code when working with code in this reposi
 lazbuild Corpus_builder/PSRCBuilder/cb.lpi
 ```
 
+### Headless golden driver (H2427)
+
+```text
+lazbuild Corpus_builder/PSRCBuilder/cb_headless.lpi
+python Corpus_builder/tests/golden/run_golden_case01.py --verify
+```
+
+- Project: `PSRCBuilder/cb_headless.lpr` + `cb_headless.lpi` (console, no GUI)
+- Calls `TMhHTMLBuilder.Execute` + optional `TOKBottomDlg.CheckAll`
+- Golden fixtures: `tests/golden/case01/` — see `tests/golden/README.md`
+
+
 - Project: `PSRCBuilder/cb.lpr` + `PSRCBuilder/cb.lpi` (LCL package, `{$MODE Delphi}`)
 - Forms: `fMainForm.lfm`, `fCheckDialog.lfm` (VCL `.dfm` kept for historical reference)
 - Output: `PSRCBuilder/lib/$(TargetCPU)-$(TargetOS)/cb.exe` (gitignored under `lib/`)
