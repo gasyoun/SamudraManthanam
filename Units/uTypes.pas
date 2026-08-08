@@ -19,6 +19,7 @@ type
  T2DIntArr=array of TIntArr;
  T3DIntArr=array of T2DIntArr;
  TStringArr=array of string;
+ TWideStringArr=array of widestring; { H2430: promoted from builder dcu/uTypes (H2429 master) }
  T2DStringArr=array of TStringArr;
  TPointArr=Array of tWordPoint;
 

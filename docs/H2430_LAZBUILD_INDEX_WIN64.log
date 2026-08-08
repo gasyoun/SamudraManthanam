@@ -1,0 +1,177 @@
+Hint: (lazbuild) Primary config path: "C:\Users\user\AppData\Local\lazarus"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-iWTOTP"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-va" "C:\Users\user\AppData\Local\lazarus\compilertest.pas", WorkDir="C:\Users\user\AppData\Local\lazarus\"
+Hint: [TPCTargetConfigCache.Update] has changed
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-iWTOTP" "-Px86_64" "-Twin64"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-va" "C:\Users\user\AppData\Local\lazarus\compilertest.pas" "-Px86_64" "-Twin64", WorkDir="C:\Users\user\AppData\Local\lazarus\"
+Hint: [TPCTargetConfigCache.Update] has changed
+Hint: (lazarus) [TBuildManager.SetBuildTarget] Old=x86_64-win64--win32 New=x86_64-win64--win32 Changed: OS/CPU=True LCL=False
+Hint: (lazarus) [TBuildManager.SetBuildTarget] Old=x86_64-win64--win32 New=x86_64-win64--win32 Changed: OS/CPU=True LCL=False
+Hint: (lazarus) Project needs building: Compiler filename changed for Project
+  Old="C:\lazarus\fpc\3.2.2\bin\x86_64-win64\fpc.exe"
+  Now="C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe"
+Info: (lazarus) Execute Title="Компиляция проекта, цель: C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\lib\x86_64-win64\Index_pr.exe"
+Info: (lazarus) Working Directory="C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\"
+Info: (lazarus) Executable="C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe"
+Info: (lazarus) Param[0]="-MDelphi"
+Info: (lazarus) Param[1]="-Scghi"
+Info: (lazarus) Param[2]="-O1"
+Info: (lazarus) Param[3]="-gw2"
+Info: (lazarus) Param[4]="-godwarfsets"
+Info: (lazarus) Param[5]="-gl"
+Info: (lazarus) Param[6]="-WG"
+Info: (lazarus) Param[7]="-l"
+Info: (lazarus) Param[8]="-vewnhibq"
+Info: (lazarus) Param[9]="-FiC:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\lib\x86_64-win64"
+Info: (lazarus) Param[10]="-FuC:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\"
+Info: (lazarus) Param[11]="-FuC:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units"
+Info: (lazarus) Param[12]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\turbopower_ipro\units\x86_64-win64\win32"
+Info: (lazarus) Param[13]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\printers\lib\x86_64-win64\win32"
+Info: (lazarus) Param[14]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\cairocanvas\lib\x86_64-win64\win32"
+Info: (lazarus) Param[15]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\lcl\units\x86_64-win64\win32"
+Info: (lazarus) Param[16]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\lcl\units\x86_64-win64"
+Info: (lazarus) Param[17]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\freetype\lib\x86_64-win64"
+Info: (lazarus) Param[18]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\lazutils\lib\x86_64-win64"
+Info: (lazarus) Param[19]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\packager\units\x86_64-win64"
+Info: (lazarus) Param[20]="-FEC:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\lib\x86_64-win64\"
+Info: (lazarus) Param[21]="-oC:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\lib\x86_64-win64\Index_pr.exe"
+Info: (lazarus) Param[22]="-dLCL"
+Info: (lazarus) Param[23]="-dLCLwin32"
+Info: (lazarus) Param[24]="Index_pr.lpr"
+Info: (lazarus) Param[25]="-B"
+Hint: (11030) Start of reading config file C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.cfg
+Hint: (11031) End of reading config file C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.cfg
+Free Pascal Compiler version 3.2.2 [2025/05/03] for x86_64
+Copyright (c) 1993-2021 by Florian Klaempfl and others
+(1002) Target OS: Win64 for x64
+(3104) Compiling Index_pr.lpr
+(3104) Compiling u_Index.pas
+(3104) Compiling fsources.pas
+(3104) Compiling u_Index.pas
+(3104) Compiling C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\uTypes.pas
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\uTypes.pas(69,18) Warning: (5043) Symbol "DecimalSeparator" is deprecated
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\uTypes.pas(70,15) Warning: (5043) Symbol "DateSeparator" is deprecated
+(3104) Compiling C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\textu.pas
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\textu.pas(42,10) Warning: (5066) Symbol "UTF8CharacterToUnicode" is deprecated: "Use UTF8CodepointToUnicode instead."
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\textu.pas(49,13) Warning: (5066) Symbol "UTF8CharacterToUnicode" is deprecated: "Use UTF8CodepointToUnicode instead."
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\textu.pas(50,13) Warning: (5066) Symbol "UTF8CharacterToUnicode" is deprecated: "Use UTF8CodepointToUnicode instead."
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\textu.pas(100,47) Warning: (5089) Local variable "NilSstr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\textu.pas(335,18) Warning: (5066) Symbol "UTF8CharacterLength" is deprecated: "Use UTF8CodepointSize instead."
+(3104) Compiling C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\_winutils.pas
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\_winutils.pas(47,27) Hint: (5057) Local variable "SystemInfo" does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\_winutils.pas(149,3) Note: (5027) Local variable "Day" is assigned but never used
+(3104) Compiling uabstractthread.pas
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(32,15) Note: (3250) Virtual method "Execute;" has a lower visibility (private) than parent class TThread (protected)
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(107,3) Note: (5025) Local variable "i" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(227,39) Hint: (5091) Local variable "bISFindListGroupBeginingArr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(229,21) Hint: (5091) Local variable "TOCCounts" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(242,25) Hint: (5091) Local variable "CaptionCounts" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(210,2) Note: (5025) Local variable "SecondSorcesCount" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(402,14) Note: (5027) Local variable "PeriodStr" is assigned but never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(525,6) Note: (5027) Local variable "l" is assigned but never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uabstractthread.pas(525,9) Note: (5025) Local variable "Pos_Comment" not used
+(3104) Compiling u_words.pas
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_words.pas(22,26) Hint: (5024) Parameter "Sender" not used
+(3104) Compiling C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Units\UpdateChecker.pas
+(3104) Compiling uupdateform.pas
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uupdateform.pas(20,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uupdateform.pas(21,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uupdateform.pas(22,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\uupdateform.pas(23,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(144,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(142,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(143,25) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(143,46) Hint: (5024) Parameter "CloseAction" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(129,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(100,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(98,34) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(295,2) Note: (5025) Local variable "i" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(99,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(101,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(312,56) Hint: (5091) Local variable "SubStr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(102,35) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(103,47) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(104,36) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(105,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(106,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(107,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(108,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(110,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(111,60) Hint: (5024) Parameter "Shift" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(113,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(114,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(115,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(116,35) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(118,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(119,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(120,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(121,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(122,37) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(123,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(124,36) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(125,37) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(126,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(127,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(128,34) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(130,34) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(130,55) Hint: (5024) Parameter "Key" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(130,66) Hint: (5024) Parameter "Shift" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(131,29) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(132,40) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(133,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(134,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(135,29) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(699,12) Warning: (5043) Symbol "Resume" is deprecated
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(656,2) Note: (5025) Local variable "i" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(136,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(137,34) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(138,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(139,38) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(140,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(141,29) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(751,2) Note: (5025) Local variable "FileName" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(752,2) Note: (5025) Local variable "i" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(145,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(145,63) Hint: (5024) Parameter "Shift" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(764,11) Note: (5027) Local variable "ImageY" is assigned but never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(146,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(147,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(782,3) Note: (5025) Local variable "S" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(868,4) Note: (5025) Local variable "i" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(869,4) Note: (5025) Local variable "Sections" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(870,4) Note: (5025) Local variable "GRPINIFile" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(1190,3) Note: (5025) Local variable "S" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(183,45) Hint: (5024) Parameter "ADir" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(1231,4) Note: (5025) Local variable "j" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(1232,2) Note: (5025) Local variable "BArr" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(1382,17) Warning: (4108) Unicode constant cast with potential data loss
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(1383,17) Warning: (4108) Unicode constant cast with potential data loss
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(171,25) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(156,3) Note: (5029) Private field "TMainForm.bBreak" is never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(157,3) Note: (5029) Private field "TMainForm.sTextToFind" is never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(158,3) Note: (5029) Private field "TMainForm.bOptionsCaseSensitive" is never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(159,3) Note: (5029) Private field "TMainForm.bOptionsWholeWord" is never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(160,3) Note: (5029) Private field "TMainForm.HTMLFileName" is never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(162,3) Note: (5029) Private field "TMainForm.PeriodStr" is never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(9,21) Hint: (5023) Unit "Messages" not used in u_Index
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(10,56) Hint: (5023) Unit "CheckLst" not used in u_Index
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\u_Index.pas(10,75) Hint: (5023) Unit "Grids" not used in u_Index
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(36,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(37,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(38,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(39,31) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(40,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(41,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(42,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(43,27) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(33,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(34,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\fsources.pas(35,28) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\Index_pr.lpr(8,3) Hint: (5023) Unit "fSources" not used in Index_pr
+(9022) Compiling resource C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\lib\x86_64-win64\Index_pr.obj
+(9015) Linking C:\Users\user\Documents\GitHub\SamudraManthanam-h2430-33780\Index\lib\x86_64-win64\Index_pr.exe
+(1008) 3670 lines compiled, 12.2 sec, 1975184 bytes code, 137028 bytes data
+(1021) 10 warning(s) issued
+(1022) 80 hint(s) issued
+(1023) 25 note(s) issued
+Info: (lazarus) [TCompiler.Compile] end

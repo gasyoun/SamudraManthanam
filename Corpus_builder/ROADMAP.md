@@ -135,12 +135,21 @@ Delphi 7.
       Report: [`docs/H2429_DCU_UNITS_CANONICAL_DIFF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2429_DCU_UNITS_CANONICAL_DIFF.md).
       Divergence cleanup / shared path → H2430 (do **not** drop builder-only APIs
       used by `uMhHTML`).
-- [ ] **Один общий каталог утилит.** Подключать общие модули через `OtherUnitFiles`
-      в `.lpi` (как это уже делает основное приложение), а не хранить копию в
-      `Corpus_builder/PSRCBuilder/dcu/`.
-- [ ] **Зарегистрировать в карте общего кода.** Отразить факт совместного
-      использования в органном хабе (`SHARED_CODE.md`), чтобы следующая сессия не
-      переписала утилиту заново.
+- [x] **Один общий каталог утилит.** Done 08-08-2026 (H2430, Grok 4.5 `grok-4.5`):
+      `cb.lpi` + `cb_headless.lpi` use `OtherUnitFiles=dcu;..\..\Units` (Index pattern).
+      **Shared:** [`Units/uTypes.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/uTypes.pas)
+      is the single `uTypes` (builder `TWideStringArr` promoted; obsolete
+      `dcu/uTypes.pas` removed). Delphi `cb.cfg` `-U` also searches `..\..\Units`.
+      **Dual-kept with reason (H2429):** builder
+      [`dcu/TextU.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/TextU.pas)
+      (+ `TextUVCL`) stays in `dcu/` — Windows case-insensitive name collision with
+      Index [`Units/textu.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/textu.pas)
+      (different product); builder-only APIs required by `uMhHTML`. Other `dcu/*`
+      (ArtMath, myutils, …) remain builder-local (no Units twins).
+      Doc: [`docs/H2430_OTHERUNITFILES_SHARED_UTILS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2430_OTHERUNITFILES_SHARED_UTILS.md).
+- [x] **Зарегистрировать в карте общего кода.** Done 08-08-2026 (H2430): org hub
+      [`SHARED_CODE.md`](https://github.com/gasyoun/github-spine/blob/main/SHARED_CODE.md)
+      row for Samudra Pascal `uTypes` + dual-kept TextU note.
 
 ## Фаза 3 — Перенос на Lazarus/FPC (основная работа)
 

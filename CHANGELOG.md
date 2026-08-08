@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   points day-2 ops there; layout/`state.db` path aligned with prod; corpus vs
   code rollback separated. Wave P2 exit.
 
+### Changed
+- **Corpus_builder Phase 2 shared utils via OtherUnitFiles (H2430, Grok 4.5 `grok-4.5`).** `cb.lpi` / `cb_headless.lpi` set `OtherUnitFiles=dcu;..\..\Units`; single [`Units/uTypes.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/uTypes.pas) (promoted `TWideStringArr`; obsolete `dcu/uTypes` removed). Builder `TextU` dual-kept in `dcu/` (name collision with Index `textu`, H2429). Phase-2 common-dir + SHARED_CODE registration checkboxes ticked. Doc: [`docs/H2430_OTHERUNITFILES_SHARED_UTILS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2430_OTHERUNITFILES_SHARED_UTILS.md). `lazbuild` green: cb (7318 lines), cb_headless, Index.
+
+### Fixed
+- **`cb_headless.lpr` program terminator** was `end;` (FPC Fatal 2003); corrected to `end.` so headless `lazbuild` links again (noticed while proving H2430).
+
 ## [0.19.25] - 2026-08-08
 ### Added
 - **Corpus_builder Phase 4 headless CLI flags (H2432, Grok 4.5 `grok-4.5`).** [`cb_headless.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb_headless.lpr) accepts `cb_headless --build <config.ini|dir> [--out <file.html>] [--check]`; wires progress/error sinks to stdout; Confirm auto-yes (no MessageDlg hang); exit **1** on `HasErrors`, **2** on usage/missing config. Engine: public `OutFileOverride` on `TMhHTMLBuilder` for `--out`. Legacy `cb_headless <dir> [check]` kept for H2427 golden. Roadmap Phase 4 CLI unit ticked. README § Headless CLI. Doc: [`docs/H2432_CLI_HEADLESS_BUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2432_CLI_HEADLESS_BUILD.md).
