@@ -55,42 +55,42 @@
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="dcu\TextU.pas"/>
+        <Filename Value="dcu/TextU.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="TextU"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\..\Units\uTypes.pas"/>
+        <Filename Value="../../Units/uTypes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uTypes"/>
       </Unit5>
       <Unit6>
-        <Filename Value="dcu\myutils.pas"/>
+        <Filename Value="dcu/myutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="myutils"/>
       </Unit6>
       <Unit7>
-        <Filename Value="dcu\mytypes.pas"/>
+        <Filename Value="dcu/mytypes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="mytypes"/>
       </Unit7>
       <Unit8>
-        <Filename Value="dcu\uSort.pas"/>
+        <Filename Value="dcu/uSort.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uSort"/>
       </Unit8>
       <Unit9>
-        <Filename Value="dcu\ArtMath.pas"/>
+        <Filename Value="dcu/ArtMath.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ArtMath"/>
       </Unit9>
       <Unit10>
-        <Filename Value="dcu\CalcSimU.pas"/>
+        <Filename Value="dcu/CalcSimU.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="CalcSimU"/>
       </Unit10>
       <Unit11>
-        <Filename Value="dcu\statprocs.pas"/>
+        <Filename Value="dcu/statprocs.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="statprocs"/>
       </Unit11>
@@ -106,8 +106,8 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="dcu;..\..\Units"/>
-      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      <OtherUnitFiles Value="dcu;../../Units"/>
+      <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -115,8 +115,6 @@
       </SyntaxOptions>
     </Parsing>
     <CodeGeneration>
-      <TargetCPU Value="x86_64"/>
-      <TargetOS Value="win64"/>
     </CodeGeneration>
     <Linking>
       <Debugging>
@@ -124,7 +122,7 @@
       </Debugging>
       <Options>
         <Win32>
-          <GraphicApplication Value="False"/>
+          <GraphicApplication Value="True"/>
         </Win32>
       </Options>
     </Linking>

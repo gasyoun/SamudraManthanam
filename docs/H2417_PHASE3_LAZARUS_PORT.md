@@ -2,6 +2,8 @@
 
 _Created: 08-08-2026 · Last updated: 08-08-2026_
 
+> **H2431 (same day):** Linux residual closed — WinAPI gates + CI `lazbuild` on ubuntu. See [`H2431_LINUX_LAZBUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2431_LINUX_LAZBUILD.md).
+
 **Handoff:** [H2417](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2417-Grok_SamudraManthanam_corpus-builder-phase3-lazarus-lcl-port_08.08.26.md)  
 **Executor:** Grok 4.5 (`grok-4.5`)  
 **Toolchain:** Lazarus 4.0 + FPC 3.2.2 x86_64-win64 (`C:\Users\user\tools\lazarus\lazarus-4.0\`)
@@ -39,7 +41,7 @@ Measured: `(1008) 1603 lines compiled, 15.7 sec`, exit 0.
 | Residual | Why |
 |---|---|
 | Phase 0 golden `expected/` re-run | No mini-set / expected capture yet; GUI-only until Phase 4 CLI |
-| Linux `lazbuild` | No Linux runner in this session |
+| ~~Linux `lazbuild`~~ | **Closed H2431** — portable gates + CI workflow |
 | Replace tracked root `cb.exe` with Lazarus binary | Optional human step; `lib/` is gitignored |
 | lazUTF8 encoding layer | Phase 1 still-open unit |
 | Phase 2 unit dedupe vs `Units/` | Separate phase |

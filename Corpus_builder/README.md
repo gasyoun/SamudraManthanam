@@ -48,7 +48,9 @@ lazbuild Corpus_builder/PSRCBuilder/cb_headless.lpi   # headless CLI
 ```
 
 Outputs land under `PSRCBuilder/lib/<cpu-os>/` (e.g. `lib/x86_64-win64/cb.exe`
-and `cb_headless.exe`).
+and `cb_headless.exe` on Windows; `lib/x86_64-linux/cb` on Linux). Host OS is
+the default target (H2431); Linux is proven in CI
+(`.github/workflows/corpus-builder-lazbuild.yml`).
 
 ### Delphi 7 (legacy binary still in tree)
 

@@ -189,8 +189,13 @@ var
 implementation
 
 // H1485: no dialogs/fMainForm/Forms/controls/ShellApi here - the engine is GUI-free.
-// `windows` remains only for GlobalMemoryStatus (WinAPI, not VCL).
-uses SysUtils, textu, windows, MyUtils, uEncoding;
+// H2431: WinAPI GlobalMemoryStatus gated MSWINDOWS; no Windows unit on Linux.
+// H2428: uEncoding for ToUTF8/FromUTF8.
+uses SysUtils, textu, MyUtils, uEncoding
+{$IFDEF MSWINDOWS}
+  , Windows
+{$ENDIF}
+  ; // H2431: Windows only for GlobalMemoryStatus
 
 { TMhHTMLBuilde }
 
@@ -295,7 +300,7 @@ begin
   end;
   ErrList.SaveToFile(Path+ErrFileName);
   // H1485: the engine no longer opens Err.txt. The caller checks HasErrors
-  // and decides (fMainForm does the ShellExecute).
+  // and decides (fMainForm does OpenDocument - H2431 portable).
   // H2432: OutFileOverride wins when the headless CLI passes --out.
   if bGoodSankrit then
   begin
@@ -842,9 +847,13 @@ var
  S:string;
  i,j:integer;
  PrevNum:string;
+{$IFDEF MSWINDOWS}
  Status: TMemoryStatus;
+{$ENDIF}
 begin
+{$IFDEF MSWINDOWS}
  Status.dwLength := sizeof(TMemoryStatus);
+{$ENDIF}
  FileName:=Path+S_SancritFileName;
  AssignFile(F,FileName);
  SetLength(SanskritArr,0);
@@ -863,8 +872,12 @@ begin
   Setlength(SanskritArrSlokaTexts,j);
   SanskritArrSlokaTexts[j-1]:=S_W0;
   S:=FromUTF8(UTF8CutNextUseDelimiterNoTrim(S_W,#9));
+{$IFDEF MSWINDOWS}
   GlobalMemoryStatus(Status);
   Progress(1,'Load '+S +'; Total Ram: ' + IntToStr(Status.dwAvailVirtual div 1024417) + ' Mb');
+{$ELSE}
+  Progress(1,'Load '+S);
+{$ENDIF}
   if PrevNum<>S then begin inc(i); PrevNum:=S end;
   SetLength(SanskritArr,i);
   SanskritArr[i-1].Info.S_Num:=S;

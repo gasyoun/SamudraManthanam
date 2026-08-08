@@ -5,7 +5,7 @@ unit fMainForm;
 interface
 
 uses
-  Windows, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, StdCtrls, ComCtrls, LCLType, LCLIntf;
 
 type
@@ -94,7 +94,7 @@ var
   Form1: TForm1;
 implementation
 
-uses fCheckDialog, textu, ShellApi, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles, uEncoding;
+uses fCheckDialog, textu, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles, FileUtil, uEncoding;
 
 
 {$R *.lfm}
@@ -206,7 +206,7 @@ begin
    Memo1.Lines.AddStrings(OKBottomDlg.ErrList);
    Memo1.Lines.SaveToFile(ChangeFileExt(OpenDialog1.FileName,'_err.txt'));
  end;
- ShellExecute(Handle, 'open', PChar(ChangeFileExt(OpenDialog1.FileName,'_err.txt')), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(ChangeFileExt(OpenDialog1.FileName,'_err.txt')); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.N11Click(Sender: TObject);
@@ -340,7 +340,7 @@ end;
 procedure TForm1.N9Click(Sender: TObject);
 begin
  if SaveDialog1.Execute then Memo1.Lines.SaveToFile(SaveDialog1.FileName);
- ShellExecute(Handle, 'open', PChar(SaveDialog1.FileName), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(SaveDialog1.FileName); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.N31Click(Sender: TObject);
@@ -542,7 +542,7 @@ begin
  Memo1.Lines.AddStrings(List);
  List.Free;
  Memo1.Lines.SaveToFile(ChangeFileExt(OpenDialog1.FileName,'.dic'));;
- ShellExecute(Handle, 'open', PChar(ChangeFileExt(OpenDialog1.FileName,'.dic')), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(ChangeFileExt(OpenDialog1.FileName,'.dic')); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.N14Click(Sender: TObject);
@@ -566,7 +566,7 @@ begin
  Memo1.Lines.AddStrings(List);
  List.Free;
  Memo1.Lines.SaveToFile(ChangeFileExt(OpenDialog1.FileName,'_srt.dic'));
- ShellExecute(Handle, 'open', PChar(ChangeFileExt(OpenDialog1.FileName,'_srt.dic')), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(ChangeFileExt(OpenDialog1.FileName,'_srt.dic')); // H2431: portable (was ShellExecute)
 end;
 
  //��������
@@ -619,7 +619,7 @@ begin
  CloseFile(FW);
  List.Free;
  Memo1.Lines.SaveToFile(ChangeFileExt(FNW,'_found.txt'));
- ShellExecute(Handle, 'open', PChar(ChangeFileExt(FNW,'_found.txt')), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(ChangeFileExt(FNW,'_found.txt')); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.N16Click(Sender: TObject);
@@ -650,7 +650,7 @@ end;
 procedure TForm1.RichEdit2Click(Sender: TObject);
 begin
  if SaveDialog1.Execute then Memo2.Lines.SaveToFile(SaveDialog1.FileName);
- ShellExecute(Handle, 'open', PChar(SaveDialog1.FileName), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(SaveDialog1.FileName); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.N81Click(Sender: TObject);
@@ -765,7 +765,7 @@ begin
  CheckQuotes (OpenDialog1.FileName,'�','�');
  Memo1.Lines.Add('-------������ ������� ������----------');
  CheckQuotes (OpenDialog1.FileName,'�','�');
- ShellExecute(Handle, 'open', PChar(ChangeFileExt(OpenDialog1.FileName,'_err.txt')), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(ChangeFileExt(OpenDialog1.FileName,'_err.txt')); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.HTML1Click(Sender: TObject);
@@ -779,10 +779,10 @@ begin
  MhHTMLBuilder.OnError:=BuilderError;
  MhHTMLBuilder.Execute(OpenDialog1.FileName);
  if MhHTMLBuilder.HasErrors then
-  ShellExecute(Handle,'open',PChar(MhHTMLBuilder.ErrFileFullPath),nil,nil,SW_SHOWNORMAL);
+  OpenDocument(MhHTMLBuilder.ErrFileFullPath); // H2431: portable (was ShellExecute)
  MhHTMLBuilder.Destroy;
  StatusBar1.Panels[0].Text:='HTML build comlete!';
- MessageBeep(1000);
+ Beep; // H2431: portable (was MessageBeep)
 end;
 
 procedure TForm1.N141Click(Sender: TObject);
@@ -850,7 +850,7 @@ begin
  StatusBar1.Panels[0].Text:=IntToStr(Memo1.Lines.Count);
  until EOF(F);
   Memo1.Lines.SaveToFile(ChangeFileExt(OpenDialog1.FileName,'_2.txt'));;
- ShellExecute(Handle, 'open', PChar(ChangeFileExt(OpenDialog1.FileName,'_2.txt')), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(ChangeFileExt(OpenDialog1.FileName,'_2.txt')); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.N20Click(Sender: TObject);
@@ -976,7 +976,7 @@ begin
   Writeln (F,ShlokasArr[i-1].S_Num,#9,ShlokasArr[i-1].S_Text);
  end;
  CloseFile(F);
- ShellExecute(Application.Handle, 'open', PChar(AFileName), nil, nil, SW_SHOWNORMAL);
+ OpenDocument(AFileName); // H2431: portable (was ShellExecute)
 end;
 
 procedure TForm1.N121Click(Sender: TObject);
@@ -1134,11 +1134,11 @@ begin
    MhHTMLBuilder.OnError:=BuilderError;
    MhHTMLBuilder.Execute(List[i-1]);
    if MhHTMLBuilder.HasErrors then
-    ShellExecute(Handle,'open',PChar(MhHTMLBuilder.ErrFileFullPath),nil,nil,SW_SHOWNORMAL);
+    OpenDocument(MhHTMLBuilder.ErrFileFullPath); // H2431: portable (was ShellExecute)
    MhHTMLBuilder.Destroy;
    StatusBar1.Panels[0].Text:='HTML build comlete for '+List[i-1];
   end;
- MessageBeep(1000);
+ Beep; // H2431: portable (was MessageBeep)
  List.Free;
 end;
 
@@ -1425,7 +1425,7 @@ begin
   MhHTMLBuilder.OnError:=BuilderError;
   MhHTMLBuilder.Execute(OpenDialog1.FileName);
   if MhHTMLBuilder.HasErrors then
-   ShellExecute(Handle,'open',PChar(MhHTMLBuilder.ErrFileFullPath),nil,nil,SW_SHOWNORMAL);
+   OpenDocument(MhHTMLBuilder.ErrFileFullPath); // H2431: portable (was ShellExecute)
   OutputHTML:=MhHTMLBuilder.KeyWords.OutputHTML;
   MhHTMLBuilder.Destroy;
 //  ShowMessage('Book '+IntToStr(i)+' complete!');
@@ -1435,7 +1435,7 @@ begin
  ConcatAllHTMLFiles(OpenDialog1.FileName,BooksCount);
  PutFile1ToFile2(ExtractFilePath(OpenDialog1.FileName)+'Res_html_buff.txt',OutputHTML,InsertBlockLab1,InsertBlockLab2);
  StatusBar1.Panels[0].Text:='HTML build comlete!';
- MessageBeep(1000);
+ Beep; // H2431: portable (was MessageBeep)
 end;
 
 procedure TForm1.LoadBooksCount(AFileName:string);
@@ -1568,7 +1568,8 @@ begin
  FNi:=ChangeFileExt(FN, '1.txt');
  FNbuff:=ChangeFileExt(FN, '_buff.txt');
  FNtmp:=ChangeFileExt(FN, '_.txt');
- CopyFile(PChar(FNi),PChar(FNbuff),False);
+ if not CopyFile(FNi, FNbuff, [cffOverwriteFile]) then
+  raise Exception.CreateFmt('CopyFile failed: %s -> %s', [FNi, FNbuff]); // H2431
  for i:=2 to BooksCount do
  begin
   FNi:=ChangeFileExt(FN, IntTostr(i)+'.txt');
