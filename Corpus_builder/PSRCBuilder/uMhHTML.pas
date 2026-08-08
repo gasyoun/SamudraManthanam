@@ -191,7 +191,7 @@ implementation
 // H1485: no dialogs/fMainForm/Forms/controls/ShellApi here - the engine is GUI-free.
 // H2431: WinAPI GlobalMemoryStatus gated MSWINDOWS; no Windows unit on Linux.
 // H2428: uEncoding for ToUTF8/FromUTF8.
-uses SysUtils, textu, MyUtils, uEncoding
+uses SysUtils, TextU, MyUtils, uEncoding
 {$IFDEF MSWINDOWS}
   , Windows
 {$ENDIF}

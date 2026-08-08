@@ -55,7 +55,7 @@
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="dcu/TextU.pas"/>
+        <Filename Value="dcu/textu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="TextU"/>
       </Unit4>
@@ -75,17 +75,17 @@
         <UnitName Value="mytypes"/>
       </Unit7>
       <Unit8>
-        <Filename Value="dcu/uSort.pas"/>
+        <Filename Value="dcu/usort.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uSort"/>
       </Unit8>
       <Unit9>
-        <Filename Value="dcu/ArtMath.pas"/>
+        <Filename Value="dcu/artmath.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ArtMath"/>
       </Unit9>
       <Unit10>
-        <Filename Value="dcu/CalcSimU.pas"/>
+        <Filename Value="dcu/calcsimu.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="CalcSimU"/>
       </Unit10>
@@ -95,7 +95,7 @@
         <UnitName Value="statprocs"/>
       </Unit11>
       <Unit12>
-        <Filename Value="dcu\uEncoding.pas"/>
+        <Filename Value="dcu/uencoding.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uEncoding"/>
       </Unit12>
