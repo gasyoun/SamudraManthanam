@@ -164,7 +164,15 @@ def render_citation_block(group_recs: list[dict], meta: dict) -> str:
     if comms:
         items = []
         for c in comms:
-            cid = f'comment_{c.get("fn", "")}'
+            # Prefer comment_{ch}_{v}_{fn} so html_to_canonical can recover
+            # annotates=ch.v (H2450 prose notes; Wave-A fn-only ids still ok
+            # as fallback when annotates is missing).
+            ann = str(c.get("annotates") or "")
+            am = re.match(r"^(\d+)\.(\d+)", ann)
+            if am:
+                cid = f'comment_{am.group(1)}_{am.group(2)}_{c.get("fn", "")}'
+            else:
+                cid = f'comment_{c.get("fn", "")}'
             items.append(f'<div class="comment_item" id="{cid}">{c["html"]}</div>')
         inner.append('<div class="comments">' + "".join(items) + '</div>')
     return f'<div class="citation_block" id="{passage}">' + "".join(inner) + '</div>'
