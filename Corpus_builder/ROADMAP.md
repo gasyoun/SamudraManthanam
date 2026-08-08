@@ -127,9 +127,14 @@ Delphi 7.
 Цель: сборщик и основное приложение перестают держать две копии одних и тех же
 утилит.
 
-- [ ] **Сверить `dcu/*.pas` сборщика с [`Units/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Units) основного приложения.**
-      `TextU.pas`, `uTypes.pas` и родня существуют в обоих местах. Определить
-      канонический источник, вычистить расхождения.
+- [x] **Сверить `dcu/*.pas` сборщика с [`Units/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Units) основного приложения.**
+      Done 08-08-2026 (H2429, Grok 4.5 `grok-4.5`): sizes + API deltas + **split**
+      canonical ruling — builder `dcu/TextU`(+`TextUVCL`) for `cb` engine; Index
+      `Units/textu.pas` is a **different** module (name collision); true twin is
+      stale `Units/_textu.pas`; `uTypes` master = builder (`TWideStringArr`).
+      Report: [`docs/H2429_DCU_UNITS_CANONICAL_DIFF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2429_DCU_UNITS_CANONICAL_DIFF.md).
+      Divergence cleanup / shared path → H2430 (do **not** drop builder-only APIs
+      used by `uMhHTML`).
 - [ ] **Один общий каталог утилит.** Подключать общие модули через `OtherUnitFiles`
       в `.lpi` (как это уже делает основное приложение), а не хранить копию в
       `Corpus_builder/PSRCBuilder/dcu/`.

@@ -1,6 +1,6 @@
 # Corpus Builder — архитектурный план
 
-_Создано: 05-07-2026 · Обновлено: 04-08-2026_
+_Создано: 05-07-2026 · Обновлено: 08-08-2026_
 
 Документ описывает **текущую** архитектуру сборщика (`cb.exe`, Delphi 7) и
 **целевую** архитектуру после переноса на Lazarus / Free Pascal. Дополняет
@@ -76,7 +76,11 @@ _Создано: 05-07-2026 · Обновлено: 04-08-2026_
   переменную напрямую — трудно тестировать. → Писать в абстрактный поток/буфер.
 - **Дубли утилит.** `TextU.pas`, `uTypes.pas` существуют и здесь, и в
   [`Units/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Units)
-  основного приложения. → Один канонический источник.
+  основного приложения. → **H2429 split ruling:** builder `dcu/TextU`(+`TextUVCL`)
+  is canonical for `cb`; Index `Units/textu.pas` is a **different** module (name
+  collision only); true twin `Units/_textu` is stale; `uTypes` master = builder.
+  Full table: [`docs/H2429_DCU_UNITS_CANONICAL_DIFF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2429_DCU_UNITS_CANONICAL_DIFF.md).
+  Physical one-copy via `OtherUnitFiles` remains H2430.
 - **Отчет об ошибках — только текст.** `ErrList` → `Err.txt`. → Плюс
   машиночитаемый формат для CI.
 
