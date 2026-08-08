@@ -935,19 +935,15 @@ def test_parse_book_prose_mode_links_note_num_to_verse():
 
 
 def test_parse_book_auto_upgrades_to_prose_when_bracket_empty():
-    text = "\n".join([
-        "Глава первая",
-        "А. (1)",
-        "Б. (2)",
-        "В. (3)",
-        "КОММЕНТАРИЙ",
-        "1. note one.",
-        "2. note two.",
-        "3. note three.",
-    ])
+    # Auto prose floor is 10 (avoids Kādambara N(pada). debris false starts).
+    notes = [f"{i}. note {i}." for i in range(1, 12)]
+    verses = [f"Стих {i}. ({i})" for i in range(1, 12)]
+    text = "\n".join(
+        ["Глава первая"] + verses + ["КОММЕНТАРИЙ"] + notes
+    )
     _recs, report = ig.parse_book(text, "auto-prose", footnote_mode="auto")
     assert report["footnote_mode"] == "prose"
-    assert report["comment_count"] == 3
+    assert report["comment_count"] == 11
 
 
 def test_parse_book_explicit_bracket_does_not_upgrade_to_prose():
@@ -971,3 +967,70 @@ def test_passage_for_verse_num_range_cover():
     assert ig._passage_for_verse_num(passages, 1, 1) == "1.1"
     assert ig._passage_for_verse_num(passages, 1, 5) == "1.3-6"
     assert ig._passage_for_verse_num(passages, 1, 99) is None
+
+
+# --- H2450 remainder reparse: free-form [N] endnotes (no ch.v) ---
+
+
+def test_parse_bracket_free_endnotes_basic_and_fn1_glued():
+    lines = [
+        "«Минуло тридцать шесть лет» — по замечанию Василькова.",
+        "продолжение первой заметки.",
+        "",
+        "[2] У древних индийцев была сильна вера в приметы.",
+        "продолжение второй.",
+        "[3] Название общины ядавов.",
+    ]
+    notes, stats = ig.parse_bracket_free_endnotes(lines, fn1_glued=True)
+    assert sorted(notes) == [1, 2, 3]
+    assert "Василькова" in notes[1]["text"]
+    assert "продолжение первой" in notes[1]["text"]
+    assert notes[1]["chapter"] is None
+    assert notes[1]["link_rule"] == "inline_bracket_first_use"
+    assert notes[2]["fn"] == 2
+    assert stats["parsed"] == 3
+
+
+def test_parse_book_bracket_free_links_by_first_inline_use():
+    text = "\n".join([
+        "Глава первая",
+        "Минуло тридцать шесть лет[1], и герои жили[2]. (1)",
+        "Другой стих без сносок. (2)",
+        "Ещё примета[3]. (3)",
+        "",
+        "[1] КОММЕНТАРИЙ",
+        "Первая заметка про годы.",
+        "[2] Вторая про жизнь.",
+        "[3] Третья про приметы.",
+        "[4] Никогда не ссылаются.",
+    ])
+    records, report = ig.parse_book(
+        text, "mbh-free-test", footnote_mode="bracket-free",
+    )
+    assert report["footnote_mode"] == "bracket-free"
+    assert report["verse_count"] == 3
+    assert report["comment_count"] == 3
+    assert 4 in report["unlinked_bracket_free_notes"]
+    ru = {r["passage"]: r for r in records if r["seg"] == "ru"}
+    assert "[1]" not in ru["1.1"]["text"]
+    assert "comment_1" in ru["1.1"]["html"] or "comment_" in ru["1.1"]["html"]
+    comm = {r["fn"]: r for r in records if str(r.get("seg", "")).startswith("comm")}
+    assert comm[1]["annotates"] == "1.1"
+    assert "годы" in comm[1]["text"]
+    assert comm[3]["annotates"] == "1.3"
+
+
+def test_parse_book_auto_upgrades_to_bracket_free():
+    text = "\n".join([
+        "Глава первая",
+        "Текст со ссылкой[1] и ещё[2]. (1)",
+        "Только вторая[2] снова. (2)",
+        "Третья[3]. (3)",
+        "Комментарий",
+        "[1] one.",
+        "[2] two.",
+        "[3] three.",
+    ])
+    _recs, report = ig.parse_book(text, "auto-free", footnote_mode="auto")
+    assert report["footnote_mode"] == "bracket-free"
+    assert report["comment_count"] == 3

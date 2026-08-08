@@ -67,12 +67,18 @@
   "annotates_remap_max_delta": 0,
   "annotates_remaps": [],
   "footnote_mode": "prose",
-  "footnote_mode_requested": "prose",
+  "footnote_mode_requested": "auto",
   "prose_note_stats": {
     "parsed": 506,
     "rejected_wrap": 11,
     "rejected_gap": 1,
     "rejected_dup": 1
+  },
+  "bracket_free_stats": {
+    "parsed": 0,
+    "rejected_gap": 0,
+    "rejected_dup": 0,
+    "fn1_glued": false
   },
   "prose_link_rule": "note_num_eq_verse",
   "id_collisions": [

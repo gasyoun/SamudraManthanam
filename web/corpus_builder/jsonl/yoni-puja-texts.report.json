@@ -2,16 +2,46 @@
   "work": "yoni-puja-texts",
   "chapters": 1,
   "verse_count": 16,
-  "comment_count": 0,
+  "comment_count": 13,
   "verse_gaps": [],
   "chapter_numbers": [
     1
   ],
-  "unrecognised_endnotes": 0,
+  "unrecognised_endnotes": 13,
   "annotates_remapped": 0,
   "annotates_remap_max_delta": 0,
   "annotates_remaps": [],
-  "footnote_mode": "bracket",
+  "footnote_mode": "bracket-free",
   "footnote_mode_requested": "auto",
-  "total_endnotes": 0
+  "prose_note_stats": {
+    "parsed": 0,
+    "rejected_wrap": 0,
+    "rejected_gap": 0,
+    "rejected_dup": 0
+  },
+  "bracket_free_stats": {
+    "parsed": 26,
+    "rejected_gap": 0,
+    "rejected_dup": 0,
+    "fn1_glued": true
+  },
+  "bracket_free_link_rule": "inline_bracket_first_use",
+  "bracket_free_notes_linked": 13,
+  "bracket_free_notes_unlinked": 13,
+  "unlinked_bracket_free_notes": [
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26
+  ],
+  "total_endnotes": 26
 }

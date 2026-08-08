@@ -14,6 +14,6 @@
   ],
   "structure": "verse",
   "needs_review": true,
-  "provenance": "А. Игнатьев (перев.). Шри-Бхагавати-манаса-пуджа-стотра.doc (Прочее; attrib. Śaṅkara). H2415 remainder: short stotra with (N) verse markers; synthetic ch.1; ru_only. Ingest via h2415_remainder_ingest.py.",
+  "provenance": "А. Игнатьев (перев.). Шри-Бхагавати-манаса-пуджа-стотра.doc (Прочее; attrib. Śaṅkara). H2415 remainder: short stotra with (N) verse markers; synthetic ch.1; ru_only. Ingest via h2415_remainder_ingest.py. H2450 remainder reparse footnote_mode=bracket comments=0. H2450 remainder reparse footnote_mode=bracket comments=0.",
   "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md"
 }

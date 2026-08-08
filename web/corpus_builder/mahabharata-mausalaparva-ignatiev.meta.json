@@ -14,6 +14,6 @@
   ],
   "structure": "verse",
   "needs_review": true,
-  "provenance": "А. Игнатьев (перев.). Махабхарата — PARTIAL: book 16 only (from «Три заключительные книги»). Source: «Махабхарата Три заключительные книги.docx». Distinct from Vasilkov/Neveleva 2005 editions already in corpus (16–18_mahabharata-*.html). H2415. Ingest via h2415_remainder_ingest.py → ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py.",
+  "provenance": "А. Игнатьев (перев.). Махабхарата — PARTIAL: book 16 only (from «Три заключительные книги»). Source: «Махабхарата Три заключительные книги.docx». Distinct from Vasilkov/Neveleva 2005 editions already in corpus (16–18_mahabharata-*.html). H2415. Ingest via h2415_remainder_ingest.py → ignatiev_book_to_canonical.py → align_sanskrit.py (ru_only) → build_corpus_html.py. H2450 remainder reparse footnote_mode=bracket comments=0. H2450 remainder reparse footnote_mode=bracket-free comments=154.",
   "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md"
 }

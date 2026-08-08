@@ -30,7 +30,7 @@ H1438 waves A–D + H2377/H2385/H2412–14 covered the main tantra/purāṇa set
 |---|---|---|
 | Devībhāgavata-purāṇa (12 skandha multi-file) | Separate multi-skandha pipeline (already ingested H534/H558); out of handoff scope | n/a (already done) |
 | Prefaces, dictionaries, bibliographies inside remainder books | Back-matter; not verse units (cut at `КОММЕНТАРИЙ` / `СЛОВАРЬ` / `ЛИТЕРАТУРА`) | **H2449 done** — [census](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2449_IGNATIEV_BACKMATTER_LAYERS_CENSUS.md) (17 layers) |
-| Prose commentary blocks after translation | Numbered `N. Источник:` notes are not pandoc `[N]` endnotes — `comment_count=0` was honest until H2450 | **H2450 done** — prose mode pilot Kāma-samūha **685 / 489** comments, verse+comment RT **100%**; [apparatus doc](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2450_PROSE_COMMENTARY_APPARATUS.md) |
+| Prose / free commentary after translation | `N. Источник:` (Kāma) and free `[N]` text (MBH/yoni) were honest zeros until H2450/H2491 | **H2450 + H2491 done** — prose + `bracket-free`; kama 489; MBH 154+55+127; yoni 13; kadambara/bhagavati residue; [reparse doc](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2450_REMAINDER_REPARSE.md) |
 | Vasilkov/Neveleva MBH 16–18 already in corpus | **Different translator.** Ignatiev triple is registered under `*-ignatiev` slugs so the two editions coexist | n/a (parallel edition already present) |
 
 ## Full `Переводы с санскрита` folder map (post-H2415)
