@@ -177,8 +177,9 @@ PSRCBuilder/
 
 ## Кодировки и соглашения (кратко)
 
-- **Кодировка**: исходные файлы — Windows CP-1251 (ANSI); на границах ввода-вывода
-  используется `AnsiToUTF8` / `UTF8ToAnsi`. Для санскрита (IAST) внутри — WideString.
+- **Кодировка**: единый слой [`dcu/uEncoding.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uEncoding.pas)
+  (`ToUTF8` / `FromUTF8` → LazUTF8). Сырые `AnsiToUTF8`/`UTF8ToAnsi` на пути
+  движка убраны (H2428). Для санскрита (IAST) внутри — WideString.
 - **Индексы циклов**: 1-based (`for i:=1 to List.Count`) с 0-based доступом
   (`List[i-1]`) — единое соглашение всего семейства проектов.
 - **Данды**: одиночная `।` и двойная `॥` — через константы `S_danda1` / `S_danda2`

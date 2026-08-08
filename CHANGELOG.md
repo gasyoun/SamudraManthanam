@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- **Corpus_builder Phase 1 unified encoding layer (H2428, Grok 4.5 `grok-4.5`).** New [`dcu/uEncoding.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uEncoding.pas) (`ToUTF8`/`FromUTF8`/`EncUTF8Length`/`EncUTF8Copy`); engine + forms + TextU free of raw `AnsiToUTF8`/`UTF8ToAnsi` (census 21+27 → 0 active). `lazbuild cb.lpi` + `cb_headless.lpi` green. Golden case01 rebaselined for UTF-8 I/O (H2427 CP-1251 `Err.txt` → UTF-8). Roadmap Phase 1 encoding unit ticked. Doc: [`docs/H2428_LAZUTF8_ENCODING_LAYER.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2428_LAZUTF8_ENCODING_LAYER.md).
 - **Corpus_builder Phase 2 shared utils via OtherUnitFiles (H2430, Grok 4.5 `grok-4.5`).** `cb.lpi` / `cb_headless.lpi` set `OtherUnitFiles=dcu;..\..\Units`; single [`Units/uTypes.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/uTypes.pas) (promoted `TWideStringArr`; obsolete `dcu/uTypes` removed). Builder `TextU` dual-kept in `dcu/` (name collision with Index `textu`, H2429). Phase-2 common-dir + SHARED_CODE registration checkboxes ticked. Doc: [`docs/H2430_OTHERUNITFILES_SHARED_UTILS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2430_OTHERUNITFILES_SHARED_UTILS.md). `lazbuild` green: cb (7318 lines), cb_headless, Index.
 
 ### Fixed

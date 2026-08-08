@@ -43,7 +43,7 @@ var
 implementation
 
 uses
-  textu;
+  textu, uEncoding;
 
 {$R *.lfm}
 
@@ -259,7 +259,7 @@ var
   r:=StringReplace(s,'\','\',[rfReplaceAll]);
   r:=StringReplace(r,'"','\"',[rfReplaceAll]);
   r:=StringReplace(r,#9,' ',[rfReplaceAll]);
-  Result:=AnsiToUtf8(r);
+  Result:=ToUTF8(r);
  end;
 
 begin
@@ -294,7 +294,7 @@ begin
   T.Add('pages'#9+TriStr(rPage));
   T.Add('messageCount'#9+IntToStr(ErrList.Count));
   for i:=0 to ErrList.Count-1 do
-   T.Add('message'#9+AnsiToUtf8(StringReplace(ErrList[i],#9,' ',[rfReplaceAll])));
+   T.Add('message'#9+ToUTF8(StringReplace(ErrList[i],#9,' ',[rfReplaceAll])));
   T.SaveToFile(ChangeFileExt(AFileName,'_check.tsv'));
  finally
   T.Free;

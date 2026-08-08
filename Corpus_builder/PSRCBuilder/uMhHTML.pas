@@ -1,7 +1,7 @@
 unit uMhHTML;
 {$MODE Delphi}
 { Delphi}
-// сделать проверку на количество закрываемых и открываемых скобок
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 interface
  uses classes, INIFiles;
 type
@@ -19,7 +19,7 @@ end;
 TSlokaRecArr=array of TSlokaRec;
 TCommentInfoRec=record
  NBook, NChapter1,NChapter2:integer;
- nShloka:string; // понадобилось только для Вьяса Бхашьи.
+ nShloka:string; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
  Num:widestring;
  N1,N2:integer;
 end;
@@ -42,16 +42,16 @@ TKeyWords=record
  CommentNumIsShlokaNum:boolean;
  RigvedaComment:Boolean; //Ex: 1a-b, 1-2
  BreakInTranslation:boolean;
- CutBookFromCitation:boolean; //удаляет номер книги из Индекса # citation_block # chapter_title
+ CutBookFromCitation:boolean; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ # citation_block # chapter_title
  DisableUvachaInSankrit:boolean;
  DisableUvachaInRus:boolean;
- CommentOnlyNumber:Boolean; //проверка, число в скобках или есть еще другие символы, если CommentOnlyNumber = false
+ CommentOnlyNumber:Boolean; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ CommentOnlyNumber = false
  OnlyRus:boolean;
  OutputHTML:string;
  BookNameForCitation:string;
- datasrc:Integer; // номер книги для серии книг. Перечисляются в поле "meta" файла html
-//title="Махабхарата I. 1. 52-55
-//id="Махабхарата 1950 (I): 11
+ datasrc:Integer; // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ "meta" пїЅпїЅпїЅпїЅпїЅ html
+//title="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ I. 1. 52-55
+//id="пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1950 (I): 11
  TextForCitation:string;
  ChapterStrToClear:string;
  CommentIgnorStr:string;
@@ -59,7 +59,7 @@ TKeyWords=record
  b2Transl:boolean;
  ManyTransl:Byte;
  ThreeLevelComment:boolean;//V.10.1.
- TwoLevelCombineComment:boolean;// номер шлоки + номер комментария
+ TwoLevelCombineComment:boolean;// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  KamasutraComment:boolean;
  IgnoreSanskritError:boolean;
  Bracket1,Bracket2:string;
@@ -134,7 +134,7 @@ TMhHTMLBuilder = class(TObject)
 //  procedure HTMLChapterCaption (ANum:integer;const ChapterCaption:widestring);
   procedure HTMLChapterCaption (IDStr:string;const ChapterCaption:widestring);
   procedure HTMLChapterNum (ANum:integer;AGlavaText:widestring);
-  procedure HTMLCitationBlock; //пустая . Вызывается из HTMLRange(N1, N2, P1,P2: Integer)
+  procedure HTMLCitationBlock; //пїЅпїЅпїЅпїЅпїЅпїЅ . пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ HTMLRange(N1, N2, P1,P2: Integer)
   Procedure HTML_EndCitationBlock;
   procedure HTMLRange(N1,N2,P1,P2:Integer);
   procedure HTMLCloseFile;
@@ -146,7 +146,7 @@ TMhHTMLBuilder = class(TObject)
   Function MarkRusNames(AText:widestring):widestring;
   Procedure HTML_CommentText(ChapterNum,CommNum,RusPage1,RusPage2:integer);
   procedure HTML_FootNoteText(bInTransl:Boolean;index,RusPage1,RusPage2:integer);
-// Утилиты
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   Function FormatFootnoteInText (AText:widestring):widestring;
   Function FormatFootnoteInText2 (bInTransl:Boolean;AText:widestring):widestring;
   function GetSanskritShlokaText ( NBook, NChapter, NSloka:integer; Info:TIASTSlolakaInfo;var ErrStr:String):WideString;
@@ -163,7 +163,7 @@ end;
 const
  sRightArrow='<code>&#8594</code>';
  C39=chr(39);
- C_RusStrLabel='с. ';
+ C_RusStrLabel='пїЅ. ';
  C_NoRusData='{no rus data}';
  C_NoSankritData='{no sanskrit data}';
  ResFileName='Res.txt';
@@ -190,7 +190,7 @@ implementation
 
 // H1485: no dialogs/fMainForm/Forms/controls/ShellApi here - the engine is GUI-free.
 // `windows` remains only for GlobalMemoryStatus (WinAPI, not VCL).
-uses SysUtils, textu, windows, MyUtils;
+uses SysUtils, textu, windows, MyUtils, uEncoding;
 
 { TMhHTMLBuilde }
 
@@ -274,19 +274,19 @@ begin
  Path:=ExtractFilePath(AFileName);
  if not LoadKeyWords then
  begin
-  if not Confirm('Не найдел файл с ключевыми словами. Использовать ключевые слова по умолчанию?')
+  if not Confirm('пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?')
   then exit;
  end;
  if bDevFileName then S_SancritFileName:=CS_SancritFileName_Dev else S_SancritFileName:=CS_SancritFileName_IAST;
  bGoodSankrit:=CheckSanskrit;
- if KeyWords.IgnoreSanskritError then bGoodSankrit:=True; // Для упанишад переведенных частично и не подряд (типа Маханараяна)
+ if KeyWords.IgnoreSanskritError then bGoodSankrit:=True; // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
  if bGoodSankrit then
  begin
    LoadSanskrit; //ok
    if KeyWords.ManyTransl>0
     then for i:=1 to KeyWords.ManyTransl do LoadPerevod (i)
     else LoadPerevod (0);
-   if KeyWords.b2Transl then LoadPerevod2; {для Смирнова и Гитаговинды}
+   if KeyWords.b2Transl then LoadPerevod2; {пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ}
    LoadComments;
    if KeyWords.IsFootNotes then LoadFootNotes;
   // LoadNames;
@@ -323,28 +323,28 @@ begin
  if KeyWords.ChapterStrToClear=''
   then  Result:=AText
   else Result:=StringReplace(Atext,KeyWords.ChapterStrToClear,'',[]);
- if KeyWords.IsFootNotes then Exit; // в этом случае используем
- if Pos (KeyWords.Bracket1,Atext)=0 then exit;      //<скобка>
+ if KeyWords.IsFootNotes then Exit; // пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ if Pos (KeyWords.Bracket1,Atext)=0 then exit;      //<пїЅпїЅпїЅпїЅпїЅпїЅ>
  CurChapterNum:=SlokasArr[CurSlokaNum-1].info.NChapter;
  CurShlokaStr:=intToStr(SlokasArr[CurSlokaNum-1].info.Num1);
  CurSubChapterNum:=SlokasArr[CurSlokaNum-1].info.NSubChapter;
  S:=AText;
  k:=1;
  repeat
-   AnsiText:=UTF8ToAnsi(AText);
+   AnsiText:=FromUTF8(AText);
    Pos1:=0;
    C1:='1';
    C9:='9';
    for i:=k to Length(AText)-1 do
-    if (S[i]=KeyWords.Bracket1) and (S[i+1] >= c1) and (S[i+1] <= c9) then //<скобка>
+    if (S[i]=KeyWords.Bracket1) and (S[i+1] >= c1) and (S[i+1] <= c9) then //<пїЅпїЅпїЅпїЅпїЅпїЅ>
     begin
      Pos1:=i;
      break;
     end;
    if Pos1=0 then exit;
    for i:=Pos1 to Length(S){Pos1+20} do
-    if S[i]=KeyWords.Bracket2 then begin Pos2:=i; break; end; //<скобка>
-   S_to_Find:=Copy(S,Pos1-1,Pos2-Pos1+2); // pos-1,Pos2-Pos1+2 учитывает пробел
+    if S[i]=KeyWords.Bracket2 then begin Pos2:=i; break; end; //<пїЅпїЅпїЅпїЅпїЅпїЅ>
+   S_to_Find:=Copy(S,Pos1-1,Pos2-Pos1+2); // pos-1,Pos2-Pos1+2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
    NumCommentStr:=Copy(S,Pos1+1,Pos2-Pos1-1);
    if Keywords.CommentOnlyNumber then
     begin
@@ -385,7 +385,7 @@ begin
      then Atext:=StringReplace(Atext,S_to_Find,S_to_Replace,[])
      else
       begin
-//       ShowMessage('Ошибка добавления комментария '+UTF8ToAnsi(NumCommentStr));
+//       ShowMessage('пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ '+FromUTF8(NumCommentStr));
        break
       end;
     S:=Atext;
@@ -398,7 +398,7 @@ end;
 
 procedure TMhHTMLBuilder.HTMLChapterCaption(IDStr:string;const ChapterCaption:widestring);
 begin
-//<div class="chapter_title" id="chapter_1С">Сказание о жизни в лесах<br></div>
+//<div class="chapter_title" id="chapter_1пїЅ">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ<br></div>
 // write(HTF, '<div class="chapter_title" id="chapter_');
  write(HTF, '    <div class="chapter_title" id="');
  Write(HTF, IDStr,'C">'); // C=Caption
@@ -415,7 +415,7 @@ begin
  Write(HTF, IntToStr(NBook)+'.'); {!!!}
  Write(HTF, IntToStr(Anum+KeyWords.ChapterInc),'">'); {!!!}
  Write(HTF, FormatFootnoteInText(AGlavaText));
-{ Write(HTF, AnsiToUTF8('>Глава '));
+{ Write(HTF, ToUTF8('>пїЅпїЅпїЅпїЅпїЅ '));
  Write(HTF, IntToStr(Anum));}
  Writeln(HTF, '</div>');
 end;
@@ -430,21 +430,21 @@ var
  Citation_Text1:string;
  Citation_block_Text_ID:string;
  Citation_Text2:string;
- BookNameForCitation:string; // c годом, например "Рамаяна 2006"
+ BookNameForCitation:string; // c пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2006"
  TextForCitation:string;
 (*
-Надо:
-1) (см.: Рамаяна I. 13. 12)
-2) Рамаяна 2006: 51
-То есть вместо
-<div class="range" title="Рамаяна I.25.14 с. 93">(14)</div>
-сделать
-<div class="range" title="(см.: Рамаяна I. 13. 12)" id="(Рамаяна 2006: 51)">(14)</div>
-Для примечаний:
-(Рамаяна 2006: 51)
+пїЅпїЅпїЅпїЅ:
+1) (пїЅпїЅ.: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ I. 13. 12)
+2) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2006: 51
+пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+<div class="range" title="пїЅпїЅпїЅпїЅпїЅпїЅпїЅ I.25.14 пїЅ. 93">(14)</div>
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+<div class="range" title="(пїЅпїЅ.: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ I. 13. 12)" id="(пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2006: 51)">(14)</div>
+пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+(пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2006: 51)
 *)
 begin
-//<div class="range">(1—7)</div>
+//<div class="range">(1пїЅ7)</div>
 //<div class="chapter_content">
  BookNameForCitation:=KeyWords.BookNameForCitation;
  TextForCitation:=KeyWords.TextForCitation;
@@ -455,7 +455,7 @@ begin
  Citation_Text1:=Citation_Text1+' '+IntToStr(CurChapter+KeyWords.ChapterInc)+'. '+IntToStr(N1);
  Citation_block_Text_ID:='';
  if not KeyWords.CutBookFromCitation then Citation_block_Text_ID:=IntToStr(NBook)+'.';
- Citation_block_Text_ID:=Citation_block_Text_ID+IntToStr(CurChapter+KeyWords.ChapterInc)+'.'+IntToStr(N1);{новое!!!}
+ Citation_block_Text_ID:=Citation_block_Text_ID+IntToStr(CurChapter+KeyWords.ChapterInc)+'.'+IntToStr(N1);{пїЅпїЅпїЅпїЅпїЅ!!!}
  if N2<>N1 then Citation_Text1:=Citation_Text1+'-'+IntTostr(N2);
 // Citation_Text2:=''+BookNameForCitation+': '+IntTostr(P1);
  Citation_Text2:=''+IntTostr(P1);
@@ -463,13 +463,13 @@ begin
  Citation_Text2:=Citation_Text2+'';
  Writeln(HTF, '    <div class="citation_block"'+' id="'+Citation_block_Text_ID+'">');
  Write(HTF, '      <div class="range" ');
- Write(HTF, 'title="', AnsiToUTF8(Citation_Text1)+'" ');
-// Write(HTF, 'id="', AnsiToUTF8(Citation_Text2)+'"');
- Write(HTF, 'data-src="', AnsiToUTF8(IntTostr(KeyWords.datasrc))+'" ');
- Write(HTF, 'data-page="', AnsiToUTF8(Citation_Text2)+'"');
+ Write(HTF, 'title="', ToUTF8(Citation_Text1)+'" ');
+// Write(HTF, 'id="', ToUTF8(Citation_Text2)+'"');
+ Write(HTF, 'data-src="', ToUTF8(IntTostr(KeyWords.datasrc))+'" ');
+ Write(HTF, 'data-page="', ToUTF8(Citation_Text2)+'"');
  Write(HTF, '>');
 
-// Write(HTF,AnsiToUTF8(Citation_Text1)); // выдача полного номера для Архипова
+// Write(HTF,ToUTF8(Citation_Text1)); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  if not KeyWords.OnlyRus then Write(HTF,'', IntTostr(N1));
  if N2<>N1 then Write(HTF, '-',IntTostr(N2));
  if bShowDivComment then Writeln(HTF, '<!-- end of range block -->');
@@ -575,7 +575,7 @@ begin
 // Writeln(HTF,Atext);
  if bShowDivComment then Writeln(HTF, '<!-- end of chapter_block translation -->');
  Writeln(HTF, '</div>');
- { перенес после комментариев
+ { пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  if bShowDivComment then Writeln(HTF, '<!-- end of citation_block -->');
  Writeln(HTF, '    </div>');}
 end;
@@ -592,7 +592,7 @@ var
  bPrevStrIsPageNum,bPerenos:boolean;
  CurChapter, RusPage:integer;
  CurShloka:integer;
- bComment_After_Chapter:boolean; // комментарий без номера, который нужно вставить после загаловка главы
+ bComment_After_Chapter:boolean; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
  bFirstStringOfComment:boolean;
  p1,p2,p3:string;
 // PrevNum:string;
@@ -614,7 +614,7 @@ begin
   readln(F,S_w);
   inc (nLine);
   Progress(0,'Load comments line - '+ IntToStr(nLine));
-  S_Ansi:=UTF8ToAnsi(S_w);
+  S_Ansi:=FromUTF8(S_w);
   S_Ansi0:=S_Ansi;
   bFirstStringOfComment:=IsFirstStringComment(S_Ansi,p1,p2,p3);
   if KeyWords.ThreeLevelComment and bFirstStringOfComment then CurChapter:=StrToInt(P2);
@@ -622,7 +622,7 @@ begin
 //  if KeyWords.TwoLevelCombineComment and KeyWords.KamasutraComment and bFirstStringOfComment then begin CurChapter:=StrToInt(P1); CurShloka:=StrToInt(p2) end;
   if bFirstStringOfComment then bComment_After_Chapter :=false;
   try
-  if IsGlavaSingInText(S_Ansi,KeyWords.Glava) then  // это скорее для Рамаяны
+  if IsGlavaSingInText(S_Ansi,KeyWords.Glava) then  // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   begin
    if KeyWords.GlavaAutoIncrement
     then begin inc(CurChapter); end
@@ -638,7 +638,7 @@ begin
   end else
 //  if Pos(KeyWords.Skazanie,S_Ansi)=1 then
   if Pos(AnsiLowerCase(KeyWords.Skazanie),AnsiLowerCase(S_Ansi))=1 then
-  begin // вырезаем диапазон глав
+  begin // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 //   PrevNum:='';
    CutNextUseDelimiter(S_Ansi,KeyWords.CommentShortGl);
    CutNextUseDelimiter(S_Ansi,' ');
@@ -646,7 +646,7 @@ begin
   end else
   if bComment_After_Chapter then
   begin
-   inc(i); // номер комментария
+   inc(i); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
    SetLength(CommentsArr,i);
    InfoRec.Num:='0';
    CommentsArr[i-1].Text:=s_w;
@@ -657,7 +657,7 @@ begin
   end else
   if bFirstStringOfComment then {New!!!}
   begin
-   inc(i); // номер комментария
+   inc(i); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
    SetLength(CommentsArr,i);
    S_N:=UTF8CutNextUseDelimiterNoTrim(S_w, ' ');
     if S_N[Length(S_N)]='.'
@@ -681,8 +681,8 @@ begin
    CommentsArr[i-1].RusPage2:=RusPage;
    CommentsArr[i-1].info:=InfoRec;
   end else
-  if (S_Ansi[1]='-')and(S_Ansi[2] in ['1'..'9']) then // номер страницы
-  begin // пропускаем строчку
+  if (S_Ansi[1]='-')and(S_Ansi[2] in ['1'..'9']) then // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  begin // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     CutNextUseDelimiter(S_Ansi,'-');
     RusPage:=StrToInt(CutNextUseDelimiter(S_Ansi,'-'))+KeyWords.PageAutoInc;
     bPrevStrIsPageNum:=True;
@@ -690,10 +690,10 @@ begin
   if (KeyWords.CommentIgnorStr<>'') and (Pos(KeyWords.CommentIgnorStr,S_Ansi)=1) then
    begin
      Writeln (F2,'Ignore',#9,S_Ansi);
-   end else // +text к предыдущей строке но с разными условиями.
+   end else // +text пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
   begin
    if i<>0 then bPerenos:=CommentsArr[i-1].Text[length(CommentsArr[i-1].Text)]='-' else bPerenos:=False;
-   //в любом случае добавляем к предыдущему.
+   //пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
    if not bPrevStrIsPageNum then
     begin
      CommentsArr[i-1].Text:=Concat(CommentsArr[i-1].Text,'<br>',S_w);
@@ -706,9 +706,9 @@ begin
        CommentsArr[i-1].Text:=Concat(CommentsArr[i-1].Text,S_w);
        Writeln (F2,'<-Perenos'#9,S_w);
       end else // not bPerenos
-      if i=0 then  //Тоже Comment0
+      if i=0 then  //пїЅпїЅпїЅпїЅ Comment0
       begin
-        inc(i); // номер комментария
+        inc(i); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         SetLength(CommentsArr,i);
         InfoRec.Num:='0';
         CommentsArr[i-1].Text:=s_w;
@@ -742,14 +742,14 @@ var
 begin
  Result:=FileExists(Path+'config.ini');
  INIFile:=TINIFile.Create(Path+'config.ini');
- KeyWords.Skazanie:=INIFile.ReadString('Common','Skazanie', 'СКАЗАНИЕ');
- KeyWords.Povest:=INIFile.ReadString('Common','Povest', 'ПОВЕСТЬ');
+ KeyWords.Skazanie:=INIFile.ReadString('Common','Skazanie', 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
+ KeyWords.Povest:=INIFile.ReadString('Common','Povest', 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
 // KeyWords.PodGlava:=INIFile.ReadString('Common','PodGlava', '');
- KeyWords.Konec:=INIFile.ReadString('Common','Konec', 'КОНЕЦ');
- KeyWords.Skazal:=INIFile.ReadString('Common','Skazal', 'сказал');
- KeyWords.Glava:=INIFile.ReadString('Common','Glava', 'Глава');
- KeyWords.Book:=INIFile.ReadString('Common','Book', 'Книга');
- KeyWords.Takova:=INIFile.ReadString('Common','Takova', 'Такова в');
+ KeyWords.Konec:=INIFile.ReadString('Common','Konec', 'пїЅпїЅпїЅпїЅпїЅ');
+ KeyWords.Skazal:=INIFile.ReadString('Common','Skazal', 'пїЅпїЅпїЅпїЅпїЅпїЅ');
+ KeyWords.Glava:=INIFile.ReadString('Common','Glava', 'пїЅпїЅпїЅпїЅпїЅ');
+ KeyWords.Book:=INIFile.ReadString('Common','Book', 'пїЅпїЅпїЅпїЅпїЅ');
+ KeyWords.Takova:=INIFile.ReadString('Common','Takova', 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ');
  KeyWords.OutputHTML:=INIFile.ReadString('Common','OutputHTML', '');
  KeyWords.BookNameForCitation:=INIFile.ReadString('Common','BookNameForCitation', '');
  KeyWords.datasrc:=INIFile.ReadInteger('Common','datasrc', 1);
@@ -764,7 +764,7 @@ begin
  KeyWords.TwoLevelCombineComment:=INIFile.ReadBool('Common','TwoLevelCombineComment',False);
  KeyWords.KamasutraComment:=INIFile.ReadBool('Common','KamasutraComment',False);
  KeyWords.IgnoreSanskritError:=INIFile.ReadBool('Common','IgnoreSanskritError',False);
- KeyWords.CommentShortGl:=INIFile.ReadString('Common','CommentShortGl', '(гл');
+ KeyWords.CommentShortGl:=INIFile.ReadString('Common','CommentShortGl', '(пїЅпїЅ');
  KeyWords.TriSlokaDivision:=INIFile.ReadString('Common','TriSlokaDivision', '1');
  KeyWords.GlavaAutoIncrement:=INIFile.ReadBool('Common','GlavaAutoIncrement', False);
  KeyWords.ShlokaOnlyNumber:=INIFile.ReadBool('Common','ShlokaOnlyNumber', False);
@@ -798,7 +798,7 @@ var
  P1,P2,P3:integer;
 begin
  ErrList.Clear;
- ErrList.Add('Проверка шлок на санскрите.');
+ ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.');
  Result:=True;
  FileName:=Path+S_SancritFileName;
  AssignFile(F,FileName);
@@ -817,20 +817,20 @@ begin
    N2:=StrToInt(CutNextUseDelimiterNoTrim(S_Ansi,'.'));
    N3:=StrToInt(CutNextUseDelimiterNoTrim(S_Ansi,#9));
   except
-   ErrList.Add('строка '+IntToStr(i)+': '+'ошибка преобразования номера шлоки.');
+   ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+': '+'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.');
   end;
-  if i>1 then // сравнение с предыдущим номером
+  if i>1 then // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   begin
-   if P1<>N1 then ErrList.Add('строка '+IntToStr(i)+': '+'неправильный номер книги.');
-   if N2-P2<0 then ErrList.Add('строка '+IntToStr(i)+': '+'уменьшение номера главы.');
-   if Abs(P2-N2)>1 then ErrList.Add('строка '+IntToStr(i)+': '+'скачек номера главы:'+IntTOstr(N2)+' после' +IntTOstr(P2));
-   if (N3<>1)and (N3<>-1)and(N3-P3<0) then ErrList.Add('строка '+IntToStr(i)+': '+'непоследовательный номер шлоки.');
-//   if (N3-P3<0)and (N2-P2=0)and(P3<>-1) then ErrList.Add('строка '+IntToStr(i)+': '+'непоследовательный номер шлоки.');
-   if (P3=-1)and(N3<>1)and(N1-P1<>1) then ErrList.Add('строка '+IntToStr(i)+': '+'нет первого номера шлоки после последнего предыдущей главы.');
+   if P1<>N1 then ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+': '+'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.');
+   if N2-P2<0 then ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+': '+'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.');
+   if Abs(P2-N2)>1 then ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+': '+'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:'+IntTOstr(N2)+' пїЅпїЅпїЅпїЅпїЅ' +IntTOstr(P2));
+   if (N3<>1)and (N3<>-1)and(N3-P3<0) then ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+': '+'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.');
+//   if (N3-P3<0)and (N2-P2=0)and(P3<>-1) then ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+': '+'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.');
+   if (P3=-1)and(N3<>1)and(N1-P1<>1) then ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+': '+'пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.');
   end;
  P1:=N1;P2:=N2;P3:=N3;
  Until EOF(F);
- if ErrList.Count=1 then ErrList[0]:=ErrList[0] + ' Ошибок не найдено!';
+ if ErrList.Count=1 then ErrList[0]:=ErrList[0] + ' пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!';
  Result:=ErrList.Count=1;
  CloseFile(F);
 end;
@@ -857,12 +857,12 @@ begin
   readln(F,S_w);
   inc(j);
   S_W0:=S_W;
-  S:=UTF8ToAnsi(UTF8CutNextUseDelimiterNoTrim(S_W0,#9));
+  S:=FromUTF8(UTF8CutNextUseDelimiterNoTrim(S_W0,#9));
   SanskritArrSlokaNums.Add(S);
   NBook:=StrToint(CutNextUseDelimiter(S,'.'));
   Setlength(SanskritArrSlokaTexts,j);
   SanskritArrSlokaTexts[j-1]:=S_W0;
-  S:=UTF8ToAnsi(UTF8CutNextUseDelimiterNoTrim(S_W,#9));
+  S:=FromUTF8(UTF8CutNextUseDelimiterNoTrim(S_W,#9));
   GlobalMemoryStatus(Status);
   Progress(1,'Load '+S +'; Total Ram: ' + IntToStr(Status.dwAvailVirtual div 1024417) + ' Mb');
   if PrevNum<>S then begin inc(i); PrevNum:=S end;
@@ -876,7 +876,7 @@ begin
   SetLength(CSS_Counts, SanskritArr[i-1].Info.NChapter);
   if CSS_Counts[SanskritArr[i-1].Info.NChapter-1]<SanskritArr[i-1].Info.Num1
    then CSS_Counts[SanskritArr[i-1].Info.NChapter-1]:=SanskritArr[i-1].Info.Num1;
-   ; // кол-во шлок в разделе
+   ; // пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   SanskritArr[i-1].Info.Num2:=SanskritArr[i-1].Info.Num1;
  until EOF(F);
  CloseFile(F);
@@ -940,7 +940,7 @@ begin
  repeat
   readln(F,S_w);
   if S_w='' then continue;
-  S_Ansi:=UTF8ToAnsi(S_w);
+  S_Ansi:=FromUTF8(S_w);
   S_Ansi0:=S_Ansi;
   try
   if IsShlokaNum (S_Ansi) then
@@ -958,8 +958,8 @@ begin
      SetLength(CSR_Counts, Inforec.NChapter);
      if KeyWords.OnlyRus then begin Inforec.Num1:=Paragraph_Num; Inforec.Num2:=Paragraph_Num  end
      else ExtractShlokaNums(S_Ansi,Inforec.Num1,Inforec.Num2);
-     CSR_Counts[Inforec.NChapter-1]:=Inforec.Num2; // кол-во шлок в разделе
-//     if Inforec.NChapter>0 then CSR_Counts[Inforec.NChapter-1]:=Inforec.Num2; // кол-во шлок в разделе
+     CSR_Counts[Inforec.NChapter-1]:=Inforec.Num2; // пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//     if Inforec.NChapter>0 then CSR_Counts[Inforec.NChapter-1]:=Inforec.Num2; // пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      //--------
      UTF8CutNextUseDelimiterNoTrim(S_w,' ');
      SlokasArr[i-1].Text:=S_w;
@@ -1006,7 +1006,7 @@ begin
   else
   if IsGlavaSingInText(S_Ansi,KeyWords.Glava) then
   begin
-   Paragraph_Num:=0; // для статей
+   Paragraph_Num:=0; // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
    if KeyWords.GlavaAutoIncrement then
     begin
      inc(CurChapter);
@@ -1026,7 +1026,7 @@ begin
   begin
    if b_perenos then
    begin
-    if (Length(SlokasArr[i-1].Text)>0)and(UTF8ToAnsi(SlokasArr[i-1].Text[Length(SlokasArr[i-1].Text)])='-') then
+    if (Length(SlokasArr[i-1].Text)>0)and(FromUTF8(SlokasArr[i-1].Text[Length(SlokasArr[i-1].Text)])='-') then
     begin
       SetLength(SlokasArr[i-1].Text, Length(SlokasArr[i-1].Text)-1);
       SlokasArr[i-1].Text:=Concat(SlokasArr[i-1].Text,s_w);
@@ -1090,7 +1090,7 @@ begin
  i:=0;
  repeat
   readln(F,S_w);
-  S_Ansi:=UTF8ToAnsi(S_w);
+  S_Ansi:=FromUTF8(S_w);
   S_Ansi0:=S_Ansi;
   try
   if IsShlokaNum (S_Ansi) then
@@ -1105,7 +1105,7 @@ begin
      Inforec.NChapter:=CurChapter;
      SetLength(CSR_Counts, Inforec.NChapter);
      ExtractShlokaNums(S_Ansi,Inforec.Num1,Inforec.Num2);
-     CSR_Counts[Inforec.NChapter-1]:=Inforec.Num2; // кол-во шлок в разделе
+     CSR_Counts[Inforec.NChapter-1]:=Inforec.Num2; // пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      //--------
      UTF8CutNextUseDelimiterNoTrim(S_w,' ');
      SlokasArr2[i-1].Text:=S_w;
@@ -1170,7 +1170,7 @@ begin
   begin
    if b_perenos then
    begin
-    if UTF8ToAnsi(SlokasArr2[i-1].Text[Length(SlokasArr2[i-1].Text)])='-' then
+    if FromUTF8(SlokasArr2[i-1].Text[Length(SlokasArr2[i-1].Text)])='-' then
     begin
       SetLength(SlokasArr2[i-1].Text, Length(SlokasArr2[i-1].Text)-1);
       SlokasArr2[i-1].Text:=Concat(SlokasArr2[i-1].Text,s_w);
@@ -1241,7 +1241,7 @@ var
     if CommentsForOutput.Count>0 then
      begin
        HTML_BeginCommentsBlock;
-       // ----начало -удаление одинаковых номеров
+       // ----пїЅпїЅпїЅпїЅпїЅпїЅ -пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
        temp:=TStringList.Create;
        temp.Sorted:=True;
        for j:=1 to CommentsForOutput.Count do
@@ -1250,7 +1250,7 @@ var
        CommentsForOutput.Clear;
        CommentsForOutput.AddStrings(temp);
        temp.Free;
-       // ----- конец -удаление одинаковых номеров
+       // ----- пїЅпїЅпїЅпїЅпїЅ -пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
        CommentsForOutput.CustomSort(CompareNum);
        Writeln (F,'<! -- comment -->');
        for j:=1 to CommentsForOutput.Count do
@@ -1333,17 +1333,17 @@ begin
      end;
     CommentsOutput;
     CommentsForOutput.Clear;
-    {вставка нулевого комментария для ригведы?}
+    {пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ?}
    end;
   PrevChapter:=SlokasArr[i-1].info.NChapter;
-  //вставка номера шлоки, одно число или диапазон
+  //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   Writeln(F,'<! -- Num -->');
   Write(F,NBook,'.',SlokasArr[i-1].info.NChapter,'.');
-  Write(F,AnsiToUtf8(IntToStr(SlokasArr[i-1].info.Num1)));
-  if SlokasArr[i-1].info.Num1<>SlokasArr[i-1].info.Num2 then Write(F,AnsiToUtf8('-'),IntToStr(SlokasArr[i-1].info.Num2));
+  Write(F,ToUTF8(IntToStr(SlokasArr[i-1].info.Num1)));
+  if SlokasArr[i-1].info.Num1<>SlokasArr[i-1].info.Num2 then Write(F,ToUTF8('-'),IntToStr(SlokasArr[i-1].info.Num2));
   Writeln(F);
   S_Rus:=IntToStr(NBook)+'.'+IntToStr(SlokasArr[i-1].info.NChapter)+'.'+IntToStr(SlokasArr[i-1].info.Num1);
-  if SlokasArr[i-1].info.Num1<>SlokasArr[i-1].info.Num2 then S_Rus:=S_Rus+AnsiToUtf8('-')+IntToStr(SlokasArr[i-1].info.Num2);
+  if SlokasArr[i-1].info.Num1<>SlokasArr[i-1].info.Num2 then S_Rus:=S_Rus+ToUTF8('-')+IntToStr(SlokasArr[i-1].info.Num2);
   HTMLRange(SlokasArr[i-1].info.Num1,SlokasArr[i-1].info.Num2,SlokasArr[i-1].RusPage1,SlokasArr[i-1].RusPage2);
   //----------------------------------------------
  // IAST
@@ -1370,23 +1370,23 @@ begin
    Writeln(F,SlokasArr[i-1].Text);
    S_Rus:='['+S_Rus+'] '+SlokasArr[i-1].UvacaText+SlokasArr[i-1].Text;
    sFullText:=SlokasArr[i-1].Text;
-//   if KeyWords.b2Transl then sFullText:=sFullText+'<br><br><u>'+AnsiToUTF8('Буквальный перевод:')+'</u><br>'+SlokasArr2[i-1].Text;
+//   if KeyWords.b2Transl then sFullText:=sFullText+'<br><br><u>'+ToUTF8('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:')+'</u><br>'+SlokasArr2[i-1].Text;
    if KeyWords.b2Transl then sFullText:=sFullText+'<br><br>'+SlokasArr2[i-1].Text;
    if KeyWords.ManyTransl>1 then
    begin
      SlokasArr2:=ManyTransSlokasArr[0];
      sFullText:=MakeURLFromAbbr (sAbbrArr[0],0,SlokasArr2[i-1].info.NChapter, SlokasArr2[i-1].info.Num1) +SlokasArr2[i-1].UvacaText + ' '+ SlokasArr2[i-1].Text;
-     S_Ansi:=UTF8ToAnsi(sFullText);
+     S_Ansi:=FromUTF8(sFullText);
      for j:=2 to KeyWords.ManyTransl do
       begin
        SlokasArr2:=ManyTransSlokasArr[j-1];
        sFullText:=sFullText+'<p>'+MakeURLFromAbbr (sAbbrArr[j-1],j-1, SlokasArr2[i-1].info.NChapter,SlokasArr2[i-1].info.Num1) +SlokasArr2[i-1].UvacaText + ' '+SlokasArr2[i-1].Text+'</p>';
-       S_Ansi:=UTF8ToAnsi(sFullText);
+       S_Ansi:=FromUTF8(sFullText);
       end;
     end;
    {!}
    if KeyWords.DisableUvachaInRus
-    then HTML_Rus_Text('',sFullText) // для 10 преводов Бхагавадгиты
+    then HTML_Rus_Text('',sFullText) // пїЅпїЅпїЅ 10 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     else HTML_Rus_Text(SlokasArr[i-1].UvacaText,sFullText);
     if KeyWords.CommentNumIsShlokaNum and KeyWords.IsFootNotes  then
      begin
@@ -1415,7 +1415,7 @@ begin
   if (CSR_Counts[n-1]=j) and (CSS_Counts[n-1]>CSR_Counts[n-1]) then
   begin
    {HTML_EndRangeBlock;}
-//    Writeln(HTF, '</div>'); {!!!не понятно где потерялся}
+//    Writeln(HTF, '</div>'); {!!!пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ}
     HTMLRange(CSR_Counts[n-1]+1,CSS_Counts[n-1],0,0);
     for j:=CSR_Counts[n-1]+1 to CSS_Counts[n-1] do
     begin
@@ -1431,7 +1431,7 @@ begin
     Writeln (F,'<! -- '+C_NoRusData+' -->');
     HTML_Rus_Text('',C_NoRusData);
   end;
-  // Если примечание в конечном тексте, то мы его запоминаем для вывода,
+  // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ,
   if SlokasArr[i-1].EndChapterText<>'' then FormatFootnoteInText(SlokasArr[i-1].EndChapterText);
   if SlokasArr[i-1].EndBookText<>'' then FormatFootnoteInText(SlokasArr[i-1].EndBookText);
   // Comments block ----------------------------------------------
@@ -1441,11 +1441,11 @@ begin
      MemoryCommentForOutput(IntToStr(SlokasArr[i-1].info.Num1),IntToStr(SlokasArr[i-1].info.Num2),SlokasArr[i-1].info.NChapter,0);
    end;
   CommentsOutput;
-  // такова в ... ----------------------------------------------
+  // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ... ----------------------------------------------
    if SlokasArr[i-1].EndChapterText<>'' then Writeln(F,SlokasArr[i-1].EndChapterText);
    if SlokasArr[i-1].EndBookText<>'' then Writeln(F,SlokasArr[i-1].EndBookText);
    HTML_EndCitationBlock;
-  // end такова в ... ------------------------------------------
+  // end пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ... ------------------------------------------
    HTML_EndChapterText(SlokasArr[i-1]);
  end;
  HTML_EndChapter;
@@ -1453,12 +1453,12 @@ begin
  for j:=1 to Length(CommentsArr) do if not CommentUsed[j-1] then
  begin
   S:=Concat(S,IntToStr(j-1),', ');
-  ErrList.Add('Не использован комментарий : №'+UTF8ToAnsi(CommentsArr[j-1].info.Num)+' в Главах ' + IntToStr(CommentsArr[j-1].info.NChapter1)+ ' - '+IntToStr(CommentsArr[j-1].info.NChapter2)+'; Доп. поле '+UTF8ToAnsi(CommentsArr[j-1].info.nShloka)+':'+UTF8ToAnsi(CommentsArr[j-1].Text));
+  ErrList.Add('пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ : пїЅ'+FromUTF8(CommentsArr[j-1].info.Num)+' пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ' + IntToStr(CommentsArr[j-1].info.NChapter1)+ ' - '+IntToStr(CommentsArr[j-1].info.NChapter2)+'; пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ '+FromUTF8(CommentsArr[j-1].info.nShloka)+':'+FromUTF8(CommentsArr[j-1].Text));
  end;
 { for j:=1 to Length(FootNotesArr) do if not FootNoteUsed[j-1] then
  begin
   S:=Concat(S,IntToStr(j-1),', ');
-  ErrList.Add('Не использована сноска : №'+UTF8ToAnsi(CommentsArr[j-1].info.Num)+'; Доп. поле '+UTF8ToAnsi(CommentsArr[j-1].info.nShloka)+':'+UTF8ToAnsi(CommentsArr[j-1].Text));
+  ErrList.Add('пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ : пїЅ'+FromUTF8(CommentsArr[j-1].info.Num)+'; пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ '+FromUTF8(CommentsArr[j-1].info.nShloka)+':'+FromUTF8(CommentsArr[j-1].Text));
  end;}
  CloseFile(F);
 // CloseFile(F1);
@@ -1479,7 +1479,7 @@ begin
  k:=SanskritArrSlokaNums.IndexOf(SlokaFullNum);
  if k=-1 then
  begin
-  ErrStr:='Запрос неправильного номера шлоки на санскрите: '+SlokaFullNum;
+  ErrStr:='пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: '+SlokaFullNum;
   Result:=C_NoSankritData;
   exit;
  end;
@@ -1512,29 +1512,29 @@ var
  N_Rus,N_IAST:integer;
  NGlMax,NShlMax:integer;
 begin
-// проверка кол-ва шлок в каждой главе.
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
  N_Rus:=Length(CSR_Counts);
  N_IAST:=Length(CSS_Counts);
  NGlMax:=N_Rus; if N_IAST>NGlMax then NGlMax:=N_IAST;
  if N_IAST<>N_Rus then
  begin
-  ErrList.Add('Несоответствие кол-ва глав в русском и санскрите:'+IntToStr(N_Rus)+' vs '+IntToStr(N_IAST));
+  ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:'+IntToStr(N_Rus)+' vs '+IntToStr(N_IAST));
  end;
  for i:=1 to NGlMax {=N_IAST,N_Rus} do
  begin
   if CSR_Counts[i-1]<>CSS_Counts[i-1] then
   begin
-   ErrList.Add('Несоответствие кол-ва шлок в русском и санскрите в главе '+IntToStr(i)+':'+IntToStr(CSR_Counts[i-1])+' vs '+IntToStr(CSS_Counts[i-1]));
+   ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ '+IntToStr(i)+':'+IntToStr(CSR_Counts[i-1])+' vs '+IntToStr(CSS_Counts[i-1]));
   end;
  end;
-// проверка пересечения номеров шлок в русском.
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
  S:='';
  for i:=2 to Length(SlokasArr) do
  begin
   if (SlokasArr[i-1].info.NChapter=SlokasArr[i-2].info.NChapter) and
     (SlokasArr[i-1].info.Num1=SlokasArr[i-2].info.Num2) then
   begin
-   ErrList.Add('Повторение шлоки ' +IntToStr(SlokasArr[i-2].info.Num2)+ ' в главе '+IntToStr(SlokasArr[i-2].info.NChapter));
+   ErrList.Add('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ ' +IntToStr(SlokasArr[i-2].info.Num2)+ ' пїЅ пїЅпїЅпїЅпїЅпїЅ '+IntToStr(SlokasArr[i-2].info.NChapter));
    SlokasArr[i-1].info.bNum1Crossing:=True;
    SlokasArr[i-2].info.bNum2Crossing:=True;
   end;
@@ -1543,7 +1543,7 @@ end;
 
 
 procedure TMhHTMLBuilder.MemoryCommentForOutput(NumCommentStr1,NumCommentStr2:widestring;CurChapterNum, Reserved:integer);
- // NumCommentStr2 - номер шлоки, там где он есть (Вьяса Бхашья, Камасутра)
+ // NumCommentStr2 - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 var
  i,j, code:integer;
  S:WideString;
@@ -1566,8 +1566,8 @@ begin
     if CurChapterNum>CommentsArr[i-1].info.NChapter2 then continue;
    end;
   S:=CommentsArr[i-1].info.Num;
-//  S:=WSExtractDigits(CommentsArr[i-1].info.Num); не срабатывало на 85a0 в БхГ Смирнова
-  S_Ansi:=Utf8ToAnsi(S);
+//  S:=WSExtractDigits(CommentsArr[i-1].info.Num); пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 85a0 пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+  S_Ansi:=FromUTF8(S);
   if KeyWords.TwoLevelCombineComment
    then bShlokaOk:=S=NumCommentStr1
    else bShlokaOk:=(S=NumCommentStr1)or(S=NumCommentStr2);
@@ -1584,7 +1584,7 @@ begin
        begin
         if (IntToStr(N1)=NumCommentStr1) and (CommentsForOutput.Indexof(IntToStr(i))<0) then CommentsForOutput.Add(IntToStr(i));
         if (IntToStr(N2)=NumCommentStr2) and (CommentsForOutput.Indexof(IntToStr(i))<0) then CommentsForOutput.Add(IntToStr(i));
-        // вроде как нужно добавить
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (IntToStr(N1)=NumCommentStr2) and (CommentsForOutput.Indexof(IntToStr(i))<0) then CommentsForOutput.Add(IntToStr(i));
         if (IntToStr(N2)=NumCommentStr1) and (CommentsForOutput.Indexof(IntToStr(i))<0) then CommentsForOutput.Add(IntToStr(i));
        end;
@@ -1611,11 +1611,11 @@ end;
 function TMhHTMLBuilder.IsShlokaNum(Atext: string): boolean;
 begin
  Result:=False;
- if KeyWords.OnlyRus then //для статей
+ if KeyWords.OnlyRus then //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
  begin
   Result:=(AText[1]='#');
   if not Result then Result:=IsRussianUpperCase (AText[1]);
-  if not Result then Result:=(AText[1]='«');
+  if not Result then Result:=(AText[1]='пїЅ');
  end
   else
  if KeyWords.ShlokaOnlyNumber then
@@ -1637,7 +1637,7 @@ begin
  if KeyWords.ShlokaOnlyNumber
   then S:=CutNextUseDelimiter(Atext,' ')
   else begin S:=CutNextUseDelimiter(Atext,']');Delete(S,1,1); end;
- for i:=1 to length(S) do if not (S[i] in ['0'..'9']) then S[i]:=' '; // замена любого тире на пробел
+ for i:=1 to length(S) do if not (S[i] in ['0'..'9']) then S[i]:=' '; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
  N1:=StrToInt(CutNextUseDelimiter(s,' '));
  if S<>'' then N2:=StrToInt(CutNextUseDelimiter(s,' ')) else N2:=N1;
 end;
@@ -1656,7 +1656,7 @@ begin
  if S<>''
    then Val(CutNextUseDelimiter(S,' '),N2,Code2)
    else begin N2:=N1; bNoN2:=True end;
- if KeyWords.IgnoreFirstNumberInComments then N1:=N2;   // более поздняя вставка для Гитаговинды
+ if KeyWords.IgnoreFirstNumberInComments then N1:=N2;   // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  Result:=(Code1=0)and(Code2=0);
 end;
 
@@ -1667,7 +1667,7 @@ begin
 end;
 
 
-function TMhHTMLBuilder.IsFirstStringComment(S_Ansi:string; var p1,p2,p3:string): boolean;// первая строка комментария
+function TMhHTMLBuilder.IsFirstStringComment(S_Ansi:string; var p1,p2,p3:string): boolean;// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 var
  sCommentPart1,sCommentPart2,sCommentPart3:string;
  Val1,Val2, Code1, Code2:integer;
@@ -1721,15 +1721,15 @@ var
  bPrevStrIsPageNum,bPerenos:boolean;
  CurChapter, RusPage:integer;
  CurShloka:integer;
- bFootNote:boolean; // комментарий без номера, который нужно вставить после загаловка главы
+ bFootNote:boolean; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
  bFirstStringOfComment:boolean;
  p1,p2,p3:string;
 // PrevNum:string;
 begin
-  // предположительно в файле только нумерованные сноски по типу
-  //1 текст
-  //2 текст
-  // все что не начало сноски иде в текст сноски через <br>
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+  //1 пїЅпїЅпїЅпїЅпїЅ
+  //2 пїЅпїЅпїЅпїЅпїЅ
+  // пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ <br>
  FileName:=Path+CS_FootNotesFileName;
  AssignFile(F,FileName);
  Reset(F);
@@ -1739,13 +1739,13 @@ begin
  InfoRec.NBook:=NBook;
  repeat
   readln(F,S_w);
-  S_Ansi:=UTF8ToAnsi(S_w);
+  S_Ansi:=FromUTF8(S_w);
   S_Ansi0:=S_Ansi;
   bFootNote:=S_Ansi[1] in ['1'..'9'];
   if bFootNote then
   begin
    S_N:=WSCutNextUseDelimiterNoTrim(S_w, ' ');
-   inc(i); // номер комментария
+   inc(i); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
    SetLength(FootNotesArr,i);
    InfoRec.Num:='0';
    InfoRec.N1:=StrToInt(S_N);
@@ -1776,29 +1776,29 @@ begin
  if KeyWords.ChapterStrToClear=''
   then  Result:=AText
   else Result:=StringReplace(Atext,KeyWords.ChapterStrToClear,'',[]);
- if Pos (KeyWords.Bracket1,Atext)=0 then exit;      //<скобка>
+ if Pos (KeyWords.Bracket1,Atext)=0 then exit;      //<пїЅпїЅпїЅпїЅпїЅпїЅ>
  CurChapterNum:=SlokasArr[CurSlokaNum-1].info.NChapter;
  CurShlokaStr:=intToStr(SlokasArr[CurSlokaNum-1].info.Num1);
  CurSubChapterNum:=SlokasArr[CurSlokaNum-1].info.NSubChapter;
  S:=AText;
  //
  k:=1;
- if bInTransl then // только для перевода, но не комментариев.
+ if bInTransl then // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
  repeat
    Pos1:=0;
    C1:='1';
    C9:='9';
    for i:=k to Length(AText)-1 do
-    if (S[i]=KeyWords.Bracket1) and (S[i+1] >= c1) and (S[i+1] <= c9) then //<скобка>
+    if (S[i]=KeyWords.Bracket1) and (S[i+1] >= c1) and (S[i+1] <= c9) then //<пїЅпїЅпїЅпїЅпїЅпїЅ>
     begin
      Pos1:=i;
      break;
     end;
    if Pos1=0 then exit;
    for i:=Pos1 to Length(S){Pos1+20} do
-    if S[i]=KeyWords.Bracket2 then begin Pos2:=i; break; end; //<скобка>
-   S_to_Find:=Copy(S,Pos1-1,Pos2-Pos1+2); // pos-1,Pos2-Pos1+2 учитывает пробел
-//   S_to_Find:=Copy(S,Pos1-1,Pos2-Pos1+1); // pos-1,Pos2-Pos1+2 не учитывает пробел
+    if S[i]=KeyWords.Bracket2 then begin Pos2:=i; break; end; //<пїЅпїЅпїЅпїЅпїЅпїЅ>
+   S_to_Find:=Copy(S,Pos1-1,Pos2-Pos1+2); // pos-1,Pos2-Pos1+2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//   S_to_Find:=Copy(S,Pos1-1,Pos2-Pos1+1); // pos-1,Pos2-Pos1+2 пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
    NumCommentStr:=Copy(S,Pos1+1,Pos2-Pos1-1);
    ErrCode:=False;
    for j:=1 to Length(NumCommentStr) do
@@ -1819,7 +1819,7 @@ begin
      then Atext:=StringReplace(Atext,S_to_Find,S_to_Replace,[])
      else
       begin
-//       ShowMessage('Ошибка добавления комментария '+UTF8ToAnsi(NumCommentStr));
+//       ShowMessage('пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ '+FromUTF8(NumCommentStr));
        break
       end;
     S:=Atext;
@@ -1835,7 +1835,7 @@ var
   i:Integer;
   RusPages:string;
 begin
-//<div class="comment_item" id="comment_1_1"> + ShlokaStr в случае, когда это необходимо
+//<div class="comment_item" id="comment_1_1"> + ShlokaStr пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 //<span class="comment_number">1</span> -
 //<span class="comment_text">
 //</span></div>
@@ -1849,10 +1849,10 @@ begin
    if KeyWords.TwoLevelCombineComment then Write(HTF, '_',info.nShloka);
    Writeln(HTF,'">');
    Write(HTF, '          <span class="comment_number" ');
-//   Write(HTF, 'title="', AnsiToUTF8(KeyWords.BookNameForCitation+': '));
-   Write(HTF, 'data-src="', AnsiToUTF8(IntToStr(KeyWords.datasrc))); Write(HTF,'" ');
-   Write(HTF, 'data-page="', AnsiToUTF8(RusPages)); Write(HTF,'" ');
-   Write(HTF, 'title="', AnsiToUTF8('c. '+RusPages));
+//   Write(HTF, 'title="', ToUTF8(KeyWords.BookNameForCitation+': '));
+   Write(HTF, 'data-src="', ToUTF8(IntToStr(KeyWords.datasrc))); Write(HTF,'" ');
+   Write(HTF, 'data-page="', ToUTF8(RusPages)); Write(HTF,'" ');
+   Write(HTF, 'title="', ToUTF8('c. '+RusPages));
    //   Writeln(HTF, '">', info.Num,'</span>','. ');
    if info.Num<>'0'
     then
@@ -1907,7 +1907,7 @@ begin
 //  <a href="https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_yAjJavalkyasmRti.htm">gretil.sub.uni-goettingen.de</a>
  Res_Ansi:='<a href="'+html_files[TranslationID]+'#'+IntToStr(NChapter)+'.'+IntToStr(NShloka)+'">';
  Res_Ansi:=Res_Ansi+AbbrText+'</a>';
- Result:=AnsiToUtf8 (Res_Ansi);
+ Result:=ToUTF8 (Res_Ansi);
 end;
 
 procedure TMhHTMLBuilder.HTML_EndCitationBlock;

@@ -70,8 +70,9 @@ _Создано: 05-07-2026 · Обновлено: 08-08-2026_
 - **GUI ↔ движок.** Многокнижная оркестрация (`PrepareBook`, склейка) живет в
   `fMainForm`, а не в движке, — ее нельзя запустить без формы. → В целевой
   архитектуре оркестрация переезжает в ядро.
-- **Границы кодировок.** Ручные `AnsiToUTF8`/`UTF8ToAnsi` рассыпаны по коду;
-  предполагается вход в CP-1251. → Единый UTF-8 слой.
+- **Границы кодировок.** ✅ H2428: [`dcu/uEncoding.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uEncoding.pas)
+  (`ToUTF8`/`FromUTF8` via LazUTF8); raw `AnsiToUTF8`/`UTF8ToAnsi` cleared from
+  engine path. Residual: process still may bridge host ANSI when not UTF-8.
 - **Вывод через глобальный `HTF: textFile`.** Генерация пишет в файловую
   переменную напрямую — трудно тестировать. → Писать в абстрактный поток/буфер.
 - **Дубли утилит.** `TextU.pas`, `uTypes.pas` существуют и здесь, и в
@@ -133,8 +134,9 @@ _Создано: 05-07-2026 · Обновлено: 08-08-2026_
 3. **Вывод — в абстрактный поток.** Заменить `HTF: textFile` на интерфейс
    «писателя» (файл, буфер, память), что делает генерацию проверяемой golden-тестами
    без файловой системы.
-4. **Кодировки — один UTF-8 слой.** Ввод-вывод через `lazUTF8`; предположение о
-   CP-1251 уходит. Санскрит остается в широком типе, но обернут единообразно.
+4. **Кодировки — один UTF-8 слой.** ✅ H2428: `uEncoding` (LazUTF8
+   `SysToUTF8`/`UTF8ToSys`); call sites use `ToUTF8`/`FromUTF8`. Санскрит
+   остается в WideString; character-safe ops available as `EncUTF8Length`/`EncUTF8Copy`.
 5. **Отчет — структурируемый.** `Validator`/`Report` отдают ошибки и текстом
    (`Err.txt`, обратная совместимость), и в JSON/TSV — для автоматического падения
    CI.

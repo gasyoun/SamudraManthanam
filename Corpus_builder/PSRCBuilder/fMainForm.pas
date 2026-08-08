@@ -94,7 +94,7 @@ var
   Form1: TForm1;
 implementation
 
-uses fCheckDialog, textu, ShellApi, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles;
+uses fCheckDialog, textu, ShellApi, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles, uEncoding;
 
 
 {$R *.lfm}
@@ -160,16 +160,16 @@ const
  Delim_2Danda='||';
 begin
  S:=AText;
- If Pos(AnsiToUtf8(Delim_2Danda),S)>5 then
+ If Pos(ToUTF8(Delim_2Danda),S)>5 then
   begin
-   Shloka.S_text:=UTF8CutNextUseDelimiterNoTrim(S,Delim_2Danda)+AnsiToUtf8(Delim_2Danda);
+   Shloka.S_text:=UTF8CutNextUseDelimiterNoTrim(S,Delim_2Danda)+ToUTF8(Delim_2Danda);
    S_num:=S;
-   S_Ansi:=Utf8ToAnsi(S_num);
+   S_Ansi:=FromUTF8(S_num);
    N1:=StrToInt(CutNextUseDelimiter(S_Ansi,Delim_defis));
    N2:=StrToInt(CutNextUseDelimiter(S_Ansi,Delim_defis));
    N3:=StrToInt(S_Ansi);
    S_Ansi:=IntToStrNils(N1,1)+'.'+IntToStrNils(N2,3)+'.'+IntToStrNils(N3,3);
-   Shloka.S_Num:=AnsiToUtf8(S_Ansi);
+   Shloka.S_Num:=ToUTF8(S_Ansi);
    Shloka.S_text:=Shloka.S_text+IntToStr(N3);
   end
    else
@@ -431,7 +431,7 @@ begin
  repeat
  readln(F,S);
  inc(i);
- S1:=Utf8ToAnsi(S);
+ S1:=FromUTF8(S);
  if S1[1] in ['1'..'9'] then
    begin
      writeln(FC,S);
@@ -717,8 +717,8 @@ var
 begin
  AssignFile(F,AFileName);
  Reset(F);
- S1:=AnsiToUtf8(S_Open);
- S2:=AnsiToUtf8(S_Close);
+ S1:=ToUTF8(S_Open);
+ S2:=ToUTF8(S_Close);
  b1:=False;
  b2:=False;
  k1:=0;
@@ -727,7 +727,7 @@ begin
  repeat
   inc(nLine);
   Readln(F,S);
-   S_Ansi:=Utf8ToAnsi(S);
+   S_Ansi:=FromUTF8(S);
    for i:=1 to Length(S_Ansi) do
    begin
      if S_Ansi[i]=S_Open then
@@ -919,11 +919,11 @@ begin
  i:=0;
  repeat
  readln(F,S); inc(i);
- S_Ansi:=Utf8ToAnsi(S);
+ S_Ansi:=FromUTF8(S);
  if Pos(Label_Sans, S_Ansi)>0  then
    repeat
     readln(F,S);inc(i);
-    S_Ansi:=Utf8ToAnsi(S);
+    S_Ansi:=FromUTF8(S);
     if S_Ansi='' then Continue;
     if Pos('audio',S_Ansi)>0 then Continue;
     if Pos('.mp3',S_Ansi)>0 then Continue;
@@ -1261,7 +1261,7 @@ begin
   SetLength(SWArr,i);
   SetLength(SArr,i);
   SWArr[i-1]:=UTF8CutNextUseDelimiterNoTrim(S_W,#9);
-  SArr[i-1]:=Utf8ToAnsi(S_W);
+  SArr[i-1]:=FromUTF8(S_W);
  until EOF(F);
  CloseFile(F);
 //--------����� ������ ��������� Uvacha ---------------
@@ -1367,7 +1367,7 @@ begin
   SetLength(SWArr,i);
   SetLength(SArr,i);
   SWArr[i-1]:=UTF8CutNextUseDelimiterNoTrim(S_W,#9);
-  SArr[i-1]:=Utf8ToAnsi(S_W);
+  SArr[i-1]:=FromUTF8(S_W);
  until EOF(F);
  CloseFile(F);
 //--------����� ������ ��������� Uvacha ---------------
@@ -1490,11 +1490,11 @@ begin
  Reset(F);
  AssignFile (F2, ExtractFilePath(AFileName)+'02_Transl.txt');
  Rewrite(F2);
- writeln(F2,AnsiToUTF8('-999-'));
+ writeln(F2,ToUTF8('-999-'));
  BookNum:=0;
  repeat
   readln (F,S_W);
-  S_Ansi:=UTF8ToAnsi(S_w);
+  S_Ansi:=FromUTF8(S_w);
   if Pos(ManyBookSign,S_Ansi)>0 then inc(BookNum)
   else
   if BookNum=NBook then writeln (F2,S_W);
@@ -1515,12 +1515,12 @@ begin
  Reset(F);
  AssignFile (F2, ExtractFilePath(AFileName)+'03_Comments.txt');
  Rewrite(F2);
- writeln(F2,AnsiToUTF8('����������'));
- writeln(F2,AnsiToUTF8('-999-'));
+ writeln(F2,ToUTF8('����������'));
+ writeln(F2,ToUTF8('-999-'));
  BookNum:=0;
  repeat
   readln (F,S_W);
-  S_Ansi:=UTF8ToAnsi(S_w);
+  S_Ansi:=FromUTF8(S_w);
   if Pos(ManyBookSign,S_Ansi)>0 then inc(BookNum)
   else 
   if BookNum=NBook then writeln (F2,S_W);

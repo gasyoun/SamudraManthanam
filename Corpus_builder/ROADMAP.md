@@ -115,12 +115,15 @@ Delphi 7.
       [`TextUVCL.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/TextUVCL.pas);
       `TextU` keeps pure string/IAST/UTF path. Static proof (no dcc32/FPC here):
       [`docs/H2370_DEAD_VCL_STATIC_PROOF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2370_DEAD_VCL_STATIC_PROOF.md).
-- [ ] **Единый слой кодировок.** Заменить ручные `AnsiToUTF8`/`UTF8ToAnsi` на
-      явные UTF-8 операции через `lazUTF8` (в основном приложении это уже норма).
-      Уйти от предположения «исходники в CP-1251» в сторону UTF-8.
+- [x] **Единый слой кодировок.** Done 08-08-2026 (H2428, Grok 4.5 `grok-4.5`):
+      new [`dcu/uEncoding.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uEncoding.pas)
+      (`ToUTF8`/`FromUTF8` via LazUTF8 `SysToUTF8`/`UTF8ToSys`); engine + forms +
+      TextU free of raw `AnsiToUTF8`/`UTF8ToAnsi`; `lazbuild cb.lpi` + `cb_headless.lpi`
+      green; golden case01 `--verify` PASS. Census:
+      [`docs/H2428_LAZUTF8_ENCODING_LAYER.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2428_LAZUTF8_ENCODING_LAYER.md).
 - [x] **`{$MODE Delphi}`.** Done 08-08-2026 (H2417, Grok 4.5 `grok-4.5`): all
       Corpus_builder units used by the LCL project carry `{$MODE Delphi}` (plus
-      `{$H+}` on TextU). Encoding layer (lazUTF8) remains open.
+      `{$H+}` on TextU).
 
 ## Фаза 2 — Дедупликация общих утилит (сближение с основным приложением)
 
