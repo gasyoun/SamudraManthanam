@@ -1,4 +1,6 @@
 unit uSort;
+{$MODE Delphi}
+{ Delphi}
 
 interface
  uses uTypes, ArtMath;

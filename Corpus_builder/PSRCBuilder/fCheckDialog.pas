@@ -1,9 +1,11 @@
 unit fCheckDialog;
 
+{$MODE Delphi}
+
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
-  Buttons, ExtCtrls;
+uses
+  SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, ExtCtrls, Dialogs;
 
 type
   TOKBottomDlg = class(TForm)
@@ -39,8 +41,11 @@ var
   OKBottomDlg: TOKBottomDlg;
 
 implementation
- uses textu, dialogs;
-{$R *.dfm}
+
+uses
+  textu;
+
+{$R *.lfm}
 
 { TOKBottomDlg }
 
@@ -81,11 +86,11 @@ begin
    if Pos('(',S) <>0
     then S_N:=CutNextUseDelimiter(S, '(' )
     else S_N:=CutNextUseDelimiter(S, ' ' );
-   if IntToStr(N) <> S_N then ErrList.Add(' - Ошибка в нумерации главы: '+MhList[i-1]);
+   if IntToStr(N) <> S_N then ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: '+MhList[i-1]);
   end;
  end;
- ErrList.Add(' - Всего глав: '+IntToStr(n));
- if ErrList.Count>1 then ErrList.Add(' - Исправьте ошибку и перезапустите процедуру.');
+ ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: '+IntToStr(n));
+ if ErrList.Count>1 then ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.');
  Result:=ErrList.Count=1;
 end;
 
@@ -108,7 +113,7 @@ begin
  N_Comm_All:=0;
  N_Chapter:=0;
  NewChapter:=False;
- // бежим по тексту, вырезаем внутренности, смотрим ...
+ // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ...
  for i:=1 to MhList.Count do
  begin
   S:=MhList[i-1];
@@ -127,16 +132,16 @@ begin
      if (N_Comm_All>1) and (N_tmp=1) then
      begin
        if not NewChapter then
-       ErrList.Add(' - Непоследовательный комментарий '+S_N+' после '+S_N_Prev+ ' к главе '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60));
-//       ErrList.Add(' - Возожно непоследовательный комментарий '+S_N+ ' к главе '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60)+'...');
+       ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ '+S_N+' пїЅпїЅпїЅпїЅпїЅ '+S_N_Prev+ ' пїЅ пїЅпїЅпїЅпїЅпїЅ '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60));
+//       ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ '+S_N+ ' пїЅ пїЅпїЅпїЅпїЅпїЅ '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60)+'...');
 
-//       ErrList.Add(' - Комментарий '+IntTOstr(N_Chapter-1)+': '+IntTOstr(N_Prev)+' комментариев');
-       N_Comm:=N_tmp;//дожно быть 1
+//       ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ '+IntTOstr(N_Chapter-1)+': '+IntTOstr(N_Prev)+' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
+       N_Comm:=N_tmp;//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ 1
        NewChapter:=False;
      end else
       if N_Comm<>N_tmp then
       begin
-       ErrList.Add(' - Непоследовательный комментарий '+S_N+' после '+S_N_Prev+ ' к главе '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60));
+       ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ '+S_N+' пїЅпїЅпїЅпїЅпїЅ '+S_N_Prev+ ' пїЅ пїЅпїЅпїЅпїЅпїЅ '+IntToStr(N_Chapter)+': '+Copy (MhList[i-1],1,60));
        N_Comm:=StrToINt(S_N);
       end;
      N_Prev:=N_tmp;
@@ -147,7 +152,7 @@ begin
     end;
   until False;
  end;
- ErrList.Add(' - Всего расставлено комментариев : '+IntToStr(N_Comm_All));
+ ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ : '+IntToStr(N_Comm_All));
  Result:=True;
 end;
 
@@ -171,14 +176,14 @@ begin
    S_N:=CutNextUseDelimiter(S, E_Page.Text[3] );
    if FirstPage then N_Prev:=IntToStr(StrToInt(S_N)-1);
    Diff:=StrToInt(S_N)-StrToInt(N_Prev);
-   if (Diff<>1) then ErrList.Add(' - Ошибка в нумерации страницы: '+MhList[i-1]);
+   if (Diff<>1) then ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: '+MhList[i-1]);
    N_Prev:=S_N;
    FirstPage:=false;
   except
-   ShowMessage('Ошибка в строке '+IntToStr(i));
+   ShowMessage('пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(i));
   end;
  end;
- ErrList.Add(' - Всего пронумеровано страниц: '+IntToStr(n));
+ ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: '+IntToStr(n));
  Result:=ErrList.Count=1;
 end;
 
@@ -196,8 +201,8 @@ begin
  for i:=1 to MhList.Count do
  try
   S:=MhList[i-1];
-  if Pos(E_Chapter.Text,S)=1 then begin ChapterStr:=MhList[i-1]; NewChapter:=True; end;// шлока
-  if (Pos(E_Shloka.Text[1],S)=1)and ((Pos(E_Shloka.Text[3],S)<>1)) then // шлока
+  if Pos(E_Chapter.Text,S)=1 then begin ChapterStr:=MhList[i-1]; NewChapter:=True; end;// пїЅпїЅпїЅпїЅпїЅ
+  if (Pos(E_Shloka.Text[1],S)=1)and ((Pos(E_Shloka.Text[3],S)<>1)) then // пїЅпїЅпїЅпїЅпїЅ
   begin
    inc(N_Shl_all);
    CutNextUseDelimiter(S, E_Shloka.Text[1] );
@@ -206,14 +211,14 @@ begin
     then begin N1:=StrToInt(S_N); N2:=N1; end
     else begin N1:=StrToInt(CutNextUseDelimiter(S_N,'-'));N2:=StrToInt(S_N) end;
    if NewChapter then Prev_N:=0;
-   if N1-Prev_N<>1 then ErrList.Add(' - Сбой в нумерации шлок. '+ IntToStr(N1)+ ' после номера '+IntToStr(Prev_N)+' в '+ChapterStr+': '+Copy (MhList[i-1],1,60));
+   if N1-Prev_N<>1 then ErrList.Add(' - пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ. '+ IntToStr(N1)+ ' пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(Prev_N)+' пїЅ '+ChapterStr+': '+Copy (MhList[i-1],1,60));
    Prev_N:=N2;
    NewChapter :=False;
   end;
  Except
   ShowMessage('Error in the line '+IntTOStr(i));
  end;
- ErrList.Add(' - Всего шлок: '+IntToStr(N_Shl_all));
+ ErrList.Add(' - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: '+IntToStr(N_Shl_all));
  Result:=True;
 end;
 

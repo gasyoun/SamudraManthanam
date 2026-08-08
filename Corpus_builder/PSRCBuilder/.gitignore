@@ -20,3 +20,11 @@ __history/
 *.~ddp
 *.~dpr
 *.~dof
+
+# Lazarus/FPC build output (H2417)
+lib/
+*.compiled
+*.o
+*.ppu
+*.or
+

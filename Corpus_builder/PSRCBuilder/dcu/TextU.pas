@@ -1,5 +1,6 @@
 Unit TextU ;
-  {$N+}
+{$MODE Delphi}
+{$H+}
 interface
  uses uTypes, classes;
 function WSExtractDigits(S:string):string;// ��������� ������ ����� � �����
@@ -106,13 +107,19 @@ const
 // Caption='������,(1)�������.(113) (115)';
 
 function IsRussianLowerCase(C: Char): Boolean;
+var
+  o: Byte;
 begin
-  Result := ((C >= '�') and (C <= '�')) or (C = '�');
+  o := Ord(C);
+  Result := ((o >= $E0) and (o <= $FF)) or (o = $B8);
 end;
 
 function IsRussianUpperCase(C: Char): Boolean;
+var
+  o: Byte;
 begin
-  Result := ((C >= '�') and (C <= '�')) or (C = '�');
+  o := Ord(C);
+  Result := ((o >= $C0) and (o <= $DF)) or (o = $A8);
 end;
 
 function WSExtractDigits(S:string):string;// ��������� ������ ����� � �����
@@ -709,7 +716,7 @@ var
 begin
  result:=0;
  for i:=1 to Length(S) do
-  if S[i] in ['�'..'�'] then inc(result);
+  if IsRussianUpperCase(S[i]) then inc(result);
 end;
 
 Function FormatPhones(const PhoneNums:string;Prefics,DefCode:string):string;

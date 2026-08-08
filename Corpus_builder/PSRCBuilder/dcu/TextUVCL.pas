@@ -2,6 +2,8 @@
   Pure string/IAST/UTF helpers stay in TextU.pas so the engine path
   (uMhHTML → TextU) does not pull CheckLst / StdCtrls / ComCtrls / ClipBrd. }
 unit TextUVCL;
+{$MODE Delphi}
+{ Delphi}
 
 interface
 

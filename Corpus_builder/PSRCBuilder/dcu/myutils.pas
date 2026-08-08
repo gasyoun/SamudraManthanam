@@ -1,4 +1,6 @@
 unit myutils;
+{$MODE Delphi}
+{ Delphi}
 interface
 uses mytypes;
 procedure Mix ( var Arr:TSingleArr; q :integer );

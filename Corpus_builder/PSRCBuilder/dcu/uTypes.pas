@@ -1,4 +1,6 @@
 unit uTypes;
+{$MODE Delphi}
+{ Delphi}
 
 interface
 type

@@ -1,4 +1,6 @@
 unit MyTypes;
+{$MODE Delphi}
+{ Delphi}
 interface
 type
  TSingleArr=array [1..100] of single;
