@@ -2,6 +2,8 @@
 
 _Created: 08-08-2026 · Last updated: 08-08-2026_
 
+**Residuals (minted as real work 08-08-2026):** back-matter glossaries → [H2449 (Grok 4.5) — Ignatiev prefaces + glossary/bibliography layers](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2449-Grok_SamudraManthanam_h2415-ignatiev-backmatter-glossaries_08.08.26.md); prose commentary apparatus → [H2450 (Grok 4.5) — non-pandoc `N. Источник:` commentary layer](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2450-Grok_SamudraManthanam_h2415-ignatiev-prose-commentary-layer_08.08.26.md).
+
 **Handoff:** [H2415-Grok_SamudraManthanam_ignatiev-archive-remainder-ingest_07.08.26](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2415-Grok_SamudraManthanam_ignatiev-archive-remainder-ingest_07.08.26.md)  
 **Executor:** Grok 4.5 (`grok-4.5`)  
 **Gate:** every remaining work under `archive_ignatiev_2026/Переводы с санскрита` either registered in `Programdata/data.txt` **or** documented as deliberate skip; each ingested work HTML→JSONL RT ≥99% or documented residue.
