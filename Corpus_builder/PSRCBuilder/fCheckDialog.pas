@@ -43,7 +43,7 @@ var
 implementation
 
 uses
-  textu, uEncoding;
+  TextU, uEncoding;
 
 {$R *.lfm}
 

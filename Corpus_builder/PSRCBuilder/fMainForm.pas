@@ -94,7 +94,7 @@ var
   Form1: TForm1;
 implementation
 
-uses fCheckDialog, textu, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles, FileUtil, uEncoding;
+uses fCheckDialog, TextU, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles, FileUtil, uEncoding;
 
 
 {$R *.lfm}
