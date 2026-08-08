@@ -10,7 +10,7 @@ data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment re
 
 # Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources
 
-_Created: 26-06-2026 · Last updated: 12-07-2026_
+_Created: 26-06-2026 · Last updated: 08-08-2026_
 
 > **Draft status (2026-07-11, H676; advanced 2026-07-08, H351; scaffolded 2026-06-26).**
 > Manuscript built directly on the converted corpus and its design specs. Every numerical
@@ -483,10 +483,11 @@ lexicon induction, diachronic translation study) needs.
 - **Monolingual text is not bitext.** Two whole translation-only texts (Balmont's
   Buddhacarita, mify-drind) account for ≈10,024 of the 10,145 Russian-only segments;
   they are valuable Russian witnesses but contribute no Sanskrit pair.
-- **Provenance and rights are heterogeneous.** The Russian translations span 1788 to
-  living authors; **redistribution of the Russian text is gated per translator**
-  (copyright triage — a human gate, §9). The corpus can ship indices, passage IDs, and
-  the Sanskrit freely while withholding in-copyright Russian text until cleared.
+- **Provenance is heterogeneous; ship is not gated per translator.** The Russian
+  translations span 1788 to living authors. **MG 08-08-2026 (H2440): ship all RU text** —
+  never reask a per-translator ship gate. **Document the different translators** in
+  [papers/data/A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md)
+  and the §5 Gītā table; residual greyness is recorded, not a park.
 - **Dates are crosswalked, not re-derived** (VisualDCS), with `manual` flags on
   author-datable medieval works; the crosswalk inherits DCS's own dating uncertainty.
 - **The §5 register metrics are surface lexical measures.** TTR/Guiraud R and the
@@ -497,18 +498,20 @@ lexicon induction, diachronic translation study) needs.
 - **`structure`-class reclassification.** The heuristic census and the final
   classification differ (§3.1); the final converter classification governs.
 
-## 9. Human gates (copyright triage and DOI)
+## 9. Human gates (rights documentation and DOI)
 
-Two decisions sit outside the data work:
+**RU ship gate — closed 08-08-2026 (MG, H2440).** **Ship all** Russian text for A41
+paths. Do **not** re-open a per-translator redistribute/hold triage. The residual
+duty is **documentation of translators** (already filled for the §5 Gītā editions and
+for every committed `*.meta.json` credit; inventory:
+[papers/data/A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md)).
+НКРЯ `RIGHTS_TABLE` rows still showing `—` for translator lack committed meta credits
+(H821 residue) — fill when meta is restored, not by guessing.
 
-1. **RU-translation copyright triage [@DO].** Decide, per translator/edition, what may
-   be redistributed as full Russian *text* vs. shipped as **indices + passage IDs +
-   the Sanskrit only**. The Sanskrit, the IDs, the alignment structure, and the
-   metadata are releasable now; in-copyright Russian translations are gated until
-   cleared (pre-1918/public-domain editions such as the 1788/1909/1914 Gītā and
-   Kossovich are the safe first release; living-author translations are held).
-2. **Mint a Zenodo DOI [@DO]** for the citable release once (1) is settled, and complete
-   the data-availability statement accordingly.
+Still outside the data work:
+
+1. **Mint a Zenodo DOI [@DO]** for the citable release and complete the data-availability
+   statement (no longer blocked on per-translator ship triage).
 
 ## 10. Conclusion
 
