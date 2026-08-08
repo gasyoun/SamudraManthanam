@@ -1,6 +1,6 @@
 # Corpus Builder (`cb.exe`)
 
-_Создано: 05-07-2026 · Обновлено: 04-08-2026_
+_Создано: 05-07-2026 · Обновлено: 08-08-2026_
 
 **Сборщик корпуса** — настольная утилита для Windows, которая готовит и собирает
 параллельный санскритско-русский корпус в формате HTML. Это **авторский/сборочный
@@ -40,20 +40,65 @@ _Создано: 05-07-2026 · Обновлено: 04-08-2026_
 
 ## Сборка
 
-Открыть и собрать в **Delphi 7 IDE**:
+### Lazarus / Free Pascal (primary since H2417)
+
+```text
+lazbuild Corpus_builder/PSRCBuilder/cb.lpi            # GUI
+lazbuild Corpus_builder/PSRCBuilder/cb_headless.lpi   # headless CLI
+```
+
+Outputs land under `PSRCBuilder/lib/<cpu-os>/` (e.g. `lib/x86_64-win64/cb.exe`
+and `cb_headless.exe`).
+
+### Delphi 7 (legacy binary still in tree)
 
 - Файл проекта: [`PSRCBuilder/cb.dpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb.dpr)
 - Опции компилятора: [`PSRCBuilder/cb.cfg`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb.cfg)
 - Выходной каталог DCU: `PSRCBuilder/dcu/`
 
-Скрипта командной строки для сборки нет — компилятор `dcc32.exe` из Borland
-Delphi 7. Готовый `cb.exe` уже лежит в репозитории, так что для простого запуска
-IDE не требуется.
+Компилятор `dcc32.exe` (Borland Delphi 7). Готовый legacy `cb.exe` лежит в
+`PSRCBuilder/` — GUI-only; headless is the Lazarus `cb_headless` target.
 
 > ⚠️ Delphi 7 (2002 г.) — платный проприетарный тулчейн. Стратегическое
-> направление проекта — **перенос на бесплатный Lazarus / Free Pascal**, на
-> котором уже собирается основное приложение. Подробности и этапы — в
+> направление проекта — **Lazarus / Free Pascal** (Фаза 3–4 роадмапа).
+> Подробности — в
 > [`ROADMAP.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md).
+
+---
+
+## Headless CLI (H2432 · Phase 4)
+
+Сборка корпуса **без окна** — консольный бинарь `cb_headless` (не GUI `cb`):
+
+```text
+# documented Phase-4 form
+cb_headless --build path\to\config.ini --out path\to\corpus.html
+
+# work-dir form (looks for config.ini inside)
+cb_headless --build path\to\work-dir --out corpus.html
+
+# optional integrity check before build (writes 02_Transl_check.json/.tsv)
+cb_headless --build path\to\work-dir --check --out corpus.html
+
+# H2427 golden / legacy (still supported)
+cb_headless path\to\work-dir check
+```
+
+| Flag | Meaning |
+|---|---|
+| `--build` / `-b` | Config `.ini` **or** directory containing `config.ini` |
+| `--out` / `-o` | Output HTML (overrides INI `Common\OutputHTML` via `OutFileOverride`) |
+| `--check` | Run `TOKBottomDlg.CheckAll` on `02_Transl.txt` first |
+| `--help` | Usage |
+
+**Behaviour:** constructs `TMhHTMLBuilder`, assigns log sinks (progress/errors to
+stdout; Confirm always auto-yes — no `MessageDlg` hang), calls `Execute`, exits
+with code **0** on success, **1** if `HasErrors` (see `Err.txt` next to the
+config), **2** on usage / missing config. Pure `--build` never creates the main
+form; only `--check` creates the check dialog.
+
+Golden re-verify still uses the legacy positional form via
+[`tests/golden/run_golden_case01.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/tests/golden/run_golden_case01.py).
 
 ---
 
@@ -107,10 +152,11 @@ IDE не требуется.
 
 ```
 PSRCBuilder/
-  cb.dpr               точка входа проекта
-  cb.cfg / cb.dof      опции компилятора Delphi 7
+  cb.dpr / cb.lpr      GUI entry (Delphi 7 / Lazarus)
+  cb_headless.lpr/.lpi headless CLI entry (H2427 + H2432 --build/--out)
+  cb.cfg               опции компилятора Delphi 7
   cb.res               ресурсы приложения (иконка и т.п.)
-  cb.exe               собранный исполняемый файл
+  cb.exe               legacy GUI binary (Delphi 7)
 
   fMainForm.pas/.dfm   TForm1 — главное окно, все операции из меню
   fCheckDialog.pas     TOKBottomDlg — диалог проверки целостности перед сборкой

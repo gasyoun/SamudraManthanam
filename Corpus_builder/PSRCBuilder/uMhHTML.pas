@@ -85,6 +85,8 @@ TMhHTMLBuilder = class(TObject)
   OnProgress:TProgressSink;
   OnConfirm:TConfirmSink;
   OnError:TErrorSink;
+  // H2432: optional CLI --out override; empty = use INI KeyWords.OutputHTML.
+  OutFileOverride:string;
   // H1485: the host decides whether to show the error log; the engine only writes it.
   function HasErrors:boolean;
   function ErrFileFullPath:string;
@@ -249,6 +251,7 @@ begin
 // RusList.Sorted:=True;
  SanskritList:=TStringList.Create;
 // SanskritList.Sorted:=True;
+ OutFileOverride:=''; // H2432: set by CLI --out, else empty -> use INI OutputHTML
 end;
 
 destructor TMhHTMLBuilder.Destroy;
@@ -293,7 +296,14 @@ begin
   ErrList.SaveToFile(Path+ErrFileName);
   // H1485: the engine no longer opens Err.txt. The caller checks HasErrors
   // and decides (fMainForm does the ShellExecute).
-  if bGoodSankrit then if KeyWords.OutputHTML<>'' then PutFile1ToFile2(Path+CS_ResHTMLFileName,KeyWords.OutputHTML,InsertBlockLab1,InsertBlockLab2);
+  // H2432: OutFileOverride wins when the headless CLI passes --out.
+  if bGoodSankrit then
+  begin
+   if OutFileOverride<>'' then
+    PutFile1ToFile2(Path+CS_ResHTMLFileName,OutFileOverride,InsertBlockLab1,InsertBlockLab2)
+   else if KeyWords.OutputHTML<>'' then
+    PutFile1ToFile2(Path+CS_ResHTMLFileName,KeyWords.OutputHTML,InsertBlockLab1,InsertBlockLab2);
+  end;
 end;
 
 
