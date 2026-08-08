@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.25] - 2026-08-08
 ### Added
 - **Corpus_builder Phase 4 headless CLI flags (H2432, Grok 4.5 `grok-4.5`).** [`cb_headless.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb_headless.lpr) accepts `cb_headless --build <config.ini|dir> [--out <file.html>] [--check]`; wires progress/error sinks to stdout; Confirm auto-yes (no MessageDlg hang); exit **1** on `HasErrors`, **2** on usage/missing config. Engine: public `OutFileOverride` on `TMhHTMLBuilder` for `--out`. Legacy `cb_headless <dir> [check]` kept for H2427 golden. Roadmap Phase 4 CLI unit ticked. README § Headless CLI. Doc: [`docs/H2432_CLI_HEADLESS_BUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2432_CLI_HEADLESS_BUILD.md).
 
