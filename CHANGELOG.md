@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **H2394 P9 UX acceptance on prod (Grok 4.5 `grok-4.5`).** Bilingual Sa+Ru + deep-link probes against `https://samudra.193.232.229.92.sslip.io/` — **11/11 PASS** (vishnu-smriti, yajnavalkyasmriti, ṛgveda). Checklist + probe script + JSON: [`docs/acceptance/H2394_UX_ACCEPTANCE_BILINGUAL_DEEPLINK_CHECKLIST.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/acceptance/H2394_UX_ACCEPTANCE_BILINGUAL_DEEPLINK_CHECKLIST.md). Wave P P9 ticked.
 - **Production deploy runbook (H2388, Grok 4.5 `grok-4.5`).** New
   [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md):
   copy-paste pull `--ff-only` / pip / `systemctl restart samudra` / smoke /

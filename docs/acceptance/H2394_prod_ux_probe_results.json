@@ -1,0 +1,96 @@
+{
+  "base": "https://samudra.193.232.229.92.sslip.io",
+  "passed": 11,
+  "total": 11,
+  "all_pass": true,
+  "probes": [
+    {
+      "id": "P0",
+      "name": "health ok",
+      "pass": true,
+      "detail": "sources=230 ver=2026.08",
+      "url": "https://samudra.193.232.229.92.sslip.io/api/health"
+    },
+    {
+      "id": "P1",
+      "name": "bilingual flex CSS served",
+      "pass": true,
+      "detail": "len=6071 flex=True",
+      "url": "https://samudra.193.232.229.92.sslip.io/static/style.css"
+    },
+    {
+      "id": "P2",
+      "name": "vishnu-smriti search hit has Sa+Ru blocks",
+      "pass": true,
+      "detail": "link_id=c1.p1 total=3 sa='brahmarātryāṃ vyatītāyāṃ prabuddhe padmasaṃbhaveviṣṇuḥ sisṛkṣur bhūtāni jñātvā bhūmiṃ jalānugām // ViS_1.1[brahma-rātryā' ru='Когда ночь Брахмы закончилась и Падмасамбхава пробудился, Вишну пожелал творить живые существа1, [но] увидел, что Земля '",
+      "url": "https://samudra.193.232.229.92.sslip.io/api/search (POST q=dharma source_ids=[218])"
+    },
+    {
+      "id": "P3",
+      "name": "html_fragment bilingual for parallel hit",
+      "pass": true,
+      "detail": "frag_len=24846 sa=True ru=True"
+    },
+    {
+      "id": "P4",
+      "name": "anchor deep-link 302 to ?highlight=",
+      "pass": true,
+      "detail": "code=302 loc=/sources/vishnu-smriti?highlight=c1.p1",
+      "url": "https://samudra.193.232.229.92.sslip.io/sources/vishnu-smriti/anchor/c1.p1"
+    },
+    {
+      "id": "P5",
+      "name": "reader ?highlight= marks correct link_id",
+      "pass": true,
+      "detail": "match=True final_url=https://samudra.193.232.229.92.sslip.io/sources/vishnu-smriti?highlight=c1.p1",
+      "url": "https://samudra.193.232.229.92.sslip.io/sources/vishnu-smriti?highlight=c1.p1"
+    },
+    {
+      "id": "P6",
+      "name": "reader page bilingual Sa+Ru present",
+      "pass": true,
+      "detail": "sa=True ru=True cyr=True lang_toolbar=True",
+      "url": "https://samudra.193.232.229.92.sslip.io/sources/vishnu-smriti?highlight=c1.p1"
+    },
+    {
+      "id": "P7",
+      "name": "yajnavalkyasmriti parallel bilingual hit",
+      "pass": true,
+      "detail": "n=2 link=c2.p1"
+    },
+    {
+      "id": "P8",
+      "name": "yajnavalkya deep-link open+highlight",
+      "pass": true,
+      "detail": "redir=302 loc=/sources/yajnavalkyasmriti?highlight=c2.p1 page_code=200",
+      "url": "https://samudra.193.232.229.92.sslip.io/sources/yajnavalkyasmriti/anchor/c2.p1"
+    },
+    {
+      "id": "P9",
+      "name": "rigveda reader deep-link lands",
+      "pass": true,
+      "detail": "link=1.1 both_blocks=(True, True, True) cid=01_rigveda:1.1#sa",
+      "url": "https://samudra.193.232.229.92.sslip.io/sources/01_rigveda?highlight=1.1"
+    },
+    {
+      "id": "P10",
+      "name": "RU query on vishnu-smriti: parallel hit bilingual",
+      "pass": true,
+      "detail": "n=5 total=5 first_link=p1 parallel_link=c1.p5 note=front-matter monoglot first-hit is OK"
+    }
+  ],
+  "sample_urls": [
+    "https://samudra.193.232.229.92.sslip.io/sources/vishnu-smriti/anchor/c1.p1",
+    "https://samudra.193.232.229.92.sslip.io/sources/vishnu-smriti?highlight=c1.p1",
+    "https://samudra.193.232.229.92.sslip.io/sources/yajnavalkyasmriti/anchor/c2.p1",
+    "https://samudra.193.232.229.92.sslip.io/sources/01_rigveda?highlight=1.1"
+  ],
+  "vishnu_sample": {
+    "link_id": "c1.p1",
+    "source_slug": "vishnu-smriti",
+    "canonical_id": "vishnu-smriti:c1.p1",
+    "sa": "brahmarātryāṃ vyatītāyāṃ prabuddhe padmasaṃbhaveviṣṇuḥ sisṛkṣur bhūtāni jñātvā bhūmiṃ jalānugām // ViS_1.1[brahma-rātryā",
+    "ru": "Когда ночь Брахмы закончилась и Падмасамбхава пробудился, Вишну пожелал творить живые существа1, [но] увидел, что Земля ",
+    "line_num": 2
+  }
+}

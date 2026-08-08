@@ -1,6 +1,6 @@
 # ROADMAP — SamudraManthanam, August 2026–July 2027
 
-_Created: 30-07-2026 · Last updated: 07-08-2026_
+_Created: 30-07-2026 · Last updated: 08-08-2026_
 
 **Status: LIVING.** This is the sole status roadmap for the programme indexed
 by [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
@@ -53,7 +53,7 @@ prod state) are not optional research.
 | P6 | **Offline packs** built and served under prod static/API | size gates pass |
 | P7 | **Zero-orphan / durable-ref gate** on prod state vs corpus | report artifact |
 | P8 | **Performance baseline** against public URL | PERFORMANCE_BASELINES row |
-| P9 | **UX acceptance** bilingual + deep-link on prod | checklist green |
+| P9 | **UX acceptance** bilingual + deep-link on prod | ✅ checklist green ([H2394](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/acceptance/H2394_UX_ACCEPTANCE_BILINGUAL_DEEPLINK_CHECKLIST.md), 08-08-2026) |
 | P10 | **Admin key / env hardening** + header security (HSTS after stable HTTPS) | checklist |
 | P11 | **Systema co-host safety** — nginx only `server_name` samudra hosts | samskrte.ru unchanged |
 
