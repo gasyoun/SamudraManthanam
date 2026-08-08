@@ -175,8 +175,17 @@ Delphi 7.
       python Corpus_builder/tests/golden/run_golden_case01.py --verify — six expected files
       byte-identical on two consecutive runs against Lazarus cb_headless.
 
-- [~] **Собрать под Windows и Linux** — Windows x64 **proved** (H2417). Linux
-      build not run on this host (no Linux agent here).
+- [x] **Собрать под Windows и Linux** — Windows x64 **proved** (H2417).
+      Linux residual **Done 08-08-2026 (H2431, Grok 4.5 `grok-4.5`):**
+      gated `ShellApi`/`ShellExecute` → `OpenDocument`, `MessageBeep` → `Beep`,
+      WinAPI `CopyFile` → `FileUtil.CopyFile`, `GlobalMemoryStatus` behind
+      `{$IFDEF MSWINDOWS}`; host-default target in `cb.lpi`/`cb_headless.lpi`.
+      Win64 regression log:
+      [`docs/H2431_WIN64_REGRESSION.log`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2431_WIN64_REGRESSION.log).
+      Linux proof via CI:
+      [`.github/workflows/corpus-builder-lazbuild.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/corpus-builder-lazbuild.yml)
+      (+ doc
+      [`docs/H2431_LINUX_LAZBUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2431_LINUX_LAZBUILD.md)).
 
 ## Фаза 4 — Headless-режим и интеграция в конвейер
 

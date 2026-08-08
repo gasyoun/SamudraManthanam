@@ -30,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   points day-2 ops there; layout/`state.db` path aligned with prod; corpus vs
   code rollback separated. Wave P2 exit.
 
+### Fixed
+- **Corpus_builder Linux `lazbuild` gates (H2431, Grok 4.5 `grok-4.5`).** Phase 3 residual after H2417 (Win-only): `fMainForm` drops `Windows`/`ShellApi` — 12× `ShellExecute` → LCL `OpenDocument`, `MessageBeep` → `Beep`, WinAPI `CopyFile` → `FileUtil.CopyFile`; `uMhHTML` `GlobalMemoryStatus` only under `{$IFDEF MSWINDOWS}`; `cb.lpi`/`cb_headless.lpi` host-default target + portable `dcu/` / `../../Units` paths. Win64 regression green (`docs/H2431_WIN64_REGRESSION.log`). CI: `.github/workflows/corpus-builder-lazbuild.yml` builds both projects on `ubuntu-latest`. Doc: [`docs/H2431_LINUX_LAZBUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2431_LINUX_LAZBUILD.md).
+
 ## [0.19.25] - 2026-08-08
 ### Added
 - **Corpus_builder Phase 4 headless CLI flags (H2432, Grok 4.5 `grok-4.5`).** [`cb_headless.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb_headless.lpr) accepts `cb_headless --build <config.ini|dir> [--out <file.html>] [--check]`; wires progress/error sinks to stdout; Confirm auto-yes (no MessageDlg hang); exit **1** on `HasErrors`, **2** on usage/missing config. Engine: public `OutFileOverride` on `TMhHTMLBuilder` for `--out`. Legacy `cb_headless <dir> [check]` kept for H2427 golden. Roadmap Phase 4 CLI unit ticked. README ┬з Headless CLI. Doc: [`docs/H2432_CLI_HEADLESS_BUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2432_CLI_HEADLESS_BUILD.md).

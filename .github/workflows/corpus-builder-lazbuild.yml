@@ -1,0 +1,58 @@
+# H2431 — prove Corpus_builder cb.lpi (+ headless) builds on Linux via lazbuild.
+# Compile-only (no GUI smoke); gtk2/lcl packages supply the LCL widgetset headers.
+name: Corpus_builder lazbuild (Linux)
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "Corpus_builder/PSRCBuilder/**"
+      - ".github/workflows/corpus-builder-lazbuild.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "Corpus_builder/PSRCBuilder/**"
+      - ".github/workflows/corpus-builder-lazbuild.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lazbuild-linux:
+    name: lazbuild cb.lpi (ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install FPC + Lazarus (LCL/gtk2)
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            fpc lazarus-ide lcl-units lcl-utils libgtk2.0-dev
+          which lazbuild
+          lazbuild --version || true
+          fpc -iV || true
+
+      - name: lazbuild cb.lpi
+        working-directory: Corpus_builder/PSRCBuilder
+        run: |
+          set -euo pipefail
+          lazbuild --build-all --verbose cb.lpi 2>&1 | tee ../../../H2431_LINUX_LAZBUILD.log
+          test -x lib/x86_64-linux/cb || test -f lib/x86_64-linux/cb
+          ls -la lib/x86_64-linux/ || ls -laR lib/
+
+      - name: lazbuild cb_headless.lpi
+        working-directory: Corpus_builder/PSRCBuilder
+        run: |
+          set -euo pipefail
+          lazbuild --build-all --verbose cb_headless.lpi 2>&1 | tee -a ../../../H2431_LINUX_LAZBUILD.log
+          test -x lib/x86_64-linux/cb_headless || test -f lib/x86_64-linux/cb_headless
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h2431-linux-lazbuild-log
+          path: H2431_LINUX_LAZBUILD.log
+          if-no-files-found: warn
