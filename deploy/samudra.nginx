@@ -1,6 +1,13 @@
 # Nginx site config for Samudra Manthanam
 # Replace <YOUR_DOMAIN> with the actual domain name.
 #
+# Production (2026-08): public Host is sslip fallback
+#   samudra.193.232.229.92.sslip.io
+# Branded name (Wave P5 / H2391) is ADDITIVE — keep sslip in server_name forever.
+# Human DNS first (A → 193.232.229.92), then:
+#   python3 scripts/enable_branded_hostname.py --hostname <name> --apply
+# Do NOT put Samudra on the samskrte.ru Systema vhost (roadmap P11).
+#
 # Bootstrap order:
 #   1. Install THIS file (HTTP-only) at /etc/nginx/sites-available/samudra.
 #   2. Run: certbot --nginx -d <YOUR_DOMAIN> --redirect
