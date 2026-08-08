@@ -170,9 +170,18 @@ Delphi 7.
 
 Цель: сборку корпуса можно запускать без GUI, из скрипта и из CI.
 
-- [ ] **CLI-режим.** `cb --build config.ini --out corpus.html` — сборка без окна.
-      Это открывает автоматическую пересборку `Data/*.html` при изменении исходных
-      текстов.
+- [x] **CLI-режим.** Done 08-08-2026 (H2432, Grok 4.5 `grok-4.5`):
+      [`PSRCBuilder/cb_headless.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb_headless.lpr)
+      accepts the documented form
+      `cb_headless --build config.ini --out corpus.html` (plus legacy
+      `cb_headless <dir> [check]` for H2427 golden). Constructs
+      `TMhHTMLBuilder`, wires log sinks (progress/error → stdout; Confirm
+      auto-yes — no MessageDlg hang), optional `OutFileOverride` for
+      `--out`, exits **1** when `HasErrors`. GUI `cb.lpr` remains
+      windowed-only. README usage in
+      [`Corpus_builder/README.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/README.md)
+      § Headless CLI. **Residual:** recompile `cb_headless.exe` with
+      `lazbuild` on a machine that has Lazarus (same host pattern as H2417/H2427).
 - [ ] **Стык с веб-конвейером.** Встроить headless-сборку в шаг перед
       `build-web-db.ps1` / `reindex.sh`, чтобы поисковая БД (SQLite FTS5)
       пересобиралась из свежего HTML одним прогоном.

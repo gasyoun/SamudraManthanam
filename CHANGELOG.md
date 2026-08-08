@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Corpus_builder Phase 4 headless CLI flags (H2432, Grok 4.5 `grok-4.5`).** [`cb_headless.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb_headless.lpr) accepts `cb_headless --build <config.ini|dir> [--out <file.html>] [--check]`; wires progress/error sinks to stdout; Confirm auto-yes (no MessageDlg hang); exit **1** on `HasErrors`, **2** on usage/missing config. Engine: public `OutFileOverride` on `TMhHTMLBuilder` for `--out`. Legacy `cb_headless <dir> [check]` kept for H2427 golden. Roadmap Phase 4 CLI unit ticked. README § Headless CLI. Doc: [`docs/H2432_CLI_HEADLESS_BUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2432_CLI_HEADLESS_BUILD.md).
+
 ## [0.19.24] - 2026-08-08
 ### Added
 - **Corpus_builder Phase 2 dcu vs Units canonical diff (H2429, Grok 4.5 `grok-4.5`).** Written comparison of builder `TextU`/`uTypes` vs `Units/` twins: sizes, API deltas, consumer-safe **split** ruling (builder TextU for `cb`; Index `textu` is not a twin; `uTypes` master = builder). Phase-2 first roadmap checkbox ticked. Report: [`docs/H2429_DCU_UNITS_CANONICAL_DIFF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2429_DCU_UNITS_CANONICAL_DIFF.md).
-- **Corpus_builder Phase 0 golden + Phase 3 re-verify (H2427, Grok 4.5 grok-4.5).** case01 fixtures under 	ests/golden/case01/; headless cb_headless (console) drives TMhHTMLBuilder + CheckAll; 
-un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; portable check JSON input basename; RusPage init. Doc: [docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md).
+- **Corpus_builder Phase 0 golden + Phase 3 re-verify (H2427, Grok 4.5 grok-4.5).** case01 fixtures under tests/golden/case01/; headless cb_headless (console) drives TMhHTMLBuilder + CheckAll; run_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; portable check JSON input basename; RusPage init. Doc: [docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md).
 
 ### Fixed
 - **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.

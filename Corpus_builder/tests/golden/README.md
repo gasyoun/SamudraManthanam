@@ -79,6 +79,13 @@ python Corpus_builder/tests/golden/run_golden_case01.py --verify
 python Corpus_builder/tests/golden/run_golden_case01.py --capture
 ```
 
+The golden runner still uses the **legacy** positional form
+`cb_headless <input-dir> check` (H2427). Equivalent Phase-4 flags (H2432):
+
+```sh
+cb_headless --build Corpus_builder/tests/golden/case01/input --check --out case01_out.html
+```
+
 Manual equivalent:
 
 ```sh

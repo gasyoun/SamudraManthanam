@@ -90,7 +90,18 @@ Shloka identifiers use `BOOK.CHAPTER.SHLOKA` (e.g. `1.002.052`), stored with zer
 3. **`LoadPerevod` / `LoadSanskrit` / `LoadComments` / `LoadFootNotes`** — populate `SlokasArr`, `SanskritArr`, `CommentsArr`, `FootNotesArr` (arrays of records).
 4. **`Check`** — validates cross-references between loaded arrays; errors go to `ErrList` and `Err.txt`.
 5. **`OutputText`** — iterates chapters/shlokas, writing HTML via `HTML_*` methods to `HTF` (the output HTML text file).
-6. Output is written to the file named in `KeyWords.OutputHTML`; intermediate result accumulates in `Res.txt` / `Res_html.txt`.
+6. Output is written to `OutFileOverride` if set (H2432 CLI `--out`), else `KeyWords.OutputHTML`; intermediate result accumulates in `Res.txt` / `Res_html.txt`.
+
+## Headless CLI (H2432 Phase 4)
+
+Console program [`cb_headless.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb_headless.lpr) — not the GUI `cb.lpr`:
+
+```
+cb_headless --build <config.ini|dir> [--out <file.html>] [--check]
+cb_headless <config.ini|dir> [check]   # H2427 legacy (golden runner)
+```
+
+Wires `OnProgress`/`OnError` to stdout log sinks and `OnConfirm` to auto-yes (never `MessageDlg`). Exit **1** when `HasErrors`, **2** on usage/missing config. Pure `--build` does not create the main form.
 
 ## Multi-book build flow (fMainForm)
 
