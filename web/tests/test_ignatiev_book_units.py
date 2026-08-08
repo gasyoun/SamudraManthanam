@@ -641,6 +641,21 @@ def test_chapter_open_allows_trailing_period():
     assert ordinal_f_to_int(m2.group("ord")) == 17
 
 
+def test_chapter_open_allows_trailing_footnote_ref():
+    """H2415: «Глава четвертая[249]» (pandoc fn glued to ordinal) must open.
+
+    Without this, MBH Ignatiev book 18 dropped ch.4–5 into ch.3's body.
+    """
+    m = ig._is_chapter_open("Глава четвертая[249]")
+    assert m is not None
+    assert ordinal_f_to_int(m.group("ord")) == 4
+    m2 = ig._is_chapter_open("Глава пятая[265]")
+    assert m2 is not None
+    assert ordinal_f_to_int(m2.group("ord")) == 5
+    # still reject prose that merely mentions a chapter number in brackets
+    assert ig._is_chapter_open("см. главу четвертую[249] в приложении") is None
+
+
 def test_chapter_open_digit_form_and_prose_paragraph_split():
     """H2376: «ГЛАВА 14» digit heads + prose without (N) still emits units."""
     m = ig._is_chapter_open("ГЛАВА 14")

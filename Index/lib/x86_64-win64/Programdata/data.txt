@@ -200,3 +200,10 @@ bhagavata-purana.html
 brihannila-tantra.html
 shaktisangama-tantra.html
 maya-tantra.html
+kama-samuha.html
+kadambara-svikarana-karika.html
+mahabharata-mausalaparva-ignatiev.html
+mahabharata-mahaprasthanikaparva-ignatiev.html
+mahabharata-svargarohanikaparva-ignatiev.html
+yoni-puja-texts.html
+bhagavati-manasa-puja-stotra.html

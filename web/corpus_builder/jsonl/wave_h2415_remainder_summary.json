@@ -1,0 +1,196 @@
+{
+  "wave": "H2415-remainder",
+  "handoff": "H2415",
+  "works": [
+    {
+      "slug": "kama-samuha",
+      "src": "web/corpus_builder/_h2415_prep/kama-samuha.prep.txt (local regenerable; not committed)",
+      "chapters": 1,
+      "verse_count": 685,
+      "comment_count": 0,
+      "chapter_numbers": [
+        1
+      ],
+      "prose_paragraph_split_chapters": null,
+      "alignment": "ru_only",
+      "raw_jsonl": "web/corpus_builder/jsonl/kama-samuha.raw.jsonl",
+      "aligned_jsonl": "web/corpus_builder/jsonl/kama-samuha.jsonl",
+      "html_emitted": true,
+      "html": "kama-samuha.html",
+      "roundtrip": {
+        "slug": "kama-samuha",
+        "src_verses": 685,
+        "rt_verses": 685,
+        "matched": 685,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      }
+    },
+    {
+      "slug": "kadambara-svikarana-karika",
+      "src": "web/corpus_builder/_h2415_prep/kadambara-svikarana-karika.prep.txt (local regenerable; not committed)",
+      "chapters": 1,
+      "verse_count": 128,
+      "comment_count": 0,
+      "chapter_numbers": [
+        1
+      ],
+      "prose_paragraph_split_chapters": null,
+      "alignment": "ru_only",
+      "raw_jsonl": "web/corpus_builder/jsonl/kadambara-svikarana-karika.raw.jsonl",
+      "aligned_jsonl": "web/corpus_builder/jsonl/kadambara-svikarana-karika.jsonl",
+      "html_emitted": true,
+      "html": "kadambara-svikarana-karika.html",
+      "roundtrip": {
+        "slug": "kadambara-svikarana-karika",
+        "src_verses": 128,
+        "rt_verses": 128,
+        "matched": 128,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      }
+    },
+    {
+      "slug": "mahabharata-mausalaparva-ignatiev",
+      "src": "web/corpus_builder/_h2415_prep/mahabharata-mausalaparva-ignatiev.prep.txt (local regenerable; not committed)",
+      "chapters": 8,
+      "verse_count": 285,
+      "comment_count": 0,
+      "chapter_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "prose_paragraph_split_chapters": null,
+      "alignment": "ru_only",
+      "raw_jsonl": "web/corpus_builder/jsonl/mahabharata-mausalaparva-ignatiev.raw.jsonl",
+      "aligned_jsonl": "web/corpus_builder/jsonl/mahabharata-mausalaparva-ignatiev.jsonl",
+      "html_emitted": true,
+      "html": "mahabharata-mausalaparva-ignatiev.html",
+      "roundtrip": {
+        "slug": "mahabharata-mausalaparva-ignatiev",
+        "src_verses": 285,
+        "rt_verses": 285,
+        "matched": 285,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      }
+    },
+    {
+      "slug": "mahabharata-mahaprasthanikaparva-ignatiev",
+      "src": "web/corpus_builder/_h2415_prep/mahabharata-mahaprasthanikaparva-ignatiev.prep.txt (local regenerable; not committed)",
+      "chapters": 3,
+      "verse_count": 110,
+      "comment_count": 0,
+      "chapter_numbers": [
+        1,
+        2,
+        3
+      ],
+      "prose_paragraph_split_chapters": null,
+      "alignment": "ru_only",
+      "raw_jsonl": "web/corpus_builder/jsonl/mahabharata-mahaprasthanikaparva-ignatiev.raw.jsonl",
+      "aligned_jsonl": "web/corpus_builder/jsonl/mahabharata-mahaprasthanikaparva-ignatiev.jsonl",
+      "html_emitted": true,
+      "html": "mahabharata-mahaprasthanikaparva-ignatiev.html",
+      "roundtrip": {
+        "slug": "mahabharata-mahaprasthanikaparva-ignatiev",
+        "src_verses": 110,
+        "rt_verses": 110,
+        "matched": 110,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      }
+    },
+    {
+      "slug": "mahabharata-svargarohanikaparva-ignatiev",
+      "src": "web/corpus_builder/_h2415_prep/mahabharata-svargarohanikaparva-ignatiev.prep.txt (local regenerable; not committed)",
+      "chapters": 6,
+      "verse_count": 319,
+      "comment_count": 0,
+      "chapter_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "prose_paragraph_split_chapters": null,
+      "alignment": "ru_only",
+      "raw_jsonl": "web/corpus_builder/jsonl/mahabharata-svargarohanikaparva-ignatiev.raw.jsonl",
+      "aligned_jsonl": "web/corpus_builder/jsonl/mahabharata-svargarohanikaparva-ignatiev.jsonl",
+      "html_emitted": true,
+      "html": "mahabharata-svargarohanikaparva-ignatiev.html",
+      "roundtrip": {
+        "slug": "mahabharata-svargarohanikaparva-ignatiev",
+        "src_verses": 319,
+        "rt_verses": 319,
+        "matched": 319,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      }
+    },
+    {
+      "slug": "yoni-puja-texts",
+      "src": "web/corpus_builder/_h2415_prep/yoni-puja-texts.prep.txt (local regenerable; not committed)",
+      "chapters": 1,
+      "verse_count": 16,
+      "comment_count": 0,
+      "chapter_numbers": [
+        1
+      ],
+      "prose_paragraph_split_chapters": null,
+      "alignment": "ru_only",
+      "raw_jsonl": "web/corpus_builder/jsonl/yoni-puja-texts.raw.jsonl",
+      "aligned_jsonl": "web/corpus_builder/jsonl/yoni-puja-texts.jsonl",
+      "html_emitted": true,
+      "html": "yoni-puja-texts.html",
+      "roundtrip": {
+        "slug": "yoni-puja-texts",
+        "src_verses": 16,
+        "rt_verses": 16,
+        "matched": 16,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      }
+    },
+    {
+      "slug": "bhagavati-manasa-puja-stotra",
+      "src": "web/corpus_builder/_h2415_prep/bhagavati-manasa-puja-stotra.prep.txt (local regenerable; not committed)",
+      "chapters": 1,
+      "verse_count": 69,
+      "comment_count": 0,
+      "chapter_numbers": [
+        1
+      ],
+      "prose_paragraph_split_chapters": null,
+      "alignment": "ru_only",
+      "raw_jsonl": "web/corpus_builder/jsonl/bhagavati-manasa-puja-stotra.raw.jsonl",
+      "aligned_jsonl": "web/corpus_builder/jsonl/bhagavati-manasa-puja-stotra.jsonl",
+      "html_emitted": true,
+      "html": "bhagavati-manasa-puja-stotra.html",
+      "roundtrip": {
+        "slug": "bhagavati-manasa-puja-stotra",
+        "src_verses": 69,
+        "rt_verses": 69,
+        "matched": 69,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      }
+    }
+  ],
+  "gate": "html→jsonl text match ≥99% or documented residue"
+}

@@ -127,6 +127,9 @@ _CHAPTER_OPEN_RE = re.compile(
     # H2376: RTF/print sources often end the heading with a full stop
     # ("ГЛАВА ВТОРАЯ.") — without this the whole open fails and the chapter
     # falls into the implicit-ch.1 bag.
+    # H2415: some MBH Ignatiev chapter heads glue a pandoc footnote ref onto
+    # the ordinal ("Глава четвертая[249]") — optional [N] before the stop.
+    r"(?:\s*\[\d+\])?"
     r"\s*[.…]*\s*$",
     re.IGNORECASE,
 )

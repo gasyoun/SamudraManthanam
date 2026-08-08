@@ -1,0 +1,22 @@
+{
+  "work": "bhagavati-manasa-puja-stotra",
+  "chapters": 1,
+  "verse_count": 69,
+  "comment_count": 0,
+  "verse_gaps": [
+    "1: 9->11",
+    "1: 11->13",
+    "1: 30->32",
+    "1: 54->56"
+  ],
+  "chapter_numbers": [
+    1
+  ],
+  "unrecognised_endnotes": 0,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "footnote_mode": "bracket",
+  "footnote_mode_requested": "auto",
+  "total_endnotes": 0
+}

@@ -1,0 +1,19 @@
+{
+  "work": "mahabharata-mahaprasthanikaparva-ignatiev",
+  "chapters": 3,
+  "verse_count": 110,
+  "comment_count": 0,
+  "verse_gaps": [],
+  "chapter_numbers": [
+    1,
+    2,
+    3
+  ],
+  "unrecognised_endnotes": 0,
+  "annotates_remapped": 0,
+  "annotates_remap_max_delta": 0,
+  "annotates_remaps": [],
+  "footnote_mode": "bracket",
+  "footnote_mode_requested": "auto",
+  "total_endnotes": 0
+}
