@@ -7,13 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.19.22] - 2026-08-08
-### Added
-- **H1438 archive remainder ingest (H2415, Grok 4.5 `grok-4.5`).** Seven new ru_only sources registered in `Programdata/data.txt`: Kāma-samūha (685 v), Kādambara-svīkaraṇa-kārikā (128 v), MBH XVI–XVIII Ignatiev (285+110+319 v; distinct from Vasilkov/Neveleva 16–18_*), yoni-pūjā texts (16 v), Bhagavatī-mānasa-pūjā-stotra (69 v). All HTML→JSONL RT **100%**. Driver [`h2415_remainder_ingest.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/h2415_remainder_ingest.py); census [`docs/H2415_IGNATIEV_ARCHIVE_REMAINDER_CENSUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2415_IGNATIEV_ARCHIVE_REMAINDER_CENSUS.md); summary [`jsonl/wave_h2415_remainder_summary.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/jsonl/wave_h2415_remainder_summary.json). Corpus-manifest pin rebuilt (209 sources / 693 990 records).
-
-### Changed
-- **Chapter-open trailing footnote ref (H2415).** `Глава четвертая[249]` opens ch.4 (MBH Ignatiev book 18); unit test `test_chapter_open_allows_trailing_footnote_ref`. Doc: [`PDF_INGESTION_PIPELINE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md) § Wave remainder.
-
 ### Fixed
 - **Search stats show server elapsed time** permanently in the result strip (not only a 1.2 s flash on the progress bar).
 - **AI Разбор `[object Object]`** on long context lines: client truncates each line to 2000 chars (server cap) and formats FastAPI validation `detail` arrays as readable messages (H2426).
@@ -23,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **`web/scripts/source_overview.py`** — CLI text report of hits by source (top-N + residue, optional `--out` / `--json`).
+
+## [0.19.22] - 2026-08-08
+### Added
+- **H1438 archive remainder ingest (H2415, Grok 4.5 `grok-4.5`).** Seven new ru_only sources registered in `Programdata/data.txt`: Kāma-samūha (685 v), Kādambara-svīkaraṇa-kārikā (128 v), MBH XVI–XVIII Ignatiev (285+110+319 v; distinct from Vasilkov/Neveleva 16–18_*), yoni-pūjā texts (16 v), Bhagavatī-mānasa-pūjā-stotra (69 v). All HTML→JSONL RT **100%**. Driver [`h2415_remainder_ingest.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/h2415_remainder_ingest.py); census [`docs/H2415_IGNATIEV_ARCHIVE_REMAINDER_CENSUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2415_IGNATIEV_ARCHIVE_REMAINDER_CENSUS.md); summary [`jsonl/wave_h2415_remainder_summary.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/jsonl/wave_h2415_remainder_summary.json). Corpus-manifest pin rebuilt (209 sources / 693 990 records).
+
+### Changed
+- **Chapter-open trailing footnote ref (H2415).** `Глава четвертая[249]` opens ch.4 (MBH Ignatiev book 18); unit test `test_chapter_open_allows_trailing_footnote_ref`. Doc: [`PDF_INGESTION_PIPELINE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md) § Wave remainder.
 
 ## [0.19.21] - 2026-08-08
 ### Added
