@@ -285,12 +285,13 @@ first candidates to compile under FPC without LCL:
 | File | Builder | Main app [`Units/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Units) | Status after H2429 |
 |---|---|---|---|
 | `TextU.pas` | 35 658 B (VCL-free) + `TextUVCL` 2 381 B | **`textu.pas` 11 651 B** is Index/FPC helpers (name collision); true twin is **`_textu.pas` 33 006 B** (stale, still VCL) | **Split:** builder `TextU` canonical for `cb`; Index `textu` stays separate |
-| `uTypes.pas` | 1 735 B (`TWideStringArr` extra) | 1 697 B | **Builder master** (sole type delta) |
-| `ArtMath`, `CalcSimU`, `mytypes`, `myutils`, `statprocs`, `uSort` | builder only | — | no main-app twin under those names |
+| `uTypes.pas` | was 1 735 B (`TWideStringArr`) | **canonical after H2430** | **Single file:** [`Units/uTypes.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/uTypes.pas); `dcu/uTypes` removed; both `.lpi` + Delphi `-U` search `..\..\Units` |
+| `ArtMath`, `CalcSimU`, `mytypes`, `myutils`, `statprocs`, `uSort` | builder only | — | no main-app twin under those names; stay in `dcu/` |
 | `UpdateChecker.pas`, `_Math.pas`, `_textu.pas`, `_winutils.pas` | — | main only | `_textu` = non-canonical twin; not used by corpus builder |
 
 Do **not** assume builder TextU is a subset of Index `Units/textu` — it is not.
-Shared-path work → H2430; never drop builder-only APIs used by `uMhHTML`.
+**H2430 done:** shared `uTypes` via `OtherUnitFiles`; TextU dual-kept (never drop
+builder-only APIs used by `uMhHTML`).
 
 ---
 

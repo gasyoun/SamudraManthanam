@@ -138,9 +138,14 @@ _Создано: 05-07-2026 · Обновлено: 08-08-2026_
 5. **Отчет — структурируемый.** `Validator`/`Report` отдают ошибки и текстом
    (`Err.txt`, обратная совместимость), и в JSON/TSV — для автоматического падения
    CI.
-6. **Утилиты — один источник.** Ядро подключает `Units/` основного приложения через
-   `OtherUnitFiles` в `.lpi`; локальная копия `dcu/*.pas` устраняется (см.
-   `SHARED_CODE.md`).
+6. **Утилиты — один источник (частично, H2430).** `cb.lpi` / `cb_headless.lpi`
+   set `OtherUnitFiles=dcu;..\..\Units`. **Shared today:** `Units/uTypes.pas`
+   (single copy; builder `TWideStringArr` promoted; `dcu/uTypes` removed).
+   **Still dual-kept in `dcu/` with reason:** `TextU` (+`TextUVCL`) — case-insensitive
+   name collision with Index `Units/textu.pas` (different product; H2429 split);
+   builder-only modules (`ArtMath`, `myutils`, …) have no Units twins. See
+   [`SHARED_CODE.md`](https://github.com/gasyoun/github-spine/blob/main/SHARED_CODE.md)
+   and [`docs/H2430_OTHERUNITFILES_SHARED_UTILS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2430_OTHERUNITFILES_SHARED_UTILS.md).
 
 ### 2.2. Границы и контракты
 

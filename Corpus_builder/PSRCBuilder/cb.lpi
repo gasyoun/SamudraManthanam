@@ -60,7 +60,7 @@
         <UnitName Value="TextU"/>
       </Unit4>
       <Unit5>
-        <Filename Value="dcu\uTypes.pas"/>
+        <Filename Value="..\..\Units\uTypes.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uTypes"/>
       </Unit5>
@@ -101,7 +101,7 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="dcu"/>
+      <OtherUnitFiles Value="dcu;..\..\Units"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
