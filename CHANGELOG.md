@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.21] - 2026-08-08
 ### Added
 - **Corpus_builder Phase 3 Lazarus/FPC LCL port (H2417, Grok 4.5 `grok-4.5`).** New [`PSRCBuilder/cb.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb.lpr) + [`cb.lpi`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb.lpi); forms as `.lfm`; `{$MODE Delphi}` on engine/utility units. FPC portability fixes (WideString digit ranges in `uMhHTML`, CP-1251 set-of-char → Ord/`IsRussian*` helpers). **`lazbuild` green** on Windows x64 (1603 lines → `lib/x86_64-win64/cb.exe`). Log: [`docs/H2417_LAZARUS_BUILD_WIN64.log`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2417_LAZARUS_BUILD_WIN64.log). Residuals: golden `expected/` capture (Phase 0), Linux `lazbuild`, lazUTF8 encoding layer, Phase 2 unit dedupe.
 
