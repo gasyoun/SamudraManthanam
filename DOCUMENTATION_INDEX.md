@@ -1,6 +1,6 @@
 # Documentation Index
 
-_Created: 19-06-2026 · Last updated: 30-07-2026_
+_Created: 19-06-2026 · Last updated: 08-08-2026_
 
 Purpose: tell humans and implementation agents which Markdown files are current, supporting, or historical.
 
@@ -40,7 +40,8 @@ Purpose: tell humans and implementation agents which Markdown files are current,
 - `web/corpus_builder/wisdomlib/README.md`: Wisdomlib crawler operations, rights guardrails, Stage A/B/C commands, Cloudflare/rate-limit reality, and watcher usage.
 - `web/corpus_builder/wisdomlib/CATALOG.md`: Wisdomlib bibliographic catalog summary generated from Stage A/B metadata.
 - `use_cases.md`: user scenarios.
-- `DEPLOYMENT.md`: no-Docker VPS deployment guide.
+- `DEPLOYMENT.md`: no-Docker VPS first-time install + corpus publish.
+- `OPS.md`: production day-2 operator path (pull/pip/restart/smoke/code rollback) for `/opt/samudra` (H2388).
 - `CLAUDE.md`: agent guidance for this repository.
 - `Corpus_builder/CLAUDE.md`: Corpus Builder-specific agent guidance.
 

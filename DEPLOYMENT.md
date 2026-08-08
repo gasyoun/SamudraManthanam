@@ -1,7 +1,19 @@
 # Deployment Guide — Samudra Manthanam (No-Docker VPS)
 
+_Created: 19-06-2026 · Last updated: 08-08-2026_
+
 This guide covers a plain-Python deployment on a Debian/Ubuntu VPS using
 **systemd + nginx**. No Docker is required.
+
+**Day-2 operator path (pull / pip / restart / code rollback / smoke):** see
+[OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) — that
+file is the single copy-paste surface for live deploys. This document remains
+the first-time install + corpus publish reference.
+
+**Current production (Wave P, LXC `samskrtam150` / `193.232.229.92`):**
+`/opt/samudra`, public
+`https://samudra.193.232.229.92.sslip.io/`, unit `samudra`. Do not point
+nginx `server_name` at `samskrte.ru` (separate product on the same host).
 
 ---
 
@@ -9,7 +21,7 @@ This guide covers a plain-Python deployment on a Debian/Ubuntu VPS using
 
 | Software | Minimum version | Install |
 |---|---|---|
-| Python | 3.11 | `apt install python3.11 python3.11-venv` |
+| Python | 3.11+ (prod runs 3.13) | `apt install python3 python3-venv` |
 | git | any | `apt install git` |
 | nginx | any | `apt install nginx` |
 | certbot | any | `apt install certbot python3-certbot-nginx` |
@@ -25,21 +37,29 @@ adduser --system --group --no-create-home samudra
 
 ## Directory layout on the VPS
 
+Canonical production layout (probed 08-08-2026 on `193.232.229.92`):
+
 ```
 /opt/samudra/
 ├── repo/               ← git clone lives here
+├── web -> repo/web     ← symlink; systemd WorkingDirectory + nginx static root
 ├── venv/               ← Python virtual environment
-├── corpus/             ← corpus source files (Data/ + Programdata/)
+├── corpus/             ← corpus source files (Data/ + Programdata/) when present
 │   ├── Data/
 │   └── Programdata/
 │       └── data.txt
 ├── db/
 │   ├── corpus.db       ← live search database
-│   ├── corpus.next.db  ← temp DB built during publish (deleted on success)
-│   └── backups/        ← timestamped DB backups
-├── state.db            ← mutable state (morph cache, corrections, leads)
-└── .env                ← environment variables (not in git)
+│   ├── state.db        ← mutable state (morph cache, corrections, migrations)
+│   ├── corpus.next.db  ← temp DB built during publish (absent when idle)
+│   └── backups/        ← timestamped corpus_*.db backups
+└── .env                ← environment variables (not in git; mode 600)
 ```
+
+Set `STATE_DB_PATH=/opt/samudra/db/state.db` and
+`DB_PATH=/opt/samudra/db/corpus.db` in `.env` so the unit and tools agree.
+Older drafts put `state.db` at `/opt/samudra/state.db` — prefer the `db/` path
+on new installs so `ReadWritePaths=/opt/samudra` stays one tree.
 
 ---
 
@@ -71,7 +91,8 @@ APP_ENV=production
 DB_PATH=/opt/samudra/db/corpus.db
 
 # Mutable state database (morph cache, corrections, leads)
-STATE_DB_PATH=/opt/samudra/state.db
+# Prefer under db/ (prod layout). Older installs may use /opt/samudra/state.db.
+STATE_DB_PATH=/opt/samudra/db/state.db
 
 # URL the app is reachable at (used for export link generation)
 PUBLIC_BASE_URL=https://<YOUR_DOMAIN>
@@ -109,7 +130,9 @@ Generate a random admin key: `python3 -c "import secrets; print(secrets.token_he
 
 ```bash
 mkdir -p /opt/samudra/db/backups
-chown -R samudra:samudra /opt/samudra/db /opt/samudra/state.db 2>/dev/null || true
+# Symlink so systemd WorkingDirectory=/opt/samudra/web matches nginx static root
+ln -sfn /opt/samudra/repo/web /opt/samudra/web
+chown -R samudra:samudra /opt/samudra/db 2>/dev/null || true
 ```
 
 ### 5. Install the corpus
@@ -256,12 +279,41 @@ Exit code is `0` on success, `1` if the DB is missing, unreadable, or below
 
 ## Updating the application code
 
+**Authoritative copy-paste runbook (record PREV SHA, ff-only pull, pip,
+restart, smoke, code rollback):**
+[OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md).
+
+Short form (app code / dependency bumps only — not corpus reindex):
+
 ```bash
 cd /opt/samudra/repo
-git pull
+PREV=$(git rev-parse --short HEAD)
+git pull --ff-only origin main
 /opt/samudra/venv/bin/pip install -r web/requirements.txt
 systemctl restart samudra
+curl -fsS -o /dev/null -w "local_home=%{http_code}\n" http://127.0.0.1:8000/
+systemctl is-active samudra
+echo "ROLLBACK_SHA=$PREV"
 ```
+
+- Prefer `git pull --ff-only origin main` over bare `git pull` so a divergent
+  prod checkout fails loudly instead of inventing a merge commit.
+- Always capture `PREV` before pull if you may need a code rollback.
+- After restart, smoke **local** `127.0.0.1:8000` first; public sslip.io can
+  hairpin-fail from inside the LXC while the app is healthy.
+
+### Code rollback
+
+```bash
+cd /opt/samudra/repo
+git reset --hard "$ROLLBACK_SHA"   # the SHA printed before the bad deploy
+/opt/samudra/venv/bin/pip install -r web/requirements.txt
+systemctl restart samudra
+curl -fsS -o /dev/null -w "local_home=%{http_code}\n" http://127.0.0.1:8000/
+```
+
+Full notes (unit re-sync, nginx caveats, what not to force-push):
+[OPS.md § Code rollback](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md#code-rollback).
 
 ---
 
@@ -278,3 +330,7 @@ cp /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db /opt/samudra/db/corpus.db
 
 The app reads `corpus.db` fresh on each request, so the rollback takes effect
 immediately on the next search without a restart.
+
+This is **independent** of code rollback: restoring a DB does not change
+`/opt/samudra/repo` HEAD, and `git reset --hard` does not restore a corpus
+backup.

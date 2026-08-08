@@ -46,7 +46,7 @@ prod state) are not optional research.
 | ID | Unit | Exit |
 |---|---|---|
 | P1 | **Sync prod tree to `origin/main` + restart + health** | `git rev-parse` matches main; `/api/health` green; search smoke |
-| P2 | **Deploy runbook** (pull/pip/restart/rollback) in OPS.md + DEPLOYMENT.md | one-command operator path documented |
+| P2 | **Deploy runbook** (pull/pip/restart/rollback) in OPS.md + DEPLOYMENT.md | ✅ one-command operator path documented (H2388, 08-08-2026) — [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) |
 | P3 | **Backups** — corpus.db + state.db cron + retention | restore drill once |
 | P4 | **Monitors** — health cron + journald/logrotate | alert path written |
 | P5 | **Branded hostname + TLS** when DNS exists (sslip.io stays fallback) | certbot on real name |
