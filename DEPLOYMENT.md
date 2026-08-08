@@ -205,6 +205,45 @@ certbot --nginx -d <YOUR_DOMAIN>
 
 Certbot rewrites the nginx config and installs an auto-renewal cron job.
 
+### Branded hostname (Wave P5 / H2391) — human DNS first
+
+Production today is reachable at the free sslip fallback:
+
+`https://samudra.193.232.229.92.sslip.io/`
+
+A **branded** name (recommended: `samudra.samskrte.ru`) is **not done** until:
+
+1. A human creates an **A-record** → `193.232.229.92` (apex `samskrte.ru` NS is reg.ru).
+2. Certbot issues a cert for that name and nginx serves HTTPS.
+3. `curl -I https://<name>/api/health` returns **200**.
+4. The sslip Host still returns 200 (permanent fallback; P11 keeps `samskrte.ru` Systema vhost separate).
+
+**Do not treat missing DNS as done.** The gate script exits **2** on NXDOMAIN / wrong IP:
+
+```bash
+# On the LXC as root, after git pull of this repo under /opt/samudra/repo:
+python3 /opt/samudra/repo/scripts/enable_branded_hostname.py \
+  --hostname samudra.samskrte.ru
+# → REFUSE exit 2 while DNS is missing
+
+# After the A-record propagates (GATE GO):
+python3 /opt/samudra/repo/scripts/enable_branded_hostname.py \
+  --hostname samudra.samskrte.ru --apply
+
+curl -I https://samudra.samskrte.ru/api/health
+curl -I https://samudra.193.232.229.92.sslip.io/api/health
+```
+
+What `--apply` does: injects the branded name into every `server_name` line that
+already carries the sslip Host (never removes sslip), `nginx -t` + reload,
+`certbot --nginx -d <name> --redirect`, then dual HTTPS smoke.
+
+Status snapshot (why this may still be blocked):  
+[`docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md) · live notes [`OPS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md).
+
+Optional after branded HTTPS is green: set `PUBLIC_BASE_URL` / `ALLOWED_ORIGINS` in
+`/opt/samudra/.env` to include the branded origin, then `systemctl restart samudra`.
+
 ### Offline-search packs — do NOT touch the gzip encoding
 
 The optional offline-search feature serves large SQLite packs pre-compressed

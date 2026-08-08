@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Wave P5 branded hostname path (H2391, Grok 4.5 \grok-4.5\) — agent half only.** DNS-gated [\scripts/enable_branded_hostname.py\](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/enable_branded_hostname.py) (exit 2 on NXDOMAIN / wrong A; \--apply\ injects \server_name\, certbot, dual smoke). Operator docs: [\DEPLOYMENT.md\](https://github.com/gasyoun/SamudraManthanam/blob/main/DEPLOYMENT.md) § Branded hostname, [\OPS.md\](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) § Branded hostname, status [\docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md\](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md). **Not done until human A-record + HTTPS 200** (measured 08-08-2026: \samudra.samskrte.ru\ NXDOMAIN; sslip remains public).
+
 ## [0.19.27] - 2026-08-08
 ### Changed
 - **Corpus_builder Phase 1 unified encoding layer (H2428, Grok 4.5 `grok-4.5`).** New [`dcu/uEncoding.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uEncoding.pas) (`ToUTF8`/`FromUTF8`/`EncUTF8Length`/`EncUTF8Copy`); engine + forms + TextU free of raw `AnsiToUTF8`/`UTF8ToAnsi` (census 21+27 → 0 active). `lazbuild cb.lpi` + `cb_headless.lpi` green. Golden case01 rebaselined for UTF-8 I/O (H2427 CP-1251 `Err.txt` → UTF-8). Roadmap Phase 1 encoding unit ticked. Doc: [`docs/H2428_LAZUTF8_ENCODING_LAYER.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2428_LAZUTF8_ENCODING_LAYER.md).
@@ -29,6 +32,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `193.232.229.92`). [DEPLOYMENT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/DEPLOYMENT.md)
   points day-2 ops there; layout/`state.db` path aligned with prod; corpus vs
   code rollback separated. Wave P2 exit.
+
+### Fixed
+- **Corpus_builder Linux `lazbuild` gates (H2431, Grok 4.5 `grok-4.5`).** Phase 3 residual after H2417 (Win-only): `fMainForm` drops `Windows`/`ShellApi` — 12× `ShellExecute` → LCL `OpenDocument`, `MessageBeep` → `Beep`, WinAPI `CopyFile` → `FileUtil.CopyFile`; `uMhHTML` `GlobalMemoryStatus` only under `{$IFDEF MSWINDOWS}`; `cb.lpi`/`cb_headless.lpi` host-default target + portable `dcu/` / `../../Units` paths. Win64 regression green (`docs/H2431_WIN64_REGRESSION.log`). CI: `.github/workflows/corpus-builder-lazbuild.yml` builds both projects on `ubuntu-latest`. Doc: [`docs/H2431_LINUX_LAZBUILD.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2431_LINUX_LAZBUILD.md).
 
 ## [0.19.25] - 2026-08-08
 ### Added

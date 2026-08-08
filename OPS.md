@@ -1,6 +1,7 @@
 # OPS.md — Samudra Manthanam production operator path
 
-_Created: 08-08-2026 · Last updated: 08-08-2026_
+_Created: 08-08-2026 · Last updated: 08-08-2026_  
+_(+ H2391 branded-hostname section)_
 
 **Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
 First-time install, systemd unit, nginx, and corpus reindex live in
@@ -231,6 +232,38 @@ curl -fsS -X POST -H "X-Admin-Key: $ADMIN_SECRET_KEY" \
 
 ---
 
+## Branded hostname + TLS (Wave P5 / H2391)
+
+**Human DNS first.** Until an A-record for the chosen FQDN points at
+`193.232.229.92`, P5 is **not done** (sslip remains the only public name).
+
+Measured 08-08-2026: `samudra.samskrte.ru` and `samudra.samskrtam.ru` are
+**NXDOMAIN**. Recommended record at reg.ru: `samudra.samskrte.ru` A →
+`193.232.229.92`. Do not put Samudra on the Systema `samskrte.ru` vhost (P11).
+
+Gate script (exit **2** while DNS is missing — never treat that as done):
+
+```bash
+python3 /opt/samudra/repo/scripts/enable_branded_hostname.py \
+  --hostname samudra.samskrte.ru
+
+# After A-record propagates (GATE GO):
+python3 /opt/samudra/repo/scripts/enable_branded_hostname.py \
+  --hostname samudra.samskrte.ru --apply
+
+curl -I https://samudra.samskrte.ru/api/health
+curl -I https://samudra.193.232.229.92.sslip.io/api/health
+```
+
+What `--apply` does: injects the branded name into nginx `server_name` (keeps
+sslip), `nginx -t` + reload, certbot, dual HTTPS smoke.
+
+Status: [docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md).
+Optional after branded HTTPS is 200: extend `PUBLIC_BASE_URL` /
+`ALLOWED_ORIGINS` in `/opt/samudra/.env`, then `systemctl restart samudra`.
+
+---
+
 ## What this runbook deliberately excludes
 
 | Topic | Where |
@@ -239,12 +272,14 @@ curl -fsS -X POST -H "X-Admin-Key: $ADMIN_SECRET_KEY" \
 | Offline-pack nginx gzip rules | DEPLOYMENT.md § Offline-search packs |
 | Multi-GB reindex ops / rights | reindex path above; do not conflate with code pull |
 | Systema Laravel on same host | `/var/www/html` — different product |
+| Creating the public DNS A-record | human at reg.ru (this section + H2391) |
 
 ---
 
 ## Provenance
 
 - Wave P2 / H2388 (Grok 4.5 `grok-4.5`): expand operator pull/pip/restart/rollback.
+- Wave P5 / H2391 (Grok 4.5 `grok-4.5`): DNS-gated branded hostname path; agent half only until human A-record.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
 - Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
   `/opt/samudra/repo/OPS.md` as the source of truth.

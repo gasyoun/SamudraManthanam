@@ -49,7 +49,7 @@ prod state) are not optional research.
 | P2 | **Deploy runbook** (pull/pip/restart/rollback) in OPS.md + DEPLOYMENT.md | ✅ one-command operator path documented (H2388, 08-08-2026) — [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) |
 | P3 | **Backups** — corpus.db + state.db cron + retention | restore drill once |
 | P4 | **Monitors** — health cron + journald/logrotate | alert path written |
-| P5 | **Branded hostname + TLS** when DNS exists (sslip.io stays fallback) | certbot on real name |
+| P5 | **Branded hostname + TLS** when DNS exists (sslip.io stays fallback) | certbot on real name · **agent half 08-08-2026 (H2391):** DNS-gated script + ops path landed; **blocked on human A-record** (`samudra.samskrte.ru` NXDOMAIN) — [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md) |
 | P6 | **Offline packs** built and served under prod static/API | size gates pass |
 | P7 | **Zero-orphan / durable-ref gate** on prod state vs corpus | report artifact |
 | P8 | **Performance baseline** against public URL | PERFORMANCE_BASELINES row |
@@ -215,6 +215,9 @@ bundle and meets the published verification and performance contract.
 ## Human checkpoints
 
 - **Wave P5** branded DNS (A/AAAA → 193.232.229.92) — human DNS only.
+  Recommended: `samudra.samskrte.ru` A → `193.232.229.92` at reg.ru.
+  Measured 08-08-2026: NXDOMAIN; enable after DNS via
+  `scripts/enable_branded_hostname.py --apply` (H2391).
 - Stratified corpus samples for quality contract.
 - H1438/H1485 ownership merge where overlaps.
 - Ordinary PR review; deploy authority on the LXC is agent-reachable via
