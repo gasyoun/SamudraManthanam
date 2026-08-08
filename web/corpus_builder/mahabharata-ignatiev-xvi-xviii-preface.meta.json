@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "slug": "mahabharata-ignatiev-xvi-xviii-preface",
+  "parent_work": "mahabharata-ignatiev-xvi-xviii",
+  "layer": "preface",
+  "layer_title": "ПРЕДИСЛОВИЕ",
+  "title_ru": "Махабхарата XVI–XVIII (Игнатьев) — Предисловие; А. Игнатьев",
+  "title_display": "Махабхарата XVI–XVIII (Игнатьев): Предисловие",
+  "title_en": "mahabharata-ignatiev-xvi-xviii / preface (Ignatiev)",
+  "credit": "А. Игнатьев",
+  "credit_role": "Перевод с санскрита, предисловие и комментарий",
+  "imprint": "неопубликованный перевод",
+  "publisher": null,
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "prose",
+  "needs_review": true,
+  "provenance": "H2449 back-matter layer of parent 'mahabharata-ignatiev-xvi-xviii' (H2415 remainder). Section heading 'ПРЕДИСЛОВИЕ'. Extracted via ignatiev_backmatter.py; not verse-aligned.",
+  "rights": "cleared 15-07-2026 — translator А. Игнатьев granted full/exclusive/worldwide/perpetual redistribution + derivative-work rights to \"all my works ... whether published or unpublished\" to MG/samskrtam.ru via email (unsigned, sender not independently verified; MG accepted at face value). Full text: https://github.com/gasyoun/Uprava/blob/main/RIGHTS_GRANT_IGNATJEV_DBHP_2026H2.md"
+}

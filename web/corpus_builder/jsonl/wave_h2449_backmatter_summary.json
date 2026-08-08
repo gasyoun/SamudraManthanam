@@ -1,0 +1,405 @@
+{
+  "wave": "H2449-backmatter",
+  "handoff": "H2449",
+  "layers": [
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-preface",
+      "kind": "preface",
+      "title": "ПРЕДИСЛОВИЕ",
+      "record_count": 86,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-preface.jsonl",
+      "filename": "kama-samuha-preface.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-preface",
+        "src_units": 86,
+        "rt_units": 86,
+        "matched": 86,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-slovar-imen",
+      "kind": "glossary",
+      "title": "СЛОВАРЬ ИМЕН",
+      "record_count": 34,
+      "structure": "dictionary",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-slovar-imen.jsonl",
+      "filename": "kama-samuha-slovar-imen.txt",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-slovar-imen",
+        "src_entries": 34,
+        "rt_entries": 34,
+        "matched": 34,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-slovar-predmetov",
+      "kind": "glossary",
+      "title": "СЛОВАРЬ ПРЕДМЕТОВ И ТЕРМИНОВ",
+      "record_count": 21,
+      "structure": "dictionary",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-slovar-predmetov.jsonl",
+      "filename": "kama-samuha-slovar-predmetov.txt",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-slovar-predmetov",
+        "src_entries": 21,
+        "rt_entries": 21,
+        "matched": 21,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-slovar-toponimov",
+      "kind": "glossary",
+      "title": "СЛОВАРЬ ТОПОНИМОВ И ЭТНОНИМОВ",
+      "record_count": 19,
+      "structure": "dictionary",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-slovar-toponimov.jsonl",
+      "filename": "kama-samuha-slovar-toponimov.txt",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-slovar-toponimov",
+        "src_entries": 19,
+        "rt_entries": 19,
+        "matched": 19,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-slovar-flory",
+      "kind": "glossary",
+      "title": "СЛОВАРЬ ФЛОРЫ И ФАУНЫ",
+      "record_count": 27,
+      "structure": "dictionary",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-slovar-flory.jsonl",
+      "filename": "kama-samuha-slovar-flory.txt",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-slovar-flory",
+        "src_entries": 27,
+        "rt_entries": 27,
+        "matched": 27,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-istochniki",
+      "kind": "bibliography",
+      "title": "ИСТОЧНИКИ «КАМА-САМУХИ»",
+      "record_count": 21,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-istochniki.jsonl",
+      "filename": "kama-samuha-istochniki.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-istochniki",
+        "src_units": 21,
+        "rt_units": 21,
+        "matched": 21,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-antologii",
+      "kind": "bibliography",
+      "title": "ИЗВЕСТНЫЕ АНТОЛОГИИ САНСКРИТСКОЙ ПОЭЗИИ",
+      "record_count": 4,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-antologii.jsonl",
+      "filename": "kama-samuha-antologii.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-antologii",
+        "src_units": 4,
+        "rt_units": 4,
+        "matched": 4,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-literatura",
+      "kind": "bibliography",
+      "title": "ЛИТЕРАТУРА",
+      "record_count": 81,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-literatura.jsonl",
+      "filename": "kama-samuha-literatura.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-literatura",
+        "src_units": 81,
+        "rt_units": 81,
+        "matched": 81,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kama-samuha",
+      "slug": "kama-samuha-ob-avtore",
+      "kind": "about_author",
+      "title": "ОБ АВТОРЕ ПЕРЕВОДА",
+      "record_count": 6,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kama-samuha-ob-avtore.jsonl",
+      "filename": "kama-samuha-ob-avtore.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kama-samuha-ob-avtore",
+        "src_units": 6,
+        "rt_units": 6,
+        "matched": 6,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kadambara-svikarana-karika",
+      "slug": "kadambara-svikarana-karika-preface",
+      "kind": "preface",
+      "title": "ПРЕДИСЛОВИЕ",
+      "record_count": 22,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kadambara-svikarana-karika-preface.jsonl",
+      "filename": "kadambara-svikarana-karika-preface.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kadambara-svikarana-karika-preface",
+        "src_units": 22,
+        "rt_units": 22,
+        "matched": 22,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kadambara-svikarana-karika",
+      "slug": "kadambara-svikarana-karika-literatura",
+      "kind": "bibliography",
+      "title": "ЛИТЕРАТУРА",
+      "record_count": 42,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kadambara-svikarana-karika-literatura.jsonl",
+      "filename": "kadambara-svikarana-karika-literatura.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kadambara-svikarana-karika-literatura",
+        "src_units": 42,
+        "rt_units": 42,
+        "matched": 41,
+        "soft_accent_match": 1,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": [
+          {
+            "passage": "1.42",
+            "class": "latin_accent_fold",
+            "src_snip": "Tāntrikābhidhānakośa 2000 – Tāntrikābhidhānakośa I. Dictionnaire des termes tech",
+            "rt_snip": "Tāntrikābhidhānakośa 2000 – Tāntrikābhidhānakośa I. Dictionnaire des termes tech"
+          }
+        ]
+      },
+      "emitted": true
+    },
+    {
+      "parent": "kadambara-svikarana-karika",
+      "slug": "kadambara-svikarana-karika-ob-avtore",
+      "kind": "about_author",
+      "title": "ОБ АВТОРЕ ПЕРЕВОДА",
+      "record_count": 11,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/kadambara-svikarana-karika-ob-avtore.jsonl",
+      "filename": "kadambara-svikarana-karika-ob-avtore.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "kadambara-svikarana-karika-ob-avtore",
+        "src_units": 11,
+        "rt_units": 11,
+        "matched": 11,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "mahabharata-ignatiev-xvi-xviii",
+      "slug": "mahabharata-ignatiev-xvi-xviii-preface",
+      "kind": "preface",
+      "title": "ПРЕДИСЛОВИЕ",
+      "record_count": 18,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-preface.jsonl",
+      "filename": "mahabharata-ignatiev-xvi-xviii-preface.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "mahabharata-ignatiev-xvi-xviii-preface",
+        "src_units": 18,
+        "rt_units": 18,
+        "matched": 18,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "mahabharata-ignatiev-xvi-xviii",
+      "slug": "mahabharata-ignatiev-xvi-xviii-slovar-imen",
+      "kind": "glossary",
+      "title": "СЛОВАРЬ ИМЕН ЭПИЧЕСКИХ ПЕРСОНАЖЕЙ",
+      "record_count": 190,
+      "structure": "dictionary",
+      "jsonl": "web/corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-slovar-imen.jsonl",
+      "filename": "mahabharata-ignatiev-xvi-xviii-slovar-imen.txt",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "mahabharata-ignatiev-xvi-xviii-slovar-imen",
+        "src_entries": 190,
+        "rt_entries": 190,
+        "matched": 190,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      },
+      "emitted": true
+    },
+    {
+      "parent": "mahabharata-ignatiev-xvi-xviii",
+      "slug": "mahabharata-ignatiev-xvi-xviii-slovar-predmetov",
+      "kind": "glossary",
+      "title": "СЛОВАРЬ ПРЕДМЕТОВ И ТЕРМИНОВ",
+      "record_count": 66,
+      "structure": "dictionary",
+      "jsonl": "web/corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-slovar-predmetov.jsonl",
+      "filename": "mahabharata-ignatiev-xvi-xviii-slovar-predmetov.txt",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "mahabharata-ignatiev-xvi-xviii-slovar-predmetov",
+        "src_entries": 66,
+        "rt_entries": 66,
+        "matched": 66,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0
+      },
+      "emitted": true
+    },
+    {
+      "parent": "mahabharata-ignatiev-xvi-xviii",
+      "slug": "mahabharata-ignatiev-xvi-xviii-literatura",
+      "kind": "bibliography",
+      "title": "БИБЛИОГРАФИЯ",
+      "record_count": 50,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-literatura.jsonl",
+      "filename": "mahabharata-ignatiev-xvi-xviii-literatura.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "mahabharata-ignatiev-xvi-xviii-literatura",
+        "src_units": 50,
+        "rt_units": 50,
+        "matched": 50,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "mahabharata-ignatiev-xvi-xviii",
+      "slug": "mahabharata-ignatiev-xvi-xviii-ob-avtore",
+      "kind": "about_author",
+      "title": "ОБ АВТОРЕ ПЕРЕВОДА",
+      "record_count": 2,
+      "structure": "prose",
+      "jsonl": "web/corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-ob-avtore.jsonl",
+      "filename": "mahabharata-ignatiev-xvi-xviii-ob-avtore.html",
+      "data_txt_added": [],
+      "roundtrip": {
+        "slug": "mahabharata-ignatiev-xvi-xviii-ob-avtore",
+        "src_units": 2,
+        "rt_units": 2,
+        "matched": 2,
+        "soft_accent_match": 0,
+        "mismatched": 0,
+        "missing_in_rt": 0,
+        "rate_pct": 100.0,
+        "residue": []
+      },
+      "emitted": true
+    },
+    {
+      "parent": "yoni-puja-texts",
+      "disposition": "skip_no_layers",
+      "reason": "no preface/glossary/bibliography/about sections found",
+      "layers": []
+    },
+    {
+      "parent": "bhagavati-manasa-puja-stotra",
+      "disposition": "skip_no_layers",
+      "reason": "no preface/glossary/bibliography/about sections found",
+      "layers": []
+    }
+  ],
+  "gate": "layer text RT ≥99% or documented residue"
+}
