@@ -2,6 +2,8 @@
 
 _Created: 08-08-2026 · Last updated: 08-08-2026_
 
+**Residuals (minted as real work 08-08-2026):** back-matter glossaries → [H2449 (Grok 4.5) — Ignatiev prefaces + glossary/bibliography layers](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2449-Grok_SamudraManthanam_h2415-ignatiev-backmatter-glossaries_08.08.26.md); prose commentary apparatus → [H2450 (Grok 4.5) — non-pandoc `N. Источник:` commentary layer](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2450-Grok_SamudraManthanam_h2415-ignatiev-prose-commentary-layer_08.08.26.md).
+
 **Handoff:** [H2415-Grok_SamudraManthanam_ignatiev-archive-remainder-ingest_07.08.26](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2415-Grok_SamudraManthanam_ignatiev-archive-remainder-ingest_07.08.26.md)  
 **Executor:** Grok 4.5 (`grok-4.5`)  
 **Gate:** every remaining work under `archive_ignatiev_2026/Переводы с санскрита` either registered in `Programdata/data.txt` **or** documented as deliberate skip; each ingested work HTML→JSONL RT ≥99% or documented residue.
@@ -24,12 +26,12 @@ H1438 waves A–D + H2377/H2385/H2412–14 covered the main tantra/purāṇa set
 
 ## Deliberate non-goals / skips (not H2415 remainder)
 
-| Item | Reason |
-|---|---|
-| Devībhāgavata-purāṇa (12 skandha multi-file) | Separate multi-skandha pipeline (already ingested H534/H558); out of handoff scope |
-| Prefaces, dictionaries, bibliographies inside remainder books | Back-matter; not verse units (cut at `КОММЕНТАРИЙ` / `СЛОВАРЬ` / `ЛИТЕРАТУРА`) |
-| Prose commentary blocks after translation | Numbered `N. Источник:` notes are not pandoc `[N]` endnotes — `comment_count=0` is honest; body verses still RT-clean |
-| Vasilkov/Neveleva MBH 16–18 already in corpus | **Different translator.** Ignatiev triple is registered under `*-ignatiev` slugs so the two editions coexist |
+| Item | Reason | Residual |
+|---|---|---|
+| Devībhāgavata-purāṇa (12 skandha multi-file) | Separate multi-skandha pipeline (already ingested H534/H558); out of handoff scope | n/a (already done) |
+| Prefaces, dictionaries, bibliographies inside remainder books | Back-matter; not verse units (cut at `КОММЕНТАРИЙ` / `СЛОВАРЬ` / `ЛИТЕРАТУРА`) | **H2449** — real work |
+| Prose commentary blocks after translation | Numbered `N. Источник:` notes are not pandoc `[N]` endnotes — `comment_count=0` is honest; body verses still RT-clean | **H2450** — real work |
+| Vasilkov/Neveleva MBH 16–18 already in corpus | **Different translator.** Ignatiev triple is registered under `*-ignatiev` slugs so the two editions coexist | n/a (parallel edition already present) |
 
 ## Full `Переводы с санскрита` folder map (post-H2415)
 
