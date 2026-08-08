@@ -1,0 +1,252 @@
+# OPS.md — Samudra Manthanam production operator path
+
+_Created: 08-08-2026 · Last updated: 08-08-2026_
+
+**Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
+First-time install, systemd unit, nginx, and corpus reindex live in
+[DEPLOYMENT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/DEPLOYMENT.md).
+This file is the **day-2 operator** surface.
+
+**Host (as of 08-08-2026 probe):** LXC `samskrtam150` · `root@193.232.229.92` ·
+layout under `/opt/samudra/`. Public search:
+`https://samudra.193.232.229.92.sslip.io/` (TLS via certbot; `samskrte.ru` is a
+different vhost and must not be edited for Samudra).
+
+---
+
+## Live layout (ground truth)
+
+```
+/opt/samudra/
+├── .env                 # EnvironmentFile for systemd (mode 600, root:samudra)
+├── OPS.md               # Host-local short notes (optional; repo copy is canonical)
+├── repo/                # git clone of gasyoun/SamudraManthanam (branch main)
+├── web -> repo/web      # symlink used by WorkingDirectory + nginx static root
+├── venv/                # Python 3.13 venv (do not replace casually)
+├── corpus/              # source HTML / data.txt for reindex (optional empty)
+└── db/
+    ├── corpus.db        # live search DB
+    ├── state.db         # morph cache, corrections, schema_migrations
+    ├── corpus.next.db   # temp during reindex (absent when idle)
+    ├── corpus.build-report.json
+    └── backups/         # corpus_YYYYMMDD_HHMMSS.db
+```
+
+| Surface | Path / command |
+|---|---|
+| App unit | `systemctl {status,restart,stop,start} samudra` |
+| Unit file on disk | `/etc/systemd/system/samudra.service` (source: `deploy/samudra.service`) |
+| uvicorn (bound) | `127.0.0.1:8000`, 2 workers, user `samudra` |
+| nginx site | `/etc/nginx/sites-enabled/samudra` (sslip.io server_name only) |
+| Repo | `/opt/samudra/repo` |
+| Venv Python | `/opt/samudra/venv/bin/python` (3.13.x on prod) |
+| Logs | `journalctl -u samudra -f` |
+
+Env keys expected in `/opt/samudra/.env` (values never committed):
+`APP_ENV`, `DB_PATH`, `STATE_DB_PATH`, `PUBLIC_BASE_URL`, `ALLOWED_ORIGINS`,
+`ADMIN_SECRET_KEY`, `SYSTEMA_SANSCRITICUM_URL`, `SITE_DESCRIPTION`,
+`AI_PROVIDER`, `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL`.
+
+---
+
+## One-command code deploy (happy path)
+
+Use this after a merge lands on `origin/main` and the change is **app code or
+Python deps** (not a multi-GB corpus reindex — that is a separate step).
+
+```bash
+# As root on 193.232.229.92
+set -euo pipefail
+cd /opt/samudra/repo
+PREV=$(git rev-parse --short HEAD)
+echo "BEFORE: $PREV  $(git log -1 --oneline)"
+
+git fetch origin --quiet
+git pull --ff-only origin main
+
+/opt/samudra/venv/bin/pip install -r web/requirements.txt
+systemctl restart samudra
+
+# Local smoke (always available; does not depend on public DNS hairpin)
+curl -fsS -o /dev/null -w "local_home=%{http_code}\n" http://127.0.0.1:8000/
+systemctl is-active samudra
+echo "AFTER:  $(git rev-parse --short HEAD)  $(git log -1 --oneline)"
+echo "ROLLBACK_SHA=$PREV   # keep this if you need to roll back"
+```
+
+**Why `--ff-only`:** refuse a dirty/divergent checkout instead of creating a
+merge commit on prod. If pull fails, stop and inspect — do not force-reset
+without a human.
+
+**Why pip every time:** cheap insurance when `web/requirements.txt` moved;
+no-op when pins are unchanged.
+
+**Not this path:** corpus reindex (`reindex.sh`), nginx/cert edits, `.env`
+secret rotates, OpenRouter key swaps — see sections below and DEPLOYMENT.md.
+
+### Agent / skill short form
+
+Same recipe as the org standing deploy rule (`deploy-without-reask`):
+
+```bash
+cd /opt/samudra/repo && git pull --ff-only origin main \
+  && /opt/samudra/venv/bin/pip install -r web/requirements.txt \
+  && systemctl restart samudra
+```
+
+Then one smoke that proves the shipped surface (local `/` HTTP 200, or a
+feature-specific fragment check).
+
+---
+
+## Smoke checks
+
+### Always (post-restart)
+
+```bash
+systemctl is-active samudra          # expect: active
+curl -fsS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8000/
+# expect: 200
+
+journalctl -u samudra -n 40 --no-pager
+```
+
+### DB integrity (optional, heavier)
+
+```bash
+/opt/samudra/venv/bin/python /opt/samudra/repo/web/scripts/smoke_check.py \
+  --db-path /opt/samudra/db/corpus.db \
+  --min-sources 5
+# expect: OK … sources=N lines=N …
+```
+
+### Public HTTPS
+
+```bash
+curl -fsS -o /dev/null -w "%{http_code}\n" \
+  https://samudra.193.232.229.92.sslip.io/
+```
+
+**Note:** hairpin from the LXC itself to the public sslip.io name can fail
+(timeout) while the app is healthy on `127.0.0.1:8000`. Prefer local smoke for
+post-deploy gates; confirm public from an external client when TLS/nginx is
+what changed.
+
+### Search fragment (example)
+
+```bash
+curl -fsS "http://127.0.0.1:8000/api/search?q=dharma" | head -c 200
+echo
+```
+
+---
+
+## Code rollback
+
+Record `PREV` **before** every deploy (the happy-path block prints it). To
+undo a bad app deploy:
+
+```bash
+set -euo pipefail
+# Replace with the SHA printed as ROLLBACK_SHA / BEFORE
+BAD_SHA_OR_PREV=<short-or-full-sha>
+
+cd /opt/samudra/repo
+git fetch origin --quiet
+git rev-parse --verify "${BAD_SHA_OR_PREV}^{commit}"
+
+# Hard reset to the last known-good commit (prod is not a feature branch)
+git checkout main
+git reset --hard "$BAD_SHA_OR_PREV"
+
+/opt/samudra/venv/bin/pip install -r web/requirements.txt
+systemctl restart samudra
+curl -fsS -o /dev/null -w "local_home=%{http_code}\n" http://127.0.0.1:8000/
+systemctl is-active samudra
+echo "NOW: $(git rev-parse --short HEAD)  $(git log -1 --oneline)"
+```
+
+**After rollback:** the next happy-path `git pull --ff-only` will re-advance to
+`origin/main`. If main still contains the bad change, either leave the host
+pinned until a fix merges, or cherry-pick a fix onto a temporary branch — do
+**not** force-push main from the VPS.
+
+**Unit / nginx rollback:** the on-disk unit is a copy of
+`deploy/samudra.service`. To re-sync from the current repo revision:
+
+```bash
+cp /opt/samudra/repo/deploy/samudra.service /etc/systemd/system/samudra.service
+systemctl daemon-reload
+systemctl restart samudra
+```
+
+nginx is host-managed under `/etc/nginx/sites-enabled/samudra` (not always
+identical to `deploy/samudra.nginx` placeholders). Diff before overwrite;
+`nginx -t && systemctl reload nginx` after any edit.
+
+---
+
+## Corpus publish / rollback (separate ladder)
+
+Code restart does **not** rebuild `corpus.db`. After corpus source changes:
+
+```bash
+CORPUS_PATH=/opt/samudra/corpus \
+DB_PATH=/opt/samudra/db/corpus.db \
+NEXT_DB_PATH=/opt/samudra/db/corpus.next.db \
+BACKUP_DIR=/opt/samudra/db/backups \
+VENV=/opt/samudra/venv \
+  /opt/samudra/repo/reindex.sh
+```
+
+Corpus DB rollback (no service restart required for the next query):
+
+```bash
+ls -lt /opt/samudra/db/backups/
+cp /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db /opt/samudra/db/corpus.db
+```
+
+Full detail: [DEPLOYMENT.md § Ongoing corpus publish](https://github.com/gasyoun/SamudraManthanam/blob/main/DEPLOYMENT.md#ongoing-corpus-publish)
+and § Rollback a corpus publish.
+
+---
+
+## Env / AI key changes
+
+```bash
+# Edit only as root; never commit .env
+nano /opt/samudra/.env
+chmod 600 /opt/samudra/.env
+chown root:samudra /opt/samudra/.env
+systemctl restart samudra
+```
+
+Admin API uses **headers**, not `?key=` (refused with 400):
+
+```bash
+# ADMIN_SECRET_KEY from /opt/samudra/.env or /root/samudra-admin-key.txt
+curl -fsS -X POST -H "X-Admin-Key: $ADMIN_SECRET_KEY" \
+  http://127.0.0.1:8000/api/admin/vacuum
+```
+
+---
+
+## What this runbook deliberately excludes
+
+| Topic | Where |
+|---|---|
+| First-time clone / venv / certbot | [DEPLOYMENT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/DEPLOYMENT.md) |
+| Offline-pack nginx gzip rules | DEPLOYMENT.md § Offline-search packs |
+| Multi-GB reindex ops / rights | reindex path above; do not conflate with code pull |
+| Systema Laravel on same host | `/var/www/html` — different product |
+
+---
+
+## Provenance
+
+- Wave P2 / H2388 (Grok 4.5 `grok-4.5`): expand operator pull/pip/restart/rollback.
+- Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
+- Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
+  `/opt/samudra/repo/OPS.md` as the source of truth.
+
+_Dr. Mārcis Gasūns_
