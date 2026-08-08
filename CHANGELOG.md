@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **Corpus_builder Phase 2 shared utils via OtherUnitFiles (H2430, Grok 4.5 `grok-4.5`).** `cb.lpi` / `cb_headless.lpi` set `OtherUnitFiles=dcu;..\..\Units`; single [`Units/uTypes.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/uTypes.pas) (promoted `TWideStringArr`; obsolete `dcu/uTypes` removed). Builder `TextU` dual-kept in `dcu/` (name collision with Index `textu`, H2429). Phase-2 common-dir + SHARED_CODE registration checkboxes ticked. Doc: [`docs/H2430_OTHERUNITFILES_SHARED_UTILS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2430_OTHERUNITFILES_SHARED_UTILS.md). `lazbuild` green: cb (7318 lines), cb_headless, Index.
+
+### Fixed
+- **`cb_headless.lpr` program terminator** was `end;` (FPC Fatal 2003); corrected to `end.` so headless `lazbuild` links again (noticed while proving H2430).
+
+## [0.19.26] - 2026-08-08
 ### Added
 - **Production deploy runbook (H2388, Grok 4.5 `grok-4.5`).** New
   [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md):
@@ -15,12 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `193.232.229.92`). [DEPLOYMENT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/DEPLOYMENT.md)
   points day-2 ops there; layout/`state.db` path aligned with prod; corpus vs
   code rollback separated. Wave P2 exit.
-
-### Changed
-- **Corpus_builder Phase 2 shared utils via OtherUnitFiles (H2430, Grok 4.5 `grok-4.5`).** `cb.lpi` / `cb_headless.lpi` set `OtherUnitFiles=dcu;..\..\Units`; single [`Units/uTypes.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/uTypes.pas) (promoted `TWideStringArr`; obsolete `dcu/uTypes` removed). Builder `TextU` dual-kept in `dcu/` (name collision with Index `textu`, H2429). Phase-2 common-dir + SHARED_CODE registration checkboxes ticked. Doc: [`docs/H2430_OTHERUNITFILES_SHARED_UTILS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2430_OTHERUNITFILES_SHARED_UTILS.md). `lazbuild` green: cb (7318 lines), cb_headless, Index.
-
-### Fixed
-- **`cb_headless.lpr` program terminator** was `end;` (FPC Fatal 2003); corrected to `end.` so headless `lazbuild` links again (noticed while proving H2430).
 
 ## [0.19.25] - 2026-08-08
 ### Added
