@@ -1,6 +1,6 @@
 # Corpus Builder — dependency inventory (Phase 1)
 
-_Created: 01-08-2026 · Last updated: 07-08-2026_
+_Created: 01-08-2026 · Last updated: 08-08-2026_
 
 Source: [Corpus_builder/ROADMAP.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) Phase 1 item
 «Инвентаризация зависимостей». Closed by the `/roadmap-item-exec` pass that
@@ -277,17 +277,20 @@ first candidates to compile under FPC without LCL:
 
 ---
 
-## 6. Overlap with main app `Units/` (Phase 2 preview)
+## 6. Overlap with main app `Units/` (Phase 2)
 
-| File | Builder | Main app [`Units/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Units) | Identical? |
+**H2429 (08-08-2026) closed the canonical pick** — full table + API lists:
+[`docs/H2429_DCU_UNITS_CANONICAL_DIFF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2429_DCU_UNITS_CANONICAL_DIFF.md).
+
+| File | Builder | Main app [`Units/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Units) | Status after H2429 |
 |---|---|---|---|
-| `TextU.pas` | 37 202 B | 11 651 B | **No** — builder copy is ~3× larger |
-| `uTypes.pas` | 1 735 B | 1 697 B | **No** — small drift |
+| `TextU.pas` | 35 658 B (VCL-free) + `TextUVCL` 2 381 B | **`textu.pas` 11 651 B** is Index/FPC helpers (name collision); true twin is **`_textu.pas` 33 006 B** (stale, still VCL) | **Split:** builder `TextU` canonical for `cb`; Index `textu` stays separate |
+| `uTypes.pas` | 1 735 B (`TWideStringArr` extra) | 1 697 B | **Builder master** (sole type delta) |
 | `ArtMath`, `CalcSimU`, `mytypes`, `myutils`, `statprocs`, `uSort` | builder only | — | no main-app twin under those names |
-| `UpdateChecker.pas`, `_Math.pas`, `_textu.pas`, `_winutils.pas` | — | main only | not used by corpus builder |
+| `UpdateChecker.pas`, `_Math.pas`, `_textu.pas`, `_winutils.pas` | — | main only | `_textu` = non-canonical twin; not used by corpus builder |
 
-Phase 2 must pick a **canonical** `TextU`/`uTypes` and re-diff; do not assume the
-builder copy is a subset of the main app.
+Do **not** assume builder TextU is a subset of Index `Units/textu` — it is not.
+Shared-path work → H2430; never drop builder-only APIs used by `uMhHTML`.
 
 ---
 
