@@ -1,0 +1,17 @@
+{
+  "input": "02_Transl.txt",
+  "ok": true,
+  "checks": {
+    "chapters": true,
+    "shlokas": true,
+    "comments": true,
+    "pages": true
+  },
+  "messageCount": 4,
+  "messages": [
+    " - ����� ����: 1",
+    " - ����� ����: 2",
+    " - ����� ����������� ������������ : 0",
+    " - page markers found: 1"
+  ]
+}

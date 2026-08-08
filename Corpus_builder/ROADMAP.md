@@ -1,6 +1,6 @@
 # Corpus Builder — план развития (Roadmap)
 
-_Создано: 05-07-2026 · Обновлено: 04-08-2026_
+_Создано: 05-07-2026 · Обновлено: 08-08-2026_
 
 > **Обновление 10-07-2026 (H534).** Появился **альтернативный, агент-исполнимый
 > путь ингеста на Python** — не порт `cb.exe` на Lazarus, а замена его для
@@ -47,15 +47,17 @@ Delphi 7.
 Цель: закрепить текущее состояние и убрать очевидный технический долг **до**
 любого переноса, чтобы было с чем сравнивать поведение.
 
-- [~] **Golden-file тесты.** Каркас и процедура фиксации готовы
-      ([`tests/golden/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Corpus_builder/tests/golden)
-      + README с точной инструкцией захвата). **Осталось:** прогнать `cb.exe` на
-      реальном мини-наборе и положить побайтовый эталон в `expected/`.
-      **Blocked (01-08-2026, roadmap-item-exec skip recorded):** `cb.exe` is GUI-only
-      (no headless until Phase 4); real `01_Sanskrit`/`02_Transl`/`config.ini` source
-      mini-set is not in-repo; `_check.json` needs a Delphi-7 recompile of
-      `fCheckDialog.pas` that the committed binary does not yet include. Skipped so
-      Phase 1 inventory can proceed; do not treat `[~]` as done.
+- [x] **Golden-file тесты.** Done 08-08-2026 (H2427, Grok 4.5 grok-4.5):
+      case01 input + expected under
+      [	ests/golden/case01/](https://github.com/gasyoun/SamudraManthanam/tree/main/Corpus_builder/tests/golden/case01);
+      headless driver
+      [PSRCBuilder/cb_headless.lpr](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb_headless.lpr);
+      verify script
+      [	ests/golden/run_golden_case01.py](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/tests/golden/run_golden_case01.py)
+      (--verify twice PASS). Baseline = Lazarus engine (Delphi GUI binary stale).
+      Report:
+      [docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md).
+
 - [x] **Убрать мусор из репозитория.** Удалены из git: `Unit1.*`, `*.dof`,
       все `*.~pas`/`*.~dfm`/`*.~ddp`, `*.ddp` и все `*.dcu` (в т.ч. в `dcu/`);
       исходники `dcu/*.pas` и формы `*.dfm` сохранены. Добавлен
@@ -152,9 +154,10 @@ Delphi 7.
       fMainForm. `lazbuild` **green** on Windows x64 — see
       [`docs/H2417_LAZARUS_BUILD_WIN64.log`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2417_LAZARUS_BUILD_WIN64.log)
       (1603 lines, linked `lib/x86_64-win64/cb.exe`).
-- [ ] **Проверка эталоном.** Пересобрать golden-набор из Фазы 0 новым бинарником;
-      выход обязан совпасть с зафиксированным. *(still blocked: Phase 0 golden
-      `expected/` not captured — GUI-only capture residual.)*
+- [x] **Проверка эталоном.** Done 08-08-2026 (H2427, Grok 4.5 grok-4.5):
+      python Corpus_builder/tests/golden/run_golden_case01.py --verify — six expected files
+      byte-identical on two consecutive runs against Lazarus cb_headless.
+
 - [~] **Собрать под Windows и Linux** — Windows x64 **proved** (H2417). Linux
       build not run on this host (no Linux agent here).
 

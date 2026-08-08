@@ -163,9 +163,14 @@ var
  Diff:integer;
  N_Prev,S_N:string;
  FirstPage:boolean;
+ BaseCount:integer;
 begin
+ // H2427: Result against ErrList size *before* this check. Prior CheckChapters/
+ // CheckShlokas/CheckComments already left summary lines in ErrList, so
+ // Result:=ErrList.Count=1 always failed after a successful earlier stage.
  FirstPage:=True;
  n:=0;
+ BaseCount:=ErrList.Count;
  for i:=1 to MhList.Count do
  begin
   S:=MhList[i-1];
@@ -176,15 +181,16 @@ begin
    S_N:=CutNextUseDelimiter(S, E_Page.Text[3] );
    if FirstPage then N_Prev:=IntToStr(StrToInt(S_N)-1);
    Diff:=StrToInt(S_N)-StrToInt(N_Prev);
-   if (Diff<>1) then ErrList.Add(' - ������ � ��������� ��������: '+MhList[i-1]);
+   if (Diff<>1) then ErrList.Add(' - gap in page sequence: '+MhList[i-1]);
    N_Prev:=S_N;
    FirstPage:=false;
   except
-   ShowMessage('������ � ������ '+IntToStr(i));
+   // Headless-safe: never ShowMessage (blocks cb_headless).
+   ErrList.Add(' - page parse error at line '+IntToStr(i)+': '+MhList[i-1]);
   end;
  end;
- ErrList.Add(' - ����� ������������� �������: '+IntToStr(n));
- Result:=ErrList.Count=1;
+ ErrList.Add(' - page markers found: '+IntToStr(n));
+ Result:=ErrList.Count=BaseCount+1;
 end;
 
 Function TOKBottomDlg.CheckShlokas:boolean;
@@ -262,7 +268,7 @@ begin
  T:=TStringList.Create;
  try
   J.Add('{');
-  J.Add('  "input": "'+JEsc(AFileName)+'",');
+  J.Add('  "input": "'+JEsc(ExtractFileName(AFileName))+'",'); // H2427 portable golden
   if okAll then J.Add('  "ok": true,') else J.Add('  "ok": false,');
   J.Add('  "checks": {');
   J.Add('    "chapters": '+TriStr(rChap)+',');
