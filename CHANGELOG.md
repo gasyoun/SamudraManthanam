@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.24] - 2026-08-08
 ### Added
 - **Corpus_builder Phase 2 dcu vs Units canonical diff (H2429, Grok 4.5 `grok-4.5`).** Written comparison of builder `TextU`/`uTypes` vs `Units/` twins: sizes, API deltas, consumer-safe **split** ruling (builder TextU for `cb`; Index `textu` is not a twin; `uTypes` master = builder). Phase-2 first roadmap checkbox ticked. Report: [`docs/H2429_DCU_UNITS_CANONICAL_DIFF.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2429_DCU_UNITS_CANONICAL_DIFF.md).
 - **Corpus_builder Phase 0 golden + Phase 3 re-verify (H2427, Grok 4.5 grok-4.5).** case01 fixtures under 	ests/golden/case01/; headless cb_headless (console) drives TMhHTMLBuilder + CheckAll; 
