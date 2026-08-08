@@ -17,5 +17,17 @@
   "annotates_remaps": [],
   "footnote_mode": "bracket",
   "footnote_mode_requested": "auto",
+  "prose_note_stats": {
+    "parsed": 5,
+    "rejected_wrap": 0,
+    "rejected_gap": 0,
+    "rejected_dup": 0
+  },
+  "bracket_free_stats": {
+    "parsed": 0,
+    "rejected_gap": 0,
+    "rejected_dup": 0,
+    "fn1_glued": false
+  },
   "total_endnotes": 0
 }

@@ -298,6 +298,14 @@ _NOTES_HEAD_RE = re.compile(
 # not.
 _BACKMATTER_RE = re.compile(r"^[А-ЯЁ][А-ЯЁ \-]{7,45}")
 
+# Decorative book/work colophon (not a glossary). Must not close the body
+# *before* a trailing КОММЕНТАРИЙ block (MBH Ignatiev: «ТАК ЗАКАНЧИВАЕТСЯ
+# «МАХАБХАРАТА»» sits immediately above ``[1] КОММЕНТАРИЙ``).
+_COLOPHON_LINE_RE = re.compile(
+    r"^\s*(ТАК\s+ЗАКАНЧИВАЕТСЯ|ТАКОВА\b|КОНЕЦ\b)",
+    re.IGNORECASE,
+)
+
 # A bare page-number line (pdftotext emits running page numbers alone).
 _PAGENUM_RE = re.compile(r"^\s*\d{1,4}\s*$")
 
@@ -338,6 +346,14 @@ _PROSE_XREF_WRAP_RE = re.compile(
 # Max upward gap between consecutive accepted prose note numbers (Kāma-samūha
 # real gaps are almost always 1–8; a larger jump is usually a false start).
 _PROSE_NOTE_GAP_TOL = 20
+
+# Free-form pandoc endnotes without ch.v target (H2450 remainder reparse):
+# ``[N] free text…`` multi-line until next ``[M]``. Link by first inline
+# ``[N]`` use in a verse body (MBH Ignatiev / yoni-pūjā).
+_FREE_BRACKET_NOTE_RE = re.compile(
+    r"^\[(?P<fn>\d{1,3})\]\s+(?P<text>\S.*)$"
+)
+_FREE_BRACKET_GAP_TOL = 50
 
 # --- glued-digit page-local footnotes (H2377 / Māyā-tantra) -----------------
 #
@@ -1134,6 +1150,75 @@ def prose_note_signal(note_lines: list[str]) -> dict:
     }
 
 
+def parse_bracket_free_endnotes(
+    note_lines: list[str],
+    fn1_glued: bool = False,
+) -> tuple[dict[int, dict], dict]:
+    """Parse free-form ``[N] text`` endnotes (no ch.v target in the note).
+
+    H2450 remainder reparse (MBH Ignatiev, yoni-pūjā): pandoc collects notes
+    as ``[N] free prose`` without the ``ch.v(pada).`` prefix. Link key is
+    assigned later from the first verse body that consumes inline ``[N]``
+    (``link_rule=inline_bracket_first_use``). When pandoc glues ``[1]`` onto
+    the section heading (``fn1_glued``), the first note line has no bracket.
+    """
+    notes: dict[int, dict] = {}
+    current: dict | None = None
+    last_fn = 0
+    first_note = True
+    rejected_gap = 0
+    rejected_dup = 0
+
+    for raw in note_lines:
+        stripped = raw.strip()
+        if not stripped or _PAGENUM_RE.match(stripped):
+            continue
+        m = _FREE_BRACKET_NOTE_RE.match(stripped)
+        fn: int | None = None
+        text = ""
+        if m:
+            fn = int(m.group("fn"))
+            text = m.group("text")
+        elif first_note and fn1_glued:
+            fn = 1
+            text = stripped
+        is_start = False
+        if fn is not None:
+            if fn in notes:
+                rejected_dup += 1
+            elif last_fn == 0 and fn >= 1:
+                is_start = True
+            elif last_fn < fn <= last_fn + _FREE_BRACKET_GAP_TOL:
+                is_start = True
+            else:
+                rejected_gap += 1
+        if is_start:
+            current = {
+                "fn": fn,
+                "chapter": None,
+                "verse": None,
+                "pada": None,
+                "text": text,
+                "link_rule": "inline_bracket_first_use",
+            }
+            notes[fn] = current
+            last_fn = fn
+            first_note = False
+        elif current is not None:
+            current["text"] += " " + stripped
+        # else: noise before first note
+
+    for n in notes.values():
+        n["text"] = re.sub(r"\s+", " ", n["text"]).strip()
+    stats = {
+        "parsed": len(notes),
+        "rejected_gap": rejected_gap,
+        "rejected_dup": rejected_dup,
+        "fn1_glued": fn1_glued,
+    }
+    return notes, stats
+
+
 def _passage_for_verse_num(
     chapter_passages: list[str], chn: int, vnum: int,
 ) -> str | None:
@@ -1196,20 +1281,22 @@ def parse_book(
     """Parse one Ignatjev single-book translation into (records, report).
 
     ``footnote_mode``: ``auto`` | ``bracket`` | ``glued-digit`` | ``prose``
-    (H2377 / H2450).
+    | ``bracket-free`` (H2377 / H2450 / remainder reparse).
     """
     mode = footnote_mode
     glued_stats: dict = {}
     prose_stats: dict = {}
+    free_stats: dict = {}
     pre_fn_map: dict[int, dict] | None = None
     if mode == "auto":
         mode = detect_footnote_mode(text)
     if mode == "glued-digit":
         text, pre_fn_map, glued_stats = strip_glued_digit_page_notes(text)
-    elif mode not in ("bracket", "prose"):
+    elif mode not in ("bracket", "prose", "bracket-free"):
         raise ValueError(
             f"unknown footnote_mode {footnote_mode!r} "
-            f"(resolved {mode!r}); expected auto|bracket|glued-digit|prose"
+            f"(resolved {mode!r}); expected "
+            f"auto|bracket|glued-digit|prose|bracket-free"
         )
     # Form-feeds are page markers for the glued-digit front-end; once notes
     # are stripped (or in bracket mode) treat them as plain newlines so
@@ -1257,6 +1344,10 @@ def parse_book(
         # heading further down remains the body/notes closer.
         if _NOTES_HEAD_RE.match(lines[i]):
             continue
+        # Colophon before the notes block must not steal search_end
+        # (MBH Ignatiev remainder reparse).
+        if _COLOPHON_LINE_RE.match(lines[i]):
+            continue
         if _BACKMATTER_RE.match(lines[i]):
             backmatter_idx = i
             break
@@ -1301,20 +1392,37 @@ def parse_book(
             fn_map, prose_stats = (
                 parse_prose_endnotes(note_lines) if note_lines else ({}, {})
             )
+        elif mode == "bracket-free":
+            fn_map, free_stats = (
+                parse_bracket_free_endnotes(note_lines, fn1_glued)
+                if note_lines else ({}, {})
+            )
         else:
             fn_map = parse_endnotes(note_lines, fn1_glued) if note_lines else {}
-            # Auto-upgrade only when caller asked for ``auto``: trailing
-            # КОММЕНТАРИЙ is prose N. notes (H2415 remainder — bracket
-            # parser correctly returns {}). Explicit ``bracket`` stays empty.
+            # Auto-upgrade only when caller asked for ``auto`` and structured
+            # bracket parse is empty (H2415 remainder).
+            # Order: prose N.  →  free-form [N] text (MBH / yoni-pūjā).
             if (
                 footnote_mode == "auto"
                 and note_lines
                 and len(fn_map) == 0
             ):
                 prose_map, prose_stats = parse_prose_endnotes(note_lines)
-                if len(prose_map) >= 3:
+                free_map, free_stats = parse_bracket_free_endnotes(
+                    note_lines, fn1_glued,
+                )
+                # Prefer the denser front-end. Prose floor is higher (10)
+                # so Kādambara's sparse N(pada). debris does not auto-upgrade
+                # to 5 false N. notes; free-bracket floor stays 3 (yoni-pūjā).
+                if (
+                    len(prose_map) >= 10
+                    and len(prose_map) >= len(free_map)
+                ):
                     fn_map = prose_map
                     mode = "prose"
+                elif len(free_map) >= 3:
+                    fn_map = free_map
+                    mode = "bracket-free"
         if notes_start is not None:
             body_end = notes_start - 1
         elif backmatter_idx is not None:
@@ -1435,8 +1543,12 @@ def parse_book(
         report["glued_digit_stats"] = glued_stats
     if prose_stats:
         report["prose_note_stats"] = prose_stats
+    if free_stats:
+        report["bracket_free_stats"] = free_stats
     if mode == "prose":
         report["prose_link_rule"] = "note_num_eq_verse"
+    if mode == "bracket-free":
+        report["bracket_free_link_rule"] = "inline_bracket_first_use"
     seq = 0
     seen_passages: set[str] = set()
     all_fn = set(fn_map)
@@ -1484,6 +1596,11 @@ def parse_book(
             # No inline markers in body for prose apparatus; skip linking.
             fn_numbers = set()
             link_fn = link_footnotes
+        elif mode == "bracket-free":
+            # Free-form notes have no ch.v; all numbers are candidates until
+            # first inline use assigns chapter/verse.
+            fn_numbers = all_fn_numbers
+            link_fn = link_footnotes
         else:
             fn_numbers = {
                 fn for fn, note in fn_map.items()
@@ -1501,7 +1618,7 @@ def parse_book(
                 passage = f"{chn}.{re.split(r'[-–]', label)[0]}-{re.split(r'[-–]', label)[1]}"
             else:
                 passage = f"{chn}.{label}"
-            clean, html_text, _refs = link_fn(v["text"], fn_numbers, used_fn)
+            clean, html_text, refs = link_fn(v["text"], fn_numbers, used_fn)
             # OLE/PDF sometimes leaves a bare ``(1)`` with no body after the
             # chapter heading (H2353 Devīmāhātmya ch.1/2/13). Empty verses are
             # not real passages — skip rather than mint blank cards.
@@ -1515,6 +1632,17 @@ def parse_book(
                     suffix = chr(ord(suffix) + 1)
                 passage = f"{passage}{suffix}"
             seen_passages.add(passage)
+            # Free-bracket: first inline [N] use assigns the note target.
+            if mode == "bracket-free" and refs:
+                try:
+                    vnum = int(re.split(r"[-–]", label)[0])
+                except ValueError:
+                    vnum = 1
+                for fn in refs:
+                    note = fn_map.get(fn)
+                    if note is not None and note.get("chapter") is None:
+                        note["chapter"] = chn
+                        note["verse"] = vnum
             group = f"{work_slug}:{passage}"
             seq += 1
             rec = {
@@ -1608,6 +1736,15 @@ def parse_book(
         report["unlinked_prose_notes"] = unlinked
         report["prose_notes_linked"] = len(used_prose_fn)
         report["prose_notes_unlinked"] = len(unlinked)
+        report["unrecognised_endnotes"] = len(unlinked)
+    elif mode == "bracket-free":
+        assigned = {
+            fn for fn, note in fn_map.items() if note.get("chapter") is not None
+        }
+        unlinked = sorted(all_fn - assigned)
+        report["bracket_free_notes_linked"] = len(assigned)
+        report["bracket_free_notes_unlinked"] = len(unlinked)
+        report["unlinked_bracket_free_notes"] = unlinked
         report["unrecognised_endnotes"] = len(unlinked)
     else:
         report["unrecognised_endnotes"] = len(all_fn - used_fn - {
@@ -1731,12 +1868,11 @@ def main() -> None:
     ap.add_argument("--output-dir", default="web/corpus_builder/jsonl")
     ap.add_argument(
         "--footnote-mode",
-        choices=("auto", "bracket", "glued-digit", "prose"),
+        choices=("auto", "bracket", "glued-digit", "prose", "bracket-free"),
         default="auto",
-        help="endnote front-end: auto (bracket, upgrades to prose when the "
-             "КОММЕНТАРИЙ block is N. print-style), pandoc bracket [N], "
-             "page-local glued-digit (DBhP/Māyā), or prose N. commentary "
-             "(H2450 Kāma-samūha class)",
+        help="endnote front-end: auto (bracket → prose N. → free [N] text), "
+             "pandoc structured [N] ch.v, page-local glued-digit, prose N. "
+             "(H2450), or free-form [N] text linked by first inline use",
     )
     ap.add_argument("--stdout-report", action="store_true")
     args = ap.parse_args()
