@@ -2,7 +2,7 @@
   "work": "kama-samuha",
   "chapters": 1,
   "verse_count": 685,
-  "comment_count": 0,
+  "comment_count": 489,
   "verse_gaps": [
     "1: 22->24",
     "1: 30->32",
@@ -62,14 +62,42 @@
   "chapter_numbers": [
     1
   ],
-  "unrecognised_endnotes": 0,
+  "unrecognised_endnotes": 17,
   "annotates_remapped": 0,
   "annotates_remap_max_delta": 0,
   "annotates_remaps": [],
-  "footnote_mode": "bracket",
-  "footnote_mode_requested": "auto",
+  "footnote_mode": "prose",
+  "footnote_mode_requested": "prose",
+  "prose_note_stats": {
+    "parsed": 506,
+    "rejected_wrap": 11,
+    "rejected_gap": 1,
+    "rejected_dup": 1
+  },
+  "prose_link_rule": "note_num_eq_verse",
   "id_collisions": [
     "1.66"
   ],
-  "total_endnotes": 0
+  "unlinked_prose_notes": [
+    65,
+    79,
+    158,
+    182,
+    207,
+    369,
+    377,
+    409,
+    419,
+    506,
+    526,
+    536,
+    613,
+    615,
+    672,
+    688,
+    738
+  ],
+  "prose_notes_linked": 489,
+  "prose_notes_unlinked": 17,
+  "total_endnotes": 506
 }

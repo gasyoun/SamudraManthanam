@@ -39,8 +39,13 @@ Differences from the DBhP PDF pipeline this generalizes:
   every chapter body and fake ``(N)`` verse boundaries. Mode
   ``glued-digit`` strips per-page note regions first, then links inline
   digits with the DBhP heuristic. ``--footnote-mode auto`` (default)
-  picks ``glued-digit`` when mid-body page-local note-start lines are
-  dense, else ``bracket``.
+  stays ``bracket`` for Wave-A count lock (glued-digit is opt-in).
+* **Prose numbered commentary (``prose`` mode, H2450).** Print-style notes
+  after ``КОММЕНТАРИЙ`` of the form ``N. text…`` (often ``N. Источник: …``),
+  multi-line until the next note start. Link key: note number equals verse
+  number within a chapter (no pandoc bracket body markers). ``auto`` upgrades
+  to ``prose`` when the collected note block yields zero bracket endnotes but
+  at least 3 prose note starts (H2415 remainder works).
 
 Usage:
     python web/corpus_builder/ignatiev_book_to_canonical.py \
@@ -51,6 +56,10 @@ Usage:
     python web/corpus_builder/ignatiev_book_to_canonical.py \
         --input ".../Майя-тантра.pdf" --work-slug maya-tantra \
         --footnote-mode glued-digit
+    # Kāma-samūha-class prose commentary apparatus:
+    python web/corpus_builder/ignatiev_book_to_canonical.py \
+        --input ".../kama-samuha.prep.txt" --work-slug kama-samuha \
+        --footnote-mode prose
 
 Multi-part works (Ignatjev split some translations across several files,
 e.g. Kularnava-tantra "Часть первая"/"Часть вторая", each continuing the
@@ -315,6 +324,20 @@ _ENDNOTE_RE = re.compile(
     r"^(?:\[(?P<fn>\d+)\]\s*)?(?P<ch>\d+)\.\s?(?P<v>\d+)"
     r"(?:\s*[-–]\s*\d+)?(?:\((?P<pada>[^)]{0,10})\))?\.\s*(?P<text>.*)"
 )
+
+# Prose commentary start (H2450): "N. text" / "N. Источник: …" after
+# КОММЕНТАРИЙ. Multi-line body until the next accepted start. Cross-ref
+# line-wraps ("см. коммент. к №\n580. continuation") are rejected when the
+# previous non-empty line ends with "№".
+_PROSE_NOTE_RE = re.compile(r"^(?P<fn>\d{1,4})\.\s+(?P<text>\S.*)$")
+# Previous line ends with a cross-ref marker that line-wrapped the number.
+_PROSE_XREF_WRAP_RE = re.compile(
+    r"(?:коммент\.?\s*к\s*№|к\s*№|№)\s*$",
+    re.IGNORECASE,
+)
+# Max upward gap between consecutive accepted prose note numbers (Kāma-samūha
+# real gaps are almost always 1–8; a larger jump is usually a false start).
+_PROSE_NOTE_GAP_TOL = 20
 
 # --- glued-digit page-local footnotes (H2377 / Māyā-tantra) -----------------
 #
@@ -1031,6 +1054,108 @@ def parse_endnotes(note_lines: list[str], fn1_glued: bool) -> dict[int, dict]:
     return notes
 
 
+def parse_prose_endnotes(
+    note_lines: list[str],
+) -> tuple[dict[int, dict], dict]:
+    """Parse print-style ``N. text`` commentary after КОММЕНТАРИЙ (H2450).
+
+    Returns ``(notes, stats)``. Link key (stored as ``verse``): note number
+    == verse number. ``chapter`` is left ``None`` so the emission pass can
+    attach the note to whichever chapter actually emitted that verse
+    (residue for no match is reported, never guessed).
+
+    Rejects:
+    * line-wrap false starts after ``…к №`` / ``…№`` on the previous line
+      (e.g. ``см. коммент. к №\\n580. Кукушка…`` is not note 580);
+    * non-monotonic / oversized gaps (``_PROSE_NOTE_GAP_TOL``);
+    * duplicate note numbers (first wins).
+    """
+    notes: dict[int, dict] = {}
+    current: dict | None = None
+    last_fn = 0
+    prev_nonempty = ""
+    rejected_wrap = 0
+    rejected_gap = 0
+    rejected_dup = 0
+
+    for raw in note_lines:
+        stripped = raw.strip()
+        if not stripped or _PAGENUM_RE.match(stripped):
+            continue
+        m = _PROSE_NOTE_RE.match(stripped)
+        fn = int(m.group("fn")) if m else None
+        is_start = False
+        if m and fn is not None:
+            if _PROSE_XREF_WRAP_RE.search(prev_nonempty):
+                rejected_wrap += 1
+            elif fn in notes:
+                rejected_dup += 1
+            elif last_fn and not (last_fn < fn <= last_fn + _PROSE_NOTE_GAP_TOL):
+                rejected_gap += 1
+            elif fn <= last_fn:
+                rejected_gap += 1
+            else:
+                is_start = True
+        if is_start:
+            current = {
+                "fn": fn,
+                "chapter": None,  # assigned at emission by verse match
+                "verse": fn,  # link key: note N → verse N
+                "pada": None,
+                "text": m.group("text"),
+                "link_rule": "note_num_eq_verse",
+            }
+            notes[fn] = current
+            last_fn = fn
+        elif current is not None:
+            current["text"] += " " + stripped
+        prev_nonempty = stripped
+
+    for n in notes.values():
+        n["text"] = re.sub(r"\s+", " ", n["text"]).strip()
+    stats = {
+        "parsed": len(notes),
+        "rejected_wrap": rejected_wrap,
+        "rejected_gap": rejected_gap,
+        "rejected_dup": rejected_dup,
+    }
+    return notes, stats
+
+
+def prose_note_signal(note_lines: list[str]) -> dict:
+    """Density of prose ``N.`` note starts (diagnostic; does not select mode)."""
+    starts = 0
+    for raw in note_lines:
+        if _PROSE_NOTE_RE.match(raw.strip()):
+            starts += 1
+    return {
+        "prose_note_start_lines": starts,
+        "would_suggest_prose": starts >= 3,
+    }
+
+
+def _passage_for_verse_num(
+    chapter_passages: list[str], chn: int, vnum: int,
+) -> str | None:
+    """Exact ``chn.vnum`` or a range passage covering ``vnum``; else None."""
+    exact = f"{chn}.{vnum}"
+    if exact in chapter_passages:
+        return exact
+    prefix = f"{chn}."
+    for p in chapter_passages:
+        if not p.startswith(prefix):
+            continue
+        tail = p[len(prefix):]
+        m = re.match(r"(\d+)(?:\s*[-–]\s*(\d+))?[a-z]?$", tail)
+        if not m:
+            continue
+        lo = int(m.group(1))
+        hi = int(m.group(2)) if m.group(2) else lo
+        if lo <= vnum <= hi:
+            return p
+    return None
+
+
 def link_footnotes(text: str, fn_numbers: set[int], used: set[int]):
     """Replace ``[N]`` inline footnote refs with sup-link HTML; return
     (clean_text, html_text, refs). Only refs that are real, unconsumed
@@ -1070,19 +1195,21 @@ def parse_book(
 ) -> tuple[list[dict], dict]:
     """Parse one Ignatjev single-book translation into (records, report).
 
-    ``footnote_mode``: ``auto`` | ``bracket`` | ``glued-digit`` (H2377).
+    ``footnote_mode``: ``auto`` | ``bracket`` | ``glued-digit`` | ``prose``
+    (H2377 / H2450).
     """
     mode = footnote_mode
     glued_stats: dict = {}
+    prose_stats: dict = {}
     pre_fn_map: dict[int, dict] | None = None
     if mode == "auto":
         mode = detect_footnote_mode(text)
     if mode == "glued-digit":
         text, pre_fn_map, glued_stats = strip_glued_digit_page_notes(text)
-    elif mode != "bracket":
+    elif mode not in ("bracket", "prose"):
         raise ValueError(
             f"unknown footnote_mode {footnote_mode!r} "
-            f"(resolved {mode!r}); expected auto|bracket|glued-digit"
+            f"(resolved {mode!r}); expected auto|bracket|glued-digit|prose"
         )
     # Form-feeds are page markers for the glued-digit front-end; once notes
     # are stripped (or in bracket mode) treat them as plain newlines so
@@ -1124,6 +1251,12 @@ def parse_book(
     if scan_from < n and _BACKMATTER_RE.match(lines[scan_from]):
         scan_from += 1  # skip the last chapter's own ALL-CAPS title
     for i in range(scan_from, n):
+        # H2450: ALL-CAPS ``КОММЕНТАРИЙ`` matches both _NOTES_HEAD_RE and
+        # _BACKMATTER_RE. Prefer notes-head classification so the prose /
+        # bracket endnote block is collected; the real glossary/literature
+        # heading further down remains the body/notes closer.
+        if _NOTES_HEAD_RE.match(lines[i]):
+            continue
         if _BACKMATTER_RE.match(lines[i]):
             backmatter_idx = i
             break
@@ -1164,7 +1297,24 @@ def parse_book(
         else:
             body_end = n
     else:
-        fn_map = parse_endnotes(note_lines, fn1_glued) if note_lines else {}
+        if mode == "prose":
+            fn_map, prose_stats = (
+                parse_prose_endnotes(note_lines) if note_lines else ({}, {})
+            )
+        else:
+            fn_map = parse_endnotes(note_lines, fn1_glued) if note_lines else {}
+            # Auto-upgrade only when caller asked for ``auto``: trailing
+            # КОММЕНТАРИЙ is prose N. notes (H2415 remainder — bracket
+            # parser correctly returns {}). Explicit ``bracket`` stays empty.
+            if (
+                footnote_mode == "auto"
+                and note_lines
+                and len(fn_map) == 0
+            ):
+                prose_map, prose_stats = parse_prose_endnotes(note_lines)
+                if len(prose_map) >= 3:
+                    fn_map = prose_map
+                    mode = "prose"
         if notes_start is not None:
             body_end = notes_start - 1
         elif backmatter_idx is not None:
@@ -1283,14 +1433,19 @@ def parse_book(
     }
     if glued_stats:
         report["glued_digit_stats"] = glued_stats
+    if prose_stats:
+        report["prose_note_stats"] = prose_stats
+    if mode == "prose":
+        report["prose_link_rule"] = "note_num_eq_verse"
     seq = 0
     seen_passages: set[str] = set()
     all_fn = set(fn_map)
     used_fn: set[int] = set()
+    used_prose_fn: set[int] = set()
     # Glued-digit notes are book-global (fn numbers rise across chapters);
     # bracket endnotes are scoped per chapter in the pandoc block. Inline
     # linking: glued mode may see any remaining unused fn; bracket mode
-    # keeps the per-chapter set.
+    # keeps the per-chapter set. Prose mode has no inline [N] markers.
     all_fn_numbers = set(fn_map)
 
     for ch in chapters:
@@ -1325,6 +1480,10 @@ def parse_book(
         if mode == "glued-digit":
             fn_numbers = all_fn_numbers
             link_fn = link_footnotes_glued
+        elif mode == "prose":
+            # No inline markers in body for prose apparatus; skip linking.
+            fn_numbers = set()
+            link_fn = link_footnotes
         else:
             fn_numbers = {
                 fn for fn, note in fn_map.items()
@@ -1386,20 +1545,41 @@ def parse_book(
             if p.startswith(f"{chn}.") and ".comm" not in p
         )
         comm_by_verse: dict[str, list[tuple[int, dict, str, str]]] = {}
-        for fn, note in sorted(fn_map.items()):
-            if note.get("chapter") != chn:
-                continue
-            nverse = note.get("verse") or 1
-            requested = f"{chn}.{nverse}"
-            annot, resolution, delta = _resolve_flat_annotates(
-                requested, chapter_passages, chn)
-            if resolution == "nearest":
-                report["annotates_remapped"] += 1
-                report["annotates_remap_max_delta"] = max(
-                    report["annotates_remap_max_delta"], delta)
-                report["annotates_remaps"].append(
-                    {"requested": requested, "resolved": annot, "delta": delta, "fn": fn})
-            comm_by_verse.setdefault(annot, []).append((fn, note, requested, resolution))
+        if mode == "prose":
+            # H2450: note N → verse N (exact or range cover). Never nearest-
+            # guess across gaps — unlinked notes stay in residue.
+            for fn, note in sorted(fn_map.items()):
+                if fn in used_prose_fn:
+                    continue
+                nverse = note.get("verse") or fn
+                annot = _passage_for_verse_num(chapter_passages, chn, nverse)
+                if annot is None:
+                    continue
+                requested = f"{chn}.{nverse}"
+                resolution = (
+                    "exact" if annot == requested else "range_cover"
+                )
+                used_prose_fn.add(fn)
+                note["chapter"] = chn  # record resolved chapter
+                comm_by_verse.setdefault(annot, []).append(
+                    (fn, note, requested, resolution))
+        else:
+            for fn, note in sorted(fn_map.items()):
+                if note.get("chapter") != chn:
+                    continue
+                nverse = note.get("verse") or 1
+                requested = f"{chn}.{nverse}"
+                annot, resolution, delta = _resolve_flat_annotates(
+                    requested, chapter_passages, chn)
+                if resolution == "nearest":
+                    report["annotates_remapped"] += 1
+                    report["annotates_remap_max_delta"] = max(
+                        report["annotates_remap_max_delta"], delta)
+                    report["annotates_remaps"].append(
+                        {"requested": requested, "resolved": annot,
+                         "delta": delta, "fn": fn})
+                comm_by_verse.setdefault(annot, []).append(
+                    (fn, note, requested, resolution))
         for annot, items in comm_by_verse.items():
             for k, (fn, note, requested, resolution) in enumerate(items, 1):
                 seq += 1
@@ -1423,10 +1603,19 @@ def parse_book(
                 })
                 report["comment_count"] += 1
 
-    report["unrecognised_endnotes"] = len(all_fn - used_fn - {
-        fn for fn, note in fn_map.items()
-        if note["chapter"] not in {c["chapter"] for c in chapters if c["chapter"]}
-    }) if all_fn else 0
+    if mode == "prose":
+        unlinked = sorted(all_fn - used_prose_fn)
+        report["unlinked_prose_notes"] = unlinked
+        report["prose_notes_linked"] = len(used_prose_fn)
+        report["prose_notes_unlinked"] = len(unlinked)
+        report["unrecognised_endnotes"] = len(unlinked)
+    else:
+        report["unrecognised_endnotes"] = len(all_fn - used_fn - {
+            fn for fn, note in fn_map.items()
+            if note.get("chapter") not in {
+                c["chapter"] for c in chapters if c["chapter"]
+            }
+        }) if all_fn else 0
     report["total_endnotes"] = len(all_fn)
     return records, report
 
@@ -1542,10 +1731,12 @@ def main() -> None:
     ap.add_argument("--output-dir", default="web/corpus_builder/jsonl")
     ap.add_argument(
         "--footnote-mode",
-        choices=("auto", "bracket", "glued-digit"),
+        choices=("auto", "bracket", "glued-digit", "prose"),
         default="auto",
-        help="endnote front-end: auto-detect (default), pandoc bracket [N] "
-             "block, or page-local glued-digit (DBhP/Māyā PDF convention)",
+        help="endnote front-end: auto (bracket, upgrades to prose when the "
+             "КОММЕНТАРИЙ block is N. print-style), pandoc bracket [N], "
+             "page-local glued-digit (DBhP/Māyā), or prose N. commentary "
+             "(H2450 Kāma-samūha class)",
     )
     ap.add_argument("--stdout-report", action="store_true")
     args = ap.parse_args()

@@ -843,3 +843,131 @@ def test_extract_text_doc_archive_ole_smoke_or_skip():
         shutil.which = real_which  # type: ignore[assignment]
     assert text.strip()
     assert len(text) > 500
+
+# --- H2450 prose commentary apparatus (N. Источник: / multi-line notes) ---
+
+
+def test_parse_prose_endnotes_basic_and_multiline():
+    lines = [
+        "1. Индрами средь данав (dAnavendraiH) – данавы это",
+        "родов асур, потомки Кашьяпы.",
+        "",
+        "2. Милостью Сарасвати люди сочиняют стихи.",
+        "3. Источник: «Шишупала-вадха» Магхи.",
+    ]
+    notes, stats = ig.parse_prose_endnotes(lines)
+    assert sorted(notes) == [1, 2, 3]
+    assert "родов асур" in notes[1]["text"]
+    assert notes[1]["verse"] == 1 and notes[1]["link_rule"] == "note_num_eq_verse"
+    assert notes[1]["chapter"] is None
+    assert "Источник" in notes[3]["text"]
+    assert stats["parsed"] == 3
+    assert stats["rejected_wrap"] == 0
+
+
+def test_parse_prose_endnotes_rejects_xref_linewrap():
+    """``см. коммент. к №\\n580. continuation`` must not mint note 580."""
+    lines = [
+        "461. Также содержится в «Субхашита-ратна-бхандагаре» (304.4). ночные",
+        "лотосы томятся. Чатаки ждут прихода облаков, см. коммент. к №",
+        "580. Кукушка тоскует по манго – см. коммент. к № 9, 20.",
+        "",
+        "462. Как чакора – лунный диск.",
+    ]
+    notes, stats = ig.parse_prose_endnotes(lines)
+    assert sorted(notes) == [461, 462]
+    assert 580 not in notes
+    assert "Кукушка" in notes[461]["text"]
+    assert stats["rejected_wrap"] >= 1
+
+
+def test_parse_prose_endnotes_skips_large_gap_and_dup():
+    lines = [
+        "1. first.",
+        "50. too far after 1 — gap reject.",
+        "2. second real.",
+        "2. duplicate number — reject.",
+        "3. third.",
+    ]
+    notes, stats = ig.parse_prose_endnotes(lines)
+    assert sorted(notes) == [1, 2, 3]
+    assert "too far" in notes[1]["text"] or "too far" not in notes[1]["text"]
+    # gap-rejected "50." is appended to current (1); dup "2." appends to 2
+    assert stats["rejected_gap"] >= 1
+    assert stats["rejected_dup"] >= 1
+
+
+def test_parse_book_prose_mode_links_note_num_to_verse():
+    text = "\n".join([
+        "Глава первая",
+        "Стих один. (1)",
+        "Стих два. (2)",
+        "Стих три. (3)",
+        "Стих пять. (5)",
+        "",
+        "КОММЕНТАРИЙ",
+        "1. Заметка к первому стиху, multi",
+        "line body continues.",
+        "2. Источник: комментарий к «Куттани-мате» (147).",
+        "5. Заметка к пятому.",
+        "9. Нет такого стиха — unlinked residue.",
+        "",
+        "СЛОВАРЬ ИМЕН",
+        "Абхиманью – …",
+    ])
+    records, report = ig.parse_book(
+        text, "kama-prose-test", footnote_mode="prose",
+    )
+    assert report["footnote_mode"] == "prose"
+    assert report["verse_count"] == 4
+    assert report["comment_count"] == 3
+    assert report["prose_notes_linked"] == 3
+    assert 9 in report["unlinked_prose_notes"]
+    ru = {r["passage"]: r for r in records if r["seg"] == "ru"}
+    assert set(ru) == {"1.1", "1.2", "1.3", "1.5"}
+    comm = [r for r in records if str(r.get("seg", "")).startswith("comm")]
+    by_ann = {r["annotates"]: r for r in comm}
+    assert "line body" in by_ann["1.1"]["text"]
+    assert "Источник" in by_ann["1.2"]["text"]
+    assert by_ann["1.5"]["fn"] == 5
+    # glossary must not enter note text
+    assert all("СЛОВАРЬ" not in r["text"] for r in comm)
+
+
+def test_parse_book_auto_upgrades_to_prose_when_bracket_empty():
+    text = "\n".join([
+        "Глава первая",
+        "А. (1)",
+        "Б. (2)",
+        "В. (3)",
+        "КОММЕНТАРИЙ",
+        "1. note one.",
+        "2. note two.",
+        "3. note three.",
+    ])
+    _recs, report = ig.parse_book(text, "auto-prose", footnote_mode="auto")
+    assert report["footnote_mode"] == "prose"
+    assert report["comment_count"] == 3
+
+
+def test_parse_book_explicit_bracket_does_not_upgrade_to_prose():
+    text = "\n".join([
+        "Глава первая",
+        "А. (1)",
+        "Б. (2)",
+        "В. (3)",
+        "КОММЕНТАРИЙ",
+        "1. note one.",
+        "2. note two.",
+        "3. note three.",
+    ])
+    _recs, report = ig.parse_book(text, "br-no-upgrade", footnote_mode="bracket")
+    assert report["footnote_mode"] == "bracket"
+    assert report["comment_count"] == 0
+
+
+def test_passage_for_verse_num_range_cover():
+    passages = ["1.1", "1.3-6", "1.10"]
+    assert ig._passage_for_verse_num(passages, 1, 1) == "1.1"
+    assert ig._passage_for_verse_num(passages, 1, 5) == "1.3-6"
+    assert ig._passage_for_verse_num(passages, 1, 99) is None
