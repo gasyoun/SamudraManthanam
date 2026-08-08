@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; portable check JSON input basename; RusPage init. Doc: [docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2427_GOLDEN_CAPTURE_P3_VERIFY.md).
 
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Search stats show server elapsed time** permanently in the result strip (not only a 1.2 s flash on the progress bar).
 - **AI Разбор `[object Object]`** on long context lines: client truncates each line to 2000 chars (server cap) and formats FastAPI validation `detail` arrays as readable messages (H2426).
 
@@ -84,6 +85,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
 - **Nirvāṇa-tantra 821→492 verse-count drop justified (H2273, Grok 4.5 `grok-4.5`).** Chapter-by-chapter pre/post table against the printed Ignatiev PDF numbering, ≥12 sampled absorbed chunks with debris verdicts, and a ruling on residual `id_collisions` `9.1`/`9.4`. Narrow fix: high-N footnote debris no longer becomes `prev_end` and swallows later real verses (ch.8 measured). Doc: [`docs/NIRVANA_TANTRA_VERSE_COUNT_DROP_H2273.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/NIRVANA_TANTRA_VERSE_COUNT_DROP_H2273.md).
 
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Wave-B Ignatiev dual-run compare (H2076, Sonnet 5 `claude-sonnet-5`).** Independent Sonnet re-run of Grok's Wave-B ingest ([PR #125](https://github.com/gasyoun/SamudraManthanam/pull/125)) confirms 3/5 works byte-identical (Nīlamata, Kulārṇava, Yoginī) and independently reproduces the ≥99% round-trip claim for all 5 via `html_to_canonical.py` against the live corpus. Two works (Adbhuta-rāmāyaṇa, Mahābhāgavata-purāṇa) diverge under a different pandoc build on already-flagged out-of-order source verse numbering — root cause is an unpinned pandoc version, not a corpus defect; the merged corpus (which explicitly logs both anomalies) is confirmed correct-or-better and kept as-is. Also fixes a doc slip (Wave-B unit test count "19" → actual 23). Full memo: [`web/corpus_builder/H2076_SONNET_WAVEB_DUAL_RUN_COMPARE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/H2076_SONNET_WAVEB_DUAL_RUN_COMPARE.md).
 
 ## [0.19.0] - 2026-08-05
@@ -103,6 +105,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
 ### Changed
 - **Admin authentication moves from `?key=` to a header (H1926 C3/C5).** `POST /api/admin/vacuum` and `GET /api/corrections/pending` accept `X-Admin-Key` or `Authorization: Bearer`, compared with `hmac.compare_digest`; **any** credential-shaped query parameter is refused with 400 *without being compared*, including the correct one — by the time the application sees it, nginx and uvicorn have already logged it and browsers have it in history. No time-bounded compatibility path: the only callers were this repo's tests and the operator runbook, both updated here. A credential-scrubbing logging filter is attached to the application loggers **and the root handlers** (a logger-level filter never sees records propagated from child loggers). Operator migration in [DEPLOYMENT.md](https://github.com/gasyoun/SamudraManthanam/blob/main/DEPLOYMENT.md).
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Typed email text no longer grants attribution (H1926 C6).** `POST /api/corrections/propose` resolved the `email` field of the request body against the users table and attached the matching account to the correction — so typing a known scholar's address filed corrections under their name, with no verification step in the loop. The address is now stored as `contact_email` only; `user_id` comes from a redeemed session or is null. `POST /api/identity/lead` also stops returning the internal `users.id`. **Pre-existing `user_id` links written by the old lookup are not evidence of verification** and should not be read as attribution.
 
 ## [0.17.0] - 2026-08-05
@@ -118,6 +121,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
 - **CI test matrix extended to Python 3.10–3.14 (H1927 Lane D3).** The Dockerfile has run `python:3.14-slim` while CI tested only 3.10–3.12, so every release shipped on an interpreter no test had ever executed and nothing would have reported it. The full hermetic suite was measured passing on 3.14.4 *before* choosing to extend the matrix rather than downgrade the image. [`test_runtime_alignment.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_runtime_alignment.py) parses the Dockerfile `FROM` against the workflow matrix so the two cannot silently re-diverge, and carries a fixture replaying the pre-fix state to prove the guard goes red there.
 
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Two checks that would have passed without testing anything (H1927).** The deployment smoke's admin probe pointed at `/api/admin/corrections`, which does not exist — it 404'd and reported PASS; it now hits the real `/api/admin/vacuum`, and a test pins the probe path to a registered route. And every regex bound was being exercised with the textbook `(a+)+$`, which this app's `regex` engine optimises away in ~1 ms; measured 05-08-2026, `(a|a)*$` is an alternation the optimiser cannot collapse and does reach the 0.05 s per-match timeout. Both call sites were switched.
 
 ## [0.16.0] - 2026-08-05
@@ -230,6 +234,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
 
 ## [0.13.0] - 2026-07-25
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **SA morphology no longer keyed off bilingual pairs — unlocks 7,123 Rāmāyaṇa
   verses of DCS gold (H906, Opus 5 `claude-opus-5[1m]`).** The `--sa-morph` and
   `--vidyut-diff` layers iterated `classify()`'s `pairs`, which by design require
@@ -445,6 +450,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
   `validate_mapping`/`emit_jsonl` pipeline.
 
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Full-corpus `ingest.py` was failing on the combined DBhP source (H941).**
   `data.txt` lists the real, intentionally-built `devibhagavata-purana.html`
   but its canonical `web/corpus_builder/jsonl/devibhagavata-purana.jsonl` was
@@ -542,6 +548,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
   `<slug>.ru_morph.tsv` (deterministic, byte-identical across `PYTHONHASHSEED`). The inline НКРЯ
   `<w><ana/>` fold is deferred to the H906-coordinated per-token scheme.
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Кали→кал false positives (H905).** `sanskritisms/filters.py` gains `is_russian_word()`
   (pymorphy3 `word_is_known`, minus Rubanova's curated collision exceptions); `extract.py` now
   drops any non-capitalized candidate that is a known Russian wordform — reproducing Rubanova's
@@ -612,6 +619,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
   metadata-population follow-up) and `FULL_CORPUS_VALIDATION.md` (per-source classify() stats).
   The bulk per-source export bundle stays gitignored and ships as a **release artifact**.
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Sanskritisms index was non-deterministic** — the singular/plural canonical merge
   (`sanskritisms/disambiguate.py`) and the candidate-set iteration (`extract.py`) depended on
   hash order, flipping the index `lemma`/`display` across runs. Now sorted → byte-identical
@@ -621,6 +629,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
 ## [0.3.1] - 2026-07-12
 
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - **Cyrillic homoglyph contamination in Sanskrit-IAST (`sa`) segments** — 7 verses
   across 4 corpus files carried a Cyrillic letter mis-encoded where a Latin IAST
   letter belongs (`с` U+0441 → `c`, `а` U+0430 → `a`): Sundarakāṇḍa 1.35 / 22.25 /
@@ -694,6 +703,7 @@ un_golden_case01.py --verify byte-exact PASS ×2. CheckPages base-count fix; por
 ### Removed
 
 ### Fixed
+- **Bṛhannīla-tantra JSONL duplicate comment IDs** (48 identical double rows) blocked full-pin web publish; dropped dups (2533→2485 records). Rebuild corpus-manifest pin: **230** sources / **723 229** records. `*.jsonl text eol=lf` in `.gitattributes` so Windows pin builds match Linux publish.
 - `html_to_canonical.py` now unescapes HTML entities in searchable text, so
   Ignatjev's OCR-mangled editorial brackets (`>…@`) round-trip exactly (16180/
   16180 RU verses reproduce); `build_corpus_html.py`'s sort key tolerates the

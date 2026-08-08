@@ -29,3 +29,6 @@ web/corpus_builder/jsonl/dic_mw.jsonl filter=lfs diff=lfs merge=lfs -text
 *.ifo binary
 *.idx binary
 *.dz binary
+
+*.jsonl text eol=lf
+

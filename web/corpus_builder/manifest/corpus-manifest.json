@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "3bce35ccde70d1cd44375218b18af894a5da17ae"
+    "revision": "77ce68cd0755923a8d3c2b23afe147ce8f5ce1dc"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -1126,12 +1126,12 @@
       },
       {
         "canonical": {
-          "bytes": 3157207,
+          "bytes": 3072303,
           "first_canonical_id": "brihannila-tantra:4.92.comm1",
           "last_canonical_id": "brihannila-tantra:22.172.comm1",
           "path": "corpus_builder/jsonl/brihannila-tantra.jsonl",
-          "record_count": 2533,
-          "sha256": "e2b56899fe0eb48a4a918dae3d406c6b3190453190d3930b30d0800f62769d42"
+          "record_count": 2485,
+          "sha256": "d5c05ddd4960b7a3c3ff335dbf8525f6d068819287f496b85b8c572fbe3081b5"
         },
         "filename": "brihannila-tantra.html",
         "provenance": "canonical JSONL brihannila-tantra.jsonl",
@@ -1726,12 +1726,12 @@
       },
       {
         "canonical": {
-          "bytes": 30956,
+          "bytes": 30914,
           "first_canonical_id": "kadambara-svikarana-karika-literatura:1.1#ru",
           "last_canonical_id": "kadambara-svikarana-karika-literatura:1.42#ru",
           "path": "corpus_builder/jsonl/kadambara-svikarana-karika-literatura.jsonl",
           "record_count": 42,
-          "sha256": "71389a2e9c014c9be2b1cd4547ed0b756523214fd0f085240b294ebbd854659f"
+          "sha256": "615ef2eed8217f10f8127ac8355308f6a7e0a82b0c9c1d69991a0e406030b027"
         },
         "filename": "kadambara-svikarana-karika-literatura.html",
         "provenance": "canonical JSONL kadambara-svikarana-karika-literatura.jsonl",
@@ -1741,12 +1741,12 @@
       },
       {
         "canonical": {
-          "bytes": 7793,
+          "bytes": 7782,
           "first_canonical_id": "kadambara-svikarana-karika-ob-avtore:1.1#ru",
           "last_canonical_id": "kadambara-svikarana-karika-ob-avtore:1.11#ru",
           "path": "corpus_builder/jsonl/kadambara-svikarana-karika-ob-avtore.jsonl",
           "record_count": 11,
-          "sha256": "930bec91b7da7d7c1d00394fdef33c67079e43abb1733d80d0a9810c0c317a95"
+          "sha256": "db409052c3d2a904504d95f989729313ee4200d35022db320cd2a928b25bcc97"
         },
         "filename": "kadambara-svikarana-karika-ob-avtore.html",
         "provenance": "canonical JSONL kadambara-svikarana-karika-ob-avtore.jsonl",
@@ -1756,12 +1756,12 @@
       },
       {
         "canonical": {
-          "bytes": 42814,
+          "bytes": 42792,
           "first_canonical_id": "kadambara-svikarana-karika-preface:1.1#ru",
           "last_canonical_id": "kadambara-svikarana-karika-preface:1.22#ru",
           "path": "corpus_builder/jsonl/kadambara-svikarana-karika-preface.jsonl",
           "record_count": 22,
-          "sha256": "360acfad098b2153239150742c93b918ab9be075f6bce1391c940cc9ec10fd9b"
+          "sha256": "7a64e2dacbacde8fb08a1b7eeafafb62d172d2c68503d8e5a343d00af2c61d15"
         },
         "filename": "kadambara-svikarana-karika-preface.html",
         "provenance": "canonical JSONL kadambara-svikarana-karika-preface.jsonl",
@@ -1816,12 +1816,12 @@
       },
       {
         "canonical": {
-          "bytes": 4402,
+          "bytes": 4398,
           "first_canonical_id": "kama-samuha-antologii:1.1#ru",
           "last_canonical_id": "kama-samuha-antologii:1.4#ru",
           "path": "corpus_builder/jsonl/kama-samuha-antologii.jsonl",
           "record_count": 4,
-          "sha256": "25a42e3f4d49f97c4d85a336462376eba946eb86a650f43bc0995cff68ebb07d"
+          "sha256": "f8812bcd7b0c7ce8601d51595e6af871801fa8dac60a7b5105b486c89c248bd0"
         },
         "filename": "kama-samuha-antologii.html",
         "provenance": "canonical JSONL kama-samuha-antologii.jsonl",
@@ -1831,12 +1831,12 @@
       },
       {
         "canonical": {
-          "bytes": 27987,
+          "bytes": 27966,
           "first_canonical_id": "kama-samuha-istochniki:1.1#ru",
           "last_canonical_id": "kama-samuha-istochniki:1.21#ru",
           "path": "corpus_builder/jsonl/kama-samuha-istochniki.jsonl",
           "record_count": 21,
-          "sha256": "7310a96361486dbbe38c21e33d23b2948e2272ba7bacdeb7ed9f5800a3349e16"
+          "sha256": "a2845034baa7723606de99efe6351bc426f1f55f1b86e5726294c8de770edfbf"
         },
         "filename": "kama-samuha-istochniki.html",
         "provenance": "canonical JSONL kama-samuha-istochniki.jsonl",
@@ -1846,12 +1846,12 @@
       },
       {
         "canonical": {
-          "bytes": 54147,
+          "bytes": 54066,
           "first_canonical_id": "kama-samuha-literatura:1.1#ru",
           "last_canonical_id": "kama-samuha-literatura:1.81#ru",
           "path": "corpus_builder/jsonl/kama-samuha-literatura.jsonl",
           "record_count": 81,
-          "sha256": "8d7d7d27aba654674534694852d0233c8bea4417096b9bfa5f63cf495f8a6ce5"
+          "sha256": "3cfcd8b8a32ad887f681d42c8e1676b4b4fa97038a8651f4d690b46fd2596523"
         },
         "filename": "kama-samuha-literatura.html",
         "provenance": "canonical JSONL kama-samuha-literatura.jsonl",
@@ -1861,12 +1861,12 @@
       },
       {
         "canonical": {
-          "bytes": 5402,
+          "bytes": 5396,
           "first_canonical_id": "kama-samuha-ob-avtore:1.1#ru",
           "last_canonical_id": "kama-samuha-ob-avtore:1.6#ru",
           "path": "corpus_builder/jsonl/kama-samuha-ob-avtore.jsonl",
           "record_count": 6,
-          "sha256": "7f73010a072cc62c4a815296d63271f59936cb18e41b4a445a7c26e9a1a169ba"
+          "sha256": "88637f4f044ff0b25538caf0737b7d81567ece226ee69e32288383ee3eefc313"
         },
         "filename": "kama-samuha-ob-avtore.html",
         "provenance": "canonical JSONL kama-samuha-ob-avtore.jsonl",
@@ -1876,12 +1876,12 @@
       },
       {
         "canonical": {
-          "bytes": 201850,
+          "bytes": 201764,
           "first_canonical_id": "kama-samuha-preface:1.1#ru",
           "last_canonical_id": "kama-samuha-preface:1.86#ru",
           "path": "corpus_builder/jsonl/kama-samuha-preface.jsonl",
           "record_count": 86,
-          "sha256": "98b513e97abecde720155227bac541a6a8cd3992932a1abd2a258c83dd778fbd"
+          "sha256": "6f307459a585f06824456a3aa1d6ae08ff4001982fb1273d709f5640afaf4285"
         },
         "filename": "kama-samuha-preface.html",
         "provenance": "canonical JSONL kama-samuha-preface.jsonl",
@@ -1891,12 +1891,12 @@
       },
       {
         "canonical": {
-          "bytes": 27985,
+          "bytes": 27958,
           "first_canonical_id": "kama-samuha-slovar-flory:e1",
           "last_canonical_id": "kama-samuha-slovar-flory:e27",
           "path": "corpus_builder/jsonl/kama-samuha-slovar-flory.jsonl",
           "record_count": 27,
-          "sha256": "128669e74723d04caf822513ec853deda0c2f38ba684f489c799b4deaccf5161"
+          "sha256": "73e7b2b08abeea9a7c580a9d436cd14f4d8bee7b62490e503d16da66517aeb4a"
         },
         "filename": "kama-samuha-slovar-flory.html",
         "provenance": "canonical JSONL kama-samuha-slovar-flory.jsonl",
@@ -1906,12 +1906,12 @@
       },
       {
         "canonical": {
-          "bytes": 25842,
+          "bytes": 25808,
           "first_canonical_id": "kama-samuha-slovar-imen:e1",
           "last_canonical_id": "kama-samuha-slovar-imen:e34",
           "path": "corpus_builder/jsonl/kama-samuha-slovar-imen.jsonl",
           "record_count": 34,
-          "sha256": "851da837b7fab369cff227173d5ab5e606e3321ebeb6ab87ccf0812c9c480a70"
+          "sha256": "06cac63c779d5c6c5c707a4f91d854649d9be3885c7d11c81b91de6933e67849"
         },
         "filename": "kama-samuha-slovar-imen.html",
         "provenance": "canonical JSONL kama-samuha-slovar-imen.jsonl",
@@ -1921,12 +1921,12 @@
       },
       {
         "canonical": {
-          "bytes": 20843,
+          "bytes": 20822,
           "first_canonical_id": "kama-samuha-slovar-predmetov:e1",
           "last_canonical_id": "kama-samuha-slovar-predmetov:e21",
           "path": "corpus_builder/jsonl/kama-samuha-slovar-predmetov.jsonl",
           "record_count": 21,
-          "sha256": "2761d40a098d830a7b3cec990dcf4888c419f181bdd558253221d6fe475773a5"
+          "sha256": "8bed24ef1b7b23a51f8dcb93ce0e2e8dbdca7094d3d6d03d8f2a62391298d6cd"
         },
         "filename": "kama-samuha-slovar-predmetov.html",
         "provenance": "canonical JSONL kama-samuha-slovar-predmetov.jsonl",
@@ -1936,12 +1936,12 @@
       },
       {
         "canonical": {
-          "bytes": 23473,
+          "bytes": 23454,
           "first_canonical_id": "kama-samuha-slovar-toponimov:e1",
           "last_canonical_id": "kama-samuha-slovar-toponimov:e19",
           "path": "corpus_builder/jsonl/kama-samuha-slovar-toponimov.jsonl",
           "record_count": 19,
-          "sha256": "3cc761863da48c4625486dde362af7c7baa9b9f0426a7420d296d8f663471ed5"
+          "sha256": "c435be7998c0a9073808c132af17e54c4380d6116f586a21e470f15780379f84"
         },
         "filename": "kama-samuha-slovar-toponimov.html",
         "provenance": "canonical JSONL kama-samuha-slovar-toponimov.jsonl",
@@ -2461,12 +2461,12 @@
       },
       {
         "canonical": {
-          "bytes": 31462,
+          "bytes": 31412,
           "first_canonical_id": "mahabharata-ignatiev-xvi-xviii-literatura:1.1#ru",
           "last_canonical_id": "mahabharata-ignatiev-xvi-xviii-literatura:1.50#ru",
           "path": "corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-literatura.jsonl",
           "record_count": 50,
-          "sha256": "05ffb921b6bbde324b284bf89a5b63771e72312096e3e5ff6a52e4f45835d0ac"
+          "sha256": "7c1c032999eb65421dd5bc6b6347b03c0835fdcd107e35ae2bcaa45a3033c7ef"
         },
         "filename": "mahabharata-ignatiev-xvi-xviii-literatura.html",
         "provenance": "canonical JSONL mahabharata-ignatiev-xvi-xviii-literatura.jsonl",
@@ -2476,12 +2476,12 @@
       },
       {
         "canonical": {
-          "bytes": 3296,
+          "bytes": 3294,
           "first_canonical_id": "mahabharata-ignatiev-xvi-xviii-ob-avtore:1.1#ru",
           "last_canonical_id": "mahabharata-ignatiev-xvi-xviii-ob-avtore:1.2#ru",
           "path": "corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-ob-avtore.jsonl",
           "record_count": 2,
-          "sha256": "5250f4ffb1c65476a1485240c4663aab65e650c6fcb2f3380588771c17fdb63d"
+          "sha256": "03f0e1072909589738923bdeb2b477ec5b3ff9a61b0aaf5fd3883cb37db95602"
         },
         "filename": "mahabharata-ignatiev-xvi-xviii-ob-avtore.html",
         "provenance": "canonical JSONL mahabharata-ignatiev-xvi-xviii-ob-avtore.jsonl",
@@ -2491,12 +2491,12 @@
       },
       {
         "canonical": {
-          "bytes": 26142,
+          "bytes": 26124,
           "first_canonical_id": "mahabharata-ignatiev-xvi-xviii-preface:1.1#ru",
           "last_canonical_id": "mahabharata-ignatiev-xvi-xviii-preface:1.18#ru",
           "path": "corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-preface.jsonl",
           "record_count": 18,
-          "sha256": "d62b2d06ba131a01717965265fdc73389ecba8023d1f53653cb55b0cf3c201a4"
+          "sha256": "987a42a3180b67806bb9273702d6538b38b7445f83a224c9d41650e3f63ab4b4"
         },
         "filename": "mahabharata-ignatiev-xvi-xviii-preface.html",
         "provenance": "canonical JSONL mahabharata-ignatiev-xvi-xviii-preface.jsonl",
@@ -2506,12 +2506,12 @@
       },
       {
         "canonical": {
-          "bytes": 191062,
+          "bytes": 190872,
           "first_canonical_id": "mahabharata-ignatiev-xvi-xviii-slovar-imen:e1",
           "last_canonical_id": "mahabharata-ignatiev-xvi-xviii-slovar-imen:e190",
           "path": "corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-slovar-imen.jsonl",
           "record_count": 190,
-          "sha256": "e125bf7fd0973d90fc677f47c88acf5b7b82cf91a87af53bcfc1dd6bf5d382d6"
+          "sha256": "36966d95d41175f920f83da44fd23f1f04ec5efb759e1169f117ddf7d46aaaa6"
         },
         "filename": "mahabharata-ignatiev-xvi-xviii-slovar-imen.html",
         "provenance": "canonical JSONL mahabharata-ignatiev-xvi-xviii-slovar-imen.jsonl",
@@ -2521,12 +2521,12 @@
       },
       {
         "canonical": {
-          "bytes": 65782,
+          "bytes": 65716,
           "first_canonical_id": "mahabharata-ignatiev-xvi-xviii-slovar-predmetov:e1",
           "last_canonical_id": "mahabharata-ignatiev-xvi-xviii-slovar-predmetov:e66",
           "path": "corpus_builder/jsonl/mahabharata-ignatiev-xvi-xviii-slovar-predmetov.jsonl",
           "record_count": 66,
-          "sha256": "4744fe2b52475ab145b39ece61df32d0528a03ed8cf673d6bcbc5cc6c2ff635c"
+          "sha256": "0cbdb105f529aed2c9eea3a24864b33785d25e5cd5fe2881135d594a9f96a00d"
         },
         "filename": "mahabharata-ignatiev-xvi-xviii-slovar-predmetov.html",
         "provenance": "canonical JSONL mahabharata-ignatiev-xvi-xviii-slovar-predmetov.jsonl",
@@ -3481,11 +3481,11 @@
       }
     ],
     "totals": {
-      "canonical_bytes": 704007291,
-      "record_count": 723277,
+      "canonical_bytes": 703921687,
+      "record_count": 723229,
       "source_count": 230
     }
   },
-  "content_hash": "sha256:e00774d85a5c90511f4c75bb2b8824b210b563e88f30b268c945bc9f2234d8ee",
+  "content_hash": "sha256:5e915453252c5739d3c9f59d73372b1274bb665d51ba70a963f0c21fa173a772",
   "schema_version": 1
 }
