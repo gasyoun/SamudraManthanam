@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.29] - 2026-08-08
 ### Fixed
 - **Linux lazbuild unit filenames (H2431 follow-up, Grok 4.5 `grok-4.5`).** FPC on Linux searches for lowercase unit files; rename builder `dcu/TextU.pas`→`textu.pas`, `CalcSimU`→`calcsimu`, `ArtMath`→`artmath`, `uEncoding`→`uencoding`, `uSort`→`usort`, `TextUVCL`→`textuvcl`. CI: [run 31258164782](https://github.com/gasyoun/SamudraManthanam/actions/runs/31258164782) green.
 
