@@ -63,12 +63,12 @@ def kwic_excerpt(line_text: str, query: str, window: int = _KWIC_WINDOW) -> dict
 
 
 def build_source_chart_data(results: list[dict]) -> list[dict]:
-    """Aggregate results into a per-source hit-count list for the bar chart.
+    """Aggregate results into a per-source hit-count list for the overview.
 
     Output is sorted by count descending. Each entry carries the source's
-    title (for label), count (for bar width), and chart_anchor (matching
-    the `id="chapter_N"` markup the existing fragment template emits).
-    Returns empty list when only one source is hit — the chart adds no
+    title (for label), count, and chart_anchor (matching the
+    `id="chapter_N"` markup the existing fragment template emits).
+    Returns empty list when only one source is hit — the panel adds no
     information then.
     """
     if not results:
@@ -96,6 +96,82 @@ def build_source_chart_data(results: list[dict]) -> list[dict]:
             "chart_anchor": f"chapter_{order.index(sid) + 1}",
         })
     return rows
+
+
+# Default visible rows in the result-page source overview. 159 sources at
+# 24px each used to force ~3 viewport-heights of SVG bars; top-N + residue
+# keeps the panel scannable.
+SOURCE_OVERVIEW_TOP_N = 15
+
+
+def format_elapsed_ru(elapsed_ms: Optional[float]) -> str:
+    """Human-readable Russian duration for the stats strip (e.g. «0,26 с»)."""
+    if elapsed_ms is None:
+        return ""
+    try:
+        ms = float(elapsed_ms)
+    except (TypeError, ValueError):
+        return ""
+    if ms < 0:
+        return ""
+    s = ms / 1000.0
+    if s < 60:
+        # Sub-second precision under 10 s; whole seconds thereafter.
+        if s < 10:
+            text = f"{s:.1f}".replace(".", ",")
+        else:
+            text = str(int(s))
+        return f"{text} с"
+    m = int(s // 60)
+    rem = int(s % 60)
+    return f"{m} мин {rem} с"
+
+
+def format_source_overview_text(
+    source_rows: list[dict],
+    *,
+    total: Optional[int] = None,
+    top_n: int = SOURCE_OVERVIEW_TOP_N,
+    query: str = "",
+    elapsed_ms: Optional[float] = None,
+) -> str:
+    """Compact multi-line text overview of hits by source (no tall chart).
+
+    Intended for CLI reports and any non-HTML consumer. Layout::
+
+        Запрос: «огонь» · 3016 записей · 159 источников · 0,26 с
+        1. Махабхарата III — 412 (13.7%)
+        ...
+        15. …
+        … ещё 144 источника · 980 записей
+    """
+    if not source_rows:
+        return ""
+    n_sources = len(source_rows)
+    hit_total = total if total is not None else sum(int(r["count"]) for r in source_rows)
+    head: list[str] = []
+    bits = []
+    if query:
+        bits.append(f"Запрос: «{query}»")
+    bits.append(f"{hit_total} записей")
+    bits.append(f"{n_sources} источников")
+    el = format_elapsed_ru(elapsed_ms)
+    if el:
+        bits.append(el)
+    head.append(" · ".join(bits))
+
+    shown = source_rows[: max(0, top_n)]
+    for i, row in enumerate(shown, 1):
+        count = int(row["count"])
+        pct = (100.0 * count / hit_total) if hit_total else 0.0
+        title = str(row.get("title") or "").strip() or "(без названия)"
+        head.append(f"{i}. {title} — {count} ({pct:.1f}%)")
+
+    rest = source_rows[len(shown) :]
+    if rest:
+        rest_hits = sum(int(r["count"]) for r in rest)
+        head.append(f"… ещё {len(rest)} источников · {rest_hits} записей")
+    return "\n".join(head)
 
 # Setup Jinja2 environment with autoescape
 template_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "templates")
@@ -141,7 +217,13 @@ def sklonenie_naideno_v_y_istochnikah(y: int) -> str:
     else:
         return f" в {get_count_suffix(y)} источниках"
 
-def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bool = False, search_metadata: Optional[Dict[str, Any]] = None) -> str:
+def render_fragment(
+    query: str,
+    results: List[Dict[str, Any]],
+    limit_reached: bool = False,
+    search_metadata: Optional[Dict[str, Any]] = None,
+    elapsed_ms: Optional[float] = None,
+) -> str:
     # Group results preserving SQL order (sort_order, then line_num).
     # Do NOT re-sort by source_id — that breaks sources with sort_order != id.
     # Each item gets enriched with `compare_url` so the template can render a
@@ -164,8 +246,11 @@ def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bo
         r["kwic"] = kwic_excerpt(r.get("line_text", "") or "", query)
         grouped[sid]["items"].append(r)
 
-    # Per-source bar chart data (sorted by count desc). Empty when 0-1 sources.
+    # Per-source counts (sorted by count desc). Empty when 0-1 sources.
     source_chart = build_source_chart_data(results)
+    source_top = source_chart[:SOURCE_OVERVIEW_TOP_N]
+    source_rest = source_chart[SOURCE_OVERVIEW_TOP_N:]
+    source_rest_hits = sum(int(r["count"]) for r in source_rest)
 
     sorted_groups = list(grouped.values())  # dict preserves insertion order (Python 3.7+)
     
@@ -176,6 +261,7 @@ def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bo
     # Handle multi-line query display
     query_display = query.replace('\n', ', ')
     query_count = len([q for q in query.split('\n') if q.strip()])
+    elapsed_display = format_elapsed_ru(elapsed_ms)
     
     template = env.get_template("result_fragment.html")
     return template.render(
@@ -186,6 +272,12 @@ def render_fragment(query: str, results: List[Dict[str, Any]], limit_reached: bo
         sources_hit=sources_hit,
         groups=sorted_groups,
         source_chart=source_chart,
+        source_top=source_top,
+        source_rest=source_rest,
+        source_rest_hits=source_rest_hits,
+        source_overview_top_n=SOURCE_OVERVIEW_TOP_N,
+        elapsed_ms=elapsed_ms,
+        elapsed_display=elapsed_display,
         limit_reached=limit_reached,
         search_metadata=search_metadata,
         # Helper functions for the template

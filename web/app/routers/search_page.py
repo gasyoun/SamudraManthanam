@@ -176,7 +176,9 @@ async def search_page(
     results = search_data["results"]
     search_metadata = search_data["search_metadata"]
     total = len(results)
-    fragment = render_fragment(q, results, search_metadata=search_metadata)
+    fragment = render_fragment(
+        q, results, search_metadata=search_metadata, elapsed_ms=elapsed_ms,
+    )
 
     canonical_url = _canonical_search_url(
         base=base, query=q, mode=mode.value,

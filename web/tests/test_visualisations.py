@@ -10,6 +10,8 @@ Three layers:
 """
 from app.services.html_service import (
     build_source_chart_data,
+    format_elapsed_ru,
+    format_source_overview_text,
     kwic_excerpt,
     render_fragment,
 )
@@ -165,7 +167,8 @@ def test_fragment_renders_kwic_block_for_each_result():
 def test_fragment_omits_chart_for_single_source_hit():
     results = [_mk_result(1, "Source A", "v1"), _mk_result(1, "Source A", "v2")]
     html = render_fragment("v", results)
-    # Single source → no SVG bar chart.
+    # Single source → no source-overview panel.
+    assert 'class="source-overview"' not in html
     assert 'class="search-bar-chart"' not in html
 
 
@@ -176,10 +179,9 @@ def test_fragment_renders_chart_when_multiple_sources_hit():
         _mk_result(2, "Source B", "another match"),
     ]
     html = render_fragment("match", results)
-    assert 'class="search-bar-chart"' in html
-    # SVG element present with rect bars.
-    assert '<svg' in html and '<rect' in html
-    # Titles appear as labels.
+    # Compact text overview (no multi-screen SVG bars).
+    assert 'class="source-overview"' in html
+    assert "<svg" not in html
     assert "Source A" in html
     assert "Source B" in html
 
@@ -190,9 +192,42 @@ def test_fragment_chart_links_to_chapter_anchors():
         _mk_result(2, "Source B", "y"),
     ]
     html = render_fragment("x y", results)
-    # Each bar wraps in an <a href="#chapter_N">.
+    # Each overview row links to #chapter_N.
     assert 'href="#chapter_1"' in html
     assert 'href="#chapter_2"' in html
+
+
+def test_fragment_shows_elapsed_in_stats_line():
+    results = [
+        _mk_result(1, "Source A", "x"),
+        _mk_result(2, "Source B", "y"),
+    ]
+    html = render_fragment("x", results, elapsed_ms=260.4)
+    assert 'class="result-elapsed"' in html
+    assert "0,3 с" in html or "0,26 с" in html
+
+
+def test_format_elapsed_ru():
+    assert format_elapsed_ru(260) == "0,3 с"
+    assert format_elapsed_ru(12_000) == "12 с"
+    assert format_elapsed_ru(65_000) == "1 мин 5 с"
+    assert format_elapsed_ru(None) == ""
+
+
+def test_format_source_overview_text_top_n_and_residue():
+    rows = [
+        {"title": f"S{i}", "count": 100 - i, "chart_anchor": f"chapter_{i}"}
+        for i in range(1, 21)
+    ]
+    text = format_source_overview_text(
+        rows, total=sum(r["count"] for r in rows), top_n=5, query="огонь", elapsed_ms=250,
+    )
+    assert "Запрос: «огонь»" in text
+    assert "0,3 с" in text or "0,2 с" in text
+    assert "1. S1 —" in text
+    assert "5. S5 —" in text
+    assert "S6" not in text.split("ещё")[0]  # S6 only in residue section if at all
+    assert "ещё 15 источников" in text
 
 
 def test_fragment_emits_compact_toggle_button_when_more_than_one_result():

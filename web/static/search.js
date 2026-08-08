@@ -535,13 +535,41 @@ $(document).ready(function() {
     });
 
     // ── AI panel ──────────────────────────────────────────────────────────────
+    // Mirror server caps in web/app/routers/ai.py — long dictionary lines
+    // (e.g. encyclopedic Агни entries) exceed MAX_CONTEXT_LINE_LEN and used to
+    // return FastAPI 422 with detail=[{msg,loc,…}], which JS stringified as
+    // "[object Object]".
+    const AI_MAX_CONTEXT_LINES = 25;
+    const AI_MAX_LINE_LEN = 2000;
+
+    function formatApiDetail(detail) {
+        if (detail == null || detail === '') return '';
+        if (typeof detail === 'string') return detail;
+        if (Array.isArray(detail)) {
+            return detail.map(function (item) {
+                if (typeof item === 'string') return item;
+                if (item && typeof item.msg === 'string') return item.msg;
+                try { return JSON.stringify(item); } catch (_) { return String(item); }
+            }).filter(Boolean).join('; ');
+        }
+        if (typeof detail === 'object') {
+            if (typeof detail.msg === 'string') return detail.msg;
+            try { return JSON.stringify(detail); } catch (_) { return String(detail); }
+        }
+        return String(detail);
+    }
+
     $(document).on('click', '#askAiBtn', function() {
         const query = $('#query').val();
         const contextLines = [];
         $('.citation_block').each(function() {
-            const text = $(this).attr('data-text');
-            if (text) contextLines.push(text);
-            if (contextLines.length >= 25) return false;
+            let text = $(this).attr('data-text');
+            if (!text) return;
+            if (text.length > AI_MAX_LINE_LEN) {
+                text = text.slice(0, AI_MAX_LINE_LEN);
+            }
+            contextLines.push(text);
+            if (contextLines.length >= AI_MAX_CONTEXT_LINES) return false;
         });
 
         $('#aiPanel').addClass('active');
@@ -560,18 +588,25 @@ $(document).ready(function() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query, context_lines: contextLines })
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(function (response) {
+            return response.json().then(function (data) {
+                return { ok: response.ok, status: response.status, data: data };
+            });
+        })
+        .then(function (resp) {
             const wallMs = wait.stop();
             $('#aiLoading').hide();
-            if (data.explanation) {
+            const data = resp.data || {};
+            if (resp.ok && data.explanation) {
                 $('#aiContent').html(
                     '<div class="ai-think-done">Ответ за ' + formatElapsed(wallMs) + '</div>'
                 );
                 // text() after prepend would wipe the badge — append text node.
                 $('#aiContent').append(document.createTextNode(data.explanation));
             } else {
-                $('#aiContent').text('Ошибка: ' + (data.detail || 'не удалось получить ответ от ИИ.') +
+                const detailMsg = formatApiDetail(data.detail)
+                    || (resp.ok ? 'не удалось получить ответ от ИИ.' : ('HTTP ' + resp.status));
+                $('#aiContent').text('Ошибка: ' + detailMsg +
                     ' (ждали ' + formatElapsed(wallMs) + ')');
             }
         })
