@@ -1,4 +1,6 @@
 unit ArtMath;
+{$MODE Delphi}
+{ Delphi}
 
 interface
  uses uTypes;

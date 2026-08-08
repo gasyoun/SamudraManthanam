@@ -1,4 +1,6 @@
 unit uMhHTML;
+{$MODE Delphi}
+{ Delphi}
 // сделать проверку на количество закрываемых и открываемых скобок
 interface
  uses classes, INIFiles;
@@ -324,7 +326,7 @@ begin
    C1:='1';
    C9:='9';
    for i:=k to Length(AText)-1 do
-    if (S[i]=KeyWords.Bracket1) and (S[i+1] in [c1..c9]) then //<скобка>
+    if (S[i]=KeyWords.Bracket1) and (S[i+1] >= c1) and (S[i+1] <= c9) then //<скобка>
     begin
      Pos1:=i;
      break;
@@ -1776,7 +1778,7 @@ begin
    C1:='1';
    C9:='9';
    for i:=k to Length(AText)-1 do
-    if (S[i]=KeyWords.Bracket1) and (S[i+1] in [c1..c9]) then //<скобка>
+    if (S[i]=KeyWords.Bracket1) and (S[i+1] >= c1) and (S[i+1] <= c9) then //<скобка>
     begin
      Pos1:=i;
      break;

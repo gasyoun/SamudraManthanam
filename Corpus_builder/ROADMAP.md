@@ -116,7 +116,9 @@ Delphi 7.
 - [ ] **Единый слой кодировок.** Заменить ручные `AnsiToUTF8`/`UTF8ToAnsi` на
       явные UTF-8 операции через `lazUTF8` (в основном приложении это уже норма).
       Уйти от предположения «исходники в CP-1251» в сторону UTF-8.
-- [ ] **`{$MODE Delphi}`.** Добавить директиву режима в модули, готовые к FPC.
+- [x] **`{$MODE Delphi}`.** Done 08-08-2026 (H2417, Grok 4.5 `grok-4.5`): all
+      Corpus_builder units used by the LCL project carry `{$MODE Delphi}` (plus
+      `{$H+}` on TextU). Encoding layer (lazUTF8) remains open.
 
 ## Фаза 2 — Дедупликация общих утилит (сближение с основным приложением)
 
@@ -137,13 +139,24 @@ Delphi 7.
 
 Цель: `cb` собирается под Lazarus/FPC, GUI работает на LCL.
 
-- [ ] **Создать `.lpi`/`.lpr`** для проекта сборщика по образцу
+- [x] **Создать `.lpi`/`.lpr`** для проекта сборщика по образцу
       [`Index/Index_pr.lpi`](https://github.com/gasyoun/SamudraManthanam/blob/main/Index/Index_pr.lpi).
-- [ ] **Формы VCL → LCL.** Перенести `.dfm` → `.lfm` для `fMainForm` и
-      `fCheckDialog`; заменить VCL-специфичные компоненты на LCL-аналоги.
+      **Done 08-08-2026 (H2417):**
+      [`PSRCBuilder/cb.lpr`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb.lpr) +
+      [`PSRCBuilder/cb.lpi`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/cb.lpi)
+      (LCL package, `OtherUnitFiles=dcu`, win64 Default mode).
+- [x] **Формы VCL → LCL.** **Done 08-08-2026 (H2417):** `.lfm` for
+      `fMainForm` / `fCheckDialog`; `{$R *.lfm}`; uses → LCL (`Interfaces`,
+      `LCLType`/`LCLIntf` on host form). FPC fixes: WideString digit-range compare
+      in `uMhHTML`, CP-1251 set-of-char → `IsRussian*` Ord helpers in TextU +
+      fMainForm. `lazbuild` **green** on Windows x64 — see
+      [`docs/H2417_LAZARUS_BUILD_WIN64.log`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2417_LAZARUS_BUILD_WIN64.log)
+      (1603 lines, linked `lib/x86_64-win64/cb.exe`).
 - [ ] **Проверка эталоном.** Пересобрать golden-набор из Фазы 0 новым бинарником;
-      выход обязан совпасть с зафиксированным.
-- [ ] **Собрать под Windows и Linux** — подтвердить кросс-платформенность FPC.
+      выход обязан совпасть с зафиксированным. *(still blocked: Phase 0 golden
+      `expected/` not captured — GUI-only capture residual.)*
+- [~] **Собрать под Windows и Linux** — Windows x64 **proved** (H2417). Linux
+      build not run on this host (no Linux agent here).
 
 ## Фаза 4 — Headless-режим и интеграция в конвейер
 

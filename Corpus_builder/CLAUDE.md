@@ -4,17 +4,32 @@ This file provides guidance to Claude Code when working with code in this reposi
 
 ## Project overview
 
-**Corpus Builder** (`cb.exe`) is a Windows desktop utility for preparing and building parallel Sanskrit–Russian text corpora in HTML format. It is the **authoring/build tool** that produces the corpus HTML files consumed by the search application ("Пахтанье океана"). Built with **Delphi 7** (classic VCL, 32-bit Win32).
+**Corpus Builder** (`cb.exe`) is a Windows desktop utility for preparing and building parallel Sanskrit–Russian text corpora in HTML format. It is the **authoring/build tool** that produces the corpus HTML files consumed by the search application ("Пахтанье океана").
+
+**Primary toolchain (H2417, 08-08-2026):** **Lazarus / Free Pascal** (LCL), same family as `Index/Index_pr.lpi`. Legacy Delphi 7 `cb.dpr` remains as a secondary reference; prefer the LCL project for new work.
 
 ## Build
 
+### Lazarus / FPC (preferred)
+
+```text
+lazbuild Corpus_builder/PSRCBuilder/cb.lpi
+```
+
+- Project: `PSRCBuilder/cb.lpr` + `PSRCBuilder/cb.lpi` (LCL package, `{$MODE Delphi}`)
+- Forms: `fMainForm.lfm`, `fCheckDialog.lfm` (VCL `.dfm` kept for historical reference)
+- Output: `PSRCBuilder/lib/$(TargetCPU)-$(TargetOS)/cb.exe` (gitignored under `lib/`)
+- Units search path: `PSRCBuilder/dcu/`
+- Proven Windows x64 build log: `docs/H2417_LAZARUS_BUILD_WIN64.log`
+
+### Delphi 7 (legacy)
+
 Open and build with **Delphi 7 IDE**:
 
-- Project file: `PSRC/cb.dpr`
-- Compiler options: `PSRC/cb.cfg`
-- DCU output directory: `PSRC/dcu/`
+- Project file: `PSRCBuilder/cb.dpr`
+- Compiler options: `PSRCBuilder/cb.cfg`
 
-There is no command-line build script. Compiled units (`.dcu`) are stored in `dcu/` alongside their `.pas` sources. The compiler is the Borland Delphi 7 `dcc32.exe`.
+The committed root-level `cb.exe` may still be a Delphi binary until a human replaces it with a Lazarus build.
 
 ## Code structure
 

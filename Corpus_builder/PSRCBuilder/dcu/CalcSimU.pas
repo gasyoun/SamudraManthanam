@@ -1,4 +1,6 @@
 Unit CalcSimU;
+{$MODE Delphi}
+{ Delphi}
 interface
 uses math, uTypes;
 type

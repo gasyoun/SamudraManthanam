@@ -1,4 +1,6 @@
 unit statprocs;
+{$MODE Delphi}
+{ Delphi}
 interface
  uses uTypes;
 const

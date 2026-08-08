@@ -1,0 +1,152 @@
+Hint: (lazbuild) Primary config path: "C:\Users\user\AppData\Local\lazarus"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-iWTOTP"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-va" "C:\Users\user\AppData\Local\lazarus\compilertest.pas", WorkDir="C:\Users\user\AppData\Local\lazarus\"
+Hint: [TPCTargetConfigCache.Update] has changed
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-iWTOTP" "-Px86_64" "-Twin64"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-va" "C:\Users\user\AppData\Local\lazarus\compilertest.pas" "-Px86_64" "-Twin64", WorkDir="C:\Users\user\AppData\Local\lazarus\"
+Hint: [TPCTargetConfigCache.Update] has changed
+Hint: (lazarus) [TBuildManager.SetBuildTarget] Old=x86_64-win64--win32 New=x86_64-win64--win32 Changed: OS/CPU=True LCL=False
+Hint: (lazarus) [TBuildManager.SetBuildTarget] Old=x86_64-win64--win32 New=x86_64-win64--win32 Changed: OS/CPU=True LCL=False
+Hint: (lazarus) Project needs building: Compile was incomplete for Project
+Info: (lazarus) Execute Title="Компиляция проекта, цель: C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.exe"
+Info: (lazarus) Working Directory="C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\"
+Info: (lazarus) Executable="C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe"
+Info: (lazarus) Param[0]="-Twin64"
+Info: (lazarus) Param[1]="-Px86_64"
+Info: (lazarus) Param[2]="-MDelphi"
+Info: (lazarus) Param[3]="-Scghi"
+Info: (lazarus) Param[4]="-O1"
+Info: (lazarus) Param[5]="-gw2"
+Info: (lazarus) Param[6]="-godwarfsets"
+Info: (lazarus) Param[7]="-gl"
+Info: (lazarus) Param[8]="-WG"
+Info: (lazarus) Param[9]="-l"
+Info: (lazarus) Param[10]="-vewnhibq"
+Info: (lazarus) Param[11]="-FiC:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\lib\x86_64-win64"
+Info: (lazarus) Param[12]="-FuC:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\"
+Info: (lazarus) Param[13]="-FuC:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\dcu"
+Info: (lazarus) Param[14]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\lcl\units\x86_64-win64\win32"
+Info: (lazarus) Param[15]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\lcl\units\x86_64-win64"
+Info: (lazarus) Param[16]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\freetype\lib\x86_64-win64"
+Info: (lazarus) Param[17]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\lazutils\lib\x86_64-win64"
+Info: (lazarus) Param[18]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\packager\units\x86_64-win64"
+Info: (lazarus) Param[19]="-FEC:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\lib\x86_64-win64\"
+Info: (lazarus) Param[20]="-oC:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.exe"
+Info: (lazarus) Param[21]="-dLCL"
+Info: (lazarus) Param[22]="-dLCLwin32"
+Info: (lazarus) Param[23]="cb.lpr"
+Hint: (11030) Start of reading config file C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.cfg
+Hint: (11031) End of reading config file C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.cfg
+Free Pascal Compiler version 3.2.2 [2025/05/03] for x86_64
+Copyright (c) 1993-2021 by Florian Klaempfl and others
+(1002) Target OS: Win64 for x64
+(3104) Compiling cb.lpr
+(3104) Compiling fMainForm.pas
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(147,47) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(148,47) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(149,47) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(150,47) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(165,65) Warning: (4104) Implicit string type conversion from "RawByteString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(167,28) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "RawByteString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(172,18) Warning: (4104) Implicit string type conversion from "RawByteString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(173,33) Warning: (4104) Implicit string type conversion from "AnsiString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(27,23) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(28,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(29,23) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(30,23) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(31,23) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(32,23) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(33,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(34,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(35,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(434,18) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "RawByteString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(36,36) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(37,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(38,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(552,2) Note: (5025) Local variable "i" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(39,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(582,5) Note: (5025) Local variable "FT" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(40,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(41,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(42,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(43,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(44,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(720,6) Warning: (4104) Implicit string type conversion from "RawByteString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(721,6) Warning: (4104) Implicit string type conversion from "RawByteString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(730,24) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "RawByteString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(735,173) Warning: (5089) Local variable "S_k1" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(744,174) Warning: (5089) Local variable "S_k2" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(711,4) Note: (5027) Local variable "S1" is assigned but never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(711,7) Note: (5027) Local variable "S2" is assigned but never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(45,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(46,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(791,2) Note: (5025) Local variable "Pos_Tire" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(47,25) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(818,2) Note: (5025) Local variable "Pos_Tire" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(48,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(49,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(50,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(51,39) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(956,23) Hint: (5091) Local variable "ShlokasArr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(979,27) Warning: (5044) Symbol "Handle" is not portable
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(52,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(53,25) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1014,29) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1014,9) Warning: (4104) Implicit string type conversion from "AnsiString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1015,29) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1015,9) Warning: (4104) Implicit string type conversion from "AnsiString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1016,32) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1016,39) Warning: (4104) Implicit string type conversion from "AnsiString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(54,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(55,30) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1049,4) Note: (5025) Local variable "F2" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(56,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1060,14) Note: (5025) Local variable "S1" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1060,17) Note: (5025) Local variable "S2" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(57,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(58,26) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1109,73) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1109,60) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1109,51) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1109,36) Warning: (4104) Implicit string type conversion from "AnsiString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1110,73) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1110,60) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1110,51) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1110,36) Warning: (4104) Implicit string type conversion from "AnsiString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(59,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(60,46) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1170,21) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1173,18) Warning: (4104) Implicit string type conversion from "AnsiString" to "WideString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1173,21) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1149,2) Note: (5025) Local variable "i" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(61,24) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(62,32) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1261,18) Hint: (5091) Local variable "SWArr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1262,17) Hint: (5091) Local variable "SArr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1264,28) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "RawByteString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1277,6) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1293,33) Hint: (5091) Local variable "UvachaNumsArr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1240,4) Note: (5025) Local variable "k" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1241,14) Note: (5027) Local variable "iBook" is assigned but never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1242,2) Note: (5025) Local variable "ShlokaOutputNum" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1243,2) Note: (5025) Local variable "ShlokaOutputNum_Uvacha" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1367,18) Hint: (5091) Local variable "SWArr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1368,17) Hint: (5091) Local variable "SArr" of a managed type does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1370,28) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "RawByteString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1381,6) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1392,15) Warning: (5036) Local variable "iShloka_old" does not seem to be initialized
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1355,2) Note: (5027) Local variable "iBook" is assigned but never used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(63,46) Hint: (5024) Parameter "Sender" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1451,62) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1475,60) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "AnsiString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1497,25) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "RawByteString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1523,25) Warning: (4105) Implicit string type conversion with potential data loss from "WideString" to "RawByteString"
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1544,2) Note: (5025) Local variable "FN2" not used
+C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\fMainForm.pas(1563,5) Note: (5027) Local variable "FN0" is assigned but never used
+(9022) Compiling resource C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.obj
+(9015) Linking C:\Users\user\Documents\GitHub\SamudraManthanam-h-phase3-44780\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.exe
+(1008) 1603 lines compiled, 15.7 sec, 1805120 bytes code, 127172 bytes data
+(1021) 41 warning(s) issued
+(1022) 45 hint(s) issued
+(1023) 17 note(s) issued
+Info: (lazarus) [TCompiler.Compile] end

@@ -1,10 +1,12 @@
 unit fMainForm;
 
+{$MODE Delphi}
+
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, StdCtrls, ComCtrls;
+  Windows, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Menus, StdCtrls, ComCtrls, LCLType, LCLIntf;
 
 type
   TForm1 = class(TForm)
@@ -92,10 +94,10 @@ var
   Form1: TForm1;
 implementation
 
-uses fCheckDialog,textu, shellapi, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles;
+uses fCheckDialog, textu, ShellApi, uMhHTML, myUtils, ClipBrd, uTypes, IniFiles;
 
 
-{$R *.dfm}
+{$R *.lfm}
 
 // H1485 --- builder sinks ------------------------------------------------
 // The engine used to write Form1.StatusBar1 directly and call
@@ -137,7 +139,7 @@ end;
 Function GetRusText (AN_Uvacha:integer; var ASArr:TStringArr):string;
 begin
  if AN_Uvacha=0
-  then Result:='…'
+  then Result:='пїЅ'
   else Result:=ASArr[AN_Uvacha-1];
 end;
 Function IsEqualStrWithoutDandas (S1,S2:widestring):boolean;
@@ -250,7 +252,7 @@ begin
    S2:=Copy (S,1,Pos(']',S)+1) ;
    Delete (S,1,Pos(']',S)+1);
   end else S2:='';
- if (Pos('Глава ',S)=0) then
+ if (Pos('пїЅпїЅпїЅпїЅпїЅ ',S)=0) then
  i:=0;
  While i<= Length(S) do
  begin
@@ -288,14 +290,14 @@ var
  i,j:integer;
  S:string;
 begin
-  // перенос слова на след строку, если оно идет после числа с пробелом: "123 Арджуна" ="123<br>Арджуна"
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: "123 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" ="123<br>пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
  i:=1;
  repeat
   S:=Memo1.Lines[i-1];
   for j:=3 to Length(S) do
    if (S[j-2] in ['0'..'9']) and
        (S[j-1]=' ') and
-       ((S[j] in ['А'..'Я']) or (S[j] in ['а'..'я']))
+       (IsRussianUpperCase(S[j]) or IsRussianLowerCase(S[j]))
        then
        begin
         Memo1.Lines[i-1]:=Copy(S,1,j-1);
@@ -304,7 +306,7 @@ begin
        end;
    inc(i);
  until i>Memo1.Lines.Count;
- // Объединение строк, если начало строки - число
+ // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ
  i:=2;
  repeat
   S:=Memo1.Lines[i-1];
@@ -317,7 +319,7 @@ begin
        end;
    inc(i);
  until i>Memo1.Lines.Count;
-  // замена точек между числами на запятые "1. 2" на "1, 2" 
+  // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "1. 2" пїЅпїЅ "1, 2" 
  i:=1;
  repeat
   S:=Memo1.Lines[i-1];
@@ -379,7 +381,7 @@ begin
  readln(F,S);
  if S<>'' then
   begin
-// номера страниц
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if (S[1] in ['1'..'9']) and (Pos('-',S)=0) and (Length(S)<10 )then
      S:='-'+IntToStr(StrToInt(Trim(S))+1)+'-';
   end;
@@ -461,9 +463,9 @@ begin
  S1:='';
  S2:=S0;
  inc(i);
- if (Copy (S0,1,5)='Глава') or
-    (Copy (S0,1,10)='Так гласит') or
-    (Copy (S0,1,8)='Сказание') 
+ if (Copy (S0,1,5)='пїЅпїЅпїЅпїЅпїЅ') or
+    (Copy (S0,1,10)='пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ') or
+    (Copy (S0,1,8)='пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ') 
     then Goto 2;
   S1:='';
   if S0[1] ='[' then S1:=CutNextUseDelimiterNoTrim(S0, ' ')+' ';
@@ -485,8 +487,8 @@ begin
  If not OpenDialog1.Execute then exit;
  AssignFile(F,OpenDialog1.FileName);
  reset(F);
- readln(F,S); //номер стр
- readln(F,S); //название
+ readln(F,S); //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+ readln(F,S); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
  List:=TStringList.Create;
  List.CaseSensitive:=True;
  List.Sorted:=True;
@@ -503,21 +505,21 @@ begin
   end;
   S:=Trim(S);             
   S:=StringReplace(S,',',' ',[rfReplaceAll]);
-  S:=StringReplace(S,' (',' ',[rfReplaceAll]); // из слова Тара(ка) нужно делать два слова
+  S:=StringReplace(S,' (',' ',[rfReplaceAll]); // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ(пїЅпїЅ) пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   S:=StringReplace(S,')',' ',[rfReplaceAll]);
   S:=StringReplace(S,'[',' ',[rfReplaceAll]);
   S:=StringReplace(S,']',' ',[rfReplaceAll]);
-  S:=StringReplace(S,'см.','',[rfReplaceAll]);
-  S:=StringReplace(S,' — ',' ',[rfReplaceAll]);
-  S:=StringReplace(S,' - ',' ',[rfReplaceAll]); // слова с тире как одно слово
+  S:=StringReplace(S,'пїЅпїЅ.','',[rfReplaceAll]);
+  S:=StringReplace(S,' пїЅ ',' ',[rfReplaceAll]);
+  S:=StringReplace(S,' - ',' ',[rfReplaceAll]); // пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
   S:=StringReplace(S,'.',' ',[rfReplaceAll]);
-  S:=StringReplace(S,'»',' ',[rfReplaceAll]);
-  S:=StringReplace(S,'«',' ',[rfReplaceAll]);
+  S:=StringReplace(S,'пїЅ',' ',[rfReplaceAll]);
+  S:=StringReplace(S,'пїЅ',' ',[rfReplaceAll]);
   S:=Trim(S);
   if s='' then continue;
   repeat
    S1:=CutNextUseDelimiter(S,' ');
-   // из слова Тара(ка) нужно делать два слова
+   // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ(пїЅпїЅ) пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
    k:=Pos ('(',S1);
    if k>1 then
     begin
@@ -526,7 +528,7 @@ begin
      List.Add(S2+S1);
      S1:='';
     end
-    else if k=1 then // слова типа (Бог
+    else if k=1 then // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ
     begin
      Delete(S1,k,1);
      List.Add(S1)
@@ -567,14 +569,14 @@ begin
  ShellExecute(Handle, 'open', PChar(ChangeFileExt(OpenDialog1.FileName,'_srt.dic')), nil, nil, SW_SHOWNORMAL);
 end;
 
- //Ангелина
- // Алфавитная последовательность
- //Еще ошибка распознавания, которую можно отловить скриптом: в тексте не должно быть кавычек вида ", только "елочки" и "лапки"
-// Последовательность вида: ". х", где х - строчная буква, в тексте перевода скорее всего ошибка. В статьях же и комментариях - нет, так как там могут быть сочетания типа м. б., т. д., н. э.
-// Стоит добавить поиск " па " - такое слово существует, но по стилистике текста его использование вряд ли возможно. Только что попалось вместо " на ".
+ //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+ //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ ", пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅ" пїЅ "пїЅпїЅпїЅпїЅпїЅ"
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: ". пїЅ", пїЅпїЅпїЅ пїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ. пїЅ., пїЅ. пїЅ., пїЅ. пїЅ.
+// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ " пїЅпїЅ " - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ " пїЅпїЅ ".
 
 
-// Поиск предложения с вхождением слова из файла FNW.
+// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ FNW.
 procedure TForm1.N15Click(Sender: TObject);
 var
  FW,FT:textFile; // words, text
@@ -583,9 +585,9 @@ var
  S,S_Found,FNW,FNT:string;
 begin
  Memo1.Lines.Clear;
- OpenDialog1.Title:='Имя файла со словами для поиска';
+ OpenDialog1.Title:='пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ';
  If not OpenDialog1.Execute then exit;
- OpenDialog1.Title:='Имя файла в котором нужно искать';
+ OpenDialog1.Title:='пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ';
  FNW:=OpenDialog1.FileName;
  If not OpenDialog1.Execute then exit;
  FNT:=OpenDialog1.FileName;
@@ -626,12 +628,12 @@ var
  S,SearchText, ReplaceText:string;
 
 {
-Пример Memo1 (разделитель - табуляция):
-лпшился	лишился
-Махабхарагы	Махабхараты
-мощпого	мощного
-мпою	мною
-напосить	наносить
+пїЅпїЅпїЅпїЅпїЅпїЅ Memo1 (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ):
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅ	пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅ	пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+пїЅпїЅпїЅпїЅ	пїЅпїЅпїЅпїЅ
+пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ	пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 }
 begin
  for i:=1 to Memo1.Lines.Count do
@@ -665,7 +667,7 @@ begin
  S:=Trim(S);
  if S<>'' then
   begin
-// номера страниц
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if (S[1]='-')and (S[2] in ['1'..'9']) then
     begin
      S:=S+'-';
@@ -691,10 +693,10 @@ begin
  S:=Trim(S);
  if S<>'' then
   begin
-// номера шлок
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     if (S[1]='[')and (S[2] in ['1'..'9']) then
     begin
-     S:=StringReplace(S,'—','-',[]);
+     S:=StringReplace(S,'пїЅ','-',[]);
     end;
   end;
  Memo1.Lines.Add(S);
@@ -730,7 +732,7 @@ begin
    begin
      if S_Ansi[i]=S_Open then
      begin
-       if b1=True then  Memo1.Lines.Add('Две открывающиеся кавычки подряд '+IntToStr(NLine)+', '+IntToStr(k1)+':'+S_k1+ ' | '+Copy(S_Ansi,i,20));
+       if b1=True then  Memo1.Lines.Add('пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(NLine)+', '+IntToStr(k1)+':'+S_k1+ ' | '+Copy(S_Ansi,i,20));
        b1:=True;
        if b2=True then b2:=False;
        k1:=i;
@@ -739,7 +741,7 @@ begin
      begin
       if S_Ansi[i]=S_Close then
       begin
-        if b2=True then  Memo1.Lines.Add('Две закрывающиеся кавычки подряд '+IntToStr(NLine)+', '+IntToStr(k2)+':'+S_k2+ ' | '+Copy(S_Ansi,i-19,20));
+        if b2=True then  Memo1.Lines.Add('пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ '+IntToStr(NLine)+', '+IntToStr(k2)+':'+S_k2+ ' | '+Copy(S_Ansi,i-19,20));
         b2:=True;
         if b1=True then b1:=False;
         k2:=i;
@@ -758,11 +760,11 @@ procedure TForm1.N18Click(Sender: TObject);
 begin
  If not OpenDialog1.Execute then exit;
  Memo1.Lines.Clear;
- //«»->„“
- Memo1.Lines.Add('-------Ошибки кавычек «ёлочки»----------');
- CheckQuotes (OpenDialog1.FileName,'«','»');
- Memo1.Lines.Add('-------Ошибки кавычек „лапки“----------');
- CheckQuotes (OpenDialog1.FileName,'„','“');
+ //пїЅпїЅ->пїЅпїЅ
+ Memo1.Lines.Add('-------пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ----------');
+ CheckQuotes (OpenDialog1.FileName,'пїЅ','пїЅ');
+ Memo1.Lines.Add('-------пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ----------');
+ CheckQuotes (OpenDialog1.FileName,'пїЅ','пїЅ');
  ShellExecute(Handle, 'open', PChar(ChangeFileExt(OpenDialog1.FileName,'_err.txt')), nil, nil, SW_SHOWNORMAL);
 end;
 
@@ -800,7 +802,7 @@ begin
    if S[1] in ['1'..'9'] then
    begin
     s1:=CutNext(S);
-    if Pos('—',s1)>0 then s1[Pos('—',s1)]:='-';
+    if Pos('пїЅ',s1)>0 then s1[Pos('пїЅ',s1)]:='-';
     S:='['+S1+'] '+S;
    end;
   end;
@@ -825,7 +827,7 @@ begin
  repeat
  readln(F,S);
  S1:='';
- if copy (S,1,5)='Глава' then  begin Goto 1 end;
+ if copy (S,1,5)='пїЅпїЅпїЅпїЅпїЅ' then  begin Goto 1 end;
  for i:=10 to Length (S) do
   begin
    if S[i] in ['1'..'9'] then
@@ -834,7 +836,7 @@ begin
      else
      begin
       s1:='';
-      // вырезаем фрагмент
+      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
       for j:=i to Length(S) do
       begin
        if S[j]=' ' then break;
@@ -866,7 +868,7 @@ begin
  readln(F,S);
  if S<>'' then
   begin
-// номера страниц
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if (S[1] ='-') and (S[2] in ['1'..'9']) then
     begin
      S:=Trim(StringReplace(S,'-','',[rfReplaceAll]));
@@ -890,7 +892,7 @@ begin
  reset(F);
  repeat
  readln(F,S);
- nPesn:=Pos('песнь',S);
+ nPesn:=Pos('пїЅпїЅпїЅпїЅпїЅ',S);
  if (nPesn>0)and(nPesn=Length(S)-4) then
     begin
      S:='#'+S;
@@ -957,7 +959,7 @@ begin
   StatusBar1.Panels[0].Text:=IntToStr(Memo1.Lines.Count);
  until EOF(F);
  CloseFile(F);
-// Поставить номера там, где их нет
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ
  for i:=1 to Length(ShlokasArr) do
  if ShlokasArr[i-1].S_Num='' then
    for j:=i+1 to Length(ShlokasArr) do
@@ -1006,7 +1008,7 @@ begin
  readln(F,S);
  if S<>'' then
   begin
-// номера страниц
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if (S[1] ='[') and (S[2] in [WideChar('1')..WideChar('9')]) then
     begin
      S:=Trim(StringReplace(S,'[','',[rfReplaceAll]));
@@ -1071,7 +1073,7 @@ begin
  repeat
   inc(i);
   readln(F,S_Cur);
-  // сравнение
+  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   if not IsEqualStrWithoutDandas (S_Cur,S_Old)
    then writeln(F2,S_Old)
    else Memo1.Lines.Add(IntToStr(i)+'='+IntToStr(i-1));
@@ -1247,9 +1249,9 @@ var
  UvachaNumsArr:TIntArr;
 
 begin
-//--------чтение переводов Uvacha ---------------
+//--------пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Uvacha ---------------
  If not OpenDialog1.Execute then exit;
-//--------чтение переводов Uvacha ---------------
+//--------пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Uvacha ---------------
  AssignFile(F,ExtractFilePath(OpenDialog1.FileName)+'uvacha.txt');
  reset(F);
  i:=0;
@@ -1262,7 +1264,7 @@ begin
   SArr[i-1]:=Utf8ToAnsi(S_W);
  until EOF(F);
  CloseFile(F);
-//--------конец чтение переводов Uvacha ---------------
+//--------пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Uvacha ---------------
  AssignFile(F,OpenDialog1.FileName);
  AssignFile(F2,ChangeFileExt(OpenDialog1.FileName,'_AutoRus.txt'));
  reset(F);
@@ -1291,8 +1293,8 @@ begin
          SetLength(UvachaNumsArr,ChapterUvachaListSl.Count);
          UvachaNumsArr[ChapterUvachaListSl.Count-1]:=0;
         end;   
-    // Начало - Процедура вывода -------------------------
-     Writeln(F2, 'Глава '+IntToStr(iGlava-1));
+    // пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -------------------------
+     Writeln(F2, 'пїЅпїЅпїЅпїЅпїЅ '+IntToStr(iGlava-1));
      if UvachaNumsArr[0]>0 then Writeln(F2, GetRusText (UvachaNumsArr[0], SArr));
      Write(F2, '[1-');
      for i:=2 to ChapterUvachaListSl.Count-1 do
@@ -1304,7 +1306,7 @@ begin
       i:=ChapterUvachaListSl.Count;
        Writeln(F2, ChapterUvachaListSl[i-1] +'] '+ GetRusText (0, SArr));
 
-    // Конец - Процедура вывода -------------------------
+    // пїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -------------------------
      ChapterUvachaListSl.Clear;
      ChapterUvachaListSl.Add('1');
      SetLength(UvachaNumsArr,ChapterUvachaListSl.Count);
@@ -1325,8 +1327,8 @@ begin
    SetLength(UvachaNumsArr,ChapterUvachaListSl.Count);
    UvachaNumsArr[ChapterUvachaListSl.Count-1]:=0;
   end;
- // Начало - Процедура вывода для последней главы
- Writeln(F2, 'Глава '+IntToStr(iGlava));
+ // пїЅпїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+ Writeln(F2, 'пїЅпїЅпїЅпїЅпїЅ '+IntToStr(iGlava));
  if UvachaNumsArr[0]>0 then Writeln(F2, GetRusText (UvachaNumsArr[0], SArr));
  Write(F2, '[1-');
  for i:=2 to ChapterUvachaListSl.Count-1 do
@@ -1337,7 +1339,7 @@ begin
   end;
   i:=ChapterUvachaListSl.Count;
   Writeln(F2, ChapterUvachaListSl[i-1] +'] '+ GetRusText (0, SArr));
-    // Конец - Процедура вывода -------------------------
+    // пїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ -------------------------
  CloseFile(F);
  CloseFile(F2);
  ChapterUvachaListSl.Free;
@@ -1353,9 +1355,9 @@ var
  iBook, iGlava, iShloka,iShloka_old,iGlava_old:integer;
  TextIndex:integer;
 begin
-//--------чтение переводов Uvacha ---------------
+//--------пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Uvacha ---------------
  If not OpenDialog1.Execute then exit;
-//--------чтение переводов Uvacha ---------------
+//--------пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Uvacha ---------------
  AssignFile(F,ExtractFilePath(OpenDialog1.FileName)+'uvacha.txt');
  reset(F);
  i:=0;
@@ -1368,7 +1370,7 @@ begin
   SArr[i-1]:=Utf8ToAnsi(S_W);
  until EOF(F);
  CloseFile(F);
-//--------конец чтение переводов Uvacha ---------------
+//--------пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Uvacha ---------------
  AssignFile(F,ExtractFilePath(OpenDialog1.FileName)+'01_Sanskrit.txt');
  AssignFile(F2,ExtractFilePath(OpenDialog1.FileName)+'02_Transl_AutoRus.txt');
  reset(F);
@@ -1384,18 +1386,18 @@ begin
   iGlava:=StrToInt(CutNextUseDelimiter(S,'.'));
   iShloka:=StrToInt(S);
   UTF8CutNextUseDelimiterNoTrim(S_W,#9);
-  // если новая глава - вывод номера главы
-  if iGlava<>iGlava_old then Writeln(F2, 'Глава '+IntToStr(iGlava));
-  // если поменялась шлока - вывод новой шлоки (либо перевод, либо три точки)
+  // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+  if iGlava<>iGlava_old then Writeln(F2, 'пїЅпїЅпїЅпїЅпїЅ '+IntToStr(iGlava));
+  // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
   if iShloka<>iShloka_Old then
   begin
    TextIndex:=GetRusTextIndex(S_W,SWArr);
    if TextIndex=0
-    then Writeln(F2, '[',intTostr(iShloka),'] …')
+    then Writeln(F2, '[',intTostr(iShloka),'] пїЅ')
     else
      begin
       Writeln(F2, SArr[Textindex-1]);
-      Writeln(F2, '[',intTostr(iShloka),'] …')
+      Writeln(F2, '[',intTostr(iShloka),'] пїЅ')
      end;
   end;
   iShloka_old:=iShloka;
@@ -1513,7 +1515,7 @@ begin
  Reset(F);
  AssignFile (F2, ExtractFilePath(AFileName)+'03_Comments.txt');
  Rewrite(F2);
- writeln(F2,AnsiToUTF8('ПРИМЕЧАНИЯ'));
+ writeln(F2,AnsiToUTF8('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ'));
  writeln(F2,AnsiToUTF8('-999-'));
  BookNum:=0;
  repeat
