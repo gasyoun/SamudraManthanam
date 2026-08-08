@@ -59,9 +59,11 @@ pipeline (see the repo
 
 ## Encoding
 
-- Input `.txt` and `config.ini`: **UTF-8, no BOM** (engine applies `UTF8ToAnsi` on read).
-- Output HTML / `Res_html.txt`: **UTF-8**.
-- `Err.txt`: **CP-1251** (engine `TStringList.SaveToFile` default).
+- I/O helpers: [`dcu/uEncoding.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uEncoding.pas)
+  (`ToUTF8` / `FromUTF8`, H2428) — no raw `AnsiToUTF8`/`UTF8ToAnsi` on the engine path.
+- Input `.txt` and `config.ini`: **UTF-8, no BOM**.
+- Output HTML / `Res_html.txt` / `Err.txt`: **UTF-8** (H2428 rebaseline; pre-H2428
+  `Err.txt` was CP-1251).
 - `_check.json` / `_check.tsv`: **UTF-8**.
 - When snapshotting, copy bytes verbatim — never let an editor re-save/normalize
   line endings or add a BOM.

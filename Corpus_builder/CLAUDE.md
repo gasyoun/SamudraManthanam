@@ -126,7 +126,7 @@ Errors are collected in `ErrList` (shown in `Memo1`) and saved to `<input>_err.t
 
 ## Key conventions
 
-- **Encoding**: source files are Windows CP-1251 (ANSI); I/O uses `AnsiToUTF8` / `UTF8ToAnsi` at boundaries. WideString is used for Sanskrit IAST text internally.
+- **Encoding**: centralized in [`dcu/uEncoding.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/PSRCBuilder/dcu/uEncoding.pas) (`ToUTF8`/`FromUTF8` → LazUTF8 `SysToUTF8`/`UTF8ToSys`). No raw `AnsiToUTF8`/`UTF8ToAnsi` on the engine path (H2428). WideString is used for Sanskrit IAST text internally.
 - **Loop indices**: 1-based (`for i:=1 to List.Count`) with zero-based array access (`List[i-1]`), consistent with the shared `uTypes`/`TextU` conventions used across the project family.
 - **String utilities** (`TextU.pas`): use `CutNextUseDelimiter` (modifies `var Source`) to tokenize lines, `UTF8CutNextUseDelimiterNoTrim` for WideString. Do not use byte-level `Pos`/`Copy` on UTF-8 WideString data.
 - **File helpers** (`myutils.pas`): `PutFile1ToFile2(F1, F2, MarkerBegin, MarkerEnd)` inserts the full content of `F1` into `F2` between the two marker strings (saves `.old` backup); `MergeFiles(Fn1, Fn2, Sum)` concatenates two files into a third.

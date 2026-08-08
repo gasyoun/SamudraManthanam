@@ -92,7 +92,7 @@ var
  s:string;
 implementation
 
-uses sysutils, Math, dateUtils, calcsimu, StatProcs, variants;
+uses sysutils, Math, dateUtils, calcsimu, StatProcs, variants, uEncoding;
 
 const
 cUsedBits=7;
@@ -1042,7 +1042,7 @@ var
  S,wDelimiter:widestring;
  PosSpace:integer;
 begin
- wDelimiter:=AnsiToUtf8(Delimiter);
+ wDelimiter:=ToUTF8(Delimiter);
  S:=Source;
  PosSpace:=Pos(Delimiter,s);
  if PosSpace=0 then

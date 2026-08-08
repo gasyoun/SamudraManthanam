@@ -1,0 +1,48 @@
+Hint: (lazbuild) Primary config path: "C:\Users\user\AppData\Local\lazarus"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-iWTOTP"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-va" "C:\Users\user\AppData\Local\lazarus\compilertest.pas", WorkDir="C:\Users\user\AppData\Local\lazarus\"
+Hint: [TPCTargetConfigCache.Update] has changed
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-iWTOTP" "-Px86_64" "-Twin64"
+Hint: (lazarus) [RunTool] "C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe" "-va" "C:\Users\user\AppData\Local\lazarus\compilertest.pas" "-Px86_64" "-Twin64", WorkDir="C:\Users\user\AppData\Local\lazarus\"
+Hint: [TPCTargetConfigCache.Update] has changed
+Hint: (lazarus) [TBuildManager.SetBuildTarget] Old=x86_64-win64--win32 New=x86_64-win64--win32 Changed: OS/CPU=True LCL=False
+Hint: (lazarus) [TBuildManager.SetBuildTarget] Old=x86_64-win64--win32 New=x86_64-win64--win32 Changed: OS/CPU=True LCL=False
+Hint: (lazarus) Build Project: nothing to do.
+Info: (lazarus) Execute Title="Компиляция проекта, цель: C:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.exe"
+Info: (lazarus) Working Directory="C:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\"
+Info: (lazarus) Executable="C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.exe"
+Info: (lazarus) Param[0]="-Twin64"
+Info: (lazarus) Param[1]="-Px86_64"
+Info: (lazarus) Param[2]="-MDelphi"
+Info: (lazarus) Param[3]="-Scghi"
+Info: (lazarus) Param[4]="-O1"
+Info: (lazarus) Param[5]="-gw2"
+Info: (lazarus) Param[6]="-godwarfsets"
+Info: (lazarus) Param[7]="-gl"
+Info: (lazarus) Param[8]="-WG"
+Info: (lazarus) Param[9]="-l"
+Info: (lazarus) Param[10]="-vewnhibq"
+Info: (lazarus) Param[11]="-FiC:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\lib\x86_64-win64"
+Info: (lazarus) Param[12]="-FuC:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\"
+Info: (lazarus) Param[13]="-FuC:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\dcu"
+Info: (lazarus) Param[14]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\lcl\units\x86_64-win64\win32"
+Info: (lazarus) Param[15]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\lcl\units\x86_64-win64"
+Info: (lazarus) Param[16]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\freetype\lib\x86_64-win64"
+Info: (lazarus) Param[17]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\components\lazutils\lib\x86_64-win64"
+Info: (lazarus) Param[18]="-FuC:\Users\user\tools\lazarus\lazarus-4.0\packager\units\x86_64-win64"
+Info: (lazarus) Param[19]="-FEC:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\lib\x86_64-win64\"
+Info: (lazarus) Param[20]="-oC:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.exe"
+Info: (lazarus) Param[21]="-dLCL"
+Info: (lazarus) Param[22]="-dLCLwin32"
+Info: (lazarus) Param[23]="cb.lpr"
+Hint: (11030) Start of reading config file C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.cfg
+Hint: (11031) End of reading config file C:\Users\user\tools\lazarus\lazarus-4.0\fpc\3.2.2\bin\x86_64-win64\fpc.cfg
+Free Pascal Compiler version 3.2.2 [2025/05/03] for x86_64
+Copyright (c) 1993-2021 by Florian Klaempfl and others
+(1002) Target OS: Win64 for x64
+(3104) Compiling cb.lpr
+(9022) Compiling resource C:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.obj
+(9015) Linking C:\Users\user\Documents\GitHub\SamudraManthanam-h2428-26112\Corpus_builder\PSRCBuilder\lib\x86_64-win64\cb.exe
+(1008) 21 lines compiled, 5.3 sec, 1804112 bytes code, 127172 bytes data
+(1022) 2 hint(s) issued
+Info: (lazarus) [TCompiler.Compile] end
