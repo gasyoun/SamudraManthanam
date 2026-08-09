@@ -30,7 +30,7 @@ different vhost and must not be edited for Samudra).
     ├── state.db         # morph cache, corrections, schema_migrations
     ├── corpus.next.db   # temp during reindex (absent when idle)
     ├── corpus.build-report.json
-    └── backups/         # corpus_YYYYMMDD_HHMMSS.db
+    └── backups/         # {corpus,state}_YYYYMMDD_HHMMSS.db (7-day retention)
 ```
 
 | Surface | Path / command |
@@ -212,6 +212,48 @@ and § Rollback a corpus publish.
 
 ---
 
+## DB backups (cron)
+
+Scheduled daily at **03:07 UTC** via `/etc/cron.d/samudra-db-backup`.
+Both `corpus.db` and `state.db` are backed up using `sqlite3 .backup`
+(WAL-safe — no `-shm`/`-wal` inconsistency). Retention: 7 days; files older
+than 7 days (including stale `-shm`/`-wal` sidecars) are pruned automatically.
+
+| Item | Path |
+|---|---|
+| Script on host | `/usr/local/sbin/samudra-db-backup.sh` |
+| Source in repo | [`scripts/db_backup.sh`](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/db_backup.sh) |
+| Cron drop-in | `/etc/cron.d/samudra-db-backup` |
+| Log | `/var/log/samudra-backup.log` |
+
+### Manual backup (one-off)
+
+```bash
+/usr/local/sbin/samudra-db-backup.sh
+```
+
+### Verify / restore dry-run
+
+```bash
+ls -lt /opt/samudra/db/backups/
+# Check a backup is a valid SQLite file:
+sqlite3 /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db ".tables"
+# Or restore to a temp path and run smoke check:
+cp /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db /tmp/corpus_restore_test.db
+/opt/samudra/venv/bin/python /opt/samudra/repo/web/scripts/smoke_check.py \
+  --db-path /tmp/corpus_restore_test.db --min-sources 5
+```
+
+To roll back `corpus.db` to a backup: stop is not required (SQLite handles
+concurrent readers). Copy the backup over live; restart for certainty.
+
+```bash
+cp /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db /opt/samudra/db/corpus.db
+systemctl restart samudra
+```
+
+---
+
 ## Env / AI key changes
 
 ```bash
@@ -261,6 +303,45 @@ sslip), `nginx -t` + reload, certbot, dual HTTPS smoke.
 Status: [docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md).
 Optional after branded HTTPS is 200: extend `PUBLIC_BASE_URL` /
 `ALLOWED_ORIGINS` in `/opt/samudra/.env`, then `systemctl restart samudra`.
+
+---
+
+## Offline packs — build and serve (Wave P6 / H2392)
+
+Build once against the live `corpus.db` and the FastAPI router serves the
+result at `/api/offline-packs/{base,dict}.db` — no restart needed, the router
+reads the pack files fresh on every request.
+
+```bash
+# One-time per install — offline-packs/ is created by DEPLOYMENT.md with
+# .gitkeep only, still owned root:samudra mode 755 (no group-write). Without
+# this, build_offline_pack.py's temp-file write fails "unable to open
+# database file" even though corpus.db itself is readable.
+chown samudra:samudra /opt/samudra/repo/web/offline-packs
+chmod 775 /opt/samudra/repo/web/offline-packs
+
+cd /opt/samudra/repo/web
+sudo -u samudra /opt/samudra/venv/bin/python scripts/build_offline_pack.py \
+  --db /opt/samudra/db/corpus.db --out /opt/samudra/web/offline-packs --pack both
+
+# Verify
+curl -fsS http://127.0.0.1:8000/api/corpus-version
+curl -fsS -o /dev/null -D - http://127.0.0.1:8000/api/offline-packs/base.db \
+  | grep -iE 'HTTP|content-encoding|content-length|x-db-bytes'
+curl -fsS -o /dev/null -D - http://127.0.0.1:8000/api/offline-packs/dict.db \
+  | grep -iE 'HTTP|content-encoding|content-length|x-db-bytes'
+```
+
+`sudo -u samudra` keeps the produced `.db`/`.gz`/`.sha256` owned by the same
+user the systemd unit runs as, so the next rebuild doesn't need a second
+permission fix. Size gates are on the **wire** (`.gz`) size: base ≤130 MB,
+dict ≤90 MB — see [`scripts/build_offline_pack.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/scripts/build_offline_pack.py)
+`SIZE_LIMIT_MB`.
+
+**Rebuild cadence:** packs are a derivative view of `corpus.db` and go stale
+after every `reindex.sh` run. Not yet wired to rebuild automatically — rerun
+the recipe above after a corpus publish. Full build/API detail:
+[docs/H2392_OFFLINE_PACKS_PROD_STATUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2392_OFFLINE_PACKS_PROD_STATUS.md).
 
 ---
 
@@ -366,8 +447,10 @@ echo '{"consecutive_failures":0,"last_alert_at":null}' \
 ## Provenance
 
 - Wave P2 / H2388 (Grok 4.5 `grok-4.5`): expand operator pull/pip/restart/rollback.
+- Wave P3 / H2389 (Sonnet 5 `claude-sonnet-5`): DB backup cron (`corpus.db` + `state.db`), 7-day retention, restore dry-run PASS.
 - Wave P4 / H2390 (Sonnet 5 `claude-sonnet-5`): health + search smoke monitor and alert path; `scripts/health_monitor.py` + this OPS section. Delivered as a systemd timer (`deploy/samudra-health-monitor.{service,timer}`), not root crontab — Systema's `server_guards_apply.sh` fully overwrites root's crontab on every re-run and would have silently dropped a hand-added cron line.
 - Wave P5 / H2391 (Grok 4.5 `grok-4.5`): DNS-gated branded hostname path; agent half only until human A-record.
+- Wave P6 / H2392 (Sonnet 5 `claude-sonnet-5`): offline-pack build recipe; found + fixed `offline-packs/` ownership gap.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
 - Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
   `/opt/samudra/repo/OPS.md` as the source of truth.
