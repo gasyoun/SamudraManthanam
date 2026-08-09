@@ -1,0 +1,17 @@
+{
+  "before_corpus_version": "v2026.07.15",
+  "candidate_corpus_version": "2026.08",
+  "before_lines": 611569,
+  "candidate_lines": 671250,
+  "legacy_map_rows": 0,
+  "references_checked": 0,
+  "counts": {},
+  "fatal": 0,
+  "zero_orphan": true,
+  "references": [],
+  "rollback_rehearsal": {
+    "counts": {},
+    "fatal": 0,
+    "rollback_safe": true
+  }
+}
