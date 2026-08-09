@@ -1,6 +1,6 @@
 # Corpus Builder — план развития (Roadmap)
 
-_Создано: 05-07-2026 · Обновлено: 08-08-2026_
+_Создано: 05-07-2026 · Обновлено: 09-08-2026_
 
 > **Обновление 10-07-2026 (H534).** Появился **альтернативный, агент-исполнимый
 > путь ингеста на Python** — не порт `cb.exe` на Lazarus, а замена его для
@@ -206,8 +206,15 @@ Delphi 7.
 - [ ] **Стык с веб-конвейером.** Встроить headless-сборку в шаг перед
       `build-web-db.ps1` / `reindex.sh`, чтобы поисковая БД (SQLite FTS5)
       пересобиралась из свежего HTML одним прогоном.
-- [ ] **CI-джоб.** GitHub Actions: собрать сборщик под FPC, прогнать golden-тесты,
-      пересобрать корпус — на каждом PR, меняющем исходные тексты.
+- [x] **CI-джоб.** Done 09-08-2026 (H2434, Sonnet 5 `claude-sonnet-4-6`, override
+      of Grok lock — [[feedback_sonnet_runs_grok_handoffs]]):
+      [`.github/workflows/corpus-builder-golden.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/corpus-builder-golden.yml)
+      builds `cb_headless` via `lazbuild` on Linux and runs
+      `tests/golden/run_golden_case01.py --verify` on every push/PR touching
+      `Corpus_builder/**`; fail-closed (missing toolchain, missing binary, or a
+      byte diff against `expected/` all hard-fail, never skip). **Residual:**
+      full corpus rebuild on PR (separate from the golden compare) stays open —
+      not required by this handoff's stop condition (1 PR + green Actions run).
 
 ## Фаза 5 (опциональная развилка) — судьба GUI
 

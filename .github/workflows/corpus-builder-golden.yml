@@ -1,0 +1,66 @@
+# H2434 — build cb_headless via lazbuild and run the golden compare (case01)
+# on every PR/push touching Corpus_builder. Fails closed: a missing lazbuild
+# toolchain, a missing binary, or a byte diff against tests/golden/*/expected/
+# is a hard failure, never a skip.
+name: Corpus_builder golden tests
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "Corpus_builder/**"
+      - ".github/workflows/corpus-builder-golden.yml"
+  pull_request:
+    branches: [main, master]
+    paths:
+      - "Corpus_builder/**"
+      - ".github/workflows/corpus-builder-golden.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: corpus-builder-golden-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  golden:
+    name: lazbuild cb_headless + golden compare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install FPC + Lazarus (LCL/gtk2)
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            fpc lazarus-ide lcl-units lcl-utils libgtk2.0-dev
+          which lazbuild
+
+      - name: lazbuild cb_headless.lpi
+        working-directory: Corpus_builder/PSRCBuilder
+        run: |
+          set -euo pipefail
+          lazbuild --build-all --verbose cb_headless.lpi 2>&1 | tee ../../H2434_GOLDEN_BUILD.log
+          test -f lib/x86_64-linux/cb_headless
+          chmod +x lib/x86_64-linux/cb_headless
+
+      - name: Golden compare — case01
+        run: |
+          set -euo pipefail
+          test -d Corpus_builder/tests/golden/case01/expected
+          test -n "$(ls -A Corpus_builder/tests/golden/case01/expected)"
+          python Corpus_builder/tests/golden/run_golden_case01.py --verify
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h2434-golden-build-log
+          path: H2434_GOLDEN_BUILD.log
+          if-no-files-found: warn
