@@ -1,6 +1,6 @@
 # OPS.md — Samudra Manthanam production operator path
 
-_Created: 08-08-2026 · Last updated: 08-08-2026_  
+_Created: 08-08-2026 · Last updated: 09-08-2026_  
 _(+ H2391 branded-hostname section)_
 
 **Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
@@ -30,7 +30,7 @@ different vhost and must not be edited for Samudra).
     ├── state.db         # morph cache, corrections, schema_migrations
     ├── corpus.next.db   # temp during reindex (absent when idle)
     ├── corpus.build-report.json
-    └── backups/         # corpus_YYYYMMDD_HHMMSS.db
+    └── backups/         # {corpus,state}_YYYYMMDD_HHMMSS.db (7-day retention)
 ```
 
 | Surface | Path / command |
@@ -212,6 +212,48 @@ and § Rollback a corpus publish.
 
 ---
 
+## DB backups (cron)
+
+Scheduled daily at **03:07 UTC** via `/etc/cron.d/samudra-db-backup`.
+Both `corpus.db` and `state.db` are backed up using `sqlite3 .backup`
+(WAL-safe — no `-shm`/`-wal` inconsistency). Retention: 7 days; files older
+than 7 days (including stale `-shm`/`-wal` sidecars) are pruned automatically.
+
+| Item | Path |
+|---|---|
+| Script on host | `/usr/local/sbin/samudra-db-backup.sh` |
+| Source in repo | [`scripts/db_backup.sh`](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/db_backup.sh) |
+| Cron drop-in | `/etc/cron.d/samudra-db-backup` |
+| Log | `/var/log/samudra-backup.log` |
+
+### Manual backup (one-off)
+
+```bash
+/usr/local/sbin/samudra-db-backup.sh
+```
+
+### Verify / restore dry-run
+
+```bash
+ls -lt /opt/samudra/db/backups/
+# Check a backup is a valid SQLite file:
+sqlite3 /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db ".tables"
+# Or restore to a temp path and run smoke check:
+cp /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db /tmp/corpus_restore_test.db
+/opt/samudra/venv/bin/python /opt/samudra/repo/web/scripts/smoke_check.py \
+  --db-path /tmp/corpus_restore_test.db --min-sources 5
+```
+
+To roll back `corpus.db` to a backup: stop is not required (SQLite handles
+concurrent readers). Copy the backup over live; restart for certainty.
+
+```bash
+cp /opt/samudra/db/backups/corpus_YYYYMMDD_HHMMSS.db /opt/samudra/db/corpus.db
+systemctl restart samudra
+```
+
+---
+
 ## Env / AI key changes
 
 ```bash
@@ -280,6 +322,7 @@ Optional after branded HTTPS is 200: extend `PUBLIC_BASE_URL` /
 
 - Wave P2 / H2388 (Grok 4.5 `grok-4.5`): expand operator pull/pip/restart/rollback.
 - Wave P5 / H2391 (Grok 4.5 `grok-4.5`): DNS-gated branded hostname path; agent half only until human A-record.
+- Wave P3 / H2389 (Sonnet 5 `claude-sonnet-5`): DB backup cron (`corpus.db` + `state.db`), 7-day retention, restore dry-run PASS.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
 - Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
   `/opt/samudra/repo/OPS.md` as the source of truth.
