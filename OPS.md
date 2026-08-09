@@ -303,6 +303,68 @@ the recipe above after a corpus publish. Full build/API detail:
 
 ---
 
+## Health monitor + smoke cron (Wave P4 / H2390)
+
+Script: `scripts/health_monitor.py` — hits `/api/health` and one search probe
+every invocation. Designed for a 15-minute cron call; keeps state in
+`/opt/samudra/logs/.health_monitor_state.json`.
+
+### Cron entry (root crontab on `193.232.229.92`)
+
+```
+*/15 * * * * /opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py >> /opt/samudra/logs/health_monitor.log 2>&1
+```
+
+### Log files
+
+| File | Content |
+|---|---|
+| `/opt/samudra/logs/health_monitor.log` | Every check: `PASS` / `FAIL` + health and search detail |
+| `/opt/samudra/logs/health_monitor_journal.log` | Recoveries and `CRITICAL` alerts (5+ consecutive failures) |
+| `/opt/samudra/logs/.health_monitor_state.json` | Consecutive-failure counter (state between cron runs) |
+
+### Alert path
+
+After **5 consecutive failures** the script writes a `CRITICAL:` line to
+`health_monitor_journal.log` and prints to stderr (visible in cron mail and
+`journalctl`). The circuit-breaker threshold is `ALERT_THRESHOLD = 5` in the
+script. The cron continues running — it does not silence itself; the CRITICAL
+line fires on every subsequent failure until recovery is logged.
+
+Recovery from a transient outage is logged automatically as `RECOVERY after N
+failure(s)` in both files, and the counter resets to 0.
+
+### Manual fail-inject / smoke
+
+```bash
+# Inject failure: point at a dead port, run once, check journal
+SAMUDRA_BASE_URL=http://127.0.0.1:19999 \
+  /opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py
+# expect: FAIL lines in stdout, no CRITICAL yet (counter=1)
+
+# Simulate 5 consecutive failures by patching state:
+echo '{"consecutive_failures":4,"last_alert_at":null}' \
+  > /opt/samudra/logs/.health_monitor_state.json
+SAMUDRA_BASE_URL=http://127.0.0.1:19999 \
+  /opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py
+# expect: CRITICAL line in stderr AND in health_monitor_journal.log
+
+# Restore
+echo '{"consecutive_failures":0,"last_alert_at":null}' \
+  > /opt/samudra/logs/.health_monitor_state.json
+/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py
+# expect: PASS + RECOVERY logged if counter was nonzero
+```
+
+### Env overrides
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `SAMUDRA_BASE_URL` | `http://127.0.0.1:8000` | Target URL |
+| `SAMUDRA_LOG_DIR` | `/opt/samudra/logs` | Log directory |
+
+---
+
 ## What this runbook deliberately excludes
 
 | Topic | Where |
@@ -318,6 +380,7 @@ the recipe above after a corpus publish. Full build/API detail:
 ## Provenance
 
 - Wave P2 / H2388 (Grok 4.5 `grok-4.5`): expand operator pull/pip/restart/rollback.
+- Wave P4 / H2390 (Sonnet 5 `claude-sonnet-5`): health + search smoke cron and alert path; `scripts/health_monitor.py` + this OPS section.
 - Wave P5 / H2391 (Grok 4.5 `grok-4.5`): DNS-gated branded hostname path; agent half only until human A-record.
 - Wave P6 / H2392 (Sonnet 5 `claude-sonnet-5`): offline-pack build recipe; found + fixed `offline-packs/` ownership gap.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
