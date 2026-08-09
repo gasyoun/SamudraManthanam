@@ -1,6 +1,6 @@
 # ROADMAP — SamudraManthanam, August 2026–July 2027
 
-_Created: 30-07-2026 · Last updated: 08-08-2026_
+_Created: 30-07-2026 · Last updated: 09-08-2026_
 
 **Status: LIVING.** This is the sole status roadmap for the programme indexed
 by [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
@@ -50,7 +50,7 @@ prod state) are not optional research.
 | P3 | **Backups** — corpus.db + state.db cron + retention | restore drill once |
 | P4 | **Monitors** — health cron + journald/logrotate | alert path written |
 | P5 | **Branded hostname + TLS** when DNS exists (sslip.io stays fallback) | certbot on real name · **agent half 08-08-2026 (H2391):** DNS-gated script + ops path landed; **blocked on human A-record** (`samudra.samskrte.ru` NXDOMAIN) — [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md) |
-| P6 | **Offline packs** built and served under prod static/API | size gates pass |
+| P6 | **Offline packs** built and served under prod static/API | ✅ built + serving on prod (H2392, 09-08-2026) — base 109.5 MB / dict 36.8 MB wire, both under gate — [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2392_OFFLINE_PACKS_PROD_STATUS.md) |
 | P7 | **Zero-orphan / durable-ref gate** on prod state vs corpus | report artifact |
 | P8 | **Performance baseline** against public URL | PERFORMANCE_BASELINES row |
 | P9 | **UX acceptance** bilingual + deep-link on prod | ✅ checklist green ([H2394](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/acceptance/H2394_UX_ACCEPTANCE_BILINGUAL_DEEPLINK_CHECKLIST.md), 08-08-2026) |
