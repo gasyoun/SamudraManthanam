@@ -1,0 +1,9 @@
+# H2433 example — copy to headless_jobs.jsonl (repo) or
+# Programdata/headless_jobs.jsonl (deploy corpus) and edit paths.
+# One JSON object per line. Relative paths are resolved from the repo root.
+#
+# {"build": "path/to/work-dir-or-config.ini", "out": "Data/book.html"}
+# {"build": "path/to/config.ini", "out": "Data/book.html", "check": true}
+#
+# Golden single-book smoke (requires lazbuild-built cb_headless):
+# {"build": "Corpus_builder/tests/golden/case01/input", "out": "Data/case01_out.html"}
