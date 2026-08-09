@@ -1,11 +1,13 @@
 """Samudra Manthanam production health monitor.
 
-Run once per cron invocation (every 15 minutes). Checks /api/health and a
-search probe, logs every outcome, and writes a CRITICAL alert to the journal
-file after ALERT_THRESHOLD consecutive failures (circuit-breaker).
+Run once per invocation (every 15 minutes, via a systemd timer -- NOT root
+crontab, which Systema Sanscriticum's server_guards_apply.sh fully overwrites
+on every re-run). Checks /api/health and a search probe, logs every outcome,
+and writes a CRITICAL alert to the journal file after ALERT_THRESHOLD
+consecutive failures (circuit-breaker).
 
-Usage (cron line added by H2390):
-  */15 * * * * /opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py
+Usage (systemd timer installed by H2390):
+  see deploy/samudra-health-monitor.{service,timer} and OPS.md
 
 Env overrides:
   SAMUDRA_BASE_URL     default: http://127.0.0.1:8000

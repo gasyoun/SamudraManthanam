@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Samudra Manthanam health + search smoke check every 15 minutes (H2390)
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=15min
+AccuracySec=30s
+Unit=samudra-health-monitor.service
+
+[Install]
+WantedBy=timers.target
