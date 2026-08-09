@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.19.35] - 2026-08-09
 ### Fixed
 - **Wave P4 health monitor: cron → systemd timer correction (H2390 follow-up, Sonnet 5 `claude-sonnet-5`).** The 0.19.33 entry below described a root-crontab line; that would have been silently wiped the next time Systema's [`scripts/server_guards_apply.sh`](https://github.com/gasyoun/Systema-Sanscriticum/blob/main/scripts/server_guards_apply.sh) re-renders root's crontab (it fully overwrites it from a template on every run, keyed only off `AUTO_DEPLOY_SCHEDULE`). Replaced with [`deploy/samudra-health-monitor.service`](https://github.com/gasyoun/SamudraManthanam/blob/main/deploy/samudra-health-monitor.service) + [`deploy/samudra-health-monitor.timer`](https://github.com/gasyoun/SamudraManthanam/blob/main/deploy/samudra-health-monitor.timer) (`OnUnitActiveSec=15min`), a unit outside that managed file. `OPS.md` and the script docstring updated accordingly.
 
