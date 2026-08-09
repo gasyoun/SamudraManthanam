@@ -39,7 +39,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-            fpc lazarus-ide lcl-units lcl-utils libgtk2.0-dev
+            fpc lazarus-ide lcl-units lcl-utils libgtk2.0-dev xvfb
           which lazbuild
 
       - name: lazbuild cb_headless.lpi
@@ -55,7 +55,7 @@ jobs:
           set -euo pipefail
           test -d Corpus_builder/tests/golden/case01/expected
           test -n "$(ls -A Corpus_builder/tests/golden/case01/expected)"
-          python Corpus_builder/tests/golden/run_golden_case01.py --verify
+          xvfb-run --auto-servernum python Corpus_builder/tests/golden/run_golden_case01.py --verify
 
       - name: Upload build log
         if: always()
