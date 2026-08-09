@@ -432,6 +432,25 @@ echo '{"consecutive_failures":0,"last_alert_at":null}' \
 
 ---
 
+## Performance baseline against prod (Wave P8 / H2395)
+
+Re-run after a corpus publish or a search/reader perf-sensitive change to
+catch a regression against the recorded floor:
+
+```bash
+python web/scripts/performance_baseline.py \
+  --base-url https://samudra.193.232.229.92.sslip.io
+```
+
+Writes a fresh measurement table; commit the updated
+[docs/PERFORMANCE_BASELINES.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PERFORMANCE_BASELINES.md)
+(do not hand-edit it — re-run the script). Budgets are defined in
+[docs/VERIFICATION_SAMUDRAMANTHANAM_ARCHITECTURE_INTEGRITY.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/VERIFICATION_SAMUDRAMANTHANAM_ARCHITECTURE_INTEGRITY.md)
+§ Performance budgets; an over-budget measurement is recorded as an
+exception there, never silently dropped.
+
+---
+
 ## What this runbook deliberately excludes
 
 | Topic | Where |
@@ -451,6 +470,7 @@ echo '{"consecutive_failures":0,"last_alert_at":null}' \
 - Wave P4 / H2390 (Sonnet 5 `claude-sonnet-5`): health + search smoke monitor and alert path; `scripts/health_monitor.py` + this OPS section. Delivered as a systemd timer (`deploy/samudra-health-monitor.{service,timer}`), not root crontab — Systema's `server_guards_apply.sh` fully overwrites root's crontab on every re-run and would have silently dropped a hand-added cron line.
 - Wave P5 / H2391 (Grok 4.5 `grok-4.5`): DNS-gated branded hostname path; agent half only until human A-record.
 - Wave P6 / H2392 (Sonnet 5 `claude-sonnet-5`): offline-pack build recipe; found + fixed `offline-packs/` ownership gap.
+- Wave P8 / H2395 (Sonnet 5 `claude-sonnet-5`): performance baseline re-run against the live public sslip URL instead of localhost; recipe above.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
 - Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
   `/opt/samudra/repo/OPS.md` as the source of truth.
