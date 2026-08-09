@@ -5,13 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-## [0.19.34] - 2026-08-09
+## [0.19.35] - 2026-08-09
 ### Added
 - **P8 performance baseline against the public prod URL (H2395, Sonnet 5 `claude-sonnet-4-5`).** Ran [`web/scripts/performance_baseline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/scripts/performance_baseline.py) against `https://samudra.193.232.229.92.sslip.io` (230 sources, corpus `2026.08`) instead of localhost, refreshing [`docs/PERFORMANCE_BASELINES.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PERFORMANCE_BASELINES.md). Two measurements over budget, recorded as exceptions per VERIFICATION: `plain_search_p95[atman]` (700ms vs 500ms, 1.4×) and `reader_lookup_p95` (635ms vs 500ms, 1.3×, now against `/01_atharvaveda`); `catastrophic_regex` improved to within budget (1671ms vs 2000ms).
 
-### Added
 - **Wave P6: offline packs built and served on prod (H2392, Sonnet 5 `claude-sonnet-5`).** Ran [`scripts/build_offline_pack.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/scripts/build_offline_pack.py) against the live `/opt/samudra/db/corpus.db`: `base.db` 469,192 rows, 283.9 MB raw → 109.5 MB wire (limit 130 MB); `dict.db` 254,037 rows, 86.8 MB raw → 36.8 MB wire (limit 90 MB). Found and fixed a real prod blocker: `/opt/samudra/repo/web/offline-packs/` was `root:samudra` mode `755` (no group-write), so the `samudra` service user's temp-file write failed with `unable to open database file` even though `corpus.db` itself was readable — fixed with `chown samudra:samudra` + `chmod 775`. Verified `/api/corpus-version` and both `/api/offline-packs/{base,dict}.db` return 200 with correct `content-encoding: gzip` / `x-db-bytes` headers. Recipe added to [`OPS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) § Offline packs; roadmap Wave P6 ticked. Doc: [`docs/H2392_OFFLINE_PACKS_PROD_STATUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2392_OFFLINE_PACKS_PROD_STATUS.md).
 
 ## [0.19.33] - 2026-08-09
