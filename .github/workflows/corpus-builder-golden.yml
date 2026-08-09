@@ -64,3 +64,13 @@ jobs:
           name: h2434-golden-build-log
           path: H2434_GOLDEN_BUILD.log
           if-no-files-found: warn
+
+      - name: Show diff (debug, only on failure)
+        if: failure()
+        run: |
+          echo "=== diff case01_out.html ==="
+          diff Corpus_builder/tests/golden/case01/expected/case01_out.html \
+               Corpus_builder/tests/golden/case01/input/case01_out.html || true
+          echo "=== diff Res_html.txt ==="
+          diff Corpus_builder/tests/golden/case01/expected/Res_html.txt \
+               Corpus_builder/tests/golden/case01/input/Res_html.txt || true
