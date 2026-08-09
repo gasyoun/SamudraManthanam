@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.19.34] - 2026-08-09
 ### Added
 - **P8 performance baseline against the public prod URL (H2395, Sonnet 5 `claude-sonnet-4-5`).** Ran [`web/scripts/performance_baseline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/scripts/performance_baseline.py) against `https://samudra.193.232.229.92.sslip.io` (230 sources, corpus `2026.08`) instead of localhost, refreshing [`docs/PERFORMANCE_BASELINES.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PERFORMANCE_BASELINES.md). Two measurements over budget, recorded as exceptions per VERIFICATION: `plain_search_p95[atman]` (700ms vs 500ms, 1.4×) and `reader_lookup_p95` (635ms vs 500ms, 1.3×, now against `/01_atharvaveda`); `catastrophic_regex` improved to within budget (1671ms vs 2000ms).
 
