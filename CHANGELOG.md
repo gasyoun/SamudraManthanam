@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- **P8 performance baseline against the public prod URL (H2395, Sonnet 5 `claude-sonnet-4-5`).** Ran [`web/scripts/performance_baseline.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/scripts/performance_baseline.py) against `https://samudra.193.232.229.92.sslip.io` (230 sources, corpus `2026.08`) instead of localhost, refreshing [`docs/PERFORMANCE_BASELINES.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PERFORMANCE_BASELINES.md). Two measurements over budget, recorded as exceptions per VERIFICATION: `plain_search_p95[atman]` (700ms vs 500ms, 1.4×) and `reader_lookup_p95` (635ms vs 500ms, 1.3×, now against `/01_atharvaveda`); `catastrophic_regex` improved to within budget (1671ms vs 2000ms).
+
+## [0.19.33] - 2026-08-09
+### Added
+- **Wave P4 health + search smoke cron and alert path (H2390, Sonnet 5 `claude-sonnet-5`).** New [`scripts/health_monitor.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/health_monitor.py): stdlib-only (no extra deps), single-shot cron worker that hits `/api/health` and a `/api/search` probe on every invocation, appends `PASS`/`FAIL` lines to `/opt/samudra/logs/health_monitor.log`, tracks consecutive failures in a JSON state file, and writes a `CRITICAL:` alert to `health_monitor_journal.log` after 5 consecutive failures (circuit-breaker); auto-logs `RECOVERY` when the counter resets. Cron line: `*/15 * * * * /opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py`. [`OPS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) updated with monitor section, log-files table, alert path, manual fail-inject smoke commands, and env overrides.
+
+## [0.19.32] - 2026-08-09
+### Added
+- **P7 zero-orphan gate run against real prod state+corpus (H2393, Sonnet 5 `claude-sonnet-4-5`).** Ran [`web/scripts/zero_orphan_report.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/scripts/zero_orphan_report.py) on `root@193.232.229.92` against the live `/opt/samudra/db/state.db` + `/opt/samudra/db/corpus.db` (before `v2026.07.15`/611,569 lines → candidate `2026.08`/671,250 lines), with `--rollback-rehearsal`. Result: `ZERO-ORPHAN: PASS`, rollback rehearsal SAFE — but `references_checked: 0` since prod's `corrections` table currently holds no rows, so this proves the pipeline runs clean end-to-end on real non-fixture data, not non-vacuous orphan survival yet. Report: [`reports/zero_orphan_prod_2026-08-09.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/reports/zero_orphan_prod_2026-08-09.json). Status doc: [`docs/H2393_ZERO_ORPHAN_PROD_GATE_STATUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2393_ZERO_ORPHAN_PROD_GATE_STATUS.md).
 
 ## [0.19.32] - 2026-08-09
 ### Added
