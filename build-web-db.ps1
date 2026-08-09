@@ -26,6 +26,14 @@ Write-Host "Building web corpus database..."
 Write-Host "Corpus: $resolvedCorpusPath"
 Write-Host "Database: $resolvedDbPath"
 
+# H2433 - run any configured headless Corpus_builder jobs before ingest.
+# No jobs file / SKIP_HEADLESS_CB=1 -> no-op (prebuilt HTML unaffected).
+$headlessScript = Join-Path $repoRoot "scripts\run_headless_cb.py"
+python $headlessScript --repo-root $repoRoot --corpus-path $resolvedCorpusPath
+if ($LASTEXITCODE -ne 0) {
+    throw "Headless corpus-builder step failed with exit code $LASTEXITCODE."
+}
+
 python $ingestScript --corpus-path $resolvedCorpusPath --db-path $resolvedDbPath
 if ($LASTEXITCODE -ne 0) {
     throw "Database build failed with exit code $LASTEXITCODE."

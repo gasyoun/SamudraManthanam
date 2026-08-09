@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.30] - 2026-08-09
+### Added
+- **Corpus_builder Phase 4 web-pipeline hook (H2433, Sonnet 5 `claude-sonnet-4-5`).** Wired headless `cb_headless` (H2432) into a scripted pre-ingest step. New [`scripts/run_headless_cb.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/run_headless_cb.py) runs JSONL-configured `cb_headless --build/--out/--check` jobs before DB ingest; called from [`reindex.sh`](https://github.com/gasyoun/SamudraManthanam/blob/main/reindex.sh) and [`build-web-db.ps1`](https://github.com/gasyoun/SamudraManthanam/blob/main/build-web-db.ps1). No jobs file / `SKIP_HEADLESS_CB=1` → no-op, so prod's prebuilt-HTML rsync flow is unaffected. Jobs example: [`Corpus_builder/pipeline/headless_jobs.example.jsonl`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/pipeline/headless_jobs.example.jsonl). Hermetic tests: [`web/tests/test_run_headless_cb.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_run_headless_cb.py) (13 passed). Doc: [`docs/H2433_WEB_PIPELINE_HOOK.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2433_WEB_PIPELINE_HOOK.md).
+
 ## [0.19.29] - 2026-08-08
 ### Fixed
 - **Linux lazbuild unit filenames (H2431 follow-up, Grok 4.5 `grok-4.5`).** FPC on Linux searches for lowercase unit files; rename builder `dcu/TextU.pas`→`textu.pas`, `CalcSimU`→`calcsimu`, `ArtMath`→`artmath`, `uEncoding`→`uencoding`, `uSort`→`usort`, `TextUVCL`→`textuvcl`. CI: [run 31258164782](https://github.com/gasyoun/SamudraManthanam/actions/runs/31258164782) green.

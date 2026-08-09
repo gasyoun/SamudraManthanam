@@ -34,6 +34,10 @@ fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WEB_DIR="$SCRIPT_DIR/web"
 
+# H2433 — run any configured headless Corpus_builder jobs before ingest.
+# No jobs file / SKIP_HEADLESS_CB=1 → no-op (prod HTML-only rsync unaffected).
+python "$SCRIPT_DIR/scripts/run_headless_cb.py" --repo-root "$SCRIPT_DIR" --corpus-path "$CORPUS_PATH"
+
 cd "$WEB_DIR"
 
 PYTHONPATH="$WEB_DIR" python ingest/publish.py \
