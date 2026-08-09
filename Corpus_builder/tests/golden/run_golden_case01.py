@@ -10,6 +10,7 @@ EXP = CASE / "expected"
 EXE_CANDIDATES = [
     ROOT / "PSRCBuilder" / "lib" / "x86_64-win64" / "cb_headless.exe",
     ROOT / "PSRCBuilder" / "lib" / "i386-win32" / "cb_headless.exe",
+    ROOT / "PSRCBuilder" / "lib" / "x86_64-linux" / "cb_headless",
 ]
 SHELL = (
     "<!DOCTYPE html>\n"

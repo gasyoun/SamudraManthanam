@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- **Corpus_builder Phase 4 CI job — golden tests on Linux (H2434, Sonnet 4.6 `claude-sonnet-4-6`, override of Grok lock).** New [`.github/workflows/corpus-builder-golden.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/corpus-builder-golden.yml): `lazbuild` builds `cb_headless.lpi` on `ubuntu-latest` (reusing the H2431 toolchain steps), then runs [`Corpus_builder/tests/golden/run_golden_case01.py --verify`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/tests/golden/run_golden_case01.py) against the case01 baseline (H2427); fails closed if `expected/` is missing/empty or the build/binary is absent. Fixed a latent bug in the golden script's `EXE_CANDIDATES` list, which only listed Windows paths and would have made `--verify` unable to find the Linux binary. Triggers on push/PR touching `Corpus_builder/**`. Roadmap Phase 4 CI-job checkbox ticked.
 
 ## [0.19.30] - 2026-08-09
 ### Added
