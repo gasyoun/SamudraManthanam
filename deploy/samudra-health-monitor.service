@@ -1,0 +1,19 @@
+[Unit]
+Description=Samudra Manthanam health + search smoke check (H2390)
+After=network.target samudra.service
+
+[Service]
+Type=oneshot
+User=samudra
+Group=samudra
+WorkingDirectory=/opt/samudra/repo
+Environment=SAMUDRA_BASE_URL=http://127.0.0.1:8000
+Environment=SAMUDRA_LOG_DIR=/opt/samudra/logs
+ExecStart=/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py
+
+# ── Hardening (mirrors samudra.service) ─────────────────────────────────────
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/samudra/logs
+ProtectHome=yes
+NoNewPrivileges=yes

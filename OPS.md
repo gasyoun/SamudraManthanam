@@ -345,16 +345,40 @@ the recipe above after a corpus publish. Full build/API detail:
 
 ---
 
-## Health monitor + smoke cron (Wave P4 / H2390)
+## Health monitor + smoke systemd timer (Wave P4 / H2390)
 
 Script: `scripts/health_monitor.py` — hits `/api/health` and one search probe
-every invocation. Designed for a 15-minute cron call; keeps state in
+every invocation. Designed for a 15-minute periodic call; keeps state in
 `/opt/samudra/logs/.health_monitor_state.json`.
 
-### Cron entry (root crontab on `193.232.229.92`)
+**Not root crontab.** Samudra shares this box with Systema Sanscriticum,
+whose `scripts/server_guards_apply.sh` treats the *entire* root crontab as a
+managed file — it renders `scripts/server_guards/cron/root.crontab` and calls
+`crontab "$CRON_TMP"` (full overwrite), keyed only off `AUTO_DEPLOY_SCHEDULE`.
+A hand-added Samudra line in root's crontab would silently vanish the next
+time that script re-runs. A systemd timer is a separate unit outside that
+managed file, so it survives.
 
+### systemd timer + service (`193.232.229.92`)
+
+Units: [`deploy/samudra-health-monitor.service`](https://github.com/gasyoun/SamudraManthanam/blob/main/deploy/samudra-health-monitor.service),
+[`deploy/samudra-health-monitor.timer`](https://github.com/gasyoun/SamudraManthanam/blob/main/deploy/samudra-health-monitor.timer).
+
+```bash
+cp /opt/samudra/repo/deploy/samudra-health-monitor.service /etc/systemd/system/
+cp /opt/samudra/repo/deploy/samudra-health-monitor.timer /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable --now samudra-health-monitor.timer
+systemctl list-timers samudra-health-monitor.timer   # confirm next run
 ```
-*/15 * * * * /opt/samudra/venv/bin/python /opt/samudra/repo/scripts/health_monitor.py >> /opt/samudra/logs/health_monitor.log 2>&1
+
+Re-sync after an edit to either unit file:
+
+```bash
+cp /opt/samudra/repo/deploy/samudra-health-monitor.service /etc/systemd/system/
+cp /opt/samudra/repo/deploy/samudra-health-monitor.timer /etc/systemd/system/
+systemctl daemon-reload
+systemctl restart samudra-health-monitor.timer
 ```
 
 ### Log files
@@ -363,15 +387,16 @@ every invocation. Designed for a 15-minute cron call; keeps state in
 |---|---|
 | `/opt/samudra/logs/health_monitor.log` | Every check: `PASS` / `FAIL` + health and search detail |
 | `/opt/samudra/logs/health_monitor_journal.log` | Recoveries and `CRITICAL` alerts (5+ consecutive failures) |
-| `/opt/samudra/logs/.health_monitor_state.json` | Consecutive-failure counter (state between cron runs) |
+| `/opt/samudra/logs/.health_monitor_state.json` | Consecutive-failure counter (state between timer runs) |
 
 ### Alert path
 
 After **5 consecutive failures** the script writes a `CRITICAL:` line to
-`health_monitor_journal.log` and prints to stderr (visible in cron mail and
-`journalctl`). The circuit-breaker threshold is `ALERT_THRESHOLD = 5` in the
-script. The cron continues running — it does not silence itself; the CRITICAL
-line fires on every subsequent failure until recovery is logged.
+`health_monitor_journal.log` and prints to stderr (visible via
+`journalctl -u samudra-health-monitor.service`). The circuit-breaker threshold
+is `ALERT_THRESHOLD = 5` in the script. The timer keeps firing every 15
+minutes — it does not silence itself; the CRITICAL line fires on every
+subsequent failure until recovery is logged.
 
 Recovery from a transient outage is logged automatically as `RECOVERY after N
 failure(s)` in both files, and the counter resets to 0.
@@ -423,7 +448,7 @@ echo '{"consecutive_failures":0,"last_alert_at":null}' \
 
 - Wave P2 / H2388 (Grok 4.5 `grok-4.5`): expand operator pull/pip/restart/rollback.
 - Wave P3 / H2389 (Sonnet 5 `claude-sonnet-5`): DB backup cron (`corpus.db` + `state.db`), 7-day retention, restore dry-run PASS.
-- Wave P4 / H2390 (Sonnet 5 `claude-sonnet-5`): health + search smoke cron and alert path; `scripts/health_monitor.py` + this OPS section.
+- Wave P4 / H2390 (Sonnet 5 `claude-sonnet-5`): health + search smoke monitor and alert path; `scripts/health_monitor.py` + this OPS section. Delivered as a systemd timer (`deploy/samudra-health-monitor.{service,timer}`), not root crontab — Systema's `server_guards_apply.sh` fully overwrites root's crontab on every re-run and would have silently dropped a hand-added cron line.
 - Wave P5 / H2391 (Grok 4.5 `grok-4.5`): DNS-gated branded hostname path; agent half only until human A-record.
 - Wave P6 / H2392 (Sonnet 5 `claude-sonnet-5`): offline-pack build recipe; found + fixed `offline-packs/` ownership gap.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
