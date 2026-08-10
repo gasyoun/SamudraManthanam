@@ -191,12 +191,31 @@ def main():
     both, ru_only, sa_only, mono_by_work = verse_group_cardinality(verse_slugs)
     total_groups = both + ru_only + sa_only
 
-    # 4. corpus.db view-layer numbers (reconciliation footnote).
-    db = sqlite3.connect(CORPUS_DB)
-    db_sources = db.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
-    db_lines = db.execute("SELECT COUNT(*) FROM corpus_lines").fetchone()[0]
-    db_version = dict(db.execute("SELECT key, value FROM corpus_meta")).get("corpus_version")
-    db.close()
+    # 4. corpus.db view-layer numbers (reconciliation footnote ONLY).
+    #
+    # web/corpus.db is gitignored (742 MB runtime search view, built from the reading
+    # HTML) and is NOT part of the corpus of record — §3.1 says so explicitly. It is
+    # therefore absent (or a 0-byte stub) in any fresh clone or linked worktree, which
+    # used to abort this whole script on `no such table: sources` and so falsified the
+    # paper's "every statistic recomputes in one pass" claim from a clean checkout.
+    # Degrade to None and report it: a missing footnote must not take the headline
+    # numbers down with it. (H2403, 10-08-2026.)
+    db_sources = db_lines = db_version = None
+    db_status = "absent (gitignored runtime view; footnote skipped)"
+    try:
+        db = sqlite3.connect(f"file:{CORPUS_DB}?mode=ro", uri=True)
+        try:
+            db_sources = db.execute("SELECT COUNT(*) FROM sources").fetchone()[0]
+            db_lines = db.execute("SELECT COUNT(*) FROM corpus_lines").fetchone()[0]
+            db_version = dict(
+                db.execute("SELECT key, value FROM corpus_meta")
+            ).get("corpus_version")
+            db_status = "read"
+        finally:
+            db.close()
+    except sqlite3.Error as exc:
+        print(f"  ! corpus.db view layer unavailable ({exc}) — footnote fields null",
+              file=sys.stderr)
 
     # 5. Gita per-edition table.
     editions = []
@@ -237,6 +256,7 @@ def main():
             "note": "web/corpus.db is the runtime search view built from the "
                     "reading HTML, NOT the canonical JSONL layer; its counts "
                     "include nav headings and post-report sources.",
+            "status": db_status,
             "version": db_version,
             "sources": db_sources,
             "lines": db_lines,
@@ -298,7 +318,10 @@ def main():
     print(f"verse groups: {total_groups:,} = 1:1 {both:,} + 0:1 {ru_only:,} + 1:0 {sa_only:,}"
           f" (clean {100 * both / total_groups:.2f}%)")
     print(f"extras on disk: {len(extras)} files, {sum(extra_counts.values()):,} records: {extras}")
-    print(f"corpus.db view: {db_sources} sources, {db_lines:,} lines ({db_version})")
+    if db_lines is None:
+        print(f"corpus.db view: {db_status}")
+    else:
+        print(f"corpus.db view: {db_sources} sources, {db_lines:,} lines ({db_version})")
     print("\n--- gita editions ---")
     for e in editions:
         print(f"{e['slug']:<38} {str(e.get('year')):<6} pairs={e['clean_pairs']:<5}"
