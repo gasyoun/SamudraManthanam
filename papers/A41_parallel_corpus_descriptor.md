@@ -10,7 +10,7 @@ data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment re
 
 # Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources
 
-_Created: 26-06-2026 · Last updated: 08-08-2026_
+_Created: 26-06-2026 · Last updated: 10-08-2026_
 
 > **Draft status (2026-07-11, H676; advanced 2026-07-08, H351; scaffolded 2026-06-26).**
 > Manuscript built directly on the converted corpus and its design specs. Every numerical
@@ -50,12 +50,32 @@ _Created: 26-06-2026 · Last updated: 08-08-2026_
 > and the full report
 > ([ANNOTATION_3PATH_COMPARISON.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/ANNOTATION_3PATH_COMPARISON.md));
 > former §§6–11 renumbered to §§7–12.
-> **Open before submission:** (1) settle the RU-translation copyright triage that decides
-> what ships as text vs index-only (a [@DO] human gate, §9 / Limitations); (2) mint a
-> Zenodo DOI and complete the data-availability statement; (3) freeze ONE headline
-> number at submission (78,219 spec figure vs 78,139 live re-count, reconciled in §4.2);
-> (4) venue + byline (a human decides); (5) the §6.4 human adjudication verdict
-> (51-group review sheet) folded in once voted.
+> **ACL uplift 10-08-2026 (H2403, Fable 5 `claude-fable-5`):** the companion
+> venue-compliance layer landed — a **data statement**
+> ([papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md),
+> Bender & Friedman 2018 + Gebru et al. 2021 fields) and a **filled ARR Responsible-NLP
+> checklist** ([papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md),
+> ARR Oct-2024 cycle version); §2 gained two strands (corpus-collection scale /
+> precision tradeoff vs OPUS + CCMatrix; translationese per Rabinovich & Wintner) with
+> 6 live-verified citations added; §9 + the reproducibility section now carry the
+> settled **ship-all** rights position, the per-layer licence table, the no-GPU/no-API
+> reproducibility profile, and the declared crosswalk thresholds; the "mint a Zenodo
+> DOI" gate is corrected — a software concept DOI already exists
+> ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315)), what is owed is
+> a **dataset** DOI. Two measured findings from the same pass: the corpus of record is
+> **byte-stable a fourth time** (574,939 records / 78,139 · 10,009 · 80 cardinality,
+> identical to 26-06 / 08-07 / 11-07), but the `jsonl/` directory has grown to **269
+> files with 121 post-report extras / 199,379 records** (was 7 / 11,056), so the
+> fold-or-exclude decision in §11 row 1 is now the largest freeze-time item; and
+> `a41_stats.py` no longer aborts from a clean checkout on the gitignored `corpus.db`
+> (footnote fields degrade to null).
+> **Open before submission:** (1) mint a **dataset** DOI (distinct from the existing
+> software concept DOI) and complete the data-availability statement; (2) freeze ONE
+> headline number at submission (78,219 spec figure vs 78,139 live re-count, reconciled
+> in §4.2); (3) venue + byline (a human decides); (4) the §6.4 human adjudication verdict
+> (51-group review sheet) folded in once voted. *(The RU-translation ship triage that
+> stood here is closed — ship-all, MG 08-08-2026, H2440; the residual is documentation,
+> already filled.)*
 
 ## Abstract
 
@@ -120,7 +140,7 @@ Our claims:
 
 ## 2. Related work
 
-Four strands frame the contribution. The novelty claim, stated crisply: a
+Six strands frame the contribution. The novelty claim, stated crisply: a
 **markup-aligned Sanskrit–Russian parallel corpus at 148-source scale with per-segment
 cardinality/monolingual flags and a chronology crosswalk** — a *resource and
 method-of-construction* contribution, **not** a new aligner.
@@ -158,11 +178,41 @@ epic, Upaniṣads, kāvya, śāstra) rather than the two epics; and the alignmen
 per-pair heuristics. The 15-dictionary lexical layer (321,672 head entries) additionally
 connects the corpus to the lexicographic strand (A42, §12).
 
+**Corpus collections and the precision–scale tradeoff.** The parallel-data landscape is
+dominated by *aggregation at web scale*: OPUS normalises hundreds of collections into one
+distribution format (Tiedemann 2012), and mined bitext such as CCMatrix reaches billions
+of pairs by scoring candidate sentences in an embedding space (Schwenk et al. 2021). That
+strand buys volume at the cost of per-pair certainty — a mined pair carries a margin
+score, and low-resource language sides are exactly where mined precision degrades. This
+corpus sits at the opposite corner of the same design space: ~78k pairs, no score column,
+because no pairing was ever estimated. We share OPUS's *uniform-schema* goal (one format,
+one addressing scheme across heterogeneous sources) and reject the mining strand's
+inference step, which our sources make unnecessary. Stating this explicitly matters for a
+low-resource pair: the alternative route to Sanskrit–Russian bitext at this size would be
+mining, and it would be strictly noisier here.
+
+**Translationese and diachronic register.** Because every Russian side is a translation of
+a fixed Sanskrit source, the corpus is also a *translationese* resource in the sense of
+Rabinovich & Wintner (2015), who show translated text is machine-distinguishable from
+originally-authored text by lexical and syntactic markers. Our §5 measurements (TTR,
+Guiraud R, Sanskrit-loan retention across 11 Gītā renderings, 1788–2016) are a
+philologically-motivated instance of that measurement stance on a controlled bilingual
+alignment — one source text, eleven target realisations, ~230 years apart. This connects
+the resource to the translationese/diachronic-change literature (a venue path tracked
+separately as LChange-family work) without claiming a stylometric contribution here (§8).
+
 **Data-descriptor norms.** The paper is framed for FAIR-style data-descriptor venues
 (JOHD, the LREC-COLING resource track; Wilkinson et al. 2016): the artefact, its schema,
 its honest edge-case accounting (§4.2's two-number reconciliation, §3.4's monolingual
-inventory), its rights triage (§9), and its reproducibility story (§3.5) are the
-contribution, and the paper's structure follows that contract.
+inventory), its rights position (§9), and its reproducibility story (§3.5) are the
+contribution, and the paper's structure follows that contract. Concretely, the corpus
+ships a **data statement** in the Bender & Friedman (2018) form extended with Gebru et
+al. (2021) datasheet fields
+([papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md))
+and a filled ARR Responsible-NLP checklist
+([papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md)),
+so provenance, licensing, intended use and known misuse are documented artifacts rather
+than prose assurances.
 
 ## 3. Data and method
 
@@ -188,15 +238,22 @@ the **final** converter/backfill classification recorded in the conversion repor
 is the heuristic-vs-final reclassification (and the 152→148 source-set trim) and must be
 stated, not hidden.)*
 
-*(Layer reconciliation, 11-07-2026: three counts coexist and none contradicts the
-others. The **canonical corpus** is the 148 report sources / 574,939 JSONL records above.
-The **`jsonl/` directory** additionally holds 7 post-report files (11,056 records:
-`hitopadesha`, `naradasmriti`, `vishnu-smriti`, `yajnavalkyasmriti`,
-`yajnavalkyasmriti_add`, and the two H534 Devībhāgavata files), excluded from every
-count until a re-frozen conversion report folds them in. The **runtime search view**
-`web/corpus.db` (`v2026.07.06`: 152 sources, 580,552 display lines) is built from the
-reading HTML, includes navigation headings and a different source cut, and is never a
-source of corpus statistics. Recomputation record:
+*(Layer reconciliation, re-measured 10-08-2026: three counts coexist and none contradicts
+the others. The **canonical corpus** is the 148 report sources / 574,939 JSONL records
+above, and it is **byte-stable** — the 26-06, 08-07, 11-07 and 10-08 re-counts all return
+574,939 records / 574,939 unique IDs and identical verse-group cardinality. The **`jsonl/`
+directory has since grown well past the corpus of record**: 269 `.jsonl` files as of
+10-08-2026, of which **121 are post-report files carrying 199,379 records** (was 7 files /
+11,056 records on 11-07 — the growth is later ingestion waves, led by
+`devibhagavata-purana` 37,984 and `kathasaritsagara` 19,994; 26 of the 121 are `.raw`
+twins of a sibling file, so the file count overstates distinct works). **None of it enters
+any figure in this paper**: every count here is restricted to the 148 sources named in the
+conversion report, and the extras stay excluded until a re-frozen report folds them in.
+This gap is now the single largest freeze-time decision — see §11 row 1. The **runtime
+search view** `web/corpus.db` (`v2026.07.06`: 152 sources, 580,552 display lines) is built
+from the reading HTML, includes navigation headings and a different source cut, and is
+never a source of corpus statistics; it is gitignored, so the recompute script reports its
+footnote fields as null from a clean checkout rather than failing. Recomputation record:
 [papers/data/A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json).)*
 
 The verse sources span the Ṛgveda and Atharvaveda, the full Mahābhārata (18 parvans)
@@ -508,10 +565,26 @@ for every committed `*.meta.json` credit; inventory:
 НКРЯ `RIGHTS_TABLE` rows still showing `—` for translator lack committed meta credits
 (H821 residue) — fill when meta is restored, not by guessing.
 
+**Documented artifacts (added 10-08-2026, H2403).** The rights position above, the
+per-layer licence table, and the corpus's intended use / known-misuse notes are recorded
+in the **data statement**
+([papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md),
+Bender & Friedman 2018 form + Gebru et al. 2021 datasheet fields), and audited item by
+item in the filled ARR checklist
+([papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md)).
+The imported DCS lemma/morphology layer of §6 is **CC BY 4.0** and therefore
+redistributable with attribution; vidyut output is evaluated but **not shipped**, so no
+question of redistributing it arises.
+
 Still outside the data work:
 
-1. **Mint a Zenodo DOI [@DO]** for the citable release and complete the data-availability
-   statement (no longer blocked on per-translator ship triage).
+1. **Mint a *dataset* DOI [@DO].** The **software** already carries a Zenodo concept DOI
+   ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315), in
+   [CITATION.cff](https://github.com/gasyoun/SamudraManthanam/blob/main/CITATION.cff),
+   which explicitly notes that the corpus texts carry their own rights and are cited by
+   print edition). What is missing is a **separate DOI for the corpus release itself** —
+   a citation of the software DOI is not a citation of the data. Completing the
+   data-availability statement depends on that mint, not on any per-translator triage.
 
 ## 10. Conclusion
 
@@ -527,11 +600,11 @@ already lives in their markup.
 
 The corpus layer is the JSONL directory
 [`web/corpus_builder/jsonl/`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/jsonl) — **148 report sources** define the corpus of record (the
-directory currently holds 155 `.jsonl` files; the 7 post-report additions —
-`hitopadesha`, `naradasmriti`, `vishnu-smriti`, `yajnavalkyasmriti`,
-`yajnavalkyasmriti_add`, `devibhagavata-purana-1`, `devibhagavata-purana_s1.sanskrit`,
-11,056 records — are excluded from every count until a re-frozen conversion report
-folds them in; freeze-time TODO); canonical counts in
+directory holds **269** `.jsonl` files as of 10-08-2026; the **121 post-report additions,
+199,379 records** — led by `devibhagavata-purana`, `kathasaritsagara`, `kalika-purana`,
+the two remaining Rāmāyaṇa kāṇḍas, and the Ignatiev tantra/purāṇa wave — are excluded from
+every count until a re-frozen conversion report folds them in; freeze-time TODO, itemised
+in §3.1 and §11 row 1); canonical counts in
 [`web/corpus_builder/conversion_report.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json);
 the converter is
 [`web/corpus_builder/html_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/html_to_canonical.py);
@@ -540,8 +613,49 @@ the alignment model and gold/CI gates are in
 [`docs/CONVERTER_SPEC.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONVERTER_SPEC.md); the structural inventory is
 [`docs/TAG_CENSUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md); the date crosswalk is
 [`web/corpus_builder/chronology/texts_chronology.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/texts_chronology.json).
-*(TODO before submission: a Zenodo DOI; a one-line license/redistribution statement per
-the §9 copyright triage; confirmation of which sources ship as full text vs. index-only.)*
+**Licence and redistribution (settled 08-08-2026, documented 10-08-2026).** Code, schema
+and documentation: **Apache-2.0**
+([LICENSE](https://github.com/gasyoun/SamudraManthanam/blob/main/LICENSE)). Sanskrit
+source text: public domain by age. Russian translations: pre-1930 editions public domain,
+20th–21st-century editions in copyright with a grey residual — **ship all RU text** (MG
+08-08-2026, H2440), with translators documented in
+[papers/data/A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md)
+(19 distinct credits over 63 metadata-bearing sources) and per-source rows in
+[RIGHTS_TABLE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/RIGHTS_TABLE.md);
+so there is **no full-text-vs-index-only split to confirm**. Imported DCS lemma/morphology
+layer: **CC BY 4.0**, redistributed with attribution. Full per-layer table and the
+intended-use / known-misuse notes: the
+[data statement](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md)
+§G–§H.
+
+**Reproducibility profile.** No model is trained, fine-tuned, or tuned by search:
+extraction is deterministic and the lemma layer is imported human-curated DCS. Both
+measurement passes run **locally on one CPU workstation in minutes, with no GPU and no
+API spend**. Every reported figure is a **single deterministic run over a frozen corpus**
+— not a mean over seeds, so error bars would be meaningless — and stability is evidenced
+by re-execution instead: the 26-06, 08-07 and 11-07-2026 re-counts return byte-identical
+figures (78,139 / 10,009 / 80). Tool versions of record: vidyut 0.4.0 (`vidyut-cheda`,
+local data pack), DCS snapshot pinned at
+[gasyoun/dcs-conllu@04e0778](https://github.com/gasyoun/dcs-conllu),
+[nkrya_annotate.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_annotate.py)
+v0.1.0, crosswalk thresholds declared (exact → consonant-skeleton at ≥0.70 vowelled
+similarity → difflib ≥0.90; sample seed 759; first-hit on the 362 multiply-matching
+lines), service dependencies pinned in
+[web/requirements.txt](https://github.com/gasyoun/SamudraManthanam/blob/main/web/requirements.txt).
+Per-item audit: the filled
+[ARR checklist](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md)
+§C.
+
+*(TODO before submission: a **dataset** DOI distinct from the software concept DOI
+[10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315); the §6.4 adjudication
+verdict; the headline freeze.)*
+
+**No train/dev/test split is defined, by design.** This is a resource descriptor, not a
+modelling paper: splitting is left to consumers, who should split by *source* rather than
+by pair to avoid leaking an edition's register across folds. An MT-ready split with
+train/eval discipline is scoped as separate work (the interlinear Sa→Ru MT resource in the
+[ACL footprint roadmap](https://github.com/gasyoun/Uprava/blob/main/ROADMAP_ACL_ANTHOLOGY_FOOTPRINT_2026_2027.md)),
+not as an omission here.
 The extraction is deterministic and re-runs from the committed HTML sources; it never
 infers a pairing the source did not already encode. Every statistic in this paper is
 recomputed in one pass by
@@ -559,7 +673,7 @@ flagged as such):
 
 | # | Claim | Figure(s) | Artifact | Status |
 |--:|---|---|---|---|
-| 1 | Corpus scale | 148 report sources, 574,939 segment records (the `jsonl/` dir holds 155 `.jsonl` files as of 11-07-2026; 7 post-report additions, 11,056 records, excluded from all counts and itemised in §3.1) | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ⬜ fold or formally exclude the extras at freeze (re-frozen conversion report) |
+| 1 | Corpus scale | 148 report sources, 574,939 segment records — **byte-stable across four re-counts** (26-06, 08-07, 11-07, 10-08-2026). The `jsonl/` dir now holds **269** `.jsonl` files: **121 post-report extras / 199,379 records** (was 7 / 11,056 on 11-07), all excluded from every figure and itemised in §3.1 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ⬜ **freeze blocker (grown 18×):** fold or formally exclude 121 extras via a re-frozen conversion report — a reviewer will ask why 199,379 records sit beside a 574,939-record corpus |
 | 2 | Final structure split | 119 verse / 15 dictionary / 14 prose; 208,230 / 321,672 / 45,037 records | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) + final backfill in [.ai_state.md](https://github.com/gasyoun/SamudraManthanam/blob/main/.ai_state.md); the heuristic 70/15/67-of-152 census in [TAG_CENSUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) is superseded and said so in §3.1 | ✅ committed |
 | 3 | Headline: clean 1:1 verse pairs | **78,219** (Tier-1) vs 78,139 / 88.56% live re-count (26-06, re-verified identically 08-07 and 11-07-2026) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §0 + [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) recount ([A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json)) | ✅ committed; ⬜ freeze-time choice of which reconciled figure leads (one-line edit) |
 | 4 | Monolingual inventory | 10,145 RU-only, dominated by `buddhacharita-balmont` 8,852 + `mify-drind` 1,172 (≈10,024 of 10,145); 1 Sa-only (spec) / 80 (live) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §2 + JSONL re-count | ✅ committed |
@@ -568,6 +682,8 @@ flagged as such):
 | 7 | Chronology crosswalk | 86 `parallel-ru` texts: `dcs-exact` 20 / `dcs-bucket` 27 / `manual` 11 / `n/a` 28 (cross-corpus `dcs-exact` = 92, of which 72 are `wisdomlib-en`) | [texts_chronology.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/texts_chronology.json) | ✅ committed |
 | 8 | Gītā demonstration | 11 RU translation sources + 3 commentaries on shared `{chapter}.{verse}` keys; per-edition table + TTR/Guiraud R/loan-retention metrics (§5.1–5.2, Figure 1) | [A41_gita_editions.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_gita_editions.tsv) + [A41_gita_register.svg](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg), computed by [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) from per-source `meta.json` + JSONL | ✅ committed (11-07-2026) |
 | 9 | Lexical layer | 321,672 head entries; Kochergina 29,180, Kossovich 13,488 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) per-source counts | ✅ committed |
+| 10b | Rights position + intended use / known misuse | Apache-2.0 code · Sa PD · RU pre-1930 PD · RU 20–21c in-copyright grey, **ship-all** (MG 08-08-2026, H2440) · DCS layer CC BY 4.0 · vidyut not shipped; 19 distinct translator credits over 63 metadata-bearing sources | [A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md) §G–H + [A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md) / [.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.tsv) + [RIGHTS_TABLE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/RIGHTS_TABLE.md) | ✅ committed (10-08-2026, H2403) |
+| 10c | Venue-checklist compliance | A1–A2 yes · B1–B6 yes (B6: no splits, by design) · C1 partial (no GPU/API; wall-clock not instrumented) · C2–C4 yes · D1–D5 n/a (no annotator population) · E1 yes | [A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md) (ARR Oct-2024 cycle version, fetched 10-08-2026) | ✅ committed (10-08-2026, H2403); ⬜ dataset DOI still owed |
 | 10 | Annotation comparison (§6) | DCS crosswalk coverage 81.1% overall (MBh 3 99.8%, Rām 1–3 54–76%); vidyut 1.44× over-segmentation; B↔C Jaccard 0.28–0.35 on 6,355 fully-covered groups | [annotation_3path_metrics.json](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/annotation_3path_metrics.json) + [ANNOTATION_3PATH_COMPARISON.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/ANNOTATION_3PATH_COMPARISON.md), computed by [nkrya_annotate.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_annotate.py) | ✅ committed (12-07-2026); ⬜ 51-group human adjudication verdict pending |
 
 ## 12. Scope versus companion papers (anti-salami)
@@ -599,19 +715,36 @@ flagged as such):
   *Proceedings of the 8th Workshop on Asian Translation (WAT 2021)*.
 - Artetxe, M. & H. Schwenk. 2019. Massively multilingual sentence embeddings for
   zero-shot cross-lingual transfer and beyond. *TACL* 7: 597–610. (LASER.)
+- Bender, E. M. & B. Friedman. 2018.
+  [Data statements for natural language processing: Toward mitigating system bias and enabling better science](https://aclanthology.org/Q18-1041/).
+  *Transactions of the ACL* 6: 587–604.
 - Feng, F., Y. Yang, D. Cer, N. Arivazhagan & W. Wang. 2022. Language-agnostic BERT
   sentence embedding. *ACL 2022*. (LaBSE.)
 - Gale, W. A. & K. W. Church. 1993. A program for aligning sentences in bilingual
   corpora. *Computational Linguistics* 19(1): 75–102.
+- Gebru, T., J. Morgenstern, B. Vecchione, J. W. Vaughan, H. Wallach, H. Daumé III &
+  K. Crawford. 2021. [Datasheets for datasets](https://doi.org/10.1145/3458723).
+  *Communications of the ACM* 64(12): 86–92.
 - GRETIL — Göttingen Register of Electronic Texts in Indian Languages —
   [gretil.sub.uni-goettingen.de](https://gretil.sub.uni-goettingen.de/).
 - Hellwig, O. *Digital Corpus of Sanskrit (DCS)* — dating spine via the crosswalk in
   §3.6; the DCS-2026 release is described in the companion paper A38.
+- Hellwig, O. & S. Nehrdich. 2018.
+  [Sanskrit word segmentation using character-level recurrent and convolutional neural networks](https://aclanthology.org/D18-1295/).
+  *EMNLP 2018*: 2754–2763.
+- Rabinovich, E. & S. Wintner. 2015.
+  [Unsupervised identification of translationese](https://aclanthology.org/Q15-1030/).
+  *Transactions of the ACL* 3: 419–432.
+- Schwenk, H., G. Wenzek, S. Edunov, E. Grave, A. Joulin & A. Fan. 2021.
+  [CCMatrix: Mining billions of high-quality parallel sentences on the web](https://aclanthology.org/2021.acl-long.507/).
+  *ACL-IJCNLP 2021*: 6490–6500.
 - Scharf, P. & M. Hyman. The Sanskrit Library — [sanskritlibrary.org](https://sanskritlibrary.org/).
 - Sennrich, R. & M. Volk. 2010. MT-based sentence alignment for OCR-generated parallel
   texts. *AMTA 2010*. (Bleualign.)
 - Thompson, B. & P. Koehn. 2019. Vecalign: Improved sentence alignment in linear time
   and space. *EMNLP-IJCNLP 2019*.
+- Tiedemann, J. 2012. [Parallel data, tools and interfaces in OPUS](https://aclanthology.org/L12-1246/).
+  *LREC 2012*: 2214–2218.
 - Varga, D., P. Halácsy, A. Kornai, V. Nagy, L. Németh & V. Trón. 2005. Parallel
   corpora for medium density languages. *RANLP 2005*. (Hunalign.)
 - Wilkinson, M. D., et al. 2016. The FAIR guiding principles for scientific data
@@ -619,4 +752,3 @@ flagged as such):
 - ⬜ A38, A42, A43 self-citations once their venues/DOIs freeze.
 
 _Dr. Mārcis Gasūns_
-
