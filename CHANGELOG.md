@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.19.36] - 2026-08-10
 ### Added
 - **A41 resource-paper ACL uplift pack (H2403, Fable 5 `claude-fable-5`).** Companion venue-compliance layer for [`papers/A41_parallel_corpus_descriptor.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_parallel_corpus_descriptor.md): a **data statement** in the Bender & Friedman (2018) form extended with Gebru et al. (2021) datasheet fields ([`papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md) — §A–I incl. no-annotator-population, seven-row per-layer rights table, five named misuses) and a **filled ARR Responsible-NLP checklist** ([`papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md), ARR Oct-2024 cycle version fetched 10-08-2026): A1–A2 yes · B1–B6 yes · C1 partial · C2–C4 yes · D1–D5 n/a · E1 yes. Manuscript §2 gained two related-work strands (corpus-collection scale / precision tradeoff vs OPUS + CCMatrix; translationese per Rabinovich & Wintner) with **6 live-verified citations**; §9 + the reproducibility section now carry the settled ship-all rights position, the per-layer licence table, and the declared crosswalk thresholds. New link/lint gate [`papers/scripts/verify_a41_uplift_links.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/verify_a41_uplift_links.py) (blob-target resolution, no-HTML, hygiene, header/byline) — PASS on all three files.
 ### Fixed
