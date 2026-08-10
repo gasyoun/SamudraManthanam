@@ -98,7 +98,7 @@ jobs:
 
       - name: Cache the resolved bundle by checksum
         if: steps.bundle.outputs.manifest == 'present'
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .corpus-bundle
           key: corpus-bundle-${{ hashFiles('web/corpus_builder/manifest/corpus-manifest.json') }}
