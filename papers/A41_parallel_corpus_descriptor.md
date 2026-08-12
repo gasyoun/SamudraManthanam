@@ -5,12 +5,12 @@ status: draft (advanced, 4/5 proposed) — scaffolded 2026-06-26, advanced 2026-
 readiness: 3/5 → 4/5 proposed
 venue: "LREC-COLING (parallel-corpus) / eLex / JOHD (Journal of Open Humanities Data)"
 author: "**Mārcis Gasūns**, independent scholar ([ORCID 0000-0003-4513-884X](https://orcid.org/0000-0003-4513-884X)), gasyoun@ya.ru"
-data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 155 .jsonl files — 7 post-report additions excluded from all counts); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk); papers/data/A41_corpus_stats.json + papers/data/A41_gita_editions.tsv (recomputation record, papers/scripts/a41_stats.py); nkrya-parallel/export/annotation_3path_metrics.json (§6 annotation comparison, web/corpus_builder/nkrya_annotate.py)"
+data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 269 .jsonl files — 121 post-report additions / 199,379 records formally excluded from all counts, resolved 12-08-2026 H2542); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk); papers/data/A41_corpus_stats.json + papers/data/A41_gita_editions.tsv (recomputation record, papers/scripts/a41_stats.py); nkrya-parallel/export/annotation_3path_metrics.json (§6 annotation comparison, web/corpus_builder/nkrya_annotate.py)"
 ---
 
 # Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources
 
-_Created: 26-06-2026 · Last updated: 10-08-2026_
+_Created: 26-06-2026 · Last updated: 12-08-2026_
 
 > **Draft status (2026-07-11, H676; advanced 2026-07-08, H351; scaffolded 2026-06-26).**
 > Manuscript built directly on the converted corpus and its design specs. Every numerical
@@ -69,8 +69,21 @@ _Created: 26-06-2026 · Last updated: 10-08-2026_
 > fold-or-exclude decision in §11 row 1 is now the largest freeze-time item; and
 > `a41_stats.py` no longer aborts from a clean checkout on the gitignored `corpus.db`
 > (footnote fields degrade to null).
+> **Extras freeze resolved 12-08-2026 (H2542, Sonnet 5 `claude-sonnet-5`).** The 121
+> post-report extras / 199,379 records flagged 10-08-2026 are **formally excluded** from
+> the corpus of record — the safe default named in the handoff, applied because folding
+> them in is a human call this pass had no human present to make, and exclusion preserves
+> every published figure (78,219 headline, 574,939 total, all §4–§11 numbers unchanged).
+> §3.1 and §11 row 1 carry the written rationale. The **dataset DOI is still genuinely
+> open** — confirmed this pass by querying the Zenodo public API directly
+> ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315)'s record family has
+> 44 versions, all `resource_type: software`, zero dataset records under this account) —
+> minting a distinct dataset DOI needs either a manual Zenodo deposit or a second
+> Zenodo↔GitHub repo toggle, both requiring Zenodo login credentials no agent session
+> holds. Tracked as a human `@DO` in
+> [Uprava/GTD_NEXT_ACTIONS.md](https://github.com/gasyoun/Uprava/blob/main/GTD_NEXT_ACTIONS.md).
 > **Open before submission:** (1) mint a **dataset** DOI (distinct from the existing
-> software concept DOI) and complete the data-availability statement; (2) freeze ONE
+> software concept DOI) — human Zenodo action, see §9 item 1; (2) freeze ONE
 > headline number at submission (78,219 spec figure vs 78,139 live re-count, reconciled
 > in §4.2); (3) venue + byline (a human decides); (4) the §6.4 human adjudication verdict
 > (51-group review sheet) folded in once voted. *(The RU-translation ship triage that
@@ -248,8 +261,12 @@ directory has since grown well past the corpus of record**: 269 `.jsonl` files a
 `devibhagavata-purana` 37,984 and `kathasaritsagara` 19,994; 26 of the 121 are `.raw`
 twins of a sibling file, so the file count overstates distinct works). **None of it enters
 any figure in this paper**: every count here is restricted to the 148 sources named in the
-conversion report, and the extras stay excluded until a re-frozen report folds them in.
-This gap is now the single largest freeze-time decision — see §11 row 1. The **runtime
+conversion report. **Resolved 12-08-2026 (H2542):** the 121 extras are **formally
+excluded** from the corpus of record rather than folded into a re-frozen report — the
+handoff's own stated default when no human is present to make the fold-vs-exclude call,
+chosen because it preserves every published figure in this paper unchanged (78,219
+headline pairs, 574,939 total records). A future pass may fold them in as a *new*,
+separately-versioned corpus release; that is out of scope here. The **runtime
 search view** `web/corpus.db` (`v2026.07.06`: 152 sources, 580,552 display lines) is built
 from the reading HTML, includes navigation headings and a different source cut, and is
 never a source of corpus statistics; it is gitignored, so the recompute script reports its
@@ -578,12 +595,21 @@ question of redistributing it arises.
 
 Still outside the data work:
 
-1. **Mint a *dataset* DOI [@DO].** The **software** already carries a Zenodo concept DOI
+1. **Mint a *dataset* DOI [@DO — confirmed genuinely human, 12-08-2026, H2542].** The
+   **software** already carries a Zenodo concept DOI
    ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315), in
    [CITATION.cff](https://github.com/gasyoun/SamudraManthanam/blob/main/CITATION.cff),
    which explicitly notes that the corpus texts carry their own rights and are cited by
    print edition). What is missing is a **separate DOI for the corpus release itself** —
-   a citation of the software DOI is not a citation of the data. Completing the
+   a citation of the software DOI is not a citation of the data. Verified against the
+   Zenodo public API (`zenodo.org/api/records/21317315`, checked 12-08-2026): the whole
+   concept-DOI family (44 versions) is `resource_type: software`; no sibling dataset
+   record exists. Minting one needs Zenodo login credentials no agent session holds —
+   either (a) a manual Zenodo deposit of the corpus artifact (JSONL directory or a tagged
+   archive of the 148 report sources) with `resource_type: dataset`, or (b) enabling the
+   Zenodo↔GitHub integration on a second, dataset-only repo and cutting a release there.
+   Once minted, wiring the DOI into `CITATION.cff` + this section is mechanical (one-line
+   paste, per `/cut-release` Phase 3b) — an agent can finish that half. Completing the
    data-availability statement depends on that mint, not on any per-translator triage.
 
 ## 10. Conclusion
@@ -602,9 +628,8 @@ The corpus layer is the JSONL directory
 [`web/corpus_builder/jsonl/`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/jsonl) — **148 report sources** define the corpus of record (the
 directory holds **269** `.jsonl` files as of 10-08-2026; the **121 post-report additions,
 199,379 records** — led by `devibhagavata-purana`, `kathasaritsagara`, `kalika-purana`,
-the two remaining Rāmāyaṇa kāṇḍas, and the Ignatiev tantra/purāṇa wave — are excluded from
-every count until a re-frozen conversion report folds them in; freeze-time TODO, itemised
-in §3.1 and §11 row 1); canonical counts in
+the two remaining Rāmāyaṇa kāṇḍas, and the Ignatiev tantra/purāṇa wave — are **formally
+excluded** from every count, resolved 12-08-2026, H2542; see §3.1 and §11 row 1); canonical counts in
 [`web/corpus_builder/conversion_report.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json);
 the converter is
 [`web/corpus_builder/html_to_canonical.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/html_to_canonical.py);
@@ -647,8 +672,8 @@ Per-item audit: the filled
 §C.
 
 *(TODO before submission: a **dataset** DOI distinct from the software concept DOI
-[10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315); the §6.4 adjudication
-verdict; the headline freeze.)*
+[10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315) — human Zenodo action,
+§9 item 1; the §6.4 adjudication verdict; the headline freeze.)*
 
 **No train/dev/test split is defined, by design.** This is a resource descriptor, not a
 modelling paper: splitting is left to consumers, who should split by *source* rather than
@@ -673,7 +698,7 @@ flagged as such):
 
 | # | Claim | Figure(s) | Artifact | Status |
 |--:|---|---|---|---|
-| 1 | Corpus scale | 148 report sources, 574,939 segment records — **byte-stable across four re-counts** (26-06, 08-07, 11-07, 10-08-2026). The `jsonl/` dir now holds **269** `.jsonl` files: **121 post-report extras / 199,379 records** (was 7 / 11,056 on 11-07), all excluded from every figure and itemised in §3.1 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ⬜ **freeze blocker (grown 18×):** fold or formally exclude 121 extras via a re-frozen conversion report — a reviewer will ask why 199,379 records sit beside a 574,939-record corpus |
+| 1 | Corpus scale | 148 report sources, 574,939 segment records — **byte-stable across four re-counts** (26-06, 08-07, 11-07, 10-08-2026). The `jsonl/` dir now holds **269** `.jsonl` files: **121 post-report extras / 199,379 records** (was 7 / 11,056 on 11-07), **formally excluded** (12-08-2026, H2542) from every figure and itemised in §3.1 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ✅ extras decision resolved (exclude, written rationale §3.1) |
 | 2 | Final structure split | 119 verse / 15 dictionary / 14 prose; 208,230 / 321,672 / 45,037 records | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) + final backfill in [.ai_state.md](https://github.com/gasyoun/SamudraManthanam/blob/main/.ai_state.md); the heuristic 70/15/67-of-152 census in [TAG_CENSUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) is superseded and said so in §3.1 | ✅ committed |
 | 3 | Headline: clean 1:1 verse pairs | **78,219** (Tier-1) vs 78,139 / 88.56% live re-count (26-06, re-verified identically 08-07 and 11-07-2026) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §0 + [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) recount ([A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json)) | ✅ committed; ⬜ freeze-time choice of which reconciled figure leads (one-line edit) |
 | 4 | Monolingual inventory | 10,145 RU-only, dominated by `buddhacharita-balmont` 8,852 + `mify-drind` 1,172 (≈10,024 of 10,145); 1 Sa-only (spec) / 80 (live) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §2 + JSONL re-count | ✅ committed |
