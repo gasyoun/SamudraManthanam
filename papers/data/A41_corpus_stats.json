@@ -1,5 +1,5 @@
 {
-  "derived": "2026-08-10",
+  "derived": "2026-08-12",
   "script": "papers/scripts/a41_stats.py",
   "report": {
     "total_sources": 148,
