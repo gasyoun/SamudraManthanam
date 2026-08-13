@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.19.37] - 2026-08-13
 ### Added
 - **Wave P11: journald/logrotate for the samudra unit (H2397, Sonnet 5 `claude-sonnet-5`).** journald was already bounded org-wide (`/etc/systemd/journald.conf.d/99-persistent.conf`: `SystemMaxUse=3G`; measured ~1.1G in use). `/opt/samudra/logs/*.log` had no rotation since install — added `/etc/logrotate.d/samudra` (daily, rotate 14, maxsize 50M, compress), verified via `logrotate -d` dry-run. Recipe: [`OPS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) § Logs bounded.
 
