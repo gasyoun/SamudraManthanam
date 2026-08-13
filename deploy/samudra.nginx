@@ -13,8 +13,12 @@
 #   2. Run: certbot --nginx -d <YOUR_DOMAIN> --redirect
 #      The --redirect flag forces certbot to add a 301 HTTP→HTTPS rule
 #      automatically; without it, the operator must answer "2" interactively.
-#   3. After certbot succeeds, MOVE the security headers from the commented
-#      block at the bottom of this file into the HTTPS server certbot wrote.
+#   3. After certbot succeeds AND HTTPS is stable (GET /api/health → 200,
+#      HTTP→HTTPS redirect), enable HSTS via:
+#        python3 scripts/enable_security_headers.py --apply
+#      That copies deploy/samudra-security-headers.conf into
+#      /etc/nginx/snippets/ and includes it in listen-443 servers only.
+#      Do NOT paste HSTS into this listen-80 bootstrap file.
 
 server {
     listen 80;
@@ -104,16 +108,10 @@ server {
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Security headers to add to the HTTPS server block AFTER certbot rewrites
-# this file. Paste these inside the `server { listen 443 ssl ... }` block
-# that certbot creates:
-#
-#     # HSTS — force HTTPS for 1 year. Only enable AFTER confirming HTTPS works,
-#     # otherwise browsers cache the policy and lock users out on cert problems.
-#     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-#     add_header X-Content-Type-Options    "nosniff" always;
-#     add_header X-Frame-Options           "SAMEORIGIN" always;
-#     add_header Referrer-Policy           "strict-origin-when-cross-origin" always;
-#     add_header Permissions-Policy        "geolocation=(), microphone=(), camera=()" always;
-#
+# Security headers (H2398 / Wave P10b) live in
+#   deploy/samudra-security-headers.conf
+# and are installed by scripts/enable_security_headers.py AFTER HTTPS is
+# stable. That script refuses to run against an HTTP-only or broken-TLS
+# host (HSTS would pin browsers to a service they cannot reach).
+# Never include the snippet in a listen 80 server.
 # ─────────────────────────────────────────────────────────────────────────────

@@ -54,7 +54,7 @@ prod state) are not optional research.
 | P7 | **Zero-orphan / durable-ref gate** on prod state vs corpus | report artifact |
 | P8 | **Performance baseline** against public URL | PERFORMANCE_BASELINES row |
 | P9 | **UX acceptance** bilingual + deep-link on prod | ✅ checklist green ([H2394](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/acceptance/H2394_UX_ACCEPTANCE_BILINGUAL_DEEPLINK_CHECKLIST.md), 08-08-2026) |
-| P10 | **Admin key / env hardening** + header security (HSTS after stable HTTPS) | ✅ env half 13-08-2026 (H2396) — [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2396_ADMIN_ENV_HARDENING_STATUS.md) · `.env` `600`, parent `755`, world-readable `.env.bak*` moved + key rotated, `X-Admin-Key` 200. **HSTS residual = [H2398](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2398-Grok_SamudraManthanam_prod-nginx-hsts-security-headers_07.08.26.md)** |
+| P10 | **Admin key / env hardening** + header security (HSTS after stable HTTPS) | ✅ env half 13-08-2026 (H2396) — [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2396_ADMIN_ENV_HARDENING_STATUS.md). ✅ HSTS half 13-08-2026 (H2398) — [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md) · `Strict-Transport-Security: max-age=31536000; includeSubDomains` on the live sslip HTTPS vhost; HTTP-only refuse gate |
 | P11 | **Systema co-host safety** — nginx only `server_name` samudra hosts | samskrte.ru unchanged |
 
 Minted handoffs use slug prefix `prod-…` (see Uprava registry same day).

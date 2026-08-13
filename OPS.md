@@ -1,7 +1,7 @@
 # OPS.md — Samudra Manthanam production operator path
 
 _Created: 08-08-2026 · Last updated: 13-08-2026_  
-_(+ H2397 logs-bounded section · H2396 admin-env hardening)_
+_(+ H2398 HSTS/security headers · H2397 logs-bounded · H2396 admin-env hardening)_
 
 **Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
 First-time install, systemd unit, nginx, and corpus reindex live in
@@ -393,10 +393,51 @@ AI / OpenRouter key edits use the same file and the same `chmod 600` + restart.
 Do not `cp .env .env.bak` in `/opt/samudra/` — copy into
 `/root/samudra-env-backups/` instead.
 
-HSTS / extra nginx security headers are **not** this section — that is
-Wave P10b / [H2398](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2398-Grok_SamudraManthanam_prod-nginx-hsts-security-headers_07.08.26.md).
+HSTS / extra nginx security headers are the next section (Wave P10b / H2398),
+not this env-hardening recipe.
 
 Status: [docs/H2396_ADMIN_ENV_HARDENING_STATUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2396_ADMIN_ENV_HARDENING_STATUS.md).
+
+---
+
+## HSTS + nginx security headers (Wave P10b / H2398)
+
+**Only on the HTTPS vhost, and only after HTTPS is already stable.** HSTS on
+an HTTP-only or broken-TLS host pins browsers to a service they then cannot
+reach — that is this handoff's fail condition.
+
+Live public Host (13-08-2026): `https://samudra.193.232.229.92.sslip.io/`
+(cert since 07-08-2026). The branded name is still NXDOMAIN (H2391) and is
+**not** given HSTS.
+
+```bash
+# Gate only (exit 2 if HTTPS is down or HTTP does not 301→HTTPS):
+python3 /opt/samudra/repo/scripts/enable_security_headers.py
+
+# When GATE GO:
+python3 /opt/samudra/repo/scripts/enable_security_headers.py --apply
+
+# Handoff prove-with:
+curl -sI https://samudra.193.232.229.92.sslip.io/ | grep -i strict
+# expect: strict-transport-security: max-age=31536000; includeSubDomains
+```
+
+What `--apply` does: copies
+[`deploy/samudra-security-headers.conf`](https://github.com/gasyoun/SamudraManthanam/blob/main/deploy/samudra-security-headers.conf)
+to `/etc/nginx/snippets/`, includes it in every `listen 443` server (and in
+every `location` that already has `add_header`, because nginx does not inherit
+those), runs `nginx -t`, reloads. It **refuses** to touch a listen-80 server.
+
+On-box note: `https://samudra.193.232.229.92.sslip.io` times out from the
+LXC itself (no hairpin NAT). The script falls back to
+`curl --resolve host:443:127.0.0.1`, which still hits the real nginx 443
+listener + cert. Prove-with from a machine that can reach the public name.
+
+Snippet also sets `X-Content-Type-Options`, `X-Frame-Options`,
+`Referrer-Policy`, `Permissions-Policy`. The `always` flag is required: the
+app answers HEAD `/` with 405, and `curl -sI` is HEAD.
+
+Status: [docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md).
 
 ---
 
@@ -633,6 +674,7 @@ exception there, never silently dropped.
 - Wave P8 / H2395 (Sonnet 5 `claude-sonnet-5`): performance baseline re-run against the live public sslip URL instead of localhost; recipe above.
 - Wave P11 / H2397 (Sonnet 5 `claude-sonnet-5`): confirmed journald already bounded org-wide; added `/etc/logrotate.d/samudra` for the previously-unrotated app logs; recipe above.
 - Wave P10 / H2396 (Grok 4.6 `grok-4.6`): live `.env` already `600`; found three world-readable `.env.bak*` holding `ADMIN_SECRET_KEY`; moved them under `/root/samudra-env-backups/`, set parent `755`, rotated the admin key, `X-Admin-Key` 200 / old key 403. HSTS left to H2398.
+- Wave P10b / H2398 (Grok 4.6 `grok-4.6`): HSTS + security headers on the live sslip HTTPS vhost after a 6-day-stable Let's Encrypt cert; gate refuses HTTP-only; snippet committed under `deploy/`.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
 - Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
   `/opt/samudra/repo/OPS.md` as the source of truth.
