@@ -1,6 +1,6 @@
 # Deployment Guide — Samudra Manthanam (No-Docker VPS)
 
-_Created: 19-06-2026 · Last updated: 08-08-2026_
+_Created: 19-06-2026 · Last updated: 13-08-2026_
 
 This guide covers a plain-Python deployment on a Debian/Ubuntu VPS using
 **systemd + nginx**. No Docker is required.
@@ -122,9 +122,19 @@ AI_MODEL=
 EOF
 chmod 600 /opt/samudra/.env
 chown root:samudra /opt/samudra/.env
+# Parent must NOT be group-writable: 775 lets the samudra user unlink .env
+# and drop a replacement even though the file itself is 600.
+chmod 755 /opt/samudra
+chown root:samudra /opt/samudra
 ```
 
 Generate a random admin key: `python3 -c "import secrets; print(secrets.token_hex(32))"`
+
+**Do not leave `.env.bak*` next to the live file.** Copies default to `644`
+and then `nobody` / `www-data` (Systema on the same LXC) can read
+`ADMIN_SECRET_KEY`. Park backups under `/root/samudra-env-backups/` mode
+`700`, files `600`. Day-2 rotation and the permission check live in
+[OPS.md § Admin key / env hardening](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md).
 
 ### 4. Create required directories
 
