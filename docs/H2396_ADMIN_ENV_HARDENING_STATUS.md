@@ -4,8 +4,9 @@ _Created: 13-08-2026 · Last updated: 13-08-2026_
 
 **Handoff:** [H2396](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2396-Grok_SamudraManthanam_prod-admin-env-hardening_07.08.26.md)
 **Executor:** Grok 4.6 (`grok-4.6`)
-**Verdict 13-08-2026: DONE** (env half). HSTS / extra nginx security headers are
-[H2398](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2398-Grok_SamudraManthanam_prod-nginx-hsts-security-headers_07.08.26.md), not this pass.
+**Verdict 13-08-2026: DONE** (env half). HSTS / extra nginx security headers
+are sibling [H2398](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2398-Grok_SamudraManthanam_prod-nginx-hsts-security-headers_07.08.26.md)
+([status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md), shipped same day).
 
 ## Acceptance (locked in the handoff)
 

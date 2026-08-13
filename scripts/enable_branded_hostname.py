@@ -243,6 +243,33 @@ def apply(
     else:
         print("skip-certbot: left TLS issuance to the operator", flush=True)
 
+    # certbot --nginx rewrites the vhost; re-apply H2398 includes so a new
+    # 443 server does not ship without HSTS (sslip already has them).
+    try:
+        import enable_security_headers as _hsts
+    except ImportError:
+        _hsts = None
+    if _hsts is not None:
+        snippet_src = _hsts.default_snippet_src()
+        snippet_dst = Path(_hsts.DEFAULT_SNIPPET_DST)
+        if snippet_src.is_file():
+            current = nginx.read_text(encoding="utf-8")
+            _hsts.install_snippet(snippet_src, snippet_dst)
+            rewritten, stats = _hsts.inject_security_headers(
+                current, snippet_dst=str(snippet_dst)
+            )
+            if rewritten != current:
+                nginx.write_text(rewritten, encoding="utf-8")
+                print(f"hsts: re-applied includes after certbot ({stats})", flush=True)
+                _run(["nginx", "-t"])
+                _run(["systemctl", "reload", "nginx"])
+            else:
+                print(f"hsts: includes already present ({stats})", flush=True)
+        else:
+            print(f"hsts: snippet source missing at {snippet_src} — skip", flush=True)
+    else:
+        print("hsts: enable_security_headers not importable — skip", flush=True)
+
     if certbot_dry_run or skip_certbot:
         print("apply: certbot dry-run/skip — skip live HTTPS smoke", flush=True)
         return

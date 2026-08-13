@@ -215,6 +215,31 @@ certbot --nginx -d <YOUR_DOMAIN>
 
 Certbot rewrites the nginx config and installs an auto-renewal cron job.
 
+### Security headers (Wave P10b / H2398) — only after HTTPS is stable
+
+Do **not** paste `Strict-Transport-Security` into the listen-80 bootstrap
+file above. HSTS on a host that is still HTTP-only (or whose cert is broken)
+pins browsers to a service they cannot reach.
+
+After `curl -sS https://<YOUR_DOMAIN>/api/health` returns 200 and HTTP
+301s to HTTPS:
+
+```bash
+python3 /opt/samudra/repo/scripts/enable_security_headers.py
+# expect: GATE GO
+
+python3 /opt/samudra/repo/scripts/enable_security_headers.py --apply
+
+curl -sI https://<YOUR_DOMAIN>/ | grep -i strict
+# expect: strict-transport-security: max-age=31536000; includeSubDomains
+```
+
+The snippet is [`deploy/samudra-security-headers.conf`](https://github.com/gasyoun/SamudraManthanam/blob/main/deploy/samudra-security-headers.conf).
+It is included only in `listen 443` servers. The `always` flag is required
+because this app answers HEAD `/` with 405 (`curl -sI` is HEAD).
+
+Status: [`docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md).
+
 ### Branded hostname (Wave P5 / H2391) — human DNS first
 
 Production today is reachable at the free sslip fallback:
