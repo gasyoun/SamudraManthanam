@@ -1,7 +1,7 @@
 # OPS.md — Samudra Manthanam production operator path
 
 _Created: 08-08-2026 · Last updated: 13-08-2026_  
-_(+ H2397 logs-bounded section)_
+_(+ H2397 logs-bounded section · H2396 admin-env hardening)_
 
 **Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
 First-time install, systemd unit, nginx, and corpus reindex live in
@@ -19,7 +19,7 @@ different vhost and must not be edited for Samudra).
 
 ```
 /opt/samudra/
-├── .env                 # EnvironmentFile for systemd (mode 600, root:samudra)
+├── .env                 # EnvironmentFile for systemd (mode 600, root:samudra; parent 755)
 ├── OPS.md               # Host-local short notes (optional; repo copy is canonical)
 ├── repo/                # git clone of gasyoun/SamudraManthanam (branch main)
 ├── web -> repo/web      # symlink used by WorkingDirectory + nginx static root
@@ -254,23 +254,149 @@ systemctl restart samudra
 
 ---
 
-## Env / AI key changes
+## Admin key / env hardening (Wave P10 / H2396)
+
+**Contract on the live box (measured 13-08-2026 after this pass):**
+
+| Path | Mode · owner | Why |
+|---|---|---|
+| `/opt/samudra` | `755` `root:samudra` | **Not** `775`. Group-write on the parent lets `samudra` unlink `.env` and drop a replacement even though the file is `600`. nginx/`www-data` still needs `+x` here to follow `/opt/samudra/web`. |
+| `/opt/samudra/.env` | `600` `root:samudra` | systemd `EnvironmentFile=` is read by PID 1 as root; the app user must **not** be able to read the file. |
+| `/root/samudra-admin-key.txt` | `600` `root:root` | operator copy of `ADMIN_SECRET_KEY` only. |
+| `/root/samudra-env-backups/` | dir `700`, files `600` | the only legal home for `.env` copies. |
+| `/opt/samudra/db/state.db` | `640` `samudra:samudra` | corrections / session hashes; not world-readable. |
+
+**Never** leave `.env.bak*` next to the live file. On 13-08-2026 three such copies
+(`.env.bak-ai`, `.env.bak-before-true-openrouter`, `.env.bak-true-or-key`)
+were `644 root:root` and contained `ADMIN_SECRET_KEY`. `nobody`, `www-data`
+(Systema PHP on the same LXC) and `samudra` could all read them. They were
+moved to `/root/samudra-env-backups/` and the live key was **rotated** the
+same day.
+
+Permission check (prints modes only, never values):
 
 ```bash
-# Edit only as root; never commit .env
-nano /opt/samudra/.env
+python3 /opt/samudra/repo/scripts/check_env_hardening.py
+# expect: VERDICT=PASS
+stat -c '%A %a %U:%G %n' /opt/samudra /opt/samudra/.env
+```
+
+Admin API uses **headers**, not `?key=` (refused with 400). Prefer
+`GET /api/corrections/pending` as a smoke — `POST /api/admin/vacuum`
+actually VACUUMs `state.db`.
+
+```bash
+# Extract the key in Python (do not `source` .env — values can contain quotes)
+# then pass it only as a header. Never echo it.
+python3 - <<'PY'
+import os, urllib.request, urllib.error
+from pathlib import Path
+
+def key_from(path):
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        if line.startswith("ADMIN_SECRET_KEY="):
+            return line.split("=", 1)[1].strip().strip("\"'")
+    raise SystemExit("no ADMIN_SECRET_KEY")
+
+key = key_from("/opt/samudra/.env")
+req = urllib.request.Request(
+    "http://127.0.0.1:8000/api/corrections/pending",
+    headers={"X-Admin-Key": key},
+)
+try:
+    with urllib.request.urlopen(req, timeout=10) as r:
+        print("header_ok", r.status)
+except urllib.error.HTTPError as e:
+    print("header_ok", e.code)
+PY
+```
+
+Expect: missing header → **403**, dummy `?key=` → **400**, wrong header →
+**403**, correct `X-Admin-Key` / `Authorization: Bearer` → **200**.
+
+### Rotate `ADMIN_SECRET_KEY`
+
+Do this after any world-readable copy, a leaked access log, a departed
+operator, or a suspected compromise. The new value must never appear in
+chat, tickets, or git.
+
+```bash
+# As root. Prints statuses only.
+python3 - <<'PY'
+import os, shutil, time, urllib.error, urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+env = Path("/opt/samudra/.env")
+bak_dir = Path("/root/samudra-env-backups")
+keyfile = Path("/root/samudra-admin-key.txt")
+bak_dir.mkdir(mode=0o700, exist_ok=True)
+ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+copy = bak_dir / f".env.pre-rotate.{ts}"
+shutil.copy2(env, copy)
+os.chmod(copy, 0o600)
+
+def load(path: Path) -> str:
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("ADMIN_SECRET_KEY="):
+            return line.split("=", 1)[1].strip().strip("\"'")
+    raise SystemExit("no ADMIN_SECRET_KEY")
+
+old = load(copy)
+new = os.urandom(32).hex()
+text = env.read_text(encoding="utf-8")
+out = []
+for line in text.splitlines(keepends=True):
+    if line.startswith("ADMIN_SECRET_KEY="):
+        nl = "\n" if line.endswith("\n") else ""
+        out.append(f"ADMIN_SECRET_KEY={new}{nl}")
+    else:
+        out.append(line)
+tmp = env.with_name(".env.rotate.tmp")
+tmp.write_text("".join(out), encoding="utf-8")
+os.chmod(tmp, 0o600)
+shutil.chown(tmp, user="root", group="samudra")
+tmp.replace(env)
+os.chmod(env, 0o600)
+shutil.chown(env, user="root", group="samudra")
+keyfile.write_text(new + "\n", encoding="utf-8")
+os.chmod(keyfile, 0o600)
+
+os.system("systemctl restart samudra")
+time.sleep(3)
+
+def hit(headers=None):
+    req = urllib.request.Request(
+        "http://127.0.0.1:8000/api/corrections/pending",
+        headers=headers or {},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return r.status
+    except urllib.error.HTTPError as e:
+        return e.code
+
+print("new_header", hit({"X-Admin-Key": new}))
+print("old_header", hit({"X-Admin-Key": old}))
+req = urllib.request.Request("http://127.0.0.1:8000/")
+with urllib.request.urlopen(req, timeout=10) as r:
+    print("local_home", r.status)
+PY
 chmod 600 /opt/samudra/.env
 chown root:samudra /opt/samudra/.env
-systemctl restart samudra
+chmod 755 /opt/samudra
 ```
 
-Admin API uses **headers**, not `?key=` (refused with 400):
+Expect after rotate: new header **200**, old header **403**, `local_home` **200**.
 
-```bash
-# ADMIN_SECRET_KEY from /opt/samudra/.env or /root/samudra-admin-key.txt
-curl -fsS -X POST -H "X-Admin-Key: $ADMIN_SECRET_KEY" \
-  http://127.0.0.1:8000/api/admin/vacuum
-```
+AI / OpenRouter key edits use the same file and the same `chmod 600` + restart.
+Do not `cp .env .env.bak` in `/opt/samudra/` — copy into
+`/root/samudra-env-backups/` instead.
+
+HSTS / extra nginx security headers are **not** this section — that is
+Wave P10b / [H2398](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2398-Grok_SamudraManthanam_prod-nginx-hsts-security-headers_07.08.26.md).
+
+Status: [docs/H2396_ADMIN_ENV_HARDENING_STATUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2396_ADMIN_ENV_HARDENING_STATUS.md).
 
 ---
 
@@ -506,6 +632,7 @@ exception there, never silently dropped.
 - Wave P6 / H2392 (Sonnet 5 `claude-sonnet-5`): offline-pack build recipe; found + fixed `offline-packs/` ownership gap.
 - Wave P8 / H2395 (Sonnet 5 `claude-sonnet-5`): performance baseline re-run against the live public sslip URL instead of localhost; recipe above.
 - Wave P11 / H2397 (Sonnet 5 `claude-sonnet-5`): confirmed journald already bounded org-wide; added `/etc/logrotate.d/samudra` for the previously-unrotated app logs; recipe above.
+- Wave P10 / H2396 (Grok 4.6 `grok-4.6`): live `.env` already `600`; found three world-readable `.env.bak*` holding `ADMIN_SECRET_KEY`; moved them under `/root/samudra-env-backups/`, set parent `755`, rotated the admin key, `X-Admin-Key` 200 / old key 403. HSTS left to H2398.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
 - Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
   `/opt/samudra/repo/OPS.md` as the source of truth.

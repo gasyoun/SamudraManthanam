@@ -1,6 +1,6 @@
 # ROADMAP — SamudraManthanam, August 2026–July 2027
 
-_Created: 30-07-2026 · Last updated: 09-08-2026_
+_Created: 30-07-2026 · Last updated: 13-08-2026_
 
 **Status: LIVING.** This is the sole status roadmap for the programme indexed
 by [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).
@@ -54,7 +54,7 @@ prod state) are not optional research.
 | P7 | **Zero-orphan / durable-ref gate** on prod state vs corpus | report artifact |
 | P8 | **Performance baseline** against public URL | PERFORMANCE_BASELINES row |
 | P9 | **UX acceptance** bilingual + deep-link on prod | ✅ checklist green ([H2394](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/acceptance/H2394_UX_ACCEPTANCE_BILINGUAL_DEEPLINK_CHECKLIST.md), 08-08-2026) |
-| P10 | **Admin key / env hardening** + header security (HSTS after stable HTTPS) | checklist |
+| P10 | **Admin key / env hardening** + header security (HSTS after stable HTTPS) | ✅ env half 13-08-2026 (H2396) — [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2396_ADMIN_ENV_HARDENING_STATUS.md) · `.env` `600`, parent `755`, world-readable `.env.bak*` moved + key rotated, `X-Admin-Key` 200. **HSTS residual = [H2398](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2398-Grok_SamudraManthanam_prod-nginx-hsts-security-headers_07.08.26.md)** |
 | P11 | **Systema co-host safety** — nginx only `server_name` samudra hosts | samskrte.ru unchanged |
 
 Minted handoffs use slug prefix `prod-…` (see Uprava registry same day).

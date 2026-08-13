@@ -33,6 +33,9 @@ NoNewPrivileges=yes
 CapabilityBoundingSet=
 AmbientCapabilities=
 RestrictSUIDSGID=yes
+# New files the unit creates (state.db WAL, logs) are 600/700 — never 644.
+# Live drop-in on prod (H2396): /etc/systemd/system/samudra.service.d/umask.conf
+UMask=0077
 
 # Namespaces and network
 RestrictNamespaces=yes
