@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.39] - 2026-08-13
 ### Security
 - **Wave P10b: HSTS + nginx security headers after stable HTTPS (H2398, Grok 4.6 `grok-4.6`).** Public sslip HTTPS has been serving a Let's Encrypt cert since 07-08-2026 and HTTP already 301s; the vhost still sent no `Strict-Transport-Security`. New snippet [`deploy/samudra-security-headers.conf`](https://github.com/gasyoun/SamudraManthanam/blob/main/deploy/samudra-security-headers.conf) + gate/apply script [`scripts/enable_security_headers.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/enable_security_headers.py) (exit 2 if HTTPS `/api/health` is not 200 or HTTP is not a redirect to `https://` — HSTS on HTTP-only is the fail condition). Include is HTTPS-only and is repeated inside every `location` that already uses `add_header` (nginx does not inherit those). Prove-with: `curl -sI https://samudra.193.232.229.92.sslip.io/ | grep -i strict`. Operator path: [`OPS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md) § HSTS + nginx security headers · [status](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md).
 
