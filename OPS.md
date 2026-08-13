@@ -1,7 +1,7 @@
 # OPS.md — Samudra Manthanam production operator path
 
-_Created: 08-08-2026 · Last updated: 09-08-2026_  
-_(+ H2391 branded-hostname section)_
+_Created: 08-08-2026 · Last updated: 13-08-2026_  
+_(+ H2397 logs-bounded section)_
 
 **Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
 First-time install, systemd unit, nginx, and corpus reindex live in
@@ -451,6 +451,40 @@ exception there, never silently dropped.
 
 ---
 
+## Logs bounded — journald + app logrotate (Wave P11 / H2397)
+
+- **journald** was already capped org-wide (Systema's shared
+  `/etc/systemd/journald.conf.d/99-persistent.conf`: `SystemMaxUse=3G`,
+  `SystemKeepFree=2G`, `SystemMaxFileSize=128M`, `MaxRetentionSec=180day`) —
+  `journalctl --disk-usage` measured ~1.1G in use, well inside the cap. No
+  samudra-specific journald change needed.
+- **App logs** (`/opt/samudra/logs/health_monitor.log`,
+  `/opt/samudra/logs/health_monitor_journal.log`) had **no rotation since
+  install**. Added `/etc/logrotate.d/samudra`:
+
+  ```
+  /opt/samudra/logs/*.log
+  {
+      daily
+      rotate 14
+      maxsize 50M
+      missingok
+      notifempty
+      compress
+      delaycompress
+      copytruncate
+      su root root
+      create 0644 root root
+  }
+  ```
+
+  Verified with `logrotate -d /etc/logrotate.d/samudra` (clean dry-run,
+  no errors). Host-local proof also logged in `/opt/samudra/OPS.md`
+  (short-notes pointer file, not canonical — this section is the
+  canonical record).
+
+---
+
 ## What this runbook deliberately excludes
 
 | Topic | Where |
@@ -471,6 +505,7 @@ exception there, never silently dropped.
 - Wave P5 / H2391 (Grok 4.5 `grok-4.5`): DNS-gated branded hostname path; agent half only until human A-record.
 - Wave P6 / H2392 (Sonnet 5 `claude-sonnet-5`): offline-pack build recipe; found + fixed `offline-packs/` ownership gap.
 - Wave P8 / H2395 (Sonnet 5 `claude-sonnet-5`): performance baseline re-run against the live public sslip URL instead of localhost; recipe above.
+- Wave P11 / H2397 (Sonnet 5 `claude-sonnet-5`): confirmed journald already bounded org-wide; added `/etc/logrotate.d/samudra` for the previously-unrotated app logs; recipe above.
 - Live layout probed 08-08-2026 on `193.232.229.92` (`samudra` active; local `/` → 200).
 - Host-local `/opt/samudra/OPS.md` may lag the git copy; after deploy, prefer
   `/opt/samudra/repo/OPS.md` as the source of truth.
