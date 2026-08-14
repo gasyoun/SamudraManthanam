@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "slug": "errata-pilot",
+  "title_ru": "Фикстура опечатки H2720",
+  "title_display": "Errata apply fixture",
+  "title_en": "H2720 errata fixture",
+  "credit": "fixture",
+  "credit_role": "test",
+  "imprint": null,
+  "publisher": null,
+  "year": null,
+  "scripts": ["cyrillic"],
+  "structure": "verse"
+}

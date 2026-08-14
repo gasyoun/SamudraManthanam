@@ -1,0 +1,16 @@
+# Hermetic fixture — one digitization slip, not a real printed typo.
+work: "Errata apply fixture (H2720)"
+
+entries:
+  - kind: digitization
+    page: ""
+    line: ""
+    work: "errata-pilot"
+    passage: "1.1"
+    id: "errata-pilot:1.1#ru"
+    locus: "errata-pilot.jsonl id=errata-pilot:1.1#ru field=text"
+    read: "исправление"
+    instead: "опечатка"
+    found_by: "H2720 fixture"
+    date_added: "2026-08-14"
+    note: "Golden fixture for apply_errata + html-from-jsonl rebuild."

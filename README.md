@@ -1,6 +1,6 @@
 # Samudra Manthanam — Churning of the Ocean
 
-_Created: 12-05-2026 · Last updated: 30-07-2026_
+_Created: 12-05-2026 · Last updated: 14-08-2026_
 
 A parallel Sanskrit–Russian corpus search tool developed by the [Society of Sanskrit Enthusiasts](https://samskrtam.ru). The name refers to the mythological churning of the cosmic ocean (*Samudra Manthanam*), here used as a metaphor for extracting meaning from an ocean of words.
 
@@ -104,6 +104,14 @@ The corpus contains **153 active source texts** (Sanskrit with parallel Russian 
 Each corpus file is an HTML document. The first line holds the source title as an HTML comment; companion `.no_tags` files contain the same lines with tags stripped, used for plain-text indexing.
 
 New sources can be prepared with the legacy [`Corpus_builder/`](https://github.com/gasyoun/SamudraManthanam/tree/main/Corpus_builder) Delphi tool (`cb.exe`) or the newer Python **PDF → canonical-JSONL → app-HTML** pipeline in [`web/corpus_builder/`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder), documented in [`PDF_INGESTION_PIPELINE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md). The most recent addition via that pipeline is the **Devībhāgavata-purāṇa Skandha 1** (A. Ignatjev, Касталия 2018) — 20 chapters, 1181 verses, with Sanskrit aligned at 1180/1181 (99.9%) from the sanskritdocuments.org source (H534).
+
+**Typo / errata rebuild (H2720).** Account a slip in [`web/corpus_builder/errata/<slug>/errata.yml`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/errata) (same `read` / `instead` / `found_by` / `date_added` row as [SanskritGrammar `errata.yml`](https://github.com/gasyoun/SanskritGrammar/blob/main/KnauerFrazy_1908/errata.yml); add `passage` or `id` when there is no printed page). Then, without opening `cb.exe`:
+
+```
+python web/corpus_builder/apply_errata.py --work <slug> --rebuild
+```
+
+That patches the canonical JSONL and re-runs `html-from-jsonl`. Which inbound recipe a work uses lives in [docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md) §4.5 / [`errata/recipes.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/errata/recipes.json). Pilot work: [bhagavati-manasa-puja-stotra](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/errata/bhagavati-manasa-puja-stotra/errata.yml).
 
 ---
 

@@ -1,6 +1,6 @@
 # PDF → Corpus Ingestion Pipeline (house standard)
 
-_Created: 10-07-2026 · Last updated: 08-08-2026_
+_Created: 10-07-2026 · Last updated: 14-08-2026_
 
 The reusable, agent-runnable pipeline that turns a print-derived **PDF**
 translation into the app-ready corpus HTML the desktop reader «Пахтанье
@@ -29,6 +29,15 @@ PDF ──(1) ignatjev_pdf_to_canonical.py──▶ *.raw.jsonl  (+ *.report.jso
                                                + .no_tags + .html.meta.json
                                                + append to Programdata/data.txt
 ```
+
+A found typo is **not** a reason to re-run stage 1. Account it in
+[`errata/<slug>/errata.yml`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/errata)
+and run
+[`apply_errata.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/apply_errata.py)
+(H2720): that patches the canonical JSONL (`read`/`instead` on `passage`/`id`)
+and re-runs stage 3 only. Re-ingesting from PDF/Word would wipe the patch.
+Catalog of which inbound recipe a work used:
+[KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md).
 
 ### 1. `ignatjev_pdf_to_canonical.py` — PDF → canonical JSONL (Russian side)
 
