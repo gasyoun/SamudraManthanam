@@ -6,7 +6,7 @@ _Created: 14-08-2026 · Last updated: 14-08-2026_
 
 **Hub copy (same text):** [Uprava/decide_briefs/DECIDE_BRIEF_corpus-builder-p5-gui-fate_14-08-2026.md](https://github.com/gasyoun/Uprava/blob/main/decide_briefs/DECIDE_BRIEF_corpus-builder-p5-gui-fate_14-08-2026.md)
 
-**Human 14-08-2026:** «not enough data to rule». A vs B is **not** picked. GUI stays. This pass adds the clone census; two facts still sit outside the repo.
+**Human 14-08-2026 (second pass):** `cb.exe` as translator — **nobody**. Rebuilds — **yes**, via Python recipes; `01/02/03` folder still unknown. Book is a bundle. Catalog: [KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md).
 
 This is a **recommendation, not a ruling**. A human decides. No GUI file was deleted.
 

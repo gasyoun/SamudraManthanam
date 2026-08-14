@@ -44,7 +44,9 @@ Purpose: tell humans and implementation agents which Markdown files are current,
 - `OPS.md`: production day-2 operator path (pull/pip/restart/smoke/code rollback) for `/opt/samudra` (H2388).
 - `CLAUDE.md`: agent guidance for this repository.
 - `Corpus_builder/CLAUDE.md`: Corpus Builder-specific agent guidance.
-- `Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md`: Phase 5 GUI-fate brief (H2435) — recommendation A, not a ruling.
+- `Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md`: Phase 5 GUI-fate brief (H2435) — deferred; `cb` unused as translator.
+- `docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md`: catalog of build combinations (H2719) — agent + human.
+- `docs/DLYA_ANATOLIYA_DOBAVLENIE_IGNATIEVA_VS_STARAYA_SBORKA.md`: for Anatoly — Ignatiev add vs old `cb`.
 
 ## Historical Docs (`docs/archive/`)
 
