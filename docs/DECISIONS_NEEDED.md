@@ -238,12 +238,16 @@ scope for the gzip work, but it will bite any future JS fix.
 
 ---
 
-## D6. Corpus_builder Phase 5 — keep LCL GUI or CLI + light web?  OPEN (brief ready 14-08-2026)
+## D6. Corpus_builder Phase 5 — keep LCL GUI or CLI + light web?  ⏸ DEFERRED (not enough data, 14-08-2026)
 
 **Found:** H2435, 14-08-2026, Grok 4.6 (`grok-4.6`). After Phases 0–4, [ROADMAP.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) Phase 5 asks a human to pick A (keep the LCL desktop GUI for translators) or B (drop it for CLI + a light web). Soft dependency H2432 shipped ([PR #201](https://github.com/gasyoun/SamudraManthanam/pull/201)), so B is a real option.
 
-**Brief (do not re-derive):** [Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md) · hub [Uprava brief](https://github.com/gasyoun/Uprava/blob/main/decide_briefs/DECIDE_BRIEF_corpus-builder-p5-gui-fate_14-08-2026.md). GTD Waiting-on-Me row annotated `brief ready`.
+**Human 14-08-2026:** «not enough data to rule». A vs B not picked. GUI stays.
 
-**Recommendation (not a ruling):** A — keep the LCL GUI. `--check` already lives on `cb_headless`; MultiBook split/concat still lives only in `fMainForm.pas`; target architecture still names three frontends. Do not delete the GUI until a human rules.
+**Clone census (same day):** one `01/02/03` triple (golden fixture only); zero ManyBooks inputs; no local Lazarus `cb.exe` / `cb_headless.exe`; committed Delphi `cb.exe` mtime 2026-05-14; 269 jsonl / 193 html.
+
+**Still needed before A/B:** (1) a private `01/02/03` or `ManyBooks_*` workspace that someone still opens in desktop `cb`? (2) will any of the 193 `Data/*.html` titles be rebuilt via `cb`?
+
+**Brief:** [Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md). Default until those facts exist: C (keep files, spend nothing).
 
 _Dr. Mārcis Gasūns_

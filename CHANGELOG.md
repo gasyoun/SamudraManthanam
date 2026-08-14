@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **H2435 Phase 5 GUI-fate deferred** (Grok 4.6 `grok-4.6`, 14-08-2026). Human: not enough data to rule A vs B. Brief now includes the clone census (one golden `01/02/03` triple, zero ManyBooks inputs). GUI not deleted.
+
 ## [0.19.40] - 2026-08-14
 ### Added
 - **H2435 Phase 5 GUI-fate brief** (Grok 4.6 `grok-4.6`, 14-08-2026). Ruling-ready `@DECIDE` for keep-LCL-GUI (A) vs CLI + light web (B): [Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md). Recommendation (not a ruling): A. No GUI deleted.
