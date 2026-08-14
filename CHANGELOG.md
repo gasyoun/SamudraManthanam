@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.42] - 2026-08-14
+
 ### Added
 - **Scholar-tier capability spec, costed** (H2640, Opus 5 `claude-opus-5`, 14-08-2026). Per-candidate build verdicts + rights lines for the paid corpus tier of the samskrte.ru membership, an auth-substrate decision (Samudra `identity.py` authenticates · Systema owns entitlement · signed short-lived grant token bridges), and a **measured** AI run-cost — **₽8.77 per 100 queries** (`deepseek/deepseek-chat` on OpenRouter, median 1 391.5 prompt + 660 completion tokens over 8 real corpus queries, USD/RUB 84.5449). Three findings overturn the brief's premises: the AI layer is **dark on prod** (OpenRouter 403, so selling it withdraws nothing), cost is **not** the pricing driver at ₽0.088/call, and there is **no rate limiting anywhere** — filed as [#307](https://github.com/gasyoun/SamudraManthanam/issues/307). Price recommendation: **₽1 490/mo parallel add-on**, not the ₽5 000 membership rung. Spec: [`docs/SPEC_SAMUDRA_SCHOLAR_TIER_PAID_CAPABILITY_2026.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/SPEC_SAMUDRA_SCHOLAR_TIER_PAID_CAPABILITY_2026.md). Reproducer: [`web/tools/measure_ai_query_cost.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tools/measure_ai_query_cost.py).
 - **Short search IRI `/s/`** (H2752, Grok 4.6 `grok-4.6`, 14-08-2026). Share [`/s/Хастинапур`](https://samudra.samskrte.ru/s/Хастинапур) and `/s/geo/Хастинапур`. H2751 `/search/Хастинапур` and `?q=` 301 onto `/s/`. Google sitelinks box still uses `?q={search_term_string}` (required). Prove: `python -m pytest tests/test_search_urls.py tests/test_search_page.py`.
