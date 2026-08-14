@@ -11,7 +11,7 @@ _Created: 14-08-2026 · Last updated: 14-08-2026_
 - [PDF_INGESTION_PIPELINE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md) — PDF Игнатьева → JSONL → HTML
 - [H2449 census](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2449_IGNATIEV_BACKMATTER_LAYERS_CENSUS.md) — предисловия / словари / библиография
 - Заметка Анатолию: [DLYA_ANATOLIYA_DOBAVLENIE_IGNATIEVA_VS_STARAYA_SBORKA.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/DLYA_ANATOLIYA_DOBAVLENIE_IGNATIEVA_VS_STARAYA_SBORKA.md)
-- Опечатка → автопересборка (ещё не код): [H2720](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2720-Grok_SamudraManthanam_corpus-errata-auto-rebuild_14.08.26.md)
+- Опечатка → автопересборка: [apply_errata.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/apply_errata.py) (H2720)
 
 Человек 14-08-2026: `cb.exe` как переводчик **никто не открывает**. Пересобирать **будем**. Путь к старой папке `01/02/03` **неизвестен**.
 
@@ -142,13 +142,23 @@ _Created: 14-08-2026 · Last updated: 14-08-2026_
 
 ---
 
-## 5. Что делать, когда нашлась опечатка (пока без кода)
+## 5. Что делать, когда нашлась опечатка
 
-1. Записать строку в `errata.yml` работы (схема как в [SanskritGrammar Knauer `errata.yml`](https://github.com/gasyoun/SanskritGrammar/blob/main/KnauerFrazy_1908/errata.yml): `read` / `instead` / `found_by` / `date_added` / `fixed_in`). Для корпуса добавить `work` + `passage` (или `id` сегмента), не «стр. 117», если страницы печати нет.
-2. Рецепт из §4.5 сам перегоняет JSONL→HTML. Человек **не** запускает `cb.exe`.
-3. Реализация — [H2720](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2720-Grok_SamudraManthanam_corpus-errata-auto-rebuild_14.08.26.md). Этот каталог только говорит, **какой** рецепт вызывать.
+1. Записать строку в `web/corpus_builder/errata/<slug>/errata.yml` (схема как в [SanskritGrammar Knauer `errata.yml`](https://github.com/gasyoun/SanskritGrammar/blob/main/KnauerFrazy_1908/errata.yml): `read` / `instead` / `found_by` / `date_added` / `fixed_in`). Для корпуса добавить `work` + `passage` (или `id` сегмента), не «стр. 117», если страницы печати нет. Пилот: [bhagavati-manasa-puja-stotra](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/errata/bhagavati-manasa-puja-stotra/errata.yml).
+2. Один скрипт патчит канонический JSONL и гоняет рецепт `html-from-jsonl` из [recipes.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/errata/recipes.json) (машина для §4.5). Человек **не** запускает `cb.exe`. Не перегонять PDF/Word заново — это сотрёт патч.
 
-Пока H2720 не слит: опечатку всё равно заносить в yaml (учёт как в SanskritGrammar); пересборку не откладывать «на выходные с GUI».
+```
+python web/corpus_builder/apply_errata.py --work bhagavati-manasa-puja-stotra --rebuild --data-dir Index/lib/x86_64-win64/Data
+python web/corpus_builder/build_errata.py bhagavati-manasa-puja-stotra
+```
+
+Доказать на фикстуре (без живого JSONL):
+
+```
+python -m pytest tests/test_apply_errata.py -v
+```
+
+Коды `IN-*` / `KEY-*` в §4.5 говорят, **какой** вход у книги. После правки JSONL пересборка всегда `html-from-jsonl` ([build_corpus_html.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/build_corpus_html.py)).
 
 Старые HTML «году и больше» — это долг `IN-HTML` / `IN-PDF-IGN` по строкам таблицы, не долг `ManyBooks_`.
 

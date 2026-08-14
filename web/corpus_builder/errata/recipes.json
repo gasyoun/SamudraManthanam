@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "note": "Machine form of docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md section 4.5. After a JSONL patch, rebuild is always html-from-jsonl (build_corpus_html.py). Do not re-ingest from PDF/Word — that would wipe the patch.",
+  "works": {
+    "bhagavati-manasa-puja-stotra": {
+      "input": "IN-DOC-IGN",
+      "verse_key": "KEY-SKANDHA",
+      "layers": ["LY-BODY"],
+      "footnotes": "FN-END",
+      "rebuild": "html-from-jsonl",
+      "jsonl": "web/corpus_builder/jsonl/bhagavati-manasa-puja-stotra.jsonl",
+      "report": "web/corpus_builder/jsonl/bhagavati-manasa-puja-stotra.report.json",
+      "meta": "web/corpus_builder/bhagavati-manasa-puja-stotra.meta.json",
+      "slug": "bhagavati-manasa-puja-stotra"
+    }
+  }
+}

@@ -12,9 +12,16 @@ _Created: 14-08-2026 · Last updated: 14-08-2026_
 
 1. Fill §4.5 for every slug in `conversion_report.json` (148), not just the crown jewels.
 2. Point each row at the exact driver script + one reproduce command.
-3. After [H2720](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2720-Grok_SamudraManthanam_corpus-errata-auto-rebuild_14.08.26.md) lands, add the apply command per recipe.
+3. ~~After H2720 lands, add the apply command per recipe.~~ Done 14-08-2026: §5 + [recipes.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/errata/recipes.json) (`html-from-jsonl`).
 4. Derive the §4.5 table from the manifest (`--check`) so it cannot drift.
 
 **Limitations.** Counts 66/53/15 are from CONVERTER_SPEC / TAG_CENSUS (2026-06), not re-counted this pass. Atharvaveda vs Rigveda difference is stated as “do not reuse the Rigveda recipe blindly”; a per-book tech note is still owed. Source `01/02/03` folder still missing.
+
+**Revision history.**
+
+| Date | What |
+|---|---|
+| 14-08-2026 | H2719 first catalog. |
+| 14-08-2026 | H2720: §5 is the apply+rebuild command; recipes.json machine form. |
 
 _Dr. Mārcis Gasūns_
