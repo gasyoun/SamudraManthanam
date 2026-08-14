@@ -2,9 +2,11 @@
 
 _Created: 14-08-2026 · Last updated: 14-08-2026_
 
-**Source:** [H2435 (Grok 4.6) — Corpus_builder Phase 5: human DECIDE GUI LCL vs CLI-only](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2435-Grok_SamudraManthanam_corpus-builder-p5-gui-fate-decide_08.08.26.md) · GTD Waiting-on-Me `@DECIDE` row added this pass · Grok 4.6 (`grok-4.6`)
+**Source:** [H2435 (Grok 4.6) — Corpus_builder Phase 5: human DECIDE GUI LCL vs CLI-only](https://github.com/gasyoun/Uprava/blob/main/handoffs/archive/H2435-Grok_SamudraManthanam_corpus-builder-p5-gui-fate-decide_08.08.26.md) · Grok 4.6 (`grok-4.6`)
 
 **Hub copy (same text):** [Uprava/decide_briefs/DECIDE_BRIEF_corpus-builder-p5-gui-fate_14-08-2026.md](https://github.com/gasyoun/Uprava/blob/main/decide_briefs/DECIDE_BRIEF_corpus-builder-p5-gui-fate_14-08-2026.md)
+
+**Human 14-08-2026:** «not enough data to rule». A vs B is **not** picked. GUI stays. This pass adds the clone census; two facts still sit outside the repo.
 
 This is a **recommendation, not a ruling**. A human decides. No GUI file was deleted.
 
@@ -36,6 +38,18 @@ The desktop builder is the **historical** HTML compiler (`01_Sanskrit.txt` / `02
 | No light-web builder exists | grep of `web/` + `Corpus_builder/` — no builder UI route | B is not "flip a flag". It is a new product surface (auth, file upload, check report, job queue). |
 | ROADMAP Phase 4 "стык с веб-конвейером" checkbox is still `[ ]` even though H2433 shipped | [ROADMAP.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/ROADMAP.md) Фаза 4 | Stale checkbox, not a missing hook. Do not treat it as a reason to delay this ruling. |
 | Who last launched the desktop `cb` window is **unmeasured** | no telemetry, no dated operator log in `OPS.md` | The "translators need the window" claim is the roadmap's premise, not a counted fact. |
+
+### Clone census (14-08-2026, same session, after the human deferral)
+
+| Fact | Number | Why it matters |
+|---|---|---|
+| Live `01_Sanskrit.txt` / `02_Transl.txt` / `03_Comments.txt` triples in the clone | **1** — only [tests/golden/case01/input/](https://github.com/gasyoun/SamudraManthanam/tree/main/Corpus_builder/tests/golden/case01/input) | No authoring workspace is checked in. |
+| `ManyBooks_01_Sanskrit.txt` / `many_books_config.ini` | **0** in Corpus_builder, `web/corpus_builder`, Programdata, and `Index/.../Data` | The MultiBook path has no on-disk input in this clone. |
+| Local Lazarus `lib/x86_64-win64/cb.exe` and `cb_headless.exe` | **absent** (`lib/` is gitignored and empty here) | This machine is not currently running the windowed or headless binary. |
+| Committed Delphi `PSRCBuilder/cb.exe` | 522,240 bytes, mtime **2026-05-14** | Last rebuilt before the Lazarus port; not evidence of a 2026-08 launch. |
+| `fMainForm.pas` history since first commit (15-05-2026) | H1485, H2417, H2428, H2431 only | Port/maintenance commits, not translator feature requests. |
+| Python ingest vs published HTML | **269** `.jsonl` under `web/corpus_builder/jsonl/` (749 MB) · **193** `.html` under `Index/.../Data` (199 MB) | New titles already go through [PDF_INGESTION_PIPELINE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/PDF_INGESTION_PIPELINE.md). |
+| Still unmeasured (outside this clone) | a private disk / old Windows box / translator laptop | Only a human can say whether such a folder exists. |
 
 ## Options
 
@@ -71,17 +85,18 @@ Remove `cb.lpr` / `fMainForm` / `fCheckDialog` because CLI + CI exist. This is t
 
 ## Recommendation
 
-**Option A** — keep the LCL desktop GUI. Labelled as a recommendation, not a ruling.
+**No A/B pick.** Labelled as a recommendation, not a ruling. The human said there is not enough data; the clone census confirms that. Default until the two facts exist: **C** (keep the files, spend nothing, do not delete).
 
-Treat new GUI *features* as out of scope. Put the next engineering hour into extracting MultiBook so CLI can build a many-book corpus. Revisit B only after that extract, and only if a human says the window is unused.
+The two facts that would make A vs B decidable:
 
-**Confidence: medium-high.**
+1. Does anyone still have a **private** `01_Sanskrit.txt` / `02_Transl.txt` / `03_Comments.txt` (or `ManyBooks_*`) folder they open in desktop `cb`?
+2. Will any of the 193 `Data/*.html` titles be **rebuilt via `cb`**, or only via the Python ingest?
 
-- High that B is not owed this month: CLI, `--check`, web hook, and golden CI already exist; a light web would duplicate them.
-- High that deleting the GUI now is unsafe: MultiBook has no other host.
-- Medium on "translators still need the window": that is the roadmap's stated user, and it is unmeasured.
+- If (1) is yes → A.
+- If (1) is no **and** (2) is "Python only" → B is cheap, or C forever.
+- If (1) is "maybe, on another disk" → still C; do not delete.
 
-**Flip A → B** if all three hold: (1) MultiBook is in the core and `cb_headless` can rebuild a many-book corpus; (2) a human confirms nobody launches the desktop `cb` for new or historical books; (3) someone will actually staff a light web (not "CLI is enough, just delete the `.lpi`").
+**Confidence: high** that the *clone* cannot settle A vs B. **Confidence: none** on private disks.
 
 **If a human is away and this sits:** nothing is blocked. CLI, CI, Python ingest, and prod reindex keep working. The only frozen thing is deletion of the window.
 
