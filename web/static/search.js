@@ -161,7 +161,7 @@ $(document).ready(function() {
 
     function parsePrettySearch() {
         const path = window.location.pathname || '';
-        const m = path.match(/^\/search\/(.+)$/);
+        const m = path.match(/^\/(?:s|search)\/(.+)$/);
         if (!m) return null;
         const parts = m[1].split('/').filter(Boolean).map(function (p) {
             try { return decodeURIComponent(p); } catch (e) { return p; }
@@ -232,9 +232,9 @@ $(document).ready(function() {
             // Unicode path — do not encodeURIComponent; the address bar stays readable.
             if (slugs.length === 1) {
                 const token = SLUG_TO_ALIAS[slugs[0]] || slugs[0];
-                return '/search/' + token + '/' + q;
+                return '/s/' + token + '/' + q;
             }
-            return '/search/' + q;
+            return '/s/' + q;
         }
         const params = new URLSearchParams();
         params.set('q', query);

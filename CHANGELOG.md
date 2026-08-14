@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Pretty search IRIs** (Grok 4.6 `grok-4.6`, 14-08-2026). Share `/search/Хастинапур` and `/search/geo/Хастинапур` — Unicode path, no `?q=%D0…`. Old `?q=` / `/?q=` 301 onto the pretty path. Short aliases: `geo` `imen` `predmet` `flora` `stati`. Google sitelinks box still uses `?q={search_term_string}` (required). Prove: `python -m pytest tests/test_search_urls.py tests/test_search_page.py`.
+- **Short search IRI `/s/`** (H2752, Grok 4.6 `grok-4.6`, 14-08-2026). Share [`/s/Хастинапур`](https://samudra.samskrte.ru/s/Хастинапур) and `/s/geo/Хастинапур`. H2751 `/search/Хастинапур` and `?q=` 301 onto `/s/`. Google sitelinks box still uses `?q={search_term_string}` (required). Prove: `python -m pytest tests/test_search_urls.py tests/test_search_page.py`.
+- **Pretty search IRIs** (H2751, Grok 4.6 `grok-4.6`, 14-08-2026). Unicode path instead of `?q=%D0…`. Shortened the same day to `/s/` (H2752). Short aliases: `geo` `imen` `predmet` `flora` `stati`.
 - **H2391 branded hostname live** (Grok 4.6 `grok-4.6`, 14-08-2026). `samudra.samskrte.ru` A → `193.232.229.92`; certbot HTTPS 200 on branded + sslip (one cert, three SANs). `PUBLIC_BASE_URL` on prod is the branded name. Enabler now issues sslip names too (branded-only cert broke sslip SNI on first apply) and smokes with GET + `--resolve` hairpin fallback.
 
 ### Fixed
