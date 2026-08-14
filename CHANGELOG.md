@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **H2738 MBH Smirnov articles + indexes as corpus layers** (Grok 4.6 `grok-4.6`, 14-08-2026). From Anatoly Drive «Для Пахтания»: 25 volume articles (`mahabharata-stati`, 2430 prose records, RT 99.96% with Latin-accent folds) and four print indexes (`mahabharata-ukazatel-imen` 9980 / `geo` 3449 / `predmet` 4122 / `flora` 103, RT 100%). Verse comments stay on the parva HTML (already `comment_item`; book 13 has none in either source). Parser: [`mbh_word_layers.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/mbh_word_layers.py). Census: [`docs/H2738_MBH_WORD_ARTICLES_INDEXES.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2738_MBH_WORD_ARTICLES_INDEXES.md). Prove: `python -m pytest tests/test_mbh_word_layers.py`.
+
 ## [0.19.41] - 2026-08-14
 ### Added
 - **H2720 errata.yml + automatic corpus rebuild** (Grok 4.6 `grok-4.6`, 14-08-2026). SanskritGrammar-shaped `errata.yml` (`read`/`instead`/`found_by`/`date_added`/`fixed_in`) plus catalog `passage`/`id` targeting. One script patches canonical JSONL and re-runs `html-from-jsonl` — no `cb.exe`. Pilot: [bhagavati-manasa-puja-stotra/errata.yml](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/errata/bhagavati-manasa-puja-stotra/errata.yml). Prove: `python -m pytest tests/test_apply_errata.py` (fixture apply + HTML/JSONL diff). Recipe table: [errata/recipes.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/errata/recipes.json). Catalog §5 now has the command.

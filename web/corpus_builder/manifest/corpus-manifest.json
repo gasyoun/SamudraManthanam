@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "77ce68cd0755923a8d3c2b23afe147ce8f5ce1dc"
+    "revision": "597ca824f47d37373fb389af190d815bae9472a5"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -1951,12 +1951,12 @@
       },
       {
         "canonical": {
-          "bytes": 596284,
+          "bytes": 1272173,
           "first_canonical_id": "kama-samuha:1.1#ru",
-          "last_canonical_id": "kama-samuha:1.751#ru",
+          "last_canonical_id": "kama-samuha:1.747.comm1",
           "path": "corpus_builder/jsonl/kama-samuha.jsonl",
-          "record_count": 685,
-          "sha256": "2ba71a17e55128647ffce6a3ebc441323e7296a3a75b66e1a8953661b628e916"
+          "record_count": 1174,
+          "sha256": "19b38a87b3c870b8cfd03d1c039fcd948e7482a0ffe58e68fd3a9f6ac777bbfa"
         },
         "filename": "kama-samuha.html",
         "provenance": "canonical JSONL kama-samuha.jsonl",
@@ -2536,12 +2536,12 @@
       },
       {
         "canonical": {
-          "bytes": 87763,
+          "bytes": 165087,
           "first_canonical_id": "mahabharata-mahaprasthanikaparva-ignatiev:1.1#ru",
-          "last_canonical_id": "mahabharata-mahaprasthanikaparva-ignatiev:3.38#ru",
+          "last_canonical_id": "mahabharata-mahaprasthanikaparva-ignatiev:3.26.comm1",
           "path": "corpus_builder/jsonl/mahabharata-mahaprasthanikaparva-ignatiev.jsonl",
-          "record_count": 110,
-          "sha256": "fa829fa4f9d877300023f47d3ddcfd256df29ecbd42b23216a5a57f329e8da3a"
+          "record_count": 165,
+          "sha256": "679d4f5bd88bc850b163af8f468e7c24f0839cf58a84b895326a77256f5dc0dd"
         },
         "filename": "mahabharata-mahaprasthanikaparva-ignatiev.html",
         "provenance": "canonical JSONL mahabharata-mahaprasthanikaparva-ignatiev.jsonl",
@@ -2551,12 +2551,12 @@
       },
       {
         "canonical": {
-          "bytes": 222921,
+          "bytes": 437322,
           "first_canonical_id": "mahabharata-mausalaparva-ignatiev:1.1#ru",
-          "last_canonical_id": "mahabharata-mausalaparva-ignatiev:8.38#ru",
+          "last_canonical_id": "mahabharata-mausalaparva-ignatiev:8.38.comm1",
           "path": "corpus_builder/jsonl/mahabharata-mausalaparva-ignatiev.jsonl",
-          "record_count": 285,
-          "sha256": "7ae1dad81c74923def72812051e09c1b1495b493b930f3088884878fb12ea644"
+          "record_count": 439,
+          "sha256": "cf190b04a85dd83ce4bdec6aadde4a30c660f2235a009f0d8a0ad299ba77044c"
         },
         "filename": "mahabharata-mausalaparva-ignatiev.html",
         "provenance": "canonical JSONL mahabharata-mausalaparva-ignatiev.jsonl",
@@ -2566,18 +2566,93 @@
       },
       {
         "canonical": {
-          "bytes": 259601,
+          "bytes": 4597832,
+          "first_canonical_id": "mahabharata-stati:1.1.1#ru",
+          "last_canonical_id": "mahabharata-stati:1.25.71#ru",
+          "path": "corpus_builder/jsonl/mahabharata-stati.jsonl",
+          "record_count": 2430,
+          "sha256": "b8b10f2d0243d4afb96d9efb3b5a292297611e32616fd3b44f00ef79bbb7f370"
+        },
+        "filename": "mahabharata-stati.html",
+        "provenance": "canonical JSONL mahabharata-stati.jsonl",
+        "slug": "mahabharata-stati",
+        "sort_order": 169,
+        "title": "mahabharata-stati"
+      },
+      {
+        "canonical": {
+          "bytes": 443381,
           "first_canonical_id": "mahabharata-svargarohanikaparva-ignatiev:1.1#ru",
-          "last_canonical_id": "mahabharata-svargarohanikaparva-ignatiev:6.105#ru",
+          "last_canonical_id": "mahabharata-svargarohanikaparva-ignatiev:6.104.comm1",
           "path": "corpus_builder/jsonl/mahabharata-svargarohanikaparva-ignatiev.jsonl",
-          "record_count": 319,
-          "sha256": "a656ba7533bbe7767b5e298c01ae36f536932f029e8c5b057b41c38705975794"
+          "record_count": 446,
+          "sha256": "01ea07c13c628601fec0dc8be297f5e09fd773d8c0759be927d51d206496f034"
         },
         "filename": "mahabharata-svargarohanikaparva-ignatiev.html",
         "provenance": "canonical JSONL mahabharata-svargarohanikaparva-ignatiev.jsonl",
         "slug": "mahabharata-svargarohanikaparva-ignatiev",
-        "sort_order": 169,
+        "sort_order": 170,
         "title": "mahabharata-svargarohanikaparva-ignatiev"
+      },
+      {
+        "canonical": {
+          "bytes": 54893,
+          "first_canonical_id": "mahabharata-ukazatel-flora:e1#head",
+          "last_canonical_id": "mahabharata-ukazatel-flora:e103#head",
+          "path": "corpus_builder/jsonl/mahabharata-ukazatel-flora.jsonl",
+          "record_count": 103,
+          "sha256": "964a7ca351a83d9a663cc53ee0ec696010ef5532960dbdbc039ed33985aa03e4"
+        },
+        "filename": "mahabharata-ukazatel-flora.html",
+        "provenance": "canonical JSONL mahabharata-ukazatel-flora.jsonl",
+        "slug": "mahabharata-ukazatel-flora",
+        "sort_order": 171,
+        "title": "mahabharata-ukazatel-flora"
+      },
+      {
+        "canonical": {
+          "bytes": 1381483,
+          "first_canonical_id": "mahabharata-ukazatel-geo:e1#head",
+          "last_canonical_id": "mahabharata-ukazatel-geo:e3449#head",
+          "path": "corpus_builder/jsonl/mahabharata-ukazatel-geo.jsonl",
+          "record_count": 3449,
+          "sha256": "2135f2bc31b337100bf012082f0396b5f18fbde3742046fdc05f4e6ef4856b2e"
+        },
+        "filename": "mahabharata-ukazatel-geo.html",
+        "provenance": "canonical JSONL mahabharata-ukazatel-geo.jsonl",
+        "slug": "mahabharata-ukazatel-geo",
+        "sort_order": 172,
+        "title": "mahabharata-ukazatel-geo"
+      },
+      {
+        "canonical": {
+          "bytes": 4266148,
+          "first_canonical_id": "mahabharata-ukazatel-imen:e1#head",
+          "last_canonical_id": "mahabharata-ukazatel-imen:e9980#head",
+          "path": "corpus_builder/jsonl/mahabharata-ukazatel-imen.jsonl",
+          "record_count": 9980,
+          "sha256": "5e871015d3192af2ddcb848b681f959aa66ccd747d73b9809c97d62667ab68eb"
+        },
+        "filename": "mahabharata-ukazatel-imen.html",
+        "provenance": "canonical JSONL mahabharata-ukazatel-imen.jsonl",
+        "slug": "mahabharata-ukazatel-imen",
+        "sort_order": 173,
+        "title": "mahabharata-ukazatel-imen"
+      },
+      {
+        "canonical": {
+          "bytes": 1830298,
+          "first_canonical_id": "mahabharata-ukazatel-predmet:e1#head",
+          "last_canonical_id": "mahabharata-ukazatel-predmet:e4122#head",
+          "path": "corpus_builder/jsonl/mahabharata-ukazatel-predmet.jsonl",
+          "record_count": 4122,
+          "sha256": "249ec64ba0bb4f186133abb24b2c258ce483757843c3b3b9cc832e36e145fd46"
+        },
+        "filename": "mahabharata-ukazatel-predmet.html",
+        "provenance": "canonical JSONL mahabharata-ukazatel-predmet.jsonl",
+        "slug": "mahabharata-ukazatel-predmet",
+        "sort_order": 174,
+        "title": "mahabharata-ukazatel-predmet"
       },
       {
         "canonical": {
@@ -2591,7 +2666,7 @@
         "filename": "mai-up.html",
         "provenance": "canonical JSONL mai-up.jsonl",
         "slug": "mai-up",
-        "sort_order": 170,
+        "sort_order": 175,
         "title": "mai-up"
       },
       {
@@ -2606,7 +2681,7 @@
         "filename": "man-up.html",
         "provenance": "canonical JSONL man-up.jsonl",
         "slug": "man-up",
-        "sort_order": 171,
+        "sort_order": 176,
         "title": "man-up"
       },
       {
@@ -2621,7 +2696,7 @@
         "filename": "manavadharmashastra.html",
         "provenance": "canonical JSONL manavadharmashastra.jsonl",
         "slug": "manavadharmashastra",
-        "sort_order": 172,
+        "sort_order": 177,
         "title": "manavadharmashastra"
       },
       {
@@ -2636,7 +2711,7 @@
         "filename": "maya-tantra.html",
         "provenance": "canonical JSONL maya-tantra.jsonl",
         "slug": "maya-tantra",
-        "sort_order": 173,
+        "sort_order": 178,
         "title": "maya-tantra"
       },
       {
@@ -2651,7 +2726,7 @@
         "filename": "megha-duta.html",
         "provenance": "canonical JSONL megha-duta.jsonl",
         "slug": "megha-duta",
-        "sort_order": 174,
+        "sort_order": 179,
         "title": "megha-duta"
       },
       {
@@ -2666,7 +2741,7 @@
         "filename": "mify-drind.html",
         "provenance": "canonical JSONL mify-drind.jsonl",
         "slug": "mify-drind",
-        "sort_order": 175,
+        "sort_order": 180,
         "title": "mify-drind"
       },
       {
@@ -2681,7 +2756,7 @@
         "filename": "mify_759_ind.html",
         "provenance": "canonical JSONL mify_759_ind.jsonl",
         "slug": "mify_759_ind",
-        "sort_order": 176,
+        "sort_order": 181,
         "title": "mify_759_ind"
       },
       {
@@ -2696,7 +2771,7 @@
         "filename": "mnar-up.html",
         "provenance": "canonical JSONL mnar-up.jsonl",
         "slug": "mnar-up",
-        "sort_order": 177,
+        "sort_order": 182,
         "title": "mnar-up"
       },
       {
@@ -2711,7 +2786,7 @@
         "filename": "mun-up.html",
         "provenance": "canonical JSONL mun-up.jsonl",
         "slug": "mun-up",
-        "sort_order": 178,
+        "sort_order": 183,
         "title": "mun-up"
       },
       {
@@ -2726,7 +2801,7 @@
         "filename": "naradasmriti.html",
         "provenance": "canonical JSONL naradasmriti.jsonl",
         "slug": "naradasmriti",
-        "sort_order": 179,
+        "sort_order": 184,
         "title": "naradasmriti"
       },
       {
@@ -2741,7 +2816,7 @@
         "filename": "nilamata-purana.html",
         "provenance": "canonical JSONL nilamata-purana.jsonl",
         "slug": "nilamata-purana",
-        "sort_order": 180,
+        "sort_order": 185,
         "title": "nilamata-purana"
       },
       {
@@ -2756,7 +2831,7 @@
         "filename": "niruttara-tantra.html",
         "provenance": "canonical JSONL niruttara-tantra.jsonl",
         "slug": "niruttara-tantra",
-        "sort_order": 181,
+        "sort_order": 186,
         "title": "niruttara-tantra"
       },
       {
@@ -2771,7 +2846,7 @@
         "filename": "nirvana-tantra.html",
         "provenance": "canonical JSONL nirvana-tantra.jsonl",
         "slug": "nirvana-tantra",
-        "sort_order": 182,
+        "sort_order": 187,
         "title": "nirvana-tantra"
       },
       {
@@ -2786,7 +2861,7 @@
         "filename": "nr-up.html",
         "provenance": "canonical JSONL nr-up.jsonl",
         "slug": "nr-up",
-        "sort_order": 183,
+        "sort_order": 188,
         "title": "nr-up"
       },
       {
@@ -2801,7 +2876,7 @@
         "filename": "nyaya-bhashya.html",
         "provenance": "canonical JSONL nyaya-bhashya.jsonl",
         "slug": "nyaya-bhashya",
-        "sort_order": 184,
+        "sort_order": 189,
         "title": "nyaya-bhashya"
       },
       {
@@ -2816,7 +2891,7 @@
         "filename": "padma-purana.html",
         "provenance": "canonical JSONL padma-purana.jsonl",
         "slug": "padma-purana",
-        "sort_order": 185,
+        "sort_order": 190,
         "title": "padma-purana"
       },
       {
@@ -2831,7 +2906,7 @@
         "filename": "pai-up.html",
         "provenance": "canonical JSONL pai-up.jsonl",
         "slug": "pai-up",
-        "sort_order": 186,
+        "sort_order": 191,
         "title": "pai-up"
       },
       {
@@ -2846,7 +2921,7 @@
         "filename": "pandey.html",
         "provenance": "canonical JSONL pandey.jsonl",
         "slug": "pandey",
-        "sort_order": 187,
+        "sort_order": 192,
         "title": "pandey"
       },
       {
@@ -2861,7 +2936,7 @@
         "filename": "paramarthasara-abhinavagupta.html",
         "provenance": "canonical JSONL paramarthasara-abhinavagupta.jsonl",
         "slug": "paramarthasara-abhinavagupta",
-        "sort_order": 188,
+        "sort_order": 193,
         "title": "paramarthasara-abhinavagupta"
       },
       {
@@ -2876,7 +2951,7 @@
         "filename": "pr-up.html",
         "provenance": "canonical JSONL pr-up.jsonl",
         "slug": "pr-up",
-        "sort_order": 189,
+        "sort_order": 194,
         "title": "pr-up"
       },
       {
@@ -2891,7 +2966,7 @@
         "filename": "pratyabhijna-hridaya_kshemaraja.html",
         "provenance": "canonical JSONL pratyabhijna-hridaya_kshemaraja.jsonl",
         "slug": "pratyabhijna-hridaya_kshemaraja",
-        "sort_order": 190,
+        "sort_order": 195,
         "title": "pratyabhijna-hridaya_kshemaraja"
       },
       {
@@ -2906,7 +2981,7 @@
         "filename": "raghuvamsha.html",
         "provenance": "canonical JSONL raghuvamsha.jsonl",
         "slug": "raghuvamsha",
-        "sort_order": 191,
+        "sort_order": 196,
         "title": "raghuvamsha"
       },
       {
@@ -2921,7 +2996,7 @@
         "filename": "ramanuja_gitabhashya.html",
         "provenance": "canonical JSONL ramanuja_gitabhashya.jsonl",
         "slug": "ramanuja_gitabhashya",
-        "sort_order": 192,
+        "sort_order": 197,
         "title": "ramanuja_gitabhashya"
       },
       {
@@ -2936,7 +3011,7 @@
         "filename": "ramayana-3-slovar.html",
         "provenance": "canonical JSONL ramayana-3-slovar.jsonl",
         "slug": "ramayana-3-slovar",
-        "sort_order": 193,
+        "sort_order": 198,
         "title": "ramayana-3-slovar"
       },
       {
@@ -2951,7 +3026,7 @@
         "filename": "rampt-up.html",
         "provenance": "canonical JSONL rampt-up.jsonl",
         "slug": "rampt-up",
-        "sort_order": 194,
+        "sort_order": 199,
         "title": "rampt-up"
       },
       {
@@ -2966,7 +3041,7 @@
         "filename": "sankhya-karika.html",
         "provenance": "canonical JSONL sankhya-karika.jsonl",
         "slug": "sankhya-karika",
-        "sort_order": 195,
+        "sort_order": 200,
         "title": "sankhya-karika"
       },
       {
@@ -2981,7 +3056,7 @@
         "filename": "shaktisangama-tantra.html",
         "provenance": "canonical JSONL shaktisangama-tantra.jsonl",
         "slug": "shaktisangama-tantra",
-        "sort_order": 196,
+        "sort_order": 201,
         "title": "shaktisangama-tantra"
       },
       {
@@ -2996,7 +3071,7 @@
         "filename": "shatakatrayam-serebryakov.html",
         "provenance": "canonical JSONL shatakatrayam-serebryakov.jsonl",
         "slug": "shatakatrayam-serebryakov",
-        "sort_order": 197,
+        "sort_order": 202,
         "title": "shatakatrayam-serebryakov"
       },
       {
@@ -3011,7 +3086,7 @@
         "filename": "shatakatrayam.html",
         "provenance": "canonical JSONL shatakatrayam.jsonl",
         "slug": "shatakatrayam",
-        "sort_order": 198,
+        "sort_order": 203,
         "title": "shatakatrayam"
       },
       {
@@ -3026,7 +3101,7 @@
         "filename": "shiva-sutry_sharma.html",
         "provenance": "canonical JSONL shiva-sutry_sharma.jsonl",
         "slug": "shiva-sutry_sharma",
-        "sort_order": 199,
+        "sort_order": 204,
         "title": "shiva-sutry_sharma"
       },
       {
@@ -3041,7 +3116,7 @@
         "filename": "shukasaptati.html",
         "provenance": "canonical JSONL shukasaptati.jsonl",
         "slug": "shukasaptati",
-        "sort_order": 200,
+        "sort_order": 205,
         "title": "shukasaptati"
       },
       {
@@ -3056,7 +3131,7 @@
         "filename": "shv-up.html",
         "provenance": "canonical JSONL shv-up.jsonl",
         "slug": "shv-up",
-        "sort_order": 201,
+        "sort_order": 206,
         "title": "shv-up"
       },
       {
@@ -3071,7 +3146,7 @@
         "filename": "slovar-grintsera-iz-bada-kadambari.html",
         "provenance": "canonical JSONL slovar-grintsera-iz-bada-kadambari.jsonl",
         "slug": "slovar-grintsera-iz-bada-kadambari",
-        "sort_order": 202,
+        "sort_order": 207,
         "title": "slovar-grintsera-iz-bada-kadambari"
       },
       {
@@ -3086,7 +3161,7 @@
         "filename": "slovar-grintsera-iz-ramayany-1-2.html",
         "provenance": "canonical JSONL slovar-grintsera-iz-ramayany-1-2.jsonl",
         "slug": "slovar-grintsera-iz-ramayany-1-2",
-        "sort_order": 203,
+        "sort_order": 208,
         "title": "slovar-grintsera-iz-ramayany-1-2"
       },
       {
@@ -3101,7 +3176,7 @@
         "filename": "slovar-potapovoy.html",
         "provenance": "canonical JSONL slovar-potapovoy.jsonl",
         "slug": "slovar-potapovoy",
-        "sort_order": 204,
+        "sort_order": 209,
         "title": "slovar-potapovoy"
       },
       {
@@ -3116,7 +3191,7 @@
         "filename": "slovar-smirnova.html",
         "provenance": "canonical JSONL slovar-smirnova.jsonl",
         "slug": "slovar-smirnova",
-        "sort_order": 205,
+        "sort_order": 210,
         "title": "slovar-smirnova"
       },
       {
@@ -3131,7 +3206,7 @@
         "filename": "stati-makhabkharaty.html",
         "provenance": "canonical JSONL stati-makhabkharaty.jsonl",
         "slug": "stati-makhabkharaty",
-        "sort_order": 206,
+        "sort_order": 211,
         "title": "stati-makhabkharaty"
       },
       {
@@ -3146,7 +3221,7 @@
         "filename": "stepanyants.html",
         "provenance": "canonical JSONL stepanyants.jsonl",
         "slug": "stepanyants",
-        "sort_order": 207,
+        "sort_order": 212,
         "title": "stepanyants"
       },
       {
@@ -3161,7 +3236,7 @@
         "filename": "sub-up.html",
         "provenance": "canonical JSONL sub-up.jsonl",
         "slug": "sub-up",
-        "sort_order": 208,
+        "sort_order": 213,
         "title": "sub-up"
       },
       {
@@ -3176,7 +3251,7 @@
         "filename": "syrkin_tom_1_utf.html",
         "provenance": "canonical JSONL syrkin_tom_1_utf.jsonl",
         "slug": "syrkin_tom_1_utf",
-        "sort_order": 209,
+        "sort_order": 214,
         "title": "syrkin_tom_1_utf"
       },
       {
@@ -3191,7 +3266,7 @@
         "filename": "tai-up.html",
         "provenance": "canonical JSONL tai-up.jsonl",
         "slug": "tai-up",
-        "sort_order": 210,
+        "sort_order": 215,
         "title": "tai-up"
       },
       {
@@ -3206,7 +3281,7 @@
         "filename": "toporov.html",
         "provenance": "canonical JSONL toporov.jsonl",
         "slug": "toporov",
-        "sort_order": 211,
+        "sort_order": 216,
         "title": "toporov"
       },
       {
@@ -3221,7 +3296,7 @@
         "filename": "ukazateli-makhabkharaty.html",
         "provenance": "canonical JSONL ukazateli-makhabkharaty.jsonl",
         "slug": "ukazateli-makhabkharaty",
-        "sort_order": 212,
+        "sort_order": 217,
         "title": "ukazateli-makhabkharaty"
       },
       {
@@ -3236,7 +3311,7 @@
         "filename": "vajs-up.html",
         "provenance": "canonical JSONL vajs-up.jsonl",
         "slug": "vajs-up",
-        "sort_order": 213,
+        "sort_order": 218,
         "title": "vajs-up"
       },
       {
@@ -3251,7 +3326,7 @@
         "filename": "vedanga_jyotisha.html",
         "provenance": "canonical JSONL vedanga_jyotisha.jsonl",
         "slug": "vedanga_jyotisha",
-        "sort_order": 214,
+        "sort_order": 219,
         "title": "vedanga_jyotisha"
       },
       {
@@ -3266,7 +3341,7 @@
         "filename": "vedartha-samgraha_ramanuja.html",
         "provenance": "canonical JSONL vedartha-samgraha_ramanuja.jsonl",
         "slug": "vedartha-samgraha_ramanuja",
-        "sort_order": 215,
+        "sort_order": 220,
         "title": "vedartha-samgraha_ramanuja"
       },
       {
@@ -3281,7 +3356,7 @@
         "filename": "vishnu-purana.html",
         "provenance": "canonical JSONL vishnu-purana.jsonl",
         "slug": "vishnu-purana",
-        "sort_order": 216,
+        "sort_order": 221,
         "title": "vishnu-purana"
       },
       {
@@ -3296,7 +3371,7 @@
         "filename": "vishnu-smriti.html",
         "provenance": "canonical JSONL vishnu-smriti.jsonl",
         "slug": "vishnu-smriti",
-        "sort_order": 217,
+        "sort_order": 222,
         "title": "vishnu-smriti"
       },
       {
@@ -3311,7 +3386,7 @@
         "filename": "warnemyr.html",
         "provenance": "canonical JSONL warnemyr.jsonl",
         "slug": "warnemyr",
-        "sort_order": 218,
+        "sort_order": 223,
         "title": "warnemyr"
       },
       {
@@ -3326,7 +3401,7 @@
         "filename": "yajnavalkyasmriti.html",
         "provenance": "canonical JSONL yajnavalkyasmriti.jsonl",
         "slug": "yajnavalkyasmriti",
-        "sort_order": 219,
+        "sort_order": 224,
         "title": "yajnavalkyasmriti"
       },
       {
@@ -3341,7 +3416,7 @@
         "filename": "yajnavalkyasmriti_add.html",
         "provenance": "canonical JSONL yajnavalkyasmriti_add.jsonl",
         "slug": "yajnavalkyasmriti_add",
-        "sort_order": 220,
+        "sort_order": 225,
         "title": "yajnavalkyasmriti_add"
       },
       {
@@ -3356,7 +3431,7 @@
         "filename": "yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova.html",
         "provenance": "canonical JSONL yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova.jsonl",
         "slug": "yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova",
-        "sort_order": 221,
+        "sort_order": 226,
         "title": "yoga-bessmertie-i-cvoboda-mircha-eliade-per-pakhomova"
       },
       {
@@ -3371,7 +3446,7 @@
         "filename": "yoga-sutry.html",
         "provenance": "canonical JSONL yoga-sutry.jsonl",
         "slug": "yoga-sutry",
-        "sort_order": 222,
+        "sort_order": 227,
         "title": "yoga-sutry"
       },
       {
@@ -3386,7 +3461,7 @@
         "filename": "yoga-sutry_sharma.html",
         "provenance": "canonical JSONL yoga-sutry_sharma.jsonl",
         "slug": "yoga-sutry_sharma",
-        "sort_order": 223,
+        "sort_order": 228,
         "title": "yoga-sutry_sharma"
       },
       {
@@ -3401,7 +3476,7 @@
         "filename": "yoga-sutry_vyasa-bhashya.html",
         "provenance": "canonical JSONL yoga-sutry_vyasa-bhashya.jsonl",
         "slug": "yoga-sutry_vyasa-bhashya",
-        "sort_order": 224,
+        "sort_order": 229,
         "title": "yoga-sutry_vyasa-bhashya"
       },
       {
@@ -3416,7 +3491,7 @@
         "filename": "yoga-sutry_zagumennov.html",
         "provenance": "canonical JSONL yoga-sutry_zagumennov.jsonl",
         "slug": "yoga-sutry_zagumennov",
-        "sort_order": 225,
+        "sort_order": 230,
         "title": "yoga-sutry_zagumennov"
       },
       {
@@ -3431,22 +3506,22 @@
         "filename": "yogini-tantra.html",
         "provenance": "canonical JSONL yogini-tantra.jsonl",
         "slug": "yogini-tantra",
-        "sort_order": 226,
+        "sort_order": 231,
         "title": "yogini-tantra"
       },
       {
         "canonical": {
-          "bytes": 20963,
+          "bytes": 40378,
           "first_canonical_id": "yoni-puja-texts:1.1#ru",
-          "last_canonical_id": "yoni-puja-texts:1.16#ru",
+          "last_canonical_id": "yoni-puja-texts:1.1.comm13",
           "path": "corpus_builder/jsonl/yoni-puja-texts.jsonl",
-          "record_count": 16,
-          "sha256": "f720f2b35737bdab77cf2b05d9ee3b0c6d8fae4bef879b7d416fbd22529d4ed9"
+          "record_count": 29,
+          "sha256": "3b2ff92d0be6e5a2ed0506255bc77d55003320930bf51c54d68828941a4a0883"
         },
         "filename": "yoni-puja-texts.html",
         "provenance": "canonical JSONL yoni-puja-texts.jsonl",
         "slug": "yoni-puja-texts",
-        "sort_order": 227,
+        "sort_order": 232,
         "title": "yoni-puja-texts"
       },
       {
@@ -3461,7 +3536,7 @@
         "filename": "yoni-tantra.html",
         "provenance": "canonical JSONL yoni-tantra.jsonl",
         "slug": "yoni-tantra",
-        "sort_order": 228,
+        "sort_order": 233,
         "title": "yoni-tantra"
       },
       {
@@ -3476,16 +3551,16 @@
         "filename": "yotat-up.html",
         "provenance": "canonical JSONL yotat-up.jsonl",
         "slug": "yotat-up",
-        "sort_order": 229,
+        "sort_order": 234,
         "title": "yotat-up"
       }
     ],
     "totals": {
-      "canonical_bytes": 703921687,
-      "record_count": 723229,
-      "source_count": 230
+      "canonical_bytes": 717223150,
+      "record_count": 744151,
+      "source_count": 235
     }
   },
-  "content_hash": "sha256:5e915453252c5739d3c9f59d73372b1274bb665d51ba70a963f0c21fa173a772",
+  "content_hash": "sha256:3ca700ba4f31892508cfadbfcb62cf4350901837d81d3b565631963830404145",
   "schema_version": 1
 }

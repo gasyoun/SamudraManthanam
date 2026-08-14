@@ -224,3 +224,8 @@ mahabharata-ignatiev-xvi-xviii-slovar-imen.txt
 mahabharata-ignatiev-xvi-xviii-slovar-predmetov.txt
 mahabharata-ignatiev-xvi-xviii-literatura.html
 mahabharata-ignatiev-xvi-xviii-ob-avtore.html
+mahabharata-stati.html
+mahabharata-ukazatel-imen.txt
+mahabharata-ukazatel-geo.txt
+mahabharata-ukazatel-predmet.txt
+mahabharata-ukazatel-flora.txt

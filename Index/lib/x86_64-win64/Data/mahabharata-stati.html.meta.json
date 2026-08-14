@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "slug": "mahabharata-stati",
+  "parent_work": "mahabharata",
+  "layer": "article",
+  "layer_title": "Статьи и предисловия томов",
+  "title_ru": "Махабхарата — статьи и предисловия томов (АН СССР / Наука)",
+  "title_display": "Махабхарата: статьи томов",
+  "title_en": "Mahabharata volume articles (Smirnov series)",
+  "credit": "Баранников, Кальянов, Эрман, Васильков, Невелева, Серебряный",
+  "credit_role": "Предисловия, послесловия и статьи томов",
+  "imprint": "АН СССР / Наука, 1950–2017",
+  "publisher": "Наука",
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "prose",
+  "needs_review": false,
+  "provenance": "H2738. Anatoliy Drive «Для Пахтания» / Все статьи Махабхараты (для чтения).docx (2024-10-04). Parsed by mbh_word_layers.split_articles.",
+  "rights": "Printed Nauka / AN SSSR Mahābhārata volumes (Barannikov, Kalyanov, Erman, Vassilkov, Neveleva, Serebryany). Same edition family as the already-public parva HTML on samudra. Rights uncertainty is not a stop (Uprava STANDING_POLICY_RIGHTS_UNCERTAINTY_IS_NOT_A_STOP_2026). Source: Anatoliy Artemenko Drive «Для Пахтания».",
+  "filename": "mahabharata-stati.html"
+}
