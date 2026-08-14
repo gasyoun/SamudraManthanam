@@ -167,7 +167,7 @@ def article_records(articles: list[Article], slug: str) -> list[dict]:
                     "text": para,
                     "html": para,
                     "structure": "prose",
-                    "chapter": art_i,
+                    "chapter": str(art_i),
                     "skandha": 1,
                     "seq": seq,
                     "deleted": False,
