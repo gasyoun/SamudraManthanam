@@ -1,6 +1,6 @@
 # Corpus Builder — план развития (Roadmap)
 
-_Создано: 05-07-2026 · Обновлено: 09-08-2026_
+_Создано: 05-07-2026 · Обновлено: 14-08-2026_
 
 > **Обновление 10-07-2026 (H534).** Появился **альтернативный, агент-исполнимый
 > путь ингеста на Python** — не порт `cb.exe` на Lazarus, а замена его для
@@ -226,7 +226,12 @@ Delphi 7.
   приложения; проверку целостности вынести в тот же CLI.
 
 Это решение принимает человек — фиксируется отдельной записью, когда до него
-дойдет очередь; здесь оставлено открытым.
+дойдет очередь; здесь оставлено открытым. Brief ready 14-08-2026 (H2435, Grok 4.6
+`grok-4.6`, recommendation **A**, not a ruling):
+[Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md)
+· hub
+[Uprava decide brief](https://github.com/gasyoun/Uprava/blob/main/decide_briefs/DECIDE_BRIEF_corpus-builder-p5-gui-fate_14-08-2026.md).
+Do not delete the GUI until a human rules.
 
 ---
 

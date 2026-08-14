@@ -1,6 +1,6 @@
 # Documentation Index
 
-_Created: 19-06-2026 · Last updated: 08-08-2026_
+_Created: 19-06-2026 · Last updated: 14-08-2026_
 
 Purpose: tell humans and implementation agents which Markdown files are current, supporting, or historical.
 
@@ -44,6 +44,7 @@ Purpose: tell humans and implementation agents which Markdown files are current,
 - `OPS.md`: production day-2 operator path (pull/pip/restart/smoke/code rollback) for `/opt/samudra` (H2388).
 - `CLAUDE.md`: agent guidance for this repository.
 - `Corpus_builder/CLAUDE.md`: Corpus Builder-specific agent guidance.
+- `Corpus_builder/docs/DECIDE_BRIEF_p5-gui-lcl-vs-cli_14-08-2026.md`: Phase 5 GUI-fate brief (H2435) — recommendation A, not a ruling.
 
 ## Historical Docs (`docs/archive/`)
 
