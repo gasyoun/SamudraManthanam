@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "slug": "mahabharata-ukazatel-imen",
+  "parent_work": "mahabharata",
+  "layer": "index",
+  "layer_title": "Махабхарата — именной указатель (тома АН СССР / Наука)",
+  "title_ru": "Махабхарата — именной указатель (тома АН СССР / Наука)",
+  "title_display": "Махабхарата — именной указатель (тома АН СССР / Наука)",
+  "title_en": "Mahabharata imen index (Smirnov series)",
+  "credit": "указатели томов АН СССР / Наука",
+  "credit_role": "Указатель",
+  "imprint": "АН СССР / Наука",
+  "publisher": "Наука",
+  "year": null,
+  "scripts": [
+    "cyrillic"
+  ],
+  "structure": "dictionary",
+  "needs_review": false,
+  "provenance": "H2738. Anatoliy Drive «Для Пахтания» / Махабхарата -все указатели.doc (2022-10-26). Kind=imen; volume tag [N] prefixes each entry.",
+  "rights": "Printed Nauka / AN SSSR Mahābhārata volumes (Barannikov, Kalyanov, Erman, Vassilkov, Neveleva, Serebryany). Same edition family as the already-public parva HTML on samudra. Rights uncertainty is not a stop (Uprava STANDING_POLICY_RIGHTS_UNCERTAINTY_IS_NOT_A_STOP_2026). Source: Anatoliy Artemenko Drive «Для Пахтания»."
+}

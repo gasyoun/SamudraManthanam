@@ -129,6 +129,7 @@ _Created: 14-08-2026 · Last updated: 14-08-2026_
 | Ригведа 1–10 | `IN-HTML` | `KEY-RANGE` | `LY-BODY` + `LY-NOTES` в HTML | — |
 | Атхарваведа 1–19 | `IN-HTML` | `KEY-RANGE` | то же, **другая** нарезка книг | — |
 | МБх парвы (старые) | `IN-HTML` | `KEY-RANGE` | тело + comm в HTML | — |
+| МБх статьи + указатели (H2738) | `IN-DOC` (полка «Для Пахтания») | нет стиха | `LY-PREF` `mahabharata-stati` + `LY-INDEX` четыре `.txt` | — |
 | Рамаяна 1–4 (старые) | `IN-HTML` | `KEY-RANGE` | тело | — |
 | Рамаяна 6–7 | `IN-TEI` | `KEY-TEI` (`xml:id`) | тело | — |
 | ДБхП | `IN-PDF-IGN` + `IN-ITX` | `KEY-SKANDHA` | тело по скандхам; предисловие/словарь — отдельные слои, если вырезаны | часто `FN-GLUE` на PDF |
