@@ -1,7 +1,7 @@
 # OPS.md — Samudra Manthanam production operator path
 
-_Created: 08-08-2026 · Last updated: 13-08-2026_  
-_(+ H2398 HSTS/security headers · H2397 logs-bounded · H2396 admin-env hardening)_
+_Created: 08-08-2026 · Last updated: 14-08-2026_  
+_(+ H2391 branded hostname live · H2398 HSTS/security headers · H2397 logs-bounded · H2396 admin-env hardening)_
 
 **Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
 First-time install, systemd unit, nginx, and corpus reindex live in
@@ -10,8 +10,8 @@ This file is the **day-2 operator** surface.
 
 **Host (as of 08-08-2026 probe):** LXC `samskrtam150` · `root@193.232.229.92` ·
 layout under `/opt/samudra/`. Public search:
-`https://samudra.193.232.229.92.sslip.io/` (TLS via certbot; `samskrte.ru` is a
-different vhost and must not be edited for Samudra).
+`https://samudra.samskrte.ru/` (TLS via certbot; sslip remains fallback;
+apex `samskrte.ru` is a different vhost and must not be edited for Samudra).
 
 ---
 
@@ -38,7 +38,7 @@ different vhost and must not be edited for Samudra).
 | App unit | `systemctl {status,restart,stop,start} samudra` |
 | Unit file on disk | `/etc/systemd/system/samudra.service` (source: `deploy/samudra.service`) |
 | uvicorn (bound) | `127.0.0.1:8000`, 2 workers, user `samudra` |
-| nginx site | `/etc/nginx/sites-enabled/samudra` (sslip.io server_name only) |
+| nginx site | `/etc/nginx/sites-enabled/samudra` (`samudra.samskrte.ru` + sslip) |
 | Repo | `/opt/samudra/repo` |
 | Venv Python | `/opt/samudra/venv/bin/python` (3.13.x on prod) |
 | Logs | `journalctl -u samudra -f` |
@@ -406,9 +406,8 @@ Status: [docs/H2396_ADMIN_ENV_HARDENING_STATUS.md](https://github.com/gasyoun/Sa
 an HTTP-only or broken-TLS host pins browsers to a service they then cannot
 reach — that is this handoff's fail condition.
 
-Live public Host (13-08-2026): `https://samudra.193.232.229.92.sslip.io/`
-(cert since 07-08-2026). The branded name is still NXDOMAIN (H2391) and is
-**not** given HSTS.
+Live public Host (14-08-2026): `https://samudra.samskrte.ru/` (H2391).
+sslip fallback still serves the same vhost + HSTS.
 
 ```bash
 # Gate only (exit 2 if HTTPS is down or HTTP does not 301→HTTPS):
@@ -443,33 +442,22 @@ Status: [docs/H2398_NGINX_HSTS_SECURITY_HEADERS_STATUS.md](https://github.com/ga
 
 ## Branded hostname + TLS (Wave P5 / H2391)
 
-**Human DNS first.** Until an A-record for the chosen FQDN points at
-`193.232.229.92`, P5 is **not done** (sslip remains the only public name).
-
-Measured 08-08-2026: `samudra.samskrte.ru` and `samudra.samskrtam.ru` are
-**NXDOMAIN**. Recommended record at reg.ru: `samudra.samskrte.ru` A →
-`193.232.229.92`. Do not put Samudra on the Systema `samskrte.ru` vhost (P11).
-
-Gate script (exit **2** while DNS is missing — never treat that as done):
+**Live 14-08-2026.** Public name: `https://samudra.samskrte.ru/`.
+sslip remains the permanent fallback on the same vhost. Apex `samskrte.ru`
+is still the Systema vhost (P11 — do not merge them).
 
 ```bash
-python3 /opt/samudra/repo/scripts/enable_branded_hostname.py \
-  --hostname samudra.samskrte.ru
-
-# After A-record propagates (GATE GO):
-python3 /opt/samudra/repo/scripts/enable_branded_hostname.py \
-  --hostname samudra.samskrte.ru --apply
-
-curl -I https://samudra.samskrte.ru/api/health
-curl -I https://samudra.193.232.229.92.sslip.io/api/health
+curl -sS -o /dev/null -w '%{http_code}\n' https://samudra.samskrte.ru/api/health
+curl -sS -o /dev/null -w '%{http_code}\n' https://samudra.193.232.229.92.sslip.io/api/health
+# both 200
 ```
 
-What `--apply` does: injects the branded name into nginx `server_name` (keeps
-sslip), `nginx -t` + reload, certbot, dual HTTPS smoke.
+`--apply` injects the branded name into nginx `server_name` (keeps sslip),
+issues one cert covering branded + both sslip names (`--expand`), dual GET
+smoke (HEAD `/api/health` is 405; on-box hairpin uses `--resolve`).
+`PUBLIC_BASE_URL` / `ALLOWED_ORIGINS` on prod now include the branded origin.
 
 Status: [docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2391_BRANDED_HOSTNAME_TLS_STATUS.md).
-Optional after branded HTTPS is 200: extend `PUBLIC_BASE_URL` /
-`ALLOWED_ORIGINS` in `/opt/samudra/.env`, then `systemctl restart samudra`.
 
 ---
 

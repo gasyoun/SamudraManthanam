@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **H2391 branded hostname live** (Grok 4.6 `grok-4.6`, 14-08-2026). `samudra.samskrte.ru` A → `193.232.229.92`; certbot HTTPS 200 on branded + sslip (one cert, three SANs). `PUBLIC_BASE_URL` on prod is the branded name. Enabler now issues sslip names too (branded-only cert broke sslip SNI on first apply) and smokes with GET + `--resolve` hairpin fallback.
+
 ### Fixed
 - **Search 500 when a hit has numeric `chapter`** (H2738 follow-up, Grok 4.6 `grok-4.6`, 14-08-2026). Live `/api/search` raised Pydantic `string_type` on `SearchResultItem.chapter` for every query that touched the new MBH article layer (`chapter` was stored as int). Coerce int/None → str on the response model; emit `str(art_i)` on the next article rebuild. Prove: `python -m pytest tests/test_search_chapter_coerce.py`.
 
