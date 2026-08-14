@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "597ca824f47d37373fb389af190d815bae9472a5"
+    "revision": "6e682e71489f94293fc88e84d2f22a164e9b9f8d"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -2566,12 +2566,12 @@
       },
       {
         "canonical": {
-          "bytes": 4597832,
+          "bytes": 4595402,
           "first_canonical_id": "mahabharata-stati:1.1.1#ru",
           "last_canonical_id": "mahabharata-stati:1.25.71#ru",
           "path": "corpus_builder/jsonl/mahabharata-stati.jsonl",
           "record_count": 2430,
-          "sha256": "b8b10f2d0243d4afb96d9efb3b5a292297611e32616fd3b44f00ef79bbb7f370"
+          "sha256": "64f0c3ab95bc1e62b82879b6c524dcaca547a589593d305bd7c0c9444baa114c"
         },
         "filename": "mahabharata-stati.html",
         "provenance": "canonical JSONL mahabharata-stati.jsonl",
@@ -2596,12 +2596,12 @@
       },
       {
         "canonical": {
-          "bytes": 54893,
+          "bytes": 54790,
           "first_canonical_id": "mahabharata-ukazatel-flora:e1#head",
           "last_canonical_id": "mahabharata-ukazatel-flora:e103#head",
           "path": "corpus_builder/jsonl/mahabharata-ukazatel-flora.jsonl",
           "record_count": 103,
-          "sha256": "964a7ca351a83d9a663cc53ee0ec696010ef5532960dbdbc039ed33985aa03e4"
+          "sha256": "12ea6c5ca7469403b3c0cf2411287602ac5349f763b282f6d0cd8e432ca6c372"
         },
         "filename": "mahabharata-ukazatel-flora.html",
         "provenance": "canonical JSONL mahabharata-ukazatel-flora.jsonl",
@@ -2611,12 +2611,12 @@
       },
       {
         "canonical": {
-          "bytes": 1381483,
+          "bytes": 1378034,
           "first_canonical_id": "mahabharata-ukazatel-geo:e1#head",
           "last_canonical_id": "mahabharata-ukazatel-geo:e3449#head",
           "path": "corpus_builder/jsonl/mahabharata-ukazatel-geo.jsonl",
           "record_count": 3449,
-          "sha256": "2135f2bc31b337100bf012082f0396b5f18fbde3742046fdc05f4e6ef4856b2e"
+          "sha256": "7444a111b56ede57f8eebcb91b00509acf2d88db493e1e02afc26d96f1f4d060"
         },
         "filename": "mahabharata-ukazatel-geo.html",
         "provenance": "canonical JSONL mahabharata-ukazatel-geo.jsonl",
@@ -2626,12 +2626,12 @@
       },
       {
         "canonical": {
-          "bytes": 4266148,
+          "bytes": 4256168,
           "first_canonical_id": "mahabharata-ukazatel-imen:e1#head",
           "last_canonical_id": "mahabharata-ukazatel-imen:e9980#head",
           "path": "corpus_builder/jsonl/mahabharata-ukazatel-imen.jsonl",
           "record_count": 9980,
-          "sha256": "5e871015d3192af2ddcb848b681f959aa66ccd747d73b9809c97d62667ab68eb"
+          "sha256": "721340a2ce17c7a2c3242f741731462bf2596089ddda7ba5cfb75aa999dec260"
         },
         "filename": "mahabharata-ukazatel-imen.html",
         "provenance": "canonical JSONL mahabharata-ukazatel-imen.jsonl",
@@ -2641,12 +2641,12 @@
       },
       {
         "canonical": {
-          "bytes": 1830298,
+          "bytes": 1826176,
           "first_canonical_id": "mahabharata-ukazatel-predmet:e1#head",
           "last_canonical_id": "mahabharata-ukazatel-predmet:e4122#head",
           "path": "corpus_builder/jsonl/mahabharata-ukazatel-predmet.jsonl",
           "record_count": 4122,
-          "sha256": "249ec64ba0bb4f186133abb24b2c258ce483757843c3b3b9cc832e36e145fd46"
+          "sha256": "b4cd4c6e34c78f91d4c1bf4805d301b0867ee877bda2a6cab66c0f70a9ae5c19"
         },
         "filename": "mahabharata-ukazatel-predmet.html",
         "provenance": "canonical JSONL mahabharata-ukazatel-predmet.jsonl",
@@ -3556,11 +3556,11 @@
       }
     ],
     "totals": {
-      "canonical_bytes": 717223150,
+      "canonical_bytes": 717203066,
       "record_count": 744151,
       "source_count": 235
     }
   },
-  "content_hash": "sha256:3ca700ba4f31892508cfadbfcb62cf4350901837d81d3b565631963830404145",
+  "content_hash": "sha256:0ba38d24ac084fc406b36dac14147f7027b44b359e35266e3f65ce13432b4584",
   "schema_version": 1
 }
