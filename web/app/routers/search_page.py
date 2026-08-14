@@ -1,12 +1,13 @@
 """Server-rendered search page.
 
 Pretty IRI (preferred, shareable):
-    /search/Хастинапур
-    /search/geo/Хастинапур
+    /s/Хастинапур
+    /s/geo/Хастинапур
 
-Legacy query string still works and 301s onto the pretty path when flags
-are defaults:
+Legacy `/search/Хастинапур` and `?q=` still work and 301 onto `/s/` when
+flags are defaults:
     /search?q=Хастинапур&src=mahabharata-ukazatel-geo
+    /search/Хастинапур
 
 This is the SEO surface for content queries — distinct from:
 - `/`              live JS-driven search app (brand/home landing)
@@ -242,8 +243,8 @@ async def search_page(
     )
 
 
-@router.get("/search/{src}/{query:path}", response_class=HTMLResponse)
-async def search_page_src_path(request: Request, src: str, query: str):
+@router.get("/s/{src}/{query:path}", response_class=HTMLResponse)
+async def search_page_s_src_path(request: Request, src: str, query: str):
     if len(query) > 1000:
         return RedirectResponse(url="/search", status_code=302)
     return await _render_search_page(
@@ -257,8 +258,8 @@ async def search_page_src_path(request: Request, src: str, query: str):
     )
 
 
-@router.get("/search/{query:path}", response_class=HTMLResponse)
-async def search_page_path(request: Request, query: str):
+@router.get("/s/{query:path}", response_class=HTMLResponse)
+async def search_page_s_path(request: Request, query: str):
     if len(query) > 1000:
         return RedirectResponse(url="/search", status_code=302)
     return await _render_search_page(
@@ -270,3 +271,22 @@ async def search_page_path(request: Request, query: str):
         src=None,
         redirect_query_string=False,
     )
+
+
+@router.get("/search/{src}/{query:path}", response_class=HTMLResponse)
+async def search_page_src_path(request: Request, src: str, query: str):
+    """H2751 long form — 301 onto `/s/{src}/{query}`."""
+    if len(query) > 1000:
+        return RedirectResponse(url="/search", status_code=302)
+    return RedirectResponse(
+        url=pretty_search_path(query, [expand_source_token(src)]),
+        status_code=301,
+    )
+
+
+@router.get("/search/{query:path}", response_class=HTMLResponse)
+async def search_page_path(request: Request, query: str):
+    """H2751 long form — 301 onto `/s/{query}`."""
+    if len(query) > 1000:
+        return RedirectResponse(url="/search", status_code=302)
+    return RedirectResponse(url=pretty_search_path(query), status_code=301)

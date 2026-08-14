@@ -9,7 +9,7 @@ Each page is a self-contained landing surface for one term:
 - related-term cross-links to other `/q/{slug}` pages.
 
 The `total` count and the "Все результаты" link route the user to
-`/search?q={term}` for the full result set.
+`/s/{term}` for the full result set.
 
 Case-insensitive slug lookup with a canonical lowercased URL — if the user
 hits `/q/DHARMA` we serve the page but emit `<link rel="canonical"

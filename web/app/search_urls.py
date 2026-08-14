@@ -1,7 +1,8 @@
-"""Pretty search IRIs — `/search/Хастинапур` instead of `?q=%D0%A5…`.
+"""Pretty search IRIs — `/s/Хастинапур` instead of `/search/…` or `?q=%D0%A5…`.
 
 Query-string permalinks percent-encode Cyrillic (ugly, bad for sharing).
-Path IRIs stay readable in the address bar. Short source aliases keep
+Path IRIs stay readable in the address bar. `/s/` is the short share
+form; `/search/Хастинапур` 301s onto it. Short source aliases keep
 long slugs like `mahabharata-ukazatel-geo` out of the URL.
 
 On the wire the browser may still send UTF-8 percent-encoding; HTML
@@ -26,6 +27,7 @@ SOURCE_ALIASES: dict[str, str] = {
 SLUG_TO_ALIAS: dict[str, str] = {slug: alias for alias, slug in SOURCE_ALIASES.items()}
 
 _MAX_QUERY = 1000
+PRETTY_PREFIX = "/s"
 
 
 def expand_source_token(token: str) -> str:
@@ -52,8 +54,8 @@ def pretty_search_path(
     if len(q) > _MAX_QUERY:
         q = q[:_MAX_QUERY]
     if source_slugs and len(source_slugs) == 1:
-        return f"/search/{shorten_source(source_slugs[0])}/{q}"
-    return f"/search/{q}"
+        return f"{PRETTY_PREFIX}/{shorten_source(source_slugs[0])}/{q}"
+    return f"{PRETTY_PREFIX}/{q}"
 
 
 def pretty_search_url(
