@@ -139,19 +139,32 @@ def ensure_server_name(nginx_path: Path, hostname: str, sslip: str) -> bool:
     return True
 
 
-def certbot_issue(hostname: str, email: str | None, dry_run_certbot: bool) -> None:
+def certbot_issue(
+    hostname: str,
+    extra_names: list[str],
+    email: str | None,
+    dry_run_certbot: bool,
+) -> None:
     certbot = shutil.which("certbot")
     if not certbot:
         raise RuntimeError("certbot not on PATH (apt install certbot python3-certbot-nginx)")
-    cmd = [
-        certbot,
-        "--nginx",
-        "-d",
-        hostname,
-        "--non-interactive",
-        "--agree-tos",
-        "--redirect",
-    ]
+    # One cert covering branded + sslip fallback. A branded-only cert on a
+    # shared vhost breaks sslip SNI (measured 14-08-2026 on first --apply).
+    names = [hostname]
+    for name in extra_names:
+        if name and name not in names:
+            names.append(name)
+    cmd = [certbot, "--nginx"]
+    for name in names:
+        cmd.extend(["-d", name])
+    cmd.extend(
+        [
+            "--expand",
+            "--non-interactive",
+            "--agree-tos",
+            "--redirect",
+        ]
+    )
     if email:
         cmd.extend(["--email", email])
     else:
@@ -161,37 +174,63 @@ def certbot_issue(hostname: str, email: str | None, dry_run_certbot: bool) -> No
     _run(cmd)
 
 
-def smoke_https(hostname: str, health_path: str, timeout: float = 20.0) -> int:
-    """Return HTTP status via curl -I against https://hostname/health_path."""
+def smoke_https(
+    hostname: str,
+    health_path: str,
+    timeout: float = 20.0,
+    *,
+    resolve_ip: str | None = None,
+) -> int:
+    """Return HTTP status via GET https://hostname/health_path.
+
+    HEAD (-I) is 405 on /api/health. Hairpin from the LXC to the public
+    name can time out (OPS.md); retry with --resolve to 127.0.0.1.
+    """
     curl = shutil.which("curl")
     if not curl:
         raise RuntimeError("curl not on PATH")
     url = f"https://{hostname}{health_path}"
-    proc = subprocess.run(
-        [
-            curl,
-            "-sS",
-            "-o",
-            "/dev/null",
-            "-w",
-            "%{http_code}",
-            "--max-time",
-            str(int(timeout)),
-            "-I",
-            url,
-        ],
-        check=False,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-        capture_output=True,
-    )
-    code_str = (proc.stdout or "").strip()
-    try:
-        return int(code_str)
-    except ValueError:
-        print(f"smoke: curl failed rc={proc.returncode} out={code_str!r} err={proc.stderr!r}", flush=True)
-        return 0
+
+    def _once(extra: list[str]) -> int:
+        proc = subprocess.run(
+            [
+                curl,
+                "-sS",
+                "-o",
+                "/dev/null",
+                "-w",
+                "%{http_code}",
+                "--max-time",
+                str(int(timeout)),
+                *extra,
+                url,
+            ],
+            check=False,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            capture_output=True,
+        )
+        code_str = (proc.stdout or "").strip()
+        try:
+            return int(code_str)
+        except ValueError:
+            print(
+                f"smoke: curl failed rc={proc.returncode} out={code_str!r} err={proc.stderr!r}",
+                flush=True,
+            )
+            return 0
+
+    code = _once([])
+    if code == 200:
+        return code
+    if resolve_ip:
+        print(
+            f"smoke: public GET {hostname} → {code}; retry --resolve {hostname}:443:{resolve_ip}",
+            flush=True,
+        )
+        return _once(["--resolve", f"{hostname}:443:{resolve_ip}"])
+    return code
 
 
 def print_plan(hostname: str, expected_ip: str, nginx: Path, sslip: str) -> None:
@@ -239,7 +278,15 @@ def apply(
     _run(["systemctl", "reload", "nginx"])
 
     if not skip_certbot:
-        certbot_issue(hostname, email=email, dry_run_certbot=certbot_dry_run)
+        extra = [sslip]
+        if sslip.startswith("samudra."):
+            extra.append(sslip.removeprefix("samudra."))
+        certbot_issue(
+            hostname,
+            extra_names=extra,
+            email=email,
+            dry_run_certbot=certbot_dry_run,
+        )
     else:
         print("skip-certbot: left TLS issuance to the operator", flush=True)
 
@@ -274,7 +321,7 @@ def apply(
         print("apply: certbot dry-run/skip — skip live HTTPS smoke", flush=True)
         return
 
-    code = smoke_https(hostname, health_path)
+    code = smoke_https(hostname, health_path, resolve_ip=expected_ip)
     print(f"smoke: https://{hostname}{health_path} → {code}", flush=True)
     if code != 200:
         raise RuntimeError(
@@ -283,7 +330,7 @@ def apply(
         )
 
     # Fallback must remain
-    fb = smoke_https(sslip, health_path)
+    fb = smoke_https(sslip, health_path, resolve_ip=expected_ip)
     print(f"smoke fallback: https://{sslip}{health_path} → {fb}", flush=True)
     if fb != 200:
         print(

@@ -1,6 +1,6 @@
 # H2398 / Wave P10b — HSTS + nginx security headers: status
 
-_Created: 13-08-2026 · Last updated: 13-08-2026_
+_Created: 13-08-2026 · Last updated: 14-08-2026_
 
 **Handoff:** [H2398](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2398-Grok_SamudraManthanam_prod-nginx-hsts-security-headers_07.08.26.md)
 **Executor:** Grok 4.6 (`grok-4.6`)
@@ -80,9 +80,8 @@ curl -sS -o /dev/null -w "%{http_code}\n" https://samudra.193.232.229.92.sslip.i
 
 ## Out of scope (intentionally)
 
-- **Branded hostname HSTS** — there is no branded 443 vhost yet (H2391,
-  human A-record). When that lands, `enable_branded_hostname.py --apply`
-  re-includes this snippet.
+- **Branded hostname HSTS** — landed 14-08-2026 with H2391 `--apply`; the
+  shared vhost already had the snippet (`https_touched: 0`).
 - **`preload`** — not in the locked snippet; HSTS preload is hard to undo.
 - **FastAPI `security_headers` middleware** — that path is HTTP-behind-nginx
   in prod and must not emit HSTS on a development HTTP origin.
