@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **H2719 catalog of corpus-build combinations** (Grok 4.6 `grok-4.6`, 14-08-2026). Axes: inbound × verse-key × bundle layer × footnote mode. Living cells (Rigveda / Atharvaveda / DBhP / Ignatiev tantras / dictionaries). Explains `ManyBooks_` (two different GUI commands; prefix not reused). Agent+human: [docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/KATALOG_KOMBINACIJ_SBORKI_KORPUSA.md). For Anatoly: [docs/DLYA_ANATOLIYA_DOBAVLENIE_IGNATIEVA_VS_STARAYA_SBORKA.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/DLYA_ANATOLIYA_DOBAVLENIE_IGNATIEVA_VS_STARAYA_SBORKA.md). Typo→auto-rebuild is [H2720](https://github.com/gasyoun/Uprava/blob/main/handoffs/H2720-Grok_SamudraManthanam_corpus-errata-auto-rebuild_14.08.26.md), not this PR.
+
 ### Changed
 - **H2435 Phase 5 GUI-fate deferred** (Grok 4.6 `grok-4.6`, 14-08-2026). Human: not enough data to rule A vs B. Brief now includes the clone census (one golden `01/02/03` triple, zero ManyBooks inputs). GUI not deleted.
 
