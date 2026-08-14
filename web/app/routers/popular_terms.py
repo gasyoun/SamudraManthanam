@@ -17,8 +17,6 @@ href="/q/dharma">` so duplicates collapse for crawlers.
 """
 import re
 import time
-from urllib.parse import quote
-
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -97,9 +95,9 @@ async def view_popular_term(request: Request, slug: str):
         elapsed_ms=elapsed_ms,
     )
 
-    # Build "Все результаты" deep-link with the proper URL encoding so Cyrillic
-    # survives the GET.
-    full_search_url = f"/search?q={quote(search_query, safe='')}"
+    from app.search_urls import pretty_search_path
+
+    full_search_url = pretty_search_path(search_query)
 
     related = []
     for rel_slug in entry.get("related", []):

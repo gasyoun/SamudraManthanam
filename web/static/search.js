@@ -137,10 +137,51 @@ $(document).ready(function() {
         }
     }
 
+    // Short public tokens for share URLs (keep in sync with app/search_urls.py).
+    const SOURCE_ALIASES = {
+        geo: 'mahabharata-ukazatel-geo',
+        imen: 'mahabharata-ukazatel-imen',
+        predmet: 'mahabharata-ukazatel-predmet',
+        flora: 'mahabharata-ukazatel-flora',
+        stati: 'mahabharata-stati',
+    };
+    const SLUG_TO_ALIAS = {};
+    Object.keys(SOURCE_ALIASES).forEach(function (alias) {
+        SLUG_TO_ALIAS[SOURCE_ALIASES[alias]] = alias;
+    });
+
+    function knownSourceToken(token) {
+        if (SOURCE_ALIASES[token] || SLUG_TO_ALIAS[token]) return true;
+        let found = false;
+        $('#sourcesGrid input').each(function () {
+            if (($(this).data('slug') || '') === token) found = true;
+        });
+        return found;
+    }
+
+    function parsePrettySearch() {
+        const path = window.location.pathname || '';
+        const m = path.match(/^\/search\/(.+)$/);
+        if (!m) return null;
+        const parts = m[1].split('/').filter(Boolean).map(function (p) {
+            try { return decodeURIComponent(p); } catch (e) { return p; }
+        });
+        if (!parts.length) return null;
+        if (parts.length >= 2 && knownSourceToken(parts[0])) {
+            const token = parts[0];
+            return {
+                q: parts.slice(1).join('/'),
+                src: SOURCE_ALIASES[token] || token,
+            };
+        }
+        return { q: parts.join('/'), src: null };
+    }
+
     // ── Permalink: restore state from URL on page load + popstate ────────────
     function restoreFromUrl() {
+        const pretty = parsePrettySearch();
         const params = new URLSearchParams(window.location.search);
-        const q = params.get('q');
+        const q = (pretty && pretty.q) || params.get('q');
         if (!q) {
             // Back-navigation to a URL with no query: reset visible state so the
             // page matches the address bar instead of showing stale results.
@@ -159,8 +200,8 @@ $(document).ready(function() {
         $('#case_sensitive').prop('checked', params.get('cs') === '1');
         $('#whole_word').prop('checked', params.get('ww') === '1');
 
-        const srcParam = params.get('src');
-        if (srcParam !== null) {
+        const srcParam = (pretty && pretty.src) || params.get('src');
+        if (srcParam !== null && srcParam !== undefined) {
             $('#sourcesGrid input').prop('checked', false);
             if (srcParam) {
                 // Tokens are slugs (stable across re-ingests). Numeric tokens
@@ -179,21 +220,29 @@ $(document).ready(function() {
 
     // ── Permalink: build URL from current search state ────────────────────────
     function buildPermalink(query, mode, case_sensitive, whole_word, source_ids) {
+        const q = (query || '').trim();
+        const slugs = [];
+        if (source_ids.length !== totalSourceCount) {
+            $('#sourcesGrid input:checked').each(function() {
+                slugs.push($(this).data('slug') || $(this).val());
+            });
+        }
+        const extras = (mode && mode !== 'plain') || case_sensitive || whole_word;
+        if (q && !extras && slugs.length <= 1) {
+            // Unicode path — do not encodeURIComponent; the address bar stays readable.
+            if (slugs.length === 1) {
+                const token = SLUG_TO_ALIAS[slugs[0]] || slugs[0];
+                return '/search/' + token + '/' + q;
+            }
+            return '/search/' + q;
+        }
         const params = new URLSearchParams();
         params.set('q', query);
         if (mode && mode !== 'plain') params.set('mode', mode);
         if (case_sensitive) params.set('cs', '1');
         if (whole_word) params.set('ww', '1');
-        if (source_ids.length !== totalSourceCount) {
-            // Permalinks carry slugs, not ids: ids renumber on every corpus
-            // re-ingest, slugs are derived from filenames and survive.
-            const slugs = [];
-            $('#sourcesGrid input:checked').each(function() {
-                slugs.push($(this).data('slug') || $(this).val());
-            });
-            params.set('src', slugs.join(','));
-        }
-        return '?' + params.toString();
+        if (slugs.length) params.set('src', slugs.join(','));
+        return '/search?' + params.toString();
     }
 
     window.addEventListener('popstate', restoreFromUrl);

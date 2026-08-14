@@ -1,40 +1,44 @@
-"""Server-rendered `/search?q=…` page.
+"""Server-rendered search page.
+
+Pretty IRI (preferred, shareable):
+    /search/Хастинапур
+    /search/geo/Хастинапур
+
+Legacy query string still works and 301s onto the pretty path when flags
+are defaults:
+    /search?q=Хастинапур&src=mahabharata-ukazatel-geo
 
 This is the SEO surface for content queries — distinct from:
 - `/`              live JS-driven search app (brand/home landing)
+- `/q/{ascii}`     curated popular-term landings (ASCII slugs only)
 - `/api/search`    POST JSON API consumed by the live app
-- `/api/search/export`  downloadable HTML export
 
 The page server-renders results into the initial HTML payload so search
 engines see content without executing JavaScript. Form submission is plain
-GET, so the page works without JS.
+GET (`?q=`), then 301s to the pretty path so the address bar stays readable.
 
 Canonical URL discipline
 ------------------------
-Multiple URLs can produce the same result set (different param order,
-mixed-case query, default-valued booleans). To prevent duplicate-content
-penalties we emit `<link rel="canonical">` pointing at a deterministically
-normalised URL: lowercase query, sorted source ids, dropped defaults.
-
-Indexability rules
-------------------
-Pages with no useful indexable content get `<meta name="robots" content="noindex,follow">`:
-- single-character queries (junk)
-- regex queries (don't make good landing pages, and patterns are search-noise)
-- zero-result queries (crawl budget waste)
+Plain one-source (or all-sources) searches canonicalise to the Unicode path.
+Regex / extra flags / multi-source stay on a query-string URL.
 """
 import logging
 import re
 import time
 from typing import Optional
-from urllib.parse import urlencode
 
 from fastapi import APIRouter, Query, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from app.db import get_db
 from app.models import SearchMode
+from app.search_urls import (
+    can_use_pretty_path,
+    expand_source_token,
+    pretty_search_path,
+    pretty_search_url,
+)
 from app.services.dispatch_service import dispatch_search
 from app.services.html_service import render_fragment
 from app.settings import settings
@@ -92,22 +96,15 @@ def _canonical_search_url(
     *, base: str, query: str, mode: str, case_sensitive: bool,
     whole_word: bool, source_slugs: Optional[list[str]],
 ) -> str:
-    """Build a normalised canonical URL.
-
-    Normalisation: lowercase + strip query, drop default-valued flags, sort
-    source slugs. Empty params are omitted so equivalent searches converge
-    on one URL. Slugs (not ids) keep the canonical stable across re-ingests.
-    """
-    parts: list[tuple[str, str]] = [("q", query.strip().lower())]
-    if mode != "plain":
-        parts.append(("mode", mode))
-    if case_sensitive:
-        parts.append(("cs", "1"))
-    if whole_word:
-        parts.append(("ww", "1"))
-    if source_slugs:
-        parts.append(("src", ",".join(sorted(source_slugs))))
-    return f"{base}/search?{urlencode(parts)}"
+    """Build a normalised canonical URL (pretty path when flags are defaults)."""
+    return pretty_search_url(
+        base=base,
+        query=query,
+        mode=mode,
+        case_sensitive=case_sensitive,
+        whole_word=whole_word,
+        source_slugs=source_slugs,
+    )
 
 
 def _should_noindex(*, query: str, mode: str, total: int) -> bool:
@@ -125,14 +122,15 @@ def _should_noindex(*, query: str, mode: str, total: int) -> bool:
     return False
 
 
-@router.get("/search", response_class=HTMLResponse)
-async def search_page(
+async def _render_search_page(
     request: Request,
-    q: str = Query("", max_length=1000, description="Search query"),
-    mode: SearchMode = Query(SearchMode.plain),
-    cs: bool = Query(False, description="Case sensitive"),
-    ww: bool = Query(False, description="Whole word"),
-    src: Optional[str] = Query(None, description="Comma-separated source slugs (legacy: numeric IDs)"),
+    *,
+    q: str,
+    mode: SearchMode,
+    cs: bool,
+    ww: bool,
+    src: Optional[str],
+    redirect_query_string: bool = False,
 ):
     from app.main import _ss_link, _template_context
 
@@ -166,6 +164,15 @@ async def search_page(
     db = await get_db(settings.DB_PATH)
     try:
         source_ids, source_slugs = await _resolve_source_filter(db, src)
+        if redirect_query_string and can_use_pretty_path(
+            query=q,
+            mode=mode.value,
+            case_sensitive=cs,
+            whole_word=ww,
+            source_slugs=source_slugs,
+        ):
+            target = pretty_search_path(q, source_slugs)
+            return RedirectResponse(url=target, status_code=301)
         search_data = await dispatch_search(
             db, q, mode, cs, ww, source_ids, limit=5000
         )
@@ -212,4 +219,54 @@ async def search_page(
             og_description=og_description,
             og_url=canonical_url,
         ),
+    )
+
+
+@router.get("/search", response_class=HTMLResponse)
+async def search_page(
+    request: Request,
+    q: str = Query("", max_length=1000, description="Search query"),
+    mode: SearchMode = Query(SearchMode.plain),
+    cs: bool = Query(False, description="Case sensitive"),
+    ww: bool = Query(False, description="Whole word"),
+    src: Optional[str] = Query(None, description="Comma-separated source slugs (legacy: numeric IDs)"),
+):
+    return await _render_search_page(
+        request,
+        q=q,
+        mode=mode,
+        cs=cs,
+        ww=ww,
+        src=src,
+        redirect_query_string=bool(q.strip()),
+    )
+
+
+@router.get("/search/{src}/{query:path}", response_class=HTMLResponse)
+async def search_page_src_path(request: Request, src: str, query: str):
+    if len(query) > 1000:
+        return RedirectResponse(url="/search", status_code=302)
+    return await _render_search_page(
+        request,
+        q=query,
+        mode=SearchMode.plain,
+        cs=False,
+        ww=False,
+        src=expand_source_token(src),
+        redirect_query_string=False,
+    )
+
+
+@router.get("/search/{query:path}", response_class=HTMLResponse)
+async def search_page_path(request: Request, query: str):
+    if len(query) > 1000:
+        return RedirectResponse(url="/search", status_code=302)
+    return await _render_search_page(
+        request,
+        q=query,
+        mode=SearchMode.plain,
+        cs=False,
+        ww=False,
+        src=None,
+        redirect_query_string=False,
     )

@@ -136,8 +136,9 @@ def test_page_renders_related_term_links():
 
 def test_page_emits_full_search_link():
     r = client.get("/q/dharma")
-    # The "Все результаты" link should escape Cyrillic with percent encoding.
-    assert "/search?q=" in r.text
+    # Pretty IRI — Cyrillic stays readable, no ?q=%D0…
+    assert "/search/дхарм" in r.text
+    assert "/search?q=" not in r.text
 
 
 # ── JSON-LD ──────────────────────────────────────────────────────────────────

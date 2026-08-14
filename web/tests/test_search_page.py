@@ -22,12 +22,13 @@ client = TestClient(app)
 
 # ── _canonical_search_url ────────────────────────────────────────────────────
 
-def test_canonical_lowercases_query_and_strips():
+def test_canonical_strips_to_pretty_unicode_path():
     url = _canonical_search_url(
         base="https://samskrtam.ru", query="  Кришна  ",
         mode="plain", case_sensitive=False, whole_word=False, source_slugs=None,
     )
-    assert url == "https://samskrtam.ru/search?q=%D0%BA%D1%80%D0%B8%D1%88%D0%BD%D0%B0"
+    assert url == "https://samskrtam.ru/search/Кришна"
+    assert "%D0" not in url
 
 
 def test_canonical_drops_default_params():
@@ -35,7 +36,7 @@ def test_canonical_drops_default_params():
         base="", query="dharma", mode="plain",
         case_sensitive=False, whole_word=False, source_slugs=None,
     )
-    assert url == "/search?q=dharma"
+    assert url == "/search/dharma"
 
 
 def test_canonical_keeps_non_default_flags():
@@ -62,29 +63,31 @@ def test_canonical_sorts_source_slugs():
 
 def test_src_slug_filter_narrows_results():
     # 'svasti' lives in source1 only — filtering to source2 must hide it.
-    r = client.get("/search?q=svasti&src=source1")
+    r = client.get("/search/source1/svasti")
     assert r.status_code == 200
     assert "svasti arjuna" in r.text
-    r = client.get("/search?q=svasti&src=source2")
+    r = client.get("/search/source2/svasti")
     assert r.status_code == 200
     assert "svasti arjuna" not in r.text
 
 
 def test_src_legacy_numeric_ids_still_resolve():
-    # Pre-slug bookmarks carried numeric ids; they must keep working and
-    # the canonical URL must rewrite them to slugs.
-    r = client.get("/search?q=svasti&src=1")
+    # Pre-slug bookmarks carried numeric ids; they 301 onto the slug path.
+    r = client.get("/search?q=svasti&src=1", follow_redirects=False)
+    assert r.status_code == 301
+    assert r.headers["location"].endswith("/search/source1/svasti")
+    r = client.get("/search/source1/svasti")
     assert r.status_code == 200
     assert "svasti arjuna" in r.text
     canon_idx = r.text.index('rel="canonical"')
-    assert "src=source1" in r.text[canon_idx:canon_idx + 300]
+    assert "/search/source1/svasti" in r.text[canon_idx:canon_idx + 300]
 
 
 def test_src_unknown_tokens_fall_back_to_all_sources():
     # Unresolvable filter degrades to "all sources" rather than erroring.
-    r = client.get("/search?q=svasti&src=no-such-slug")
-    assert r.status_code == 200
-    assert "svasti arjuna" in r.text
+    r = client.get("/search?q=svasti&src=no-such-slug", follow_redirects=False)
+    assert r.status_code == 301
+    assert r.headers["location"].endswith("/search/svasti")
 
 
 # ── _should_noindex ──────────────────────────────────────────────────────────
@@ -117,13 +120,29 @@ def test_empty_query_renders_landing_with_noindex():
     assert "SearchResultsPage" not in r.text
 
 
+def test_query_string_301s_to_pretty_path():
+    r = client.get("/search?q=svasti", follow_redirects=False)
+    assert r.status_code == 301
+    assert r.headers["location"].endswith("/search/svasti")
+    assert "%D0" not in r.headers["location"]
+
+
+def test_cyrillic_pretty_path_is_not_percent_encoded_in_canonical():
+    r = client.get("/search/Хастинапур")
+    assert r.status_code == 200
+    canon_idx = r.text.index('rel="canonical"')
+    chunk = r.text[canon_idx:canon_idx + 220]
+    assert "Хастинапур" in chunk
+    assert "%D0" not in chunk
+
+
 def test_normal_query_renders_results_and_canonical():
     # 'svasti' is in the conftest seed (source 1, line 10, link_id 1.10).
-    r = client.get("/search?q=svasti")
+    r = client.get("/search/svasti")
     assert r.status_code == 200
     assert "svasti" in r.text
     assert 'rel="canonical"' in r.text
-    assert "/search?q=svasti" in r.text
+    assert "/search/svasti" in r.text
     # Indexable (has results, plain mode, multi-char query).
     assert 'name="robots" content="noindex' not in r.text
     # JSON-LD present.
@@ -132,13 +151,13 @@ def test_normal_query_renders_results_and_canonical():
 
 def test_short_query_gets_noindex_even_when_results_exist():
     # Single character — junk landing page.
-    r = client.get("/search?q=s")
+    r = client.get("/search/s")
     # Single 's' might match anything; whatever the count, must be noindex.
     assert 'name="robots" content="noindex,follow"' in r.text
 
 
 def test_zero_result_query_gets_noindex():
-    r = client.get("/search?q=zzznoresultsexpected")
+    r = client.get("/search/zzznoresultsexpected")
     assert 'name="robots" content="noindex,follow"' in r.text
 
 
@@ -157,16 +176,14 @@ def test_form_preserves_source_filter():
     assert 'name="src" value="1,2"' in r.text
 
 
-def test_canonical_url_in_html_is_normalised():
-    # Mixed case input should canonicalise to lowercase.
-    r = client.get("/search?q=SVASTI")
+def test_canonical_url_in_html_is_pretty_path():
+    r = client.get("/search/SVASTI")
     body = r.text
-    # Canonical link should point at lowercase form.
     assert 'rel="canonical" href="' in body
-    # The canonical href contains the lowercased query.
     canon_idx = body.index('rel="canonical"')
     canon_chunk = body[canon_idx:canon_idx + 200]
-    assert "svasti" in canon_chunk
+    assert "/search/SVASTI" in canon_chunk
+    assert "?q=" not in canon_chunk
 
 
 def test_regex_mode_renders_but_noindex():
