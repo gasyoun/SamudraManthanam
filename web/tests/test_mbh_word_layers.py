@@ -88,4 +88,4 @@ def test_article_records_passage_shape():
     recs = ml.article_records(arts, "mahabharata-stati")
     assert recs[0]["passage"].startswith("1.1.")
     assert recs[0]["structure"] == "prose"
-    assert recs[-1]["chapter"] == 2
+    assert recs[-1]["chapter"] == "2"

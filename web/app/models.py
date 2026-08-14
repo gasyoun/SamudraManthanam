@@ -58,6 +58,16 @@ class SearchResultItem(BaseModel):
     source_slug: Optional[str] = None
     canonical_id: Optional[str] = None
 
+    @field_validator("chapter", mode="before")
+    @classmethod
+    def chapter_as_str(cls, v):
+        # JSONL/SQLite may store a numeric chapter (H2738 articles used int).
+        # The public search schema is a string heading; refuse-to-coerce 500s
+        # every query that hits such a row.
+        if v is None:
+            return ""
+        return str(v)
+
 class SearchResult(BaseModel):
     query: str
     total: int

@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Search 500 when a hit has numeric `chapter`** (H2738 follow-up, Grok 4.6 `grok-4.6`, 14-08-2026). Live `/api/search` raised Pydantic `string_type` on `SearchResultItem.chapter` for every query that touched the new MBH article layer (`chapter` was stored as int). Coerce int/None → str on the response model; emit `str(art_i)` on the next article rebuild. Prove: `python -m pytest tests/test_search_chapter_coerce.py`.
+
 ### Added
 - **H2738 MBH Smirnov articles + indexes as corpus layers** (Grok 4.6 `grok-4.6`, 14-08-2026). From Anatoly Drive «Для Пахтания»: 25 volume articles (`mahabharata-stati`, 2430 prose records, RT 99.96% with Latin-accent folds) and four print indexes (`mahabharata-ukazatel-imen` 9980 / `geo` 3449 / `predmet` 4122 / `flora` 103, RT 100%). Verse comments stay on the parva HTML (already `comment_item`; book 13 has none in either source). Parser: [`mbh_word_layers.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/mbh_word_layers.py). Census: [`docs/H2738_MBH_WORD_ARTICLES_INDEXES.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2738_MBH_WORD_ARTICLES_INDEXES.md). Prove: `python -m pytest tests/test_mbh_word_layers.py`.
 
