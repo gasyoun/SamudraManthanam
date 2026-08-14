@@ -1,0 +1,90 @@
+{
+  "model": "deepseek/deepseek-chat (OpenRouter)",
+  "pricing_usd_per_million": {
+    "prompt": 0.2574,
+    "completion": 1.0287
+  },
+  "usd_rub": 84.5449,
+  "context_lines_per_call": 25,
+  "tokenizer": "cl100k_base",
+  "samples": [
+    {
+      "query": "дхарма",
+      "context_lines": 25,
+      "context_chars": 1881,
+      "explain_prompt_tokens": 1268,
+      "compare_prompt_tokens": 966
+    },
+    {
+      "query": "карма",
+      "context_lines": 25,
+      "context_chars": 2056,
+      "explain_prompt_tokens": 1301,
+      "compare_prompt_tokens": 994
+    },
+    {
+      "query": "Хастинапур",
+      "context_lines": 25,
+      "context_chars": 2196,
+      "explain_prompt_tokens": 1434,
+      "compare_prompt_tokens": 1028
+    },
+    {
+      "query": "yoga",
+      "context_lines": 25,
+      "context_chars": 1903,
+      "explain_prompt_tokens": 1452,
+      "compare_prompt_tokens": 1058
+    },
+    {
+      "query": "atman",
+      "context_lines": 25,
+      "context_chars": 2025,
+      "explain_prompt_tokens": 1608,
+      "compare_prompt_tokens": 1072
+    },
+    {
+      "query": "брахман",
+      "context_lines": 25,
+      "context_chars": 2046,
+      "explain_prompt_tokens": 1362,
+      "compare_prompt_tokens": 1025
+    },
+    {
+      "query": "жертвоприношение",
+      "context_lines": 25,
+      "context_chars": 2270,
+      "explain_prompt_tokens": 1421,
+      "compare_prompt_tokens": 1035
+    },
+    {
+      "query": "Арджуна",
+      "context_lines": 25,
+      "context_chars": 1975,
+      "explain_prompt_tokens": 1360,
+      "compare_prompt_tokens": 986
+    }
+  ],
+  "cost": {
+    "explain": {
+      "prompt_tokens_median": 1391.5,
+      "prompt_tokens_p90": 1452,
+      "prompt_tokens_max": 1608,
+      "completion_tokens_assumed": 660.0,
+      "rub_per_query_median": 0.0877,
+      "rub_per_query_p90": 0.089,
+      "rub_per_100_median": 8.77,
+      "rub_per_100_p90": 8.9
+    },
+    "compare": {
+      "prompt_tokens_median": 1026.5,
+      "prompt_tokens_p90": 1058,
+      "prompt_tokens_max": 1072,
+      "completion_tokens_assumed": 660.0,
+      "rub_per_query_median": 0.0797,
+      "rub_per_query_p90": 0.0804,
+      "rub_per_100_median": 7.97,
+      "rub_per_100_p90": 8.04
+    }
+  }
+}
