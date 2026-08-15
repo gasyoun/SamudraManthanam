@@ -37,6 +37,17 @@ VERIFIED_CORRECTION_LIMIT = 60
 #: Window length, seconds.
 CORRECTION_WINDOW_SECONDS = 3600
 
+#: Hard monthly quota for `/api/ai/*` calls, per verified session (H2640
+#: §2.4, H2772). This is the only thing standing between a funded
+#: `AI_API_KEY` and an unbounded provider bill — the per-call bounds in
+#: `app/routers/ai.py` limit the cost of one call, not the number of calls.
+AI_MONTHLY_CALL_LIMIT = 1000
+
+#: Fixed window covering "a month" for the AI quota. A 30-day fixed window
+#: is deliberately simpler than a calendar-month boundary — see the module
+#: docstring's trade-off note, which applies unchanged here.
+AI_MONTHLY_WINDOW_SECONDS = 30 * 24 * 3600
+
 
 @dataclass
 class RateLimitDecision:
@@ -63,12 +74,17 @@ async def check_and_consume(
     limit: int,
     window_seconds: int,
     now: float | None = None,
+    fail_open: bool = True,
 ) -> RateLimitDecision:
     """Consume one unit from ``(bucket, key)``; report whether it was allowed.
 
-    Fails **open** on a storage error: a broken rate-limit table must not take
-    down correction intake, and the failure is logged loudly rather than
-    silently degrading to "everything is allowed" with no trace.
+    By default fails **open** on a storage error: a broken rate-limit table
+    must not take down correction intake, and the failure is logged loudly
+    rather than silently degrading to "everything is allowed" with no trace.
+
+    Pass ``fail_open=False`` for a billable bucket (H2772) — there, a storage
+    error must deny the call rather than let it through uncounted, because an
+    uncounted call still reaches the paid provider.
     """
     now = time.time() if now is None else now
     window_start = int(now // window_seconds) * window_seconds
@@ -96,8 +112,14 @@ async def check_and_consume(
         )
         await db.commit()
     except Exception:
-        logger.exception("rate limit check failed for bucket=%s — failing open", bucket)
-        return RateLimitDecision(True, limit, limit, 0)
+        logger.exception(
+            "rate limit check failed for bucket=%s — failing %s",
+            bucket,
+            "open" if fail_open else "closed",
+        )
+        if fail_open:
+            return RateLimitDecision(True, limit, limit, 0)
+        return RateLimitDecision(False, limit, 0, window_seconds)
 
     allowed = count <= limit
     return RateLimitDecision(
