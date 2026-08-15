@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.43] - 2026-08-15
+
+### Security
+- **Auth + hard monthly quota on `/api/ai/*`** (H2772, Sonnet 5 `claude-sonnet-5`, 15-08-2026). `POST /api/ai/explain` and `POST /api/ai/compare-translations` were publicly reachable with no authentication and no rate limit — safe only because the unfunded OpenRouter key answered 403/503. Both routes now resolve a session (401 without one) and enforce a hard 1000-call/30-day quota per session via `check_and_consume` (429 + `Retry-After` on overage); the AI quota bucket fails **closed** on a storage error (new `fail_open` param, default unchanged/open for corrections intake). Closes [#307](https://github.com/gasyoun/SamudraManthanam/issues/307). Live-smoked on prod: unauthenticated `POST /api/ai/explain` now returns 401, not 503.
+
 ## [0.19.42] - 2026-08-14
 
 ### Added

@@ -23,8 +23,8 @@ license: Apache-2.0
 # (v0.14.0 = 10.5281/zenodo.21569201), minted automatically by the Zenodo–GitHub
 # webhook; version DOIs belong in the release notes, not here.
 doi: "10.5281/zenodo.21317315"
-version: 0.19.42
-date-released: 2026-08-14
+version: 0.19.43
+date-released: 2026-08-15
 keywords:
   - Sanskrit
   - Russian
