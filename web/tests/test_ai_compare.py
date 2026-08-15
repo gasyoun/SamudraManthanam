@@ -9,6 +9,7 @@ Three layers:
    panel + JSON payload script are present when there are 2+ hits.
 """
 import json
+import os
 import re
 from unittest.mock import AsyncMock, patch
 
@@ -20,9 +21,52 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 from app.services.ai_service import build_compare_prompt
+from app.services.session_service import SESSION_HEADER
 from app.settings import settings
+from app.state_db import init_state_db
 
 client = TestClient(app)
+
+
+@pytest_asyncio.fixture(autouse=True)
+async def state_db(tmp_path):
+    """/api/ai/compare-translations now resolves a session against state.db
+    (H2772) — every route test needs one, even the pre-existing validation
+    ones that never touched state.db before."""
+    db_path = str(tmp_path / "state_ai_compare.db")
+    old_path = settings.STATE_DB_PATH
+    settings.STATE_DB_PATH = db_path
+    async with aiosqlite.connect(db_path) as db:
+        await init_state_db(db)
+    yield db_path
+    settings.STATE_DB_PATH = old_path
+    if os.path.exists(db_path):
+        os.remove(db_path)
+
+
+def _auth_headers(email="ai-compare-tester@example.com") -> dict:
+    """Run the real two-step verification loop and return session headers.
+
+    `verification_token` is only echoed back when APP_ENV != "production"
+    (identity.py) — force dev mode for the exchange regardless of what an
+    earlier test in the same process left `settings.APP_ENV` as.
+    """
+    old_env = settings.APP_ENV
+    settings.APP_ENV = "development"
+    try:
+        r = client.post(
+            "/api/identity/lead",
+            json={"email": email, "consent_data": True, "consent_marketing": False},
+        )
+        assert r.status_code == 200
+        requested = client.post("/api/identity/verify/request", json={"email": email})
+        assert requested.status_code == 202
+        token = requested.json()["verification_token"]
+        confirmed = client.post("/api/identity/verify/confirm", json={"token": token})
+        assert confirmed.status_code == 200
+        return {SESSION_HEADER: confirmed.json()["session_token"]}
+    finally:
+        settings.APP_ENV = old_env
 
 
 # ── build_compare_prompt ────────────────────────────────────────────────────
@@ -115,17 +159,23 @@ def _valid_payload(translations_count=3):
     }
 
 
+def test_route_requires_auth():
+    """Unauthenticated callers never reach validation or the provider (H2772)."""
+    r = client.post("/api/ai/compare-translations", json=_valid_payload())
+    assert r.status_code == 401
+
+
 def test_route_requires_at_least_two_translations():
     # The whole point is comparison — one translation is meaningless.
     bad = _valid_payload(translations_count=1)
-    r = client.post("/api/ai/compare-translations", json=bad)
+    r = client.post("/api/ai/compare-translations", json=bad, headers=_auth_headers())
     assert r.status_code == 422
 
 
 def test_route_rejects_oversized_translation_text():
     payload = _valid_payload()
     payload["translations"][0]["text"] = "x" * 5000
-    r = client.post("/api/ai/compare-translations", json=payload)
+    r = client.post("/api/ai/compare-translations", json=payload, headers=_auth_headers())
     assert r.status_code == 422
 
 
@@ -135,21 +185,21 @@ def test_route_rejects_too_many_translations():
         {"label": f"L{i}", "role": "translation", "text": "t"}
         for i in range(25)
     ]
-    r = client.post("/api/ai/compare-translations", json=payload)
+    r = client.post("/api/ai/compare-translations", json=payload, headers=_auth_headers())
     assert r.status_code == 422
 
 
 def test_route_rejects_invalid_chapter_or_verse():
     payload = _valid_payload()
     payload["chapter"] = 0
-    r = client.post("/api/ai/compare-translations", json=payload)
+    r = client.post("/api/ai/compare-translations", json=payload, headers=_auth_headers())
     assert r.status_code == 422
 
 
 def test_route_rejects_oversized_label():
     payload = _valid_payload()
     payload["translations"][0]["label"] = "x" * 300
-    r = client.post("/api/ai/compare-translations", json=payload)
+    r = client.post("/api/ai/compare-translations", json=payload, headers=_auth_headers())
     assert r.status_code == 422
 
 
@@ -158,7 +208,9 @@ def test_route_returns_503_when_ai_service_returns_error():
     old = settings.AI_BASE_URL
     settings.AI_BASE_URL = ""
     try:
-        r = client.post("/api/ai/compare-translations", json=_valid_payload())
+        r = client.post(
+            "/api/ai/compare-translations", json=_valid_payload(), headers=_auth_headers()
+        )
         assert r.status_code == 503
     finally:
         settings.AI_BASE_URL = old
@@ -181,7 +233,9 @@ def test_route_happy_path_with_mocked_provider():
 
     with patch("httpx.AsyncClient.post", new_callable=AsyncMock) as mock_post:
         mock_post.return_value = mock_response
-        r = client.post("/api/ai/compare-translations", json=_valid_payload())
+        r = client.post(
+            "/api/ai/compare-translations", json=_valid_payload(), headers=_auth_headers()
+        )
 
     assert r.status_code == 200
     body = r.json()

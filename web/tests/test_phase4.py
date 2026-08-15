@@ -1,11 +1,67 @@
+import os
+
+import aiosqlite
 import pytest
+import pytest_asyncio
 from fastapi.testclient import TestClient
 from app.main import app
+from app.services.session_service import SESSION_HEADER
 from app.settings import settings
+from app.state_db import init_state_db
 import httpx
 from unittest.mock import AsyncMock, patch
 
 client = TestClient(app)
+
+
+@pytest_asyncio.fixture(autouse=True)
+async def state_db(tmp_path):
+    """Every /api/ai/* route now resolves a session against state.db (H2772)."""
+    db_path = str(tmp_path / "state_phase4.db")
+    old_path = settings.STATE_DB_PATH
+    settings.STATE_DB_PATH = db_path
+    async with aiosqlite.connect(db_path) as db:
+        await init_state_db(db)
+    yield db_path
+    settings.STATE_DB_PATH = old_path
+    if os.path.exists(db_path):
+        os.remove(db_path)
+
+
+def _auth_headers(email="ai-tester@example.com") -> dict:
+    """Run the real two-step verification loop and return session headers.
+
+    `verification_token` is only echoed back when APP_ENV != "production"
+    (identity.py) — force dev mode for the exchange regardless of what an
+    earlier test in the same process left `settings.APP_ENV` as.
+    """
+    old_env = settings.APP_ENV
+    settings.APP_ENV = "development"
+    try:
+        r = client.post(
+            "/api/identity/lead",
+            json={"email": email, "consent_data": True, "consent_marketing": False},
+        )
+        assert r.status_code == 200
+        requested = client.post("/api/identity/verify/request", json={"email": email})
+        assert requested.status_code == 202
+        token = requested.json()["verification_token"]
+        confirmed = client.post("/api/identity/verify/confirm", json={"token": token})
+        assert confirmed.status_code == 200
+        return {SESSION_HEADER: confirmed.json()["session_token"]}
+    finally:
+        settings.APP_ENV = old_env
+
+
+def test_ai_explain_requires_auth():
+    """Unauthenticated callers are rejected before ever reaching the provider
+    (H2772) — the routes must not be reachable with no session at all."""
+    response = client.post("/api/ai/explain", json={
+        "query": "arjuna",
+        "context_lines": ["line 1"]
+    })
+    assert response.status_code == 401
+
 
 def test_ai_explain_unconfigured():
     settings.AI_BASE_URL = ""
@@ -17,7 +73,7 @@ def test_ai_explain_unconfigured():
         response = client.post("/api/ai/explain", json={
             "query": "arjuna",
             "context_lines": ["line 1", "line 2"]
-        })
+        }, headers=_auth_headers())
         assert response.status_code == 503
         assert "not configured" in response.json()["detail"]
     finally:
@@ -31,7 +87,7 @@ def test_ai_explain_rejects_excessive_context_lines():
     response = client.post("/api/ai/explain", json={
         "query": "arjuna",
         "context_lines": ["x"] * 1000,  # well above MAX_CONTEXT_LINES=50
-    })
+    }, headers=_auth_headers())
     assert response.status_code == 422
 
 
@@ -40,7 +96,7 @@ def test_ai_explain_rejects_oversized_single_line():
     response = client.post("/api/ai/explain", json={
         "query": "arjuna",
         "context_lines": ["x" * 10_000],  # above MAX_CONTEXT_LINE_LEN=2000
-    })
+    }, headers=_auth_headers())
     assert response.status_code == 422
 
 
@@ -138,7 +194,7 @@ async def test_ai_service_call_mocked():
         response = client.post("/api/ai/explain", json={
             "query": "test",
             "context_lines": ["ctx"]
-        })
+        }, headers=_auth_headers())
     
     assert response.status_code == 200
     assert response.json()["explanation"] == "Mocked success"
