@@ -156,11 +156,81 @@ caught both failures; keep it.
 
 ## 4. Deploy, smoke, rollback
 
-_Filled in after the merge — see the deploy section below._
+Merged: [#313](https://github.com/gasyoun/SamudraManthanam/pull/313) (policy) ·
+[#314](https://github.com/gasyoun/SamudraManthanam/pull/314) (version-proof
+census) · [#315](https://github.com/gasyoun/SamudraManthanam/pull/315)
+(release 0.19.44) · [#316](https://github.com/gasyoun/SamudraManthanam/pull/316)
+(posture log). Release:
+[v0.19.44](https://github.com/gasyoun/SamudraManthanam/releases/tag/v0.19.44).
+
+Deployed to `root@193.232.229.92` `/opt/samudra` with the OPS.md recipe; prod
+`repo` is at `772ecdf`, identical to `origin/main`.
+
+**Startup posture, from the live journal:**
+
+```text
+Aug 16 23:33:05 samskrtam150 uvicorn[2464539]: ai_policy: paid AI DISABLED (AI_ENABLED=false) — zero provider calls possible
+```
+
+That line only exists because the first deploy proved the original one did not.
+It was logged at INFO, and under uvicorn the app's own loggers get no handler,
+so journald sees only what the root `lastResort` handler emits — WARNING and
+above. The posture line was therefore invisible in production, and OPS.md's
+`journalctl … | grep ai_policy` check would have answered "nothing" for a
+disabled and an enabled service alike. Fixed in #316; a parametrized test now
+pins WARNING+ for all three branches.
+
+**Disabled smoke** — public surface plus both paid routes:
+
+| Probe | Result |
+|---|---|
+| `GET https://samudra.193.232.229.92.sslip.io/` | **200** |
+| `POST /api/ai/explain`, no session | **401** `{"detail":"Authentication required"}` |
+| `POST /api/ai/compare-translations`, no session | **401** |
+
+**Deployed-configuration verdict**, read out of the prod venv against the real
+`/opt/samudra/.env` (read-only; no HTTP, no DB, no key printed):
+
+```text
+AI_ENABLED           : False
+model                : deepseek/deepseek-chat
+max_output_tokens    : 1024
+max_cost_per_call    : 0.05 USD
+priced models        : (none configured)
+AI_API_KEY present   : True (value never printed)
+
+verdict for a real call: DENIED
+reason code            : ai_disabled
+```
+
+Two things worth reading twice. The key **is present** on the box, so the
+"safe because the key is dead" era is over and this policy is load-bearing
+today, not hypothetically. And the deployment is denied **twice over**: even if
+`AI_ENABLED` were flipped, `deepseek/deepseek-chat` is unpriced, so every call
+would still fail closed as `unknown_model_price`.
+
+**Rollback drill**, executed on prod — roll back to the previous release tag,
+prove it serves, roll forward, prove it serves:
+
+```text
+== before
+  forward:     home=200 ai_explain=401 commit=772ecdf
+== rolling back to v0.19.43
+  rolledback:  home=200 ai_explain=401 commit=0e3460b
+== rolling forward to main
+  restored:    home=200 ai_explain=401 commit=772ecdf
+```
+
+No `.env` change, no migration, no reindex, no key or quota state touched. The
+drill script restores `main` unconditionally, so a failure inside it could not
+strand production on an old commit.
 
 ## 5. Production verdict
 
-`AI_ENABLED` stays **false** in production. See §6 for the exact reason.
+`AI_ENABLED` stays **false** in production, and this is a deliberate stop, not
+an incomplete gate. Every engineering gate in the handoff passed; what remains
+is a business decision about whether to spend money on AI at all, which is not
+an agent's to take. See §6 for what turning it on would involve.
 
 ## 6. What a human decides, and what happens if nobody does
 
@@ -169,10 +239,12 @@ its shipped configuration; enabling paid AI is an optional business decision,
 not a missing engineering step.
 
 If someone does want it on, the act is: edit `/opt/samudra/.env` on
-`root@193.232.229.92`, add an `AI_MODEL_PRICES` line pricing whichever model
-`AI_MODEL` names (numbers copied from the provider's current price list —
-nothing in the app can verify them), change `AI_ENABLED=false` to
-`AI_ENABLED=true`, and `systemctl restart samudra`. The literal commands and
+`root@193.232.229.92`, add an `AI_MODEL_PRICES` line pricing
+`deepseek/deepseek-chat` (the model that box actually runs — numbers copied
+from the provider's current price list, since nothing in the app can verify
+them), add `AI_ENABLED=true` (the key is currently absent from the file, and an
+absent key means false), and `systemctl restart samudra`, then confirm the
+journal says `ENABLED` with no `misconfigured`. The literal commands and
 the one-line rollback are in
 [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md)
 § Paid-AI kill switch.
