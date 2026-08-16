@@ -123,11 +123,36 @@ instead of a hand-maintained list, and fails when:
 3. `evaluate_call` stops preceding the HTTP dispatch inside `_openai_chat`
    (line-order on the AST, so a reordering regression fails);
 4. a second dispatch appears anywhere else in `ai_service`;
-5. the set of `/api/ai/*` routes changes;
-6. any `/api/ai/*` route lacks the `_require_quota` dependency.
+5. the set of `/api/ai/*` routes mounted on the live app changes;
+6. any `@router.*` handler in `routers/ai.py` lacks a `Depends(_require_quota)`
+   parameter.
 
 `ai_policy.py` is deliberately **not** exempt from (2): it must decide without
 ever holding the credentials.
+
+Checks (5) and (6) deliberately avoid FastAPI internals, and the reason is
+worth recording because the first two attempts both failed silently in the one
+direction that matters.
+
+The first version filtered `app.routes` with `isinstance(r, APIRoute)` and
+walked `route.dependant`. On the CI image's `fastapi==0.141.1` (local dev runs
+0.136.1) that returned an **empty** route set while every route served
+normally — the census went vacuous exactly where it was supposed to be
+loudest. Reproduced in a throwaway 0.141.1 venv: `include_router` no longer
+appends child routes at all, it appends one opaque
+`fastapi.routing._IncludedRouter` with no `path`, no `routes` and no `router`
+attribute, keeping its children behind `original_router` /
+`effective_candidates`. So the obvious second fix — a recursive `.routes` walk
+— returns empty too, and starting the app through `TestClient` does not
+flatten it either.
+
+The version that ships reads `app.openapi()["paths"]`, a documented public
+surface that reports the same set on both versions, and check (6) parses
+`routers/ai.py` for a `Depends(_require_quota)` parameter on every `@router.*`
+handler. The regression being guarded against is a handler added without the
+gate — visible in the source regardless of what the routing layer does
+internally. `test_paid_routes_exist_so_the_census_is_not_vacuous` is what
+caught both failures; keep it.
 
 ## 4. Deploy, smoke, rollback
 
