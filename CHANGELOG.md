@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.44] - 2026-08-17
+
 ### Security
 
 - **Deny-by-default paid-AI spend policy** (H2866, Opus 5 `claude-opus-5`,
