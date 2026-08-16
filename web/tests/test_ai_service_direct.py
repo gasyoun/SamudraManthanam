@@ -5,7 +5,7 @@ from app.services.ai_service import explain_with_ai
 from app.settings import settings
 
 @pytest.mark.asyncio
-async def test_explain_with_ai_service_mocked():
+async def test_explain_with_ai_service_mocked(ai_policy_allowed):
     settings.AI_BASE_URL = "http://local-ai"
     settings.AI_API_KEY = "test-key"
     

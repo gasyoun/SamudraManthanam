@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Deny-by-default paid-AI spend policy** (H2866, Opus 5 `claude-opus-5`,
+  17-08-2026). H2772 bounded *how many* AI calls a verified user may make; it
+  bounded nothing about whether the service is on at all or what one call may
+  cost, so funding `AI_API_KEY` alone would have started billing. New
+  [`web/app/services/ai_policy.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/app/services/ai_policy.py)
+  is evaluated inside `_openai_chat` **before** the base-URL check and before
+  the cache lookup, and issues no HTTP of its own, so every rejection provably
+  costs zero provider calls. It enforces a global `AI_ENABLED` kill switch
+  (default **false**), a bounded `AI_MAX_OUTPUT_TOKENS` (1..4096) sent as
+  `max_tokens` on every payload, and a preventive worst-case
+  `AI_MAX_COST_PER_CALL` ceiling priced from `AI_MODEL_PRICES`. There is no
+  built-in price table on purpose — an unpriced model fails closed, making
+  enablement a deliberate two-step operator action. Unknown price, invalid
+  bound, invalid ceiling, currency mismatch and over-ceiling all fail closed
+  before dispatch, each with a stable reason code.
+  [`web/tests/test_ai_spend_policy.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ai_spend_policy.py)
+  asserts `provider call count == 0` on every rejection path (including that
+  the kill switch beats the cache), and
+  [`web/tests/test_ai_policy_census.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_ai_policy_census.py)
+  is a structural bypass census: it derives paid surfaces from the source tree
+  and the live route table, so a future route, importer or second provider
+  integration that skips auth, quota or the policy fails CI. Shipped with
+  `AI_ENABLED=false` in production; startup logs the posture. Operator enable
+  and instant-rollback recipes:
+  [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md)
+  § Paid-AI kill switch.
+
 ### Changed
 
 - **H2820 — CLAUDE.md truth-pass** (Grok 4.6 `grok-4.6`, 16-08-2026). What this

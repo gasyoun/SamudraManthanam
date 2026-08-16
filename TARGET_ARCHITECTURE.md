@@ -664,6 +664,42 @@ Rules:
 - Do not send unnecessary personal data to AI providers.
 - Do not allow AI to modify canonical corpus data.
 
+### 10.5 Spend policy — implemented (H2866)
+
+Three layers now stand between a funded key and an unbounded bill. They are
+independent on purpose: each one alone has a failure mode the others cover.
+
+| Layer | Where | Bounds |
+|---|---|---|
+| Session auth + monthly quota (H2772) | `web/app/routers/ai.py` `_require_quota` | *how many* calls, per verified user (1,000 / 30 days, fails closed) |
+| Request shape | route Pydantic models | *how large* one prompt may be (context lines, per-line and per-field lengths) |
+| Spend policy (H2866) | `web/app/services/ai_policy.py` | *whether a call may happen at all*, and *what one call may cost* |
+
+The spend policy is evaluated in `_openai_chat` before the configuration
+check and before the cache lookup, and issues no HTTP of its own, so a
+rejection provably costs zero provider calls. Rejection order and the stable
+reason codes are in the module docstring; the deny-by-default posture is:
+
+- `AI_ENABLED` defaults to **false** — a funded key changes nothing on its own;
+- `AI_MODEL_PRICES` defaults to **empty**, and an unpriced model fails closed,
+  so enabling AI is deliberately a two-step operator action;
+- `AI_MAX_OUTPUT_TOKENS` (1..4096) is sent as `max_tokens` on every payload —
+  the bound the ceiling was computed against is the bound the provider gets;
+- `AI_MAX_COST_PER_CALL` (in `AI_COST_CURRENCY`, ≤ 1.0) rejects a call whose
+  worst-case cost exceeds it, estimating input tokens conservatively at 2
+  characters per token because the live prompts are Russian.
+
+There is deliberately **no built-in price table**: a stale hard-coded price
+under-states cost and silently widens the ceiling.
+
+Bypass census: `web/tests/test_ai_policy_census.py` derives the paid surface
+from the source tree and the live route table rather than a hand list, and
+fails when a new module imports the provider service, when a second module
+builds a provider request, when `evaluate_call` stops preceding the HTTP
+dispatch, or when an `/api/ai/*` route appears without the quota dependency.
+Adding a provider (10.2's `providers/` split) must keep that single
+convergence point, or extend the census with it.
+
 ## 11. Correction Proposal Architecture
 
 ### 11.1 User Flow

@@ -216,7 +216,7 @@ def test_route_returns_503_when_ai_service_returns_error():
         settings.AI_BASE_URL = old
 
 
-def test_route_happy_path_with_mocked_provider():
+def test_route_happy_path_with_mocked_provider(ai_policy_allowed):
     settings.AI_BASE_URL = "https://api.openai.com/v1"
     settings.AI_API_KEY = "sk-test"
 
