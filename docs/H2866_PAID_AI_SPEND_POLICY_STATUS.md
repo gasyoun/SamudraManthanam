@@ -123,11 +123,24 @@ instead of a hand-maintained list, and fails when:
 3. `evaluate_call` stops preceding the HTTP dispatch inside `_openai_chat`
    (line-order on the AST, so a reordering regression fails);
 4. a second dispatch appears anywhere else in `ai_service`;
-5. the set of `/api/ai/*` routes changes;
-6. any `/api/ai/*` route lacks the `_require_quota` dependency.
+5. the set of `/api/ai/*` routes mounted on the live app changes;
+6. any `@router.*` handler in `routers/ai.py` lacks a `Depends(_require_quota)`
+   parameter.
 
 `ai_policy.py` is deliberately **not** exempt from (2): it must decide without
 ever holding the credentials.
+
+Checks (5) and (6) are duck-typed and source-level respectively, on purpose.
+The first attempt filtered `app.routes` with `isinstance(r, APIRoute)` and
+walked `route.dependant` — both FastAPI internals. On the CI image's
+`fastapi==0.141.1` (local dev runs 0.136.1) the isinstance filter returned an
+**empty** route set while every route worked perfectly, i.e. the census went
+silently vacuous exactly where it was supposed to be loudest. A census that can
+quietly stop censusing is worse than none, so neither check now depends on a
+FastAPI internal: (5) reads `path` off whatever objects are mounted, and (6)
+parses `routers/ai.py` — the thing being guarded against is a handler added
+without the gate, and that is visible in the source no matter what the routing
+layer does internally.
 
 ## 4. Deploy, smoke, rollback
 

@@ -26,9 +26,6 @@ instead of quietly widening the bill.
 import ast
 import pathlib
 
-import pytest
-from fastapi.routing import APIRoute
-
 import app.routers.ai as ai_router
 from app.main import app
 
@@ -185,33 +182,82 @@ def test_no_other_async_function_in_the_service_calls_the_provider():
     )
 
 
-def _paid_routes() -> list[APIRoute]:
-    return [
-        r
-        for r in app.routes
-        if isinstance(r, APIRoute) and r.path.startswith("/api/ai")
-    ]
+def _paid_route_paths() -> list[str]:
+    """Every mounted path under `/api/ai`, read off the live app.
+
+    Deliberately duck-typed rather than `isinstance(r, APIRoute)`: the route
+    class FastAPI puts in `app.routes` is an internal detail that has moved
+    between releases (an isinstance filter silently returned an EMPTY set on
+    fastapi 0.141 while every route worked fine), and a census that can go
+    quietly vacuous is worse than no census.
+    """
+    return sorted(
+        {
+            path
+            for path in (str(getattr(r, "path", "")) for r in app.routes)
+            if path.startswith("/api/ai")
+        }
+    )
 
 
 def test_paid_routes_exist_so_the_census_is_not_vacuous():
-    paths = sorted(r.path for r in _paid_routes())
+    paths = _paid_route_paths()
     assert paths == ["/api/ai/compare-translations", "/api/ai/explain"], (
         "the set of paid AI routes changed; re-read H2866 and confirm the new "
         f"route is policy-covered before updating this list: {paths}"
     )
 
 
-@pytest.mark.parametrize("route", _paid_routes(), ids=lambda r: r.path)
-def test_every_paid_route_requires_auth_and_quota(route: APIRoute):
-    """Walk the dependency tree; `_require_quota` must be in it."""
-    seen = []
-    stack = list(route.dependant.dependencies)
-    while stack:
-        dep = stack.pop()
-        if dep.call is not None:
-            seen.append(dep.call)
-        stack.extend(dep.dependencies)
-    assert ai_router._require_quota in seen, (
-        f"{route.path} does not depend on _require_quota — it is reachable "
-        "without a session and without consuming the monthly quota"
+def _route_decorated_functions() -> list[ast.AST]:
+    """Every function in `routers/ai.py` carrying an `@router.<method>` decorator."""
+    tree = ast.parse(PAID_ROUTER.read_text(encoding="utf-8"))
+    found = []
+    for node in ast.walk(tree):
+        if not isinstance(node, (ast.AsyncFunctionDef, ast.FunctionDef)):
+            continue
+        for dec in node.decorator_list:
+            call = dec.func if isinstance(dec, ast.Call) else dec
+            if isinstance(call, ast.Attribute) and isinstance(call.value, ast.Name):
+                if call.value.id == "router":
+                    found.append(node)
+                    break
+    return found
+
+
+def test_every_paid_route_requires_auth_and_quota():
+    """Each `@router.*` handler must take a `Depends(_require_quota)` parameter.
+
+    Source-level rather than a walk of `route.dependant`: the dependency-tree
+    API is FastAPI-internal and version-fragile, while the thing being
+    protected against — somebody adding a handler to this file and forgetting
+    the gate — is visible in the source and cannot be version-shifted away.
+    """
+    handlers = _route_decorated_functions()
+    assert handlers, "census is stale: no @router-decorated handlers found in routers/ai.py"
+
+    missing = []
+    for func in handlers:
+        args = func.args
+        defaults = list(args.defaults) + [d for d in args.kw_defaults if d is not None]
+        guarded = any(
+            isinstance(d, ast.Call)
+            and isinstance(d.func, ast.Name)
+            and d.func.id == "Depends"
+            and d.args
+            and isinstance(d.args[0], ast.Name)
+            and d.args[0].id == "_require_quota"
+            for d in defaults
+        )
+        if not guarded:
+            missing.append(func.name)
+
+    assert missing == [], (
+        "these /api/ai handlers do not take Depends(_require_quota) — they are "
+        "reachable without a session and without consuming the monthly quota: "
+        + ", ".join(missing)
     )
+
+
+def test_the_quota_gate_still_exists_under_that_name():
+    """Guards the test above against passing because the name was renamed."""
+    assert callable(ai_router._require_quota)
