@@ -183,21 +183,19 @@ def test_no_other_async_function_in_the_service_calls_the_provider():
 
 
 def _paid_route_paths() -> list[str]:
-    """Every mounted path under `/api/ai`, read off the live app.
+    """Every mounted path under `/api/ai`, read off the live app's OpenAPI schema.
 
-    Deliberately duck-typed rather than `isinstance(r, APIRoute)`: the route
-    class FastAPI puts in `app.routes` is an internal detail that has moved
-    between releases (an isinstance filter silently returned an EMPTY set on
-    fastapi 0.141 while every route worked fine), and a census that can go
-    quietly vacuous is worse than no census.
+    `app.routes` is deliberately NOT used. It is an internal structure that has
+    changed shape between releases: on `fastapi==0.141.1` (the CI image; local
+    dev runs 0.136.1) `include_router` leaves a single opaque
+    `fastapi.routing._IncludedRouter` with no `path`, no `routes` and no
+    `router` attribute, so both an `isinstance(r, APIRoute)` filter and a
+    recursive `.routes` walk return an EMPTY set while every route serves
+    normally. A census that can go quietly vacuous is worse than no census.
+    `app.openapi()["paths"]` is the documented public surface and reports the
+    same set on both versions.
     """
-    return sorted(
-        {
-            path
-            for path in (str(getattr(r, "path", "")) for r in app.routes)
-            if path.startswith("/api/ai")
-        }
-    )
+    return sorted(p for p in app.openapi()["paths"] if p.startswith("/api/ai"))
 
 
 def test_paid_routes_exist_so_the_census_is_not_vacuous():
