@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **H2820 — CLAUDE.md truth-pass** (Grok 4.6 `grok-4.6`, 16-08-2026). What this
+  repo is (Sanskrit–Russian corpus search), how to run the live FastAPI surface
+  (`uvicorn`, `pytest -m "not corpus"`, known prod deploy) plus legacy Lazarus,
+  do-not-touch (second indexer / reindex-as-restart). AGENTS.md twin
+  regenerated.
+
 ## [0.19.43] - 2026-08-15
 
 ### Security
