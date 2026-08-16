@@ -30,6 +30,7 @@ from app.services.ai_policy import (
     estimate_prompt_tokens,
     evaluate_call,
     load_price_table,
+    log_policy_config,
     policy_config_report,
 )
 from app.services.ai_service import _openai_chat
@@ -453,3 +454,28 @@ def test_config_report_never_leaks_the_key(policy_env):
     report = policy_config_report()
     assert "sk-test" not in json.dumps(report)
     assert "AI_API_KEY" not in json.dumps(report)
+
+
+@pytest.mark.parametrize(
+    "enabled,priced",
+    [(False, True), (True, True), (True, False)],
+)
+def test_startup_posture_line_survives_uvicorn_log_levels(policy_env, caplog, enabled, priced):
+    """The posture line must be WARNING+ in every branch.
+
+    Under uvicorn the app's loggers have no handler, so journald only ever sees
+    what the root `lastResort` handler emits — WARNING and above. An INFO
+    posture line would make OPS.md's `journalctl … | grep ai_policy` check
+    answer "nothing" for a disabled AND an enabled service alike.
+    """
+    policy_env.AI_ENABLED = enabled
+    if not priced:
+        policy_env.AI_MODEL_PRICES = ""
+    caplog.clear()
+    with caplog.at_level(0, logger="app.services.ai_policy"):
+        log_policy_config()
+    records = [r for r in caplog.records if r.name == "app.services.ai_policy"]
+    assert records, "startup must say something about the paid-AI posture"
+    assert all(r.levelno >= 30 for r in records), (
+        "posture line below WARNING is invisible in production journald"
+    )

@@ -296,14 +296,24 @@ def policy_config_report() -> Dict[str, Any]:
 
 
 def log_policy_config() -> Dict[str, Any]:
-    """Emit one startup line describing the paid-AI posture. Never raises."""
+    """Emit one startup line describing the paid-AI posture. Never raises.
+
+    Every branch logs at WARNING or above, including the safe one. That looks
+    like over-logging and is not: under uvicorn the app's own loggers get no
+    handler, so the root `lastResort` handler is what reaches journald — and it
+    drops anything below WARNING. An INFO posture line is invisible in
+    production, which would make OPS.md's `journalctl -u samudra | grep
+    ai_policy` check silently answer "nothing" for both a disabled and an
+    enabled service. One line per restart is a cheap price for a spend posture
+    an operator can actually read back.
+    """
     try:
         report = policy_config_report()
     except Exception:  # pragma: no cover - defensive; startup must not crash
         logger.exception("ai_policy: configuration report failed")
         return {}
     if not report["enabled"]:
-        logger.info(
+        logger.warning(
             "ai_policy: paid AI DISABLED (AI_ENABLED=false) — zero provider calls possible"
         )
     elif report["problems"]:
