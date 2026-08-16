@@ -1,6 +1,6 @@
 # Deployment Guide — Samudra Manthanam (No-Docker VPS)
 
-_Created: 19-06-2026 · Last updated: 14-08-2026_
+_Created: 19-06-2026 · Last updated: 17-08-2026_
 
 This guide covers a plain-Python deployment on a Debian/Ubuntu VPS using
 **systemd + nginx**. No Docker is required.
@@ -119,6 +119,22 @@ AI_PROVIDER=openai-compatible
 AI_BASE_URL=
 AI_API_KEY=
 AI_MODEL=
+
+# Paid-AI spend policy (H2866). DENY BY DEFAULT: with AI_ENABLED unset or
+# false, /api/ai/* answers 503 and no provider request is ever dispatched,
+# however well funded AI_API_KEY is. Turning AI on is TWO steps — price the
+# model first, then flip the switch; either step alone still fails closed.
+AI_ENABLED=false
+# Hard per-call output bound, sent as max_tokens. Must be 1..4096.
+AI_MAX_OUTPUT_TOKENS=1024
+# Worst-case cost ceiling for ONE call, in AI_COST_CURRENCY. Must be in (0, 1.0].
+AI_MAX_COST_PER_CALL=0.05
+AI_COST_CURRENCY=USD
+# JSON price map, per 1M tokens. No built-in defaults on purpose: a stale
+# hard-coded price under-states cost and silently widens the ceiling. An
+# unpriced AI_MODEL rejects every call as `unknown_model_price`. Copy the
+# current numbers from the provider's price list — nothing here checks them.
+AI_MODEL_PRICES={"currency":"USD","models":{"gpt-4o-mini":{"input_per_1m":0.15,"output_per_1m":0.60}}}
 EOF
 chmod 600 /opt/samudra/.env
 chown root:samudra /opt/samudra/.env

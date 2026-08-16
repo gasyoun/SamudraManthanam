@@ -1,6 +1,6 @@
 # OPS.md — Samudra Manthanam production operator path
 
-_Created: 08-08-2026 · Last updated: 14-08-2026_  
+_Created: 08-08-2026 · Last updated: 17-08-2026_  
 _(+ H2391 branded hostname live · H2398 HSTS/security headers · H2397 logs-bounded · H2396 admin-env hardening)_
 
 **Purpose:** one copy-paste path for code deploy, smoke, and rollback on the live box.
@@ -46,7 +46,47 @@ apex `samskrte.ru` is a different vhost and must not be edited for Samudra).
 Env keys expected in `/opt/samudra/.env` (values never committed):
 `APP_ENV`, `DB_PATH`, `STATE_DB_PATH`, `PUBLIC_BASE_URL`, `ALLOWED_ORIGINS`,
 `ADMIN_SECRET_KEY`, `SYSTEMA_SANSCRITICUM_URL`, `SITE_DESCRIPTION`,
-`AI_PROVIDER`, `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL`.
+`AI_PROVIDER`, `AI_BASE_URL`, `AI_API_KEY`, `AI_MODEL`,
+`AI_ENABLED`, `AI_MAX_OUTPUT_TOKENS`, `AI_MAX_COST_PER_CALL`,
+`AI_COST_CURRENCY`, `AI_MODEL_PRICES`.
+
+### Paid-AI kill switch (H2866)
+
+`AI_ENABLED` is the one lever that stops all provider spend. It is **false**
+by default and false on this box; while it is false, `/api/ai/explain` and
+`/api/ai/compare-translations` answer 503 for authenticated callers and no
+provider request is dispatched at all — funding the key changes nothing.
+
+Confirm the current posture from the log, not from memory:
+
+```bash
+journalctl -u samudra --since "-5 min" | grep ai_policy
+# ai_policy: paid AI DISABLED (AI_ENABLED=false) — zero provider calls possible
+```
+
+**To enable** (two steps, both required — either alone still fails closed):
+
+```bash
+# 1. price the model you actually run, per 1M tokens, from the provider's
+#    current price list; nothing in the app can verify these numbers
+echo 'AI_MODEL_PRICES={"currency":"USD","models":{"<model>":{"input_per_1m":0.15,"output_per_1m":0.60}}}' >> /opt/samudra/.env
+# 2. flip the switch
+sed -i 's/^AI_ENABLED=.*/AI_ENABLED=true/' /opt/samudra/.env
+systemctl restart samudra
+journalctl -u samudra --since "-2 min" | grep ai_policy   # must say ENABLED, no "misconfigured"
+```
+
+**To roll back instantly** — this is the kill switch, use it without
+hesitation if spend looks wrong:
+
+```bash
+sed -i 's/^AI_ENABLED=.*/AI_ENABLED=false/' /opt/samudra/.env
+systemctl restart samudra
+```
+
+Never rotate, reveal or re-fund `AI_API_KEY` as part of this procedure, and
+never clear the `rate_limits` rows that hold the monthly quota — the quota is
+per-user spend history, not a cache.
 
 ---
 

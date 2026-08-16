@@ -70,3 +70,51 @@ async def test_db(tmp_path_factory):
 async def setup_test_db(test_db):
     # Ensure settings.DB_PATH is always pointing to test_db for every test
     settings.DB_PATH = test_db
+
+
+#: Prices for the fake models the test-suite talks to. Real numbers are a
+#: deployment concern (`AI_MODEL_PRICES`); these exist only so the H2866
+#: spend policy can price a mocked call. Deliberately cheap so the default
+#: ceiling is not the thing under test unless a test says so.
+TEST_MODEL_PRICES = {
+    "currency": "USD",
+    "models": {
+        "gpt-4-mock": {"input_per_1m": 0.15, "output_per_1m": 0.60},
+        "gpt-3.5-turbo": {"input_per_1m": 0.50, "output_per_1m": 1.50},
+        "local-model": {"input_per_1m": 0.0, "output_per_1m": 0.0},
+    },
+}
+
+
+@pytest.fixture
+def ai_policy_allowed():
+    """Enable the H2866 paid-AI policy for one test, then restore it.
+
+    Paid AI is deny-by-default (`AI_ENABLED=False`, no configured prices),
+    so any test that expects a mocked provider call to actually happen must
+    opt in through this fixture. That is the point: forgetting it makes the
+    call fail closed, not silently bill. Tests that assert the *rejection*
+    behaviour set the settings themselves and must not use this fixture.
+    """
+    import json as _json
+
+    saved = {
+        name: getattr(settings, name)
+        for name in (
+            "AI_ENABLED",
+            "AI_MODEL_PRICES",
+            "AI_MAX_OUTPUT_TOKENS",
+            "AI_MAX_COST_PER_CALL",
+            "AI_COST_CURRENCY",
+        )
+    }
+    settings.AI_ENABLED = True
+    settings.AI_MODEL_PRICES = _json.dumps(TEST_MODEL_PRICES)
+    settings.AI_MAX_OUTPUT_TOKENS = 1024
+    settings.AI_MAX_COST_PER_CALL = 0.05
+    settings.AI_COST_CURRENCY = "USD"
+    try:
+        yield settings
+    finally:
+        for name, value in saved.items():
+            setattr(settings, name, value)

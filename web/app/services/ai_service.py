@@ -1,11 +1,15 @@
 import asyncio
 import httpx
 import json
+import logging
 import re
 import time
 from app.services.ai_cache import cache_get, cache_put, hash_request
+from app.services.ai_policy import evaluate_call
 from app.settings import settings
 from typing import List, Dict, Any
+
+logger = logging.getLogger(__name__)
 
 # Strip simple HTML tags so AI prompts never carry markup. Cheap; intentional
 # replacement for a full HTML parser since corpus line_html is well-formed
@@ -41,7 +45,22 @@ async def _openai_chat(
     Provider-agnostic: works with any base_url that exposes the OpenAI
     chat/completions schema (OpenAI, Ollama-with-openai-shim, vLLM,
     LM Studio, etc.).
+
+    Spend policy (H2866) is evaluated FIRST — before the configuration
+    check and before the cache lookup — so that a disabled or
+    misconfigured service is uniformly inert: no provider call, and no
+    cached answer served from a service an operator believes is off. The
+    verdict costs zero HTTP requests, and the bound it returns is the
+    `max_tokens` actually sent, so the ceiling that was checked is the
+    ceiling that applies.
     """
+    policy = evaluate_call(system_prompt, user_prompt, model=settings.AI_MODEL)
+    if not policy.allowed:
+        logger.warning(
+            "ai_policy rejected task=%s code=%s: %s", task, policy.code, policy.reason
+        )
+        return {"error": policy.error_message, "policy_code": policy.code}
+
     if not settings.AI_BASE_URL:
         return {"error": "AI service (AI_BASE_URL) not configured"}
 
@@ -60,6 +79,9 @@ async def _openai_chat(
             {"role": "user", "content": user_prompt},
         ],
         "temperature": temperature,
+        # The exact bound the cost ceiling was computed against. Sending a
+        # different (or no) value would make the pre-call estimate a lie.
+        "max_tokens": policy.max_tokens,
     }
     headers = {"Content-Type": "application/json"}
     if settings.AI_API_KEY:

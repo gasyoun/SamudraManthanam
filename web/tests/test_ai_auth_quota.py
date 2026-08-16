@@ -115,7 +115,9 @@ def test_compare_translations_rejects_unauthenticated_caller():
 # ── Route level: hard monthly quota ─────────────────────────────────────────
 
 
-def test_explain_returns_429_with_retry_after_when_quota_exhausted(monkeypatch):
+def test_explain_returns_429_with_retry_after_when_quota_exhausted(
+    monkeypatch, ai_policy_allowed
+):
     monkeypatch.setattr(ai_router, "AI_MONTHLY_CALL_LIMIT", 1)
     settings.AI_BASE_URL = "https://api.openai.com/v1"
     settings.AI_API_KEY = "sk-test"
@@ -141,7 +143,7 @@ def test_explain_returns_429_with_retry_after_when_quota_exhausted(monkeypatch):
     assert mock_post.call_count == 1
 
 
-def test_quota_is_scoped_per_session_not_global(monkeypatch):
+def test_quota_is_scoped_per_session_not_global(monkeypatch, ai_policy_allowed):
     """A second, distinct session must not inherit the first session's
     exhausted bucket — the quota is `key=f"user:{session.user_id}"`."""
     monkeypatch.setattr(ai_router, "AI_MONTHLY_CALL_LIMIT", 1)

@@ -180,7 +180,7 @@ async def test_cache_stats_counts_by_task(fresh_ai_cache):
 # ── End-to-end through _openai_chat: hit/miss with mocked provider ──────────
 
 @pytest.mark.asyncio
-async def test_openai_chat_writes_to_cache_on_first_call(fresh_ai_cache):
+async def test_openai_chat_writes_to_cache_on_first_call(fresh_ai_cache, ai_policy_allowed):
     settings.AI_BASE_URL = "https://api.openai.com/v1"
     settings.AI_API_KEY = "sk-test"
     settings.AI_MODEL = "gpt-4-mock"
@@ -210,7 +210,9 @@ async def test_openai_chat_writes_to_cache_on_first_call(fresh_ai_cache):
 
 
 @pytest.mark.asyncio
-async def test_openai_chat_returns_cached_on_second_call_without_provider_hit(fresh_ai_cache):
+async def test_openai_chat_returns_cached_on_second_call_without_provider_hit(
+    fresh_ai_cache, ai_policy_allowed
+):
     settings.AI_BASE_URL = "https://api.openai.com/v1"
     settings.AI_API_KEY = "sk-test"
     settings.AI_MODEL = "gpt-4-mock"
@@ -241,7 +243,7 @@ async def test_openai_chat_returns_cached_on_second_call_without_provider_hit(fr
 
 
 @pytest.mark.asyncio
-async def test_openai_chat_different_prompts_cache_separately(fresh_ai_cache):
+async def test_openai_chat_different_prompts_cache_separately(fresh_ai_cache, ai_policy_allowed):
     settings.AI_BASE_URL = "https://api.openai.com/v1"
     settings.AI_API_KEY = "sk-test"
     settings.AI_MODEL = "gpt-4-mock"
@@ -265,7 +267,7 @@ async def test_openai_chat_different_prompts_cache_separately(fresh_ai_cache):
 
 
 @pytest.mark.asyncio
-async def test_openai_chat_error_response_is_not_cached(fresh_ai_cache):
+async def test_openai_chat_error_response_is_not_cached(fresh_ai_cache, ai_policy_allowed):
     # Provider 500 → error result → don't poison the cache with the error.
     settings.AI_BASE_URL = "https://api.openai.com/v1"
     settings.AI_API_KEY = "sk-test"

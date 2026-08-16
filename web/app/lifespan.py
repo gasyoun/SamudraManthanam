@@ -20,6 +20,7 @@ from app import corpus_info
 from app.corpus_compat import ensure_slug_column_and_backfill
 from app.db import get_db
 from app.migrations.corpus_policy import check_corpus_schema_version
+from app.services.ai_policy import log_policy_config
 from app.settings import settings
 from app.state_db import get_state_db, init_state_db
 
@@ -77,6 +78,9 @@ async def lifespan(app: FastAPI):
     the corpus search should keep working in degraded mode while the operator
     fixes the state DB. State-dependent routes will surface clean 503s."""
     await check_corpus_db()
+    # H2866: state the paid-AI posture once, at startup, so "is the AI on?"
+    # is answerable from the log rather than by reading the env by hand.
+    log_policy_config()
     if settings.STATE_DB_PATH:
         db = None
         try:

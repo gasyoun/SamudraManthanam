@@ -63,7 +63,9 @@ def test_ai_explain_requires_auth():
     assert response.status_code == 401
 
 
-def test_ai_explain_unconfigured():
+def test_ai_explain_unconfigured(ai_policy_allowed):
+    # Policy allowed (fixture) but no provider endpoint — the "AI_BASE_URL is
+    # empty" branch, distinct from an H2866 policy rejection.
     settings.AI_BASE_URL = ""
     # Force dev mode so the test sees the verbose "not configured" message;
     # otherwise an earlier CORS test may have left APP_ENV in production.
@@ -177,7 +179,7 @@ def test_ingest_source_count_matches_actual_rows(tmp_path):
     assert recorded == "1"   # source_count must reflect reality, not the manifest
 
 @pytest.mark.asyncio
-async def test_ai_service_call_mocked():
+async def test_ai_service_call_mocked(ai_policy_allowed):
     settings.AI_BASE_URL = "https://api.openai.com/v1"
     settings.AI_API_KEY = "sk-test"
     
