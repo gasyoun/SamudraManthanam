@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.46] - 2026-08-17
+
+### Fixed
+
+- **Prod `POST /api/search` 500s on interleaved Sanskrit/Russian rows** (H3031,
+  Sonnet 5 `claude-sonnet-5`, 17-08-2026). `web/corpus_builder/align_sanskrit.py`
+  deliberately assigns Sanskrit lines `ru_seq - 0.5` so they sort right before
+  their Russian-pane companion — 14 sources, ~34.7k rows in the live corpus DB.
+  `SearchResultItem.line_num` was declared `int`, so Pydantic strict-mode
+  rejected the real float value and 500ed every query that returned one of
+  those rows, silently, since 08-08-2026 (16 occurrences in the retained
+  journal). Widened `line_num` to `float` in
+  [`web/app/models.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/app/models.py)
+  and the `/api/search/context` query param in
+  [`web/app/routers/search.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/app/routers/search.py);
+  downstream consumers (templates, deep-link building) already treat
+  `line_num` as an opaque display value, `link_id` is the stable deep-link
+  key. Verified live: `agni` and `rama\nsita` both 200, plus a
+  `source_ids=[83]` (devibhagavata-purana) query returning 39/42 rows with a
+  fractional `line_num` at 200. Hermetic suite green (1024 passed).
+  [PR #325](https://github.com/gasyoun/SamudraManthanam/pull/325).
+
 ## [0.19.45] - 2026-08-17
 
 ### Changed
