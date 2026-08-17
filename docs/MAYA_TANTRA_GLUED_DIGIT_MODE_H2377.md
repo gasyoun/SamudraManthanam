@@ -49,11 +49,7 @@ bogus high-N jumps).
 |---|---|
 | `bracket` | Pre-H2377 path (pandoc `[N]` end-block). Default for `auto`. |
 | `glued-digit` | Page-local strip + glued inline linking. |
-| `auto` | **Conservative: always `bracket`.** Wave-A PDFs (Nirvāṇa, Yoni, …)
-  also carry page-local notes whose committed counts were frozen under the
-  old path; density-based auto would re-baseline them. Force
-  `--footnote-mode glued-digit` for Māyā-class works. Density diagnostics:
-  `glued_digit_signal(text)`. |
+| `auto` | **Conservative: always `bracket`.** Wave-A PDFs (Nirvāṇa, Yoni, …) also carry page-local notes whose committed counts were frozen under the old path; density-based auto would re-baseline them. Force `--footnote-mode glued-digit` for Māyā-class works. Density diagnostics: `glued_digit_signal(text)`. |
 
 ### Rejected alternatives
 
