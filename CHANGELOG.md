@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.19.45] - 2026-08-17
+
+### Changed
+
+- **Paid AI turned ON in production** (H2866 activation, Opus 5
+  `claude-opus-5`, 17-08-2026). The engineering half shipped in `0.19.44` and
+  deliberately left `AI_ENABLED=false`; this is the operator decision to flip
+  it. Because the policy is deny-by-default in *two* independent ways,
+  enabling took two changes, not one — `AI_ENABLED=true` alone would have left
+  every call refusing with `pricing_not_configured`, i.e. enabled in name and
+  dead in practice, so `AI_MODEL_PRICES` had to be configured as well.
+  `deepseek/deepseek-chat` is priced at `0.30` in / `1.20` out USD per 1M:
+  OpenRouter's published `0.2574` / `1.0287`, rounded **up** so the ceiling
+  errs strict. Verified from both uvicorn workers' own startup log
+  (`ai_policy: paid AI ENABLED — model=deepseek/deepseek-chat max_tokens=1024
+  ceiling=0.05 USD`), plus a policy probe showing a typical call allowed at
+  `max_tokens=1024`, a 400 000-character prompt refused
+  `cost_ceiling_exceeded`, and an unpriced model refused `unknown_model_price`.
+  Local smoke: home 200, `/api/ai/explain` 401 unauthenticated. Rollback is one
+  `sed` plus a restart —
+  [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md)
+  § Paid-AI kill switch. Worst-case exposure under the existing 1,000-call
+  monthly per-user quota is $50 per user per month.
+
 ## [0.19.44] - 2026-08-17
 
 ### Security
