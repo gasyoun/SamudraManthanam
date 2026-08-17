@@ -53,16 +53,38 @@ Env keys expected in `/opt/samudra/.env` (values never committed):
 ### Paid-AI kill switch (H2866)
 
 `AI_ENABLED` is the one lever that stops all provider spend. It is **false**
-by default and false on this box; while it is false, `/api/ai/explain` and
+by default; while it is false, `/api/ai/explain` and
 `/api/ai/compare-translations` answer 503 for authenticated callers and no
 provider request is dispatched at all — funding the key changes nothing.
+
+**Current posture on this box: ENABLED since 17-08-2026** (operator decision,
+taken after every H2866 engineering gate had passed). Live configuration:
+
+| Key | Value | Where it comes from |
+|---|---|---|
+| `AI_ENABLED` | `true` | operator decision 17-08-2026 |
+| `AI_MODEL` | `deepseek/deepseek-chat` | pre-existing |
+| `AI_MODEL_PRICES` | `0.30` in / `1.20` out, USD per 1M | OpenRouter's published rates for that model on 17-08-2026 (`0.2574` / `1.0287`), **rounded up** |
+| `AI_MAX_OUTPUT_TOKENS` | `1024` | code default |
+| `AI_MAX_COST_PER_CALL` | `0.05 USD` | code default |
+
+Prices are rounded **up** on purpose: over-stating price tightens the ceiling,
+while under-stating it lets an over-budget call through. Re-check them against
+the provider's price list whenever `AI_MODEL` changes — nothing in the app can
+verify these numbers, and a stale price silently widens the ceiling.
+
+Worst-case exposure is the ceiling times the pre-existing 1,000-call monthly
+per-user quota: **$50 per user per month** if every call were maximal. Real
+calls cost far less, but that is the number to reason about, not the average.
 
 Confirm the current posture from the log, not from memory:
 
 ```bash
 journalctl -u samudra --since "-5 min" | grep ai_policy
-# ai_policy: paid AI DISABLED (AI_ENABLED=false) — zero provider calls possible
+# ai_policy: paid AI ENABLED — model=deepseek/deepseek-chat max_tokens=1024 ceiling=0.05 USD
 ```
+
+The pre-activation `.env` is kept at `/opt/samudra/.env.bak-h2866-enable-17.08.26`.
 
 **To enable** (two steps, both required — either alone still fails closed):
 
