@@ -225,33 +225,64 @@ No `.env` change, no migration, no reindex, no key or quota state touched. The
 drill script restores `main` unconditionally, so a failure inside it could not
 strand production on an old commit.
 
-## 5. Production verdict
+## 5. Production verdict — SUPERSEDED 17-08-2026: paid AI is ON
 
-`AI_ENABLED` stays **false** in production, and this is a deliberate stop, not
-an incomplete gate. Every engineering gate in the handoff passed; what remains
-is a business decision about whether to spend money on AI at all, which is not
-an agent's to take. See §6 for what turning it on would involve.
+At ship time `AI_ENABLED` stayed **false**, as a deliberate stop rather than an
+incomplete gate: every engineering gate passed, and only the business decision
+remained. **That decision was taken on 17-08-2026 and the switch is now on.**
+§6 records the live configuration; the paragraphs below it are kept as the
+pre-activation record.
 
-## 6. What a human decides, and what happens if nobody does
+## 6. Live configuration (17-08-2026)
 
-Nothing in this handoff waits on a human. The service is complete and safe in
-its shipped configuration; enabling paid AI is an optional business decision,
-not a missing engineering step.
+| Key | Value | Source |
+|---|---|---|
+| `AI_ENABLED` | `true` | operator decision 17-08-2026 |
+| `AI_MODEL` | `deepseek/deepseek-chat` | pre-existing |
+| `AI_MODEL_PRICES` | `0.30` in / `1.20` out, USD per 1M | OpenRouter's published rates that day (`0.2574` / `1.0287`), **rounded up** |
+| `AI_MAX_OUTPUT_TOKENS` | `1024` | code default, unchanged |
+| `AI_MAX_COST_PER_CALL` | `0.05 USD` | code default, unchanged |
 
-If someone does want it on, the act is: edit `/opt/samudra/.env` on
-`root@193.232.229.92`, add an `AI_MODEL_PRICES` line pricing
-`deepseek/deepseek-chat` (the model that box actually runs — numbers copied
-from the provider's current price list, since nothing in the app can verify
-them), add `AI_ENABLED=true` (the key is currently absent from the file, and an
-absent key means false), and `systemctl restart samudra`, then confirm the
-journal says `ENABLED` with no `misconfigured`. The literal commands and
-the one-line rollback are in
+Enabling took **two** changes, not one — the prediction in §2 held exactly.
+The box had no `AI_MODEL_PRICES` at all, so `AI_ENABLED=true` alone would have
+left every call refusing `pricing_not_configured`: enabled in name, dead in
+practice. Prices are rounded **up** deliberately, because over-stating price
+tightens the ceiling while under-stating it lets an over-budget call through.
+
+Verified from both uvicorn workers' own startup log rather than from the
+config file:
+
+```
+ai_policy: paid AI ENABLED — model=deepseek/deepseek-chat max_tokens=1024 ceiling=0.05 USD
+```
+
+Policy probe on the live box: a typical Russian prompt **allowed** at
+`max_tokens=1024`; a 400 000-character prompt **refused**
+`cost_ceiling_exceeded`; an unpriced model (`anthropic/claude-3.5-sonnet`)
+**refused** `unknown_model_price`. Loopback smoke: home 200,
+`/api/ai/explain` 401 unauthenticated. The public URL was **not** smoked
+end-to-end — the box has no NAT hairpin and cannot curl its own public
+hostname (returns `000`), so that check must be driven from outside.
+
+Shipped as
+[v0.19.45](https://github.com/gasyoun/SamudraManthanam/releases/tag/v0.19.45)
+([PR #322](https://github.com/gasyoun/SamudraManthanam/pull/322)). The
+pre-activation `.env` is kept on the box at
+`/opt/samudra/.env.bak-h2866-enable-17.08.26`.
+
+**Money exposure, stated as a bound rather than an average:** the ceiling is
+per *call*. Against the pre-existing 1 000-call monthly per-user quota, the
+worst case is **$50 per user per month**. Real calls cost far less, but that is
+the number to reason about. Rollback is one `sed` plus a restart —
 [OPS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md)
-§ Paid-AI kill switch.
+§ Paid-AI kill switch — and it is the kill switch, so use it without hesitation
+if spend looks wrong.
 
-If nobody ever does it, the two AI routes keep answering 503 for authenticated
-callers, no provider request is ever dispatched, and the key can be funded or
-left dead with identical financial consequence — zero. That is the point of the
-default.
+### Pre-activation record (kept for provenance)
+
+Before 17-08-2026 the two AI routes answered 503 for authenticated callers, no
+provider request was ever dispatched, and the key could be funded or left dead
+with identical financial consequence — zero. That was the point of the default,
+and it is what the rollback returns to.
 
 _Dr. Mārcis Gasūns_
