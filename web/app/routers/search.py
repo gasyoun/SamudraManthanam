@@ -205,7 +205,7 @@ async def get_search_stream(
 @router.get("/context")
 async def get_context(
     source_id: int,
-    line_num: int,
+    line_num: float,
     window: int = Query(default=5, ge=1, le=20),
 ):
     """Return up to `window` lines before and after `line_num` in the given source."""

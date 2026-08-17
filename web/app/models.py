@@ -48,7 +48,11 @@ class SearchResultItem(BaseModel):
     source_id: int
     source_title: str
     chapter: Optional[str] = ""
-    line_num: int
+    # H3031: `align_sanskrit.py` deliberately assigns Sanskrit lines
+    # `ru_seq - 0.5` so they sort immediately before their Russian pane
+    # (14 sources, ~34.7k rows in prod as of 17-08-2026) — a real value, not
+    # corpus corruption. `int` here 500s every query that hits one.
+    line_num: float
     link_id: Optional[str] = ""
     line_html: str
     line_text: str
