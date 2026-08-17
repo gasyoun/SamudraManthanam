@@ -252,7 +252,11 @@ async def test_multi_query_header_does_not_duplicate_ordinal():
     assert response.status_code == 200
     fragment = response.json()["html_fragment"]
     assert "2-та" not in fragment
-    assert "в 2-х поисковых запросах" in fragment
+    # PR #161 (commit 6d7fa82) intentionally dropped the old "при пахтании
+    # океана в N поисковых запросах" header in favor of a compact stats
+    # line that folds every query term into one quoted, comma-joined
+    # string instead of counting them — assert that current contract.
+    assert "«arjuna, krishna»" in fragment
 
 @pytest.mark.asyncio
 async def test_morphological_search_metadata():
