@@ -156,7 +156,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.19.29] - 2026-08-08
 ### Added
-- **H2450 remainder reparse (Grok 4.5 grok-4.5).** New racket-free footnote mode: free-form [N] text notes linked by first inline use. Auto chain: structured → prose (≥10) → free (≥3). Colophon skip so MBH notes collect after «ТАК ЗАКАНЧИВАЕТСЯ». Shared note block attached to MBH 16–18. Results: kama prose 489; MBH free 154+55+127 comments; yoni 13; kadambara/bhagavati residue documented. Driver h2450_remainder_reparse.py; doc docs/H2450_REMAINDER_REPARSE.md; summary jsonl/h2450_remainder_reparse_summary.json.
+- **H2450 remainder reparse (Grok 4.5 grok-4.5).** New bracket-free footnote mode: free-form [N] text notes linked by first inline use. Auto chain: structured → prose (≥10) → free (≥3). Colophon skip so MBH notes collect after «ТАК ЗАКАНЧИВАЕТСЯ». Shared note block attached to MBH 16–18. Results: kama prose 489; MBH free 154+55+127 comments; yoni 13; kadambara/bhagavati residue documented. Driver h2450_remainder_reparse.py; doc docs/H2450_REMAINDER_REPARSE.md; summary jsonl/h2450_remainder_reparse_summary.json.
 
 ## [0.19.28] - 2026-08-08
 ### Added
