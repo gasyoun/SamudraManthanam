@@ -203,9 +203,21 @@ Delphi 7.
       [`Corpus_builder/README.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/README.md)
       § Headless CLI. **Residual:** recompile `cb_headless.exe` with
       `lazbuild` on a machine that has Lazarus (same host pattern as H2417/H2427).
-- [ ] **Стык с веб-конвейером.** Встроить headless-сборку в шаг перед
-      `build-web-db.ps1` / `reindex.sh`, чтобы поисковая БД (SQLite FTS5)
-      пересобиралась из свежего HTML одним прогоном.
+- [x] **Стык с веб-конвейером.** Done 09-08-2026 (H2433, Sonnet 5
+      `claude-sonnet-4-6`, [PR #263](https://github.com/gasyoun/SamudraManthanam/pull/263)):
+      [`scripts/run_headless_cb.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/run_headless_cb.py)
+      runs `cb_headless` from an optional jobs file
+      ([`Corpus_builder/pipeline/headless_jobs.example.jsonl`](https://github.com/gasyoun/SamudraManthanam/blob/main/Corpus_builder/pipeline/headless_jobs.example.jsonl))
+      as a step before ingest in both
+      [`build-web-db.ps1`](https://github.com/gasyoun/SamudraManthanam/blob/main/build-web-db.ps1)
+      and [`reindex.sh`](https://github.com/gasyoun/SamudraManthanam/blob/main/reindex.sh);
+      no jobs file / `SKIP_HEADLESS_CB=1` is a safe no-op (prod's prebuilt-HTML
+      rsync flow unaffected). 13 hermetic tests green (re-verified A13,
+      24-08-2026):
+      [`web/tests/test_run_headless_cb.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/tests/test_run_headless_cb.py).
+      Doc: [`docs/H2433_WEB_PIPELINE_HOOK.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/H2433_WEB_PIPELINE_HOOK.md).
+      **This checkbox was left open in the roadmap despite the work shipping —
+      A13 closes the gap.**
 - [x] **CI-джоб.** Done 09-08-2026 (H2434, Sonnet 5 `claude-sonnet-4-6`, override
       of Grok lock — [[feedback_sonnet_runs_grok_handoffs]]):
       [`.github/workflows/corpus-builder-golden.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/corpus-builder-golden.yml)
