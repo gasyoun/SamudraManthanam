@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - **H3552 (OxAlpha) — SamudraManthanam 30-day risk-ranked code review and future independent review gate: execution-ready five-layer plan staged** (OxAlpha (x-preview-f-free), plan authored 26-08-2026 by Codex Sol (gpt-5.6-sol)). [Plan index](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_OXALPHA_CODE_REVIEW_HARDENING_2026Q3.md) fixes the 30-day window, ten-slice risk cap, independent Standards/Spec passes, evidence-only P0/P1 repair contract, canonical GitHub adapter, and an inactive future status-gate design.
+- **H3552 (OxAlpha) — Wave 0: GitHub tracker adapter setup** (Sonnet 5 `claude-sonnet-5`, 26-08-2026). Canonical GitHub Issues tracker docs
+  ([`docs/agents/issue-tracker.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/issue-tracker.md)),
+  the five-role triage vocabulary mapped onto this repo's actual labels
+  ([`docs/agents/triage-labels.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/triage-labels.md),
+  four new labels created: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`),
+  and the real single-context reading order
+  ([`docs/agents/domain.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/domain.md)) —
+  plus an Agent skills block wiring all three into `CLAUDE.md`/`AGENTS.md`. Setup only, merged alone per the roadmap.
+  [PR #334](https://github.com/gasyoun/SamudraManthanam/pull/334).
 
 ## [0.19.46] - 2026-08-17
 
