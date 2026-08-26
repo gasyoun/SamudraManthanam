@@ -20,3 +20,13 @@ This file orients Codex and other non-Claude agent sessions. The section between
 - Gitignored/off-git canonical assets are registered as pointer rows in the org-private [shadow-assets registry](https://github.com/gasyoun/Uprava/blob/main/SHADOW_ASSETS_POINTERS.md).
 
 [/generated-block]
+
+## Agent skills (repo-curated, OxAlpha adapter, H3552)
+
+This repo uses **native GitHub Issues** as its tracker, PR intake is
+issue-first (no unsolicited external PRs), and has no `CONTEXT.md`/`docs/adr/`
+convention. Full detail:
+
+- [`docs/agents/issue-tracker.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/issue-tracker.md)
+- [`docs/agents/triage-labels.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/triage-labels.md)
+- [`docs/agents/domain.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/domain.md)

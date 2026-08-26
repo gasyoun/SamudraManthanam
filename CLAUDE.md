@@ -62,4 +62,18 @@ Danger facts:
 and the generated block of
 [AGENTS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/AGENTS.md).
 
+## Agent skills
+
+### Issue tracker
+
+Native GitHub Issues, not Uprava handoffs. See [`docs/agents/issue-tracker.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/issue-tracker.md).
+
+### Triage labels
+
+Five-role vocabulary (`needs-triage` … `wontfix`) mapped onto this repo's actual label set. See [`docs/agents/triage-labels.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/triage-labels.md).
+
+### Domain docs
+
+No `CONTEXT.md`/`docs/adr/` here — the real reading-order chain and conflict rule live in `DOCUMENTATION_INDEX.md`. See [`docs/agents/domain.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/domain.md).
+
 _Dr. Mārcis Gasūns_
