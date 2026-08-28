@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.19.49] - 2026-08-28
+
+### Fixed
+- **H3630 (OxAlpha) - nkrya-parallel npm CI invariant green: 27 vulnerabilities (24 high) → 0, `npm audit --omit=dev --audit-level=high` exit 0 + `npm run build` green in CI** ([PR #340](https://github.com/gasyoun/SamudraManthanam/pull/340), red on main since ≥26-08, pre-existing, not H3614-caused). All via `package.json` overrides, lockfile refreshed: `js-yaml` 4.3.0→^4.3.2 (CVE-2026-59870 fix landed 4.3.1+, semver-compatible — no major bump needed, all consumers require ^4), `nanoid` →^3.3.18 (generator infinite-loop GHSA), `fast-uri` 4.1.1→4.1.3 (host-confusion GHSA-7p8r-x3mc-p8w7, clears ajv chain), `brace-expansion` 5.0.8→5.0.9 (GHSA-rgw5-rvv9-x895, clears minimatch 10.x + serve-handler chain), `image-size` 2.0.2→`npm:image-size-next@2.1.1` (both advisories GHSA-w3rx-r6r6-pgpr / GHSA-5p2g-fcmc-qvqq have NO upstream fix, affected ≤2.0.2 — community fork published for exactly these CVEs, same 2.x API, resolve + export surface verified in mdx-loader context), `uuid` 8.3.2→^11.1.1 (clears uuid→sockjs→webpack-dev-server moderates; sockjs uses only uuid.v4 which v11 keeps). Prove: CI job "npm build and high-severity audit" green on PR #340 and on main (run for merge commit 9257719); full audit incl. dev deps also 0.
+
 ## [0.19.48] - 2026-08-28
 
 ### Added
