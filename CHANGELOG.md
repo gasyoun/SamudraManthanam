@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.19.48] - 2026-08-28
 
 ### Added
 - **H3552 (OxAlpha) — 30-day retrospective code review report + future gate design** (OxAlpha `x-preview-f-free`, 27-08-2026). [Evidence report](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/reviews/OXALPHA_RETROSPECTIVE_CODE_REVIEW_26-08-2026.md): all ten in-window executable slices (#313, #311, #305, #304, #302, #297, #291, #274, #270, #263) with independent Standards/Spec verdicts, 21 findings (1×P1 proven → PR #336, 1×P1 parked with an explicit infra stop note, 12×P2, 7×P3), zero unsupported findings. [Future OxAlpha status-gate design](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/OXALPHA_STATUS_GATE_DESIGN_2026.md): executable-path matching, independent required check, human approval for money/security/production paths, fail-closed policy, staged rollout, rollback — designed, NOT enabled.
