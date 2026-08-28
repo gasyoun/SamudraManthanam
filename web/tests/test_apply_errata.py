@@ -1,4 +1,5 @@
 """H2720: errata.yml apply + html-from-jsonl rebuild (hermetic fixture)."""
+
 from __future__ import annotations
 
 import json
@@ -61,7 +62,9 @@ def test_apply_one_erratum_and_diff_jsonl(tmp_path: Path):
     assert report[0]["status"] == "applied"
     dest = tmp_path / "patched.jsonl"
     ey.write_jsonl(dest, patched)
-    recs = [json.loads(ln) for ln in dest.read_text(encoding="utf-8").splitlines() if ln]
+    recs = [
+        json.loads(ln) for ln in dest.read_text(encoding="utf-8").splitlines() if ln
+    ]
     assert recs[0]["text"] == "Напечатано слово исправление здесь."
     assert recs[0]["html"] == "Напечатано слово исправление здесь."
     assert recs[1]["text"] == "Второй стих без правки."
@@ -103,6 +106,54 @@ def test_apply_missing_instead_fails_loud(tmp_path: Path):
     loaded = ey.load_errata_yml(_FIXTURE / "errata.yml")
     with pytest.raises(ValueError, match="not in"):
         ey.apply_entries(ey.load_jsonl(src), loaded["entries"])
+
+
+def test_apply_is_idempotent_when_read_extends_instead():
+    """H3552 P1: an extension fix (instead is a substring of read) used to
+    re-apply on every run — Ганг → Ганга → Гангаа. The applied row must be
+    detected as already_applied via the read-masked residue, not a bare
+    substring test."""
+
+    def _rows(text: str):
+        rec = {
+            "id": "ext:1",
+            "work": "ext",
+            "passage": "1",
+            "seg": "ru",
+            "text": text,
+            "html": text,
+        }
+        return [(json.dumps(rec, ensure_ascii=False), rec)]
+
+    entry = {"instead": "Ганг", "read": "Ганга", "id": "ext:1"}
+    once, rep1 = ey.apply_entries(_rows("на реке Ганг стоит"), [entry])
+    assert rep1[0]["status"] == "applied"
+    assert json.loads(once[0][0])["text"] == "на реке Ганга стоит"
+
+    twice, rep2 = ey.apply_entries(once, [entry])
+    assert rep2[0]["status"] == "already_applied"
+    assert json.loads(twice[0][0])["text"] == "на реке Ганга стоит"
+
+
+def test_apply_bare_typo_alongside_fixed_form_fails_loud():
+    """If a record holds BOTH the bare typo and the corrected form, the row is
+    ambiguous under the single-occurrence contract — fail loud, never guess
+    which occurrence the errata targets."""
+
+    def _rows():
+        rec = {
+            "id": "amb:1",
+            "work": "amb",
+            "passage": "1",
+            "seg": "ru",
+            "text": "Ганг Ганга",
+            "html": "Ганг Ганга",
+        }
+        return [(json.dumps(rec, ensure_ascii=False), rec)]
+
+    entry = {"instead": "Ганг", "read": "Ганга", "id": "amb:1"}
+    with pytest.raises(ValueError, match="occurs 2 times"):
+        ey.apply_entries(_rows(), [entry])
 
 
 def test_cli_apply_and_rebuild_html(tmp_path: Path):
@@ -167,6 +218,6 @@ def test_pilot_recipe_is_html_from_jsonl():
     recipe = ey.recipe_for("bhagavati-manasa-puja-stotra")
     assert recipe["rebuild"] == "html-from-jsonl"
     assert recipe["input"] == "IN-DOC-IGN"
-    assert Path(recipe["jsonl"]).as_posix().endswith(
-        "bhagavati-manasa-puja-stotra.jsonl"
+    assert (
+        Path(recipe["jsonl"]).as_posix().endswith("bhagavati-manasa-puja-stotra.jsonl")
     )
