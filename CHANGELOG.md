@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.19.50] - 2026-08-28
+
+### Added
+- **H2611 (OxAlpha) — A41 corpus of record published as a Zenodo dataset DOI; wired into CITATION.cff + A41 descriptor.** Dataset record minted 28-08-2026 via the Zenodo API under the project's stored deposit credentials ([`Zenodo:` line of `solyanka.env`](https://github.com/gasyoun/Uprava/blob/main/docs/SECRETS_INDEX.md), MG ruled the stored-token route in scope in-chat): **concept DOI [10.5281/zenodo.22149933](https://doi.org/10.5281/zenodo.22149933)**, v1.0.0 = [10.5281/zenodo.22149934](https://doi.org/10.5281/zenodo.22149934), `resource_type: dataset`, open access (verified via API + `doi.org` 200). Deposit = the **148 report-source JSONL files** (each file line-count-verified against `conversion_report.json` before upload; 121 post-report extras excluded per §3.1) in four tar.gz parts (87 MB) + `conversion_report.json` + `MANIFEST.csv` (per-file record counts) + `RIGHTS_TABLE.md` + `A41_TRANSLATORS.md` + the [data statement](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md) + README; all 10 files MD5-verified server-side pre-publish. Closes the last human-gated data-availability gap of [H2542](https://github.com/gasyoun/SamudraManthanam/pull/286): `CITATION.cff` gains an `identifiers:` block citing the dataset concept DOI (software `doi:` unchanged), descriptor §9 item 1 + §2 status block + "Data and reproducibility" TODO rewritten to the minted state. Prove: `python papers/scripts/verify_a41_uplift_links.py` PASS.
+
 ## [0.19.49] - 2026-08-28
 
 ### Fixed

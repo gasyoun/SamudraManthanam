@@ -74,16 +74,17 @@ _Created: 26-06-2026 · Last updated: 12-08-2026_
 > the corpus of record — the safe default named in the handoff, applied because folding
 > them in is a human call this pass had no human present to make, and exclusion preserves
 > every published figure (78,219 headline, 574,939 total, all §4–§11 numbers unchanged).
-> §3.1 and §11 row 1 carry the written rationale. The **dataset DOI is still genuinely
-> open** — confirmed this pass by querying the Zenodo public API directly
-> ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315)'s record family has
-> 44 versions, all `resource_type: software`, zero dataset records under this account) —
-> minting a distinct dataset DOI needs either a manual Zenodo deposit or a second
-> Zenodo↔GitHub repo toggle, both requiring Zenodo login credentials no agent session
-> holds. Tracked as a human `@DO` in
-> [Uprava/GTD_NEXT_ACTIONS.md](https://github.com/gasyoun/Uprava/blob/main/GTD_NEXT_ACTIONS.md).
-> **Open before submission:** (1) mint a **dataset** DOI (distinct from the existing
-> software concept DOI) — human Zenodo action, see §9 item 1; (2) freeze ONE
+> §3.1 and §11 row 1 carry the written rationale. **Dataset DOI minted 28-08-2026**
+> (H2611, OxAlpha): the corpus of record deposited on Zenodo as a `resource_type: dataset`
+> record — concept DOI [10.5281/zenodo.22149933](https://doi.org/10.5281/zenodo.22149933)
+> (v1.0.0 = [10.5281/zenodo.22149934](https://doi.org/10.5281/zenodo.22149934)), 148
+> JSONL files + rights documentation, wired into [CITATION.cff](https://github.com/gasyoun/SamudraManthanam/blob/main/CITATION.cff)
+> and §9. Minted via the Zenodo API under the project's stored credentials after MG
+> ruled the stored-token route in scope (28-08-2026); the prior belief that no agent
+> session held credentials was wrong — [docs/SECRETS_INDEX.md](https://github.com/gasyoun/Uprava/blob/main/docs/SECRETS_INDEX.md)
+> has carried a `Zenodo:` deposit token since 14-08.
+> **Open before submission:** (1) ~~mint a **dataset** DOI~~ ✅ done 28-08-2026 (see §9
+> item 1); (2) freeze ONE
 > headline number at submission (78,219 spec figure vs 78,139 live re-count, reconciled
 > in §4.2); (3) venue + byline (a human decides); (4) the §6.4 human adjudication verdict
 > (51-group review sheet) folded in once voted. *(The RU-translation ship triage that
@@ -595,22 +596,25 @@ question of redistributing it arises.
 
 Still outside the data work:
 
-1. **Mint a *dataset* DOI [@DO — confirmed genuinely human, 12-08-2026, H2542].** The
-   **software** already carries a Zenodo concept DOI
-   ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315), in
-   [CITATION.cff](https://github.com/gasyoun/SamudraManthanam/blob/main/CITATION.cff),
-   which explicitly notes that the corpus texts carry their own rights and are cited by
-   print edition). What is missing is a **separate DOI for the corpus release itself** —
-   a citation of the software DOI is not a citation of the data. Verified against the
-   Zenodo public API (`zenodo.org/api/records/21317315`, checked 12-08-2026): the whole
-   concept-DOI family (44 versions) is `resource_type: software`; no sibling dataset
-   record exists. Minting one needs Zenodo login credentials no agent session holds —
-   either (a) a manual Zenodo deposit of the corpus artifact (JSONL directory or a tagged
-   archive of the 148 report sources) with `resource_type: dataset`, or (b) enabling the
-   Zenodo↔GitHub integration on a second, dataset-only repo and cutting a release there.
-   Once minted, wiring the DOI into `CITATION.cff` + this section is mechanical (one-line
-   paste, per `/cut-release` Phase 3b) — an agent can finish that half. Completing the
-   data-availability statement depends on that mint, not on any per-translator triage.
+1. **Mint a *dataset* DOI — ✅ DONE 28-08-2026 (H2611, OxAlpha).** The **corpus of
+   record** now has its own Zenodo record with `resource_type: dataset`: concept DOI
+   [10.5281/zenodo.22149933](https://doi.org/10.5281/zenodo.22149933) (v1.0.0 =
+   [10.5281/zenodo.22149934](https://doi.org/10.5281/zenodo.22149934)), wired into
+   [CITATION.cff](https://github.com/gasyoun/SamudraManthanam/blob/main/CITATION.cff)
+   (`identifiers:`) and the data-availability TODO below. The deposit carries the 148
+   report-source JSONL files (byte-verified per-source against
+   [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json);
+   post-report additions excluded, exactly as §3.1 rules), `conversion_report.json`,
+   [RIGHTS_TABLE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/RIGHTS_TABLE.md),
+   [A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md),
+   the
+   [data statement](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md),
+   `MANIFEST.csv` (per-file record counts) and a README — 87 MB across four tar.gz
+   parts. Cite the dataset concept DOI for the corpus; the software concept DOI
+   ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315)) remains the
+   citation for the search platform only; corpus texts are still cited by their print
+   editions (per the data statement). Future folds of the excluded extras belong in a
+   *new, separately-versioned* dataset record, not this one.
 
 ## 10. Conclusion
 
@@ -671,9 +675,12 @@ Per-item audit: the filled
 [ARR checklist](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md)
 §C.
 
-*(TODO before submission: a **dataset** DOI distinct from the software concept DOI
-[10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315) — human Zenodo action,
-§9 item 1; the §6.4 adjudication verdict; the headline freeze.)*
+*Data availability: the corpus of record is published as a Zenodo **dataset** — concept
+DOI [10.5281/zenodo.22149933](https://doi.org/10.5281/zenodo.22149933) (v1.0.0 =
+[10.5281/zenodo.22149934](https://doi.org/10.5281/zenodo.22149934)), minted 28-08-2026
+(H2611); the software carries concept DOI
+[10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315). *(Remaining TODO
+before submission: the §6.4 adjudication verdict; the headline freeze.)*
 
 **No train/dev/test split is defined, by design.** This is a resource descriptor, not a
 modelling paper: splitting is left to consumers, who should split by *source* rather than
