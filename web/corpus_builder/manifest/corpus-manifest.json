@@ -1,7 +1,7 @@
 {
   "build": {
     "generator": "corpus_manifest/1",
-    "revision": "6e682e71489f94293fc88e84d2f22a164e9b9f8d"
+    "revision": "4a93b34fa9d63efc92f9af94838b3d410ae48275"
   },
   "bundle": {
     "bundle_version": "2026.08",
@@ -1126,12 +1126,12 @@
       },
       {
         "canonical": {
-          "bytes": 3072303,
+          "bytes": 3072420,
           "first_canonical_id": "brihannila-tantra:4.92.comm1",
           "last_canonical_id": "brihannila-tantra:22.172.comm1",
           "path": "corpus_builder/jsonl/brihannila-tantra.jsonl",
           "record_count": 2485,
-          "sha256": "d5c05ddd4960b7a3c3ff335dbf8525f6d068819287f496b85b8c572fbe3081b5"
+          "sha256": "fc36704889a76f09cc58e2e9f8d6a02975f53166cf9297e88a48c35a113fdce7"
         },
         "filename": "brihannila-tantra.html",
         "provenance": "canonical JSONL brihannila-tantra.jsonl",
@@ -3046,12 +3046,12 @@
       },
       {
         "canonical": {
-          "bytes": 2563103,
+          "bytes": 2563277,
           "first_canonical_id": "shaktisangama-tantra:37.1#ru",
           "last_canonical_id": "shaktisangama-tantra:9.8#ru",
           "path": "corpus_builder/jsonl/shaktisangama-tantra.jsonl",
           "record_count": 1495,
-          "sha256": "b41969ecdecd981fcbd3dcefd0373bb26b57b85cad4026de59d57aca673bd076"
+          "sha256": "f0bd84bd1a25249ab682b4698a3190c924a8ee0f7351f72dcd32485ecf8a0aee"
         },
         "filename": "shaktisangama-tantra.html",
         "provenance": "canonical JSONL shaktisangama-tantra.jsonl",
@@ -3556,11 +3556,11 @@
       }
     ],
     "totals": {
-      "canonical_bytes": 717203066,
+      "canonical_bytes": 717203357,
       "record_count": 744151,
       "source_count": 235
     }
   },
-  "content_hash": "sha256:0ba38d24ac084fc406b36dac14147f7027b44b359e35266e3f65ce13432b4584",
+  "content_hash": "sha256:6b810dcd0c9c9d09c1f9b77a8d1df3927505132a2cccec69c4937070044b70fe",
   "schema_version": 1
 }

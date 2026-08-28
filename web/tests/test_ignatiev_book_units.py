@@ -1034,3 +1034,26 @@ def test_parse_book_auto_upgrades_to_bracket_free():
     _recs, report = ig.parse_book(text, "auto-free", footnote_mode="auto")
     assert report["footnote_mode"] == "bracket-free"
     assert report["comment_count"] == 3
+
+# ---------------------------------------------------------------------------
+# H3614 — collision-suffix mint caps at 'z' and falls back to a prose id
+# ---------------------------------------------------------------------------
+
+def test_mint_collision_passage_advances_letters_then_caps():
+    seen = {"37.2"}
+    report = {}
+    assert ig.mint_collision_passage("37.2", seen, report) == "37.2b"
+    seen.add("37.2b")
+    assert ig.mint_collision_passage("37.2", seen, report) == "37.2c"
+
+
+def test_mint_collision_passage_overflow_falls_back_to_prose_id():
+    seen = {f"37.2{chr(ord('a') + n)}" for n in range(1, 27)}
+    seen.add("37.2")
+    report = {}
+    result = ig.mint_collision_passage("37.2", seen, report)
+    assert result == "p1"
+    assert report["id_collision_overflow"] == ["37.2"]
+    # overflow ids stay unique on repeated calls
+    seen.add("p1")
+    assert ig.mint_collision_passage("37.2", seen, report) == "p2"

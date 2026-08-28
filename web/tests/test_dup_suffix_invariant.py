@@ -181,3 +181,90 @@ def test_dup_id_pattern_boundaries(rid, is_dup):
     from dup_suffix_report import DUP_ID_RE
 
     assert bool(DUP_ID_RE.match(rid)) is is_dup
+
+
+# ---------------------------------------------------------------------------
+# H3614 — the repair script: runs re-key, pairs stay, comm groups skip
+# ---------------------------------------------------------------------------
+
+def _full_rec(rid, work, chapter="22", seg="ru"):
+    return {
+        "id": rid,
+        "work": work,
+        "passage": rid.split(":", 1)[-1].split("#")[0],
+        "seg": seg,
+        "group": rid.split("#")[0],
+        "chapter": chapter,
+    }
+
+
+def test_repair_rekeys_run_and_restores_last_member():
+    from fix_dup_suffix_runs import repair_records
+
+    records = [
+        _full_rec("w:22.2#ru", "w"),
+        _full_rec("w:22.2b#ru", "w"),
+        _full_rec("w:22.2c#ru", "w"),
+    ]
+    new, changes, skipped = repair_records(records, "t.jsonl")
+    assert skipped == []
+    assert [r["id"] for r in new] == [
+        "w:c22.p1#ru",
+        "w:c22.p2#ru",
+        "w:22.2#ru",
+    ]
+    assert new[-1]["chapter"] == "22"
+    assert {c["old"]: c["new"] for c in changes} == {
+        "w:22.2#ru": "w:c22.p1#ru",
+        "w:22.2b#ru": "w:c22.p2#ru",
+        "w:22.2c#ru": "w:22.2#ru",
+    }
+
+
+def test_repair_leaves_legitimate_pair_alone():
+    from fix_dup_suffix_runs import repair_records
+
+    records = [
+        _full_rec("w:37.1#ru", "w", chapter="37"),
+        _full_rec("w:37.1b#ru", "w", chapter="37"),
+    ]
+    new, changes, skipped = repair_records(records, "t.jsonl")
+    assert changes == [] and skipped == []
+    assert [r["id"] for r in new] == ["w:37.1#ru", "w:37.1b#ru"]
+
+
+def test_repair_skips_comm_bearing_group():
+    from fix_dup_suffix_runs import repair_records
+
+    records = [
+        _full_rec("w:9.1#ru", "w", chapter="9"),
+        _full_rec("w:9.1b#ru", "w", chapter="9"),
+        _full_rec("w:9.1c#ru", "w", chapter="9"),
+        _full_rec("w:9.1.comm1", "w", chapter="9", seg="comm1"),
+    ]
+    _new, changes, skipped = repair_records(records, "t.jsonl")
+    assert changes == []
+    assert len(skipped) == 1
+    assert "manual review" in skipped[0]["reason"]
+
+
+def test_repair_overflow_suffixes_are_group_members():
+    from fix_dup_suffix_runs import repair_records
+
+    records = [
+        _full_rec("w:4.1#ru", "w"),
+        _full_rec("w:4.1b#ru", "w"),
+        _full_rec("w:4.1c#ru", "w"),
+        _full_rec("w:4.1|#ru", "w"),
+        _full_rec("w:4.1\x7f#ru", "w"),
+    ]
+    new, changes, skipped = repair_records(records, "t.jsonl")
+    assert skipped == []
+    assert len(changes) == 5
+    assert [r["id"] for r in new] == [
+        "w:c22.p1#ru",
+        "w:c22.p2#ru",
+        "w:c22.p3#ru",
+        "w:c22.p4#ru",
+        "w:4.1#ru",
+    ]

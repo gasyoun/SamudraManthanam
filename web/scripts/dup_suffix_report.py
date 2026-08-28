@@ -61,7 +61,16 @@ if str(WEB_ROOT) not in sys.path:
 from app.services.slug import make_unique_slug  # noqa: E402
 
 # `work:1.1b#sa`, `work:1.1b.comm`, … — a letter suffix on the passage number.
-DUP_ID_RE = re.compile(r"^(?P<base>.+:[0-9.]+)(?P<suffix>[b-z])(?P<tail>(?:#|\.comm).*)$")
+# The suffix class is deliberately WIDE on the upper end: the legacy Ignatiev
+# exporter minted collision suffixes with a bare `chr(ord(c) + 1)` run that
+# overflowed past 'z' into `{ | } ~` DEL and C1 controls (H3614 — 12 such ids
+# hid from a plain `[b-z]` class while the same run violated the depth rule 24
+# times). The mint starts at 'b', so the whole debris space is `b`..`z` plus
+# the contiguous chr() range above it. 'a' stays excluded on purpose: it is a
+# GRETIL pada letter (Rigveda `1.1a`), not a disambiguation suffix.
+DUP_ID_RE = re.compile(
+    r"^(?P<base>.+:[0-9.]+)(?P<suffix>[b-z{|}~\x7f-\x9f])(?P<tail>(?:#|\.comm).*)$"
+)
 
 # Concentration is only meaningful once the population is large enough that a
 # ratio means something; below this a single multi-verse work is 100% and fine.

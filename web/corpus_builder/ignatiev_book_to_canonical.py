@@ -166,6 +166,36 @@ _COLOPHON_BODY_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Last letter a collision suffix may use (H3614). The old mint advanced a bare
+# ``chr(ord(c) + 1)`` run with no ceiling: shaktisangama-tantra ch.37 overflowed
+# past 'z' into ``{ | } ~`` DEL and C1 controls. Collisions are pairs, so a run
+# this deep is debris anyway — past 'z' the block gets a Class C prose id.
+_COLLISION_SUFFIX_LAST = "z"
+
+
+def mint_collision_passage(passage: str, seen_passages: set, report: dict) -> str:
+    """Return ``passage`` disambiguated with a letter suffix, or a prose id.
+
+    Deterministic: 2nd occurrence → 'b', 3rd → 'c', … capped at 'z'. When the
+    whole alphabet is taken (a 26-deep collision is exporter debris, never 27
+    genuine same-numbered verses) the block falls back to the Class C prose
+    scheme ``p{n}`` (LINE_ID_SCHEME) and the overflow is reported loudly.
+    """
+    suffix = "b"
+    while (
+        f"{passage}{suffix}" in seen_passages
+        and suffix != _COLLISION_SUFFIX_LAST
+    ):
+        suffix = chr(ord(suffix) + 1)
+    candidate = f"{passage}{suffix}"
+    if candidate not in seen_passages:
+        return candidate
+    report.setdefault("id_collision_overflow", []).append(passage)
+    n = 1
+    while f"p{n}" in seen_passages:
+        n += 1
+    return f"p{n}"
+
 
 def _peel_glued_unit_ordinal(ord_phrase: str, rest: str) -> tuple[str, str]:
     """Recover a compound ordinal when OLE/PDF glues the unit onto body text.
@@ -1627,10 +1657,7 @@ def parse_book(
                 continue
             if passage in seen_passages:
                 report.setdefault("id_collisions", []).append(passage)
-                suffix = "b"
-                while f"{passage}{suffix}" in seen_passages:
-                    suffix = chr(ord(suffix) + 1)
-                passage = f"{passage}{suffix}"
+                passage = mint_collision_passage(passage, seen_passages, report)
             seen_passages.add(passage)
             # Free-bracket: first inline [N] use assigns the note target.
             if mode == "bracket-free" and refs:

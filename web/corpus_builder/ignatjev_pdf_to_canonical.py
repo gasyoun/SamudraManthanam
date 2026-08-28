@@ -91,6 +91,37 @@ _COLOPHON_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Last letter a collision suffix may use (H3614). The old mint advanced a bare
+# ``chr(ord(c) + 1)`` run with no ceiling — the same defect that overflowed
+# shaktisangama-tantra ch.37 past 'z' into punctuation and control chars.
+# Past 'z' the block gets a Class C prose id instead.
+_COLLISION_SUFFIX_LAST = "z"
+
+
+def mint_collision_passage(passage: str, seen_passages: set, report: dict) -> str:
+    """Return ``passage`` disambiguated with a letter suffix, or a prose id.
+
+    Deterministic: 2nd occurrence → 'b', 3rd → 'c', … capped at 'z'. When the
+    whole alphabet is taken (a 26-deep collision is exporter debris, never 27
+    genuine same-numbered verses) the block falls back to the Class C prose
+    scheme ``p{n}`` (LINE_ID_SCHEME) and the overflow is reported loudly.
+    Mirrors ``ignatiev_book_to_canonical.mint_collision_passage``.
+    """
+    suffix = "b"
+    while (
+        f"{passage}{suffix}" in seen_passages
+        and suffix != _COLLISION_SUFFIX_LAST
+    ):
+        suffix = chr(ord(suffix) + 1)
+    candidate = f"{passage}{suffix}"
+    if candidate not in seen_passages:
+        return candidate
+    report.setdefault("id_collision_overflow", []).append(passage)
+    n = 1
+    while f"p{n}" in seen_passages:
+        n += 1
+    return f"p{n}"
+
 # Skandha-end colophon. The wording is NOT uniform across the six volumes —
 # pdftotext yields all of:
 #   "ТАК ЗАКАНЧИВАЕТСЯ ПЕРВАЯ КНИГА МАХАПУРАНЫ ..."      (Vol 1)
@@ -618,10 +649,7 @@ def parse_volume(text: str, vol_num: int, skandha_only: int | None = None):
             passage = zero_pad_passage(sk, ch["chapter"], v["verse"])
             if passage in seen_passages:
                 report.setdefault("id_collisions", []).append(passage)
-                suffix = "b"
-                while f"{passage}{suffix}" in seen_passages:
-                    suffix = chr(ord(suffix) + 1)
-                passage = f"{passage}{suffix}"
+                passage = mint_collision_passage(passage, seen_passages, report)
             seen_passages.add(passage)
             group = f"{WORK_SLUG}:{passage}"
             clean, html_text, refs = link_footnotes(v["text"], fn_numbers, used_fn)
