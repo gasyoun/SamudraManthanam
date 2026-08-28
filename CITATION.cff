@@ -23,7 +23,14 @@ license: Apache-2.0
 # (v0.14.0 = 10.5281/zenodo.21569201), minted automatically by the Zenodo–GitHub
 # webhook; version DOIs belong in the release notes, not here.
 doi: "10.5281/zenodo.21317315"
-version: 0.19.48
+# The CORPUS OF RECORD is a separate DATASET DOI (minted 28-08-2026, H2611):
+# cite it for the data, the doi above for the software only. Concept DOI
+# resolves to the latest dataset version; v1.0.0 = 10.5281/zenodo.22149934.
+identifiers:
+  - description: "Corpus of record dataset (Zenodo concept DOI, resource_type: dataset)"
+    type: doi
+    value: "10.5281/zenodo.22149933"
+version: 0.19.50
 date-released: 2026-08-28
 keywords:
   - Sanskrit
