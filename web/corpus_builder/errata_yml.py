@@ -8,11 +8,11 @@ so a row can target a JSONL record when there is no printed page.
 PyYAML is deliberately not imported: the CI test job installs only
 requirements.txt + pytest (see web/tests/test_runtime_alignment.py).
 """
+
 from __future__ import annotations
 
 import hashlib
 import json
-import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -130,7 +130,11 @@ def load_errata_yml(path: Path) -> dict[str, Any]:
             if fold_key and raw.startswith(" "):
                 fold_lines.append(stripped)
             continue
-        if fold_key and (raw.startswith("  ") or raw.startswith("\t")) and not stripped.startswith("-"):
+        if (
+            fold_key
+            and (raw.startswith("  ") or raw.startswith("\t"))
+            and not stripped.startswith("-")
+        ):
             fold_lines.append(stripped)
             continue
         flush_fold()
@@ -254,6 +258,21 @@ def _replace_once(value: str, instead: str, read: str) -> tuple[str, int]:
     return value.replace(instead, read, 1), count
 
 
+def _outside_read_count(haystack: str, instead: str, read: str) -> int:
+    """Count ``instead`` occurrences that are not already inside a ``read`` one.
+
+    An applied extension fix (``instead`` is a substring of ``read``, e.g.
+    Ганг → Ганга) leaves the bad string inside the corrected one, so a bare
+    substring test re-detects an already-applied row and double-extends it
+    (Ганг → Ганга → Гангаа). Masking ``read`` occurrences first keeps the
+    test idempotent.
+    """
+    if not haystack:
+        return 0
+    residue = haystack.replace(read, "\x00") if read else haystack
+    return residue.count(instead)
+
+
 def apply_entries(
     rows: list[tuple[str, dict[str, Any]]],
     entries: list[dict[str, Any]],
@@ -284,7 +303,10 @@ def apply_entries(
             original, rec = out[i]
             text = str(rec.get("text") or "")
             html = str(rec.get("html") or "")
-            if instead not in text and instead not in html:
+            if (
+                _outside_read_count(text, instead, read) == 0
+                and _outside_read_count(html, instead, read) == 0
+            ):
                 if read in text or read in html:
                     already += 1
                     continue
@@ -294,7 +316,7 @@ def apply_entries(
                 )
             new_rec = dict(rec)
             changed = False
-            if instead in text:
+            if _outside_read_count(text, instead, read):
                 new_text, n = _replace_once(text, instead, read)
                 if n != 1:
                     raise ValueError(
@@ -303,7 +325,7 @@ def apply_entries(
                     )
                 new_rec["text"] = new_text
                 changed = True
-            if instead in html:
+            if _outside_read_count(html, instead, read):
                 new_html, n = _replace_once(html, instead, read)
                 if n != 1:
                     raise ValueError(
@@ -327,7 +349,9 @@ def apply_entries(
     return out, report
 
 
-def generate_errata_md(work: str, entries: list[dict[str, Any]], source_name: str = "errata.yml") -> str:
+def generate_errata_md(
+    work: str, entries: list[dict[str, Any]], source_name: str = "errata.yml"
+) -> str:
     n = len(entries)
     fixed = sum(1 for e in entries if e.get("fixed_in"))
     header = [

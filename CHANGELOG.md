@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Errata re-apply corrupted extension fixes (H3552 P1, OxAlpha `x-preview-f-free`, 27-08-2026).** `apply_entries` detected "already applied" with a bare substring test, so any row whose `read` extends its `instead` (e.g. `Ганг` → `Ганга`) re-applied on every run: run 2 produced `Гангаа` and reported `applied`. Applied detection now masks `read` occurrences before counting residual `instead` occurrences (`_outside_read_count`); a record holding both the bare typo and the fixed form fails loud under the existing single-occurrence contract. Found by the H3552 30-day retrospective review (slice PR #297); repro executed against `v0.19.47`. Prove: `python -m pytest tests/test_apply_errata.py`.
+
 ## [0.19.47] - 2026-08-26
 ### Added
 - **H3552 (OxAlpha) — SamudraManthanam 30-day risk-ranked code review and future independent review gate: execution-ready five-layer plan staged** (OxAlpha (x-preview-f-free), plan authored 26-08-2026 by Codex Sol (gpt-5.6-sol)). [Plan index](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_OXALPHA_CODE_REVIEW_HARDENING_2026Q3.md) fixes the 30-day window, ten-slice risk cap, independent Standards/Spec passes, evidence-only P0/P1 repair contract, canonical GitHub adapter, and an inactive future status-gate design.
