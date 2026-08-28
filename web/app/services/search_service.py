@@ -146,20 +146,36 @@ async def search_regex(db: aiosqlite.Connection, pattern: str, case_sensitive: b
     stats = ScanStats()
 
     async with db.execute(sql, params) as cursor:
-        async for row in cursor:
-            stats.scanned_rows += 1
-            # H1926 C1: hard wall-clock deadline (was a 5 s soft budget). The
-            # per-match timeout bounds one match; this bounds the whole scan.
-            if time.time() - start_time > HARD_DEADLINE_SECONDS:
-                stats.deadline_exceeded = True
+        # H3614: fetch in batches. Row-by-row `async for` pays one aiosqlite
+        # thread hop per row — measured ~1.2 s for a 3.6k-row source, most of
+        # the H1926 hard deadline spent on transport rather than matching, so
+        # any scheduling hiccup tripped the deadline and truncated results.
+        # Batched fetchmany keeps the identical visit order, stats, budget and
+        # deadline semantics while cutting the hop count by the batch factor.
+        while True:
+            batch = await cursor.fetchmany(256)
+            if not batch:
                 break
-            if stats.scanned_rows > MAX_SCANNED_ROWS:
-                stats.budget_exceeded = True
-                break
-
-            if executor.matches(row["line_text"], stats):
-                results.append(dict(row))
-                if len(results) >= limit:
+            for row in batch:
+                stats.scanned_rows += 1
+                # H1926 C1: hard wall-clock deadline (was a 5 s soft budget). The
+                # per-match timeout bounds one match; this bounds the whole scan.
+                if time.time() - start_time > HARD_DEADLINE_SECONDS:
+                    stats.deadline_exceeded = True
                     break
+                if stats.scanned_rows > MAX_SCANNED_ROWS:
+                    stats.budget_exceeded = True
+                    break
+
+                if executor.matches(row["line_text"], stats):
+                    results.append(dict(row))
+                    if len(results) >= limit:
+                        break
+            if (
+                len(results) >= limit
+                or stats.deadline_exceeded
+                or stats.budget_exceeded
+            ):
+                break
 
     return {"results": results, "search_metadata": stats.as_metadata()}

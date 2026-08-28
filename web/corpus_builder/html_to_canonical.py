@@ -403,9 +403,15 @@ class SourceIDState:
         self._seen[raw_passage] = count + 1
         if count == 0:
             return raw_passage
-        # 2nd occurrence → 'b', 3rd → 'c', …
-        suffix = chr(ord("a") + count)  # 1→'b', 2→'c', ...
-        return f"{raw_passage}{suffix}"
+        if count <= 25:
+            # 2nd occurrence → 'b', 3rd → 'c', …
+            return f"{raw_passage}{chr(ord('a') + count)}"
+        # 'z' is exhausted. The legacy Ignatiev exporter kept advancing a bare
+        # chr() run past 'z' into punctuation and control characters (H3614:
+        # shaktisangama-tantra:37.2{, 37.2|, … 37.2\x86). A 27th collision on
+        # one passage is exporter debris, not a verse — mint a Class C prose
+        # id (LINE_ID_SCHEME §C) instead of overflowing the alphabet.
+        return f"p{self.mint_seq()}"
 
     def mint_seq(self) -> int:
         """Return next 1-based sequence number (for e{n}, p{n})."""
