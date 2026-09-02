@@ -1,6 +1,12 @@
 # ROADMAP — SamudraManthanam, August 2026–July 2027
 
-_Created: 30-07-2026 · Last updated: 13-08-2026_
+_Created: 30-07-2026 · Last updated: 02-09-2026_
+
+> **Truth-pass 02-09-2026** (H3775) — `roadmap_handoff_truth.py --check` flagged this
+> page drained but still living: **17 of 17 referenced handoffs have shipped, zero remain OPEN**.
+> Kept at this path per MG ruling 31-08-2026 (do not archive) — the strategy/plan
+> layer still holds even though its backlog has fully closed. A future session
+> reopening work here should mint a fresh H### rather than un-close these.
 
 **Status: LIVING.** This is the sole status roadmap for the programme indexed
 by [PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PLAN_SAMUDRAMANTHANAM_ARCHITECTURE_2026_2027.md).

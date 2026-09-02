@@ -1,5 +1,11 @@
 # Corpus Builder — план развития (Roadmap)
 
+> **Truth-pass 02-09-2026** (H3775) — `roadmap_handoff_truth.py --check` flagged this
+> page drained but still living: **14 of 14 referenced handoffs have shipped, zero remain OPEN**.
+> Kept at this path per MG ruling 31-08-2026 (do not archive) — the strategy/plan
+> layer still holds even though its backlog has fully closed. A future session
+> reopening work here should mint a fresh H### rather than un-close these.
+
 _Создано: 05-07-2026 · Обновлено: 14-08-2026_
 
 > **Обновление 10-07-2026 (H534).** Появился **альтернативный, агент-исполнимый
