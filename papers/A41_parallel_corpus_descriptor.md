@@ -643,8 +643,8 @@ already lives in their markup.
 
 The corpus layer is the JSONL directory
 [`web/corpus_builder/jsonl/`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/jsonl) — **148 report sources** define the corpus of record (the
-directory holds **269** `.jsonl` files as of 10-08-2026; the **121 post-report additions,
-199,379 records** — led by `devibhagavata-purana`, `kathasaritsagara`, `kalika-purana`,
+directory holds **274** `.jsonl` files as of 04-09-2026; the **126 post-report additions,
+219,463 records** — led by `devibhagavata-purana`, `kathasaritsagara`, `kalika-purana`,
 the two remaining Rāmāyaṇa kāṇḍas, and the Ignatiev tantra/purāṇa wave — are **formally
 excluded** from every count, resolved 12-08-2026, H2542; see §3.1 and §11 row 1); canonical counts in
 [`web/corpus_builder/conversion_report.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json);
@@ -718,7 +718,7 @@ flagged as such):
 
 | # | Claim | Figure(s) | Artifact | Status |
 |--:|---|---|---|---|
-| 1 | Corpus scale | 148 report sources, 574,939 segment records — **byte-stable across four re-counts** (26-06, 08-07, 11-07, 10-08-2026). The `jsonl/` dir now holds **269** `.jsonl` files: **121 post-report extras / 199,379 records** (was 7 / 11,056 on 11-07), **formally excluded** (12-08-2026, H2542) from every figure and itemised in §3.1 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ✅ extras decision resolved (exclude, written rationale §3.1) |
+| 1 | Corpus scale | 148 report sources, 574,939 segment records — **byte-stable across four re-counts** (26-06, 08-07, 11-07, 10-08-2026). The `jsonl/` dir now holds **274** `.jsonl` files: **126 post-report extras / 219,463 records** (was 7 / 11,056 on 11-07; re-counted 04-09-2026), **formally excluded** (12-08-2026, H2542) from every figure and itemised in §3.1 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ✅ extras decision resolved (exclude, written rationale §3.1) |
 | 2 | Final structure split | 119 verse / 15 dictionary / 14 prose; 208,230 / 321,672 / 45,037 records | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) + final backfill in [.ai_state.md](https://github.com/gasyoun/SamudraManthanam/blob/main/.ai_state.md); the heuristic 70/15/67-of-152 census in [TAG_CENSUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) is superseded and said so in §3.1 | ✅ committed |
 | 3 | Headline: clean 1:1 verse pairs | **78,219** (Tier-1) vs 78,139 / 88.56% live re-count (26-06, re-verified identically 08-07 and 11-07-2026) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §0 + [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) recount ([A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json)) | ✅ committed; ⬜ freeze-time choice of which reconciled figure leads (one-line edit) |
 | 4 | Monolingual inventory | 10,145 RU-only, dominated by `buddhacharita-balmont` 8,852 + `mify-drind` 1,172 (≈10,024 of 10,145); 1 Sa-only (spec) / 80 (live) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §2 + JSONL re-count | ✅ committed |
