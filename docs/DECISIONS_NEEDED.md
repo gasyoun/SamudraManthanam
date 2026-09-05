@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Decisions needed — human input required
 
 Open decisions that the autonomous work has surfaced but should not make

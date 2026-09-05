@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Samudra Manthanam Target Architecture
 
 Date: 2026-05-15
@@ -939,3 +941,5 @@ The target architecture is deliberately modest:
 - Correction proposals are open to identified users but reviewed by editors.
 
 This gives Samudra Manthanam a practical path from search app to scholarly research platform without forcing a premature rewrite.
+
+_Dr. Mārcis Gasūns_

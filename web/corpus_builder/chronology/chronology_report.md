@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Chronology crosswalk — build report
 
 Date source: `VisualDCS/visual/dcs_scatter.json` (85 dated texts) + `dcs_genres.json` (18 period buckets).
@@ -151,3 +153,5 @@ Date source: `VisualDCS/visual/dcs_scatter.json` (85 dated texts) + `dcs_genres.
 | 1050 | Narrative Prose | Kathasaritsagara [sanskrit] | Kathāsaritsāgara |
 | 1150 | Purāṇa | The Kalika Purana (literary study) | Kālikāpurāṇa |
 | 1200 | Kāvya | Gita-govinda of Jayadeva (comparative study) | Gītagovinda |
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Phase 02: Search and Reader
 
 Goal: make search correct, fast, linkable, and useful for scholarly reading.
@@ -98,3 +100,5 @@ cd web
 python -m pytest
 node --check static\search.js
 ```
+
+_Dr. Mārcis Gasūns_

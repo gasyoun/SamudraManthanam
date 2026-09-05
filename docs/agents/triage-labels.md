@@ -23,3 +23,5 @@ issue can also carry `ready-for-agent`).
 
 When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use
 the corresponding label string from this table.
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Phase 05: Deploy and Operations
 
 Goal: make corpus publication and VPS operation repeatable without Docker.
@@ -98,3 +100,5 @@ Acceptance:
 git diff --check
 bash -n deploy/*.sh
 ```
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Phase 01: Foundation
 
 Goal: prepare storage, settings, and no-Docker runtime foundations before feature work.
@@ -91,3 +93,5 @@ py -3.10 -m compileall web\app web\ingest
 cd web
 python -m pytest
 ```
+
+_Dr. Mārcis Gasūns_

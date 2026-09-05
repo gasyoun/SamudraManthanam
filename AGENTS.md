@@ -6,7 +6,7 @@ This file orients Codex and other non-Claude agent sessions. The section between
 ## Shared org context (generated — H1393 layer)
 
 - Encodings / key1/key2 / transcoder traps: [Sanskrit context primer](https://github.com/gasyoun/github-spine/blob/main/SANSKRIT_CONTEXT_PRIMER.md).
-- Task routing: [CLAUDE.md](CLAUDE.md) — matching section, not end-to-end.
+- Task routing: [CLAUDE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/CLAUDE.md) — matching section, not end-to-end.
 - Danger facts (destroy-work-if-missed; full text + sources in [DANGER_FACTS.md](https://github.com/gasyoun/Uprava/blob/main/DANGER_FACTS.md)):
   - RETIRED 15-08-2026 (H2772, SamudraManthanam#311, merged+deployed+live-smoked): /api/ai/* now requires a session (401) and enforces a hard 1000-call/30-day quota per session (429), fails closed on storage error. Funding AI_API_KEY is now safe from this denial-of-wallet path. Original: both routes were public/uncapped, safe only because the key 403'd; measured ₽0.088/call, ₽75 800/day at 10 req/s (H2640, 14-08-2026; SamudraManthanam#307)
   - git worktree add --no-checkout + manual sparse-checkout disable + partial checkout can leave a worktree on a stale HEAD with the whole tree reported deleted — abandon and recreate with a plain full checkout, don't debug it (H2395 propagation sweep, 09-08-2026)

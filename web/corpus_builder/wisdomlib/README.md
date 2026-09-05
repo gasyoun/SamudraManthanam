@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # wisdomlib catalog crawler
 
 Async indexer + content downloader for [wisdomlib.org](https://www.wisdomlib.org)
@@ -95,7 +97,7 @@ backs off for hours if it detects a re-block.
 
 ## Autonomous runs — GitHub Actions (self-hosted runner)
 
-[`.github/workflows/wisdomlib-crawl.yml`](../../../.github/workflows/wisdomlib-crawl.yml)
+[`.github/workflows/wisdomlib-crawl.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/wisdomlib-crawl.yml)
 runs one bounded, gentle, resumable Stage C pass on demand. Because GitHub's
 own runners are Cloudflare-blocked (above), it is set to `runs-on: self-hosted`
 and `workflow_dispatch` only (no cron). To use it:
@@ -166,3 +168,5 @@ connection; **validate the parser with `parse` on the first real page** before b
 - `content/` — Stage C downloads (gitignored)
 
 Requires `httpx[http2]` (`h2`).
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Contributing to SamudraManthanam
 
 > Part of the [Sanskrit Lexicon](https://github.com/sanskrit-lexicon) project. Inherits the [org-wide contribution standard](https://github.com/sanskrit-lexicon/COLOGNE/blob/main/CONTRIBUTING.md).
@@ -7,7 +9,7 @@
 3. Run the relevant gates below.
 4. Submit a pull request, referencing any related issue.
 
-See [`CLAUDE.md`](CLAUDE.md) for repo-specific commands and conventions.
+See [`CLAUDE.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/CLAUDE.md) for repo-specific commands and conventions.
 
 ## Python hermetic gate
 
@@ -87,3 +89,5 @@ curl --fail --silent -X POST -H "Content-Type: application/json" \
 `docker exec ... id -u` must print `10001`. The container healthcheck requires
 `corpus_db.ok == true`; an absent or degraded state database does not make the
 container unhealthy. Stop the smoke stack with `docker compose down`.
+
+_Dr. Mārcis Gasūns_

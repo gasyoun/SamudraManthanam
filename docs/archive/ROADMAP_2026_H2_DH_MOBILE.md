@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Samudra Manthanam — Roadmap H2 2026: DH Standards + Cross-Platform Offline
 
 > **Status (30-07-2026): SUPERSEDED FOR LIVE STATUS.** Phases 0–3e and most of
@@ -172,3 +174,5 @@ Rights constraints remain unchanged: exporting search results is in scope; publi
 1. **sqlite-wasm pack size / iOS storage eviction** — mitigate with per-text packs, `navigator.storage.persist()`, and a clean re-download path. Prototype in Phase 3 week 1 before committing.
 2. **HTML→JSONL conversion fidelity** across 152 heterogeneous hand-made files — mitigate with byte-level round-trip tests and per-file converter quirks table; convert the messiest file first.
 3. **Two search engines (server FTS5 + wasm FTS5) drifting** — mitigate: one pack-build pipeline, golden queries in CI against both.
+
+_Dr. Mārcis Gasūns_

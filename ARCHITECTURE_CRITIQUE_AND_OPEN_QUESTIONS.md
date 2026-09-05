@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Architecture Critique and Open Questions
 
 Date: 2026-05-15
@@ -465,3 +467,5 @@ Question:
 2. **Advanced Morphology**: Transition from Sanskrit Heritage API to a curated offline morphology dataset is a candidate for the next 6-month roadmap.
 3. **Rich Annotation**: Whether the reader should evolve into a rich collaborative annotation workspace or remain a high-quality viewer.
 4. **Identity Verification**: When to transition from lead capture to mandatory magic-link verification for sensitive operations.
+
+_Dr. Mārcis Gasūns_

@@ -30,3 +30,5 @@ When an internal skill or plan says "create an issue" or "publish a spec",
 that maps directly onto opening a GitHub Issue here (not an `H###` handoff) —
 the spec is the issue body, or a linked `docs/` file for anything long enough
 to need one.
+
+_Dr. Mārcis Gasūns_

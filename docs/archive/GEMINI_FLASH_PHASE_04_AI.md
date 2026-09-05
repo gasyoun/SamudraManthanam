@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Phase 04: AI
 
 Goal: add optional provider-agnostic AI without making AI canonical.
@@ -97,3 +99,5 @@ Acceptance:
 - Works with fake provider.
 - Fails gracefully when AI disabled.
 - Output is visually secondary to corpus text.
+
+_Dr. Mārcis Gasūns_

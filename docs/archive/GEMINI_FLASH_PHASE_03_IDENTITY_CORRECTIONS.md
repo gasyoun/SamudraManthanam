@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Phase 03: Identity and Corrections
 
 Goal: add low-friction Systema-Sanscriticum identity and correction proposals.
@@ -93,3 +95,5 @@ Acceptance:
 
 - Canonical corpus files are not changed.
 - Anonymous users cannot submit corrections.
+
+_Dr. Mārcis Gasūns_

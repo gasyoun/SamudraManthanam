@@ -1,6 +1,6 @@
 # НКРЯ full-corpus export — per-source rights table (Wave 4)
 
-_Created: 2026-07-13 · Last updated: 2026-08-08_
+_Created: 13-07-2026 · Last updated: 08-08-2026_
 
 One row per exported seg=ru source (131 sources). `rights`/`needs_review` read verbatim from each `<slug>.meta.json` (H231 Phase-0 pass) — this wave tabulates, it does not re-research provenance. **`needs_review: true` = verify against the physical edition before any НКРЯ submission.** Bulk export artifacts are gitignored / release-only (in-copyright).
 

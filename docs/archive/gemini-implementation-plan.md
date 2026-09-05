@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Implementation Plan
 
 > **STATUS: SUPERSEDED** — Older long-form Gemini plan. Use `GEMINI_FLASH_IMPLEMENTATION_PLAN.md` as the current index.
@@ -457,3 +459,4 @@ Gemini should begin with this bounded batch:
 
 This is the right first slice because it improves scholar-facing quality immediately and creates guardrails for later phases.
 
+_Dr. Mārcis Gasūns_

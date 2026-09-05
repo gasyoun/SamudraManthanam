@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code when working with code in this repository.
@@ -141,3 +143,5 @@ Errors are collected in `ErrList` (shown in `Memo1`) and saved to `<input>_err.t
   Putting `Forms`, `Dialogs`, `Controls`, `ShellApi` or `fMainForm` back into `uMhHTML.pas` re-creates the reverse dependency edge this removed. Before/after map: `DEPENDENCY_INVENTORY.md` §3/§3a.
 - **`TextU.pas` is VCL-free** (H2370, 07-08-2026). List/clipboard/RichEdit helpers live in `TextUVCL.pas` — do not pull `CheckLst`/`StdCtrls`/`ComCtrls`/`ClipBrd` back into `TextU`. `fCheckDialog.pas` remains GUI-coupled by design.
 - **`uSort.pas` has no `Dialogs`** (H2370) — keep it portable (`uses Math` in implementation).
+
+_Dr. Mārcis Gasūns_

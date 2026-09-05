@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Samudra Manthanam - 1-Month Development Roadmap
 
 > **STATUS: SUPERSEDED** — Older 1-month roadmap with stale ordering. Current roadmap: `ARCHITECTURE_REVIEW_6_MONTH_ROADMAP.md`. Current Gemini index: `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`.
@@ -370,3 +372,4 @@ By June 12, 2026, the following should be true:
 - ingest validation catches obvious corpus issues
 - deployment and operational notes are sufficient for a beta release
 
+_Dr. Mārcis Gasūns_

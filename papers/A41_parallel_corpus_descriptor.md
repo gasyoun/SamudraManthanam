@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 ---
 paper_id: A41
 title: "Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources"

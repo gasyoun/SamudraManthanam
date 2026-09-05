@@ -1,8 +1,10 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # HTML→JSONL Converter Spec — Phase 1, Session S2
 
 **Status:** Draft for review · 2026-06-12
-**Implements:** [LINE_ID_SCHEME.md](LINE_ID_SCHEME.md) (frozen) · grounded in
-[TAG_CENSUS.md](TAG_CENSUS.md) and live `corpus.db` samples.
+**Implements:** [LINE_ID_SCHEME.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/LINE_ID_SCHEME.md) (frozen) · grounded in
+[TAG_CENSUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) and live `corpus.db` samples.
 **Consumed by:** the Phase 1 converter `corpus_builder/html_to_canonical.py`; the
 alignment work (S3) reads the records this produces.
 
@@ -226,3 +228,5 @@ This is the audit trail (Cologne `printchange.txt` discipline) and the review su
       grouped; alignment group key present on every verse record.
 - [ ] SLP1 computed for every Sanskrit segment; accented + stripped forms both stored.
 - [ ] Conversion report produced and committed per corpus version.
+
+_Dr. Mārcis Gasūns_

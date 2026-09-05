@@ -1,8 +1,10 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Sanskrit↔Russian Alignment Spec — Phase 1, Session S3
 
 **Status:** Draft for review · 2026-06-12
-**Builds on:** [CONVERTER_SPEC.md](CONVERTER_SPEC.md) (the converter emits the group key
-this spec defines) and [LINE_ID_SCHEME.md](LINE_ID_SCHEME.md) (frozen).
+**Builds on:** [CONVERTER_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONVERTER_SPEC.md) (the converter emits the group key
+this spec defines) and [LINE_ID_SCHEME.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/LINE_ID_SCHEME.md) (frozen).
 **Grounded in:** live `corpus.db` measurement of all 119 verse sources (2026-06-12).
 
 ---
@@ -203,3 +205,5 @@ extracted the existing pairing faithfully**, not that an algorithm guessed corre
       from all groups.
 - [ ] One text demonstrably queryable + readable across both panes with the toggle, end to
       end (roadmap Phase 1 acceptance, alignment half).
+
+_Dr. Mārcis Gasūns_

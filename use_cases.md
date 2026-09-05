@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Use Case Scenarios - Samudra Manthanam
 
 This document outlines the primary ways scholars, students, and developers interact with the Samudra Manthanam platform.
@@ -48,3 +50,5 @@ This document outlines the primary ways scholars, students, and developers inter
     1. The automated `reindex.sh` script runs via cron at 3:00 AM.
     2. `ingest.py` parses the new files, updates the FTS5 index, and regenerates SHA-256 hashes.
 - **Outcome:** The web search and the sync API are instantly updated with the new content without manual intervention.
+
+_Dr. Mārcis Gasūns_

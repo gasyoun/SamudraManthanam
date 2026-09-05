@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # H760 sanskritisms -- corpus-wide counts report
 
 _Committed validation artifact (H760 deliverable 2). Bulk per-source
@@ -145,3 +147,5 @@ lexicon/epithets/index JSON is gitignored; regenerate with
 | yoga-sutry_vyasa-bhashya | 203 | 28938 | 1055 | 132 | 10 | 30 |
 | yoga-sutry_zagumennov | 195 | 12254 | 754 | 103 | 5 | 5 |
 | yotat-up | 143 | 2468 | 109 | 32 | 9 | 14 |
+
+_Dr. Mārcis Gasūns_

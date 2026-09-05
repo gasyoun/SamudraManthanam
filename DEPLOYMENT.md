@@ -424,3 +424,5 @@ immediately on the next search without a restart.
 This is **independent** of code rollback: restoring a DB does not change
 `/opt/samudra/repo` HEAD, and `git reset --hard` does not restore a corpus
 backup.
+
+_Dr. Mārcis Gasūns_
