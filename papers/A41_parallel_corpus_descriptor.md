@@ -1,4 +1,4 @@
-_Created: 25-08-2026 · Last updated: 05-09-2026_
+_Created: 25-08-2026 · Last updated: 06-09-2026_
 
 ---
 paper_id: A41
@@ -12,7 +12,7 @@ data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment re
 
 # Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources
 
-_Created: 26-06-2026 · Last updated: 12-08-2026_
+_Created: 26-06-2026 · Last updated: 06-09-2026_
 
 > **Draft status (2026-07-11, H676; advanced 2026-07-08, H351; scaffolded 2026-06-26).**
 > Manuscript built directly on the converted corpus and its design specs. Every numerical
@@ -94,10 +94,11 @@ _Created: 26-06-2026 · Last updated: 12-08-2026_
 > (51-group review sheet) folded in once voted. *(The RU-translation ship triage that
 > stood here is closed — ship-all, MG 08-08-2026, H2440; the residual is documentation,
 > already filled.)*
+> author-voice pass 06-09-2026 ([SIGNOFF_A41_author_pass.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/SIGNOFF_A41_author_pass.md)), Fable 5.1 `claude-fable-5-1`: voice, register and framing only.
 
 ## Abstract
 
-We present **Samudra Manthanam** ("the churning of the ocean"), a Sanskrit–Russian
+I present **Samudra Manthanam** ("the churning of the ocean"), a Sanskrit–Russian
 parallel corpus assembled from **148 digitised sources** and released as a uniform,
 segment-addressable JSONL layer of **574,939 records**. Unlike most parallel corpora,
 whose sentence pairs are produced by a statistical or neural aligner and carry an
@@ -115,8 +116,8 @@ sources are **15 bilingual dictionaries** (321,672 head entries) and **14 prose 
 segment carries its canonical passage ID, transliteration in both IAST and SLP1 (for
 Sanskrit), an explicit `structure` class, and a per-segment `seg` role, so that
 confidence, monolinguality, and commentary status are queryable fields rather than
-buried assumptions. We add a **chronology crosswalk** that maps each text onto
-VisualDCS period dates without re-deriving them, and we use the corpus's 11 Russian
+buried assumptions. I add a **chronology crosswalk** that maps each text onto
+VisualDCS period dates without re-deriving them, and I use the corpus's 11 Russian
 Bhagavadgītā translations (1788 → present) as a worked **diachronic register
 demonstration**. The contribution is a reproducible, FAIR-leaning data descriptor:
 the artefact, its extraction method, its honest edge-case accounting, and the path
@@ -139,11 +140,11 @@ The central observation, formalised in [`docs/ALIGNMENT_SPEC.md`](https://github
 reading HTML, they placed each Sanskrit verse and its Russian translation as sibling
 `div`s inside one citation block, hand-aligned at the verse (or atomic-range) level.
 A parallel-corpus builder who treats this as a sentence-alignment task would discard
-ground truth and re-introduce error. We therefore frame extraction as a markup-faithful
-operation whose correctness is checked by a **regression oracle** ("did we extract the
-existing pairing faithfully?"), not by scoring a guesser.
+ground truth and re-introduce error. I therefore frame extraction as a markup-faithful
+operation whose correctness is checked by a **regression oracle** ("did the converter
+extract the existing pairing faithfully?"), not by scoring a guesser.
 
-Our claims:
+I make three claims:
 
 1. **Markup-faithful recovery.** The bilingual pairing is read straight out of the
    source structure; the 78,219 clean 1:1 verse pairs are extracted, not inferred,
@@ -158,7 +159,7 @@ Our claims:
 
 ## 2. Related work
 
-Six strands frame the contribution. The novelty claim, stated crisply: a
+Six strands frame the contribution. The novelty claim is a
 **markup-aligned Sanskrit–Russian parallel corpus at 148-source scale with per-segment
 cardinality/monolingual flags and a chronology crosswalk** — a *resource and
 method-of-construction* contribution, **not** a new aligner.
@@ -169,10 +170,10 @@ pairing as an estimation problem: length-based dynamic programming (Gale & Churc
 al. 2005), MT-mediated alignment (Bleualign; Sennrich & Volk 2010), and embedding-based
 aligners over LASER/LaBSE sentence spaces (Vecalign; Thompson & Koehn 2019; Artetxe &
 Schwenk 2019; Feng et al. 2022). All of these *infer* a pairing and attach an estimated
-confidence. Our corpus is the contrasting case this literature rarely names: the
-editions were **hand-aligned by their editors at the verse level before we arrived**,
+confidence. This corpus is the contrasting case this literature rarely names: the
+editions were **hand-aligned by their editors at the verse level before I arrived**,
 so running any aligner would replace ground truth with an estimate of it (§3.2). The
-right method is extraction plus a fidelity oracle, and the corpus is offered as a
+right method is extraction plus a fidelity oracle, and I offer the corpus as a
 worked example of that stance.
 
 **Structure-derived bitext.** Reading alignment out of document structure — TEI
@@ -187,8 +188,8 @@ Sanskrit (Hellwig), GRETIL, the Sanskrit Library (Scharf & Hyman), and the Colog
 Digital Sanskrit Dictionaries. Parallel data is dominated by Sanskrit–**English**: the
 nearest neighbor to this work is the **Itihāsa** corpus (Aralikatte et al. 2021), ~93k
 Sanskrit–English śloka–translation pairs extracted from printed Rāmāyaṇa and
-Mahābhārata editions. Our delta against Itihāsa is threefold: the target language is
-**Russian** (to our knowledge no comparable machine-readable Sanskrit–Russian parallel
+Mahābhārata editions. The delta against Itihāsa is threefold: the target language is
+**Russian** (to my knowledge no comparable machine-readable Sanskrit–Russian parallel
 resource exists — the Russian indological tradition is deep but its digital layer was
 per-source reading HTML, §1); the source base is **148 works across genres** (Veda,
 epic, Upaniṣads, kāvya, śāstra) rather than the two epics; and the alignment is
@@ -196,23 +197,23 @@ epic, Upaniṣads, kāvya, śāstra) rather than the two epics; and the alignmen
 per-pair heuristics. The 15-dictionary lexical layer (321,672 head entries) additionally
 connects the corpus to the lexicographic strand (A42, §12).
 
-**Corpus collections and the precision–scale tradeoff.** The parallel-data landscape is
+**Corpus collections and the precision–scale tradeoff.** The parallel-data field is
 dominated by *aggregation at web scale*: OPUS normalises hundreds of collections into one
 distribution format (Tiedemann 2012), and mined bitext such as CCMatrix reaches billions
 of pairs by scoring candidate sentences in an embedding space (Schwenk et al. 2021). That
 strand buys volume at the cost of per-pair certainty — a mined pair carries a margin
 score, and low-resource language sides are exactly where mined precision degrades. This
 corpus sits at the opposite corner of the same design space: ~78k pairs, no score column,
-because no pairing was ever estimated. We share OPUS's *uniform-schema* goal (one format,
+because no pairing was ever estimated. I share OPUS's *uniform-schema* goal (one format,
 one addressing scheme across heterogeneous sources) and reject the mining strand's
-inference step, which our sources make unnecessary. Stating this explicitly matters for a
+inference step, which these sources make unnecessary. Stating this explicitly matters for a
 low-resource pair: the alternative route to Sanskrit–Russian bitext at this size would be
 mining, and it would be strictly noisier here.
 
 **Translationese and diachronic register.** Because every Russian side is a translation of
 a fixed Sanskrit source, the corpus is also a *translationese* resource in the sense of
 Rabinovich & Wintner (2015), who show translated text is machine-distinguishable from
-originally-authored text by lexical and syntactic markers. Our §5 measurements (TTR,
+originally-authored text by lexical and syntactic markers. My §5 measurements (TTR,
 Guiraud R, Sanskrit-loan retention across 11 Gītā renderings, 1788–2016) are a
 philologically-motivated instance of that measurement stance on a controlled bilingual
 alignment — one source text, eleven target realisations, ~230 years apart. This connects
@@ -248,13 +249,13 @@ source one of three `structure` classes; the **final converter classification** 
 | **prose** | 14 | 45,037 | `body` |
 | **total** | **148** | **574,939** | |
 
-*(Note for the methods text: the early heuristic tag-census in
+*(Classification note: the early heuristic tag-census in
 [`TAG_CENSUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) reports a provisional **70 verse / 15 dictionary /
 67 prose** split — over **152** candidate sources, not the final 148; the table above is
 the **final** converter/backfill classification recorded in the conversion report and
 [`.ai_state.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/.ai_state.md). The discrepancy
-is the heuristic-vs-final reclassification (and the 152→148 source-set trim) and must be
-stated, not hidden.)*
+is the heuristic-vs-final reclassification (and the 152→148 source-set trim), and I
+state it here rather than hide it.)*
 
 *(Layer reconciliation, re-measured 10-08-2026: three counts coexist and none contradicts
 the others. The **canonical corpus** is the 148 report sources / 574,939 JSONL records
@@ -484,7 +485,7 @@ this paper.
 A parallel corpus entering a national-corpus infrastructure (the НКРЯ track,
 [roadmap](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md))
 needs a position on Sanskrit-side linguistic annotation. Rather than assume one,
-we compared three candidate paths head-to-head on the four pilot sources — MBh 3
+I compared three candidate paths head-to-head on the four pilot sources — MBh 3
 and Rāmāyaṇa 1–3, 11,055 verse pairs / 40,269 half-verse lines / 203,623 surface
 tokens: **(A)** the plain IAST/SLP1 surface already carried by the corpus (the
 guaranteed floor), **(B)** a crosswalk onto the Digital Corpus of Sanskrit's
@@ -498,8 +499,8 @@ the full method and per-tier tables are in
 
 ### 6.1 The crosswalk is text-keyed, and coverage measures editions
 
-Verse loci cannot join the two corpora: our MBh 3 carries critical-edition
-numbering (299 adhyāyas, same as DCS) but our Rāmāyaṇa kāṇḍas are
+Verse loci cannot join the two corpora: my MBh 3 carries critical-edition
+numbering (299 adhyāyas, same as DCS) but my Rāmāyaṇa kāṇḍas are
 vulgate-numbered (77/119/75 sargas vs DCS's critical 76/111/71). The crosswalk
 therefore matches **normalized half-verse text** in three tiers — exact,
 consonant-skeleton (neutralizing sandhi differences: DCS's Rāmāyaṇa
@@ -554,15 +555,15 @@ model's estimate of it.
 
 ## 7. Discussion
 
-The corpus's value is twofold. As an **artefact**, it is, to our knowledge, the largest
+The corpus's value is twofold. As an **artefact**, it is, to my knowledge, the largest
 uniform Sanskrit–Russian parallel resource, with ~78k verse pairs spanning the Vedic to
 the late classical period and a lexical layer of >320k dictionary entries. As a
 **method case**, it argues that for editions whose translators already aligned the text
-by hand, the right move is markup-faithful extraction with a fidelity oracle, not a
+by hand, the right method is markup-faithful extraction with a fidelity oracle, not a
 statistical aligner that would overwrite ground truth and add probabilistic error. The
 per-segment confidence/monolingual flags and the chronology crosswalk make the resource
 honest about what it is — clean where the source is clean, explicitly monolingual where
-it is not — which is exactly what a downstream consumer (retrieval, bilingual
+it is not — which is what a downstream consumer (retrieval, bilingual
 lexicon induction, diachronic translation study) needs.
 
 ## 8. Limitations
@@ -573,11 +574,13 @@ lexicon induction, diachronic translation study) needs.
 - **Monolingual text is not bitext.** Two whole translation-only texts (Balmont's
   Buddhacarita, mify-drind) account for ≈10,024 of the 10,145 Russian-only segments;
   they are valuable Russian witnesses but contribute no Sanskrit pair.
-- **Provenance is heterogeneous; ship is not gated per translator.** The Russian
-  translations span 1788 to living authors. **MG 08-08-2026 (H2440): ship all RU text** —
-  never reask a per-translator ship gate. **Document the different translators** in
+- **Provenance is heterogeneous; release is not gated per translator.** The Russian
+  translations span 1788 to living authors. The rights ruling of 08-08-2026 (MG, H2440)
+  is to ship all Russian text rather than triage release translator by translator; the
+  translators are documented in
   [papers/data/A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md)
-  and the §5 Gītā table; residual greyness is recorded, not a park.
+  and in the §5 Gītā table, and the residual grey-rights status is recorded rather than
+  treated as a reason to withhold.
 - **Dates are crosswalked, not re-derived** (VisualDCS), with `manual` flags on
   author-datable medieval works; the crosswalk inherits DCS's own dating uncertainty.
 - **The §5 register metrics are surface lexical measures.** TTR/Guiraud R and the
@@ -590,13 +593,13 @@ lexicon induction, diachronic translation study) needs.
 
 ## 9. Human gates (rights documentation and DOI)
 
-**RU ship gate — closed 08-08-2026 (MG, H2440).** **Ship all** Russian text for A41
-paths. Do **not** re-open a per-translator redistribute/hold triage. The residual
-duty is **documentation of translators** (already filled for the §5 Gītā editions and
-for every committed `*.meta.json` credit; inventory:
+**Russian-text rights position — settled 08-08-2026 (MG, H2440).** All Russian text
+ships for A41 paths; the per-translator redistribute-or-hold triage is closed and is not
+reopened here. What remains is documentation of translators, already filled for the §5
+Gītā editions and for every committed `*.meta.json` credit (inventory:
 [papers/data/A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md)).
 НКРЯ `RIGHTS_TABLE` rows still showing `—` for translator lack committed meta credits
-(H821 residue) — fill when meta is restored, not by guessing.
+(H821 residue); they are filled when the metadata is restored, not by guessing.
 
 **Documented artifacts (added 10-08-2026, H2403).** The rights position above, the
 per-layer licence table, and the corpus's intended use / known-misuse notes are recorded
@@ -609,9 +612,9 @@ The imported DCS lemma/morphology layer of §6 is **CC BY 4.0** and therefore
 redistributable with attribution; vidyut output is evaluated but **not shipped**, so no
 question of redistributing it arises.
 
-Still outside the data work:
+The one gate that stood outside the data work is now closed:
 
-1. **Mint a *dataset* DOI — ✅ DONE 28-08-2026 (H2611, OxAlpha).** The **corpus of
+1. **Dataset DOI — minted 28-08-2026 (H2611, OxAlpha).** The **corpus of
    record** now has its own Zenodo record with `resource_type: dataset`: concept DOI
    [10.5281/zenodo.22149933](https://doi.org/10.5281/zenodo.22149933) (v1.0.0 =
    [10.5281/zenodo.22149934](https://doi.org/10.5281/zenodo.22149934)), wired into
@@ -637,7 +640,7 @@ Samudra Manthanam is a 148-source, 574,939-segment Sanskrit–Russian corpus who
 ~78,219 clean verse pairs were recovered by **markup-faithful extraction rather than
 statistical alignment**, with monolingual content flagged as a first-class state, a
 chronology crosswalk onto DCS period dates, and a built-in diachronic demonstration in
-its 11 Russian Bhagavadgītā translations. It is offered as a reproducible data
+its 11 Russian Bhagavadgītā translations. I offer it as a reproducible data
 descriptor and a method case for the many digitised parallel editions whose alignment
 already lives in their markup.
 
