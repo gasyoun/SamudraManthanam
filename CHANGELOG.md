@@ -653,8 +653,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **╨б╤В╨╕╤Е╨╛╨▓╨░╤П ╨┐╤А╨╛╨▓╨╡╤А╨║╨░: ╤А╨░╨╖╨╗╨╕╤З╨░╤О╤В ╨╗╨╕ ╤А╤Г╤Б╤Б╨║╨╕╨╡ ╨┐╨╡╤А╨╡╨▓╨╛╨┤╤З╨╕╨║╨╕ ╤Б╨░╨╜╤Б╨║╤А╨╕╤В╤Б╨║╨╕╨╡ ╨┐╤А╨╛╤И╨╡╨┤╤И╨╕╨╡ ╨▓╤А╨╡╨╝╨╡╨╜╨░
   (H1052, Fable 5 `claude-fable-5`; ╨┤╨╕╤А╨╡╨║╤В╨╕╨▓╨░ ╨░╨┤╤К╤О╨┤╨╕╨║╨░╤Ж╨╕╨╕ A65 ╨║ HB-57).** ╨Э╨╛╨▓╤Л╨╣ ╨╕╨╜╤Б╤В╤А╤Г╨╝╨╡╨╜╤В
-  [`nkrya-parallel/export/past_tense_translation_check.py`](nkrya-parallel/export/past_tense_translation_check.py)
-  (+ stats JSON + ╨╛╤В╤З╨╡╤В [`PAST_TENSE_TRANSLATION_CHECK.md`](nkrya-parallel/export/PAST_TENSE_TRANSLATION_CHECK.md)):
+  `nkrya-parallel/export/past_tense_translation_check.py`
+  (+ stats JSON + ╨╛╤В╤З╨╡╤В `PAST_TENSE_TRANSLATION_CHECK.md`):
   41 023 ╤Н╨┐╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨┐╨░╤А╤Л ╤Б╤В╨╕╤ЕтЗД╨┐╨╡╤А╨╡╨▓╨╛╨┤, DCS-╨▓╤Л╨▓╨╡╨┤╨╡╨╜╨╜╤Л╨╡ ╨╗╨╡╨║╤Б╨╕╨║╨╛╨╜╤Л ╨▓╤Л╤Б╨╛╨║╨╛╨╣ ╤В╨╛╤З╨╜╨╛╤Б╤В╨╕ (╨╕╨╝╨┐╨╡╤А╤Д╨╡╨║╤В
   342 ╤Д╨╛╤А╨╝ ╨┐╨╛ ╤В╨╡╨│╨░╨╝ ┬╖ ╨░╨╛╤А╨╕╤Б╤В 179 ╨┐╨╛ formation-╤В╨╡╨│╨░╨╝ ┬╖ ╨┐╨╡╤А╤Д╨╡╨║╤В 193 ╤З╨╡╤А╨╡╨╖ ╤В╨╡╤Б╤В ╤А╨╡╨┤╤Г╨┐╨╗╨╕╨║╨░╤Ж╨╕╨╕ тАФ
   ╤А╨╡╨┤╤Г╨┐╨╗╨╕╤Ж╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨┐╨╡╤А╤Д╨╡╨║╤В ╨▓ DCS ╨╜╨╡ ╤В╨╡╨│╨╕╤А╨╛╨▓╨░╨╜). **╨Ш╤В╨╛╨│: ╨┐╨╡╤А╨╡╨▓╨╛╨┤ ╨Э╨Х╨Щ╨в╨а╨Р╨Ы╨Ш╨Ч╨г╨Х╨в

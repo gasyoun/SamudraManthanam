@@ -102,7 +102,7 @@ A single cell:
    **and** dependency parse, trained on SynTagRus).
 3. `nltk.sent_tokenize` splits the translation into sentences.
 4. Per sentence: strip a bracketed verse-number artifact
-   (`[а-яА-Я](-\s-[0-9]+-\s)[а-яА-Я]+`), then remove digits, Latin letters, and
+   (`а-яА-Я[а-яА-Я]+`), then remove digits, Latin letters, and
    punctuation (`reg_punct`), collapse whitespace.
 5. `joint_model([text])` → append `(<cleaned sentence>,<predictions>)` to
    `deeppavlov_<file>`, one line per sentence.
