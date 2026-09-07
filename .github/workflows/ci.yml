@@ -163,7 +163,7 @@ jobs:
           docker rm samudra-ci
           test "$code" != "137" || { echo "::error::container had to be SIGKILLed — unclean shutdown"; exit 1; }
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: docker-contract-report
