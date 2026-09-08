@@ -7,6 +7,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **H4254 (OxAlpha) — release-envelope-v1 adopted for the A41 corpus of record (`v0.19.50`).** Per [Uprava docs/SPEC_RELEASE_ENVELOPE_V6_PORTFOLIO_2026.md](https://github.com/gasyoun/Uprava/blob/main/docs/SPEC_RELEASE_ENVELOPE_V6_PORTFOLIO_2026.md) (kosha `data-v0.5.0` pilot, H4239): [`data/manifest/envelopes/v0.19.50.envelope.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/data/manifest/envelopes/v0.19.50.envelope.json) pins 4 committed release artifacts (`conversion_report.json`, `RIGHTS_TABLE.md`, `A41_TRANSLATORS.md`, the A41 data statement, all sha256 lf-canonical) plus one in-repo source pin — an aggregate directory digest over the 148 report-source `.jsonl` files enumerated in `conversion_report.json['sources']` (574,939 records, matches `total_records` exactly). New stdlib-only checker [`scripts/envelope_check.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/scripts/envelope_check.py) re-derives every declared digest from bytes on disk: 4/4 checks PASS, exit 0; negative control (doctored artifact digest) exit 1. Additive only — canonical stores (`conversion_report.json`, the jsonl corpus, `CITATION.cff`) untouched; wraps the existing H2611 Zenodo dataset DOI (concept [10.5281/zenodo.22149933](https://doi.org/10.5281/zenodo.22149933)) rather than re-stating it.
+
 ## [0.19.50] - 2026-08-28
 
 ### Added
