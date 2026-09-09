@@ -59,7 +59,7 @@ jobs:
 
       - name: Upload build log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: h2434-golden-build-log
           path: H2434_GOLDEN_BUILD.log
