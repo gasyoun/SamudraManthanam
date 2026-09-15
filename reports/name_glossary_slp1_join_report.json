@@ -1,0 +1,260 @@
+{
+ "generated": "2026-09-15T03:59:39Z",
+ "handoff": "H4715 (xwalk-a10 cyr-propernoun-glossaries)",
+ "dataset": {
+  "id": "cyrillic-proper-noun-slp1",
+  "path": "../SanskritLexicography/RussianTranslation/data/cyrillic_proper_noun_slp1.tsv",
+  "sha256": "ae7f0c234836af839231bcb31ecb2a6ead49cb0fc19096e4f1fa2606ed0c7d87",
+  "rows": 534,
+  "distinct_cyrillic_forms": 518
+ },
+ "rights_note": "joined rows carry identifiers/keys/metadata only; gloss text NOT redistributed (in-copyright editions)",
+ "totals": {
+  "glossary_entries": 5114,
+  "joined_forms": 918,
+  "joined_rows": 965,
+  "table_rows_with_glossary_home": 522,
+  "distinct_covered_forms": 506
+ },
+ "validation_tiers_joined": {
+  "onomasticon": 854,
+  "iast-witness-only": 48,
+  "lexicon": 63
+ },
+ "per_glossary": {
+  "ramayana3": {
+   "file": "Рамаяна 3. Словарь.txt",
+   "entries": 208,
+   "joined_forms": 201,
+   "joined_rows": 215
+  },
+  "grintser-kadambari": {
+   "file": "Словарь Гринцера из Бада Кадамбари.txt",
+   "entries": 464,
+   "joined_forms": 138,
+   "joined_rows": 145
+  },
+  "grintser-ramayana12": {
+   "file": "Словарь Гринцера из Рамаяны 1-2.txt",
+   "entries": 462,
+   "joined_forms": 450,
+   "joined_rows": 472
+  },
+  "potapova": {
+   "file": "Словарь Потаповой.txt",
+   "entries": 339,
+   "joined_forms": 129,
+   "joined_rows": 133
+  },
+  "smirnov": {
+   "file": "Словарь Смирнова.txt",
+   "entries": 3641,
+   "joined_forms": 0,
+   "joined_rows": 0
+  }
+ },
+ "sample_verify": {
+  "method": "3 alphabetical joined names per glossary; headword provenance by construction, slp1 re-derived from IAST witness, inline-IAST witness agreement",
+  "n": 15,
+  "pass": 15,
+  "fail": 0,
+  "results": [
+   {
+    "name": "Агастья",
+    "glossary": "ramayana3",
+    "slp1": "agastya",
+    "iast_witness": "Agastya",
+    "iast_inline": "Agastya",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Агни",
+    "glossary": "ramayana3",
+    "slp1": "agni",
+    "iast_witness": "Agni",
+    "iast_inline": "Agni",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Адити",
+    "glossary": "ramayana3",
+    "slp1": "aditi",
+    "iast_witness": "Aditi",
+    "iast_inline": "Aditi",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Айодхья",
+    "glossary": "ramayana3",
+    "slp1": "ayoDyA",
+    "iast_witness": "Ayodhyā",
+    "iast_inline": "Ayodhyā",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Агни",
+    "glossary": "grintser-kadambari",
+    "slp1": "agni",
+    "iast_witness": "Agni",
+    "iast_inline": "",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "NO_SPAN"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Адити",
+    "glossary": "grintser-kadambari",
+    "slp1": "aditi",
+    "iast_witness": "Aditi",
+    "iast_inline": "",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "NO_SPAN"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Айодхья",
+    "glossary": "grintser-kadambari",
+    "slp1": "ayoDyA",
+    "iast_witness": "Ayodhyā",
+    "iast_inline": "",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "NO_SPAN"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Айравата",
+    "glossary": "grintser-kadambari",
+    "slp1": "ErAvata",
+    "iast_witness": "Airāvata",
+    "iast_inline": "",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "NO_SPAN"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Агастья",
+    "glossary": "grintser-ramayana12",
+    "slp1": "agastya",
+    "iast_witness": "Agastya",
+    "iast_inline": "Agastya",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Агни",
+    "glossary": "grintser-ramayana12",
+    "slp1": "agni",
+    "iast_witness": "Agni",
+    "iast_inline": "Agni",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Агниварна",
+    "glossary": "grintser-ramayana12",
+    "slp1": "agnivarRa",
+    "iast_witness": "Agnivarṇa",
+    "iast_inline": "Agnivarṇa",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Аджа",
+    "glossary": "grintser-ramayana12",
+    "slp1": "aja",
+    "iast_witness": "Aja",
+    "iast_inline": "Aja",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "MATCH"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Агастья",
+    "glossary": "potapova",
+    "slp1": "agastya",
+    "iast_witness": "Agastya",
+    "iast_inline": "",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "NO_SPAN"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Агни",
+    "glossary": "potapova",
+    "slp1": "agni",
+    "iast_witness": "Agni",
+    "iast_inline": "Павака",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "NOT_IAST_SPAN"
+    },
+    "verdict": "PASS"
+   },
+   {
+    "name": "Аджа",
+    "glossary": "potapova",
+    "slp1": "aja",
+    "iast_witness": "Aja",
+    "iast_inline": "",
+    "checks": {
+     "headword_in_glossary": true,
+     "slp1_rederived_from_witness": "OK",
+     "witness_vs_inline": "NO_SPAN"
+    },
+    "verdict": "PASS"
+   }
+  ]
+ },
+ "builder": "scripts/build_name_glossary_slp1_join.py"
+}
