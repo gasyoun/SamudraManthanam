@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 12-09-2026_
+_Created: 12-05-2026 · Last updated: 15-09-2026_
 
 `SamudraManthanam` («Пахтанье океана») is a **parallel Sanskrit–Russian corpus
 search** platform: a FastAPI + SQLite FTS5 web app (the live public surface)
@@ -77,5 +77,9 @@ Five-role vocabulary (`needs-triage` … `wontfix`) mapped onto this repo's actu
 ### Domain docs
 
 No `CONTEXT.md`/`docs/adr/` here — the real reading-order chain and conflict rule live in `DOCUMENTATION_INDEX.md`. See [`docs/agents/domain.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/domain.md).
+
+## Memory store
+
+This repo keeps a committed memory store at [`.claude/projects/SamudraManthanam/memory/`](https://github.com/gasyoun/SamudraManthanam/tree/main/.claude/projects/SamudraManthanam/memory) per the org Memory-routing rule ([`/danger-memory`](https://github.com/gasyoun/claude-config/blob/main/commands/danger-memory.md)) — write dangerous/durable facts there and index each in its `MEMORY.md` (H4547).
 
 _Dr. Mārcis Gasūns_
