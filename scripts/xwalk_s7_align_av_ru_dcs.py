@@ -140,7 +140,7 @@ def align_hymn(sam: dict, dcs: dict) -> dict:
     total = max(len(sam["tokens"]), 1)
     hymn_cov = sum(verse_hits.values()) / total
     rows = []
-    for vi, ru_text in enumerate(sam["verses"]):
+    for vi in range(len(sam["verses"])):
         v_len = sum(1 for x in sam["token_verse"] if x == vi)
         cov = verse_hits.get(vi, 0) / max(v_len, 1)
         span = sorted(pada_hits.get(vi, []))
@@ -189,7 +189,7 @@ def main() -> int:
             total_hymns += 1
             dcs = saunaka.get((book, hymn))
             if dcs is None:
-                for vi, ru_text in enumerate(sam["verses"]):
+                for vi, ru_text in enumerate(sam["verse_ru"]):
                     all_rows.append([book, hymn, sam["verse_labels"][vi], "", "no_dcs_hymn", 0.0,
                                      "", "", ru_text])
                 continue

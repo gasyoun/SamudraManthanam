@@ -7,6 +7,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- H4743 (xwalk-s7): sibling-corpus shape verification (`scripts/xwalk_s7_verify_siblings.py`, `reports/xwalk-s7-sibling-verification-report.md`) across atharvaveda + mahabharata-* JSONL siblings, and content-based verse-level alignment of AV Russian × DCS AVŚ (`scripts/xwalk_s7_align_av_ru_dcs.py`, `reports/xwalk-s7-av-ru-dcs-alignment.{tsv,md}`; 4,031/4,516 verses, Paippalāda control 0.028 vs Śaunaka 0.688).
+
 ## [0.19.50] - 2026-08-28
 
 ### Added
