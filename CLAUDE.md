@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 16-08-2026_
+_Created: 12-05-2026 · Last updated: 12-09-2026_
 
 `SamudraManthanam` («Пахтанье океана») is a **parallel Sanskrit–Russian corpus
 search** platform: a FastAPI + SQLite FTS5 web app (the live public surface)
@@ -29,10 +29,12 @@ Recipe: `cd /opt/samudra/repo && git pull --ff-only origin main && /opt/samudra/
 Ops note on the box: `/opt/samudra/OPS.md`. Do **not** invent a second
 deploy path. Corpus reindex is a separate explicit step, not the app restart.
 
-Web layout: `web/app/dispatch_service.py` (all search modes),
+Web layout: HTTP layer in `web/app/routers/` (one file per route family:
+`search.py`, `search_page.py`, `morph.py`, `ai.py`, …), service logic in
+`web/app/services/` — `dispatch_service.py` (all search modes),
 `search_service.py` (FTS5 prefix + AND), `morph_service.py`,
-`html_service.py` (Jinja2 fragments), `settings.py` (`DB_PATH`),
-`models.py` (Pydantic v2). Tests:
+`html_service.py` (Jinja2 fragments) — plus `web/app/settings.py`
+(`DB_PATH`), `web/app/models.py` (Pydantic v2). Tests:
 `web/tests/test_api.py`, `test_golden_queries.py`, `test_contract.py`,
 `test_morph.py`.
 
