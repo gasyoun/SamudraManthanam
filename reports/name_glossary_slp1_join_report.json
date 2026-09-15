@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-15T04:08:08Z",
+ "generated": "2026-09-15T04:09:48Z",
  "handoff": "H4715 (xwalk-a10 cyr-propernoun-glossaries)",
  "dataset": {
   "id": "cyrillic-proper-noun-slp1",
@@ -54,7 +54,7 @@
   }
  },
  "sample_verify": {
-  "method": "3 alphabetical joined names per glossary; headword provenance by construction, slp1 re-derived from IAST witness, inline-IAST witness agreement",
+  "method": "15 alphabetical joined names over the glossaries with joins; headword presence re-verified against source glossary lines, slp1 re-derived from IAST witness, inline-paren agreement (Cyrillic spans suppressed)",
   "n": 15,
   "pass": 15,
   "fail": 0,

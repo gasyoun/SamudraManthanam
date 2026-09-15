@@ -272,9 +272,10 @@ def main() -> int:
         "validation_tiers_joined": dict(Counter(j["validation"] for j in joined)),
         "per_glossary": per_gloss,
         "sample_verify": {
-            "method": ("3 alphabetical joined names per glossary; headword "
-                       "provenance by construction, slp1 re-derived from IAST "
-                       "witness, inline-IAST witness agreement"),
+            "method": ("15 alphabetical joined names over the glossaries with "
+                       "joins; headword presence re-verified against source "
+                       "glossary lines, slp1 re-derived from IAST witness, "
+                       "inline-paren agreement (Cyrillic spans suppressed)"),
             "n": len(sample),
             "pass": sum(1 for s in sample if s["verdict"] == "PASS"),
             "fail": sum(1 for s in sample if s["verdict"] == "FAIL"),
