@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-15T03:59:39Z",
+ "generated": "2026-09-15T04:08:08Z",
  "handoff": "H4715 (xwalk-a10 cyr-propernoun-glossaries)",
  "dataset": {
   "id": "cyrillic-proper-noun-slp1",
@@ -103,11 +103,11 @@
     "glossary": "ramayana3",
     "slp1": "ayoDyA",
     "iast_witness": "Ayodhyā",
-    "iast_inline": "Ayodhyā",
+    "iast_inline": "",
     "checks": {
      "headword_in_glossary": true,
      "slp1_rederived_from_witness": "OK",
-     "witness_vs_inline": "MATCH"
+     "witness_vs_inline": "NO_SPAN"
     },
     "verdict": "PASS"
    },
@@ -194,11 +194,11 @@
     "glossary": "grintser-ramayana12",
     "slp1": "agnivarRa",
     "iast_witness": "Agnivarṇa",
-    "iast_inline": "Agnivarṇa",
+    "iast_inline": "",
     "checks": {
      "headword_in_glossary": true,
      "slp1_rederived_from_witness": "OK",
-     "witness_vs_inline": "MATCH"
+     "witness_vs_inline": "NO_SPAN"
     },
     "verdict": "PASS"
    },
@@ -207,11 +207,11 @@
     "glossary": "grintser-ramayana12",
     "slp1": "aja",
     "iast_witness": "Aja",
-    "iast_inline": "Aja",
+    "iast_inline": "",
     "checks": {
      "headword_in_glossary": true,
      "slp1_rederived_from_witness": "OK",
-     "witness_vs_inline": "MATCH"
+     "witness_vs_inline": "NO_SPAN"
     },
     "verdict": "PASS"
    },
@@ -233,11 +233,11 @@
     "glossary": "potapova",
     "slp1": "agni",
     "iast_witness": "Agni",
-    "iast_inline": "Павака",
+    "iast_inline": "",
     "checks": {
      "headword_in_glossary": true,
      "slp1_rederived_from_witness": "OK",
-     "witness_vs_inline": "NOT_IAST_SPAN"
+     "witness_vs_inline": "NO_SPAN"
     },
     "verdict": "PASS"
    },

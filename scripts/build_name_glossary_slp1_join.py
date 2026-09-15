@@ -74,6 +74,12 @@ def extract_iast_span(text: str) -> str:
     if not m:
         return ""
     span = m.group(1)
+    # Rights guard: editions sometimes parenthesise a Russian gloss/synonym
+    # (Потапова) or append editorial notes («или Tāṭakā», «этимология не ясна»).
+    # Any Cyrillic in the span means it is NOT a pure IAST witness — suppress
+    # it entirely; the authoritative witness lives in the kosha table.
+    if any("\u0400" <= c <= "\u04FF" for c in span):
+        return ""
     for cut in (" — ", "—", " – ", "–"):
         if cut in span:
             span = span.split(cut, 1)[0]
@@ -178,6 +184,17 @@ def witness_agreement(inline: str, witness: str) -> str:
     return "MATCH" if fold(inline) == fold(witness) else "MISMATCH"
 
 
+def headword_present(slug: str, form: str) -> bool:
+    """Re-read the source glossary and confirm the form starts a line."""
+    fn = dict(GLOSSARIES)[slug]
+    for raw in open(os.path.join(DATA_DIR, fn), encoding="utf-8"):
+        line = raw.rstrip("\n")
+        if (line == form or line.startswith(form + "\t")
+                or line.startswith(form + " ")):
+            return True
+    return False
+
+
 def sample_verify(joined: list[dict], target: int = 15):
     """Deterministic 15-name sample: alphabetical joined forms distributed over
     the glossaries that have joins (smirnov is unkeyed by design and gets none);
@@ -193,14 +210,15 @@ def sample_verify(joined: list[dict], target: int = 15):
             row = next(j for j in joined
                        if j["glossary_slug"] == slug and j["cyrillic"] == form)
             checks = {
-                "headword_in_glossary": True,  # by construction of the join
+                "headword_in_glossary": headword_present(slug, form),
                 "slp1_rederived_from_witness": sanscript_check(
                     row["iast_witness"], row["slp1"]),
                 "witness_vs_inline": witness_agreement(
                     row["iast_inline"], row["iast_witness"]),
             }
             verdict = "PASS" if (
-                checks["slp1_rederived_from_witness"] == "OK"
+                checks["headword_in_glossary"]
+                and checks["slp1_rederived_from_witness"] == "OK"
                 and checks["witness_vs_inline"] != "MISMATCH"
             ) else "FAIL"
             results.append({
