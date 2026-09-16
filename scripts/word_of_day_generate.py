@@ -22,6 +22,7 @@ import argparse
 import datetime
 import json
 import random
+import re
 import sqlite3
 import sys
 from pathlib import Path
@@ -84,6 +85,30 @@ def mark_shown(state_db_path: str, entry: dict, date_str: str, cycle_reset: bool
         conn.close()
 
 
+CYRILLIC_RE = re.compile(r"[Ѐ-ӿ]")
+
+
+def _find_adjacent_translation(conn: sqlite3.Connection, rowid: int, source_id) -> str | None:
+    """Best-effort Russian translation for a matched corpus line.
+
+    Several corpus sources (e.g. the Ramayana translation) store the Sanskrit
+    line and its Russian translation as consecutive `corpus_lines` rows in
+    the same source rather than packed into one HTML row — see
+    web/app/services/language_filter.py's docstring for the other
+    (single-row, `chapter_block` divs) parallel-text convention this corpus
+    also uses. Neither convention carries an explicit language column, so
+    the next row is treated as the translation only when it actually
+    contains Cyrillic text — never guessed otherwise.
+    """
+    row = conn.execute(
+        "SELECT line_text FROM corpus_lines WHERE rowid = ? AND source_id = ?",
+        (rowid + 1, source_id),
+    ).fetchone()
+    if row and row["line_text"] and CYRILLIC_RE.search(row["line_text"]):
+        return row["line_text"]
+    return None
+
+
 def find_example(corpus_db_path: str, entry: dict) -> dict | None:
     """Best-effort one-sentence corpus attestation for `entry`.
 
@@ -102,7 +127,7 @@ def find_example(corpus_db_path: str, entry: dict) -> dict | None:
                 fts_query = escape_fts(query, whole_word=False)
                 row = conn.execute(
                     """
-                    SELECT s.title as source_title, cl.line_text
+                    SELECT s.title as source_title, cl.line_text, cl.rowid as rowid, cl.source_id as source_id
                     FROM corpus_lines cl
                     JOIN sources s ON cl.source_id = s.id
                     WHERE corpus_lines MATCH ?
@@ -111,7 +136,11 @@ def find_example(corpus_db_path: str, entry: dict) -> dict | None:
                     (fts_query,),
                 ).fetchone()
                 if row:
-                    return {"text": row["line_text"], "source": row["source_title"]}
+                    result = {"text": row["line_text"], "source": row["source_title"]}
+                    translation = _find_adjacent_translation(conn, row["rowid"], row["source_id"])
+                    if translation:
+                        result["translation"] = translation
+                    return result
         finally:
             conn.close()
     except sqlite3.Error as exc:

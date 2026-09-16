@@ -16,11 +16,14 @@
     .wod-iast { font-size: 1.3rem; color: var(--text-muted); margin: 0.2rem 0 0.8rem; }
     .wod-pos { display: inline-block; font-size: 0.8rem; color: var(--text-muted);
                border: 1px solid var(--line-border); border-radius: 4px; padding: 0.1rem 0.5rem; }
-    .wod-gloss { font-size: 1.1rem; margin: 1rem 0; }
+    .wod-gloss { font-size: 1.35rem; font-weight: 500; margin: 1rem 0; }
     .wod-example { margin-top: 1.2rem; padding: 0.8rem 1rem; background: var(--term-bg);
                    border-radius: 6px; font-style: italic; }
     .wod-example .src { display: block; font-style: normal; font-size: 0.8rem;
                         color: var(--text-muted); margin-top: 0.3rem; }
+    .wod-translation { margin-top: 0.6rem; padding: 0.6rem 0.9rem; font-style: normal;
+                        font-weight: 500; background: #fff8e6; border-left: 3px solid var(--accent);
+                        border-radius: 4px; }
     .wod-credit { margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted); }
     .wod-empty { max-width: 640px; margin: 2rem auto; padding: 1.5rem; }
 </style>
@@ -41,6 +44,9 @@
             «{{ record.example.text }}»
             <span class="src">{{ record.example.source }}</span>
         </div>
+        {% if record.example.translation %}
+        <div class="wod-translation">{{ record.example.translation }}</div>
+        {% endif %}
         {% endif %}
         <p class="wod-credit">{{ record.source }} · {{ record.date }}</p>
     </section>

@@ -13,8 +13,15 @@ output into this repo. The nightly picker (`word_of_day_generate.py`) only
 ever reads the committed pool, never the source repo.
 
 Filtering:
-- drop bound/compound-only stems (slp1 starting with "-")
+- drop bound/compound-only stems (slp1 starting/ending with "-", or
+  containing "°" — Kochergina's other bound-morpheme continuation marker,
+  e.g. "upa°")
 - drop entries with an empty gloss
+- a small number of source rows (~716 of 29,177) leak a raw IAST anusvara
+  'ṁ' into an otherwise-SLP1 `slp1` field (upstream data artifact in
+  `pwg-ru-data/corpus/koch.jsonl`, not this script's own output) — normalized
+  to SLP1 'M' before use, so `slp1_to_devanagari` never mixes a Latin
+  diacritic into a Devanagari string
 - Devanagari is re-derived from `slp1` via the vendored `sanskrit_util`
   (authoritative transcode), not scraped from the gloss text
 - the gloss's own trailing Devanagari+IAST echo (Kochergina's print
@@ -45,6 +52,9 @@ DEFAULT_SOURCE = REPO_ROOT.parent / "pwg-ru-data" / "corpus" / "koch.jsonl"
 DEFAULT_OUT = REPO_ROOT / "web" / "app" / "data" / "word_of_day_pool.jsonl"
 
 DEVANAGARI_TAIL_RE = re.compile(r"[ऀ-ॿ].*$")
+
+# Upstream leak: a raw IAST anusvara where the rest of the field is SLP1.
+SLP1_STRAY_ANUSVARA_RE = re.compile("ṁ")  # 'ṁ'
 
 # Standard abbreviations used throughout Kochergina's printed dictionary.
 # Ordered longest-first so e.g. "pl." doesn't shadow a longer match.
@@ -88,8 +98,9 @@ def build_pool(source: Path):
             slp1 = row.get("slp1", "")
             iast = row.get("iast", "")
             gloss = row.get("gloss", "")
-            if not slp1 or slp1.startswith("-") or slp1.endswith("-"):
+            if not slp1 or slp1.startswith("-") or slp1.endswith("-") or "°" in slp1:
                 continue
+            slp1 = SLP1_STRAY_ANUSVARA_RE.sub("M", slp1)
             if not gloss.strip():
                 continue
             entries.append({
