@@ -27,7 +27,14 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_RECORD = REPO_ROOT / "web" / "app" / "data" / "word_of_day_current.json"
+sys.path.insert(0, str(REPO_ROOT / "web"))
+from app.settings import settings  # noqa: E402
+
+DEFAULT_RECORD = (
+    Path(settings.WORD_OF_DAY_RECORD_PATH)
+    if settings.WORD_OF_DAY_RECORD_PATH
+    else REPO_ROOT / "web" / "app" / "data" / "word_of_day_current.json"
+)
 
 
 def format_message(record: dict) -> str:
