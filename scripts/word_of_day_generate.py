@@ -99,6 +99,12 @@ def _find_adjacent_translation(conn: sqlite3.Connection, rowid: int, source_id) 
     also uses. Neither convention carries an explicit language column, so
     the next row is treated as the translation only when it actually
     contains Cyrillic text — never guessed otherwise.
+
+    Callers must only invoke this for a matched line that is itself pure
+    Sanskrit (no Cyrillic). Dictionary sources (Kochergina, dic_mw, …) index
+    one headword entry per row, each already containing Russian gloss text —
+    for those the "next row" is just the next unrelated headword, not a
+    translation, and would false-positive on this same Cyrillic check.
     """
     row = conn.execute(
         "SELECT line_text FROM corpus_lines WHERE rowid = ? AND source_id = ?",
@@ -137,9 +143,10 @@ def find_example(corpus_db_path: str, entry: dict) -> dict | None:
                 ).fetchone()
                 if row:
                     result = {"text": row["line_text"], "source": row["source_title"]}
-                    translation = _find_adjacent_translation(conn, row["rowid"], row["source_id"])
-                    if translation:
-                        result["translation"] = translation
+                    if not CYRILLIC_RE.search(row["line_text"]):
+                        translation = _find_adjacent_translation(conn, row["rowid"], row["source_id"])
+                        if translation:
+                            result["translation"] = translation
                     return result
         finally:
             conn.close()

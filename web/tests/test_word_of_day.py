@@ -164,6 +164,41 @@ def test_find_example_skips_translation_across_source_boundary(tmp_path):
     assert "translation" not in result
 
 
+def test_find_example_skips_translation_for_dictionary_self_match(tmp_path):
+    """Dictionary sources index one headword per row (already Russian-gloss
+    text) — the 'next row' there is the next unrelated headword, not a
+    translation. Regression for a real false-positive on prod: 'tripuropaniṣad'
+    got 'tri-puruṣa' attached as a bogus 'translation'."""
+    from word_of_day_generate import find_example
+
+    corpus_db = str(tmp_path / "corpus.db")
+    conn = sqlite3.connect(corpus_db)
+    conn.execute("CREATE TABLE sources (id INTEGER PRIMARY KEY, filename TEXT, title TEXT)")
+    conn.execute("INSERT INTO sources (id, filename, title) VALUES (1, 'k.html', 'kochergina')")
+    conn.execute("""
+        CREATE VIRTUAL TABLE corpus_lines USING fts5(
+            line_text, line_html UNINDEXED, source_id UNINDEXED,
+            line_num UNINDEXED, link_id UNINDEXED, chapter UNINDEXED
+        )
+    """)
+    conn.execute(
+        "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num) "
+        "VALUES ('tripuropaniSad f. one of the Upanishads назв. одной из Упанишад', '', 1, 1)"
+    )
+    conn.execute(
+        "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num) "
+        "VALUES ('tripuruSa n. три поколения', '', 1, 2)"
+    )
+    conn.commit()
+    conn.close()
+
+    entry = {"iast": "tripuropaniṣad", "devanagari": "त्रिपुरोपनिषद्"}
+    result = find_example(corpus_db, entry)
+
+    assert result is not None
+    assert "translation" not in result
+
+
 # ── HTTP routing ──────────────────────────────────────────────────────────
 
 @pytest.fixture
