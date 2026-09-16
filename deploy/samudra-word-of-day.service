@@ -15,6 +15,6 @@ ExecStartPost=/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/word_of_day
 # ── Hardening (mirrors samudra-health-monitor.service) ──────────────────────
 PrivateTmp=true
 ProtectSystem=strict
-ReadWritePaths=/opt/samudra/repo/web/app/data /opt/samudra/db
+ReadWritePaths=/opt/samudra/db
 ProtectHome=yes
 NoNewPrivileges=yes

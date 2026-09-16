@@ -162,7 +162,10 @@ def main():
     ap.add_argument("--pool", type=Path, default=DEFAULT_POOL)
     ap.add_argument("--state-db", default=settings.STATE_DB_PATH or str(REPO_ROOT / "state.db"))
     ap.add_argument("--corpus-db", default=settings.DB_PATH)
-    ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    ap.add_argument(
+        "--out", type=Path,
+        default=Path(settings.WORD_OF_DAY_RECORD_PATH) if settings.WORD_OF_DAY_RECORD_PATH else DEFAULT_OUT,
+    )
     args = ap.parse_args()
 
     record = generate(args.date, args.pool, args.state_db, args.corpus_db, args.out)

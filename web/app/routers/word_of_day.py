@@ -14,7 +14,17 @@ from fastapi.templating import Jinja2Templates
 router = APIRouter(tags=["word-of-day"])
 templates = Jinja2Templates(directory="templates")
 
-RECORD_PATH = Path(__file__).resolve().parent.parent / "data" / "word_of_day_current.json"
+_DEFAULT_RECORD_PATH = Path(__file__).resolve().parent.parent / "data" / "word_of_day_current.json"
+
+
+def _record_path() -> Path:
+    from app.settings import settings
+
+    configured = getattr(settings, "WORD_OF_DAY_RECORD_PATH", "")
+    return Path(configured) if configured else _DEFAULT_RECORD_PATH
+
+
+RECORD_PATH = _record_path()
 
 
 def _load_record() -> dict | None:
