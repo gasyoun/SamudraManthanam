@@ -1,0 +1,21 @@
+[Unit]
+Description=Samudra Manthanam word-of-the-day generate + post (H4955)
+After=network.target samudra.service
+
+[Service]
+Type=oneshot
+User=samudra
+Group=samudra
+WorkingDirectory=/opt/samudra/repo
+Environment=SAMUDRA_STATE_DB_PATH=/opt/samudra/data/state.db
+Environment=SAMUDRA_DB_PATH=/opt/samudra/data/corpus.db
+EnvironmentFile=-/opt/samudra/word_of_day.env
+ExecStart=/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/word_of_day_generate.py --state-db ${SAMUDRA_STATE_DB_PATH} --corpus-db ${SAMUDRA_DB_PATH}
+ExecStartPost=/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/word_of_day_post.py
+
+# ── Hardening (mirrors samudra-health-monitor.service) ──────────────────────
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/opt/samudra/repo/web/app/data /opt/samudra/data
+ProtectHome=yes
+NoNewPrivileges=yes

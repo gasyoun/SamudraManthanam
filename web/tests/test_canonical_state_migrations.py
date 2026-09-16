@@ -214,9 +214,9 @@ def test_dual_ledger_history_is_adopted_without_reapply(tmp_path):
     # Bridge records 0004/0005 without listing them as "newly applied" only if
     # we count inserts from the bridge as non-apply. Current contract: bridge
     # rows are not returned in newly_applied (they were already on disk via B).
-    # Remaining migrations after 0003 that were NOT bridged would appear —
-    # both 0004 and 0005 are bridged, so newly_applied is empty.
-    assert applied == []
+    # Every migration after 0003 that is NOT bridged appears here — 0004/0005
+    # are bridged, 0006 (H4955, word-of-day) is not, so it's the sole entry.
+    assert applied == ["0006"]
     versions = _schema_versions(path)
     assert "0004" in versions
     assert "0005" in versions
@@ -268,7 +268,7 @@ async def test_async_runner_adopts_dual_ledger(tmp_path):
     db = await aiosqlite.connect(path)
     try:
         newly = await apply_async(db, state_migrations_dir())
-        assert newly == []
+        assert newly == ["0006"]  # 0004/0005 bridged; 0006 (H4955) is genuinely new
         async with db.execute(
             "SELECT version FROM schema_migrations WHERE version IN ('0004','0005') "
             "ORDER BY version"
