@@ -7,15 +7,14 @@ Type=oneshot
 User=samudra
 Group=samudra
 WorkingDirectory=/opt/samudra/repo
-Environment=SAMUDRA_STATE_DB_PATH=/opt/samudra/data/state.db
-Environment=SAMUDRA_DB_PATH=/opt/samudra/data/corpus.db
+EnvironmentFile=/opt/samudra/.env
 EnvironmentFile=-/opt/samudra/word_of_day.env
-ExecStart=/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/word_of_day_generate.py --state-db ${SAMUDRA_STATE_DB_PATH} --corpus-db ${SAMUDRA_DB_PATH}
+ExecStart=/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/word_of_day_generate.py
 ExecStartPost=/opt/samudra/venv/bin/python /opt/samudra/repo/scripts/word_of_day_post.py
 
 # ── Hardening (mirrors samudra-health-monitor.service) ──────────────────────
 PrivateTmp=true
 ProtectSystem=strict
-ReadWritePaths=/opt/samudra/repo/web/app/data /opt/samudra/data
+ReadWritePaths=/opt/samudra/repo/web/app/data /opt/samudra/db
 ProtectHome=yes
 NoNewPrivileges=yes
