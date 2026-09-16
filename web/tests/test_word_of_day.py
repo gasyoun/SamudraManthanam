@@ -97,6 +97,73 @@ def test_no_repeat_until_pool_cycles(wod_env):
     assert rec4["cycle_reset"] is True
 
 
+# ── find_example translation lookup ──────────────────────────────────────
+
+def test_find_example_pairs_adjacent_cyrillic_line_as_translation(tmp_path):
+    from word_of_day_generate import find_example
+
+    corpus_db = str(tmp_path / "corpus.db")
+    conn = sqlite3.connect(corpus_db)
+    conn.execute("CREATE TABLE sources (id INTEGER PRIMARY KEY, filename TEXT, title TEXT)")
+    conn.execute("INSERT INTO sources (id, filename, title) VALUES (1, 'f.html', 'Source 1')")
+    conn.execute("""
+        CREATE VIRTUAL TABLE corpus_lines USING fts5(
+            line_text, line_html UNINDEXED, source_id UNINDEXED,
+            line_num UNINDEXED, link_id UNINDEXED, chapter UNINDEXED
+        )
+    """)
+    conn.execute(
+        "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num) "
+        "VALUES ('idam rUpam vihAyASu', '', 1, 1)"
+    )
+    conn.execute(
+        "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num) "
+        "VALUES ('Ты лишишься прежнего облика', '', 1, 2)"
+    )
+    conn.commit()
+    conn.close()
+
+    entry = {"iast": "idaṁ-rūpa", "devanagari": "इदंरूप"}
+    result = find_example(corpus_db, entry)
+
+    assert result is not None
+    assert result["translation"] == "Ты лишишься прежнего облика"
+
+
+def test_find_example_skips_translation_across_source_boundary(tmp_path):
+    from word_of_day_generate import find_example
+
+    corpus_db = str(tmp_path / "corpus.db")
+    conn = sqlite3.connect(corpus_db)
+    conn.execute("CREATE TABLE sources (id INTEGER PRIMARY KEY, filename TEXT, title TEXT)")
+    conn.execute("INSERT INTO sources (id, filename, title) VALUES (1, 'a.html', 'A')")
+    conn.execute("INSERT INTO sources (id, filename, title) VALUES (2, 'b.html', 'B')")
+    conn.execute("""
+        CREATE VIRTUAL TABLE corpus_lines USING fts5(
+            line_text, line_html UNINDEXED, source_id UNINDEXED,
+            line_num UNINDEXED, link_id UNINDEXED, chapter UNINDEXED
+        )
+    """)
+    conn.execute(
+        "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num) "
+        "VALUES ('idam rUpam', '', 1, 1)"
+    )
+    # Next rowid belongs to a DIFFERENT source — must not be paired even
+    # though it is Cyrillic text.
+    conn.execute(
+        "INSERT INTO corpus_lines (line_text, line_html, source_id, line_num) "
+        "VALUES ('Привет из другого источника', '', 2, 1)"
+    )
+    conn.commit()
+    conn.close()
+
+    entry = {"iast": "idaṁ-rūpa", "devanagari": "इदंरूप"}
+    result = find_example(corpus_db, entry)
+
+    assert result is not None
+    assert "translation" not in result
+
+
 # ── HTTP routing ──────────────────────────────────────────────────────────
 
 @pytest.fixture
