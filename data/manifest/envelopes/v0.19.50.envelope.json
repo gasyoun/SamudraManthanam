@@ -1,0 +1,155 @@
+{
+  "schema": "release-envelope-v1",
+  "envelope_id": "SamudraManthanam/v0.19.50",
+  "hub": "SamudraManthanam — parallel Sanskrit–Russian corpus search (A41 corpus of record)",
+  "release_kind": "data",
+  "release_tag": "v0.19.50",
+  "created": "2026-09-09",
+  "authored_by": "H4254 (OxAlpha, opencode/z-ai/glm-5.3-flash) — release-envelope-v1 cross-repo adoption; spec: Uprava docs/SPEC_RELEASE_ENVELOPE_V6_PORTFOLIO_2026.md; pilot: kosha data-v0.5.0 (H4239)",
+  "code_revision": {
+    "repo_url": "https://github.com/gasyoun/SamudraManthanam",
+    "tag": "v0.19.50",
+    "commit": "b94eef8c6b9a61f10fc88d33db0905de1878892f"
+  },
+  "pinned_artifacts": [
+    {
+      "path": "web/corpus_builder/conversion_report.json",
+      "role": "canonical A41 corpus-of-record conversion report — per-source record counts, structure split, extraction fidelity (needs_review), the source list this envelope's source_pins re-derive from",
+      "sha256": "0e816599b5ec86ede5781b604cf458f05b05f391a4eccf1cb513046d21518c02",
+      "sha256_form": "lf-canonical"
+    },
+    {
+      "path": "nkrya-parallel/export/RIGHTS_TABLE.md",
+      "role": "per-source title·translator·rights·needs_review table (131 sources) backing the licence block below",
+      "sha256": "03d0463a62a2ef1e801e8665957405b8f9bbd0f9dc2c5862c30102095d1945f2",
+      "sha256_form": "lf-canonical"
+    },
+    {
+      "path": "papers/data/A41_TRANSLATORS.md",
+      "role": "translator credit table for the RU 20th–21st c. in-copyright layer (ship-all ruling, H2440 08-08-2026)",
+      "sha256": "ccf9262c36224fafa7ee8c50fcf05b8ba129f1ab45203429bf922709e15b85fa",
+      "sha256_form": "lf-canonical"
+    },
+    {
+      "path": "papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md",
+      "role": "data statement (rights position §G–H, intended use / known misuse) accompanying the Zenodo deposit",
+      "sha256": "1739e2d6a95299c1b119d576e034bdb55c958b729d01e8a348070b230dfc30dd",
+      "sha256_form": "lf-canonical"
+    }
+  ],
+  "source_pins": [
+    {
+      "dataset": "a41-corpus-of-record-jsonl",
+      "source_repo": "https://github.com/gasyoun/SamudraManthanam",
+      "source_path": "web/corpus_builder/jsonl/<slug>.jsonl — the 148 report-source files enumerated by web/corpus_builder/conversion_report.json['sources'] (126 post-report-additions / later-recount extras in the same directory are formally excluded, H2542 12-08-2026)",
+      "pin_commit": "b94eef8c6b9a61f10fc88d33db0905de1878892f",
+      "pin_rule": "the code_revision.commit itself (source lives in this repo); directory digest = sha256 of the sorted, newline-joined '<slug>:<sha256(lf-canonical bytes)>' lines, one per report-source file (see scripts/envelope_check.py CHK-4)",
+      "sha256": "b3be9bc9ba4b128c0e874a3885bb02b29e7bfe11896e9bb425319ae04dcfafae",
+      "sha256_form": "directory-digest (see pin_rule)"
+    }
+  ],
+  "output_digests": {
+    "carried_in": "web/corpus_builder/conversion_report.json",
+    "note": "restates the conversion report's headline totals so a consumer verifies without trusting the file beyond its own pin digest; records_148_sources is the sum of per-source 'records' over exactly the 148 sources this envelope pins, and must equal total_records",
+    "datasets": {
+      "a41-corpus-of-record": {
+        "release_asset": "conversion_report.json",
+        "sha256": "0e816599b5ec86ede5781b604cf458f05b05f391a4eccf1cb513046d21518c02",
+        "rows": 574939,
+        "size_bytes": 59262
+      }
+    }
+  },
+  "config": {
+    "source_manifest": "web/corpus_builder/conversion_report.json",
+    "selection_rule": "148 report-source .jsonl files (574,939 segment records) as itemised in conversion_report.json['sources']; later-directory extras (post-report additions, 219,463 records as of the 04-09-2026 recount) are formally excluded from every figure per H2542 (12-08-2026)",
+    "tier_filter": "none — the full corpus of record ships: Sanskrit public domain; RU pre-1930 public domain; RU 20th–21st c. in-copyright shipped whole under the settled ship-all ruling (MG 08-08-2026, H2440); DCS layer CC BY 4.0 redistributable with attribution; vidyut evaluated but not shipped",
+    "digest_form": "sha256 over the LF-canonical form (CRLF normalised) — reproducible from any compliant checkout",
+    "frozen_at": "2026-08-28 (H2611 Zenodo dataset mint date, tag v0.19.50)",
+    "checkout_warnings": "none known"
+  },
+  "tool_versions": {
+    "converter": "web/corpus_builder/html_to_canonical.py, ignatiev_book_to_canonical.py, ignatjev_pdf_to_canonical.py at code_revision.commit",
+    "envelope_checker": "scripts/envelope_check.py — stdlib-only, Python >= 3.9",
+    "model_note": "no model-generated content enters the corpus text; the envelope's prose was authored by H4254 (OxAlpha, opencode/z-ai/glm-5.3-flash) and every number in it is recomputed by scripts/envelope_check.py"
+  },
+  "licence": {
+    "code": "Apache-2.0 (CITATION.cff)",
+    "data": "mixed by source: Sanskrit PD; RU pre-1930 PD; RU 20th–21st c. in-copyright grey shipped under the ship-all ruling (MG 08-08-2026, H2440); DCS layer CC BY 4.0",
+    "per_dataset": {
+      "a41-corpus-of-record": "mixed — per-source rights in nkrya-parallel/export/RIGHTS_TABLE.md (131 sources)"
+    },
+    "restricted_rows": "none excluded by tier fence; vidyut evaluated but not shipped (separate reason — not a rights exclusion)"
+  },
+  "checks": [
+    {
+      "id": "CHK-1-schema",
+      "desc": "envelope carries every release-envelope-v1 required field with a non-empty value",
+      "result": "pass",
+      "ran_at": "2026-09-09",
+      "evidence": "scripts/envelope_check.py run on the authored envelope"
+    },
+    {
+      "id": "CHK-2-artifact-pins",
+      "desc": "sha256 of each pinned_artifacts entry recomputes from the file's bytes on disk (lf-canonical)",
+      "result": "pass",
+      "ran_at": "2026-09-09",
+      "evidence": "scripts/envelope_check.py CHK-2 (4/4 pass)"
+    },
+    {
+      "id": "CHK-3-output-parity",
+      "desc": "output_digests.datasets['a41-corpus-of-record'].rows equals conversion_report.json.total_records and equals the sum of per-source 'records' over the 148 pinned sources",
+      "result": "pass",
+      "ran_at": "2026-09-09",
+      "evidence": "scripts/envelope_check.py CHK-3 (574939 == 574939 == sum(148))"
+    },
+    {
+      "id": "CHK-4-source-pins",
+      "desc": "the source_pins directory digest re-derives from the 148 report-source .jsonl files listed in conversion_report.json['sources'] (sha256 of sorted 'slug:sha256' lines)",
+      "result": "pass",
+      "ran_at": "2026-09-09",
+      "evidence": "scripts/envelope_check.py CHK-4 (148/148 files present and hashed, aggregate digest matches)"
+    },
+    {
+      "id": "CHK-5-rerun-tolerance",
+      "desc": "independent rerun reproduces declared outputs or explains deterministic tolerances (V6 verification)",
+      "result": "pass",
+      "ran_at": "2026-09-09",
+      "evidence": "all digests are deterministic LF-canonical sha256; no tolerance declared — rerun must match exactly, and did"
+    }
+  ],
+  "review": [
+    {
+      "reviewer": "H2440 rights ruling (MG)",
+      "verdict": "ship-all: the RU 20th–21st c. in-copyright grey layer ships whole; residual duty is documenting translators, not gating per-translator",
+      "date": "2026-08-08"
+    },
+    {
+      "reviewer": "H2542 extras-exclusion ruling",
+      "verdict": "post-report-addition .jsonl files (later directory growth beyond the 148 report sources) are formally excluded from every corpus-of-record figure",
+      "date": "2026-08-12"
+    },
+    {
+      "reviewer": "H2611 Zenodo dataset mint (OxAlpha)",
+      "verdict": "148 report-source JSONL files published as the corpus-of-record dataset DOI, line-count-verified against conversion_report.json before upload, MD5-verified server-side pre-publish",
+      "date": "2026-08-28"
+    },
+    {
+      "reviewer": "H4254 envelope authoring (OxAlpha, opencode/z-ai/glm-5.3-flash)",
+      "verdict": "envelope authored and mechanically verified; every digest recomputed from bytes, not copied from prose",
+      "date": "2026-09-09"
+    }
+  ],
+  "citation": {
+    "concept_doi": "10.5281/zenodo.22149933",
+    "version_doi": "10.5281/zenodo.22149934",
+    "cff": "CITATION.cff",
+    "policy": "CITATION.cff header comment (no dedicated versioning/citation policy doc exists for this repo)"
+  },
+  "publication_state": {
+    "state": "published",
+    "zenodo_archived": true,
+    "github_release": "https://github.com/gasyoun/SamudraManthanam/releases/tag/v0.19.50",
+    "note": "the corpus-of-record dataset (this envelope) and the v0.19.50 software release share one tag; the dataset DOI was minted against the tag's committed jsonl bytes, not against a separate data-only tag"
+  }
+}
