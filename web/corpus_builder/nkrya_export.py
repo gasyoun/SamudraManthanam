@@ -37,25 +37,26 @@ the export artifacts (XML/TMX/TSV) are gitignored exactly like the L0/L1 TM.
 Only this generator + PILOT_VALIDATION.md are committed. No public release before
 per-translator clearance (/publish-safety-check).
 
-НКРЯ XML MODEL (BEST GUESS -- the file most likely revised after НКРЯ answers the
-format question, roadmap Wave 5). Assumptions, each explicit so a reviewer can
-diff them against the real НКРЯ parallel schema:
+НКРЯ XML MODEL (BEST GUESS for the body -- the file most likely revised after
+НКРЯ answers the format question, roadmap Wave 5; the HEADER uses НКРЯ's real
+parallel-corpus meta field names since H5281 -- see NKRYA_HEADER_FIELDS):
   * Root <document corpus="parallel" subcorpus="sanskrit-russian"> with a
-    <header> of bibliographic metadata and a <body> of alignment units.
+    <header> of НКРЯ meta fields and a <body> of alignment units.
   * One alignment unit = <para id=GROUP align="1-1">, holding exactly two <se>
     (sentence/segment) children: the Sanskrit se first, then the Russian se
     (source-before-target, the НКРЯ convention for a source-language corpus).
   * Sanskrit se: <se lang="san" script="iast" slp1="SLP1">IAST</se> -- the
-    printed IAST surface is the element text, the SLP1 machine key an attribute.
-  * Russian se: <se lang="ru">...</se>.
-  * `lang` values follow the H754 spec literally ("san"/"ru" in XML; the TMX
-    layer uses ISO "sa"/"ru" in xml:lang). НКРЯ's own tag set may differ (e.g.
-    "rus") -- one place to change if so (LANG_SA_XML / LANG_RU_XML).
+    printed IAST surface is the element text, the SLP1 machine key an attribute
+    (IAST until НКРЯ answers the script question, MG P5 23-09-2026).
+  * Russian se: <se lang="rus">...</se> -- НКРЯ's own `lang_search` code (the
+    PARA search-form lists "hin"/"rus"). The TMX layer keeps ISO "sa"/"ru" in
+    xml:lang. One place to change: LANG_SA_XML / LANG_RU_XML.
 
 Usage:
   python nkrya_export.py --source 03_mahabharata-aranyakaparva --out nkrya-parallel/export
   python nkrya_export.py --all-pilot --out nkrya-parallel/export
   python nkrya_export.py --all-pilot --out DIR --quiet
+  python nkrya_export.py --showcase --inline-ana --out DIR   # H5281 витрина
 """
 import argparse
 import collections
@@ -68,10 +69,16 @@ from xml.sax.saxutils import escape, quoteattr
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 JSONL_DIR = os.path.join(HERE, 'jsonl')
+# The desktop client's per-source meta (231 files, `credit` on 204) — the base
+# layer under the 54 curated web/corpus_builder/<slug>.meta.json sidecars
+# (H5281: reading only the sidecars left RIGHTS_TABLE translator-less on 127/131).
+INDEX_META_DIR = os.path.join(os.path.dirname(os.path.dirname(HERE)),
+                              'Index', 'lib', 'x86_64-win64', 'Data')
+SHOWCASE_BIB = os.path.join(HERE, 'nkrya_showcase_bib.json')
 
 PILOT_SOURCES = [
     '03_mahabharata-aranyakaparva',
@@ -80,9 +87,18 @@ PILOT_SOURCES = [
     '03_ramayana-aranyakanda',
 ]
 
-# lang tokens -- one place to change if НКРЯ's real schema uses different codes.
+# H5281 showcase (MG P3 «витрина», 23-09-2026): Rigveda I–X, the ten Gītā
+# translations, MBh III, Rām I–III. Curated bibliography: SHOWCASE_BIB.
+SHOWCASE_SOURCES = (
+    ['%02d_rigveda' % i for i in range(1, 11)]
+    + ['bhagavadgita-%s' % t for t in ('1788', '1909', '1914', 'smirnov',
+                                       'sementsov', 'erman', 'burba',
+                                       'prabhupada', 'radha', 'sharma')]
+    + PILOT_SOURCES)
+
+# lang tokens -- НКРЯ's own `lang_search` codes (PARA search-form: "hin", "rus").
 LANG_SA_XML = 'san'
-LANG_RU_XML = 'ru'
+LANG_RU_XML = 'rus'
 LANG_SA_TMX = 'sa'   # ISO 639-1 for the TMX xml:lang
 LANG_RU_TMX = 'ru'
 
@@ -191,11 +207,75 @@ def classify(path):
 # emitters (all deterministic, no clock)
 # ---------------------------------------------------------------------------
 
-def load_meta(slug, meta_dir=HERE):
+_BIB_CACHE = {}
+
+
+def load_showcase_bib(path=SHOWCASE_BIB):
+    if path not in _BIB_CACHE:
+        _BIB_CACHE[path] = (json.load(open(path, encoding='utf-8'))['sources']
+                            if path and os.path.exists(path) else {})
+    return _BIB_CACHE[path]
+
+
+def _index_meta(slug, index_meta_dir):
+    for ext in ('.html.meta.json', '.htm.meta.json', '.meta.json'):
+        path = os.path.join(index_meta_dir, slug + ext)
+        if os.path.exists(path):
+            return json.load(open(path, encoding='utf-8'))
+    return {}
+
+
+def load_meta(slug, meta_dir=HERE, index_meta_dir=INDEX_META_DIR,
+              bib_path=SHOWCASE_BIB):
+    """Three layers, later wins: desktop Index meta (broad coverage) <- the
+    curated corpus_builder sidecar <- the H5281 showcase bibliography (stored
+    under meta['nkrya']). Empty sidecar values never blank a base value."""
+    meta = dict(_index_meta(slug, index_meta_dir)) if index_meta_dir else {}
     path = os.path.join(meta_dir, slug + '.meta.json')
     if os.path.exists(path):
-        return json.load(open(path, encoding='utf-8'))
-    return {'slug': slug, 'needs_review': True}
+        side = json.load(open(path, encoding='utf-8'))
+        meta.update({k: v for k, v in side.items() if v not in (None, '', [])})
+    bib = load_showcase_bib(bib_path).get(slug)
+    if bib:
+        meta['nkrya'] = dict(bib)
+    if not meta:
+        return {'slug': slug, 'needs_review': True}
+    meta.setdefault('slug', slug)
+    return meta
+
+
+# Old guessed header tag -> НКРЯ parallel-corpus meta field
+# (/api/v1/para-lex-gramm/search-form, PARA, probed 23-09-2026):
+#   title -> headers_all · author -> authors_all · translator (kept)
+#   date_source_ce -> created · year -> date_trans · lang_source -> lang_orig
+#   + sphere, words. NKRYa has no field for title_orig, translator_role,
+#   publisher, imprint, series, lang_target, period, provenance, rights,
+#   bibliography_status: those ride in the package manifest, not the header.
+NKRYA_HEADER_FIELDS = ('headers_all', 'authors_all', 'created', 'translator',
+                       'lang_orig', 'date_trans', 'sphere', 'words')
+
+
+def ru_word_count(pairs):
+    return sum(len(re.findall(r'\w+', p['ru'])) for p in pairs)
+
+
+def nkrya_fields(meta, pairs):
+    """Ordered (НКРЯ field, value) pairs for one source. The curated showcase
+    bibliography wins; otherwise the raw meta is mapped as-is (credit strings
+    unnormalised, `year` = the printing's year) and sphere/created stay empty."""
+    b = meta.get('nkrya') or {}
+    comp = meta.get('composition_date_ce')
+    vals = {
+        'headers_all': b.get('headers_all') or meta.get('title_ru'),
+        'authors_all': b.get('authors_all') if b else meta.get('author_orig'),
+        'created': b.get('created') or (str(comp) if comp not in (None, '', 0) else ''),
+        'translator': b.get('translator') or meta.get('credit'),
+        'lang_orig': b.get('lang_orig') or 'san',
+        'date_trans': b.get('date_trans') or meta.get('year'),
+        'sphere': b.get('sphere', ''),
+        'words': ru_word_count(pairs),
+    }
+    return [(k, vals[k]) for k in NKRYA_HEADER_FIELDS]
 
 
 def _hdr_field(tag, val):
@@ -213,28 +293,13 @@ def nkrya_xml(slug, pairs, meta, inline_ana=False, dcs=None):
     available; the Sanskrit side only for verses whose DCS gold attaches to the
     surface words end-to-end, and stays plain text otherwise — never guessed.
     Returns the XML string; `ana_stats` is filled in place when passed."""
-    out = ['<?xml version="1.0" encoding="UTF-8"?>\n']
-    out.append('<document corpus="parallel" subcorpus="sanskrit-russian" '
-               'slug=%s>\n' % quoteattr(slug))
-    out.append('  <header>\n')
-    out.append(_hdr_field('title', meta.get('title_ru')))
-    out.append(_hdr_field('title_orig', meta.get('title_en')))
-    out.append(_hdr_field('author', meta.get('author_orig')))
-    out.append(_hdr_field('translator', meta.get('credit')))
-    out.append(_hdr_field('translator_role', meta.get('credit_role')))
-    out.append(_hdr_field('publisher', meta.get('publisher')))
-    out.append(_hdr_field('imprint', meta.get('imprint')))
-    out.append(_hdr_field('year', meta.get('year')))
-    out.append(_hdr_field('series', meta.get('series')))
-    out.append(_hdr_field('lang_source', 'san'))
-    out.append(_hdr_field('lang_target', 'rus'))
-    out.append(_hdr_field('date_source_ce', meta.get('composition_date_ce')))
-    out.append(_hdr_field('period', meta.get('period')))
-    out.append(_hdr_field('provenance', meta.get('provenance')))
-    out.append(_hdr_field('rights', meta.get('rights')))
-    out.append(_hdr_field('bibliography_status', meta.get('bibliography_status')))
-    out.append('  </header>\n')
-    out.append('  <body>\n')
+    head = ['<?xml version="1.0" encoding="UTF-8"?>\n']
+    head.append('<document corpus="parallel" subcorpus="sanskrit-russian" '
+                'slug=%s>\n' % quoteattr(slug))
+    head.append('  <header>\n')
+    for tag, val in nkrya_fields(meta, pairs):
+        head.append(_hdr_field(tag, val))
+    out = []
     ia = ru_mod = None
     stats = {'sa_paras': 0, 'sa_inline': 0, 'ru_paras': 0, 'ru_inline': 0}
     if inline_ana:
@@ -269,8 +334,14 @@ def nkrya_xml(slug, pairs, meta, inline_ana=False, dcs=None):
         out.append('    </para>\n')
     out.append('  </body>\n')
     out.append('</document>\n')
+    if stats['sa_inline']:
+        head.append('    <!-- Sanskrit <w><ana/> from the Digital Corpus of Sanskrit '
+                    '(O. Hellwig, http://www.sanskrit-linguistics.org/dcs/), '
+                    'CC BY 4.0 -->\n')
+    head.append('  </header>\n')
+    head.append('  <body>\n')
     nkrya_xml.last_ana_stats = stats
-    return ''.join(out)
+    return ''.join(head + out)
 
 
 def tmx(slug, pairs, meta):
@@ -287,9 +358,10 @@ def tmx(slug, pairs, meta):
     out.append('   datatype="plaintext"\n')
     out.append('   o-encoding="UTF-8">\n')
     out.append('  <prop type="slug">%s</prop>\n' % escape(slug))
-    out.append('  <prop type="title">%s</prop>\n' % escape(str(meta.get('title_ru') or slug)))
-    out.append('  <prop type="translator">%s</prop>\n' % escape(str(meta.get('credit') or '')))
-    out.append('  <prop type="rights">%s</prop>\n' % escape(str(meta.get('rights') or '')))
+    for tag, val in nkrya_fields(meta, pairs):
+        if val not in (None, ''):
+            out.append('  <prop type="%s">%s</prop>\n' % (tag, escape(str(val))))
+    out.append('  <prop type="x-rights">%s</prop>\n' % escape(str(meta.get('rights') or '')))
     out.append(' </header>\n')
     out.append(' <body>\n')
     for p in pairs:
@@ -543,9 +615,12 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
     report = {
         'slug': slug,
         'exporter_version': VERSION,
-        'title': meta.get('title_ru') or slug,
-        'translator': meta.get('credit'),
+        'title': (meta.get('nkrya') or {}).get('headers_all') or meta.get('title_ru') or slug,
+        'translator': (meta.get('nkrya') or {}).get('translator') or meta.get('credit'),
+        'year': meta.get('year'),
+        'publisher': (meta.get('nkrya') or {}).get('publisher') or meta.get('publisher'),
         'rights': meta.get('rights'),
+        'nkrya_header': dict(nkrya_fields(meta, pairs)),
         'needs_review': meta.get('needs_review', True),
         **stats,
         **sa_morph_stats,
@@ -570,6 +645,8 @@ def main(argv=None):
     g.add_argument('--source', help='one pilot slug')
     g.add_argument('--all-pilot', action='store_true',
                    help='export all %d pilot sources' % len(PILOT_SOURCES))
+    g.add_argument('--showcase', action='store_true',
+                   help='export the %d H5281 showcase sources (витрина)' % len(SHOWCASE_SOURCES))
     g.add_argument('--all-ru', action='store_true',
                    help='export EVERY seg=ru source (discover_ru_sources; ~131) — Wave 4 full-corpus freeze (H821)')
     ap.add_argument('--out', required=True, help='output directory')
@@ -603,6 +680,8 @@ def main(argv=None):
         slugs = discover_ru_sources()
     elif a.all_pilot:
         slugs = PILOT_SOURCES
+    elif a.showcase:
+        slugs = SHOWCASE_SOURCES
     else:
         slugs = [a.source]
     sanskritisms_ctx = None
