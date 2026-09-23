@@ -1,6 +1,6 @@
 # НКРЯ / ruscorpora.ru export roadmap — nkrya-parallel (2026–2027)
 
-_Created: 11-07-2026 · Last updated: 12-07-2026_
+_Created: 11-07-2026 · Last updated: 23-09-2026_
 
 Scale the [nkrya-parallel](https://github.com/gasyoun/SamudraManthanam/tree/main/nkrya-parallel) subsystem from E. A. Rubanova's 2020 HSE ВКР pilot to an export pipeline covering every running-text source of the Samudra Manthanam corpus (published at [samskrtam.ru/parallel-corpus](https://samskrtam.ru/parallel-corpus/), 123 texts), and deliver a package ready to enter the Russian National Corpus ([ruscorpora.ru](https://ruscorpora.ru)) as the Sanskrit member of the parallel-corpus module. Authored from a `/roadmap-interview` session (audit + 2 interview rounds, 8 rulings), Fable 5 (`claude-fable-5`), 11-07-2026.
 
@@ -83,6 +83,8 @@ Port the ВКР's санскритизм extraction + name-index generation from
 Run the triple exporter across all 137 running-text sources; emit the per-text rights table (from `meta.json`: pre-1929 PD vs in-copyright, translator death years where known); validation report with per-source pair counts; freeze as a versioned package (GitHub release artifact, not committed bulk). Mostly mechanical — Sonnet 5 (`claude-sonnet-5`) or Haiku 4.5 (`claude-haiku-4-5-20251001`). Unblocked by: W1 (exporter exists); W2/W3 outputs attach if ready.
 
 ### Wave 5 — Outreach + НКРЯ iteration (human, after W1 minimum)
+
+**23-09-2026:** MG ruled to write now; showcase set first (RV, BhG, MBh III, Rām I–III); letters drafted; metadata cleanup → Uprava H5281. See [DECISIONS_NKRYA_PARALLEL_SUBMISSION_23-09-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/DECISIONS_NKRYA_PARALLEL_SUBMISSION_23-09-2026.md).
 
 `/outreach-draft` prepares the letter to Sichinava (cc Plungian): pilot package attached, A41 draft + thesis site linked, full-corpus offer with the rights table, ask for the current intake format + ingestion owner. MG sends. Same letter (or a separate note) notifies Rubanova of the published site and invites her onto the НКРЯ submission. Then iterate: their format spec → adjust one emitter → deliver full corpus (W4 package). НКРЯ-side ingestion, Russian-side annotation, and platform work are theirs. Unblocked by: W1 (per ruling 4, artifact in hand); stronger after W4.
 
