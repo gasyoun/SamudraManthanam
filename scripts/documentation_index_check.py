@@ -3,9 +3,11 @@
 
 _Created: 24-09-2026 · Last updated: 24-09-2026_
 
-The index was hand-maintained and fell behind: on 24-09-2026 it named 23 of the
-88 Markdown files under the repo root and `docs/`, so 65 docs were invisible to
-any human or agent orienting from it. This script makes the coverage half
+The index was hand-maintained and fell behind: on 24-09-2026 it named 35 of the
+111 Markdown files under the repo root and `docs/` (recursive), so 76 docs were
+invisible to any human or agent orienting from it. (The H5426 brief estimated
+23 of 88 from a non-recursive `docs/*.md` count; this script's own scan is the
+measured figure, and the two must not be confused.) This script makes the coverage half
 generated: the hand-written sections above the generated marker stay hand-owned
 (they carry the editorial verdict current/supporting/historical), and everything
 not mentioned there is listed in one generated section below it.
