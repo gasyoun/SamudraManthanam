@@ -1,0 +1,32 @@
+{
+  "artifact": {
+    "kind": "offline-pack",
+    "name": "dict.db"
+  },
+  "counts": {
+    "rows": 254037,
+    "sources": 2
+  },
+  "generated_at": "2026-09-03T23:46:46.011872+00:00",
+  "generator": "build_offline_pack/1",
+  "input_manifest": {
+    "bundle_version": "2026.08",
+    "content_hash": "sha256:6b810dcd0c9c9d09c1f9b77a8d1df3927505132a2cccec69c4937070044b70fe",
+    "record_count": 254037,
+    "source_count": 2
+  },
+  "outputs": [
+    {
+      "bytes": 91029504,
+      "name": "dict.db",
+      "record_count": 254037,
+      "sha256": "1bc162e85c8cf4e96d487eee5e0cd92d49d0764dcb11409cca9552467680402d"
+    },
+    {
+      "bytes": 39571813,
+      "name": "dict.db.gz",
+      "sha256": "ab7e296968ed15bb224b2393a98478c7f9e70504784e394267b7396e94178b73"
+    }
+  ],
+  "report_version": 1
+}
