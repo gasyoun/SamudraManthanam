@@ -35,3 +35,5 @@ Both read the same corpus; `CLAUDE.md` § "Do not touch" (no second
 search engine/indexer, corpus reindex ≠ app restart, `Index/lib/` is
 generated) is the load-bearing cross-domain constraint. When a change spans
 both domains, flag it explicitly rather than reviewing one side only.
+
+_Dr. Mārcis Gasūns_

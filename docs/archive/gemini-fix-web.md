@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Web Repair Handoff
 
 Date: 2026-05-12  
@@ -1235,3 +1237,5 @@ Exit criteria:
 - Preserve existing architecture where reasonable, but prioritize correctness and safety over matching the current scaffolding.
 - Avoid widening scope into unrelated frontend redesign work until the API and ingest path are stable.
 - Keep generated DB artifacts out of source review decisions unless specifically needed for reproducibility or deployment.
+
+_Dr. Mārcis Gasūns_

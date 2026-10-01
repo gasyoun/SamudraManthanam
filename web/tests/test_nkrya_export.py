@@ -611,3 +611,51 @@ def test_pilot_export_wellformed_and_deterministic(slug, tmp_path):
     assert (tmp_path / "a" / slug / f"{slug}.tsv").read_bytes() == \
            (tmp_path / "b" / slug / f"{slug}.tsv").read_bytes()
     assert r1["pairs"] == r2["pairs"] == PILOT_EXPECTED[slug]
+
+
+# --------------------------------------------------------------------------- #
+# H5281: НКРЯ real meta field names + three-layer meta + showcase bibliography #
+# --------------------------------------------------------------------------- #
+def test_header_uses_only_nkrya_field_names(fixture_jsonl, tmp_path):
+    (tmp_path / "w.meta.json").write_text(json.dumps({
+        "slug": "w", "title_ru": "Тест", "credit": "И. И. Иванов", "year": 2000,
+        "publisher": "Наука", "series": "ЛП", "rights": "x", "author_orig": "Вьяса",
+        "composition_date_ce": 100}, ensure_ascii=False), encoding="utf-8")
+    report, out = _emit(fixture_jsonl, tmp_path)
+    header = ET.parse(out / "w" / "w.nkrya.xml").getroot().find("header")
+    tags = [c.tag for c in header]
+    assert tags and set(tags) <= set(nx.NKRYA_HEADER_FIELDS)
+    assert header.findtext("translator") == "И. И. Иванов"
+    assert header.findtext("date_trans") == "2000"
+    assert header.findtext("headers_all") == "Тест"
+    assert int(header.findtext("words")) > 0
+    tmx_props = {p.get("type") for p in
+                 ET.parse(out / "w" / "w.tmx").getroot().findall("./header/prop")}
+    for old in ("title", "author", "year", "lang_source", "date_source_ce"):
+        assert old not in tmx_props
+
+
+def test_load_meta_layers(tmp_path):
+    idx, side = tmp_path / "idx", tmp_path / "side"
+    idx.mkdir(), side.mkdir()
+    (idx / "s.html.meta.json").write_text(json.dumps(
+        {"slug": "s", "credit": "Base", "publisher": "P", "year": 1990}), encoding="utf-8")
+    (side / "s.meta.json").write_text(json.dumps(
+        {"slug": "s", "credit": "Curated", "publisher": ""}), encoding="utf-8")
+    m = nx.load_meta("s", meta_dir=str(side), index_meta_dir=str(idx), bib_path=None)
+    assert m["credit"] == "Curated"          # sidecar wins
+    assert m["publisher"] == "P"             # empty sidecar value never blanks base
+    assert m["year"] == 1990
+    assert nx.load_meta("zz", meta_dir=str(side), index_meta_dir=str(idx),
+                        bib_path=None)["needs_review"] is True
+
+
+def test_showcase_bib_complete():
+    bib = nx.load_showcase_bib()
+    assert set(nx.SHOWCASE_SOURCES) <= set(bib)
+    spheres = {"художественная", "нехудожественная: церковно-богословская"}
+    for slug in nx.SHOWCASE_SOURCES:
+        b = bib[slug]
+        assert b["translator"] and b["date_trans"].isdigit() and b["created"].lstrip("-").isdigit()
+        assert b["lang_orig"] == "san" and b["sphere"] in spheres
+        assert b["rights_class"] in ("public-domain", "in-copyright")

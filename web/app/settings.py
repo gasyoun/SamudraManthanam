@@ -5,6 +5,12 @@ class Settings(BaseSettings):
     APP_ENV: str = "development"
     DB_PATH: str = "corpus.db"
     STATE_DB_PATH: str = ""
+    # Where the nightly word-of-day cron writes its static record (H4955).
+    # Empty means "repo-relative default", fine for local dev; prod points
+    # this at a service-user-owned data dir (e.g. /opt/samudra/db) since the
+    # repo checkout itself is root-owned via git pull and can't be written
+    # by the samudra service user.
+    WORD_OF_DAY_RECORD_PATH: str = ""
     CORPUS_PATH: str = ""
     PUBLIC_BASE_URL: str = ""
     ALLOWED_ORIGINS: str = ""

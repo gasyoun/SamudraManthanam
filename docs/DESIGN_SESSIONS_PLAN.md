@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Frontier Design-Session Plan — H2 2026
 
 **Status:** Active · 2026-06-12
@@ -14,7 +16,7 @@ Everything ships inside the app and its search service only.
 
 ## Session 1 — Line-ID scheme ✅ DONE (2026-06-12)
 
-- **Deliverable:** [docs/LINE_ID_SCHEME.md](LINE_ID_SCHEME.md)
+- **Deliverable:** [docs/LINE_ID_SCHEME.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/LINE_ID_SCHEME.md)
 - **Output:** `{work}:{passage}` scheme, three source classes (verse / dictionary /
   prose), duplicate disambiguation, minting + immutability rules, acceptance criteria.
 - **Remaining human decisions:** §8.1 (Mahābhārata book-number duplication — recommend
@@ -23,7 +25,7 @@ Everything ships inside the app and its search service only.
 
 ## Session 2 — HTML→JSONL converter spec ✅ DONE (2026-06-12)
 
-- **Deliverable:** [docs/CONVERTER_SPEC.md](CONVERTER_SPEC.md)
+- **Deliverable:** [docs/CONVERTER_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONVERTER_SPEC.md)
 - **Key output:** the structural insight that one source "line" = one `citation_block`
   bundling Sanskrit + Russian + commentary as sibling divs, which the converter explodes
   into grouped canonical records. Four parse paths characterized against live data
@@ -38,7 +40,7 @@ Everything ships inside the app and its search service only.
 
 ## Session 3 — Sanskrit↔Russian alignment spec ✅ DONE (2026-06-12)
 
-- **Deliverable:** [docs/ALIGNMENT_SPEC.md](ALIGNMENT_SPEC.md)
+- **Deliverable:** [docs/ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md)
 - **Decisive finding:** alignment is **extraction, not inference** — Sanskrit and Russian
   are already interleaved as sibling divs in one `citation_block` (78,219 clean 1:1
   blocks measured). No statistical aligner needed for v1.
@@ -56,7 +58,7 @@ Everything ships inside the app and its search service only.
 ## Session 4 — Offline search design (sqlite-wasm + OPFS)
 
 - **Goal:** Architecture for Phase 3 PWA offline search.
-- **Inputs:** current FTS5 schema + query layer ([web/app/services/search_service.py](../web/app/services/search_service.py)),
+- **Inputs:** current FTS5 schema + query layer ([web/app/services/search_service.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/app/services/search_service.py)),
   corpus.db size figures, Phase 2 PWA shell (must exist first — Sonnet work).
 - **Deliverable:** `docs/OFFLINE_SEARCH_DESIGN.md` — wasm bundle strategy, OPFS DB
   shipping/update path (versioned with `corpus_meta`), query parity matrix (which of
@@ -67,7 +69,7 @@ Everything ships inside the app and its search service only.
 - **Order note:** last of the build sessions; depends on Phase 2 being done and is
   independent of Sessions 2–3.
 - **Gate status (2026-06-12):** Phase 2 — S4's prerequisite — is now **planned** in
-  [PHASE2_PLAN.md](PHASE2_PLAN.md), which defines an explicit "S4 contract surface" (§3):
+  [PHASE2_PLAN.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/PHASE2_PLAN.md), which defines an explicit "S4 contract surface" (§3):
   installable PWA shell, `navigator.storage.persist()` durability layer, per-text offline
   selection module, and offline/online state UX. S4 may be designed as soon as Phase 2 is
   *implemented* (not just planned). S4's `OFFLINE_SEARCH_DESIGN.md` should consume that
@@ -106,3 +108,5 @@ Phase 2 PWA shell (Sonnet, parallel) ──→ S4 offline design ──→ imple
    Session 1 — two of three questions resolved in-session).
 4. **End the session when the artifact is committed.** Implementation starts in a fresh
    cheaper-tier session that reads the spec.
+
+_Dr. Mārcis Gasūns_

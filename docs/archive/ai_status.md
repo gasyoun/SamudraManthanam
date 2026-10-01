@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Samudra Manthanam — AI Status
 
 ## Current Sprint: Hardening & Operational Readiness
@@ -74,3 +76,4 @@
 - Move `morph_cache` to `state.db`.
 - VPS deployment docs.
 
+_Dr. Mārcis Gasūns_

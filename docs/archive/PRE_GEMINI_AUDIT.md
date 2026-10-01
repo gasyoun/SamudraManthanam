@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Pre-Gemini Flash Audit
 
 Date: 2026-05-15
@@ -151,3 +153,5 @@ After this audit:
 - Phase 1 foundation tasks remain fully open for Gemini Flash.
 - The most important Phase 1 items: `settings.py` → `BaseSettings`, `state_db.py`,
   `/api/health`, CORS tightening, `morph_cache` migration.
+
+_Dr. Mārcis Gasūns_

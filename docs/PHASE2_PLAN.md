@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Phase 2 Implementation Plan — Mobile-Ready Web + PWA Shell
 
 **For:** an implementation session (Sonnet-tier — no frontier design needed; this plan is
@@ -169,3 +171,5 @@ This plan is self-contained for a Sonnet-tier implementer the same way
 implementation — different files, no shared schema. When both Phase 1 and Phase 2 are done,
 **S4 is unblocked** and becomes the next frontier session; **S5 (pre-release review)** runs
 after S4's implementation, before the release.
+
+_Dr. Mārcis Gasūns_

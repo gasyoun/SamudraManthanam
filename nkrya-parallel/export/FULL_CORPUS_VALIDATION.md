@@ -1,6 +1,6 @@
 # НКРЯ full-corpus triple-export — validation report (Wave 4)
 
-_Created: 2026-07-13 · Last updated: 2026-07-13_
+_Created: 13-07-2026 · Last updated: 13-07-2026_
 
 Full-corpus export of **all 131 seg=ru sources** (the Wave-1 pilot covered 4), via [`web/corpus_builder/nkrya_export.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_export.py) `--all-ru --with-sanskritisms` (H821). Each source → best-guess НКРЯ para-XML + TMX 1.4b + TSV + a sanskritisms proper-name index. Bulk artifacts gitignored (in-copyright); shipped as a release. Model: Opus 4.8 (`claude-opus-4-8[1m]`).
 

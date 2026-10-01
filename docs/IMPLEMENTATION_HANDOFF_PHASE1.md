@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Phase 1 Implementation Hand-off — Converter + Alignment
 
 **For:** a fresh implementation session (Sonnet-tier is fine — the design is settled).
@@ -11,12 +13,12 @@ don't silently deviate.
 
 ## 0. Read first (frozen — do not re-litigate)
 
-1. [LINE_ID_SCHEME.md](LINE_ID_SCHEME.md) — the `{work}:{passage}` ID contract. **FROZEN.**
-2. [CONVERTER_SPEC.md](CONVERTER_SPEC.md) — HTML→JSONL converter: schema, 4 parse paths,
+1. [LINE_ID_SCHEME.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/LINE_ID_SCHEME.md) — the `{work}:{passage}` ID contract. **FROZEN.**
+2. [CONVERTER_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONVERTER_SPEC.md) — HTML→JSONL converter: schema, 4 parse paths,
    commentary, SLP1/accents, 8 gates.
-3. [ALIGNMENT_SPEC.md](ALIGNMENT_SPEC.md) — alignment groups (extraction not inference),
+3. [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) — alignment groups (extraction not inference),
    cardinality, gold oracle, 5 gates.
-4. [TAG_CENSUS.md](TAG_CENSUS.md) / `.json` — the measured corpus inventory the specs cite.
+4. [TAG_CENSUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) / `.json` — the measured corpus inventory the specs cite.
 
 The key mental model (from ALIGNMENT_SPEC §0): **one source line = one `citation_block`
 bundling Sanskrit + Russian + commentary as sibling divs.** The converter explodes it into
@@ -40,9 +42,9 @@ master lives in the repo the same way the corpus HTML already does — no wider 
 | Corpus source files (148) | `Index/lib/x86_64-win64/Data/*.{html,htm,txt}` |
 | Manifest (ordered active sources) | `Index/lib/x86_64-win64/Programdata/data.txt` |
 | Per-source metadata (148, has `structure`) | `…/Data/<file>.meta.json` |
-| Existing extraction logic to reuse | [web/ingest/parse_html.py](../web/ingest/parse_html.py) (range-title regex, `VEDIC_MAP`, tag stripping) |
-| Current HTML→DB ingest (to be rebased onto JSONL) | [web/ingest/ingest.py](../web/ingest/ingest.py) |
-| DB build entry point | [build-web-db.ps1](../build-web-db.ps1) → `ingest.py --corpus-path … --db-path …` |
+| Existing extraction logic to reuse | [web/ingest/parse_html.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/ingest/parse_html.py) (range-title regex, `VEDIC_MAP`, tag stripping) |
+| Current HTML→DB ingest (to be rebased onto JSONL) | [web/ingest/ingest.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/ingest/ingest.py) |
+| DB build entry point | [build-web-db.ps1](https://github.com/gasyoun/SamudraManthanam/blob/main/build-web-db.ps1) → `ingest.py --corpus-path … --db-path …` |
 | Tests | `web/tests/` — `pytest -m "not corpus"` hermetic, `pytest -m corpus` real |
 | Transliteration (installed) | `indic_transliteration.sanscript` — `IAST`, `SLP1`, `DEVANAGARI` |
 
@@ -154,3 +156,5 @@ public corpus export, TEI. (ALIGNMENT_SPEC §8.)
 `yajnavalkyasmriti_add`) exist in `Data/` but are absent from `data.txt` — so they are NOT
 in the 148 and NOT in scope here. If M.G. re-adds them to `data.txt`, re-run the census +
 structure backfill, then they flow through this same pipeline. Until then, ignore.
+
+_Dr. Mārcis Gasūns_

@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Stable Line-ID Scheme (`work.chapter.verse`) — Phase 0 Design
 
 **Status:** FROZEN for Phase 1 · 2026-06-12 (all §8 decisions settled — see §8)
@@ -206,3 +208,5 @@ occurrence keeps the bare number so the common case cites cleanly.
 - [ ] Range-title verse extraction covers all 53 range-dependent files (Rigveda,
       Atharvaveda, Mahābhārata, Rāmāyaṇa, Raghuvaṃśa, Gītagovinda) — tested per file.
 - [ ] Legacy `?highlight={link_id}` URLs keep working.
+
+_Dr. Mārcis Gasūns_

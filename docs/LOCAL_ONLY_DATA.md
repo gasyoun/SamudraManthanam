@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Local-only data inventory
 
 _Recorded: 19-07-2026. Sizes are metadata-only measurements rounded to MiB; file
@@ -19,3 +21,5 @@ this operational inventory does not reopen it or add a release gate.
 Backup status is deliberately conservative: “not verified” means this audit found
 no repository evidence of a separate backup and did not inspect external drives,
 cloud storage, or the directory contents.
+
+_Dr. Mārcis Gasūns_

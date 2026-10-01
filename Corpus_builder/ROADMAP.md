@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Corpus Builder — план развития (Roadmap)
 
 > **Truth-pass 02-09-2026** (H3775) — `roadmap_handoff_truth.py --check` flagged this

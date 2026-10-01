@@ -38,3 +38,5 @@ alignment method or the Russian-coverage prerequisite.
 - 14-07-2026 (Opus 4.8 `claude-opus-4-8[1m]`, H907): created alongside the roadmap; documents the 10-lambaka ingest + scale-up plan.
 - 14-07-2026 (Opus 4.8 `claude-opus-4-8[1m]`, H910): **P0 resolved** — complete Russian + śloka-keyed Sanskrit for all 18 books found in-repo; roadmap rewritten execution-ready (books 11–18 align now, no human gate); added sibling [SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/SOMADEVA_KSS_RIGHTS_COPYRIGHT_UNLOCK.md).
 - 29-07-2026 (Sonnet 5 `claude-sonnet-5`, H1878 roadmap-drift sweep): backlog items 2–4 and the Limitations section were stale — `.ai_state.md` and the roadmap's own 26-07-2026 status banner show P1 (H910/H927) and P3 (H928) both DONE, all 18 KSS lambakas uniformly śloka-keyed. Struck the stale rows; item 5 (НКРЯ bibliography verification) is the one genuinely open item.
+
+_Dr. Mārcis Gasūns_

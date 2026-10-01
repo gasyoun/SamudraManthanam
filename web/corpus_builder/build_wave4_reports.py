@@ -6,7 +6,11 @@ Reads every nkrya-parallel/export/<slug>/export_report.json (written by
 sidecars the roadmap Wave 4 asks for — the bulk per-source export itself stays
 gitignored / release-only:
 
-  * nkrya-parallel/export/RIGHTS_TABLE.md      per-source title·translator·rights·needs_review
+  * nkrya-parallel/export/RIGHTS_TABLE.md      per-source title·translator·year·publisher·rights
+    (H5281: title/translator/year/publisher/rights come from the MERGED meta —
+    nkrya_export.load_meta: Index/lib Data meta <- corpus_builder sidecar <-
+    showcase bibliography — not from the export_report, which only ever saw
+    the 54 sidecars and left 127/131 rows translator-less)
   * nkrya-parallel/export/FULL_CORPUS_VALIDATION.md   per-source classify() stats
 
 Usage: python build_wave4_reports.py --export-dir ../../nkrya-parallel/export
@@ -14,9 +18,28 @@ Usage: python build_wave4_reports.py --export-dir ../../nkrya-parallel/export
 import argparse
 import json
 import os
+import re
 import sys
 
 sys.stdout.reconfigure(encoding="utf-8")
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import nkrya_export as nx  # noqa: E402
+
+SHIP_ALL_NOTE = ("ship-all RU (MG 08-08-2026 H2440) — document translator; "
+                 "no per-translator ship gate")
+
+
+def rights_cell(rights):
+    base = (rights or "").strip() or "in-copyright / grey residual"
+    base = re.sub(r"\s*—\s*corpus rights stay grey per project ruling; no redistribution"
+                  r"(?:, export bulk gitignored)?", "", base)
+    base = re.sub(r"\s*—\s*no redistribution.*$", "", base)
+    return f"{base} · {SHIP_ALL_NOTE}"
+
+
+def cell(v):
+    return str(v).replace("|", "/").strip() if v not in (None, "") else "—"
 
 
 def load_reports(export_dir):
@@ -32,11 +55,26 @@ def load_reports(export_dir):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--export-dir", default="../../nkrya-parallel/export")
-    ap.add_argument("--date", default="2026-07-13")
+    ap.add_argument("--created", default="13-07-2026")
+    ap.add_argument("--date", default="23-09-2026", help="Last updated (DD-MM-YYYY)")
+    ap.add_argument("--frozen-set", metavar="VALIDATION_MD",
+                    help="restrict to the sources listed in a committed FULL_CORPUS_VALIDATION.md "
+                         "(the Wave-4 freeze), write RIGHTS_TABLE.md only, and fail if any pair "
+                         "count drifted from that report (H5281)")
+    ap.add_argument("--out-dir", help="where to write the .md reports (default: --export-dir)")
     a = ap.parse_args()
     reports = load_reports(a.export_dir)
     if not reports:
         sys.exit(f"no export_report.json under {a.export_dir}")
+    frozen = None
+    if a.frozen_set:
+        rows = re.findall(r"^\| `([^`]+)` \| \*\*(\d+)\*\*", open(a.frozen_set, encoding="utf-8").read(), re.M)
+        frozen = {s: int(n) for s, n in rows}
+        reports = [r for r in reports if r.get("slug") in frozen]
+        drift = [(r["slug"], frozen[r["slug"]], r["pairs"]) for r in reports if r["pairs"] != frozen[r["slug"]]]
+        missing = sorted(set(frozen) - {r["slug"] for r in reports})
+        if drift or missing:
+            sys.exit(f"frozen-set mismatch: drift={drift} missing={missing}")
 
     def g(r, *keys, default=0):
         for k in keys:
@@ -45,46 +83,53 @@ def main():
         return default
 
     # ---- RIGHTS_TABLE.md ----
+    showcase = set(nx.SHOWCASE_SOURCES)
     rt = [f"# НКРЯ full-corpus export — per-source rights table (Wave 4)\n",
-          f"_Created: {a.date} · Last updated: {a.date}_\n",
-          f"One row per exported seg=ru source ({len(reports)} sources). `rights`/`needs_review` "
-          "read verbatim from each `<slug>.meta.json` (H231 Phase-0 pass) — this wave tabulates, it "
-          "does not re-research provenance. **`needs_review: true` = verify against the physical "
-          "edition before any НКРЯ submission.** Bulk export artifacts are gitignored / release-only "
-          "(in-copyright).\n",
-          "| # | Source (slug) | Title | Translator / author | Rights | Needs review |",
-          "|---:|---|---|---|---|:---:|"]
-    review_n = 0
-    documented = 0
+          f"_Created: {a.created} · Last updated: {a.date}_\n",
+          "**Policy (MG 08-08-2026, H2440):** **ship all** Russian text; **never reask** a "
+          "per-translator ship gate. This table **documents translators** (and residual "
+          "attribution gaps).\n",
+          f"One row per exported seg=ru source ({len(reports)} sources). Title, translator, "
+          "year, publisher and rights come from the merged per-source meta "
+          "([`nkrya_export.load_meta`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_export.py): "
+          "desktop `Index/lib/x86_64-win64/Data/<slug>.html.meta.json` ← curated "
+          "`web/corpus_builder/<slug>.meta.json` ← the H5281 showcase bibliography "
+          "[`nkrya_showcase_bib.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_showcase_bib.json)). "
+          "Raw meta credits are shown verbatim (some in the genitive, as printed); the 24 "
+          "showcase rows (🪟) carry the curated nominative form. `Year` = the printing the "
+          "text was taken from. Bulk export artifacts are gitignored / release-only.\n",
+          "| # | Source (slug) | Title | Translator / author | Year | Publisher | Rights | Needs review |",
+          "|---:|---|---|---|---:|---|---|:---:|"]
+    review_n = documented = 0
     for i, r in enumerate(reports, 1):
-        nr = bool(g(r, "needs_review", default=True))
+        slug = r.get("slug", "?")
+        m = nx.load_meta(slug)
+        b = m.get("nkrya") or {}
+        title = b.get("headers_all") or m.get("title_ru") or slug
+        tr = b.get("translator") or (m.get("credit") or "").strip()
+        documented += bool(tr)
+        nr = bool(m.get("needs_review", True))
         review_n += nr
-        # "documented" = a meta.json sidecar with real rights/translator (title
-        # falls back to the slug when absent, so test rights/translator).
-        has_meta = bool(r.get("rights") or r.get("translator"))
-        documented += has_meta
-        rt.append("| {i} | `{s}` | {t} | {tr} | {ri} | {nr} |".format(
-            i=i, s=r.get("slug", "?"), t=(r.get("title") or "—"),
-            tr=(r.get("translator") or "—"), ri=(r.get("rights") or "—"),
-            nr="⚠️ yes" if nr else "no"))
+        mark = "🪟 " if slug in showcase else ""
+        rt.append("| {i} | {mk}`{s}` | {t} | {tr} | {y} | {pb} | {ri} | {nr} |".format(
+            i=i, mk=mark, s=slug, t=cell(title), tr=cell(tr), y=cell(m.get("year")),
+            pb=cell(b.get("publisher") or m.get("publisher")), ri=cell(rights_cell(m.get("rights"))),
+            nr=("🗳 spot-check sheet" if slug in showcase else "⚠️ yes") if nr else "no"))
     gap = len(reports) - documented
-    rt.append(f"\n**Rights coverage: {documented} of {len(reports)} sources have a populated "
-              f"`meta.json` sidecar; {gap} have none — shown as `—` and flagged `needs_review`.**\n")
-    rt.append(f"> ⚠️ **Metadata-loss finding (H821).** The H231 Phase-0 pass reported filling "
-              "`title_en`/`provenance`/`rights` on *148* meta.json, but only **{d} source "
-              "`<slug>.meta.json` are actually committed** in `web/corpus_builder/` — the other ~143 "
-              "H231 fills were never committed and are gone from the repo (`.ai_state` still claims "
-              "\"all 148\"). Per the H821 ruling this wave *tabulates* rights and does **not** "
-              "re-research or regenerate them — restoring the meta.json stubs and re-running "
-              "`web/ingest/fill_meta_phase0.py` is a follow-up (`@DO`). All {r} sources stay "
-              "`needs_review`; the release is gated on per-translator clearance regardless.\n".format(
-                  d=documented, r=review_n))
+    rt.append(f"\n**Translator coverage: {documented} of {len(reports)} sources carry a "
+              f"translator/author credit; {gap} show `—` (the meta files' own gap — no "
+              "credit on the title page parsed by the desktop meta pass).**\n")
+    rt.append("> **Metadata-loss finding (H821) — resolved by H5281.** H821 read only the "
+              "`web/corpus_builder/<slug>.meta.json` sidecars (then 4 of 131) and concluded ~143 "
+              "H231 fills were lost. They were not: the desktop client's "
+              "`Index/lib/x86_64-win64/Data/*.meta.json` (231 files, `credit` on 204) had them all "
+              "along; the table builder read the wrong place.\n")
     rt.append("_Dr. Mārcis Gasūns_")
 
     # ---- FULL_CORPUS_VALIDATION.md ----
     tot = {k: 0 for k in ("pairs", "mono_ru", "mono_sa", "commentary", "empty_side")}
     vr = [f"# НКРЯ full-corpus triple-export — validation report (Wave 4)\n",
-          f"_Created: {a.date} · Last updated: {a.date}_\n",
+          f"_Created: {a.created} · Last updated: {a.date}_\n",
           f"Full-corpus export of **all {len(reports)} seg=ru sources** (the Wave-1 pilot covered 4), "
           "via [`web/corpus_builder/nkrya_export.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_export.py) "
           "`--all-ru --with-sanskritisms` (H821). Each source → best-guess НКРЯ para-XML + TMX 1.4b + "
@@ -106,13 +151,16 @@ def main():
               "`test_nkrya_export.py`, extended).\n")
     vr.append("_Dr. Mārcis Gasūns_")
 
-    out = a.export_dir
+    out = a.out_dir or a.export_dir
     with open(os.path.join(out, "RIGHTS_TABLE.md"), "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(rt) + "\n")
-    with open(os.path.join(out, "FULL_CORPUS_VALIDATION.md"), "w", encoding="utf-8", newline="\n") as f:
-        f.write("\n".join(vr) + "\n")
+    if frozen is None:
+        with open(os.path.join(out, "FULL_CORPUS_VALIDATION.md"), "w", encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(vr) + "\n")
+    else:
+        print(f"frozen set: {len(reports)} sources, pair counts match {a.frozen_set}")
     print(f"reports: {len(reports)} sources, {tot['pairs']:,} pairs, {review_n} needs_review")
-    print("wrote RIGHTS_TABLE.md + FULL_CORPUS_VALIDATION.md")
+    print("wrote RIGHTS_TABLE.md" + ("" if frozen is not None else " + FULL_CORPUS_VALIDATION.md"))
 
 
 if __name__ == "__main__":

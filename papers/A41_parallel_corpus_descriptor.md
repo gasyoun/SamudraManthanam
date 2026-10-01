@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 06-09-2026_
+
 ---
 paper_id: A41
 title: "Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources"
@@ -5,12 +7,12 @@ status: draft (advanced, 4/5 proposed) — scaffolded 2026-06-26, advanced 2026-
 readiness: 3/5 → 4/5 proposed
 venue: "LREC-COLING (parallel-corpus) / eLex / JOHD (Journal of Open Humanities Data)"
 author: "**Mārcis Gasūns**, independent scholar ([ORCID 0000-0003-4513-884X](https://orcid.org/0000-0003-4513-884X)), gasyoun@ya.ru"
-data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 269 .jsonl files — 121 post-report additions / 199,379 records formally excluded from all counts, resolved 12-08-2026 H2542); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk); papers/data/A41_corpus_stats.json + papers/data/A41_gita_editions.tsv (recomputation record, papers/scripts/a41_stats.py); nkrya-parallel/export/annotation_3path_metrics.json (§6 annotation comparison, web/corpus_builder/nkrya_annotate.py)"
+data_source: "web/corpus_builder/jsonl/ (148 report sources = 574,939 segment records; directory holds 274 .jsonl files — 126 post-report additions / 219,463 records formally excluded from all counts, resolved 12-08-2026 H2542, re-counted 04-09-2026); web/corpus_builder/conversion_report.json (canonical counts); docs/ALIGNMENT_SPEC.md (alignment model); docs/TAG_CENSUS.md (structural inventory); web/corpus_builder/chronology/texts_chronology.json (date crosswalk); papers/data/A41_corpus_stats.json + papers/data/A41_gita_editions.tsv (recomputation record, papers/scripts/a41_stats.py); nkrya-parallel/export/annotation_3path_metrics.json (§6 annotation comparison, web/corpus_builder/nkrya_annotate.py)"
 ---
 
 # Samudra Manthanam: A Markup-Aligned Sanskrit–Russian Parallel Corpus of 148 Sources
 
-_Created: 26-06-2026 · Last updated: 12-08-2026_
+_Created: 26-06-2026 · Last updated: 06-09-2026_
 
 > **Draft status (2026-07-11, H676; advanced 2026-07-08, H351; scaffolded 2026-06-26).**
 > Manuscript built directly on the converted corpus and its design specs. Every numerical
@@ -64,13 +66,15 @@ _Created: 26-06-2026 · Last updated: 12-08-2026_
 > ([10.5281/zenodo.21317315](https://doi.org/10.5281/zenodo.21317315)), what is owed is
 > a **dataset** DOI. Two measured findings from the same pass: the corpus of record is
 > **byte-stable a fourth time** (574,939 records / 78,139 · 10,009 · 80 cardinality,
-> identical to 26-06 / 08-07 / 11-07), but the `jsonl/` directory has grown to **269
-> files with 121 post-report extras / 199,379 records** (was 7 / 11,056), so the
+> identical to 26-06 / 08-07 / 11-07), but the `jsonl/` directory has grown to **274
+> files with 126 post-report extras / 219,463 records** (was 7 / 11,056; re-counted
+> 04-09-2026 — 19.85× the 11-07 extras), so the
 > fold-or-exclude decision in §11 row 1 is now the largest freeze-time item; and
 > `a41_stats.py` no longer aborts from a clean checkout on the gitignored `corpus.db`
 > (footnote fields degrade to null).
-> **Extras freeze resolved 12-08-2026 (H2542, Sonnet 5 `claude-sonnet-5`).** The 121
-> post-report extras / 199,379 records flagged 10-08-2026 are **formally excluded** from
+> **Extras freeze resolved 12-08-2026 (H2542, Sonnet 5 `claude-sonnet-5`).** The 126
+> post-report extras / 219,463 records (re-counted 04-09-2026; flagged 10-08-2026 at
+> 121 / 199,379) are **formally excluded** from
 > the corpus of record — the safe default named in the handoff, applied because folding
 > them in is a human call this pass had no human present to make, and exclusion preserves
 > every published figure (78,219 headline, 574,939 total, all §4–§11 numbers unchanged).
@@ -90,10 +94,11 @@ _Created: 26-06-2026 · Last updated: 12-08-2026_
 > (51-group review sheet) folded in once voted. *(The RU-translation ship triage that
 > stood here is closed — ship-all, MG 08-08-2026, H2440; the residual is documentation,
 > already filled.)*
+> author-voice pass 06-09-2026 ([SIGNOFF_A41_author_pass.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/SIGNOFF_A41_author_pass.md)), Fable 5.1 `claude-fable-5-1`: voice, register and framing only.
 
 ## Abstract
 
-We present **Samudra Manthanam** ("the churning of the ocean"), a Sanskrit–Russian
+I present **Samudra Manthanam** ("the churning of the ocean"), a Sanskrit–Russian
 parallel corpus assembled from **148 digitised sources** and released as a uniform,
 segment-addressable JSONL layer of **574,939 records**. Unlike most parallel corpora,
 whose sentence pairs are produced by a statistical or neural aligner and carry an
@@ -111,8 +116,8 @@ sources are **15 bilingual dictionaries** (321,672 head entries) and **14 prose 
 segment carries its canonical passage ID, transliteration in both IAST and SLP1 (for
 Sanskrit), an explicit `structure` class, and a per-segment `seg` role, so that
 confidence, monolinguality, and commentary status are queryable fields rather than
-buried assumptions. We add a **chronology crosswalk** that maps each text onto
-VisualDCS period dates without re-deriving them, and we use the corpus's 11 Russian
+buried assumptions. I add a **chronology crosswalk** that maps each text onto
+VisualDCS period dates without re-deriving them, and I use the corpus's 11 Russian
 Bhagavadgītā translations (1788 → present) as a worked **diachronic register
 demonstration**. The contribution is a reproducible, FAIR-leaning data descriptor:
 the artefact, its extraction method, its honest edge-case accounting, and the path
@@ -135,11 +140,11 @@ The central observation, formalised in [`docs/ALIGNMENT_SPEC.md`](https://github
 reading HTML, they placed each Sanskrit verse and its Russian translation as sibling
 `div`s inside one citation block, hand-aligned at the verse (or atomic-range) level.
 A parallel-corpus builder who treats this as a sentence-alignment task would discard
-ground truth and re-introduce error. We therefore frame extraction as a markup-faithful
-operation whose correctness is checked by a **regression oracle** ("did we extract the
-existing pairing faithfully?"), not by scoring a guesser.
+ground truth and re-introduce error. I therefore frame extraction as a markup-faithful
+operation whose correctness is checked by a **regression oracle** ("did the converter
+extract the existing pairing faithfully?"), not by scoring a guesser.
 
-Our claims:
+I make three claims:
 
 1. **Markup-faithful recovery.** The bilingual pairing is read straight out of the
    source structure; the 78,219 clean 1:1 verse pairs are extracted, not inferred,
@@ -154,7 +159,7 @@ Our claims:
 
 ## 2. Related work
 
-Six strands frame the contribution. The novelty claim, stated crisply: a
+Six strands frame the contribution. The novelty claim is a
 **markup-aligned Sanskrit–Russian parallel corpus at 148-source scale with per-segment
 cardinality/monolingual flags and a chronology crosswalk** — a *resource and
 method-of-construction* contribution, **not** a new aligner.
@@ -165,10 +170,10 @@ pairing as an estimation problem: length-based dynamic programming (Gale & Churc
 al. 2005), MT-mediated alignment (Bleualign; Sennrich & Volk 2010), and embedding-based
 aligners over LASER/LaBSE sentence spaces (Vecalign; Thompson & Koehn 2019; Artetxe &
 Schwenk 2019; Feng et al. 2022). All of these *infer* a pairing and attach an estimated
-confidence. Our corpus is the contrasting case this literature rarely names: the
-editions were **hand-aligned by their editors at the verse level before we arrived**,
+confidence. This corpus is the contrasting case this literature rarely names: the
+editions were **hand-aligned by their editors at the verse level before I arrived**,
 so running any aligner would replace ground truth with an estimate of it (§3.2). The
-right method is extraction plus a fidelity oracle, and the corpus is offered as a
+right method is extraction plus a fidelity oracle, and I offer the corpus as a
 worked example of that stance.
 
 **Structure-derived bitext.** Reading alignment out of document structure — TEI
@@ -183,8 +188,8 @@ Sanskrit (Hellwig), GRETIL, the Sanskrit Library (Scharf & Hyman), and the Colog
 Digital Sanskrit Dictionaries. Parallel data is dominated by Sanskrit–**English**: the
 nearest neighbor to this work is the **Itihāsa** corpus (Aralikatte et al. 2021), ~93k
 Sanskrit–English śloka–translation pairs extracted from printed Rāmāyaṇa and
-Mahābhārata editions. Our delta against Itihāsa is threefold: the target language is
-**Russian** (to our knowledge no comparable machine-readable Sanskrit–Russian parallel
+Mahābhārata editions. The delta against Itihāsa is threefold: the target language is
+**Russian** (to my knowledge no comparable machine-readable Sanskrit–Russian parallel
 resource exists — the Russian indological tradition is deep but its digital layer was
 per-source reading HTML, §1); the source base is **148 works across genres** (Veda,
 epic, Upaniṣads, kāvya, śāstra) rather than the two epics; and the alignment is
@@ -192,23 +197,23 @@ epic, Upaniṣads, kāvya, śāstra) rather than the two epics; and the alignmen
 per-pair heuristics. The 15-dictionary lexical layer (321,672 head entries) additionally
 connects the corpus to the lexicographic strand (A42, §12).
 
-**Corpus collections and the precision–scale tradeoff.** The parallel-data landscape is
+**Corpus collections and the precision–scale tradeoff.** The parallel-data field is
 dominated by *aggregation at web scale*: OPUS normalises hundreds of collections into one
 distribution format (Tiedemann 2012), and mined bitext such as CCMatrix reaches billions
 of pairs by scoring candidate sentences in an embedding space (Schwenk et al. 2021). That
 strand buys volume at the cost of per-pair certainty — a mined pair carries a margin
 score, and low-resource language sides are exactly where mined precision degrades. This
 corpus sits at the opposite corner of the same design space: ~78k pairs, no score column,
-because no pairing was ever estimated. We share OPUS's *uniform-schema* goal (one format,
+because no pairing was ever estimated. I share OPUS's *uniform-schema* goal (one format,
 one addressing scheme across heterogeneous sources) and reject the mining strand's
-inference step, which our sources make unnecessary. Stating this explicitly matters for a
+inference step, which these sources make unnecessary. Stating this explicitly matters for a
 low-resource pair: the alternative route to Sanskrit–Russian bitext at this size would be
 mining, and it would be strictly noisier here.
 
 **Translationese and diachronic register.** Because every Russian side is a translation of
 a fixed Sanskrit source, the corpus is also a *translationese* resource in the sense of
 Rabinovich & Wintner (2015), who show translated text is machine-distinguishable from
-originally-authored text by lexical and syntactic markers. Our §5 measurements (TTR,
+originally-authored text by lexical and syntactic markers. My §5 measurements (TTR,
 Guiraud R, Sanskrit-loan retention across 11 Gītā renderings, 1788–2016) are a
 philologically-motivated instance of that measurement stance on a controlled bilingual
 alignment — one source text, eleven target realisations, ~230 years apart. This connects
@@ -244,25 +249,26 @@ source one of three `structure` classes; the **final converter classification** 
 | **prose** | 14 | 45,037 | `body` |
 | **total** | **148** | **574,939** | |
 
-*(Note for the methods text: the early heuristic tag-census in
+*(Classification note: the early heuristic tag-census in
 [`TAG_CENSUS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) reports a provisional **70 verse / 15 dictionary /
 67 prose** split — over **152** candidate sources, not the final 148; the table above is
 the **final** converter/backfill classification recorded in the conversion report and
 [`.ai_state.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/.ai_state.md). The discrepancy
-is the heuristic-vs-final reclassification (and the 152→148 source-set trim) and must be
-stated, not hidden.)*
+is the heuristic-vs-final reclassification (and the 152→148 source-set trim), and I
+state it here rather than hide it.)*
 
 *(Layer reconciliation, re-measured 10-08-2026: three counts coexist and none contradicts
 the others. The **canonical corpus** is the 148 report sources / 574,939 JSONL records
 above, and it is **byte-stable** — the 26-06, 08-07, 11-07 and 10-08 re-counts all return
 574,939 records / 574,939 unique IDs and identical verse-group cardinality. The **`jsonl/`
-directory has since grown well past the corpus of record**: 269 `.jsonl` files as of
-10-08-2026, of which **121 are post-report files carrying 199,379 records** (was 7 files /
-11,056 records on 11-07 — the growth is later ingestion waves, led by
-`devibhagavata-purana` 37,984 and `kathasaritsagara` 19,994; 26 of the 121 are `.raw`
+directory has since grown well past the corpus of record**: 274 `.jsonl` files as of
+04-09-2026 (was 269 on 10-08-2026), of which **126 are post-report files carrying
+219,463 records** (was 7 files /
+11,056 records on 11-07 — a 19.85× growth from later ingestion waves, led by
+`devibhagavata-purana` 37,984 and `kathasaritsagara` 19,994; 26 of the 126 are `.raw`
 twins of a sibling file, so the file count overstates distinct works). **None of it enters
 any figure in this paper**: every count here is restricted to the 148 sources named in the
-conversion report. **Resolved 12-08-2026 (H2542):** the 121 extras are **formally
+conversion report. **Resolved 12-08-2026 (H2542):** the 126 extras are **formally
 excluded** from the corpus of record rather than folded into a re-frozen report — the
 handoff's own stated default when no human is present to make the fold-vs-exclude call,
 chosen because it preserves every published figure in this paper unchanged (78,219
@@ -278,9 +284,11 @@ The verse sources span the Ṛgveda and Atharvaveda, the full Mahābhārata (18 
 and three Rāmāyaṇa kāṇḍas, ~30 Upaniṣads, the classical kāvya (Meghadūta,
 Kumārasambhava, Gītagovinda, Amaruśataka, …), the dharma- and yoga-śāstra
 (Manusmṛti, the Yogasūtra with multiple commentaries), and **11 Russian translations of
-the Bhagavadgītā** plus three Gītā commentaries. The 15 dictionaries are
-Sanskrit–Russian and Russian-indological reference works (Kochergina, Kossovich,
-Smirnov, the Grintser glossaries, etc.); the 14 prose works are translations and
+the Bhagavadgītā** plus three Gītā commentaries. The 15 dictionaries are dominated by Sanskrit–English and European reference
+works — ~82% of the class's records (263,624/321,672) sit in Monier-Williams
+(222,390), Apte (31,647) and the German KEWA — with the Sanskrit–Russian and
+Russian-indological reference works (Kochergina, Kossovich,
+Smirnov, the Grintser glossaries, etc.) as the largest Russian-facing group; the 14 prose works are translations and
 scholarly apparatus (Mahābhārata commentary and indices, Gnedich's Iliad as a
 register foil, Biruni, the Viṣṇu Purāṇa).
 
@@ -390,7 +398,8 @@ intended monolingual reference content, not failed pairs — §4.4.)
 
 ### 4.4 Dictionaries and prose (not verse pairs, by design)
 The 15 dictionaries contribute **321,672 head entries** (the single largest record
-class, led by Kochergina 29,180 and Kossovich 13,488) and the 14 prose works
+class, led by Monier-Williams 222,390 and Apte 31,647; the largest Sanskrit–Russian
+sources are Kochergina 29,180 and Kossovich 13,488) and the 14 prose works
 **45,037 body segments**. These are kept in the same schema and the same IDs space but
 are **outside the 1:1 verse-pair denominator** — counting a dictionary headword as a
 "failed alignment" would be a category error. They are the corpus's lexical and
@@ -476,7 +485,7 @@ this paper.
 A parallel corpus entering a national-corpus infrastructure (the НКРЯ track,
 [roadmap](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ROADMAP_NKRYA_PARALLEL_RUSCORPORA_2026_2027.md))
 needs a position on Sanskrit-side linguistic annotation. Rather than assume one,
-we compared three candidate paths head-to-head on the four pilot sources — MBh 3
+I compared three candidate paths head-to-head on the four pilot sources — MBh 3
 and Rāmāyaṇa 1–3, 11,055 verse pairs / 40,269 half-verse lines / 203,623 surface
 tokens: **(A)** the plain IAST/SLP1 surface already carried by the corpus (the
 guaranteed floor), **(B)** a crosswalk onto the Digital Corpus of Sanskrit's
@@ -490,8 +499,8 @@ the full method and per-tier tables are in
 
 ### 6.1 The crosswalk is text-keyed, and coverage measures editions
 
-Verse loci cannot join the two corpora: our MBh 3 carries critical-edition
-numbering (299 adhyāyas, same as DCS) but our Rāmāyaṇa kāṇḍas are
+Verse loci cannot join the two corpora: my MBh 3 carries critical-edition
+numbering (299 adhyāyas, same as DCS) but my Rāmāyaṇa kāṇḍas are
 vulgate-numbered (77/119/75 sargas vs DCS's critical 76/111/71). The crosswalk
 therefore matches **normalized half-verse text** in three tiers — exact,
 consonant-skeleton (neutralizing sandhi differences: DCS's Rāmāyaṇa
@@ -504,6 +513,13 @@ consonant-skeleton (neutralizing sandhi differences: DCS's Rāmāyaṇa
 | Rām 2 (Ayodhyākāṇḍa) | 9,093 | 4,936 | **54.3%** |
 | Rām 3 (Araṇyakāṇḍa) | 5,147 | 2,827 | **54.9%** |
 | **Total** | **40,269** | **32,655** | **81.1%** |
+
+On the verse-group level the same metrics JSON yields full-group coverage
+6,355/11,055 = **57.5%** (partial 2,526, none 2,174) — a share of verse
+*groups*, not half-verse lines; the 81.1% line total is dominated by MBh 3
+(99.8%, more than half the denominator) while Rām 2–3 sit near 54%. Both
+numbers are true on their own denominators; the group-level share is the
+conservative headline.
 
 The unmatched residue is an **edition measurement, not annotation noise**: of
 801 probed unmatched Ayodhyā lines, 795 are absent from the *entire* DCS
@@ -539,15 +555,15 @@ model's estimate of it.
 
 ## 7. Discussion
 
-The corpus's value is twofold. As an **artefact**, it is, to our knowledge, the largest
+The corpus's value is twofold. As an **artefact**, it is, to my knowledge, the largest
 uniform Sanskrit–Russian parallel resource, with ~78k verse pairs spanning the Vedic to
 the late classical period and a lexical layer of >320k dictionary entries. As a
 **method case**, it argues that for editions whose translators already aligned the text
-by hand, the right move is markup-faithful extraction with a fidelity oracle, not a
+by hand, the right method is markup-faithful extraction with a fidelity oracle, not a
 statistical aligner that would overwrite ground truth and add probabilistic error. The
 per-segment confidence/monolingual flags and the chronology crosswalk make the resource
 honest about what it is — clean where the source is clean, explicitly monolingual where
-it is not — which is exactly what a downstream consumer (retrieval, bilingual
+it is not — which is what a downstream consumer (retrieval, bilingual
 lexicon induction, diachronic translation study) needs.
 
 ## 8. Limitations
@@ -558,11 +574,13 @@ lexicon induction, diachronic translation study) needs.
 - **Monolingual text is not bitext.** Two whole translation-only texts (Balmont's
   Buddhacarita, mify-drind) account for ≈10,024 of the 10,145 Russian-only segments;
   they are valuable Russian witnesses but contribute no Sanskrit pair.
-- **Provenance is heterogeneous; ship is not gated per translator.** The Russian
-  translations span 1788 to living authors. **MG 08-08-2026 (H2440): ship all RU text** —
-  never reask a per-translator ship gate. **Document the different translators** in
+- **Provenance is heterogeneous; release is not gated per translator.** The Russian
+  translations span 1788 to living authors. The rights ruling of 08-08-2026 (MG, H2440)
+  is to ship all Russian text rather than triage release translator by translator; the
+  translators are documented in
   [papers/data/A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md)
-  and the §5 Gītā table; residual greyness is recorded, not a park.
+  and in the §5 Gītā table, and the residual grey-rights status is recorded rather than
+  treated as a reason to withhold.
 - **Dates are crosswalked, not re-derived** (VisualDCS), with `manual` flags on
   author-datable medieval works; the crosswalk inherits DCS's own dating uncertainty.
 - **The §5 register metrics are surface lexical measures.** TTR/Guiraud R and the
@@ -575,13 +593,13 @@ lexicon induction, diachronic translation study) needs.
 
 ## 9. Human gates (rights documentation and DOI)
 
-**RU ship gate — closed 08-08-2026 (MG, H2440).** **Ship all** Russian text for A41
-paths. Do **not** re-open a per-translator redistribute/hold triage. The residual
-duty is **documentation of translators** (already filled for the §5 Gītā editions and
-for every committed `*.meta.json` credit; inventory:
+**Russian-text rights position — settled 08-08-2026 (MG, H2440).** All Russian text
+ships for A41 paths; the per-translator redistribute-or-hold triage is closed and is not
+reopened here. What remains is documentation of translators, already filled for the §5
+Gītā editions and for every committed `*.meta.json` credit (inventory:
 [papers/data/A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md)).
 НКРЯ `RIGHTS_TABLE` rows still showing `—` for translator lack committed meta credits
-(H821 residue) — fill when meta is restored, not by guessing.
+(H821 residue); they are filled when the metadata is restored, not by guessing.
 
 **Documented artifacts (added 10-08-2026, H2403).** The rights position above, the
 per-layer licence table, and the corpus's intended use / known-misuse notes are recorded
@@ -594,9 +612,9 @@ The imported DCS lemma/morphology layer of §6 is **CC BY 4.0** and therefore
 redistributable with attribution; vidyut output is evaluated but **not shipped**, so no
 question of redistributing it arises.
 
-Still outside the data work:
+The one gate that stood outside the data work is now closed:
 
-1. **Mint a *dataset* DOI — ✅ DONE 28-08-2026 (H2611, OxAlpha).** The **corpus of
+1. **Dataset DOI — minted 28-08-2026 (H2611, OxAlpha).** The **corpus of
    record** now has its own Zenodo record with `resource_type: dataset`: concept DOI
    [10.5281/zenodo.22149933](https://doi.org/10.5281/zenodo.22149933) (v1.0.0 =
    [10.5281/zenodo.22149934](https://doi.org/10.5281/zenodo.22149934)), wired into
@@ -622,7 +640,7 @@ Samudra Manthanam is a 148-source, 574,939-segment Sanskrit–Russian corpus who
 ~78,219 clean verse pairs were recovered by **markup-faithful extraction rather than
 statistical alignment**, with monolingual content flagged as a first-class state, a
 chronology crosswalk onto DCS period dates, and a built-in diachronic demonstration in
-its 11 Russian Bhagavadgītā translations. It is offered as a reproducible data
+its 11 Russian Bhagavadgītā translations. I offer it as a reproducible data
 descriptor and a method case for the many digitised parallel editions whose alignment
 already lives in their markup.
 
@@ -630,8 +648,8 @@ already lives in their markup.
 
 The corpus layer is the JSONL directory
 [`web/corpus_builder/jsonl/`](https://github.com/gasyoun/SamudraManthanam/tree/main/web/corpus_builder/jsonl) — **148 report sources** define the corpus of record (the
-directory holds **269** `.jsonl` files as of 10-08-2026; the **121 post-report additions,
-199,379 records** — led by `devibhagavata-purana`, `kathasaritsagara`, `kalika-purana`,
+directory holds **274** `.jsonl` files as of 04-09-2026; the **126 post-report additions,
+219,463 records** — led by `devibhagavata-purana`, `kathasaritsagara`, `kalika-purana`,
 the two remaining Rāmāyaṇa kāṇḍas, and the Ignatiev tantra/purāṇa wave — are **formally
 excluded** from every count, resolved 12-08-2026, H2542; see §3.1 and §11 row 1); canonical counts in
 [`web/corpus_builder/conversion_report.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json);
@@ -705,7 +723,7 @@ flagged as such):
 
 | # | Claim | Figure(s) | Artifact | Status |
 |--:|---|---|---|---|
-| 1 | Corpus scale | 148 report sources, 574,939 segment records — **byte-stable across four re-counts** (26-06, 08-07, 11-07, 10-08-2026). The `jsonl/` dir now holds **269** `.jsonl` files: **121 post-report extras / 199,379 records** (was 7 / 11,056 on 11-07), **formally excluded** (12-08-2026, H2542) from every figure and itemised in §3.1 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ✅ extras decision resolved (exclude, written rationale §3.1) |
+| 1 | Corpus scale | 148 report sources, 574,939 segment records — **byte-stable across four re-counts** (26-06, 08-07, 11-07, 10-08-2026). The `jsonl/` dir now holds **274** `.jsonl` files: **126 post-report extras / 219,463 records** (was 7 / 11,056 on 11-07; re-counted 04-09-2026), **formally excluded** (12-08-2026, H2542) from every figure and itemised in §3.1 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) (`total_sources`, `total_records`) + [A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json) extras census | ✅ committed; ✅ extras decision resolved (exclude, written rationale §3.1) |
 | 2 | Final structure split | 119 verse / 15 dictionary / 14 prose; 208,230 / 321,672 / 45,037 records | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) + final backfill in [.ai_state.md](https://github.com/gasyoun/SamudraManthanam/blob/main/.ai_state.md); the heuristic 70/15/67-of-152 census in [TAG_CENSUS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/TAG_CENSUS.md) is superseded and said so in §3.1 | ✅ committed |
 | 3 | Headline: clean 1:1 verse pairs | **78,219** (Tier-1) vs 78,139 / 88.56% live re-count (26-06, re-verified identically 08-07 and 11-07-2026) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §0 + [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) recount ([A41_corpus_stats.json](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_corpus_stats.json)) | ✅ committed; ⬜ freeze-time choice of which reconciled figure leads (one-line edit) |
 | 4 | Monolingual inventory | 10,145 RU-only, dominated by `buddhacharita-balmont` 8,852 + `mify-drind` 1,172 (≈10,024 of 10,145); 1 Sa-only (spec) / 80 (live) | [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §2 + JSONL re-count | ✅ committed |
@@ -713,7 +731,7 @@ flagged as such):
 | 6 | Extraction fidelity | `needs_review: 0`; 574,939 unique IDs; 25 letter-suffixed duplicate-passage records; gold set + CI gates green | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) + [ALIGNMENT_SPEC.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ALIGNMENT_SPEC.md) §§6–7 gate log (2026-06-13) | ✅ committed |
 | 7 | Chronology crosswalk | 86 `parallel-ru` texts: `dcs-exact` 20 / `dcs-bucket` 27 / `manual` 11 / `n/a` 28 (cross-corpus `dcs-exact` = 92, of which 72 are `wisdomlib-en`) | [texts_chronology.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/chronology/texts_chronology.json) | ✅ committed |
 | 8 | Gītā demonstration | 11 RU translation sources + 3 commentaries on shared `{chapter}.{verse}` keys; per-edition table + TTR/Guiraud R/loan-retention metrics (§5.1–5.2, Figure 1) | [A41_gita_editions.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_gita_editions.tsv) + [A41_gita_register.svg](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/figures/A41_gita_register.svg), computed by [a41_stats.py](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/scripts/a41_stats.py) from per-source `meta.json` + JSONL | ✅ committed (11-07-2026) |
-| 9 | Lexical layer | 321,672 head entries; Kochergina 29,180, Kossovich 13,488 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) per-source counts | ✅ committed |
+| 9 | Lexical layer | 321,672 head entries; led by Monier-Williams 222,390 and Apte 31,647; largest Sanskrit–Russian: Kochergina 29,180, Kossovich 13,488 | [conversion_report.json](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/conversion_report.json) per-source counts | ✅ committed |
 | 10b | Rights position + intended use / known misuse | Apache-2.0 code · Sa PD · RU pre-1930 PD · RU 20–21c in-copyright grey, **ship-all** (MG 08-08-2026, H2440) · DCS layer CC BY 4.0 · vidyut not shipped; 19 distinct translator credits over 63 metadata-bearing sources | [A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_DATA_STATEMENT_SAMUDRA_SA_RU_CORPUS.meta.md) §G–H + [A41_TRANSLATORS.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.md) / [.tsv](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/data/A41_TRANSLATORS.tsv) + [RIGHTS_TABLE.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/RIGHTS_TABLE.md) | ✅ committed (10-08-2026, H2403) |
 | 10c | Venue-checklist compliance | A1–A2 yes · B1–B6 yes (B6: no splits, by design) · C1 partial (no GPU/API; wall-clock not instrumented) · C2–C4 yes · D1–D5 n/a (no annotator population) · E1 yes | [A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md](https://github.com/gasyoun/SamudraManthanam/blob/main/papers/A41_ARR_RESPONSIBLE_NLP_CHECKLIST.md) (ARR Oct-2024 cycle version, fetched 10-08-2026) | ✅ committed (10-08-2026, H2403); ⬜ dataset DOI still owed |
 | 10 | Annotation comparison (§6) | DCS crosswalk coverage 81.1% overall (MBh 3 99.8%, Rām 1–3 54–76%); vidyut 1.44× over-segmentation; B↔C Jaccard 0.28–0.35 on 6,355 fully-covered groups | [annotation_3path_metrics.json](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/annotation_3path_metrics.json) + [ANNOTATION_3PATH_COMPARISON.md](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/ANNOTATION_3PATH_COMPARISON.md), computed by [nkrya_annotate.py](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_annotate.py) | ✅ committed (12-07-2026); ⬜ 51-group human adjudication verdict pending |

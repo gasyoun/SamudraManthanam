@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Gemini Flash Implementation Plan
 
 This is the short index for Gemini Flash. Each linked phase file is under 100 lines.
@@ -83,3 +85,5 @@ Each Gemini batch should finish with:
 - checks run,
 - remaining risks,
 - next recommended phase/task.
+
+_Dr. Mārcis Gasūns_

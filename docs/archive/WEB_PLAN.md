@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # Web Application — Architecture & Implementation Plan
 
 > **STATUS: SUPERSEDED** — This is the original from-scratch Docker-era plan. Do not treat it as current instructions. Current architecture: `TARGET_ARCHITECTURE.md`. Current Gemini index: `GEMINI_FLASH_IMPLEMENTATION_PLAN.md`.
@@ -648,3 +650,5 @@ Before considering the implementation complete, verify all of the following manu
 - **SSE and nginx buffering**: `proxy_buffering off` is required in nginx. Without it, SSE events will be held until the buffer fills, breaking the live progress bar.
 - **Heritage API rate limiting**: the Sanskrit Heritage Site is a public academic service. Cache all morph lookups in `morph_cache` immediately. Do not send the same SLP1 word twice. If the API is unreachable, fall back to a plain-string search with a warning in the response.
 - **Thread safety**: `aiosqlite` is async but SQLite itself is single-writer. Use WAL mode (`PRAGMA journal_mode=WAL`) to allow concurrent reads during ingest.
+
+_Dr. Mārcis Gasūns_

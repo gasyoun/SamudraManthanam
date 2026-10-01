@@ -1,3 +1,5 @@
+_Created: 25-08-2026 · Last updated: 05-09-2026_
+
 # S4 — Offline Search Design
 
 **Status:** Design spec (pre-implementation)  
@@ -486,3 +488,5 @@ queryable from the main page, confirming `opfs-sahpool` needs no isolation.
   breaks the wiring (hit twice during dev: a stale `search.js` left the pill
   blank; a stale `search-offline.js` lacked `listSources` so titles fell back to
   "Источник N"). This is the D4 issue in miniature.
+
+_Dr. Mārcis Gasūns_

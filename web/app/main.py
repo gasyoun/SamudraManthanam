@@ -51,6 +51,7 @@ from app.routers import (
     search_page,
     seo,
     sources,
+    word_of_day,
 )
 
 logger = logging.getLogger(__name__)
@@ -101,6 +102,7 @@ app.include_router(chronology.router)
 app.include_router(home.router)
 app.include_router(pwa.router)
 app.include_router(seo.router)
+app.include_router(word_of_day.router)
 
 # Mount static files
 mount_static(app)
