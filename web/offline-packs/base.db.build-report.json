@@ -1,0 +1,32 @@
+{
+  "artifact": {
+    "kind": "offline-pack",
+    "name": "base.db"
+  },
+  "counts": {
+    "rows": 490114,
+    "sources": 233
+  },
+  "generated_at": "2026-09-03T23:46:39.629295+00:00",
+  "generator": "build_offline_pack/1",
+  "input_manifest": {
+    "bundle_version": "2026.08",
+    "content_hash": "sha256:6b810dcd0c9c9d09c1f9b77a8d1df3927505132a2cccec69c4937070044b70fe",
+    "record_count": 490114,
+    "source_count": 233
+  },
+  "outputs": [
+    {
+      "bytes": 304533504,
+      "name": "base.db",
+      "record_count": 490114,
+      "sha256": "b66ee1d77c673ee8c39ab26436897fedc93ffb1a4a9fcdfe181e45fb0e795abd"
+    },
+    {
+      "bytes": 118674330,
+      "name": "base.db.gz",
+      "sha256": "a10917afc4960866912aa559806d4f0333db8b652f32e8f84821c28b255e52e2"
+    }
+  ],
+  "report_version": 1
+}
