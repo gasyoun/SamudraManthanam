@@ -13,7 +13,7 @@ permissions:
 env:
   PYTHON_TARGETS: >-
     docs_site
-    papers/scripts
+   
     web/app
     web/corpus_builder
     web/ingest
