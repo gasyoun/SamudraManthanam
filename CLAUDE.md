@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 15-09-2026_
+_Created: 12-05-2026 · Last updated: 06-10-2026_
 
 `SamudraManthanam` («Пахтанье океана») is a **parallel Sanskrit–Russian corpus
 search** platform: a FastAPI + SQLite FTS5 web app (the live public surface)
@@ -28,15 +28,25 @@ Public search after a known production deploy (`root@193.232.229.92`,
 Recipe: `cd /opt/samudra/repo && git pull --ff-only origin main && /opt/samudra/venv/bin/pip install -r web/requirements.txt && systemctl restart samudra`.
 Ops note on the box: `/opt/samudra/OPS.md`. Do **not** invent a second
 deploy path. Corpus reindex is a separate explicit step, not the app restart.
+A second unit, `deploy/samudra-word-of-day.service` (H4955), regenerates the
+daily word-of-the-day record nightly — also separate from the app restart.
 
 Web layout: HTTP layer in `web/app/routers/` (one file per route family:
-`search.py`, `search_page.py`, `morph.py`, `ai.py`, …), service logic in
-`web/app/services/` — `dispatch_service.py` (all search modes),
-`search_service.py` (FTS5 prefix + AND), `morph_service.py`,
+`search.py`, `search_page.py`, `morph.py`, `ai.py`, `word_of_day.py`, …),
+service logic in `web/app/services/` — `dispatch_service.py` (all search
+modes), `search_service.py` (FTS5 prefix + AND), `morph_service.py`,
 `html_service.py` (Jinja2 fragments) — plus `web/app/settings.py`
 (`DB_PATH`), `web/app/models.py` (Pydantic v2). Tests:
 `web/tests/test_api.py`, `test_golden_queries.py`, `test_contract.py`,
 `test_morph.py`.
+
+Word-of-the-day (H4955): the committed Kochergina pool
+`web/app/data/word_of_day_pool.jsonl` feeds `scripts/word_of_day_generate.py`
+(nightly; also Telegram-post hook `word_of_day_post.py`), which writes a
+precomputed static record the router only reads — no per-request DB query.
+Aux top-level surfaces: `nkrya-parallel/` (NKRYa parallel-corpus showcase,
+GitHub Pages via `deploy-nkrya-parallel-pages.yml`) and `reports/`
+(durable crosswalk/report artifacts, e.g. xwalk-s7 AV×DCS).
 
 ## How to run — desktop (legacy)
 
@@ -55,6 +65,9 @@ Runtime next to `PO.EXE`: `Data/` (corpus HTML), `Programdata/data.txt`
 
 - Do not start a second desktop search engine or a second web indexer.
 - Do not treat corpus reindex as part of the app `systemctl restart`.
+- Do not commit paper/manuscript-shape files here — they live in private
+  repos only (standing policy); CI `paper-priv-guard.yml` blocks them, and
+  `papers/CANARY_paper_priv.md` is the positive control (never delete).
 - Do not rewrite `stenogrammy` / lesson-listen paths here — those belong
   to Systema / whisper keep-out rules, not this repo.
 - Desktop `Index/lib/` build output is generated.
