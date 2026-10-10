@@ -30,7 +30,7 @@ identifiers:
   - description: "Corpus of record dataset (Zenodo concept DOI, resource_type: dataset)"
     type: doi
     value: "10.5281/zenodo.22149933"
-version: 0.19.53
+version: 0.19.54
 date-released: 2026-10-10
 keywords:
   - Sanskrit

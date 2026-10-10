@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 <!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [0.19.54] - 2026-10-10
+
+- **Публичная наглядная страница зрелости корпуса (MG ask 10-10).** Новая страница «Зрелость корпуса» на сайте ВКР (Docusaurus): вердикт-плашка, 5 карточек-цифр (95 260 пар / 78 219 чистых 1:1 / 574 939 записей / 4× байт-стабильность / DOI), сравнение с PARA/hin барами, 9 осевых карточек со скор-барами и траст-блоками, ранжированные остатки, таблица-аудит. Строится из закоммиченного фида data/maturity_nkrya_2026-10-10.json; палитра — только Infima-токены; только публичные ссылки (publish-safety). npm run build зелёный; built-bundle PNG прошёл визуальный гейт.
 ## [0.19.53] - 2026-10-10
 
 - **Maturity portrait for the NKRYa submission (MG ask 10-10, pre-letters).** New [MATURITY_PARALLEL_CORPUS_FOR_NKRYA_INCLUSION_10-10-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/MATURITY_PARALLEL_CORPUS_FOR_NKRYA_INCLUSION_10-10-2026.md) (+ .meta.md): 9-axis scorecard with live-probed evidence (95,260 exported pairs / 131 sources; 78,219 clean 1:1 in the frozen A41 frame; PARA/san absent, PARA/hin = 9 texts vs our 24-text/28,440-pair showcase; DCS crosswalk coverage 99.8%/54-76%/81.1%; translator 130/131; DOI resolving; corpus page 200). Verdict: showcase submission-ready today, full corpus 4/5 — maturity does not block; the NKRYa intake-format unknown does. Five ranked residuals; nothing blocks the W5 letters.
