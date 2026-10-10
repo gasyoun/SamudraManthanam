@@ -1,6 +1,6 @@
 # НКРЯ / ruscorpora.ru export roadmap — nkrya-parallel (2026–2027)
 
-_Created: 11-07-2026 · Last updated: 10-10-2026_
+_Created: 11-07-2026 · Last updated: 10-10-2026 (W9 added same day)_
 
 Scale the [nkrya-parallel](https://github.com/gasyoun/SamudraManthanam/tree/main/nkrya-parallel) subsystem from E. A. Rubanova's 2020 HSE ВКР pilot to an export pipeline covering every running-text source of the Samudra Manthanam corpus (published at [samskrtam.ru/parallel-corpus](https://samskrtam.ru/parallel-corpus/), 123 texts), and deliver a package ready to enter the Russian National Corpus ([ruscorpora.ru](https://ruscorpora.ru)) as the Sanskrit member of the parallel-corpus module. Authored from a `/roadmap-interview` session (audit + 2 interview rounds, 8 rulings), Fable 5 (`claude-fable-5`), 11-07-2026.
 
@@ -43,6 +43,7 @@ Scale the [nkrya-parallel](https://github.com/gasyoun/SamudraManthanam/tree/main
 | 9 | Maturation vehicle (10-10-2026) | **Refresh this roadmap in place, W6–W8** | The live indexed roadmap absorbs the best-practice gap as new waves; queued handoffs minted same pass, nothing executes on mint. |
 | 10 | CoNLL-U format (10-10-2026) | **Add as 4th emitter (W7)** | UD_Sanskrit-Vedic covers Vedic only (~4k sentences); Classical Sanskrit is absent from the UD ecosystem — our DCS path-B layer closes a real community gap cheaply (same JSONL). |
 | 11 | 121 post-report extras (10-10-2026) | **Fold into the nearest re-freeze (W8)** | Corpus of record grows ~35% to ≈774k records as a new versioned deposit; resolves the largest A41 freeze-time decision (H2403 flagged it) by folding, not excluding. |
+| 13 | Русская сторона своими силами (10-10-2026) | **Mint W9: benchmark + own annotation layer** | Поднять ось 4/5 → 5/5 без ожидания НКРЯ: вкировская цифра 47% заменяется датируемым воспроизводимым бенчмарком таггеров на НАШИХ 131 источниках; собственный слой русской разметки (lemma/POS/morph + санскритизм-оверлеи) делает корпус самодостаточным для поиска и MT независимо от их пайплайна. |
 | 12 | Pending sheet votes (10-10-2026) | **showcase_bib_10 now; adjudication51 stays parked** | The 10-card bib viza (~5 мин) unblocks the W5 package; the 51-group adjudication waits for the НКРЯ reply cycle. |
 
 ## 3. Scope framing
@@ -50,7 +51,7 @@ Scale the [nkrya-parallel](https://github.com/gasyoun/SamudraManthanam/tree/main
 - **НКРЯ scope = running text only**: 123 verse + 14 prose = 137 sources. The 15 bilingual dictionaries stay out (a parallel corpus is bitext, not lexicon).
 - **Pair unit** = the existing alignment group (one `citation_block`): Sanskrit verse ↔ Russian prose translation. The exporter keeps only groups with **both sides present and non-empty**; translation-only texts (`buddhacharita-balmont`, `mify-drind`) and the Sanskrit-only Hitopadeśa drop out of the bitext naturally via that filter. Monolingual-RU segments inside bilingual texts are flagged, not silently dropped.
 - **Commentary segments** are excluded from v1 bitext (they are RU-only annotation, not translation pairs); revisit only if НКРЯ asks.
-- **Russian side ships plain** — НКРЯ annotates Russian with their own pipeline; our добавка is the санскритизм lexicon (W3), which fixes exactly the class of words their lemmatizers break on (the ВКР's core finding: baseline lemma accuracy 47% on санскритизмы).
+- **Russian side ships plain** — НКРЯ annotates Russian with their own pipeline; our добавка is the санскритизм lexicon (W3), which fixes exactly the class of words their lemmatizers break on (the ВКР's core finding: baseline lemma accuracy 47% on санскритизмы). **W9 (10-10, ruling 13) supersedes the passivity:** our own benchmark + annotation sidecar ship regardless of НКРЯ.
 
 ## 4. Waves
 
@@ -109,6 +110,17 @@ Fourth emitter in `nkrya_export.py`: Sanskrit-side morphology from the DCS cross
 ### Wave 8 — Fold the 121 post-report sources, re-freeze v1.1.0, re-deposit (queued 10-10-2026, ruling 11)
 
 MG ruled 10-10 to **fold** (not formally exclude) the 121 post-report extras (199,379 records): rights + validation pass over each (per-source counts, empty-side, credit/translator extraction into the rights-table form, `meta.json` classification); `conversion_report.json` regeneration to the full 269-file / ≈774k-record frame; release-envelope re-pin (new version, sha256 lf-canonical, `envelope_check.py` PASS incl. negative control); Zenodo re-deposit as a new version under the concept DOI (stored deposit credentials, H2611 precedent); `CITATION.cff` version bump; A41 §3.1/§11 rewrite from «fold-or-exclude» to the fold verdict (manuscript edits route to the private paper-repo lane — the A41 file lives there since the paper-priv sweep). Sequencing: lands **before** the A41 freeze — this was the largest open freeze-time decision. Byte-stability discipline: the v1.0.0 frame is untouched; the fold is an additive, versioned deposit. Executor: Opus 4.8 (`claude-opus-4-8`), effort hard. **Queued: [H6372](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6372-Opus_SamudraManthanam_nkrya-w8-fold-121-extras-refreeze_10.10.26.md).**
+
+
+### Wave 9 — Русская сторона без НКРЯ: бенчмарк таггеров + собственный слой разметки (queued 10-10-2026, ruling 13)
+
+MG ruled 10-10 («mint to do better on our side, without NKRYA help»): the Russian-side axis stops being «отдаётся плоской, их пайплайн разметит». Two units:
+
+**9.1 Benchmark.** Run open Russian taggers (pymorphy2/3 deterministic baseline; DeepPavlov morphology — the estate clone exists, and the ВКР-era deeppavlov outputs for MBh 3 + Rām 1–3 survive local-only under `nkrya-parallel/diplom-rubanova/` as a comparison anchor; one more current stack if cheaply runnable) over a seed-fixed stratified sample of OUR Russian side (3 sources across epochs/registers, ~2–3k tokens). Measure lemma accuracy on санскритизмы vs general vocabulary (gold = the W3 санскритизм lexicon + name indexes + a ≤500-token hand-adjudicated slice — quote-density only, in-copyright RU stays out of bulk commits), then measure the OVERLAY effect (force lemma from our санскритизм layer, re-score). Deliverable: `reports/RU_SIDE_TAGGER_BENCHMARK_2026.md` (dated header, byline, estimator caveats) + committed per-token CSV + a machine-readable verdict JSON naming the stack for 9.2. This replaces the 2020 «47%» figure with a dated, reproducible number on our data.
+
+**9.2 Annotation layer.** A Russian-side per-text sidecar in the W7 pattern: lemma/POS/morph per token from the 9.1-verdict stack (pymorphy2 default if undecided), with санскритизм-lexicon overrides and normalized name-index forms from W3. Deterministic; CI gates: round-trip byte-stability, per-source coverage report, zero empty sides; bulk output gitignored (in-copyright), committed = validators + counts + sample metadata. The corpus becomes self-sufficient on the Russian side (lemma layer searchable on samskrtam.ru later; MT consumers get both sides annotated) — НКРЯ's own pipeline stays theirs to run or ignore.
+
+Executor: Opus 4.8 (`claude-opus-4-8`), effort hard (both units).
 
 ## 5. Non-goals (considered, ruled out)
 
