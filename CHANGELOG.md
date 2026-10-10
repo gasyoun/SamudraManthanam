@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 <!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [0.19.56] - 2026-10-10
+
+- **Concept-мемо: санскритизм-слой как старт статьи для «Вопросов языкознания» (MG ask 10-10).** [CONCEPT_SANSKRITISMS_IN_RUSSIAN_VJ_ARTICLE_10-10-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONCEPT_SANSKRITISMS_IN_RUSSIAN_VJ_ARTICLE_10-10-2026.md): вердикт «да как база, нет как готовая статья»; проба литературы подтверждает открытую нишу; три кандидатных постановки (адаптация/невидимый класс/стратификация по каналам); что уже есть (W3-слой, 95 260 пар, находка 47%, H6401, сферная стратификация, НКРЯ-квота как контроль) vs чего не хватает (постановка, prior-art, словарное сопоставление, ВЯ-формат ~1 а.л.). Не конкурирует с A41 за жанр.
 ## [0.19.55] - 2026-10-10
 
 - **W9 staged: русская сторона без НКРЯ (MG 10-10 «mint to do better on our side»).** Роадмап получает волну W9 (ruling 13): 9.1 — бенчмарк открытых русских таггеров (pymorphy2/3 + DeepPavlov + anchor ВКР-прогонов) на стратифицированной выборке нашей русской стороны с золотом из санскритизм-лексикона W3 и ≤500-токенной ручной адьюдикацией, заменяет цифру 47% (2020) датируемым воспроизводимым числом; 9.2 — собственный слой русской разметки (lemma/POS/morph пер-текстовым сайдкаром в паттерне W7, санскритизм-оверлеи, CI-гейты детерминизма/покрытия) — корпус самодостаточен по русской стороне независимо от их пайплайна. Queued: H6401 (Opus, hard) + H6402 (Opus, hard, после вердикта 9.1).
