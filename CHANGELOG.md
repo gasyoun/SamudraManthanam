@@ -8,7 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+<!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [0.19.51] - 2026-10-10
 ### Added
 
 - **H5281 showcase-bib visa voted 10/10 ✅ approve-as-proposed (10-10-2026, interactive question-tool lane).** MG ruled «10 карточек — always interactive»: the nkrya_showcase_bib_10 spot-check (3 sphere groups + 7 seeded bibliography rows) was asked as 3 AskUserQuestion rounds in the deciding session and approved exactly as proposed — сферы: Ригведа I–X и академические Гиты = «художественная», конфессиональные Гиты (1788/1909/1914/Прабхупада/Блиндерман/Шарма) = «нехудожественная: церковно-богословская»; 7 библиографических строк (Петров 1788 · Каменская–Манциарли 1914 · Бурба 2009 · Эрман 2009 · Блиндерман 2016 · Гринцер 2014 · Елизаренкова 1989) подтверждены. [`nkrya_showcase_bib.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_showcase_bib.json) already carries the approved values — data unchanged, showcase package rebuild vacuous (byte-identical by construction). W5 letter package no longer blocked on this visa. Audit: [Uprava decisions_applied_10-10-2026](https://github.com/gasyoun/Uprava/blob/main/review/weekly/archive/decisions_applied_10-10-2026_nkrya-showcase-bib_spotcheck10.md); the lane is now policy (MG 10-10) and hook-enforced ([stop_small_sheet_interactive_check](https://github.com/gasyoun/claude-config/blob/main/hooks/stop_small_sheet_interactive_check.py)).
