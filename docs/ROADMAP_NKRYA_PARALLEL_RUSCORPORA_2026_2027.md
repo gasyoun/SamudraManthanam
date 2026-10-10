@@ -120,7 +120,7 @@ MG ruled 10-10 («mint to do better on our side, without NKRYA help»): the Russ
 
 **9.2 Annotation layer.** A Russian-side per-text sidecar in the W7 pattern: lemma/POS/morph per token from the 9.1-verdict stack (pymorphy2 default if undecided), with санскритизм-lexicon overrides and normalized name-index forms from W3. Deterministic; CI gates: round-trip byte-stability, per-source coverage report, zero empty sides; bulk output gitignored (in-copyright), committed = validators + counts + sample metadata. The corpus becomes self-sufficient on the Russian side (lemma layer searchable on samskrtam.ru later; MT consumers get both sides annotated) — НКРЯ's own pipeline stays theirs to run or ignore.
 
-Executor: Opus 4.8 (`claude-opus-4-8`), effort hard (both units).
+Executor: Opus 4.8 (`claude-opus-4-8`), effort hard (both units). **Queued: [H6401](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6401-Opus_SamudraManthanam_nkrya-w9-1-ru-tagger-benchmark_10.10.26.md) (9.1), [H6402](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6402-Opus_SamudraManthanam_nkrya-w9-2-ru-annotation-layer_10.10.26.md) (9.2, runs after 9.1's verdict).**
 
 ## 5. Non-goals (considered, ruled out)
 
