@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 <!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [0.19.60] - 2026-10-11
+
+- **З-2 уточнена: архив ВЯ = вся история 1952–н.в. (MG 11-10 «not 20 years, all the history, PDF archive with all the scans is available on internet»).** Концепт-док и миссия [H6454](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6454-Opus_SamudraManthanam_sanskritisms-vj-archive-and-variant-inventory_11.10.26.md) (Uprava PR #4745) переведены на пер-декадный цензус по сканированному полному рану (archive.org-кандидаты) с кросс-чеком vja.ras.ru/eLibrary.
 ## [0.19.59] - 2026-10-11
 
 - **Модельный бамп queued-волн W7–W9: Opus 4.8 → Opus 5.5 (MG 11-10: «Opus 4.8 is dead, Opus 5.5 is live»).** Executor-строки W7 (H6371), W8 (H6372), W9 (H6401/H6402) теперь указывают на живую модель Opus 5.5 (`claude-opus-5-5`); историческая строка W1 не тронута (запись того, что исполняло в июле). Реестровые стабы несут только семейный токен «Opus» — правок не требуют. Residue: строка H137 в реестре — чужой 100-дневный queued-ряд с явным claude-opus-4-8 → кандидату на /tier-audit.
