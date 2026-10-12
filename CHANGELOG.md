@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 <!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [0.19.63] - 2026-10-12
+
+- **Постановка ВЯ-статьи зафиксирована: (b) магистраль + (a)/(c) секциями (MG, интерактив-карточка 12-10).** Вердикт вписан в [концепт-док](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONCEPT_SANSKRITISMS_IN_RUSSIAN_VJ_ARTICLE_10-10-2026.md); развёрнут черновик статьи [ARTICLE_SANSKRITISMS_VJ_DRAFT_12-10-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ARTICLE_SANSKRITISMS_VJ_DRAFT_12-10-2026.md) — каркас (b)-магистрали с ГОТОВОЙ секцией 4 (морфонология сим-/син-, ин-/им-, эм-/эн- ↔ самсара/сансара 83:1072, Панини 8.3.24; исполнение [H6555 (GLM 5.3, 🟡2 medium)](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6555-GLM_SamudraManthanam_symsyn-morphonology-section_12.10.26.md), class=publication — ✅ после чужого Verifier-PASS). Численник §3 ждёт H6401, вариантное поле §4.2 — H6454, канал «через английский» — НКРЯ-квота.
 ## [0.19.61] - 2026-10-12
 
 - **Prior-art З-1 исполнен (H6453): грецизмы и литература о заимствованиях.** Hyperresearch-пасс 4 агентами: класс грецизмов (Фасмер 1906–09 → Романеев 1965 → Полихрониду 2015; рамка Скомаровской 2019), 8 структурных образцов ВЯ/РР (формальные требования ВЯ: 40–60 тыс. знаков), восточно-индийский материал (ниша «санскритизмы как класс» пуста: Мухина 2021 называет «индоизмы», но слот не заполнен), перекрытия с тремя секциями (адаптация: Кальнова 2016; невидимый класс: GramEval/Соловьёв-Ивлева 2026; каналы: Березович/Сурикова 2016, Куваев 2018). Отчёт reports/GRECISMS_BORROWINGS_PRIOR_ART_2026.md + JSON-библиография; 30 опорных URL перепроверены (30/30 HTTP 200). Операционно: vja.iling-ran.ru мёртв, живой архив ВЯ = vja.ruslang.ru.
