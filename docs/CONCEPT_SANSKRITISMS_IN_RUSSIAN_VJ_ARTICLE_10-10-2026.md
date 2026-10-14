@@ -1,6 +1,6 @@
 # CONCEPT_SANSKRITISMS_IN_RUSSIAN_VJ_ARTICLE_10-10-2026 — может ли санскритизм-слой корпуса стать статьёй «Санскритизмы в русском языке» для «Вопросов языкознания»
 
-_Created: 10-10-2026 · Last updated: 12-10-2026_
+_Created: 10-10-2026 · Last updated: 14-10-2026_
 
 ## ВЕРДИКТ MG 12-10-2026 (интерактив-карточка): постановка (b) магистраль + (a)/(c) секциями
 
@@ -9,7 +9,8 @@ _Created: 10-10-2026 · Last updated: 12-10-2026_
 (a) морфонологическая/графическая адаптация и (c) каналы — секциями.** Рекомендация 11-10 подтверждена
 без правок. Первый актив под постановку готов: морфонологический параллель
 [MORPHONOLOGY_NASAL_PREFIX_SYM_SYN_SANSKRITISM_VARIANTS_12-10-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/MORPHONOLOGY_NASAL_PREFIX_SYM_SYN_SANSKRITISM_VARIANTS_12-10-2026.md)
-(самсара/сансара 83:1072 ↔ сим-/син-, ин-/им-, эм-/эн-; Панини 8.3.24) — ядро секции (a). Черновик
+(самсара/сансара 83:1072 ↔ сим-/син-, ин-/им-, эм-/эн-; морфонология анусвары, реципиентная
+вариантность — правка H6560 14-10: паниниевской опоры «факультативное [n]» нет) — ядро секции (a). Черновик
 статьи развёрнут: [ARTICLE_SANSKRITISMS_VJ_DRAFT_12-10-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ARTICLE_SANSKRITISMS_VJ_DRAFT_12-10-2026.md).
 Лейн вписывания секции: [H6555 (GLM 5.3, 🟡2 medium)](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6555-GLM_SamudraManthanam_symsyn-morphonology-section_12.10.26.md)
 — исполнение 12-10, class=publication (✅ после чужого Verifier-PASS). Численник магистрали ждёт H6401,
