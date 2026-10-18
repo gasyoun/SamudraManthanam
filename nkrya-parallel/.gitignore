@@ -18,6 +18,9 @@
 # bulk ships as a GitHub release asset, never committed).
 !/export/RIGHTS_TABLE.md
 !/export/FULL_CORPUS_VALIDATION.md
+# H6370: the format/mapping/audit README quotes no translation text (field
+# names, artifact inventory, verdict table) — same class as the reports above.
+!/export/README.md
 !/export/showcase/
 /export/showcase/*
 !/export/showcase/MANIFEST.tsv
