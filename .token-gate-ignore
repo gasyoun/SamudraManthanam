@@ -8,3 +8,9 @@ web/corpus_builder/**/*.json
 web/corpus_builder/*.txt
 web/corpus_builder/**/*.txt
 nkrya-parallel/**
+
+# guard hooks themselves are infrastructure, not agent-authored content
+.githooks/pre-commit
+.githooks/pre-push
+.githooks/post-commit
+.githooks/token_size_gate.py
