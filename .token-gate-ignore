@@ -1,0 +1,10 @@
+# token-size-gate: files here are not agent-authored — generated data/assets.
+# Code, docs and reports stay under the 5000-token limit.
+Index/**
+web/corpus_builder/*.jsonl
+web/corpus_builder/**/*.jsonl
+web/corpus_builder/*.json
+web/corpus_builder/**/*.json
+web/corpus_builder/*.txt
+web/corpus_builder/**/*.txt
+nkrya-parallel/**
