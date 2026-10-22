@@ -22,6 +22,11 @@ updates:
       time: "08:15"
       timezone: Europe/Moscow
     open-pull-requests-limit: 10
+    ignore:
+      # H7160: pydantic-settings >=2.16 requires Python >=3.11; the CI test
+      # matrix deliberately keeps a 3.10 leg. Drop this ignore when 3.10 goes.
+      - dependency-name: pydantic-settings
+        versions: [">=2.16"]
     groups:
       python-minor-patch:
         update-types:

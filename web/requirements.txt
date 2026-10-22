@@ -7,7 +7,9 @@ aiosqlite==0.22.1
 pydantic==2.14.1
 python-multipart==0.0.32
 sse-starlette==3.5.0
-pydantic-settings==2.16.0
+# H7160: held at 2.15.0 — 2.16.0 requires Python >=3.11 and breaks the
+# deliberate 3.10 leg of the CI test matrix. Re-bump when 3.10 is dropped.
+pydantic-settings==2.15.0
 email-validator==2.3.0
 respx==0.23.1
 # Corpus manifest validation (Lane A). The published schema-v1.json is the one
