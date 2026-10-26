@@ -1,0 +1,26 @@
+{
+  "version": "0.1",
+  "marker": "eval_harness",
+  "repo": "SamudraManthanam",
+  "created": "2026-10-26",
+  "handoff": "H6846",
+  "description": "Minimal eval scaffold over SamudraManthanam's own committed alignment gold. No new gold was created and no annotation was added.",
+  "suites": [
+    {
+      "id": "alignment-locus-gold",
+      "class": "canary",
+      "measures": "Corpus/MT-facing alignment-locus integrity: every gold row keeps the canonical ids its cardinality declares (including 0:1 monolingual rows), at least one text side, and commentary ids under the same group.",
+      "gold": {
+        "path": "web/tests/fixtures/alignment_gold.jsonl",
+        "provenance": "Committed web-test alignment fixture (A-clean, commentary-bearing rows used by the parallel-view tests); no rows were added"
+      },
+      "grader": "exact id/locus/cardinality contract over JSONL (stdlib, deterministic)",
+      "cases": 25,
+      "canary": {
+        "gold_expectation": "pass",
+        "mutation": "re-point one Russian id at the Sanskrit side (#sa)",
+        "mutation_expectation": "fail"
+      }
+    }
+  ]
+}

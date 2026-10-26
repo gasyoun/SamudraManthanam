@@ -1,0 +1,26 @@
+name: eval canary
+
+on:
+  pull_request:
+    paths:
+      - "evals/**"
+      - "web/tests/fixtures/alignment_gold.jsonl"
+  push:
+    branches: [main]
+    paths:
+      - "evals/**"
+      - "web/tests/fixtures/alignment_gold.jsonl"
+
+permissions:
+  contents: read
+
+jobs:
+  alignment-locus-gold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Gold replay + mutation must fail
+        run: python evals/run_eval.py --canary
