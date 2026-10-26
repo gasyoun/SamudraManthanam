@@ -85,7 +85,7 @@ jobs:
       run:
         working-directory: web/corpus_builder/wisdomlib
     steps:
-      - uses: actions/checkout@v7   # crawler code now on the default branch (merged)
+      - uses: actions/checkout@v7.0.1   # crawler code now on the default branch (merged)
 
       - uses: actions/setup-python@v7.1.0
         with:

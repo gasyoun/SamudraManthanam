@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
         with:
           # web/corpus_builder/jsonl/dic_mw.jsonl is LFS-tracked. Without this
           # it checks out as a pointer stub, and a gate that reads it either
