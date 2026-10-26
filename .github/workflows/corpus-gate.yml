@@ -67,7 +67,7 @@ jobs:
           # a full-corpus pass it never performed.
           lfs: true
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@v7.1.0
         with:
           # The production runtime, per H1927 / Lane D3.
           python-version: "3.14"
