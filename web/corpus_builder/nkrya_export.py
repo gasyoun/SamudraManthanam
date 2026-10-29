@@ -467,6 +467,84 @@ def ru_morph_tsv(pairs):
     return ''.join(out)
 
 
+# Upstream ingest sentinel: a seg=ru record whose whole text is this marker
+# declares the Russian side ABSENT (54 records in 6 sources, e.g. Rām
+# 1:27.28), not "Russian text to annotate". The annotation layer must treat
+# it as no side — otherwise it surfaces as a phantom "empty side" the gate
+# cannot honestly clear. classify()'s pair semantics are untouched (their
+# sentinel handling is the frozen H754/H821 export behavior; see the H6402
+# report's open-questions note).
+NO_RUS_SENTINEL = '{no rus data}'
+
+
+def ru_units(path):
+    """Every group carrying a non-empty Russian side, bilingual or not —
+    {group, ru}, in natural group order.
+
+    The RU annotation layer (W9.2 / H6402) keys off this list, NOT
+    classify()'s bilingual `pairs` — the H906 lesson applied to the Russian
+    side: a monolingual-RU group (no Sanskrit side present) is still Russian
+    text the corpus must be self-sufficient on, so it still gets its
+    annotation. Binding the layer to `pairs` would silently blank every
+    Russian-only passage exactly the way the SA layer blanked the
+    untranslated yuddha/uttarakāṇḍa.
+
+    The upstream `{no rus data}` sentinel counts as NO Russian side (see
+    NO_RUS_SENTINEL)."""
+    units = []
+    for group, d in iter_groups(path):
+        ru_txt = _txt(d.get('ru'))
+        if not ru_txt or ru_txt == NO_RUS_SENTINEL:
+            continue
+        units.append({'group': group, 'ru': ru_txt})
+    units.sort(key=lambda u: natural_key(u['group']))
+    return units
+
+
+def ru_anno_tsv(units, annotator):
+    """W9.2 (H6402): the Russian-side per-text annotation sidecar — one row
+    per Cyrillic token of every Russian-bearing group, mirroring the Sanskrit
+    W7/H906 emitter shape: group_id, tok_index, surface, lemma, pos, case,
+    number, lemma_src (pymorphy / sanskritizm / sanskritizm-amb / unknown).
+
+    Deterministic (see ru_annotate). Returns (tsv_text, stats) — the stats
+    feed the per-source coverage report in export_report.json."""
+    out = ['group_id\ttok_index\tsurface\tlemma\tpos\tcase\tnumber\tlemma_src\n']
+    tokens = overrides = ambiguous = unknown = annotated_groups = 0
+    for u in units:
+        rows = annotator.annotate(u['ru'])
+        if rows:
+            annotated_groups += 1
+        for i, t in enumerate(rows):
+            tokens += 1
+            if t['lemma_src'] == 'sanskritizm':
+                overrides += 1
+            elif t['lemma_src'] == 'sanskritizm-amb':
+                overrides += 1
+                ambiguous += 1
+            elif t['lemma_src'] == 'unknown':
+                unknown += 1
+            out.append('\t'.join([
+                _tsv_cell(u['group']), str(i),
+                _tsv_cell(t['surface']), _tsv_cell(t['lemma']),
+                t['pos'], t['case'], t['number'], t['lemma_src'],
+            ]) + '\n')
+    stats = {
+        'ru_anno_stack': annotator.stack,
+        'ru_anno_stack_src': annotator.stack_src,
+        'ru_anno_pymorphy_available': annotator.pymorphy_available,
+        'ru_anno_groups': len(units),
+        'ru_anno_groups_annotated': annotated_groups,
+        'ru_anno_tokens': tokens,
+        'ru_anno_sanskritizm_overrides': overrides,
+        'ru_anno_sanskritizm_ambiguous': ambiguous,
+        'ru_anno_unknown_tokens': unknown,
+        # zero-empty-sides gate input: groups with RU text but no token rows
+        'ru_anno_empty_side_groups': len(units) - annotated_groups,
+    }
+    return ''.join(out), stats
+
+
 def vidyut_diff_tsv(units, slug, dcs, analyzer):
     """The vidyut second-opinion diff against DCS gold (H906): per DCS-aligned
     group, run vidyut on the same SLP1 passage and pair tokens on the sandhi-
@@ -537,7 +615,8 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
                    with_sanskritisms=False, sanskritisms_ctx=None,
                    with_ru_morph=False, with_sa_morph=False, dcs_gold=None,
                    with_vidyut_diff=False, vidyut_analyzer=None,
-                   with_inline_ana=False):
+                   with_inline_ana=False, with_ru_annotate=False,
+                   ru_annotator=None):
     """Export one source into out_dir/<slug>/. Returns a stats dict (also
     written as export_report.json when write=True).
 
@@ -574,6 +653,14 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         if HERE not in sys.path:
             sys.path.insert(0, HERE)
         artifacts[slug + '.ru_morph.tsv'] = ru_morph_tsv(pairs)
+    ru_anno_stats = {}
+    if with_ru_annotate:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from ru_annotate import RuAnnotator
+        annotator = ru_annotator or RuAnnotator()
+        anno_text, ru_anno_stats = ru_anno_tsv(ru_units(jsonl_path), annotator)
+        artifacts[slug + '.ru_anno.tsv'] = anno_text
     # The SA-side layers key off every Sanskrit-bearing group, NOT the bilingual
     # pairs — an untranslated source (GRETIL yuddha/uttarakāṇḍa) still has gold.
     units = sa_units(jsonl_path) if (with_sa_morph or with_vidyut_diff) else []
@@ -625,6 +712,7 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         **stats,
         **sa_morph_stats,
         **vidyut_diff_stats,
+        **ru_anno_stats,
         **inline_ana_stats,
         'files': sorted(artifacts),
     }
@@ -653,8 +741,14 @@ def main(argv=None):
     ap.add_argument('--with-sanskritisms', action='store_true',
                      help='also write <slug>.sanskritisms_index.json (H760 Wave 3)')
     ap.add_argument('--ru-morph', action='store_true',
-                     help='also write <slug>.ru_morph.tsv — per-token RU morphology '
-                          'layer, lemma/POS/case/number via pymorphy3 (H905)')
+                    help='also write <slug>.ru_morph.tsv — per-token RU morphology '
+                         'layer, lemma/POS/case/number via pymorphy3 (H905)')
+    ap.add_argument('--ru-annotate', action='store_true',
+                    help='also write <slug>.ru_anno.tsv — the W9.2 Russian-side '
+                         'per-text annotation sidecar: pymorphy-family lemma/POS/'
+                         'morph per token (9.1-verdict stack, pymorphy '
+                         'deterministic default) with санскритизм-lexicon lemma '
+                         'overrides and normalized name-index forms (H6402)')
     ap.add_argument('--sa-morph', action='store_true',
                      help='also write <slug>.sa_morph.tsv — per-token SA morphology '
                           'anchored on DCS gold (lemma/upos/case/gender/number); needs '
@@ -690,6 +784,15 @@ def main(argv=None):
             sys.path.insert(0, HERE)
         from sanskritisms.extract import ExtractionContext
         sanskritisms_ctx = ExtractionContext()  # built once, reused across slugs
+    ru_annotator = None
+    if a.ru_annotate:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from ru_annotate import RuAnnotator
+        ru_annotator = RuAnnotator()  # one pool+reverse-index, reused across slugs
+        if not a.quiet:
+            print('ru_anno stack: %s (%s)' % (ru_annotator.stack,
+                                              ru_annotator.stack_src))
     dcs_gold = None
     if a.sa_morph or a.vidyut_diff or a.inline_ana:
         if HERE not in sys.path:
@@ -716,7 +819,9 @@ def main(argv=None):
                            with_sa_morph=a.sa_morph, dcs_gold=dcs_gold,
                            with_vidyut_diff=a.vidyut_diff,
                            vidyut_analyzer=vidyut_analyzer,
-                           with_inline_ana=a.inline_ana)
+                           with_inline_ana=a.inline_ana,
+                           with_ru_annotate=a.ru_annotate,
+                           ru_annotator=ru_annotator)
         reports.append(r)
         if not a.quiet:
             print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d'

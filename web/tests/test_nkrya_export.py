@@ -566,6 +566,143 @@ def test_export_inline_ana_wellformed_and_deterministic(fixture_jsonl, tmp_path)
 
 
 # --------------------------------------------------------------------------- #
+# H6402 (W9.2): RU-side per-text annotation sidecar — pymorphy stack +        #
+# санскритизм overrides + normalized name-index lemmas                        #
+# --------------------------------------------------------------------------- #
+def _annotator():
+    from ru_annotate import RuAnnotator
+    return RuAnnotator()
+
+
+def test_ru_annotate_stack_fallback():
+    """No 9.1 verdict JSON in reports/ → the pymorphy deterministic default,
+    with the provenance recorded (never a silent stack pick)."""
+    ann = _annotator()
+    assert ann.stack == 'pymorphy3'
+    assert 'H6402' in ann.stack_src
+
+
+def test_ru_annotate_overrides_and_trust_filter():
+    """The three rows the layer exists for: a capitalized Sanskritism gets the
+    lexicon lemma (not pymorphy's), a lowercase common word colliding with a
+    Sanskritism form does NOT, and a mis-tagged unknown Sanskritism is forced
+    to a nominal lexicon lemma instead of pymorphy's junk parse."""
+    pytest.importorskip("pymorphy3")
+    ann = _annotator()
+    toks = ann.annotate("Богиня Кали танцевала во тьме.")
+    kali = next(t for t in toks if t["surface"] == "Кали")
+    assert kali["lemma_src"] == "sanskritizm"
+    assert kali["lemma"] in ("кали", "кала") and kali["pos"] == "NOUN"
+    tma = next(t for t in toks if t["surface"] == "тьме")
+    assert tma["lemma_src"] == "pymorphy" and tma["lemma"] == "тьма"
+    # the Кали→кал class: lowercase common word → NO override (pymorphy's кал)
+    toks = ann.annotate("Он не нашёл кала в поле.")
+    kala = next(t for t in toks if t["surface"] == "кала")
+    assert kala["lemma_src"] == "pymorphy" and kala["lemma"] == "кал"
+    # the ВКР mis-tag class: a lexicon surface the tagger parses as a verb /
+    # participle is forced to the nominal lexicon lemma
+    toks = ann.annotate("Подвижник адхармахан увидел ракшаса.")
+    adh = next(t for t in toks if t["surface"] == "адхармахан")
+    assert adh["lemma_src"] == "sanskritizm" and adh["lemma"] == "адхармахан"
+    assert adh["pos"] == "NOUN"
+
+
+def test_ru_annotate_capitalized_conjunction_not_overridden():
+    """H6402 regression (642 tokens in the Aranyakāṇḍa alone): poetic
+    enjambment capitalizes «И» mid-sentence, and stage 5's blanket
+    capitalization exemption trusted it as the pool lemma «и»/NOUN. The
+    closed-function-POS guard now drops it, while a capitalized genuine
+    Sanskritism (Кали — itself on the loanword list, so only the stage-5
+    exemption rescues it) still overrides."""
+    pytest.importorskip("pymorphy3")
+    ann = _annotator()
+    toks = ann.annotate("Совершил дела, И вот он шёл. Богиня Кали танцевала.")
+    conj = next(t for t in toks if t["surface"] == "И")
+    assert conj["lemma_src"] == "pymorphy" and conj["pos"] == "CONJ"
+    kali = next(t for t in toks if t["surface"] == "Кали")
+    assert kali["lemma_src"] == "sanskritizm"
+
+
+def test_ru_annotate_deterministic():
+    pytest.importorskip("pymorphy3")
+    ann = _annotator()
+    text = "Рама идёт в лес, и Сита — с ним. Велик ракшаса род."
+    assert ann.annotate(text) == ann.annotate(text)
+
+
+def test_ru_units_cover_monolingual_russian(fixture_jsonl):
+    """The H906 lesson on the Russian side: the annotation layer keys off
+    every Russian-bearing group — including monolingual-RU g3 — never the
+    bilingual pairs; the declared-but-empty g5 stays out."""
+    pairs, _ = nx.classify(str(fixture_jsonl))
+    units = nx.ru_units(str(fixture_jsonl))
+    assert {u["group"] for u in units} == {"w:1.1-2", "w:1.3", "w:1.4"}
+    assert [u["group"] for u in units] == ["w:1.1-2", "w:1.3", "w:1.4"]
+
+
+def test_ru_units_skip_no_rus_sentinel(tmp_path):
+    """The upstream ingest sentinel '{no rus data}' declares the Russian side
+    absent (54 records corpus-wide, e.g. Rām 1:27.28) — it is not text to
+    annotate, and it must not surface as a phantom empty side."""
+    rows = [
+        _rec("s:1.1", "sa", "sa", "ślokaḥ", slp1="SlokaH", passage="1.1"),
+        _rec("s:1.1", "ru", "ru", nx.NO_RUS_SENTINEL, passage="1.1"),
+        _rec("s:1.2", "ru", "ru", "Настоящий русский текст", passage="1.2"),
+    ]
+    p = tmp_path / "s.jsonl"
+    with open(p, "w", encoding="utf-8") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    assert [u["group"] for u in nx.ru_units(str(p))] == ["s:1.2"]
+
+
+def test_export_ru_anno_sidecar(fixture_jsonl, tmp_path):
+    """W9.2 gates on the hermetic fixture: emitted TSV shape, coverage of
+    every Russian-bearing group (zero empty sides), stats + provenance in the
+    report, and byte-identical output across two independent runs."""
+    pytest.importorskip("pymorphy3")
+    for d in ("a", "b"):
+        nx.export_source("w", str(tmp_path / d),
+                         jsonl_dir=str(fixture_jsonl.parent),
+                         meta_dir=str(tmp_path), write=True,
+                         with_ru_annotate=True)
+    side = tmp_path / "a" / "w" / "w.ru_anno.tsv"
+    text = side.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    assert lines[0].split("\t") == ["group_id", "tok_index", "surface",
+                                    "lemma", "pos", "case", "number", "lemma_src"]
+    assert len(lines) > 1
+    groups_seen = set()
+    for row in lines[1:]:
+        cols = row.split("\t")
+        assert len(cols) == 8
+        assert cols[1].isdigit() and cols[3] and cols[7]
+        assert cols[7] in ("pymorphy", "sanskritizm", "sanskritizm-amb", "unknown")
+        groups_seen.add(cols[0])
+    # zero empty sides: every Russian-bearing group of the fixture emits rows
+    assert groups_seen == {"w:1.1-2", "w:1.3", "w:1.4"}
+    # round-trip byte-stability across runs (and no BOM)
+    assert side.read_bytes() == \
+        (tmp_path / "b" / "w" / "w.ru_anno.tsv").read_bytes()
+    assert not side.read_bytes().startswith(b"\xef\xbb\xbf")
+
+
+def test_export_ru_anno_report_stats(fixture_jsonl, tmp_path):
+    pytest.importorskip("pymorphy3")
+    report = nx.export_source("w", str(tmp_path),
+                              jsonl_dir=str(fixture_jsonl.parent),
+                              meta_dir=str(tmp_path), write=True,
+                              with_ru_annotate=True)
+    s = report
+    assert s["ru_anno_stack"] == "pymorphy3" and "H6402" in s["ru_anno_stack_src"]
+    assert s["ru_anno_pymorphy_available"] is True
+    assert s["ru_anno_groups"] == 3 and s["ru_anno_groups_annotated"] == 3
+    assert s["ru_anno_empty_side_groups"] == 0
+    assert s["ru_anno_tokens"] > 0
+    assert "w.ru_anno.tsv" in s["files"]
+
+
+# --------------------------------------------------------------------------- #
 # corpus gates: the real four pilots                                          #
 # --------------------------------------------------------------------------- #
 @pytest.mark.corpus
@@ -611,6 +748,38 @@ def test_pilot_export_wellformed_and_deterministic(slug, tmp_path):
     assert (tmp_path / "a" / slug / f"{slug}.tsv").read_bytes() == \
            (tmp_path / "b" / slug / f"{slug}.tsv").read_bytes()
     assert r1["pairs"] == r2["pairs"] == PILOT_EXPECTED[slug]
+
+
+@pytest.mark.corpus
+@pytest.mark.parametrize("slug", sorted(PILOT_EXPECTED))
+def test_pilot_ru_anno_sidecar(slug, tmp_path):
+    """W9.2 (H6402) on the real pilots: byte-stable sidecar, zero empty
+    sides, real override volume, and the emitted rows' group set equals
+    ru_units (every Russian-bearing group, not just bilingual pairs)."""
+    pytest.importorskip("pymorphy3")
+    jsonl = _JSONL / f"{slug}.jsonl"
+    if not jsonl.exists():
+        pytest.skip(f"{jsonl} not present")
+    from ru_annotate import RuAnnotator
+    ann = RuAnnotator()
+    r1 = nx.export_source(slug, str(tmp_path / "a"), write=True,
+                          with_ru_annotate=True, ru_annotator=ann)
+    nx.export_source(slug, str(tmp_path / "b"), write=True,
+                     with_ru_annotate=True, ru_annotator=ann)
+    side = tmp_path / "a" / slug / f"{slug}.ru_anno.tsv"
+    other = tmp_path / "b" / slug / f"{slug}.ru_anno.tsv"
+    assert side.read_bytes() == other.read_bytes()      # round-trip byte-stability
+    assert r1["ru_anno_empty_side_groups"] == 0         # zero empty sides
+    assert r1["ru_anno_tokens"] > 0
+    assert r1["ru_anno_sanskritizm_overrides"] > 0      # the layer's reason to exist
+    # NB: ru_anno_groups can sit BELOW classify()'s pair count — a "pair"
+    # whose ru text is the '{no rus data}' sentinel (15 in the ayodhyakāṇḍa)
+    # is not Russian text; the frozen H754 pair semantics keep it a pair,
+    # the annotation layer rightly refuses to annotate it.
+    units = nx.ru_units(str(jsonl))
+    seen = {row.split("\t", 1)[0] for row in
+            side.read_text(encoding="utf-8").splitlines()[1:]}
+    assert seen == {u["group"] for u in units}
 
 
 # --------------------------------------------------------------------------- #
