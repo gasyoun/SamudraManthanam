@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 r"""H754 -- НКРЯ parallel-corpus triple export (para-XML + TMX 1.4b + TSV).
+H6371 -- 4th emitter: Sanskrit-side CoNLL-U from DCS path B (--conllu).
 
 Reads the canonical verse-aligned JSONL for a pilot source
 (`web/corpus_builder/jsonl/<slug>.jsonl`), groups by the alignment `group` key,
@@ -69,7 +70,7 @@ from xml.sax.saxutils import escape, quoteattr
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
 
-VERSION = '0.2.0'
+VERSION = '0.3.0'
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 JSONL_DIR = os.path.join(HERE, 'jsonl')
@@ -509,6 +510,144 @@ def _agree_cell(v):
     return '' if v is None else ('1' if v else '0')
 
 
+# ------------------------------------------------------- 4th emitter: CoNLL-U
+
+CONLLU_PROVENANCE = (
+    '# source_1 = Samudra Manthanam canonical JSONL (verse surface + group\n'
+    '#             keys), web/corpus_builder/jsonl/<slug>.jsonl\n'
+    '# source_2 = The Digital Corpus of Sanskrit (Oliver Hellwig,\n'
+    '#             http://www.sanskrit-linguistics.org/dcs/), CC BY 4.0 —\n'
+    '#             lemma/UPOS/FEATS per token from the pinned snapshot\n'
+    '#             gasyoun/dcs-conllu via the W2 three-tier text-keyed\n'
+    '#             crosswalk (nkrya_annotate.py tiers: exact/sandhi/fuzzy)\n'
+    '# note = CoNLL-U emitter (H6371, Wave 7): sandhi is modeled as\n'
+    '#        multiword-token range rows (sandhied surface = range row,\n'
+    '#        desandhied words = interior rows); only DCS-crosswalk-covered\n'
+    '#        lines are emitted — MBh full, Rām partial by construction\n'
+    '#        (W2 finding). Official UD inclusion is a follow-up decision.\n')
+
+
+def _surface_join(rows):
+    """Reconstruct a sentence surface from CoNLL-U rows exactly the way
+    conllu_validate.py does: range-row FORM covers its interior words; all
+    other word FORMs join with single spaces."""
+    surface = []
+    in_range_hi = None
+    for cols in rows:
+        cid = cols[0] if cols else ''
+        if '-' in cid:
+            m = re.match(r'^(\d+)-(\d+)$', cid)
+            in_range_hi = int(m.group(2)) if m else None
+            surface.append(cols[1])
+        else:
+            wid = int(cid) if cid.isdigit() else None
+            if in_range_hi is not None and wid is not None and wid <= in_range_hi:
+                continue  # interior word: covered by the range FORM
+            in_range_hi = None
+            surface.append(cols[1])
+    return ' '.join(surface)
+
+
+def conllu(units, slug, dcs_conllu):
+    """4th emitter (H6371, Wave 7): Sanskrit-side CoNLL-U from DCS path B.
+
+    One CoNLL-U sentence per DCS-covered half-verse line, through the W2
+    three-tier text-keyed crosswalk (see dcs_conllu.py). UPOS rides the
+    explicit DCS->UD table (dcs_conllu.DCS_UPOS_MAP; unmapped tags pass
+    through verbatim and are counted, never coerced); lemma/FEATS pass
+    through verbatim (DCS feature extensions inventoried in the stats).
+    Returns (conllu_text, stats) — deterministic, no clock.
+    """
+    import nkrya_annotate as na
+    from dcs_conllu import map_upos
+    out = ['# newdoc id = %s\n' % slug, CONLLU_PROVENANCE]
+    st = {
+        'conllu_dcs_scope': dcs_conllu.available_for(slug),
+        'conllu_groups': 0, 'conllu_groups_full': 0,
+        'conllu_groups_partial': 0, 'conllu_groups_zero': 0,
+        'conllu_lines': 0, 'conllu_lines_exact': 0, 'conllu_lines_sandhi': 0,
+        'conllu_lines_fuzzy': 0, 'conllu_lines_unmatched': 0,
+        'conllu_lines_ambiguous': 0, 'conllu_sentences': 0,
+        'conllu_words': 0, 'conllu_mwt_ranges': 0,
+        'conllu_lemma_empty': 0, 'conllu_lemma_bad': 0,
+        'conllu_text_mismatch': 0,
+        'conllu_unmapped_upos': {},
+        'conllu_feat_extensions': {},
+    }
+    unmapped = collections.Counter()
+    feat_ext = collections.Counter()
+    if not st['conllu_dcs_scope']:
+        return ''.join(out), st
+    ok_lemma = re.compile(r"^[a-zA-Zāīūṛṝḷḹṅñṭḍṇśṣṃḥ' -]+$")
+    for u in units:
+        st['conllu_groups'] += 1
+        lines = na.split_lines(u['sa_iast'])
+        st['conllu_lines'] += len(lines)
+        matched = 0
+        for i, ln in enumerate(lines, 1):
+            tier, sent, ambiguous = dcs_conllu.match(slug, ln)
+            if tier is None:
+                st['conllu_lines_unmatched'] += 1
+                continue
+            matched += 1
+            st['conllu_lines_' + tier] += 1
+            if ambiguous:
+                st['conllu_lines_ambiguous'] += 1
+            st['conllu_sentences'] += 1
+            sid = re.sub(r'\s+', '_', '%s:L%d' % (u['group'], i))
+            out.append('# sent_id = %s\n' % sid)
+            # DCS's own # text can disagree with its token rows (77/32,655
+            # pilot sentences: unanalyzed words present in text, absent from
+            # tokens). We never edit DCS data: the reconstructable surface is
+            # the # text (validator E8 checks it), DCS's original rides as
+            # # dcs_text and the mismatch is counted, never hidden.
+            text_surface = _surface_join(sent.rows)
+            if text_surface != sent.text:
+                st['conllu_text_mismatch'] += 1
+                out.append('# text = %s\n' % text_surface)
+                out.append('# dcs_text = %s\n' % sent.text)
+            else:
+                out.append('# text = %s\n' % sent.text)
+            out.append('# source_passage = %s\n'
+                       % (u['group'].split(':', 1)[1] if ':' in u['group']
+                          else u['group']))
+            out.append('# source_line = %s\n' % ln)
+            out.append('# dcs_sent_id = %s\n' % sent.sent_id)
+            out.append('# dcs_chapter = %s\n' % sent.chapter)
+            out.append('# dcs_match = %s\n' % tier)
+            out.append('# dcs_ambiguous = %s\n' % ('yes' if ambiguous else 'no'))
+            for row in sent.rows:
+                cols = list(row)
+                if len(cols) == 10 and '-' not in cols[0] and '.' not in cols[0]:
+                    st['conllu_words'] += 1
+                    if cols[2] in ('', '_'):
+                        st['conllu_lemma_empty'] += 1
+                    elif not ok_lemma.match(cols[2]):
+                        st['conllu_lemma_bad'] += 1
+                    mapped, bad = map_upos(cols[3])
+                    if bad:
+                        unmapped[cols[3]] += 1
+                    cols[3] = mapped
+                    if cols[5] not in ('', '_'):
+                        for f in cols[5].split('|'):
+                            k, _, v = f.partition('=')
+                            if k == 'Formation' or (k == 'Case' and v == 'Cpd'):
+                                feat_ext[f] += 1
+                elif len(cols) == 10 and '-' in cols[0]:
+                    st['conllu_mwt_ranges'] += 1
+                out.append('\t'.join(cols) + '\n')
+            out.append('\n')
+        if matched == len(lines) and lines:
+            st['conllu_groups_full'] += 1
+        elif matched:
+            st['conllu_groups_partial'] += 1
+        else:
+            st['conllu_groups_zero'] += 1
+    st['conllu_unmapped_upos'] = dict(sorted(unmapped.items()))
+    st['conllu_feat_extensions'] = dict(sorted(feat_ext.items()))
+    return ''.join(out), st
+
+
 # ---------------------------------------------------------------------------
 # driver
 # ---------------------------------------------------------------------------
@@ -537,7 +676,7 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
                    with_sanskritisms=False, sanskritisms_ctx=None,
                    with_ru_morph=False, with_sa_morph=False, dcs_gold=None,
                    with_vidyut_diff=False, vidyut_analyzer=None,
-                   with_inline_ana=False):
+                   with_inline_ana=False, with_conllu=False, dcs_conllu=None):
     """Export one source into out_dir/<slug>/. Returns a stats dict (also
     written as export_report.json when write=True).
 
@@ -576,7 +715,17 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         artifacts[slug + '.ru_morph.tsv'] = ru_morph_tsv(pairs)
     # The SA-side layers key off every Sanskrit-bearing group, NOT the bilingual
     # pairs — an untranslated source (GRETIL yuddha/uttarakāṇḍa) still has gold.
-    units = sa_units(jsonl_path) if (with_sa_morph or with_vidyut_diff) else []
+    units = sa_units(jsonl_path) if (with_sa_morph or with_vidyut_diff
+                                     or with_conllu) else []
+    conllu_stats = {}
+    if with_conllu:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        if dcs_conllu is None:
+            from dcs_conllu import DcsConllu
+            dcs_conllu = DcsConllu()
+        conllu_text, conllu_stats = conllu(units, slug, dcs_conllu)
+        artifacts[slug + '.sa.conllu'] = conllu_text
     sa_morph_stats = {}
     if with_sa_morph:
         if HERE not in sys.path:
@@ -625,6 +774,7 @@ def export_source(slug, out_dir, jsonl_dir=JSONL_DIR, meta_dir=HERE, write=True,
         **stats,
         **sa_morph_stats,
         **vidyut_diff_stats,
+        **conllu_stats,
         **inline_ana_stats,
         'files': sorted(artifacts),
     }
@@ -664,6 +814,16 @@ def main(argv=None):
                           'diff against DCS gold (form-match + per-feature agreement); '
                           'needs the local DCS sqlite AND the vidyut data pack '
                           '(set $VIDYUT_DATA) (H906)')
+    ap.add_argument('--conllu', action='store_true',
+                    help='also write <slug>.sa.conllu — the 4th emitter: '
+                         'Sanskrit-side CoNLL-U from DCS path B via the W2 '
+                         'three-tier crosswalk (UPOS+lemma+FEATS per token, '
+                         'sandhi as multiword-token ranges); needs the '
+                         'sibling dcs-conllu sparse clone (or $DCS_CONLLU) '
+                         '(H6371, Wave 7)')
+    ap.add_argument('--dcs-conllu-dir', default=None,
+                    help='dcs-conllu files/ directory (default: sibling '
+                         'clone ~/Documents/GitHub/dcs-conllu/files or $DCS_CONLLU)')
     ap.add_argument('--inline-ana', action='store_true',
                      help='fold the morphology INTO the para-XML as НКРЯ '
                           '<w><ana lex= gr=/> per token (shared H905/H906 '
@@ -708,6 +868,18 @@ def main(argv=None):
         if not vidyut_analyzer.available and not a.quiet:
             print('--vidyut-diff: vidyut data pack not found (set $VIDYUT_DATA); '
                   'vidyut_diff.tsv will be empty.')
+    dcs_conllu = None
+    if a.conllu:
+        if HERE not in sys.path:
+            sys.path.insert(0, HERE)
+        from dcs_conllu import DcsConllu, DCS_CONLLU_DIR
+        dcs_conllu = (DcsConllu(a.dcs_conllu_dir) if a.dcs_conllu_dir
+                      else DcsConllu())
+        if not dcs_conllu.available and not a.quiet:
+            print('dcs-conllu clone not found (sibling %s or --dcs-conllu-dir; '
+                  'sparse-clone recipe in dcs_conllu.py docstring); the '
+                  'CoNLL-U layer will be scope-empty.'
+                  % DCS_CONLLU_DIR)
     reports = []
     for slug in slugs:
         r = export_source(slug, a.out, with_sanskritisms=a.with_sanskritisms,
@@ -716,12 +888,20 @@ def main(argv=None):
                            with_sa_morph=a.sa_morph, dcs_gold=dcs_gold,
                            with_vidyut_diff=a.vidyut_diff,
                            vidyut_analyzer=vidyut_analyzer,
-                           with_inline_ana=a.inline_ana)
+                           with_inline_ana=a.inline_ana,
+                           with_conllu=a.conllu, dcs_conllu=dcs_conllu)
         reports.append(r)
         if not a.quiet:
-            print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d'
+            extra = ''
+            if a.conllu:
+                extra = (' conllu_sent=%d conllu_lines=%d/%d'
+                         % (r.get('conllu_sentences', 0),
+                            r.get('conllu_lines', 0)
+                            - r.get('conllu_lines_unmatched', 0),
+                            r.get('conllu_lines', 0)))
+            print('%-32s pairs=%-5d mono_ru=%-3d mono_sa=%-3d comm=%-5d empty=%d%s'
                   % (slug, r['pairs'], r['mono_ru'], r['mono_sa'],
-                     r['commentary'], r['empty_side']))
+                     r['commentary'], r['empty_side'], extra))
     if not a.quiet:
         print('total pairs:', sum(r['pairs'] for r in reports))
     return reports
