@@ -53,7 +53,8 @@ Command per row: `python -m pytest scripts/test_lockfile_refresh_dispatch.py -v`
 | main dispatch | `test_main_dispatch_never_writes_main_ships_via_bot_pr` | never writes `main`; one force-push to `bot/lockfile-refresh`; PR created `--base main` | as expected | PASS |
 | feature dispatch | `test_feature_dispatch_stays_on_feature_branch` | pushes only `HEAD:<ref>`; no gh calls | as expected | PASS |
 | unchanged lock | `test_unchanged_lockfile_is_noop` | exit 0, no push, no PR | as expected | PASS |
-| repeat dispatch | `test_repeat_dispatch_reuses_single_pr` | reuses existing PR; zero `gh pr create` | as expected | PASS |
+| repeat dispatch | `test_repeat_dispatch_reuses_single_open_pr` | reuses the single **OPEN** PR; zero `gh pr create` | as expected | PASS |
+| rerun after merge | `test_rerun_after_merge_opens_fresh_pr` (cycle 1) | old PR MERGED ⇒ fresh PR cut, never reuse a closed one | as expected | PASS |
 | denied PR creation | `test_pr_refusal_preserves_artifact_and_fails_actionably` | commit already on bot branch; nonzero + `::error::` naming artifact + manual fallback URL; refusal text visible | as expected | PASS |
 | guard | `test_missing_ref_name_fails_fast` | nonzero before any push/PR | as expected | PASS |
 
@@ -78,21 +79,30 @@ pull-requests:write` and `workflow_dispatch` unchanged; regeneration step
 ## Repair shipped
 
 `scripts/lockfile_refresh_dispatch.sh`: on a default-branch dispatch — after
-force-pushing the bot branch, `gh pr view` detects an existing PR (reuse),
-else `gh pr create`; if creation is refused, the run exits 1 with
+force-pushing the bot branch, `gh pr view --json state --jq .state` gates
+reuse on state `OPEN` (a MERGED/CLOSED PR gets a fresh `gh pr create` —
+review repair cycle 1); if creation is refused, the run exits 1 with
 `::error::` that names the preserved commit (`origin/bot/lockfile-refresh` at
 `<sha>`), the manual PR URL, and the token remedy. Feature dispatch and
 unchanged-lock paths behave exactly as before.
 
 ## Checks
 
-- `python -m pytest scripts/test_lockfile_refresh_dispatch.py -v` → 12 passed.
-- `python -m pytest -m "not corpus" -q --ignore=web/tests` → 20 passed,
+- `python -m pytest scripts/test_lockfile_refresh_dispatch.py -v` → 13 passed.
+- `python -m pytest -m "not corpus" -q --ignore=web/tests` → 21 passed,
   1 skipped (web/tests skipped locally only — needs `requirements.txt` deps
   that CI installs; untouched by this change).
 - `bash -n scripts/lockfile_refresh_dispatch.sh` → OK.
 
 ## Verifier
 
-Independent non-zai review recorded on the PR (model + final commit noted
-there). Missing review ⇒ INCONCLUSIVE.
+Independent non-zai review: **deepseek/deepseek-v4.1-flash**
+(openrouter, councillor-deepseek seat), 30-10-2026, verdict **PASS-with-notes**
+on dd98316. Pre-merge note adopted as repair cycle 1 (OPEN-gated PR reuse —
+`test_rerun_after_merge_opens_fresh_pr`); low notes adopted: default-branch
+detector widened to bare `main` refspecs, historical mutation fixture now
+runs under `set -e` (bash -e fidelity); deferred as documented-convention:
+scripts/ hermetic tests are not wired into web-rooted CI (same as
+`test_enable_security_headers.py`), `BASE` stays env-overridable default
+`main`. Final-commit confirmation recorded on PR #434. Missing review ⇒
+INCONCLUSIVE.

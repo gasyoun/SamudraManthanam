@@ -42,8 +42,11 @@ if [ "$REF_NAME" = "$BASE" ]; then
   # -f is safe: the bot branch is single-purpose and bot-owned.
   git push -f origin "HEAD:$BOT_BRANCH"
 
-  if gh pr view "$BOT_BRANCH" >/dev/null 2>&1; then
-    echo "PR for $BOT_BRANCH already exists - reusing it for the refreshed commit"
+  # Reuse only an OPEN PR: after a merge the old PR is MERGED/CLOSED and a
+  # fresh one must be cut for the force-pushed commit (H7466 review, cycle 1).
+  PR_STATE="$(gh pr view "$BOT_BRANCH" --json state --jq .state 2>/dev/null || true)"
+  if [ "$PR_STATE" = "OPEN" ]; then
+    echo "PR for $BOT_BRANCH already exists (OPEN) - reusing it for the refreshed commit"
   elif gh pr create --head "$BOT_BRANCH" --base "$BASE" \
       --title "chore(nkrya-parallel): regenerate package-lock (overrides applied)" \
       --body "Automated lockfile regeneration after override changes. Auto-merges when required checks pass."; then

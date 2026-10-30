@@ -15,7 +15,6 @@ delegate every push/PR decision to the tested script (nothing inline).
 from __future__ import annotations
 
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -29,8 +28,10 @@ WORKFLOW = ROOT / ".github" / "workflows" / "lockfile-refresh.yml"
 
 # Verbatim dispatch logic shipped at 19d634a..dddad66 (pre-H7466), with only
 # the template expression `${{ github.ref_name }}` replaced by "$REF_NAME" so
-# the harness can drive it. This is the swallowed-error mutation target.
+# the harness can drive it (Actions runs steps under bash -e; kept faithful).
+# This is the swallowed-error mutation target.
 HISTORICAL_SNIPPET = r"""
+set -e
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git add nkrya-parallel/package-lock.json
@@ -80,9 +81,13 @@ if [ "${1:-}" != "pr" ]; then exit 0; fi
 sub="${2:-}"; shift 2 || true
 case "$sub" in
   view)
-    if [ "${FAKE_GH_PR_EXISTS:-0}" = "1" ]; then exit 0; fi
-    echo "no pull requests found for branch" >&2
-    exit 1
+    state="${FAKE_GH_PR_STATE:-NONE}"
+    if [ "$state" = "NONE" ]; then
+      echo "no pull requests found for branch" >&2
+      exit 1
+    fi
+    echo "$state"
+    exit 0
     ;;
   create)
     if [ "${FAKE_GH_CREATE_REFUSED:-0}" = "1" ]; then
@@ -112,14 +117,18 @@ def run_dispatch(
     *,
     script: Path = HELPER,
     staged_changes=True,
-    pr_exists=False,
+    pr_state="NONE",
     create_refused=False,
     push_fail=False,
     merge_exit=0,
     ref_name_set=True,
     timeout=30,
 ):
-    """Run the real dispatch script with shimmed git/gh; return (proc, calls)."""
+    """Run the real dispatch script with shimmed git/gh; return (proc, calls.
+
+    pr_state: PR state the gh shim reports for the bot branch
+    (OPEN / MERGED / CLOSED / NONE - no PR at all).
+    """
     tmp = Path(os.environ.get("TEMP", "/tmp")) / f"h7466-{os.getpid()}-{id(ref_name)}"
     bin_dir = tmp / "bin"
     bin_dir.mkdir(parents=True, exist_ok=True)
@@ -141,7 +150,7 @@ def run_dispatch(
             "PATH": str(bin_dir) + os.pathsep + env.get("PATH", ""),
             "FAKE_CALLS_LOG": calls_log.as_posix(),
             "FAKE_GIT_STAGED_CHANGES": "1" if staged_changes else "0",
-            "FAKE_GH_PR_EXISTS": "1" if pr_exists else "0",
+            "FAKE_GH_PR_STATE": pr_state,
             "FAKE_GH_CREATE_REFUSED": "1" if create_refused else "0",
             "FAKE_GIT_PUSH_FAIL": "1" if push_fail else "0",
             "FAKE_GH_MERGE_EXIT": str(merge_exit),
@@ -167,8 +176,14 @@ def run_dispatch(
 # ---------------------------------------------------------------- contract detectors
 
 def pushed_to_default(calls) -> bool:
-    """A dispatch wrote the protected default branch (the GH006 mutation)."""
-    return any(re.search(r"git push .*HEAD:main(\s|$)", c) for c in calls)
+    """A dispatch wrote the protected default branch (the GH006 mutation).
+    Catches both `HEAD:main` and bare `main` refspec forms."""
+    for c in calls:
+        if not c.startswith("git push"):
+            continue
+        if any(tok in ("main", "HEAD:main") for tok in c.split()):
+            return True
+    return False
 
 
 def actionable_failure(proc) -> bool:
@@ -212,14 +227,25 @@ def test_feature_dispatch_stays_on_feature_branch():
     assert not [c for c in calls if c.startswith("gh")]
 
 
-def test_repeat_dispatch_reuses_single_pr():
-    # PR already open for the bot branch: reuse it, never create a second one.
-    proc, calls = run_dispatch("main", pr_exists=True)
+def test_repeat_dispatch_reuses_single_open_pr():
+    # OPEN PR already on the bot branch: reuse it, never create a second one.
+    proc, calls = run_dispatch("main", pr_state="OPEN")
     assert proc.returncode == 0, proc.stderr
     assert any(c.startswith("gh pr view") for c in calls)
     assert not [c for c in calls if c.startswith("gh pr create")]
     assert any(c.startswith("gh pr merge") for c in calls)
     assert any("HEAD:bot/lockfile-refresh" in c for c in calls if c.startswith("git push"))
+
+
+def test_rerun_after_merge_opens_fresh_pr():
+    # Rerun safety: the previous bot PR is MERGED - reusing it would die on
+    # gh pr merge ("no pull requests found"-class confusion). A fresh PR must
+    # be cut for the force-pushed commit (H7466 review, repair cycle 1).
+    proc, calls = run_dispatch("main", pr_state="MERGED")
+    assert proc.returncode == 0, proc.stderr
+    create = [c for c in calls if c.startswith("gh pr create")]
+    assert len(create) == 1, "must create a new PR after the old one merged"
+    assert any(c.startswith("gh pr merge") for c in calls)
 
 
 def test_pr_refusal_preserves_artifact_and_fails_actionably():
@@ -261,6 +287,10 @@ def test_mutation_direct_main_push_is_caught():
     )
     proc, calls = run_dispatch("main", script=mutated)
     assert pushed_to_default(calls), "detector must catch a direct main push"
+
+    bare_ref = mutated.replace('"HEAD:main"', "main")  # refspec form `main`
+    proc, calls = run_dispatch("main", script=bare_ref)
+    assert pushed_to_default(calls), "detector must catch the bare `main` refspec too"
 
 
 def test_mutation_swallowed_pr_create_error_is_caught():
