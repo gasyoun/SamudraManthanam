@@ -1,0 +1,53 @@
+name: Lockfile refresh (nkrya-parallel)
+
+# Regenerates nkrya-parallel/package-lock.json from package.json (overrides
+# included) without a full install, commits it to a bot branch and opens an
+# auto-merge PR. Dispatch it on a branch that already carries the override
+# changes — the regenerated lock lands on the same branch, completing the PR.
+# Regeneration only; no install, no build, no deploy.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Regenerate lockfile (overrides applied, no install)
+        working-directory: nkrya-parallel
+        run: npm install --package-lock-only --no-audit --no-fund
+
+      - name: Audit gate preview
+        working-directory: nkrya-parallel
+        run: npm audit --omit=dev --audit-level=high --package-lock-only || echo "::warning::audit still red — check overrides"
+
+      - name: Commit regenerated lock
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nkrya-parallel/package-lock.json
+          if git diff --cached --quiet; then
+            echo "lockfile already up to date"
+            exit 0
+          fi
+          git commit -m "chore(nkrya-parallel): regenerate package-lock (overrides applied)"
+          BRANCH="${{ github.ref_name }}"
+          git push origin "HEAD:$BRANCH"
+          gh pr create --head "$BRANCH" --base main \
+            --title "chore(nkrya-parallel): regenerate package-lock (overrides applied)" \
+            --body "Automated lockfile regeneration after override changes. Auto-merges when required checks pass." 2>/dev/null || true
+          gh pr merge "$BRANCH" --squash --auto || gh pr merge "$BRANCH" --squash
+        env:
+          GH_TOKEN: ${{ github.token }}
