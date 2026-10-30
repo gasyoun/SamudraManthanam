@@ -16,6 +16,7 @@ One directory per source slug, produced by [`nkrya_export.py`](https://github.co
 | `<slug>.sanskritisms_index.json` | per-source proper-name index (H760 Wave 3) | no |
 | `<slug>.ru_morph.tsv` | Russian morphology layer: `group_id, tok_index, surface, lemma, pos, case, number` | no |
 | `<slug>.sa_morph.tsv` | Sanskrit morphology layer from DCS gold: `group_id, verse, tok_index, form, lemma, upos, case, gender, number` | no |
+| `<slug>.sa.conllu` | **4th emitter (H6371, W7)**: Sanskrit-side CoNLL-U from DCS path B via the W2 three-tier crosswalk — UPOS+lemma+FEATS per token, sandhi as multiword-token range rows; see [CONLLU_W7_EMISSION_REPORT.md](CONLLU_W7_EMISSION_REPORT.md) | no — UD-ecosystem positioning |
 | `<slug>.vidyut_diff.tsv` | DCS-gold vs Vidyut analyser disagreement (optional) | no |
 | `export_report.json` | per-run report: counts, `nkrya_header` echo, `needs_review`, artifact list | no |
 

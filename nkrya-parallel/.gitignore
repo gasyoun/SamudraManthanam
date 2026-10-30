@@ -21,6 +21,11 @@
 # H6370: the format/mapping/audit README quotes no translation text (field
 # names, artifact inventory, verdict table) — same class as the reports above.
 !/export/README.md
+# H6371 W7 CoNLL-U emitter: per-source .sa.conllu bulk stays gitignored with
+# the rest (release-asset material, Sanskrit-side + CC BY 4.0 DCS layer);
+# committed = the W7 emission/coverage report + machine-readable twin.
+!/export/CONLLU_W7_EMISSION_REPORT.md
+!/export/conllu_coverage.json
 !/export/showcase/
 /export/showcase/*
 !/export/showcase/MANIFEST.tsv
