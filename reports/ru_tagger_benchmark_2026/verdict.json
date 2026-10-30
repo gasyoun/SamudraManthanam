@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-29",
+  "handoff": "H6401",
+  "numbers": {
+    "adjudicated": {
+      "general": {
+        "n": 150,
+        "pymorphy3_top1_acc": 0.8333,
+        "pymorphy3_top1_ci95": [
+          0.7655,
+          0.8845
+        ]
+      },
+      "judged_wrong_listed": 91,
+      "sans": {
+        "layer_gold_ok_rate": 0.8417,
+        "n": 120,
+        "overlay_effect_dp": 24.2,
+        "pymorphy3_top1_acc": 0.6,
+        "pymorphy3_top1_ci95": [
+          0.5106,
+          0.6832
+        ]
+      }
+    },
+    "baseline": {
+      "layer_ambiguity_rate": 0.0,
+      "sanskritism_lenient_acc": 0.5667,
+      "sanskritism_lenient_ci95": [
+        0.4773,
+        0.6519
+      ],
+      "sanskritism_n": 120,
+      "sanskritism_strict_acc": 0.5667,
+      "stack": "pymorphy3 2.0.6 (top-1 parse)"
+    },
+    "overlay": {
+      "full_sample_acc_vs_layer_gold": 1.0,
+      "note": "tautological by construction (forced lemma IS the layer gold); see adjudicated.* for the non-trivial overlay numbers",
+      "policy": "force sorted-first W3 layer lemma on matched tokens"
+    },
+    "sample": {
+      "general_tokens": 2880,
+      "sanskritism_tokens": 120,
+      "seed": 20261029,
+      "sources": [
+        "bhagavadgita-1788",
+        "buddhacharita-balmont",
+        "03_ramayana-aranyakanda"
+      ],
+      "tokens_total": 3000
+    },
+    "strata": {
+      "03_ramayana-aranyakanda": {
+        "pymorphy3_lenient_acc": 0.6,
+        "sanskritism_tokens": 100,
+        "tokens": 1000
+      },
+      "bhagavadgita-1788": {
+        "pymorphy3_lenient_acc": 0.3333,
+        "sanskritism_tokens": 15,
+        "tokens": 1000
+      },
+      "buddhacharita-balmont": {
+        "pymorphy3_lenient_acc": 0.6,
+        "sanskritism_tokens": 5,
+        "tokens": 1000
+      }
+    }
+  },
+  "overlay": "W3 sanskritism reverse index (Sorensen 9460 + MBh vol.3 oneword + decl_rules paradigms), extract.py filtering, sorted-first forced pick",
+  "reproduce": "python web/corpus_builder/ru_tagger_benchmark.py run --out DIR && (adjudicate DIR/adjudication_dump.csv) && python web/corpus_builder/ru_tagger_benchmark.py score --dir DIR --verdicts FILE",
+  "sample": {
+    "general_tokens": 2880,
+    "sanskritism_tokens": 120,
+    "seed": 20261029,
+    "sources": [
+      "bhagavadgita-1788",
+      "buddhacharita-balmont",
+      "03_ramayana-aranyakanda"
+    ],
+    "tokens_total": 3000
+  },
+  "stack_details": {
+    "dictionary": "OpenCorpora (bundled)",
+    "package": "pymorphy3",
+    "rationale": "only stack cheaply runnable offline on this executor; pymorphy2 not installed (pymorphy3 = maintained twin, same dictionary); DeepPavlov estate clone is Mac-local and natasha/navec need model downloads",
+    "selection_rule": "top-1 parse by analyzer score",
+    "version": "2.0.6"
+  },
+  "stack_for_9_2": "pymorphy3",
+  "wave": "9.1"
+}
