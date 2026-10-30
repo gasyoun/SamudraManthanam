@@ -43,11 +43,18 @@ jobs:
             exit 0
           fi
           git commit -m "chore(nkrya-parallel): regenerate package-lock (overrides applied)"
-          BRANCH="${{ github.ref_name }}"
-          git push origin "HEAD:$BRANCH"
-          gh pr create --head "$BRANCH" --base main \
-            --title "chore(nkrya-parallel): regenerate package-lock (overrides applied)" \
-            --body "Automated lockfile regeneration after override changes. Auto-merges when required checks pass." 2>/dev/null || true
-          gh pr merge "$BRANCH" --squash --auto || gh pr merge "$BRANCH" --squash
+          # main is protected (GH006, 30-10-2026 run): when dispatched on main,
+          # ship the regenerated lock via a bot-owned branch; when dispatched
+          # on a fix branch that already carries a PR, just push it onward.
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            BRANCH="bot/lockfile-refresh"
+            git push -f origin "HEAD:$BRANCH"
+            gh pr create --head "$BRANCH" --base main \
+              --title "chore(nkrya-parallel): regenerate package-lock (overrides applied)" \
+              --body "Automated lockfile regeneration after override changes. Auto-merges when required checks pass." 2>/dev/null || true
+            gh pr merge "$BRANCH" --squash --auto || gh pr merge "$BRANCH" --squash
+          else
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi
         env:
           GH_TOKEN: ${{ github.token }}
