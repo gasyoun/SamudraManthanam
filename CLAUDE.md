@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 06-10-2026_
+_Created: 12-05-2026 · Last updated: 30-10-2026_
 
 `SamudraManthanam` («Пахтанье океана») is a **parallel Sanskrit–Russian corpus
 search** platform: a FastAPI + SQLite FTS5 web app (the live public surface)
