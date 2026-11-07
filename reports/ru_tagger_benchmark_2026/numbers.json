@@ -1,0 +1,67 @@
+{
+  "adjudicated": {
+    "general": {
+      "n": 150,
+      "pymorphy3_top1_acc": 0.8333,
+      "pymorphy3_top1_ci95": [
+        0.7655,
+        0.8845
+      ]
+    },
+    "judged_wrong_listed": 91,
+    "sans": {
+      "layer_gold_ok_rate": 0.8417,
+      "n": 120,
+      "overlay_effect_dp": 24.2,
+      "pymorphy3_top1_acc": 0.6,
+      "pymorphy3_top1_ci95": [
+        0.5106,
+        0.6832
+      ]
+    }
+  },
+  "baseline": {
+    "layer_ambiguity_rate": 0.0,
+    "sanskritism_lenient_acc": 0.5667,
+    "sanskritism_lenient_ci95": [
+      0.4773,
+      0.6519
+    ],
+    "sanskritism_n": 120,
+    "sanskritism_strict_acc": 0.5667,
+    "stack": "pymorphy3 2.0.6 (top-1 parse)"
+  },
+  "overlay": {
+    "full_sample_acc_vs_layer_gold": 1.0,
+    "note": "tautological by construction (forced lemma IS the layer gold); see adjudicated.* for the non-trivial overlay numbers",
+    "policy": "force sorted-first W3 layer lemma on matched tokens"
+  },
+  "sample": {
+    "general_tokens": 2880,
+    "sanskritism_tokens": 120,
+    "seed": 20261029,
+    "sources": [
+      "bhagavadgita-1788",
+      "buddhacharita-balmont",
+      "03_ramayana-aranyakanda"
+    ],
+    "tokens_total": 3000
+  },
+  "strata": {
+    "03_ramayana-aranyakanda": {
+      "pymorphy3_lenient_acc": 0.6,
+      "sanskritism_tokens": 100,
+      "tokens": 1000
+    },
+    "bhagavadgita-1788": {
+      "pymorphy3_lenient_acc": 0.3333,
+      "sanskritism_tokens": 15,
+      "tokens": 1000
+    },
+    "buddhacharita-balmont": {
+      "pymorphy3_lenient_acc": 0.6,
+      "sanskritism_tokens": 5,
+      "tokens": 1000
+    }
+  }
+}
