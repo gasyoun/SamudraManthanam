@@ -1,0 +1,46 @@
+name: Lockfile refresh (nkrya-parallel)
+
+# Regenerates nkrya-parallel/package-lock.json from package.json (overrides
+# included) without a full install, commits it to a bot branch and opens an
+# auto-merge PR. Dispatch it on a branch that already carries the override
+# changes — the regenerated lock lands on the same branch, completing the PR.
+# Regeneration only; no install, no build, no deploy.
+#
+# All commit/push/PR decisions live in scripts/lockfile_refresh_dispatch.sh
+# and are contract-tested by scripts/test_lockfile_refresh_dispatch.py (H7466):
+# main dispatch never writes main; unchanged lock is a no-op; repeat dispatch
+# reuses one PR; a refused PR creation keeps the commit on the bot branch and
+# fails the run with an actionable error.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+
+      - name: Regenerate lockfile (overrides applied, no install)
+        working-directory: nkrya-parallel
+        run: npm install --package-lock-only --no-audit --no-fund
+
+      - name: Audit gate preview
+        working-directory: nkrya-parallel
+        run: npm audit --omit=dev --audit-level=high --package-lock-only || echo "::warning::audit still red — check overrides"
+
+      - name: Commit and dispatch regenerated lock
+        run: bash scripts/lockfile_refresh_dispatch.sh
+        env:
+          REF_NAME: ${{ github.ref_name }}
+          GH_TOKEN: ${{ github.token }}
