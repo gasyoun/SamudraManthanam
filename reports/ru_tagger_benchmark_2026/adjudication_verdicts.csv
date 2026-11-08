@@ -1,0 +1,92 @@
+token_id,pym_ok,layer_ok,note
+03_ramayana-aranyakanda-2018,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2029,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2031,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2079,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2099,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2102,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2104,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2137,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2139,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2149,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2159,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2179,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2184,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2194,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2202,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2208,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2225,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2252,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2253,1,0,layer FP: capitalized common word
+03_ramayana-aranyakanda-2273,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2285,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2325,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2349,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2351,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2359,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2360,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2363,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2370,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2397,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2405,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2417,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2470,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2503,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2553,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2556,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2582,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2628,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2650,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2659,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2681,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2684,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2726,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2752,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2777,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2821,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2866,1,0,layer FP: conjunction И
+03_ramayana-aranyakanda-2881,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2885,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2936,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2968,0,1,pymorphy fiction stem / wrong normalization
+03_ramayana-aranyakanda-2977,1,0,layer FP: conjunction И
+bhagavadgita-1788-0117,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0122,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0572,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0671,0,0,layer wrong: васу->васа paradigm collision
+bhagavadgita-1788-0680,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0691,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0714,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0722,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0729,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0797,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0865,0,1,pymorphy fiction stem / wrong normalization
+buddhacharita-balmont-1119,0,1,pymorphy fiction stem / wrong normalization
+buddhacharita-balmont-1351,1,0,layer FP: capitalized common word
+buddhacharita-balmont-1664,1,0,layer FP: capitalized common word
+buddhacharita-balmont-1815,0,1,pymorphy fiction stem / wrong normalization
+bhagavadgita-1788-0027,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0028,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0040,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0110,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0132,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0134,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0187,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0301,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0304,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0333,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0416,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0463,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0469,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0486,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0492,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0549,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0559,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0579,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0695,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0737,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0790,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0927,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0993,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+bhagavadgita-1788-0994,0,1,1788 pre-reform orthography artifact (ъ-final / ять split)
+buddhacharita-balmont-1464,0,1,substantivized adj lemmatized as noun
