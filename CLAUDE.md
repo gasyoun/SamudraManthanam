@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 06-10-2026_
+_Created: 12-05-2026 · Last updated: 01-11-2026 — H7274 claims pass: web/app/main.py + requirements.txt OK; Lazarus client real (Index_pr.lpi, Units/, POUpdater exes)_
 
 `SamudraManthanam` («Пахтанье океана») is a **parallel Sanskrit–Russian corpus
 search** platform: a FastAPI + SQLite FTS5 web app (the live public surface)
