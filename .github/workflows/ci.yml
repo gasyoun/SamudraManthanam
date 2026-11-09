@@ -25,7 +25,7 @@ jobs:
     name: Lint (ruff)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
@@ -40,7 +40,7 @@ jobs:
     name: Format check (black)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
@@ -67,7 +67,7 @@ jobs:
     env:
       PYTHONPATH: .
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
@@ -85,7 +85,7 @@ jobs:
       run:
         working-directory: nkrya-parallel
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: "20"
@@ -139,7 +139,7 @@ jobs:
     name: Python dependency audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
@@ -154,7 +154,7 @@ jobs:
     name: Docker runtime image + deployment contract
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7
       - name: Build hardened runtime image
         run: docker build --tag samudra-manthanam:ci .
 
@@ -215,7 +215,7 @@ jobs:
     name: YAML lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.1
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
