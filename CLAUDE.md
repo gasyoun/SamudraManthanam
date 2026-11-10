@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 01-11-2026 — H7274 claims pass: web/app/main.py + requirements.txt OK; Lazarus client real (Index_pr.lpi, Units/, POUpdater exes)_
+_Created: 12-05-2026 · Last updated: 10-11-2026 — H7934 Python floor sync rule added; H7274 claims pass: web/app/main.py + requirements.txt OK; Lazarus client real (Index_pr.lpi, Units/, POUpdater exes)_
 
 `SamudraManthanam` («Пахтанье океана») is a **parallel Sanskrit–Russian corpus
 search** platform: a FastAPI + SQLite FTS5 web app (the live public surface)
@@ -90,6 +90,19 @@ Five-role vocabulary (`needs-triage` … `wontfix`) mapped onto this repo's actu
 ### Domain docs
 
 No `CONTEXT.md`/`docs/adr/` here — the real reading-order chain and conflict rule live in `DOCUMENTATION_INDEX.md`. See [`docs/agents/domain.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/agents/domain.md).
+
+### Python floor sync (H7934)
+
+The CI matrix floor is **3.10** (H7160/H1927 policy) and four places must move
+together when it changes: the `python-version` matrix in
+[`.github/workflows/ci.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/ci.yml),
+[`dependency-floor-install.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/workflows/dependency-floor-install.yml),
+the `ignore:` blocks in [`.github/dependabot.yml`](https://github.com/gasyoun/SamudraManthanam/blob/main/.github/dependabot.yml)
+(`sse-starlette >=3.6`, `python-multipart >=0.0.33`, `pydantic-settings >=2.16` —
+each says "drop when 3.10 goes"), and the matching caps in `web/requirements.txt`.
+A dependency pin that declares `Requires-Python >=3.11` breaks the 3.10 leg at
+`pip install`, not at test time — Dependabot PRs are gated by the floor-install
+check and by auto-merge's CI-green poll for exactly this reason (#447 merged red).
 
 ## Memory store
 
