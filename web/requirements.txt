@@ -10,7 +10,7 @@ pydantic==2.14.3
 python-multipart==0.0.32
 # H7934: 3.6.0 requires Python >=3.11 — caps as in #443; #447 re-bumped it
 # to 3.6.0 and merged with a red 3.10 leg. Re-bump when 3.10 is dropped.
-sse-starlette==3.5.0
+sse-starlette==3.5.1
 # H7160: held at 2.15.0 — 2.16.0 requires Python >=3.11 and breaks the
 # deliberate 3.10 leg of the CI test matrix. Re-bump when 3.10 is dropped.
 pydantic-settings==2.15.0
