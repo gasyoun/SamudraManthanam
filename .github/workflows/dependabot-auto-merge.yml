@@ -25,6 +25,37 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
+      # H7934: never merge a dependency PR whose CI is red or still running.
+      # #443 capped sse-starlette for the 3.10 leg; #447 re-bumped it (plus
+      # python-multipart) to >=3.11-only versions and this workflow squash-
+      # merged it 28s after the 3.10 job went red. Poll the CI workflow on the
+      # head SHA; only a completed success proceeds to approve/merge.
+      - name: Wait for CI on the head SHA (H7934)
+        env:
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          HEAD_SHA: "${{ github.event.pull_request.head.sha }}"
+          REPO: "${{ github.repository }}"
+        run: |
+          for i in $(seq 1 60); do
+            line=$(gh run list --repo "$REPO" --workflow ci.yml --commit "$HEAD_SHA" \
+              --json databaseId,status,conclusion,createdAt \
+              --jq 'first | if . == null then empty else "\(.status) \(.conclusion // "-")" end' || true)
+            if [ -n "$line" ]; then
+              status=${line%% *}; conclusion=${line#* }
+              if [ "$status" = "completed" ]; then
+                if [ "$conclusion" = "success" ]; then
+                  echo "CI green on $HEAD_SHA — proceeding to merge"
+                  exit 0
+                fi
+                echo "::error::CI $conclusion on $HEAD_SHA — refusing to auto-merge (H7934)"
+                exit 1
+              fi
+            fi
+            sleep 30
+          done
+          echo "::error::CI did not complete on $HEAD_SHA within 30 min — not merging (H7934)"
+          exit 1
+
       - name: Approve the PR
         run: gh pr review --approve "$PR_URL" || true
         env:

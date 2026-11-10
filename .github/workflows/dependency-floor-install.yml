@@ -1,0 +1,42 @@
+name: Dependency floor install
+
+# H7934: on dependency PRs (anything touching web/requirements.txt) prove a
+# CLEAN, cache-free install of the web requirements on the oldest supported
+# Python (the CI matrix floor, 3.10). The pytest matrix installs the same file
+# but with a pip cache and a 14-job fan-out — this job is the fast, focused,
+# named signal for the floor itself, so a Requires-Python regression on a
+# dependency bump fails in ~1 minute under its own heading instead of being
+# buried in "Pytest (Python 3.10)".
+#
+# Historical control (why this exists): #443 capped sse-starlette at 3.5.0
+# after #438's 3.6.0 (Requires-Python >=3.11) went red; #447 re-bumped both
+# sse-starlette and python-multipart to >=3.11-only versions and was merged
+# while the 3.10 leg was still red. Drop the 3.10 floor from the matrix and
+# this workflow's python-version together.
+
+on:
+  pull_request:
+    branches: [master, main]
+    paths:
+      - "web/requirements.txt"
+      - ".github/workflows/dependency-floor-install.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  floor-install:
+    name: Clean install of web requirements on Python 3.10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.10"
+      # Deliberately NO pip cache: a dependency PR must prove the pinned set
+      # resolves from scratch on the floor, exactly as a fresh 3.10 box would.
+      - name: Clean install of web requirements on the floor
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r web/requirements.txt
