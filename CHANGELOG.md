@@ -1,4 +1,4 @@
-_Created: 25-08-2026 · Last updated: 10-10-2026_
+_Created: 25-08-2026 · Last updated: 17-11-2026_
 
 # Changelog
 
@@ -10,6 +10,72 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 <!-- entries land in changelog_queue/ -- appended via tools/changelog_queue_consume.py, consumed by cut_release.py at release-cut (H3355); direct bullets here are hook-blocked -->
 
+## [0.19.64] - 2026-11-17
+
+- **2026-10-14 — H6560 canon sutra-citation fix (sym-/syn- section)**
+  Fixed the canonically defective sūtra citation in four artifacts (canon doc
+  `docs/MORPHONOLOGY_NASAL_PREFIX_SYM_SYN_SANSKRITISM_VARIANTS_12-10-2026.md`, draft §4.1
+  `docs/ARTICLE_SANSKRITISMS_VJ_DRAFT_12-10-2026.md`, concept doc
+  `docs/CONCEPT_SANSKRITISMS_IN_RUSSIAN_VJ_ARTICLE_10-10-2026.md`, CHANGELOG bullets
+  0.19.61/0.19.63 + doc metadoc). The previously quoted «rasābhyāṃ no ṇaḥ samānatarasya» as
+  «Aṣṭādhyāyī 8.3.24» licensing an optional [n] after a/ā before sibilants is wrong: the canonical
+  resolver (ashtadhyayi.com dataset via SanskritGrammar/GasunsDhatu_2014/revision-2026/panini_sutra.py)
+  gives 8.3.24 = naś cāpadāntasya jhali (non-apadānta n/m → anusvāra before jhal, mandatory); the
+  quoted line is a corruption of 8.4.1 raṣābhyāṃ no ṇaḥ samānapade (ṇatva after r/ṣ); parasavarṇa
+  is 8.4.58 anusvārasya yayi parasavarṇaḥ with sibilants outside yay (Vasu's own ākraṃsyate). No
+  mūla-sūtra licenses an optional [n] before sibilants. Reframed: самсара/сансара variability is
+  recipient-side transmission of the anusvāra (written anglo-Latin channel copies the m-graph,
+  oral recitation renders [n]), not a Paninian option. Also removed the unconfirmed §3 mechanism
+  insertion «(ложный hit — субстрок БАТМАНа)» — absent from the 10-10 cross-report and unverifiable
+  from Rubanova's 2020 ВКР (predates СИС-2024); the АТМАН dictionary-absence example itself is kept
+  and re-sourced to the cross-report census row (атман, OUT, 5 710 НКРЯ).
+- **2026-10-29 — H6371 W7: 4th emitter — CoNLL-U from DCS path B**
+  Added the 4th emitter to [`web/corpus_builder/nkrya_export.py`](https://github.com/gasyoun/SamudraManthanam/blob/main/web/corpus_builder/nkrya_export.py) (v0.3.0, `--conllu`): Sanskrit-side
+  CoNLL-U serialized from the DCS crosswalk (path B, CC BY 4.0) through the W2 three-tier
+  text-keyed crosswalk — UPOS + lemma + FEATS per token, sandhi modeled as multiword-token
+  range rows (sandhied surface = range row, desandhied words = interior rows). Data half in
+  new `web/corpus_builder/dcs_conllu.py`: reads the pinned public snapshot
+  [gasyoun/dcs-conllu](https://github.com/gasyoun/dcs-conllu) (sparse clone, no Mac-local
+  sqlite needed) and carries the explicit DCS→UD UPOS table (`CONJ`→`CCONJ` is the only
+  real map; unmapped tags pass through verbatim, counted, and trip the validator — 0
+  observed in the pilot). New stdlib-only validator
+  `web/corpus_builder/conllu_validate.py` (E1–E8 structural rules + W1–W3 tripwires) and
+  hermetic + corpus test suite `web/tests/test_dcs_conllu.py` (10 passed). Real pilot run:
+  32,655 sentences / 225,972 words / 36,246 sandhi MWTs, 0 validator errors, byte-identical
+  across runs; coverage reproduces W2 exactly — MBh 3 99.81%, Rām kāṇḍas 54.28–76.32%
+  (partial by construction), overall 81.09%. Honesty ledger: 17 damaged DCS lemmas kept
+  verbatim + counted, 332 DCS text↔token mismatches repaired transparently (`# dcs_text`
+  keeps the original), 362 ambiguous line matches recorded per sentence. Committed evidence:
+  [`nkrya-parallel/export/CONLLU_W7_EMISSION_REPORT.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/nkrya-parallel/export/CONLLU_W7_EMISSION_REPORT.md)
+  + `conllu_coverage.json`; per-source `.sa.conllu` bulk stays gitignored (release-asset
+  material). Positions Classical Sanskrit for the UD ecosystem (UD_Sanskrit-Vedic is Vedic
+  only); official UD inclusion stays a follow-up decision after A41. Handoff:
+  [H6371](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6371-Opus_SamudraManthanam_nkrya-w7-conllu-dcs-morph-emitter_10.10.26.md).
+- **2026-11-07 — dict UI grill decisions doc**
+  _Created: 07-11-2026 · Last updated: 07-11-2026_
+  Added `SAMUDRA_DICT_UI_GRILL_DECISIONS_2026-11-07.md` (+ metadoc): the
+  durable record of the 07-11-2026 grill that verified the live Sanskrit–Russian
+  dictionary state (samudra.samskrte.ru serving all five digitized RU
+  dictionaries incl. Frish, but linked from nowhere on samskrtam.ru) and fixed
+  MG's verdicts — full dict UI on all five dicts (Frish first), bounded
+  mojibake repair now, samskrtam.ru links lane immediate (DeepSeek-flash),
+  Cologne surfacing out of scope. Executable contracts ride in the two Uprava
+  handoffs minted the same pass.
+  _Dr. Mārcis Gasūns_
+- **2026-11-10 — Python 3.10 floor enforced for web requirements (H7934)**
+  _Created: 10-11-2026 · Last updated: 10-11-2026_
+  Re-capped `web/requirements.txt` (`sse-starlette==3.5.0`, `python-multipart==0.0.32`) —
+  PR #447 had re-bumped both to >=3.11-only versions and was squash-merged while the
+  `Pytest (Python 3.10)` job was still red. Three guards so it cannot recur: Dependabot
+  `ignore:` entries (`sse-starlette >=3.6`, `python-multipart >=0.0.33`, H7160 pattern),
+  `dependabot-auto-merge.yml` now polls CI on the head SHA and refuses to merge unless it
+  completes `success` (the direct `gh pr merge --squash` fallback was the red-merge window),
+  and a new paths-filtered `dependency-floor-install.yml` does a cache-free install of the
+  web requirements on Python 3.10 for any PR touching the file (~40 s, its own named check).
+  Controls: sse-starlette==3.6.0 and python-multipart==0.0.33 both fail `pip download
+  --python-version 3.10` (exit 1), the capped set resolves 52 distributions (exit 0).
+  [PR #450](https://github.com/gasyoun/SamudraManthanam/pull/450) · [issue #449](https://github.com/gasyoun/SamudraManthanam/issues/449) · Uprava H7934.
+  _Dr. Mārcis Gasūns_
 ## [0.19.63] - 2026-10-12
 
 - **Постановка ВЯ-статьи зафиксирована: (b) магистраль + (a)/(c) секциями (MG, интерактив-карточка 12-10).** Вердикт вписан в [концепт-док](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/CONCEPT_SANSKRITISMS_IN_RUSSIAN_VJ_ARTICLE_10-10-2026.md); развёрнут черновик статьи [ARTICLE_SANSKRITISMS_VJ_DRAFT_12-10-2026.md](https://github.com/gasyoun/SamudraManthanam/blob/main/docs/ARTICLE_SANSKRITISMS_VJ_DRAFT_12-10-2026.md) — каркас (b)-магистрали с ГОТОВОЙ секцией 4 (морфонология сим-/син-, ин-/им-, эм-/эн- ↔ самсара/сансара 83:1072; сутра-атрибуция исправлена 14-10 в H6560 — см. правку в 0.19.61; исполнение [H6555 (GLM 5.3, 🟡2 medium)](https://github.com/gasyoun/Uprava/blob/main/handoffs/H6555-GLM_SamudraManthanam_symsyn-morphonology-section_12.10.26.md), class=publication — ✅ после чужого Verifier-PASS). Численник §3 ждёт H6401, вариантное поле §4.2 — H6454, канал «через английский» — НКРЯ-квота.
