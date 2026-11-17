@@ -1,0 +1,13 @@
+# nkrya-parallel (SamudraManthanam)
+
+> Docusaurus site of a thesis-support corpus project («Пахтание океана» / ВКР Рубановой): corpus maturity report, thesis appendices and reviews.
+
+## Pages
+
+- [Project docs home](https://gasyoun.github.io/SamudraManthanam/)
+- [Corpus maturity (зрелость корпуса)](https://gasyoun.github.io/SamudraManthanam/zrelost-korpusa/)
+- [Thesis (ВКР)](https://gasyoun.github.io/SamudraManthanam/diplom-rubanova/%D0%92%D0%9A%D0%A0/)
+- [Reviewer report — Arkhangelskiy](https://gasyoun.github.io/SamudraManthanam/Arkhangelskiy_otzyv_na_VKR_Rubanovoy/)
+- [Appendix — supervisor review (Gasūns)](https://gasyoun.github.io/SamudraManthanam/Prilozhenie_VKR_otzyv_ruk_retsenzenta_Gasuns/)
+
+Source: https://github.com/gasyoun/SamudraManthanam
