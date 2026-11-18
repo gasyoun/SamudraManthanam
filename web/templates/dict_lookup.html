@@ -1,0 +1,39 @@
+{% extends "_base.html" %}
+{% block title %}«{{ query }}» — словари санскрита{% endblock %}
+{% block content %}
+<div class="container" style="max-width:1000px;margin:1.5rem auto;padding:0 1rem;">
+    <h1>Поиск слова «{{ query }}» в словарях</h1>
+    <p><a href="/slovari">← все словари</a></p>
+
+    {% if exact %}
+    <h2>Точное совпадение</h2>
+    <ul>
+        {% for m in exact %}
+        <li>
+            <a href="/slovari/{{ m.work }}/{{ m.entry.slug }}"><strong>{{ m.entry.display_iast() or m.entry.display_deva() }}</strong></a>
+            {% if m.entry.display_deva() %} <span>{{ m.entry.display_deva() }}</span>{% endif %}
+            <span class="dict-badge" style="background:#eef2ff;border-radius:6px;padding:.1rem .5rem;font-size:.8rem;">{{ m.badge }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if partial %}
+    <h2>Слова, начинающиеся на «{{ query }}»</h2>
+    <ul>
+        {% for m in partial %}
+        <li>
+            <a href="/slovari/{{ m.work }}/{{ m.entry.slug }}">{{ m.entry.display_iast() or m.entry.display_deva() }}</a>
+            <span class="dict-badge" style="background:#eef2ff;border-radius:6px;padding:.1rem .5rem;font-size:.8rem;">{{ m.badge }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if not exact and not partial %}
+    <p>Слова «{{ query }}» в заголовках словарей не найдено. Попробуйте
+       <a href="/slovari/ru/{{ query }}">искать «{{ query }}» как русское значение</a>
+       или <a href="/s/{{ query }}">обычный поиск по корпусу</a>.</p>
+    {% endif %}
+</div>
+{% endblock %}

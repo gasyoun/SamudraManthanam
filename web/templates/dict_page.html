@@ -1,0 +1,47 @@
+{% extends "_base.html" %}
+{% block title %}{{ meta.title }}{% endblock %}
+{% block content %}
+<div class="container" style="max-width:1000px;margin:1.5rem auto;padding:0 1rem;">
+    <h1>{{ meta.title }}</h1>
+    <p>{{ meta.description }}</p>
+    <p><a href="/slovari">← все словари</a>
+       {% if available %} · записей: <strong>{{ total }}</strong>{% endif %}</p>
+
+    {% if available %}
+    <form action="/slovari/lookup" method="get" style="display:flex;gap:.6rem;flex-wrap:wrap;margin:1.2rem 0;">
+        <input type="text" name="q" placeholder="Слово: देव / deva / dEva" style="flex:1;min-width:240px;padding:.7rem 1rem;border:2px solid #ddd;border-radius:8px;">
+        <button type="submit" class="btn btn-primary">Найти слово</button>
+    </form>
+
+    <h2>Алфавитный указатель</h2>
+    <p style="line-height:2.2;">
+        {% for l in letters %}
+        <a href="/slovari/{{ dict_code }}/a/{{ l.letter }}" style="text-decoration:none;margin-right:.2rem;">{{ l.letter }}<sub style="color:#888;">{{ l.count }}</sub></a>
+        {% endfor %}
+    </p>
+
+    {% if letter %}
+    <h2>Слова на «{{ letter }}»</h2>
+    <p>Страница {{ page }} из {{ pages }} · {{ total }} слов</p>
+    <table style="width:100%;border-collapse:collapse;">
+        {% for e in entries %}
+        <tr style="border-bottom:1px solid #eee;">
+            <td style="padding:.35rem .5rem .35rem 0;white-space:nowrap;">
+                <a href="/slovari/{{ dict_code }}/{{ e.slug }}"><strong>{{ e.display_iast() or e.display_deva() or e.cyr }}</strong></a>
+            </td>
+            <td style="padding:.35rem 0;font-size:1.05rem;">{{ e.display_deva() }}</td>
+            <td style="padding:.35rem 0;color:#666;">{{ e.display_cyr() }}</td>
+            <td style="padding:.35rem 0 .35rem .6rem;">{{ e.gloss_html[:200] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>
+        {% if page > 1 %}<a href="/slovari/{{ dict_code }}/a/{{ letter }}?page={{ page - 1 }}">← назад</a>{% endif %}
+        {% if page < pages %} <a href="/slovari/{{ dict_code }}/a/{{ letter }}?page={{ page + 1 }}">вперёд →</a>{% endif %}
+    </p>
+    {% endif %}
+    {% else %}
+    <p>Словарь ещё не загружен в корпус.</p>
+    {% endif %}
+</div>
+{% endblock %}
