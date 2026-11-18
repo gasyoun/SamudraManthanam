@@ -1,0 +1,2426 @@
+{
+  "handoff": "H7790",
+  "generated": "2026-11-18T20:10:10.657414+00:00",
+  "mode": "census",
+  "files": {
+    "frish.jsonl": {
+      "before": {
+        "mixed_cyr_in_lat": 78,
+        "mixed_lat_in_cyr": 39,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 51,
+        "flagged_devanagari": 16,
+        "records_changed": 0
+      },
+      "after": {
+        "mixed_cyr_in_lat": 78,
+        "mixed_lat_in_cyr": 39,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 51,
+        "flagged_devanagari": 16,
+        "records_changed": 0
+      },
+      "repaired": null,
+      "flagged_for_human": [
+        {
+          "id": "frish:p832",
+          "field": "html",
+          "token": "акампитá"
+        },
+        {
+          "id": "frish:p1542",
+          "field": "text",
+          "token": "ѵkamp"
+        },
+        {
+          "id": "frish:p1542",
+          "field": "html",
+          "token": "ѵkamp"
+        },
+        {
+          "id": "frish:p1578",
+          "field": "text",
+          "token": "ѵkar"
+        },
+        {
+          "id": "frish:p1578",
+          "field": "html",
+          "token": "ѵkar"
+        },
+        {
+          "id": "frish:p1601",
+          "field": "text",
+          "token": "ѵkart"
+        },
+        {
+          "id": "frish:p1601",
+          "field": "html",
+          "token": "ѵkart"
+        },
+        {
+          "id": "frish:p1611",
+          "field": "text",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1611",
+          "field": "html",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1617",
+          "field": "text",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1617",
+          "field": "html",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1633",
+          "field": "text",
+          "token": "ѵkalp"
+        },
+        {
+          "id": "frish:p1633",
+          "field": "html",
+          "token": "ѵkalp"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаद"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаdA"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаद"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаdA"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "text",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "text",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "text",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "html",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "html",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "html",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "text",
+          "token": "араन"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "html",
+          "token": "араन"
+        },
+        {
+          "id": "frish:p3897",
+          "field": "text",
+          "token": "сई"
+        },
+        {
+          "id": "frish:p3897",
+          "field": "html",
+          "token": "сई"
+        },
+        {
+          "id": "frish:p3913",
+          "field": "text",
+          "token": "sāgага"
+        },
+        {
+          "id": "frish:p3913",
+          "field": "text",
+          "token": "sAgага"
+        },
+        {
+          "id": "frish:p3913",
+          "field": "text",
+          "token": "sāgага"
+        },
+        {
+          "id": "frish:p3913",
+          "field": "html",
+          "token": "sāgага"
+        },
+        {
+          "id": "frish:p3913",
+          "field": "html",
+          "token": "sAgага"
+        },
+        {
+          "id": "frish:p3913",
+          "field": "html",
+          "token": "sāgага"
+        },
+        {
+          "id": "frish:p4245",
+          "field": "text",
+          "token": "пракатiта"
+        },
+        {
+          "id": "frish:p4245",
+          "field": "html",
+          "token": "пракатíта"
+        },
+        {
+          "id": "frish:p4342",
+          "field": "text",
+          "token": "сई"
+        },
+        {
+          "id": "frish:p4342",
+          "field": "html",
+          "token": "сई"
+        },
+        {
+          "id": "frish:p4585",
+          "field": "text",
+          "token": "аक"
+        },
+        {
+          "id": "frish:p4585",
+          "field": "html",
+          "token": "аक"
+        },
+        {
+          "id": "frish:p4640",
+          "field": "text",
+          "token": "араब"
+        },
+        {
+          "id": "frish:p4640",
+          "field": "html",
+          "token": "араब"
+        },
+        {
+          "id": "frish:p4718",
+          "field": "text",
+          "token": "араब"
+        },
+        {
+          "id": "frish:p4718",
+          "field": "html",
+          "token": "араब"
+        },
+        {
+          "id": "frish:p4952",
+          "field": "html",
+          "token": "бхрáмаяти"
+        },
+        {
+          "id": "frish:p5330",
+          "field": "text",
+          "token": "сअर"
+        },
+        {
+          "id": "frish:p5330",
+          "field": "html",
+          "token": "сअर"
+        },
+        {
+          "id": "frish:p5855",
+          "field": "text",
+          "token": "лангûла"
+        },
+        {
+          "id": "frish:p5855",
+          "field": "html",
+          "token": "лангûла"
+        },
+        {
+          "id": "frish:p6572",
+          "field": "html",
+          "token": "вришá"
+        },
+        {
+          "id": "frish:p7124",
+          "field": "text",
+          "token": "noт"
+        },
+        {
+          "id": "frish:p7124",
+          "field": "html",
+          "token": "noт"
+        },
+        {
+          "id": "frish:p7233",
+          "field": "text",
+          "token": "sadб"
+        },
+        {
+          "id": "frish:p7233",
+          "field": "text",
+          "token": "sadб"
+        },
+        {
+          "id": "frish:p7233",
+          "field": "html",
+          "token": "sadб"
+        },
+        {
+          "id": "frish:p7233",
+          "field": "html",
+          "token": "sadб"
+        },
+        {
+          "id": "frish:p7746",
+          "field": "text",
+          "token": "государьi"
+        },
+        {
+          "id": "frish:p7746",
+          "field": "text",
+          "token": "любезныйi"
+        },
+        {
+          "id": "frish:p7746",
+          "field": "text",
+          "token": "дорогойi"
+        },
+        {
+          "id": "frish:p7746",
+          "field": "html",
+          "token": "государьí"
+        },
+        {
+          "id": "frish:p7746",
+          "field": "html",
+          "token": "любезныйí"
+        },
+        {
+          "id": "frish:p7746",
+          "field": "html",
+          "token": "дорогойí"
+        },
+        {
+          "id": "frish:p8016",
+          "field": "text",
+          "token": "npuвemcmвue"
+        },
+        {
+          "id": "frish:p8016",
+          "field": "html",
+          "token": "npuвemcmвue"
+        }
+      ],
+      "samples": [
+        {
+          "id": "frish:p423",
+          "field": "text",
+          "token": "apaгa"
+        },
+        {
+          "id": "frish:p423",
+          "field": "html",
+          "token": "apaгa"
+        },
+        {
+          "id": "frish:p437",
+          "field": "text",
+          "token": "арi"
+        },
+        {
+          "id": "frish:p437",
+          "field": "html",
+          "token": "арi"
+        },
+        {
+          "id": "frish:p832",
+          "field": "text",
+          "token": "акампитa"
+        },
+        {
+          "id": "frish:p832",
+          "field": "html",
+          "token": "акампитá"
+        },
+        {
+          "id": "frish:p872",
+          "field": "text",
+          "token": "oт"
+        },
+        {
+          "id": "frish:p872",
+          "field": "html",
+          "token": "oт"
+        },
+        {
+          "id": "frish:p962",
+          "field": "text",
+          "token": "aг"
+        },
+        {
+          "id": "frish:p962",
+          "field": "html",
+          "token": "aг"
+        },
+        {
+          "id": "frish:p1542",
+          "field": "text",
+          "token": "ѵkamp"
+        },
+        {
+          "id": "frish:p1542",
+          "field": "html",
+          "token": "ѵkamp"
+        },
+        {
+          "id": "frish:p1578",
+          "field": "text",
+          "token": "ѵkar"
+        },
+        {
+          "id": "frish:p1578",
+          "field": "html",
+          "token": "ѵkar"
+        },
+        {
+          "id": "frish:p1601",
+          "field": "text",
+          "token": "ѵkart"
+        },
+        {
+          "id": "frish:p1601",
+          "field": "html",
+          "token": "ѵkart"
+        },
+        {
+          "id": "frish:p1611",
+          "field": "text",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1611",
+          "field": "html",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1617",
+          "field": "text",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1617",
+          "field": "html",
+          "token": "ѵkarṣ"
+        },
+        {
+          "id": "frish:p1633",
+          "field": "text",
+          "token": "ѵkalp"
+        },
+        {
+          "id": "frish:p1633",
+          "field": "html",
+          "token": "ѵkalp"
+        },
+        {
+          "id": "frish:p2441",
+          "field": "text",
+          "token": "книгe"
+        },
+        {
+          "id": "frish:p2441",
+          "field": "html",
+          "token": "книгe"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаद"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаdA"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "text",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаद"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаdA"
+        },
+        {
+          "id": "frish:p2996",
+          "field": "html",
+          "token": "ргаdā"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "text",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "text",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "text",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "html",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "html",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3215",
+          "field": "html",
+          "token": "dorака"
+        },
+        {
+          "id": "frish:p3247",
+          "field": "text",
+          "token": "drumа"
+        },
+        {
+          "id": "frish:p3247",
+          "field": "text",
+          "token": "drumа"
+        },
+        {
+          "id": "frish:p3247",
+          "field": "text",
+          "token": "drumа"
+        },
+        {
+          "id": "frish:p3247",
+          "field": "html",
+          "token": "drumа"
+        },
+        {
+          "id": "frish:p3247",
+          "field": "html",
+          "token": "drumа"
+        },
+        {
+          "id": "frish:p3247",
+          "field": "html",
+          "token": "drumа"
+        },
+        {
+          "id": "frish:p3263",
+          "field": "text",
+          "token": "вepeвок"
+        },
+        {
+          "id": "frish:p3263",
+          "field": "html",
+          "token": "вepeвок"
+        },
+        {
+          "id": "frish:p3598",
+          "field": "text",
+          "token": "уam"
+        },
+        {
+          "id": "frish:p3598",
+          "field": "html",
+          "token": "уam"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "text",
+          "token": "араन"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "text",
+          "token": "араnī"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "text",
+          "token": "араnI"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "text",
+          "token": "араnī"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "html",
+          "token": "араन"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "html",
+          "token": "араnī"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "html",
+          "token": "араnI"
+        },
+        {
+          "id": "frish:p3693",
+          "field": "html",
+          "token": "араnī"
+        },
+        {
+          "id": "frish:p3700",
+          "field": "text",
+          "token": "nīса"
+        },
+        {
+          "id": "frish:p3700",
+          "field": "text",
+          "token": "nIса"
+        },
+        {
+          "id": "frish:p3700",
+          "field": "text",
+          "token": "nīса"
+        },
+        {
+          "id": "frish:p3700",
+          "field": "html",
+          "token": "nīса"
+        }
+      ]
+    },
+    "kochergina.jsonl": {
+      "before": {
+        "mixed_cyr_in_lat": 56,
+        "mixed_lat_in_cyr": 12,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 6,
+        "flagged_devanagari": 4,
+        "records_changed": 0
+      },
+      "after": {
+        "mixed_cyr_in_lat": 56,
+        "mixed_lat_in_cyr": 12,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 6,
+        "flagged_devanagari": 4,
+        "records_changed": 0
+      },
+      "repaired": null,
+      "flagged_for_human": [
+        {
+          "id": "kochergina:e2256",
+          "field": "text",
+          "token": "अपгअ"
+        },
+        {
+          "id": "kochergina:e2256",
+          "field": "html",
+          "token": "अपгअ"
+        },
+        {
+          "id": "kochergina:e11896",
+          "field": "text",
+          "token": "XVв"
+        },
+        {
+          "id": "kochergina:e11896",
+          "field": "html",
+          "token": "XVв"
+        },
+        {
+          "id": "kochergina:e20542",
+          "field": "text",
+          "token": "IХвв"
+        },
+        {
+          "id": "kochergina:e20542",
+          "field": "html",
+          "token": "IХвв"
+        },
+        {
+          "id": "kochergina:e23336",
+          "field": "text",
+          "token": "дप"
+        },
+        {
+          "id": "kochergina:e23336",
+          "field": "html",
+          "token": "дप"
+        },
+        {
+          "id": "kochergina:e26380",
+          "field": "text",
+          "token": "npeкрасноглазая"
+        },
+        {
+          "id": "kochergina:e26380",
+          "field": "html",
+          "token": "npeкрасноглазая"
+        }
+      ],
+      "samples": [
+        {
+          "id": "kochergina:e675",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e675",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e1045",
+          "field": "text",
+          "token": "рf"
+        },
+        {
+          "id": "kochergina:e1045",
+          "field": "html",
+          "token": "рf"
+        },
+        {
+          "id": "kochergina:e1553",
+          "field": "text",
+          "token": "рf"
+        },
+        {
+          "id": "kochergina:e1553",
+          "field": "html",
+          "token": "рf"
+        },
+        {
+          "id": "kochergina:e2001",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e2001",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e2007",
+          "field": "text",
+          "token": "грaм"
+        },
+        {
+          "id": "kochergina:e2007",
+          "field": "html",
+          "token": "грaм"
+        },
+        {
+          "id": "kochergina:e2256",
+          "field": "text",
+          "token": "अपгअ"
+        },
+        {
+          "id": "kochergina:e2256",
+          "field": "html",
+          "token": "अपгअ"
+        },
+        {
+          "id": "kochergina:e2342",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e2342",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e2522",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e2522",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e3001",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e3001",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e3100",
+          "field": "text",
+          "token": "Аbl"
+        },
+        {
+          "id": "kochergina:e3100",
+          "field": "html",
+          "token": "Аbl"
+        },
+        {
+          "id": "kochergina:e3146",
+          "field": "text",
+          "token": "Аbl"
+        },
+        {
+          "id": "kochergina:e3146",
+          "field": "html",
+          "token": "Аbl"
+        },
+        {
+          "id": "kochergina:e3576",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e3576",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e5632",
+          "field": "text",
+          "token": "рr"
+        },
+        {
+          "id": "kochergina:e5632",
+          "field": "html",
+          "token": "рr"
+        },
+        {
+          "id": "kochergina:e6717",
+          "field": "text",
+          "token": "cрv"
+        },
+        {
+          "id": "kochergina:e6717",
+          "field": "html",
+          "token": "cрv"
+        },
+        {
+          "id": "kochergina:e8976",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e8976",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e8976",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e8976",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e8999",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e8999",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e9732",
+          "field": "text",
+          "token": "Mиpa"
+        },
+        {
+          "id": "kochergina:e9732",
+          "field": "html",
+          "token": "Mиpa"
+        },
+        {
+          "id": "kochergina:e9787",
+          "field": "text",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e9787",
+          "field": "html",
+          "token": "Асc"
+        },
+        {
+          "id": "kochergina:e10067",
+          "field": "text",
+          "token": "перeрыв"
+        },
+        {
+          "id": "kochergina:e10067",
+          "field": "html",
+          "token": "перeрыв"
+        },
+        {
+          "id": "kochergina:e10260",
+          "field": "text",
+          "token": "рr"
+        },
+        {
+          "id": "kochergina:e10260",
+          "field": "html",
+          "token": "рr"
+        },
+        {
+          "id": "kochergina:e11441",
+          "field": "text",
+          "token": "рf"
+        },
+        {
+          "id": "kochergina:e11441",
+          "field": "html",
+          "token": "рf"
+        },
+        {
+          "id": "kochergina:e11896",
+          "field": "text",
+          "token": "XVв"
+        },
+        {
+          "id": "kochergina:e11896",
+          "field": "html",
+          "token": "XVв"
+        },
+        {
+          "id": "kochergina:e15709",
+          "field": "text",
+          "token": "уa"
+        },
+        {
+          "id": "kochergina:e15709",
+          "field": "html",
+          "token": "уa"
+        },
+        {
+          "id": "kochergina:e15886",
+          "field": "text",
+          "token": "Maхабхашьи"
+        },
+        {
+          "id": "kochergina:e15886",
+          "field": "html",
+          "token": "Maхабхашьи"
+        },
+        {
+          "id": "kochergina:e20161",
+          "field": "text",
+          "token": "Lос"
+        },
+        {
+          "id": "kochergina:e20161",
+          "field": "html",
+          "token": "Lос"
+        },
+        {
+          "id": "kochergina:e20479",
+          "field": "text",
+          "token": "Lос"
+        },
+        {
+          "id": "kochergina:e20479",
+          "field": "html",
+          "token": "Lос"
+        },
+        {
+          "id": "kochergina:e20542",
+          "field": "text",
+          "token": "IХвв"
+        },
+        {
+          "id": "kochergina:e20542",
+          "field": "html",
+          "token": "IХвв"
+        },
+        {
+          "id": "kochergina:e20755",
+          "field": "text",
+          "token": "Lос"
+        },
+        {
+          "id": "kochergina:e20755",
+          "field": "html",
+          "token": "Lос"
+        },
+        {
+          "id": "kochergina:e21133",
+          "field": "text",
+          "token": "рf"
+        },
+        {
+          "id": "kochergina:e21133",
+          "field": "html",
+          "token": "рf"
+        }
+      ]
+    },
+    "kossovich.jsonl": {
+      "before": {
+        "mixed_cyr_in_lat": 10,
+        "mixed_lat_in_cyr": 2,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 0,
+        "flagged_devanagari": 0,
+        "records_changed": 0
+      },
+      "after": {
+        "mixed_cyr_in_lat": 10,
+        "mixed_lat_in_cyr": 2,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 0,
+        "flagged_devanagari": 0,
+        "records_changed": 0
+      },
+      "repaired": null,
+      "flagged_for_human": [],
+      "samples": [
+        {
+          "id": "kossovich:e1491",
+          "field": "text",
+          "token": "intranѕ"
+        },
+        {
+          "id": "kossovich:e1491",
+          "field": "html",
+          "token": "intranѕ"
+        },
+        {
+          "id": "kossovich:e7275",
+          "field": "text",
+          "token": "узнa"
+        },
+        {
+          "id": "kossovich:e7275",
+          "field": "html",
+          "token": "узнa"
+        },
+        {
+          "id": "kossovich:e7779",
+          "field": "text",
+          "token": "lа"
+        },
+        {
+          "id": "kossovich:e7779",
+          "field": "html",
+          "token": "lа"
+        },
+        {
+          "id": "kossovich:e11224",
+          "field": "text",
+          "token": "prurienѕ"
+        },
+        {
+          "id": "kossovich:e11224",
+          "field": "html",
+          "token": "prurienѕ"
+        },
+        {
+          "id": "kossovich:e11935",
+          "field": "text",
+          "token": "laѕѕus"
+        },
+        {
+          "id": "kossovich:e11935",
+          "field": "html",
+          "token": "laѕѕus"
+        },
+        {
+          "id": "kossovich:e13358",
+          "field": "text",
+          "token": "gueѕcor"
+        },
+        {
+          "id": "kossovich:e13358",
+          "field": "html",
+          "token": "gueѕcor"
+        }
+      ]
+    },
+    "knauer.jsonl": {
+      "before": {
+        "mixed_cyr_in_lat": 86,
+        "mixed_lat_in_cyr": 2,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 8,
+        "flagged_devanagari": 0,
+        "records_changed": 0
+      },
+      "after": {
+        "mixed_cyr_in_lat": 86,
+        "mixed_lat_in_cyr": 2,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 8,
+        "flagged_devanagari": 0,
+        "records_changed": 0
+      },
+      "repaired": null,
+      "flagged_for_human": [
+        {
+          "id": "knauer:e609",
+          "field": "text",
+          "token": "унмадаïттаан"
+        },
+        {
+          "id": "knauer:e609",
+          "field": "html",
+          "token": "унмадаïттаан"
+        },
+        {
+          "id": "knauer:e1218",
+          "field": "text",
+          "token": "deѕьnъ"
+        },
+        {
+          "id": "knauer:e1218",
+          "field": "html",
+          "token": "deѕьnъ"
+        },
+        {
+          "id": "knauer:e1269",
+          "field": "text",
+          "token": "dёna"
+        },
+        {
+          "id": "knauer:e1269",
+          "field": "html",
+          "token": "dёna"
+        },
+        {
+          "id": "knauer:e2184",
+          "field": "text",
+          "token": "спасенiе"
+        },
+        {
+          "id": "knauer:e2184",
+          "field": "html",
+          "token": "спасенiе"
+        }
+      ],
+      "samples": [
+        {
+          "id": "knauer:e61",
+          "field": "text",
+          "token": "ataѕ"
+        },
+        {
+          "id": "knauer:e61",
+          "field": "html",
+          "token": "átaѕ"
+        },
+        {
+          "id": "knauer:e234",
+          "field": "text",
+          "token": "аśv"
+        },
+        {
+          "id": "knauer:e234",
+          "field": "html",
+          "token": "аśv"
+        },
+        {
+          "id": "knauer:e278",
+          "field": "text",
+          "token": "amāṅѕa"
+        },
+        {
+          "id": "knauer:e278",
+          "field": "html",
+          "token": "amāṅѕa"
+        },
+        {
+          "id": "knauer:e346",
+          "field": "text",
+          "token": "avigһna"
+        },
+        {
+          "id": "knauer:e346",
+          "field": "html",
+          "token": "avigһna"
+        },
+        {
+          "id": "knauer:e357",
+          "field": "text",
+          "token": "ѕam"
+        },
+        {
+          "id": "knauer:e357",
+          "field": "html",
+          "token": "ѕam"
+        },
+        {
+          "id": "knauer:e373",
+          "field": "text",
+          "token": "aѕ"
+        },
+        {
+          "id": "knauer:e373",
+          "field": "html",
+          "token": "aѕ"
+        },
+        {
+          "id": "knauer:e374",
+          "field": "text",
+          "token": "aѕati"
+        },
+        {
+          "id": "knauer:e374",
+          "field": "text",
+          "token": "ѕam"
+        },
+        {
+          "id": "knauer:e374",
+          "field": "html",
+          "token": "aѕati"
+        },
+        {
+          "id": "knauer:e374",
+          "field": "html",
+          "token": "ѕam"
+        },
+        {
+          "id": "knauer:e376",
+          "field": "text",
+          "token": "aѕaṁѕthita"
+        },
+        {
+          "id": "knauer:e376",
+          "field": "html",
+          "token": "áѕaṁѕthita"
+        },
+        {
+          "id": "knauer:e377",
+          "field": "text",
+          "token": "asaṁkaѕuka"
+        },
+        {
+          "id": "knauer:e377",
+          "field": "text",
+          "token": "saṁkaѕuka"
+        },
+        {
+          "id": "knauer:e377",
+          "field": "html",
+          "token": "asaṁkaѕuka"
+        },
+        {
+          "id": "knauer:e377",
+          "field": "html",
+          "token": "saṁkaѕuka"
+        },
+        {
+          "id": "knauer:e378",
+          "field": "text",
+          "token": "aѕaṅga"
+        },
+        {
+          "id": "knauer:e378",
+          "field": "html",
+          "token": "aѕaṅga"
+        },
+        {
+          "id": "knauer:e379",
+          "field": "text",
+          "token": "aѕat"
+        },
+        {
+          "id": "knauer:e379",
+          "field": "html",
+          "token": "áѕat"
+        },
+        {
+          "id": "knauer:e390",
+          "field": "text",
+          "token": "aѕādhudarśin"
+        },
+        {
+          "id": "knauer:e390",
+          "field": "html",
+          "token": "aѕādhudarśin"
+        },
+        {
+          "id": "knauer:e397",
+          "field": "text",
+          "token": "aѕkandayant"
+        },
+        {
+          "id": "knauer:e397",
+          "field": "html",
+          "token": "aѕkandayant"
+        },
+        {
+          "id": "knauer:e406",
+          "field": "text",
+          "token": "aһ"
+        },
+        {
+          "id": "knauer:e406",
+          "field": "html",
+          "token": "aһ"
+        },
+        {
+          "id": "knauer:e523",
+          "field": "text",
+          "token": "tataѕ"
+        },
+        {
+          "id": "knauer:e523",
+          "field": "html",
+          "token": "tataѕ"
+        },
+        {
+          "id": "knauer:e609",
+          "field": "text",
+          "token": "унмадаïттаан"
+        },
+        {
+          "id": "knauer:e609",
+          "field": "html",
+          "token": "унмадаïттаан"
+        },
+        {
+          "id": "knauer:e784",
+          "field": "text",
+          "token": "kāryа"
+        },
+        {
+          "id": "knauer:e784",
+          "field": "html",
+          "token": "kāryа"
+        },
+        {
+          "id": "knauer:e900",
+          "field": "text",
+          "token": "kṣīṇāyuѕ"
+        },
+        {
+          "id": "knauer:e900",
+          "field": "html",
+          "token": "kṣīṇāyuѕ"
+        },
+        {
+          "id": "knauer:e1218",
+          "field": "text",
+          "token": "deѕьnъ"
+        },
+        {
+          "id": "knauer:e1218",
+          "field": "html",
+          "token": "deѕьnъ"
+        },
+        {
+          "id": "knauer:e1252",
+          "field": "text",
+          "token": "ditѕati"
+        },
+        {
+          "id": "knauer:e1252",
+          "field": "html",
+          "token": "ditѕati"
+        },
+        {
+          "id": "knauer:e1263",
+          "field": "text",
+          "token": "dālbһya"
+        },
+        {
+          "id": "knauer:e1263",
+          "field": "html",
+          "token": "dālbһya"
+        },
+        {
+          "id": "knauer:e1269",
+          "field": "text",
+          "token": "dёna"
+        },
+        {
+          "id": "knauer:e1269",
+          "field": "html",
+          "token": "dёna"
+        },
+        {
+          "id": "knauer:e1277",
+          "field": "text",
+          "token": "ѕamud"
+        },
+        {
+          "id": "knauer:e1277",
+          "field": "html",
+          "token": "ѕamud"
+        },
+        {
+          "id": "knauer:e1345",
+          "field": "text",
+          "token": "dyumatѕēna"
+        },
+        {
+          "id": "knauer:e1345",
+          "field": "html",
+          "token": "dyumatѕēna"
+        },
+        {
+          "id": "knauer:e1355",
+          "field": "text",
+          "token": "daśа"
+        },
+        {
+          "id": "knauer:e1355",
+          "field": "html",
+          "token": "daśа"
+        },
+        {
+          "id": "knauer:e1372",
+          "field": "text",
+          "token": "dharmataѕ"
+        },
+        {
+          "id": "knauer:e1372",
+          "field": "html",
+          "token": "dharmataѕ"
+        },
+        {
+          "id": "knauer:e1398",
+          "field": "text",
+          "token": "dumaѕ"
+        },
+        {
+          "id": "knauer:e1398",
+          "field": "html",
+          "token": "dùmaѕ"
+        },
+        {
+          "id": "knauer:e1402",
+          "field": "text",
+          "token": "dоją"
+        },
+        {
+          "id": "knauer:e1402",
+          "field": "html",
+          "token": "dоją"
+        }
+      ]
+    },
+    "slovar-smirnova.jsonl": {
+      "before": {
+        "mixed_cyr_in_lat": 72,
+        "mixed_lat_in_cyr": 10,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 188,
+        "flagged_devanagari": 0,
+        "records_changed": 0
+      },
+      "after": {
+        "mixed_cyr_in_lat": 72,
+        "mixed_lat_in_cyr": 10,
+        "repaired_to_lat": 0,
+        "repaired_to_cyr": 0,
+        "chars_changed": 0,
+        "flagged_unmappable": 188,
+        "flagged_devanagari": 0,
+        "records_changed": 0
+      },
+      "repaired": null,
+      "flagged_for_human": [
+        {
+          "id": "slovar-smirnova:e210",
+          "field": "text",
+          "token": "доṛазаṇṭлṁśṇḍа"
+        },
+        {
+          "id": "slovar-smirnova:e210",
+          "field": "html",
+          "token": "доṛазаṇṭлṁśṇḍа"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "text",
+          "token": "aбza"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "text",
+          "token": "aбśa"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "html",
+          "token": "aбza"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "html",
+          "token": "aбśa"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "text",
+          "token": "aбzumAn"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "text",
+          "token": "aбśumān"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "html",
+          "token": "aбzumAn"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "html",
+          "token": "aбśumān"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "text",
+          "token": "aбzumant"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "text",
+          "token": "aбśumant"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "html",
+          "token": "aбzumant"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "html",
+          "token": "aбśumant"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "text",
+          "token": "mцssen"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "text",
+          "token": "dцrfen"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "html",
+          "token": "mцssen"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "html",
+          "token": "dцrfen"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "text",
+          "token": "Ḍṭда"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "text",
+          "token": "Ḍṭдṣ"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "html",
+          "token": "Ḍṭда"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "html",
+          "token": "Ḍṭдṣ"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "text",
+          "token": "śм"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "text",
+          "token": "ṇаṛжṭ"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "html",
+          "token": "śм"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "html",
+          "token": "ṇаṛжṭ"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "text",
+          "token": "bRбhita"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "text",
+          "token": "bṛбhita"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "html",
+          "token": "bRбhita"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "html",
+          "token": "bṛбhita"
+        },
+        {
+          "id": "slovar-smirnova:e546",
+          "field": "text",
+          "token": "Gemцt"
+        },
+        {
+          "id": "slovar-smirnova:e546",
+          "field": "html",
+          "token": "Gemцt"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "text",
+          "token": "bhraбz"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "text",
+          "token": "bhraбś"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "html",
+          "token": "bhraбz"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "html",
+          "token": "bhraбś"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "text",
+          "token": "bhraбza"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "text",
+          "token": "bhraбśa"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "html",
+          "token": "bhraбza"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "html",
+          "token": "bhraбśa"
+        },
+        {
+          "id": "slovar-smirnova:e639",
+          "field": "text",
+          "token": "bhUyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e639",
+          "field": "text",
+          "token": "bhūyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e639",
+          "field": "html",
+          "token": "bhUyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e639",
+          "field": "html",
+          "token": "bhūyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e660",
+          "field": "text",
+          "token": "vaikuбTha"
+        },
+        {
+          "id": "slovar-smirnova:e660",
+          "field": "text",
+          "token": "vaikuбṭha"
+        },
+        {
+          "id": "slovar-smirnova:e660",
+          "field": "html",
+          "token": "vaikuбTha"
+        },
+        {
+          "id": "slovar-smirnova:e660",
+          "field": "html",
+          "token": "vaikuбṭha"
+        },
+        {
+          "id": "slovar-smirnova:e720",
+          "field": "text",
+          "token": "vasaбta"
+        },
+        {
+          "id": "slovar-smirnova:e720",
+          "field": "text",
+          "token": "vasaбta"
+        },
+        {
+          "id": "slovar-smirnova:e720",
+          "field": "html",
+          "token": "vasaбta"
+        },
+        {
+          "id": "slovar-smirnova:e720",
+          "field": "html",
+          "token": "vasaбta"
+        },
+        {
+          "id": "slovar-smirnova:e731",
+          "field": "text",
+          "token": "vasuSeбa"
+        },
+        {
+          "id": "slovar-smirnova:e731",
+          "field": "text",
+          "token": "vasuṣeбa"
+        },
+        {
+          "id": "slovar-smirnova:e731",
+          "field": "html",
+          "token": "vasuSeбa"
+        },
+        {
+          "id": "slovar-smirnova:e731",
+          "field": "html",
+          "token": "vasuṣeбa"
+        },
+        {
+          "id": "slovar-smirnova:e756",
+          "field": "text",
+          "token": "Ḍṭда"
+        },
+        {
+          "id": "slovar-smirnova:e756",
+          "field": "html",
+          "token": "Ḍṭда"
+        },
+        {
+          "id": "slovar-smirnova:e783",
+          "field": "text",
+          "token": "viviбzati"
+        },
+        {
+          "id": "slovar-smirnova:e783",
+          "field": "text",
+          "token": "viviбśati"
+        },
+        {
+          "id": "slovar-smirnova:e783",
+          "field": "html",
+          "token": "viviбzati"
+        },
+        {
+          "id": "slovar-smirnova:e783",
+          "field": "html",
+          "token": "viviбśati"
+        },
+        {
+          "id": "slovar-smirnova:e801",
+          "field": "text",
+          "token": "рiк"
+        },
+        {
+          "id": "slovar-smirnova:e801",
+          "field": "html",
+          "token": "рiк"
+        },
+        {
+          "id": "slovar-smirnova:e948",
+          "field": "text",
+          "token": "śанṛарīана"
+        },
+        {
+          "id": "slovar-smirnova:e948",
+          "field": "html",
+          "token": "śанṛарīана"
+        },
+        {
+          "id": "slovar-smirnova:e1000",
+          "field": "text",
+          "token": "garIyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e1000",
+          "field": "text",
+          "token": "garīyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e1000",
+          "field": "html",
+          "token": "garIyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e1000",
+          "field": "html",
+          "token": "garīyaбs"
+        },
+        {
+          "id": "slovar-smirnova:e1068",
+          "field": "text",
+          "token": "Ḍñдхñ"
+        },
+        {
+          "id": "slovar-smirnova:e1068",
+          "field": "html",
+          "token": "Ḍñдхñ"
+        },
+        {
+          "id": "slovar-smirnova:e1203",
+          "field": "text",
+          "token": "jīvaбjīvaka"
+        },
+        {
+          "id": "slovar-smirnova:e1203",
+          "field": "html",
+          "token": "jīvaбjīvaka"
+        },
+        {
+          "id": "slovar-smirnova:e1318",
+          "field": "text",
+          "token": "цben"
+        },
+        {
+          "id": "slovar-smirnova:e1318",
+          "field": "html",
+          "token": "цben"
+        },
+        {
+          "id": "slovar-smirnova:e1519",
+          "field": "text",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1519",
+          "field": "text",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1519",
+          "field": "html",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1519",
+          "field": "html",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1529",
+          "field": "text",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1529",
+          "field": "text",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1529",
+          "field": "html",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1529",
+          "field": "html",
+          "token": "kaбsa"
+        },
+        {
+          "id": "slovar-smirnova:e1616",
+          "field": "text",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1616",
+          "field": "text",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1616",
+          "field": "html",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1616",
+          "field": "html",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1619",
+          "field": "text",
+          "token": "kiбzuka"
+        },
+        {
+          "id": "slovar-smirnova:e1619",
+          "field": "text",
+          "token": "kiбśuka"
+        },
+        {
+          "id": "slovar-smirnova:e1619",
+          "field": "html",
+          "token": "kiбzuka"
+        },
+        {
+          "id": "slovar-smirnova:e1619",
+          "field": "html",
+          "token": "kiбśuka"
+        },
+        {
+          "id": "slovar-smirnova:e1621",
+          "field": "text",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1621",
+          "field": "text",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1621",
+          "field": "html",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1621",
+          "field": "html",
+          "token": "kiбnara"
+        },
+        {
+          "id": "slovar-smirnova:e1622",
+          "field": "text",
+          "token": "kiбpuruSa"
+        },
+        {
+          "id": "slovar-smirnova:e1622",
+          "field": "text",
+          "token": "kiбpuruṣa"
+        },
+        {
+          "id": "slovar-smirnova:e1622",
+          "field": "html",
+          "token": "kiбpuruSa"
+        },
+        {
+          "id": "slovar-smirnova:e1622",
+          "field": "html",
+          "token": "kiбpuruṣa"
+        },
+        {
+          "id": "slovar-smirnova:e2142",
+          "field": "text",
+          "token": "nRsiбha"
+        },
+        {
+          "id": "slovar-smirnova:e2142",
+          "field": "text",
+          "token": "nṛsiбha"
+        },
+        {
+          "id": "slovar-smirnova:e2142",
+          "field": "html",
+          "token": "nRsiбha"
+        },
+        {
+          "id": "slovar-smirnova:e2142",
+          "field": "html",
+          "token": "nṛsiбha"
+        },
+        {
+          "id": "slovar-smirnova:e2221",
+          "field": "text",
+          "token": "ṇапаśу"
+        },
+        {
+          "id": "slovar-smirnova:e2221",
+          "field": "html",
+          "token": "ṇапаśу"
+        },
+        {
+          "id": "slovar-smirnova:e2264",
+          "field": "text",
+          "token": "pataбga"
+        },
+        {
+          "id": "slovar-smirnova:e2264",
+          "field": "text",
+          "token": "pataбga"
+        },
+        {
+          "id": "slovar-smirnova:e2264",
+          "field": "html",
+          "token": "pataбga"
+        },
+        {
+          "id": "slovar-smirnova:e2264",
+          "field": "html",
+          "token": "pataбga"
+        },
+        {
+          "id": "slovar-smirnova:e2313",
+          "field": "text",
+          "token": "ṇапаśу"
+        },
+        {
+          "id": "slovar-smirnova:e2313",
+          "field": "text",
+          "token": "ṇапаś"
+        },
+        {
+          "id": "slovar-smirnova:e2313",
+          "field": "html",
+          "token": "ṇапаśу"
+        },
+        {
+          "id": "slovar-smirnova:e2313",
+          "field": "html",
+          "token": "ṇапаś"
+        },
+        {
+          "id": "slovar-smirnova:e2405",
+          "field": "text",
+          "token": "пуṇṁ"
+        },
+        {
+          "id": "slovar-smirnova:e2405",
+          "field": "html",
+          "token": "пуṇṁ"
+        },
+        {
+          "id": "slovar-smirnova:e2460",
+          "field": "text",
+          "token": "puraбdara"
+        },
+        {
+          "id": "slovar-smirnova:e2460",
+          "field": "text",
+          "token": "puraбdara"
+        },
+        {
+          "id": "slovar-smirnova:e2460",
+          "field": "html",
+          "token": "puraбdara"
+        },
+        {
+          "id": "slovar-smirnova:e2460",
+          "field": "html",
+          "token": "puraбdara"
+        }
+      ],
+      "samples": [
+        {
+          "id": "slovar-smirnova:e2",
+          "field": "text",
+          "token": "CBACTИ"
+        },
+        {
+          "id": "slovar-smirnova:e2",
+          "field": "html",
+          "token": "CBACTИ"
+        },
+        {
+          "id": "slovar-smirnova:e46",
+          "field": "text",
+          "token": "Aвьякта"
+        },
+        {
+          "id": "slovar-smirnova:e46",
+          "field": "html",
+          "token": "Aвьякта"
+        },
+        {
+          "id": "slovar-smirnova:e49",
+          "field": "text",
+          "token": "Агaстьи"
+        },
+        {
+          "id": "slovar-smirnova:e49",
+          "field": "html",
+          "token": "Агaстьи"
+        },
+        {
+          "id": "slovar-smirnova:e72",
+          "field": "text",
+          "token": "хtre"
+        },
+        {
+          "id": "slovar-smirnova:e72",
+          "field": "html",
+          "token": "хtre"
+        },
+        {
+          "id": "slovar-smirnova:e181",
+          "field": "text",
+          "token": "muр"
+        },
+        {
+          "id": "slovar-smirnova:e181",
+          "field": "html",
+          "token": "muр"
+        },
+        {
+          "id": "slovar-smirnova:e195",
+          "field": "text",
+          "token": "Īṭīа"
+        },
+        {
+          "id": "slovar-smirnova:e195",
+          "field": "html",
+          "token": "Īṭīа"
+        },
+        {
+          "id": "slovar-smirnova:e210",
+          "field": "text",
+          "token": "доṛазаṇṭлṁśṇḍа"
+        },
+        {
+          "id": "slovar-smirnova:e210",
+          "field": "html",
+          "token": "доṛазаṇṭлṁśṇḍа"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "text",
+          "token": "aбza"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "text",
+          "token": "aбśa"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "html",
+          "token": "aбza"
+        },
+        {
+          "id": "slovar-smirnova:e258",
+          "field": "html",
+          "token": "aбśa"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "text",
+          "token": "aбzumAn"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "text",
+          "token": "aбśumān"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "html",
+          "token": "aбzumAn"
+        },
+        {
+          "id": "slovar-smirnova:e259",
+          "field": "html",
+          "token": "aбśumān"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "text",
+          "token": "aбzumant"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "text",
+          "token": "aбśumant"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "html",
+          "token": "aбzumant"
+        },
+        {
+          "id": "slovar-smirnova:e260",
+          "field": "html",
+          "token": "aбśumant"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "text",
+          "token": "mцssen"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "text",
+          "token": "dцrfen"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "html",
+          "token": "mцssen"
+        },
+        {
+          "id": "slovar-smirnova:e317",
+          "field": "html",
+          "token": "dцrfen"
+        },
+        {
+          "id": "slovar-smirnova:e362",
+          "field": "text",
+          "token": "atyaśnataр"
+        },
+        {
+          "id": "slovar-smirnova:e362",
+          "field": "html",
+          "token": "atyaśnataр"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "text",
+          "token": "Ḍṭда"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "text",
+          "token": "Ḍṭдṣ"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "html",
+          "token": "Ḍṭда"
+        },
+        {
+          "id": "slovar-smirnova:e378",
+          "field": "html",
+          "token": "Ḍṭдṣ"
+        },
+        {
+          "id": "slovar-smirnova:e505",
+          "field": "text",
+          "token": "брахмaн"
+        },
+        {
+          "id": "slovar-smirnova:e505",
+          "field": "html",
+          "token": "брахмaн"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "text",
+          "token": "śм"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "text",
+          "token": "ṇаṛжṭ"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "text",
+          "token": "Ṇо"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "html",
+          "token": "śм"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "html",
+          "token": "ṇаṛжṭ"
+        },
+        {
+          "id": "slovar-smirnova:e524",
+          "field": "html",
+          "token": "Ṇо"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "text",
+          "token": "bRбhita"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "text",
+          "token": "bṛбhita"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "html",
+          "token": "bRбhita"
+        },
+        {
+          "id": "slovar-smirnova:e526",
+          "field": "html",
+          "token": "bṛбhita"
+        },
+        {
+          "id": "slovar-smirnova:e546",
+          "field": "text",
+          "token": "Gemцt"
+        },
+        {
+          "id": "slovar-smirnova:e546",
+          "field": "html",
+          "token": "Gemцt"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "text",
+          "token": "bhraбz"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "text",
+          "token": "bhraбś"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "html",
+          "token": "bhraбz"
+        },
+        {
+          "id": "slovar-smirnova:e614",
+          "field": "html",
+          "token": "bhraбś"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "text",
+          "token": "bhraбza"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "text",
+          "token": "bhraбśa"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "html",
+          "token": "bhraбza"
+        },
+        {
+          "id": "slovar-smirnova:e615",
+          "field": "html",
+          "token": "bhraбśa"
+        },
+        {
+          "id": "slovar-smirnova:e631",
+          "field": "text",
+          "token": "śeṣasamgrahaр"
+        },
+        {
+          "id": "slovar-smirnova:e631",
+          "field": "html",
+          "token": "śeṣasamgrahaр"
+        }
+      ]
+    }
+  }
+}

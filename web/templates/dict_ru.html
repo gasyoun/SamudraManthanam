@@ -1,0 +1,29 @@
+{% extends "_base.html" %}
+{% block title %}«{{ query }}» — русское значение в санскритских словарях{% endblock %}
+{% block content %}
+<div class="container" style="max-width:1000px;margin:1.5rem auto;padding:0 1rem;">
+    <h1>Санскритские слова со значением «{{ query }}»</h1>
+    <p><a href="/slovari">← все словари</a></p>
+
+    {% if cards %}
+    <p>Найдено записей: {{ cards|length }}. Карточка = словарная статья;
+       значок словаря показывает источник.</p>
+    <div>
+        {% for c in cards %}
+        <div class="dict-card" style="border:1px solid #e2e2e2;border-radius:10px;padding:1rem 1.2rem;margin:.7rem 0;">
+            <p style="margin:0 0 .3rem;">
+                <a href="/slovari/{{ c.work }}/{{ c.entry.slug }}"><strong>{{ c.entry.display_iast() or c.entry.display_deva() or c.entry.cyr }}</strong></a>
+                {% if c.entry.display_deva() %}<span style="font-size:1.15rem;margin-left:.6rem;">{{ c.entry.display_deva() }}</span>{% endif %}
+                {% if c.entry.display_cyr() %}<span style="color:#666;margin-left:.6rem;">{{ c.entry.display_cyr() }}</span>{% endif %}
+                <span class="dict-badge" style="background:#eef2ff;border-radius:6px;padding:.1rem .5rem;font-size:.8rem;">{{ c.badge }}</span>
+            </p>
+            <p style="margin:0;">{{ c.entry.gloss_html[:240] }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>В словарных статьях значение «{{ query }}» не найдено.
+       <a href="/s/{{ query }}">Обычный поиск по всему корпусу →</a></p>
+    {% endif %}
+</div>
+{% endblock %}

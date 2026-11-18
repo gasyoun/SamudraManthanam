@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+{% block title %}{{ headword }} — {{ meta.short }}{% endblock %}
+{% block content %}
+<div class="container" style="max-width:1000px;margin:1.5rem auto;padding:0 1rem;">
+    <h1>{{ headword }}</h1>
+    <p><a href="/slovari/{{ dict_code }}">← {{ meta.title }}</a>
+       {% if letter %} · <a href="/slovari/{{ dict_code }}/a/{{ letter }}">слова на {{ letter }}</a>{% endif %}</p>
+
+    {% for e in entries %}
+    <div class="dict-entry" style="border:1px solid #e2e2e2;border-radius:10px;padding:1rem 1.2rem;margin:.8rem 0;">
+        <p style="margin:0 0 .4rem;">
+            {% if e.display_deva() %}<span style="font-size:1.6rem;">{{ e.display_deva() }}</span>{% endif %}
+            {% if e.display_iast() %} <strong style="font-size:1.2rem;">{{ e.display_iast() }}</strong>{% endif %}
+            {% if e.display_cyr() %} <span style="color:#666;">{{ e.display_cyr() }}</span>{% endif %}
+            {% if e.homonym %} <span style="color:#888;">· омоним {{ e.homonym }}</span>{% endif %}
+        </p>
+        {% if e.pos %}
+        <p style="margin:0 0 .4rem;color:#555;">Часть речи: {{ e.pos|join(', ') }}</p>
+        {% endif %}
+        <p style="margin:0;">{{ e.gloss_html }}</p>
+        {% if not e.gloss_html and e.raw %}<p style="margin:0;">{{ e.raw }}</p>{% endif %}
+        <p style="margin:.5rem 0 0;font-size:.85rem;color:#888;">
+            <a href="/s/{{ e.display_iast() or headword }}">искать «{{ e.display_iast() or headword }}» в корпусе →</a>
+        </p>
+    </div>
+    {% endfor %}
+
+    {% if not entries %}
+    <p>Слово «{{ headword }}» в этом словаре не найдено.</p>
+    {% endif %}
+
+    {% if cross %}
+    <h2>Это же слово в других словарях</h2>
+    <ul>
+        {% for c in cross %}
+        <li><span class="dict-badge" style="background:#eef2ff;border-radius:6px;padding:.1rem .5rem;font-size:.8rem;">{{ c.badge }}</span>
+            <a href="/slovari/{{ c.work }}/{{ c.slug }}">открыть</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

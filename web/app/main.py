@@ -38,6 +38,7 @@ from app.routers import (
     compare,
     corpus_sync,
     corrections,
+    dict,
     health,
     home,
     identity,
@@ -82,8 +83,10 @@ async def regex_contract_error_handler(request: Request, exc: RegexContractError
 configure_cors(app)
 app.middleware("http")(security_headers)
 
-# Include routers
+# Include routers. dict (H7790) must register BEFORE search_page: its
+# /slovari/... paths would otherwise be swallowed by /s/{query:path}.
 app.include_router(sources.router)
+app.include_router(dict.router)
 app.include_router(search.router)
 app.include_router(morph.router)
 app.include_router(corpus_sync.router)

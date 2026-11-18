@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+{% block title %}Словари санскрита — Пахтанье океана{% endblock %}
+{% block content %}
+<div class="container" style="max-width:1000px;margin:1.5rem auto;padding:0 1rem;">
+    <h1>Словари санскрита</h1>
+    <p>Пять оцифрованных санскритско-русских словарей — с построчным просмотром,
+       поиском слова в любой записи (деванагари, IAST, SLP1) и обратным
+       поиском по русскому значению. Всего записей: <strong>{{ total }}</strong>.</p>
+
+    <form action="/slovari/lookup" method="get" style="display:flex;gap:.6rem;flex-wrap:wrap;margin:1.2rem 0;">
+        <input type="text" name="q" placeholder="Слово: देव / deva / deva / dEva" style="flex:1;min-width:240px;padding:.7rem 1rem;border:2px solid #ddd;border-radius:8px;">
+        <button type="submit" class="btn btn-primary">Найти слово</button>
+    </form>
+    <form action="/slovari/ru" method="get" onsubmit="this.action='/slovari/ru/'+encodeURIComponent(this.q.value);this.removeAttribute('onsubmit');" style="display:flex;gap:.6rem;flex-wrap:wrap;margin:1.2rem 0;">
+        <input type="text" name="q" placeholder="Значение по-русски: бог, счастье…" style="flex:1;min-width:240px;padding:.7rem 1rem;border:2px solid #ddd;border-radius:8px;">
+        <button type="submit" class="btn btn-primary">Русское значение → санскрит</button>
+    </form>
+
+    <div class="dict-list">
+        {% for d in dicts %}
+        <div class="dict-card" style="border:1px solid #e2e2e2;border-radius:10px;padding:1rem 1.2rem;margin:.8rem 0;">
+            <h2 style="margin:0 0 .3rem;"><a href="/slovari/{{ d.code }}">{{ d.title }}</a></h2>
+            <p style="margin:0 0 .5rem;color:#444;">{{ d.description }}</p>
+            {% if d.available %}
+            <a href="/slovari/{{ d.code }}">Открыть словарь · {{ d.entries }} записей →</a>
+            {% else %}
+            <span style="color:#999;">Скоро в корпусе</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
