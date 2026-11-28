@@ -1,11 +1,11 @@
 # CLAUDE.md
 
-_Created: 12-05-2026 · Last updated: 10-11-2026 — H7934 Python floor sync rule added; H7274 claims pass: web/app/main.py + requirements.txt OK; Lazarus client real (Index_pr.lpi, Units/, POUpdater exes)_
+_Created: 12-05-2026 · Last updated: 28-11-2026 — H8658 truth refresh: public URL is the branded host, H7790 dictionary layer, changelog-queue and agent-policy fences, desktop runtime paths; H7934 Python floor sync rule added_
 
-`SamudraManthanam` («Пахтанье океана») is a **parallel Sanskrit–Russian corpus
-search** platform: a FastAPI + SQLite FTS5 web app (the live public surface)
-and a legacy Lazarus/Free Pascal Windows desktop client (`PO.EXE`). Same
-corpus, two front ends.
+This repo is **SamudraManthanam** («Пахтанье океана») — a **parallel
+Sanskrit–Russian corpus search** platform: a FastAPI + SQLite FTS5 web app
+(the live public surface) and a legacy Lazarus/Free Pascal Windows desktop
+client (`PO.EXE`). Same corpus, two front ends.
 
 Org conventions live in [`../CLAUDE.md`](https://github.com/gasyoun/github-spine/blob/main/CLAUDE.md).
 Before encodings or corpus data, read the
@@ -20,33 +20,51 @@ $env:PYTHONPATH="."; python -m pytest -m "not corpus"
 $env:PYTHONPATH="."; $env:USE_REAL_CORPUS="1"; python -m pytest -m "corpus"
 ```
 
-Build the search DB: `./build-web-db.ps1`. Re-index (Docker): `./reindex.sh`.
+Build the search DB: `./build-web-db.ps1`. Corpus publish / re-index: `./reindex.sh` — validate, ingest into a temp DB, integrity-check, back up, atomic swap; Docker-path defaults, on prod through `CORPUS_PATH`/`DB_PATH`/… (`OPS.md`).
 
 Public search after a known production deploy (`root@193.232.229.92`,
-`/opt/samudra`):
-[https://samudra.193.232.229.92.sslip.io/](https://samudra.193.232.229.92.sslip.io/).
+`/opt/samudra`): [https://samudra.samskrte.ru/](https://samudra.samskrte.ru/)
+— the branded host (H2391). The older `samudra.193.232.229.92.sslip.io` name
+fails TLS: the certificate served since 14-10-2026 covers the branded host
+only.
 Recipe: `cd /opt/samudra/repo && git pull --ff-only origin main && /opt/samudra/venv/bin/pip install -r web/requirements.txt && systemctl restart samudra`.
-Ops note on the box: `/opt/samudra/OPS.md`. Do **not** invent a second
+Ops note: [`OPS.md`](https://github.com/gasyoun/SamudraManthanam/blob/main/OPS.md)
+(tracked; on the box under `/opt/samudra/repo/`). Do **not** invent a second
 deploy path. Corpus reindex is a separate explicit step, not the app restart.
-A second unit, `deploy/samudra-word-of-day.service` (H4955), regenerates the
-daily word-of-the-day record nightly — also separate from the app restart.
+A second unit, `deploy/samudra-word-of-day.service` (H4955; oneshot, fired
+00:05 by `samudra-word-of-day.timer`) regenerates the daily word-of-the-day
+record and posts it — also separate from the app restart.
 
 Web layout: HTTP layer in `web/app/routers/` (one file per route family:
-`search.py`, `search_page.py`, `morph.py`, `ai.py`, `word_of_day.py`, …),
-service logic in `web/app/services/` — `dispatch_service.py` (all search
-modes), `search_service.py` (FTS5 prefix + AND), `morph_service.py`,
-`html_service.py` (Jinja2 fragments) — plus `web/app/settings.py`
-(`DB_PATH`), `web/app/models.py` (Pydantic v2). Tests:
-`web/tests/test_api.py`, `test_golden_queries.py`, `test_contract.py`,
-`test_morph.py`.
+`search.py`, `search_page.py`, `morph.py`, `ai.py`, `word_of_day.py`,
+`dict.py`, …), service logic in `web/app/services/` — `dispatch_service.py`
+(all search modes), `search_service.py` (FTS5 prefix + AND),
+`morph_service.py`, `html_service.py` (Jinja2 fragments), `dict_service.py` —
+plus `web/app/settings.py` (`DB_PATH`), `web/app/models.py` (Pydantic v2).
+Tests: `web/tests/test_api.py`, `test_golden_queries.py`, `test_contract.py`,
+`test_morph.py`, `test_dict_ui.py`.
 
 Word-of-the-day (H4955): the committed Kochergina pool
 `web/app/data/word_of_day_pool.jsonl` feeds `scripts/word_of_day_generate.py`
 (nightly; also Telegram-post hook `word_of_day_post.py`), which writes a
 precomputed static record the router only reads — no per-request DB query.
+
+Dictionaries (H7790, #463, 18-11-2026): `/slovari` is a first-class surface
+over the five RU Sanskrit dictionaries (Frish, Kochergina, Kossovich, Knauer,
+Smirnova — JSONL under `web/corpus_builder/jsonl/`): landing page, per-dict
+varṇamālā index, structured entry pages, headword lookup in
+Devanagari/IAST/SLP1, reverse RU→Sa gloss search, all read from the corpus
+DB. The same commit moved the corpus manifest pin to bundle 2026.11
+(mojibake-repaired dict JSONL): a code deploy brings the pages, a corpus
+reindex brings the repaired text. Mojibake repair
+(`web/corpus_builder/repair_dict_mojibake.py`) is bounded: 333 unrepairable
+instances are flagged for a human in `web/corpus_builder/mojibake_report/`,
+never rewritten.
+
 Aux top-level surfaces: `nkrya-parallel/` (NKRYa parallel-corpus showcase,
-GitHub Pages via `deploy-nkrya-parallel-pages.yml`) and `reports/`
-(durable crosswalk/report artifacts, e.g. xwalk-s7 AV×DCS).
+GitHub Pages via `deploy-nkrya-parallel-pages.yml`, serving `static/llms.txt`,
+H8386) and `reports/` (durable crosswalk/report artifacts, e.g. xwalk-s7
+AV×DCS).
 
 ## How to run — desktop (legacy)
 
@@ -55,11 +73,11 @@ in Lazarus (packages: TurboPowerIPro, LCL). Updater:
 `Index/Updater/POUpdater.lpi`. Output: `Index/lib/x86_64-win64/`.
 No CLI build script. Version constant `CURRENT_VERSION` in
 [`Units/UpdateChecker.pas`](https://github.com/gasyoun/SamudraManthanam/blob/main/Units/UpdateChecker.pas)
-must be bumped on a desktop release (live `1.5.1`). Update JSON:
-`https://samskrtam.ru/software-updates/po-ors.json`.
+must be bumped on a desktop release; it is `1.5.1` in source and is compared
+against the Update JSON `https://samskrtam.ru/software-updates/po-ors.json`.
 
-Runtime next to `PO.EXE`: `Data/` (corpus HTML), `Programdata/data.txt`
-(filename list), `program.ini`, `program.grp`, `Search/` (result HTML).
+Runtime next to `PO.EXE`: `Data/` (corpus HTML), `Programdata/` (`data.txt`
+filename list, `program.ini`, `program.grp`) and `Search/` (result HTML).
 
 ## Do not touch
 
@@ -67,9 +85,16 @@ Runtime next to `PO.EXE`: `Data/` (corpus HTML), `Programdata/data.txt`
 - Do not treat corpus reindex as part of the app `systemctl restart`.
 - Do not commit paper/manuscript-shape files here — they live in private
   repos only (standing policy); CI `paper-priv-guard.yml` blocks them, and
-  `papers/CANARY_paper_priv.md` is the positive control (never delete).
+  `papers/CANARY_paper_priv.md` is the positive control of the nightly
+  paper-priv sweep — never delete, move or allowlist it.
 - Do not rewrite `stenogrammy` / lesson-listen paths here — those belong
-  to Systema / whisper keep-out rules, not this repo.
+  to Systema / whisper keep-out rules, not this repo. Agent-tool fences for
+  this repo are machine-enforced from
+  [`.agent_policy.json`](https://github.com/gasyoun/SamudraManthanam/blob/main/.agent_policy.json):
+  no `.env` into git; `stenogrammy` READ-OPEN / PUBLISH-CLOSED (H8050).
+- CHANGELOG: no bullet under `[Unreleased]` — one file per entry in
+  `changelog_queue/`, and an entry with no `- ` line is skipped at release
+  cut (H8367); the cut is Uprava `tools/cut_release.py` (H3355).
 - Desktop `Index/lib/` build output is generated.
 
 Danger facts:
